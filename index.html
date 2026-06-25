@@ -288,7 +288,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .save-btn:hover{background:var(--teal2)}
 
 /* MODALS */
-.modal-overlay{position:fixed;inset:0;background:rgba(15,20,40,0.45);display:none;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(3px);transition:opacity 0.15s}.modal-overlay.open{animation:fadeIn 0.15s ease}@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.modal-overlay{position:fixed;inset:0;background:rgba(15,20,40,0.45);display:none;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(3px);transition:opacity 0.15s}.modal-overlay.open{animation:fadeIn 0.15s ease}@keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes slideInRight{from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1}}
 .modal-overlay.open{display:flex}
 .modal{background:var(--white);border-radius:16px;width:560px;max-height:88vh;overflow-y:auto;box-shadow:0 24px 64px rgba(0,0,0,0.18);animation:slideUp 0.18s ease}
 .modal-sm{width:420px}
@@ -1146,6 +1146,20 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           </div>
         </div>
 
+        <!-- My Company — SM only, sits right under profile header -->
+        <div class="sm-only" style="padding:10px 12px 0">
+          <button onclick="openCompanySettings()" style="width:100%;display:flex;align-items:center;gap:10px;padding:11px 13px;background:linear-gradient(135deg,rgba(29,158,117,0.07) 0%,rgba(79,126,247,0.07) 100%);border:1.5px solid rgba(29,158,117,0.2);border-radius:10px;cursor:pointer;font-family:var(--font)">
+            <span style="width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--teal),#4f7ef7);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </span>
+            <div style="text-align:left;min-width:0">
+              <div style="font-size:12px;font-weight:700;color:var(--dark)">My Company</div>
+              <div style="font-size:10px;color:var(--g400);white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="profile-company-name-display">DigitalParc Insurance Group</div>
+            </div>
+            <svg style="margin-left:auto;flex-shrink:0" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+          </button>
+        </div>
+
         <!-- Menu items group 1 -->
         <div style="padding:6px 6px 0">
           <button onclick="showToast('My Profile');toggleUserSwitcher()" class="profile-menu-item">
@@ -1241,7 +1255,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     <div style="display:flex;gap:8px;flex-wrap:wrap">
       <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:10px 16px;text-align:center">
         <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">Annual Goal</div>
-        <div style="font-size:15px;font-weight:700;color:#fff;font-family:var(--mono)">$19,355,000</div>
+        <div class="cs-annual-goal" style="font-size:15px;font-weight:700;color:#fff;font-family:var(--mono)">$19,355,000</div>
       </div>
       <div style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:10px 16px;text-align:center">
         <div style="font-size:11px;font-weight:600;color:rgba(239,68,68,0.8);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">Short of Goal</div>
@@ -1283,7 +1297,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
       <div>
         <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:6px">Annual Sales Goal</div>
-        <div style="font-size:36px;font-weight:700;color:#fff;font-family:var(--mono);line-height:1;margin-bottom:6px">$19,355,000</div>
+        <div class="cs-annual-goal" style="font-size:36px;font-weight:700;color:#fff;font-family:var(--mono);line-height:1;margin-bottom:6px">$19,355,000</div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           <span style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);color:#4ade80;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700">$7.95M Achieved</span>
           <span style="background:rgba(239,68,68,0.18);border:1px solid rgba(239,68,68,0.35);color:#f87171;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700">$11.4M Remaining</span>
@@ -1647,7 +1661,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
         <div>
           <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px">Annual Sales Goal — 2026</div>
-          <div style="font-size:34px;font-weight:700;color:#fff;font-family:var(--mono);line-height:1;margin-bottom:8px">$19,355,000</div>
+          <div class="cs-annual-goal" style="font-size:34px;font-weight:700;color:#fff;font-family:var(--mono);line-height:1;margin-bottom:8px">$19,355,000</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <span style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);color:#4ade80;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">$7.95M Achieved</span>
             <span style="background:rgba(239,68,68,0.18);border:1px solid rgba(239,68,68,0.35);color:#f87171;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">$11.4M Remaining</span>
@@ -5094,6 +5108,263 @@ function switchContactsTab(tab, btn) {
   document.getElementById('contacts-people-view').style.display = tab === 'people' ? 'block' : 'none';
   document.getElementById('contacts-orgs-view').style.display = tab === 'orgs' ? 'block' : 'none';
 }
+// ── COMPANY SETTINGS (SM-controlled, ripples to all reps) ───────────────────
+var _companySettings = {
+  companyName:        'DigitalParc Insurance Group',
+  fiscalYearStart:    'January',
+  currency:           'USD',
+  annualGoal:         19355000,
+  overdueActivityDays: 7,
+  onTrackMin:         70,   // % of YTD pace — at or above = On Track
+  atRiskMin:          50,   // % of YTD pace — at or above = At Risk (below onTrackMin)
+  // below atRiskMin = Critical
+  repQuotas: {
+    'BW': {name:'Brock Wilson',   quota:2000000},
+    'RH': {name:'Russ Holt',      quota:1700000},
+    'JR': {name:'Jules Richards', quota:1400000},
+    'AP': {name:'Aya Pedrad',     quota:1750000},
+    'MK': {name:'Marcus Kim',     quota:1400000},
+    'LT': {name:'Lisa Torres',    quota:1300000},
+    'DS': {name:'Doug Silverness',quota:1800000},
+    'MB': {name:'Marcus Bradley', quota:1750000},
+    'EV': {name:'Elena Vasquez',  quota:1250000},
+    'AM': {name:'Amanda Morrison',quota:1650000},
+  },
+  pipelineStages: [
+    {name:'Prospect Registered', color:'#6366f1'},
+    {name:'Contact Made',        color:'#ca8a04'},
+    {name:'Documents Collected', color:'#0ea5e9'},
+    {name:'Payment Confirmed',   color:'#7c3aed'},
+    {name:'Enrolled',            color:'#1d9e75'},
+    {name:'Contract Signed',     color:'#059669'},
+  ],
+  tagDefinitions: [
+    {name:'Lead',     color:'#6366f1'},
+    {name:'Customer', color:'#1d9e75'},
+    {name:'VIP',      color:'#f59e0b'},
+    {name:'Prospect', color:'#8b5cf6'},
+  ],
+};
+// Apply company settings — updates live DOM elements that reference global values
+function applyCompanySettings() {
+  // Annual goal ripple — update all tagged elements
+  document.querySelectorAll('.cs-annual-goal').forEach(function(el){
+    el.textContent = '$' + _companySettings.annualGoal.toLocaleString();
+  });
+  // Goal-setting modal total (if it exists)
+  var gst = document.getElementById('gs-team-total'); if(gst) gst.textContent = '$' + _companySettings.annualGoal.toLocaleString();
+  var gstTotal = document.getElementById('gst-total'); if(gstTotal) gstTotal.textContent = '$' + _companySettings.annualGoal.toLocaleString();
+  // Company name ripple
+  var cnd = document.getElementById('profile-company-name-display'); if(cnd) cnd.textContent = _companySettings.companyName;
+  // Tag colors ripple — rebuild _tagColors from definitions
+  Object.keys(_tagColors).forEach(function(k){ delete _tagColors[k]; });
+  _companySettings.tagDefinitions.forEach(function(t){ _tagColors[t.name] = t.color; });
+  // Re-render contacts tables so tag badges update
+  if (typeof renderPeopleTable === 'function') renderPeopleTable();
+  if (typeof renderOrgsTable === 'function') renderOrgsTable();
+  showToast('✓ Company settings saved — changes applied');
+}
+
+// ── COMPANY SETTINGS OVERLAY ────────────────────────────────────────────────
+function openCompanySettings() {
+  toggleUserSwitcher();
+  var overlay = document.getElementById('company-settings-overlay');
+  if (overlay) { overlay.remove(); return; }
+  overlay = document.createElement('div');
+  overlay.id = 'company-settings-overlay';
+  overlay.style.cssText = 'position:fixed;inset:0;background:rgba(10,20,40,0.55);z-index:2000;display:flex;align-items:stretch;justify-content:flex-end;animation:fadeIn 0.18s';
+  // Panel
+  var panel = document.createElement('div');
+  panel.style.cssText = 'width:780px;max-width:95vw;background:#fff;display:flex;flex-direction:column;animation:slideInRight 0.22s cubic-bezier(0.22,1,0.36,1)';
+  // Header
+  panel.innerHTML = '<div style="display:flex;align-items:center;justify-content:space-between;padding:22px 28px;border-bottom:1px solid var(--g200);flex-shrink:0">' +
+    '<div><div style="font-size:18px;font-weight:800;color:var(--dark)">Company Settings</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Changes apply globally to all reps and views</div></div>' +
+    '<button id="cs-close-btn" style="width:32px;height:32px;border-radius:50%;background:var(--g100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:18px;color:var(--g500);line-height:1">×</button>' +
+    '</div>' +
+    '<div style="display:flex;flex:1;overflow:hidden">' +
+    // Left nav
+    '<div style="width:180px;flex-shrink:0;border-right:1px solid var(--g100);padding:16px 8px;display:flex;flex-direction:column;gap:2px;overflow-y:auto">' +
+    _csNavItem('company',   '🏢', 'Company',          true) +
+    _csNavItem('goals',     '🎯', 'Goals & Quotas',   false) +
+    _csNavItem('pipeline',  '📊', 'Pipeline Stages',  false) +
+    _csNavItem('tags',      '🏷',  'Tags',             false) +
+    _csNavItem('rules',     '⚡', 'Performance Rules', false) +
+    '</div>' +
+    // Content area
+    '<div id="cs-content" style="flex:1;overflow-y:auto;padding:28px 32px"></div>' +
+    '</div>' +
+    // Footer
+    '<div style="padding:16px 28px;border-top:1px solid var(--g200);display:flex;justify-content:flex-end;gap:10px;flex-shrink:0">' +
+    '<button id="cs-cancel-btn" style="padding:9px 22px;border:1.5px solid var(--g200);border-radius:8px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);background:#fff;color:var(--g600)">Cancel</button>' +
+    '<button id="cs-save-btn" style="padding:9px 22px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Save Changes</button>' +
+    '</div>';
+  overlay.appendChild(panel);
+  document.body.appendChild(overlay);
+  // Wire buttons
+  document.getElementById('cs-close-btn').addEventListener('click', function(){ overlay.remove(); });
+  document.getElementById('cs-cancel-btn').addEventListener('click', function(){ overlay.remove(); });
+  document.getElementById('cs-save-btn').addEventListener('click', function(){ _csSave(); overlay.remove(); });
+  // Close on backdrop click
+  overlay.addEventListener('click', function(e){ if(e.target===overlay) overlay.remove(); });
+  // Load first section
+  _csLoadSection('company');
+}
+function _csNavItem(id, icon, label, active) {
+  return '<button class="cs-nav-btn" data-section="' + id + '" onclick="_csLoadSection(\'' + id + '\')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:' + (active?'var(--teal)':'none') + ';border:none;cursor:pointer;font-size:13px;font-weight:600;color:' + (active?'#fff':'var(--g600)') + ';text-align:left;width:100%;font-family:var(--font);transition:background 0.12s">' + icon + ' ' + label + '</button>';
+}
+function _csLoadSection(id) {
+  // Update nav highlighting
+  document.querySelectorAll('.cs-nav-btn').forEach(function(b){
+    var active = b.dataset.section === id;
+    b.style.background = active ? 'var(--teal)' : 'transparent';
+    b.style.color = active ? '#fff' : 'var(--g600)';
+  });
+  var c = document.getElementById('cs-content');
+  if (!c) return;
+  if (id === 'company')  { c.innerHTML = _csCompanySection(); }
+  if (id === 'goals')    { c.innerHTML = _csGoalsSection(); }
+  if (id === 'pipeline') { c.innerHTML = _csPipelineSection(); }
+  if (id === 'tags')     { c.innerHTML = _csTagsSection(); }
+  if (id === 'rules')    { c.innerHTML = _csRulesSection(); }
+}
+function _csFieldGroup(label, hint, inputHtml) {
+  return '<div style="margin-bottom:20px"><label style="display:block;font-size:12px;font-weight:700;color:var(--dark);margin-bottom:5px">' + label + (hint?'<span style="font-size:11px;font-weight:400;color:var(--g400);margin-left:6px">'+hint+'</span>':'') + '</label>' + inputHtml + '</div>';
+}
+function _csInput(id, val, type, placeholder) {
+  type = type || 'text';
+  return '<input id="' + id + '" type="' + type + '" value="' + (val||'') + '" placeholder="' + (placeholder||'') + '" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">';
+}
+function _csSectionTitle(title, sub) {
+  return '<div style="margin-bottom:24px"><div style="font-size:16px;font-weight:800;color:var(--dark);margin-bottom:4px">' + title + '</div><div style="font-size:12px;color:var(--g400)">' + sub + '</div></div>';
+}
+function _csCompanySection() {
+  var fy = _companySettings.fiscalYearStart;
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  return _csSectionTitle('Company', 'Basic info that appears throughout the platform') +
+    _csFieldGroup('Company Name', '', _csInput('cs-company-name', _companySettings.companyName, 'text', 'e.g. Acme Insurance')) +
+    _csFieldGroup('Fiscal Year Start', 'Affects YTD calculations', '<select id="cs-fiscal-start" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);outline:none" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">' + months.map(function(m){ return '<option value="'+m+'"'+(m===fy?' selected':'')+'>'+m+'</option>'; }).join('') + '</select>') +
+    _csFieldGroup('Currency', '', '<select id="cs-currency" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);outline:none" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">' +
+      ['USD ($)','CAD (CA$)','EUR (€)','GBP (£)','AUD (A$)'].map(function(c){ var v=c.split(' ')[0]; return '<option value="'+v+'"'+(_companySettings.currency===v?' selected':'')+'>'+c+'</option>'; }).join('') + '</select>') +
+    _csFieldGroup('Activity Overdue After', 'Days without contact before flagging as overdue', '<div style="display:flex;align-items:center;gap:10px">' + _csInput('cs-overdue-days', _companySettings.overdueActivityDays, 'number', '7') + '<span style="font-size:13px;color:var(--g500);white-space:nowrap">days</span></div>');
+}
+function _csGoalsSection() {
+  var html = _csSectionTitle('Goals & Quotas', 'Annual team goal and per-rep quotas. Changes ripple to Goals, Dashboard, and Team pages.') +
+    _csFieldGroup('Annual Team Sales Goal', 'Appears on dashboard and goals page', _csInput('cs-annual-goal', _companySettings.annualGoal, 'number', '19355000'));
+  html += '<div style="margin-bottom:8px"><div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:14px">Individual Rep Quotas</div>';
+  html += '<div style="display:flex;flex-direction:column;gap:0;border:1.5px solid var(--g200);border-radius:10px;overflow:hidden">';
+  var keys = Object.keys(_companySettings.repQuotas);
+  keys.forEach(function(k, i) {
+    var r = _companySettings.repQuotas[k];
+    html += '<div style="display:flex;align-items:center;padding:11px 14px;' + (i>0?'border-top:1px solid var(--g100)':'') + ';gap:12px">' +
+      '<div style="font-size:13px;font-weight:600;color:var(--dark);width:150px;flex-shrink:0">' + r.name + '</div>' +
+      '<div style="flex:1;position:relative"><span style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--g400);font-size:13px">$</span><input id="cs-quota-' + k + '" type="number" value="' + r.quota + '" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px 7px 22px;font-size:13px;font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'"></div>' +
+      '</div>';
+  });
+  html += '</div></div>';
+  return html;
+}
+function _csPipelineSection() {
+  var html = _csSectionTitle('Pipeline Stages', 'Define the stages in your sales pipeline. Changes apply to all new opportunities and the pipeline view.') +
+    '<div id="cs-pipeline-list" style="display:flex;flex-direction:column;gap:8px">';
+  _companySettings.pipelineStages.forEach(function(s, i) {
+    html += _csPipelineRow(i, s);
+  });
+  html += '</div><button onclick="_csAddStage()" style="margin-top:12px;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px dashed var(--g300);border-radius:8px;background:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--g500);font-family:var(--font)">+ Add Stage</button>';
+  return html;
+}
+function _csPipelineRow(i, s) {
+  return '<div id="cs-pipeline-row-' + i + '" style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--g50);border-radius:9px">' +
+    '<span style="font-size:16px;color:var(--g300);cursor:grab">⋮⋮</span>' +
+    '<span style="width:18px;height:18px;border-radius:50%;background:' + s.color + ';flex-shrink:0;display:inline-block"></span>' +
+    '<input id="cs-stage-name-' + i + '" value="' + s.name + '" style="flex:1;border:1.5px solid var(--g200);border-radius:6px;padding:6px 9px;font-size:12px;font-family:var(--font);outline:none;background:#fff" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">' +
+    '<input type="color" id="cs-stage-color-' + i + '" value="' + (s.color.startsWith('#')?s.color:'#1d9e75') + '" style="width:28px;height:28px;border:none;border-radius:6px;cursor:pointer;padding:0">' +
+    '<button onclick="_csRemoveStage(' + i + ')" style="background:none;border:none;cursor:pointer;color:var(--g300);font-size:16px;padding:0 4px" title="Remove">×</button>' +
+    '</div>';
+}
+function _csAddStage() {
+  _companySettings.pipelineStages.push({name:'New Stage', color:'#6366f1'});
+  var el = document.getElementById('cs-pipeline-list');
+  var i = _companySettings.pipelineStages.length - 1;
+  var div = document.createElement('div');
+  div.innerHTML = _csPipelineRow(i, _companySettings.pipelineStages[i]);
+  el.appendChild(div.firstChild);
+}
+function _csRemoveStage(i) {
+  if (_companySettings.pipelineStages.length <= 2) { showToast('Need at least 2 stages'); return; }
+  _companySettings.pipelineStages.splice(i, 1);
+  _csLoadSection('pipeline');
+}
+function _csTagsSection() {
+  var html = _csSectionTitle('Tags', 'Tag names and colors appear on all contacts and accounts. Changes ripple immediately.') +
+    '<div id="cs-tags-list" style="display:flex;flex-direction:column;gap:8px">';
+  _companySettings.tagDefinitions.forEach(function(t, i) {
+    html += _csTagRow(i, t);
+  });
+  html += '</div><button onclick="_csAddTag()" style="margin-top:12px;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px dashed var(--g300);border-radius:8px;background:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--g500);font-family:var(--font)">+ Add Tag</button>';
+  return html;
+}
+function _csTagRow(i, t) {
+  var preview = '<span style="display:inline-flex;align-items:center;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:700;background:' + t.color + '22;color:' + (t.color.startsWith('var')?'var(--teal)':t.color) + ';border:1px solid ' + t.color + '44">' + t.name + '</span>';
+  return '<div id="cs-tag-row-' + i + '" style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--g50);border-radius:9px">' +
+    '<input type="color" id="cs-tag-color-' + i + '" value="' + (t.color.startsWith('#')?t.color:'#1d9e75') + '" style="width:28px;height:28px;border:none;border-radius:6px;cursor:pointer;padding:0" oninput="document.getElementById(\'cs-tag-preview-' + i + '\').style.color=this.value;document.getElementById(\'cs-tag-preview-' + i + '\').style.background=this.value+\'22\'">' +
+    '<input id="cs-tag-name-' + i + '" value="' + t.name + '" style="flex:1;border:1.5px solid var(--g200);border-radius:6px;padding:6px 9px;font-size:12px;font-family:var(--font);outline:none;background:#fff" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">' +
+    '<span id="cs-tag-preview-' + i + '" style="padding:2px 10px;border-radius:20px;font-size:11px;font-weight:700;background:' + t.color + '22;color:' + t.color + ';border:1px solid ' + t.color + '44;white-space:nowrap">' + t.name + '</span>' +
+    '<button onclick="_csRemoveTag(' + i + ')" style="background:none;border:none;cursor:pointer;color:var(--g300);font-size:16px;padding:0 4px" title="Remove">×</button>' +
+    '</div>';
+}
+function _csAddTag() {
+  _companySettings.tagDefinitions.push({name:'New Tag', color:'#6366f1'});
+  var el = document.getElementById('cs-tags-list');
+  var i = _companySettings.tagDefinitions.length - 1;
+  var div = document.createElement('div');
+  div.innerHTML = _csTagRow(i, _companySettings.tagDefinitions[i]);
+  el.appendChild(div.firstChild);
+}
+function _csRemoveTag(i) {
+  _companySettings.tagDefinitions.splice(i, 1);
+  _csLoadSection('tags');
+}
+function _csRulesSection() {
+  return _csSectionTitle('Performance Rules', 'Define the thresholds that determine rep status on Team and Goals pages.') +
+    '<div style="background:var(--g50);border-radius:12px;padding:16px 18px;margin-bottom:20px">' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">' +
+    '<div style="background:#fff;border-radius:10px;padding:14px 16px;border:1.5px solid rgba(29,158,117,0.3)"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--teal);margin-bottom:8px">On Track</div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--g500)">Pace ≥</span><input id="cs-ontrack-min" type="number" value="' + _companySettings.onTrackMin + '" min="1" max="99" style="width:60px;border:1.5px solid var(--g200);border-radius:6px;padding:5px 8px;font-size:13px;font-family:var(--font);outline:none;text-align:center"><span style="font-size:12px;color:var(--g500)">%</span></div></div>' +
+    '<div style="background:#fff;border-radius:10px;padding:14px 16px;border:1.5px solid rgba(245,158,11,0.3)"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--amber);margin-bottom:8px">At Risk</div><div style="display:flex;align-items:center;gap:8px"><span style="font-size:12px;color:var(--g500)">Pace ≥</span><input id="cs-atrisk-min" type="number" value="' + _companySettings.atRiskMin + '" min="1" max="99" style="width:60px;border:1.5px solid var(--g200);border-radius:6px;padding:5px 8px;font-size:13px;font-family:var(--font);outline:none;text-align:center"><span style="font-size:12px;color:var(--g500)">%</span></div></div>' +
+    '</div><div style="margin-top:12px;padding:10px 14px;background:rgba(239,68,68,0.06);border-radius:8px;border:1px solid rgba(239,68,68,0.15)"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--red);margin-bottom:4px">Critical</div><div style="font-size:12px;color:var(--g500)">Pace below At Risk threshold — automatic</div></div>' +
+    '</div>' +
+    '<div style="background:rgba(79,126,247,0.06);border:1px solid rgba(79,126,247,0.2);border-radius:10px;padding:12px 14px">' +
+    '<div style="font-size:12px;font-weight:600;color:#4f7ef7;margin-bottom:4px">How "pace" works</div>' +
+    '<div style="font-size:12px;color:var(--g500)">Pace = (Sales YTD ÷ Annual Quota) ÷ (Days Elapsed ÷ 365). A rep at 100% pace is exactly on track for their annual number.</div>' +
+    '</div>';
+}
+function _csSave() {
+  // Company
+  var n = document.getElementById('cs-company-name'); if(n) _companySettings.companyName = n.value;
+  var f = document.getElementById('cs-fiscal-start'); if(f) _companySettings.fiscalYearStart = f.value;
+  var cu = document.getElementById('cs-currency'); if(cu) _companySettings.currency = cu.value;
+  var od = document.getElementById('cs-overdue-days'); if(od) _companySettings.overdueActivityDays = parseInt(od.value)||7;
+  // Goals
+  var ag = document.getElementById('cs-annual-goal'); if(ag) _companySettings.annualGoal = parseInt(ag.value)||19355000;
+  Object.keys(_companySettings.repQuotas).forEach(function(k){
+    var el = document.getElementById('cs-quota-'+k); if(el) _companySettings.repQuotas[k].quota = parseInt(el.value)||0;
+  });
+  // Pipeline stages
+  _companySettings.pipelineStages.forEach(function(s, i){
+    var n2 = document.getElementById('cs-stage-name-'+i); if(n2) s.name = n2.value;
+    var c = document.getElementById('cs-stage-color-'+i); if(c) s.color = c.value;
+  });
+  // Tags
+  _companySettings.tagDefinitions.forEach(function(t, i){
+    var tn = document.getElementById('cs-tag-name-'+i); if(tn) t.name = tn.value;
+    var tc = document.getElementById('cs-tag-color-'+i); if(tc) t.color = tc.value;
+  });
+  // Rules
+  var ot = document.getElementById('cs-ontrack-min'); if(ot) _companySettings.onTrackMin = parseInt(ot.value)||70;
+  var ar = document.getElementById('cs-atrisk-min'); if(ar) _companySettings.atRiskMin = parseInt(ar.value)||50;
+  // Apply ripple
+  applyCompanySettings();
+}
+
 // ── PEOPLE TABLE: COLUMN CONFIG ─────────────────────────────────────────────
 var _peopleColumns = {
   person:       {label:'Person',        visible:true,  required:true},
