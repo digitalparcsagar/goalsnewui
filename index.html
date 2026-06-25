@@ -1102,7 +1102,11 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div class="tb-left">
     <button class="tb-btn btn-teal" onclick="openShortcutMenu(event)" aria-haspopup="true" aria-label="Quick add new item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Quick Add</button>
     <button class="tb-btn btn-dark" onclick="openTargetsModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/></svg> Today's Targets</button>
-    <button class="tb-btn btn-ghost" onclick="showPage('pipeline',null)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg> Pipeline</button>
+    <!-- Custom shortcut slot -->
+    <div style="display:flex;align-items:center;gap:2px" id="tb-custom-slot">
+      <button id="tb-custom-btn" class="tb-btn btn-ghost" onclick="showPage('pipeline',null)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg> Pipeline</button>
+      <button onclick="openTbCustomizer(this)" title="Customize shortcut" style="width:22px;height:22px;border-radius:6px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g300);transition:all 0.15s;padding:0;flex-shrink:0" onmouseover="this.style.background='var(--g100)';this.style.color='var(--g500)'" onmouseout="this.style.background='none';this.style.color='var(--g300)'"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+    </div>
   </div>
   <div class="tb-center">
     <div class="tb-search">
@@ -2574,9 +2578,11 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     </div>
     <div style="width:1px;height:18px;background:var(--g200)"></div>
     <div style="position:relative">
-      <input type="text" id="contacts-search" placeholder="Search accounts…" oninput="filterContacts(this.value)" style="border:1.5px solid var(--g200);border-radius:8px;padding:5px 10px 5px 30px;font-size:12px;font-family:var(--font);outline:none;color:var(--dark);width:180px">
+      <input type="text" id="contacts-search" placeholder="Search people or accounts…" oninput="filterContacts(this.value)" style="border:1.5px solid var(--g200);border-radius:8px;padding:5px 10px 5px 30px;font-size:12px;font-family:var(--font);outline:none;color:var(--dark);width:200px">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:9px;top:50%;transform:translateY(-50%)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </div>
+    <button id="btn-columns" class="tb-btn btn-ghost" style="font-size:12px;display:flex;align-items:center;gap:5px" onclick="openColumnCustomizer()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Columns</button>
+    <button id="btn-org-filter" class="tb-btn btn-ghost" style="font-size:12px;display:flex;align-items:center;gap:5px" onclick="openOrgFilterPanel()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filter</button>
     <button class="tb-btn btn-teal" style="font-size:12px" onclick="openModal('person-modal')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Contact</button>
   </div>
 </div>
@@ -2585,8 +2591,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 <div id="contacts-people-view">
   <div style="overflow-x:auto;border:1px solid var(--g200);border-radius:12px;background:#fff">
     <table class="contacts-table" id="people-table">
-      <thead>
-        <tr>
+      <thead id="people-thead"><tr>
           <th style="text-align:left">Person</th>
           <th style="text-align:left">Account</th>
           <th style="text-align:left">Phone</th>
@@ -2594,18 +2599,8 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           <th style="text-align:center">Open Opps</th>
           <th style="text-align:left">Owner</th>
           <th style="text-align:left">Last Activity</th>
-        </tr>
-      </thead>
-      <tbody id="people-tbody">
-        <tr class="contacts-table-row" onclick="openPersonDetail('Marcus Lee')"><td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0">ML</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Marcus Lee</div><div style="font-size:11px;color:var(--g400)">VP of Finance</div></div></div></td><td style="font-size:12px;color:var(--g600)">Riverside Financial Group</td><td style="font-size:12px;color:var(--g600)">(612) 555-0182</td><td style="font-size:12px;color:var(--teal)">m.lee@riverside.com</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td><div class="crm-rep-avatar" style="background:#1d9e75" title="Brock Wilson">BW</div></td><td style="font-size:12px;color:var(--g400)">Today — Call</td></tr>
-        <tr class="contacts-table-row" onclick="openPersonDetail('Sara Kim')"><td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0">SK</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Sara Kim</div><div style="font-size:11px;color:var(--g400)">HR Director</div></div></div></td><td style="font-size:12px;color:var(--g600)">Clearview Dental Associates</td><td style="font-size:12px;color:var(--g600)">(651) 555-0247</td><td style="font-size:12px;color:var(--teal)">sara.kim@clearview.com</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td><div class="crm-rep-avatar" style="background:#8b5cf6" title="Russ Holt">RH</div></td><td style="font-size:12px;color:var(--g400)">3 days ago — Email</td></tr>
-        <tr class="contacts-table-row" onclick="openPersonDetail('Tara Nguyen')"><td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0">TN</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Tara Nguyen</div><div style="font-size:11px;color:var(--g400)">CFO</div></div></div></td><td style="font-size:12px;color:var(--g600)">Apex Holdings LLC</td><td style="font-size:12px;color:var(--g600)">(763) 555-0391</td><td style="font-size:12px;color:var(--teal)">t.nguyen@apexholdings.com</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td><div class="crm-rep-avatar" style="background:#f59e0b" title="Jules Richards">JR</div></td><td style="font-size:12px;color:var(--red)">8 days ago — Overdue</td></tr>
-        <tr class="contacts-table-row" onclick="openPersonDetail('David Park')"><td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0">DP</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">David Park</div><div style="font-size:11px;color:var(--g400)">Branch Manager</div></div></div></td><td style="font-size:12px;color:var(--g600)">Summit Credit Union</td><td style="font-size:12px;color:var(--g600)">(952) 555-0174</td><td style="font-size:12px;color:var(--teal)">dpark@summitcu.org</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td><div class="crm-rep-avatar" style="background:#1d9e75" title="Brock Wilson">BW</div></td><td style="font-size:12px;color:var(--g400)">Yesterday — Call</td></tr>
-        <tr class="contacts-table-row" onclick="openPersonDetail('Angela Ross')"><td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0">AR</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Angela Ross</div><div style="font-size:11px;color:var(--g400)">Benefits Manager</div></div></div></td><td style="font-size:12px;color:var(--g600)">Harborview Medical Center</td><td style="font-size:12px;color:var(--g600)">(612) 555-0528</td><td style="font-size:12px;color:var(--teal)">a.ross@harborviewmed.com</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td><div class="crm-rep-avatar" style="background:#8b5cf6" title="Russ Holt">RH</div></td><td style="font-size:12px;color:var(--g400)">Today — Meeting</td></tr>
-        <tr class="contacts-table-row" onclick="openPersonDetail('Chris Brown')"><td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0">CB</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Chris Brown</div><div style="font-size:11px;color:var(--g400)">Owner</div></div></div></td><td style="font-size:12px;color:var(--g600)">Lakewood Builders Inc.</td><td style="font-size:12px;color:var(--g600)">(651) 555-0716</td><td style="font-size:12px;color:var(--teal)">cbrown@lakewoodbuilders.com</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td><div class="crm-rep-avatar" style="background:#3b82f6" title="Aya Pedrad">DS</div></td><td style="font-size:12px;color:var(--g400)">2 days ago — Email</td></tr>
-        <tr class="contacts-table-row" onclick="openPersonDetail('Rachel Green')"><td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0">RG</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Rachel Green</div><div style="font-size:11px;color:var(--g400)">COO</div></div></div></td><td style="font-size:12px;color:var(--g600)">Cascade Logistics Partners</td><td style="font-size:12px;color:var(--g600)">(763) 555-0843</td><td style="font-size:12px;color:var(--teal)">r.green@cascadelogistics.com</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td><div class="crm-rep-avatar" style="background:#8b5cf6" title="Russ Holt">RH</div></td><td style="font-size:12px;color:var(--g400)">Today — Call</td></tr>
-        <tr class="contacts-table-row" onclick="openPersonDetail('Janet Moore')"><td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0">JM</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Janet Moore</div><div style="font-size:11px;color:var(--g400)">Superintendent</div></div></div></td><td style="font-size:12px;color:var(--g600)">Meridian School District</td><td style="font-size:12px;color:var(--g600)">(952) 555-0962</td><td style="font-size:12px;color:var(--teal)">jmoore@meridiansd.edu</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td><div class="crm-rep-avatar" style="background:#1d9e75" title="Brock Wilson">BW</div></td><td style="font-size:12px;color:var(--g400)">4 days ago — Email</td></tr>
-      </tbody>
+      </tr></thead>
+      <tbody id="people-tbody"></tbody>
     </table>
   </div>
 </div>
@@ -2625,14 +2620,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           <th style="text-align:left">Last Activity</th>
         </tr>
       </thead>
-      <tbody>
-        <tr class="contacts-table-row" onclick="openOrgDetail('Riverside Financial Group')"><td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#6366f1;flex-shrink:0">RF</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Riverside Financial Group</div></div></td><td style="font-size:12px;color:var(--g600)">Financial Services</td><td style="text-align:center;font-size:12px;color:var(--g600)">2</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td style="text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$92,000</td><td><div class="crm-rep-avatar" style="background:#1d9e75">BW</div></td><td style="font-size:12px;color:var(--g400)">Today</td></tr>
-        <tr class="contacts-table-row" onclick="openOrgDetail('Apex Holdings LLC')"><td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#f59e0b;flex-shrink:0">AH</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Apex Holdings LLC</div></div></td><td style="font-size:12px;color:var(--g600)">Investment Holding</td><td style="text-align:center;font-size:12px;color:var(--g600)">3</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td style="text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$145,000</td><td><div class="crm-rep-avatar" style="background:#f59e0b">JR</div></td><td style="font-size:12px;color:var(--red)">8 days ago</td></tr>
-        <tr class="contacts-table-row" onclick="openOrgDetail('Harborview Medical Center')"><td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:rgba(239,68,68,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#ef4444;flex-shrink:0">HM</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Harborview Medical Center</div></div></td><td style="font-size:12px;color:var(--g600)">Healthcare</td><td style="text-align:center;font-size:12px;color:var(--g600)">4</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td style="text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$158,000</td><td><div class="crm-rep-avatar" style="background:#8b5cf6">RH</div></td><td style="font-size:12px;color:var(--g400)">Today</td></tr>
-        <tr class="contacts-table-row" onclick="openOrgDetail('Lakewood Builders Inc.')"><td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:rgba(29,158,117,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--teal);flex-shrink:0">LB</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Lakewood Builders Inc.</div></div></td><td style="font-size:12px;color:var(--g600)">Construction</td><td style="text-align:center;font-size:12px;color:var(--g600)">2</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td style="text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$174,000</td><td><div class="crm-rep-avatar" style="background:#3b82f6">DS</div></td><td style="font-size:12px;color:var(--g400)">2 days ago</td></tr>
-        <tr class="contacts-table-row" onclick="openOrgDetail('Cascade Logistics Partners')"><td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#3b82f6;flex-shrink:0">CL</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Cascade Logistics Partners</div></div></td><td style="font-size:12px;color:var(--g600)">Logistics & Transport</td><td style="text-align:center;font-size:12px;color:var(--g600)">3</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td style="text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$138,000</td><td><div class="crm-rep-avatar" style="background:#8b5cf6">RH</div></td><td style="font-size:12px;color:var(--g400)">Today</td></tr>
-        <tr class="contacts-table-row" onclick="openOrgDetail('Meridian School District')"><td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:rgba(139,92,246,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#8b5cf6;flex-shrink:0">MS</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Meridian School District</div></div></td><td style="font-size:12px;color:var(--g600)">Education</td><td style="text-align:center;font-size:12px;color:var(--g600)">2</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">1</span></td><td style="text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$100,000</td><td><div class="crm-rep-avatar" style="background:#1d9e75">BW</div></td><td style="font-size:12px;color:var(--g400)">4 days ago</td></tr>
-      </tbody>
+      <tbody id="orgs-tbody"></tbody>
     </table>
   </div>
 </div>
@@ -5103,17 +5091,136 @@ function switchContactsTab(tab, btn) {
   document.getElementById('contacts-people-view').style.display = tab === 'people' ? 'block' : 'none';
   document.getElementById('contacts-orgs-view').style.display = tab === 'orgs' ? 'block' : 'none';
 }
+// ── PEOPLE TABLE: COLUMN CONFIG ─────────────────────────────────────────────
+var _peopleColumns = {
+  person:       {label:'Person',        visible:true,  required:true},
+  account:      {label:'Account',       visible:true},
+  phone:        {label:'Phone',         visible:true},
+  email:        {label:'Email',         visible:true},
+  opps:         {label:'Open Opps',     visible:true},
+  owner:        {label:'Owner',         visible:true},
+  lastActivity: {label:'Last Activity', visible:true},
+  industry:     {label:'Industry',      visible:false},
+  city:         {label:'City',          visible:false},
+  linkedin:     {label:'LinkedIn',      visible:false},
+  tags:         {label:'Tags',          visible:false}
+};
+var _peopleSearchQ = '';
+var _orgsSearchQ   = '';
+var _orgsFilterIndustry = '';
+var _orgsFilterOwner    = '';
+// ── CUSTOM FIELDS + TAGS STORAGE ─────────────────────────────────────────────
+var _customFields = {};  // { 'Marcus Lee': [{label:'', value:''}] }
+var _recordTags   = {};  // { 'Marcus Lee': ['Lead','Customer'] } — starts seeded from data
+function initRecordTags() {
+  Object.keys(PEOPLE_DATA).forEach(function(n){ _recordTags[n] = (PEOPLE_DATA[n].tags||[]).slice(); });
+  Object.keys(ORGS_DATA).forEach(function(n){ _recordTags[n] = (ORGS_DATA[n].tags||[]).slice(); });
+}
+// ── TAG BADGE HELPERS ─────────────────────────────────────────────────────────
+var _tagColors = {Lead:'#6366f1', Customer:'var(--teal)', VIP:'#f59e0b', Prospect:'#8b5cf6'};
+function tagBadge(t, forTable) {
+  var c = _tagColors[t] || '#6366f1';
+  if (forTable) return '<span style="background:' + c + ';color:#fff;border-radius:20px;padding:1px 7px;font-size:10px;font-weight:700;margin-left:4px">' + t + '</span>';
+  return '<span class="tag-pill" onclick="removeTag(this,\'' + t.replace(/'/g,"\\'") + '\')" style="background:' + c + ';color:#fff;border-radius:20px;padding:3px 10px;font-size:12px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:5px">' + t + ' <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></span>';
+}
+// ── RENDER PEOPLE TABLE ───────────────────────────────────────────────────────
+function renderPeopleTable(q) {
+  if (q !== undefined) _peopleSearchQ = q;
+  var tbody = document.getElementById('people-tbody');
+  var thead = document.getElementById('people-thead');
+  if (!tbody || !thead) return;
+  var activeCols = Object.keys(_peopleColumns).filter(function(k){ return _peopleColumns[k].visible; });
+  // Header
+  thead.innerHTML = activeCols.map(function(k) {
+    var align = k === 'opps' ? 'center' : 'left';
+    return '<th style="text-align:' + align + '">' + _peopleColumns[k].label + '</th>';
+  }).join('');
+  // Filter
+  var names = Object.keys(PEOPLE_DATA);
+  if (_peopleSearchQ) {
+    var lq = _peopleSearchQ.toLowerCase();
+    names = names.filter(function(n) {
+      var d = PEOPLE_DATA[n];
+      return n.toLowerCase().includes(lq) || d.org.toLowerCase().includes(lq) ||
+             d.email.toLowerCase().includes(lq) || d.title.toLowerCase().includes(lq) ||
+             (d.industry||'').toLowerCase().includes(lq) || (d.city||'').toLowerCase().includes(lq);
+    });
+  }
+  tbody.innerHTML = names.map(function(name) {
+    var d = PEOPLE_DATA[name];
+    var tags = (_recordTags[name]||[]);
+    var cells = activeCols.map(function(k) {
+      switch(k) {
+        case 'person':
+          var tagHtml = tags.map(function(t){ return tagBadge(t,true); }).join('');
+          return '<td><div style="display:flex;align-items:center;gap:10px"><div class="crm-contact-chip" style="width:30px;height:30px;font-size:11px;flex-shrink:0;background:' + d.color + '">' + d.initials + '</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">' + name + tagHtml + '</div><div style="font-size:11px;color:var(--g400)">' + d.title + '</div></div></div></td>';
+        case 'account':
+          return '<td style="font-size:12px;color:var(--g600)">' + d.org + '</td>';
+        case 'phone':
+          return '<td style="font-size:12px;color:var(--g600)">' + d.phone + '</td>';
+        case 'email':
+          return '<td style="font-size:12px;color:var(--teal)">' + d.email + '</td>';
+        case 'opps':
+          return '<td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">' + (d.openOpps||[]).length + '</span></td>';
+        case 'owner':
+          return '<td><div class="crm-rep-avatar" style="background:' + d.ownerColor + '" title="' + d.owner + '">' + d.ownerInit + '</div></td>';
+        case 'lastActivity':
+          var laColor = (d.lastActivity||'').indexOf('Overdue') >= 0 ? 'var(--red)' : 'var(--g400)';
+          return '<td style="font-size:12px;color:' + laColor + '">' + (d.lastActivity||'—') + '</td>';
+        case 'industry':
+          return '<td style="font-size:12px;color:var(--g600)">' + (d.industry||'—') + '</td>';
+        case 'city':
+          return '<td style="font-size:12px;color:var(--g600)">' + (d.city||'—') + '</td>';
+        case 'linkedin':
+          return '<td style="font-size:12px">' + (d.linkedin ? '<a href="https://' + d.linkedin + '" target="_blank" style="color:var(--teal)">View →</a>' : '—') + '</td>';
+        case 'tags':
+          return '<td>' + tags.map(function(t){ return tagBadge(t,true); }).join('') + (tags.length ? '' : '<span style="color:var(--g300);font-size:12px">—</span>') + '</td>';
+        default: return '<td>—</td>';
+      }
+    }).join('');
+    return '<tr class="contacts-table-row" onclick="openPersonDetail(\'' + name.replace(/'/g,"\\'") + '\')">' + cells + '</tr>';
+  }).join('') || '<tr><td colspan="' + activeCols.length + '" style="text-align:center;padding:40px;color:var(--g400)">No people match your search</td></tr>';
+}
+// ── RENDER ORGS TABLE ─────────────────────────────────────────────────────────
+function renderOrgsTable(q, industry, owner) {
+  if (q !== undefined) _orgsSearchQ = q;
+  if (industry !== undefined) _orgsFilterIndustry = industry;
+  if (owner !== undefined) _orgsFilterOwner = owner;
+  var tbody = document.getElementById('orgs-tbody');
+  if (!tbody) return;
+  var names = Object.keys(ORGS_DATA);
+  if (_orgsSearchQ) {
+    var lq = _orgsSearchQ.toLowerCase();
+    names = names.filter(function(n){ return n.toLowerCase().includes(lq) || ORGS_DATA[n].industry.toLowerCase().includes(lq); });
+  }
+  if (_orgsFilterIndustry) names = names.filter(function(n){ return ORGS_DATA[n].industry === _orgsFilterIndustry; });
+  if (_orgsFilterOwner) names = names.filter(function(n){ return ORGS_DATA[n].owner === _orgsFilterOwner; });
+  var orgColors = {'Riverside Financial Group':'rgba(99,102,241,0.1)','Apex Holdings LLC':'rgba(245,158,11,0.1)','Harborview Medical Center':'rgba(239,68,68,0.1)','Lakewood Builders Inc.':'rgba(29,158,117,0.1)','Cascade Logistics Partners':'rgba(59,130,246,0.1)','Meridian School District':'rgba(139,92,246,0.1)'};
+  var orgTextColors = {'Riverside Financial Group':'#6366f1','Apex Holdings LLC':'#f59e0b','Harborview Medical Center':'#ef4444','Lakewood Builders Inc.':'var(--teal)','Cascade Logistics Partners':'#3b82f6','Meridian School District':'#8b5cf6'};
+  tbody.innerHTML = names.map(function(n) {
+    var d = ORGS_DATA[n];
+    var pipeVal = (d.openOpps||[]).reduce(function(s,o){ return s + parseInt((o.value||'$0').replace(/[$,]/g,'')); },0);
+    var pipeStr = pipeVal >= 1000000 ? '$' + (pipeVal/1000000).toFixed(1) + 'M' : pipeVal >= 1000 ? '$' + Math.round(pipeVal/1000) + 'K' : '$' + pipeVal;
+    var tags = (_recordTags[n]||[]);
+    var tagHtml = tags.map(function(t){ return tagBadge(t,true); }).join('');
+    var bg = orgColors[n] || 'rgba(99,102,241,0.1)';
+    var tc = orgTextColors[n] || '#6366f1';
+    var safeN = n.replace(/'/g,"\\'");
+    return '<tr class="contacts-table-row" onclick="openOrgDetail(\'' + safeN + '\')"><td><div style="display:flex;align-items:center;gap:10px"><div style="width:30px;height:30px;border-radius:7px;background:' + bg + ';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:' + tc + ';flex-shrink:0">' + d.initials + '</div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">' + n + tagHtml + '</div></div></div></td><td style="font-size:12px;color:var(--g600)">' + d.industry + '</td><td style="text-align:center;font-size:12px;color:var(--g600)">' + (d.people||[]).length + '</td><td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">' + (d.openOpps||[]).length + '</span></td><td style="text-align:right;font-size:13px;font-weight:600;color:var(--dark)">' + pipeStr + '</td><td><div class="crm-rep-avatar" style="background:' + d.ownerColor + '" title="' + d.owner + '">' + d.ownerInit + '</div></td><td style="font-size:12px;color:var(--g400)">' + (d.activity&&d.activity[0]?d.activity[0].date:'—') + '</td></tr>';
+  }).join('') || '<tr><td colspan="7" style="text-align:center;padding:40px;color:var(--g400)">No accounts match your filter</td></tr>';
+}
+// ── CONTACTS PAGE SEARCH (unified) ───────────────────────────────────────────
 function filterContacts(q) {
-  const rows = document.querySelectorAll('#people-tbody tr');
-  rows.forEach(r => {
-    r.style.display = r.textContent.toLowerCase().includes(q.toLowerCase()) ? '' : 'none';
-  });
+  var isPeople = document.getElementById('contacts-people-view').style.display !== 'none';
+  if (isPeople) renderPeopleTable(q);
+  else renderOrgsTable(q);
 }
 // ── CONTACT & ORG DETAIL DATA ────────────────────────────────────────────────
 var PEOPLE_DATA = {
   'Marcus Lee': {
     initials:'ML', color:'#6366f1', title:'VP of Finance', org:'Riverside Financial Group',
     email:'m.lee@riverside.com', phone:'(612) 555-0182',
+    linkedin:'linkedin.com/in/marcuslee-finance', industry:'Financial Services', city:'Minneapolis, MN', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75', lastActivity:'Today',
     openOpps:[
       {id:'deal-1', title:'Riverside Financial — Group Benefits', value:'$92,000', stage:'Prospect Registered', close:'Jun 30, 2026', prob:'35%', status:'open'}
@@ -5132,6 +5239,7 @@ var PEOPLE_DATA = {
   'Sara Kim': {
     initials:'SK', color:'#8b5cf6', title:'HR Director', org:'Clearview Dental Associates',
     email:'sara.kim@clearview.com', phone:'(651) 555-0247',
+    linkedin:'linkedin.com/in/sarakim-hr', industry:'Healthcare / Dental', city:'St. Paul, MN', tags:['Lead','Customer'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6', lastActivity:'3 days ago',
     openOpps:[
       {title:'Clearview Dental — Employee Plan', value:'$70,000', stage:'Prospect Registered', close:'Jul 15, 2026', prob:'25%', status:'open'}
@@ -5148,6 +5256,7 @@ var PEOPLE_DATA = {
   'Tara Nguyen': {
     initials:'TN', color:'#f59e0b', title:'CFO', org:'Apex Holdings LLC',
     email:'t.nguyen@apexholdings.com', phone:'(763) 555-0391',
+    linkedin:'linkedin.com/in/taranguyen-cfo', industry:'Investment Holding', city:'Minneapolis, MN', tags:['Lead'],
     owner:'Jules Richards', ownerInit:'JR', ownerColor:'#f59e0b', lastActivity:'8 days ago — Overdue',
     openOpps:[
       {title:'Apex Holdings — Life & Disability', value:'$145,000', stage:'Contact Made', close:'Jun 20, 2026', prob:'50%', status:'open'}
@@ -5166,6 +5275,7 @@ var PEOPLE_DATA = {
   'David Park': {
     initials:'DP', color:'#1d9e75', title:'Branch Manager', org:'Summit Credit Union',
     email:'dpark@summitcu.org', phone:'(952) 555-0174',
+    linkedin:'linkedin.com/in/davidpark-summit', industry:'Credit Union / Finance', city:'Burnsville, MN', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75', lastActivity:'Yesterday',
     openOpps:[
       {title:'Summit Credit Union — Annuity', value:'$128,500', stage:'Contact Made', close:'Jul 31, 2026', prob:'45%', status:'open'}
@@ -5182,6 +5292,7 @@ var PEOPLE_DATA = {
   'Angela Ross': {
     initials:'AR', color:'#ef4444', title:'Benefits Manager', org:'Harborview Medical Center',
     email:'a.ross@harborviewmed.com', phone:'(612) 555-0528',
+    linkedin:'linkedin.com/in/angelaross-benefits', industry:'Healthcare', city:'Minneapolis, MN', tags:['Customer','VIP'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6', lastActivity:'Today',
     openOpps:[
       {title:'Harborview Medical — Group Health', value:'$158,000', stage:'Documents Collected', close:'Jul 1, 2026', prob:'65%', status:'open'}
@@ -5199,6 +5310,7 @@ var PEOPLE_DATA = {
   'Chris Brown': {
     initials:'CB', color:'#1d9e75', title:'Owner', org:'Lakewood Builders Inc.',
     email:'cbrown@lakewoodbuilders.com', phone:'(651) 555-0716',
+    linkedin:'linkedin.com/in/chrisbrown-lakewood', industry:'Construction', city:'Lakewood, MN', tags:['Customer'],
     owner:'Aya Pedrad', ownerInit:'AP', ownerColor:'#3b82f6', lastActivity:'2 days ago',
     openOpps:[
       {title:'Lakewood Builders — Workers Comp', value:'$174,000', stage:'Payment Confirmed', close:'Jun 28, 2026', prob:'80%', status:'open'}
@@ -5216,6 +5328,7 @@ var PEOPLE_DATA = {
   'Rachel Green': {
     initials:'RG', color:'#8b5cf6', title:'COO', org:'Cascade Logistics Partners',
     email:'r.green@cascadelogistics.com', phone:'(763) 555-0843',
+    linkedin:'linkedin.com/in/rachelgreen-coo', industry:'Logistics & Transport', city:'Eagan, MN', tags:['Customer','VIP'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6', lastActivity:'Today',
     openOpps:[
       {title:'Cascade Logistics — Executive Life', value:'$138,000', stage:'Enrolled', close:'Jul 5, 2026', prob:'90%', status:'open'}
@@ -5232,6 +5345,7 @@ var PEOPLE_DATA = {
   'Janet Moore': {
     initials:'JM', color:'#8b5cf6', title:'Superintendent', org:'Meridian School District',
     email:'jmoore@meridiansd.edu', phone:'(952) 555-0962',
+    linkedin:'linkedin.com/in/janetmoore-meridian', industry:'Education', city:'Roseville, MN', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75', lastActivity:'4 days ago',
     openOpps:[
       {title:'Meridian Schools — Admin Benefits', value:'$100,000', stage:'Payment Confirmed', close:'Jun 25, 2026', prob:'80%', status:'open'}
@@ -5253,7 +5367,7 @@ var ORGS_DATA = {
   'Riverside Financial Group': {
     initials:'RF', color:'#6366f1', industry:'Financial Services',
     website:'riversidefg.com', address:'220 S 6th St, Minneapolis, MN',
-    employees:'120–250', revenue:'$8.2M',
+    employees:'120–250', revenue:'$8.2M', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75',
     people:[
       {name:'Marcus Lee', title:'VP of Finance', initials:'ML', color:'#6366f1'},
@@ -5275,7 +5389,7 @@ var ORGS_DATA = {
   'Apex Holdings LLC': {
     initials:'AH', color:'#f59e0b', industry:'Investment Holding',
     website:'apexholdings.com', address:'100 Washington Ave S, Minneapolis, MN',
-    employees:'50–100', revenue:'$42M',
+    employees:'50–100', revenue:'$42M', tags:['Lead'],
     owner:'Jules Richards', ownerInit:'JR', ownerColor:'#f59e0b',
     people:[
       {name:'Tara Nguyen', title:'CFO', initials:'TN', color:'#f59e0b'},
@@ -5299,7 +5413,7 @@ var ORGS_DATA = {
   'Harborview Medical Center': {
     initials:'HM', color:'#ef4444', industry:'Healthcare',
     website:'harborviewmed.com', address:'700 Park Ave, Minneapolis, MN',
-    employees:'500–1,000', revenue:'$64M',
+    employees:'500–1,000', revenue:'$64M', tags:['Customer','VIP'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6',
     people:[
       {name:'Angela Ross', title:'Benefits Manager', initials:'AR', color:'#ef4444'},
@@ -5323,7 +5437,7 @@ var ORGS_DATA = {
   'Lakewood Builders Inc.': {
     initials:'LB', color:'#1d9e75', industry:'Construction',
     website:'lakewoodbuilders.com', address:'3420 Industrial Blvd, Lakewood, MN',
-    employees:'80–150', revenue:'$22M',
+    employees:'80–150', revenue:'$22M', tags:['Customer'],
     owner:'Aya Pedrad', ownerInit:'AP', ownerColor:'#3b82f6',
     people:[
       {name:'Chris Brown', title:'Owner', initials:'CB', color:'#1d9e75'},
@@ -5345,7 +5459,7 @@ var ORGS_DATA = {
   'Cascade Logistics Partners': {
     initials:'CL', color:'#3b82f6', industry:'Logistics & Transport',
     website:'cascadelogistics.com', address:'5500 Highway 35, Eagan, MN',
-    employees:'200–400', revenue:'$38M',
+    employees:'200–400', revenue:'$38M', tags:['Customer','VIP'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6',
     people:[
       {name:'Rachel Green', title:'COO', initials:'RG', color:'#8b5cf6'},
@@ -5367,7 +5481,7 @@ var ORGS_DATA = {
   'Meridian School District': {
     initials:'MS', color:'#8b5cf6', industry:'Education',
     website:'meridiansd.edu', address:'1400 Education Dr, Roseville, MN',
-    employees:'1,000+', revenue:'$12M (public)',
+    employees:'1,000+', revenue:'$12M (public)', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75',
     people:[
       {name:'Janet Moore', title:'Superintendent', initials:'JM', color:'#8b5cf6'},
@@ -5437,6 +5551,9 @@ function openPersonDetail(name) {
   var salesYTD = allClosed.filter(function(o){ return o.status==='won' && o.close.indexOf('2025')>=0; }).reduce(function(s,o){ return s + parseInt(o.value.replace(/[$,]/g,'')); }, 0);
   var salesLifetime = allClosed.filter(function(o){ return o.status==='won'; }).reduce(function(s,o){ return s + parseInt(o.value.replace(/[$,]/g,'')); }, 0);
   renderKpiRow('pd', pendingSale, salesYTD, salesLifetime);
+  // Tags + Custom Fields
+  renderTagSection(name, 'pd');
+  renderCustomFieldsSection(name, 'pd');
   // Show overlay
   switchDetailTab('opps','pd');
   document.getElementById('person-detail-overlay').style.display = 'flex';
@@ -5501,6 +5618,9 @@ function openOrgDetail(orgName) {
   renderDetailOpps('od', allOpen, allClosed);
   renderDetailActivity('od', d.activity);
   renderDetailPeople('od', d.people || []);
+  // Tags + Custom Fields
+  renderTagSection(orgName, 'od');
+  renderCustomFieldsSection(orgName, 'od');
   switchDetailTab('opps','od');
   document.getElementById('org-detail-overlay').style.display = 'flex';
 }
@@ -5527,7 +5647,7 @@ function openPersonDetailFromOrg(name) {
 
 // ── SHARED HELPERS ────────────────────────────────────────────────────────────
 function switchDetailTab(tab, prefix) {
-  var tabs = prefix === 'pd' ? ['opps','activity','notes'] : prefix === 'od' ? ['opps','activity','people','notes'] : ['activity','notes','history'];
+  var tabs = prefix === 'pd' ? ['opps','activity','notes','files'] : prefix === 'od' ? ['opps','activity','people','notes','files'] : ['activity','notes','history','files'];
   tabs.forEach(function(t) {
     var btn = document.getElementById(prefix + '-tab-' + t);
     var content = document.getElementById(prefix + '-content-' + t);
@@ -5918,37 +6038,214 @@ function sendChatMsg(btn) {
   messages.scrollTop = messages.scrollHeight;
 }
 
-// ── CONTACTS FILTER ──────────────────────────────────────────────────────────
-function filterContacts(type, btn) {
-  btn.closest('div').querySelectorAll('button').forEach(b => {
-    b.className = 'tb-btn btn-ghost';
-    b.style.fontSize = '12px';
-  });
-  btn.className = 'tb-btn btn-teal';
-  btn.style.fontSize = '12px';
-  showToast('Showing: ' + type.charAt(0).toUpperCase() + type.slice(1));
+// ── TOOLBAR CUSTOM SHORTCUT ───────────────────────────────────────────────────
+var _tbCustomBtn = {
+  label: 'Pipeline', page: 'pipeline',
+  icon: '<rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/>'
+};
+var _tbOptions = [
+  { label:'Pipeline',    page:'pipeline',    icon:'<rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/>' },
+  { label:'Goals',       page:'goals',       icon:'<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/>' },
+  { label:'Accounts',    page:'contacts',    icon:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>' },
+  { label:'Team',        page:'team',        icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+  { label:'Reports',     page:'reports',     icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' },
+  { label:'Forecast',    page:'forecasting', icon:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>' },
+  { label:'Highlights',  page:'highlights',  icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
+  { label:'Commissions', page:'commissions', icon:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>' },
+  { label:'Bonuses',     page:'bonuses',     icon:'<polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>' },
+  { label:'Contests',    page:'contests',    icon:'<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>' },
+];
+function openTbCustomizer(triggerEl) {
+  var existing = document.getElementById('tb-customizer-panel');
+  if (existing) { existing.remove(); return; }
+  var rect = triggerEl.getBoundingClientRect();
+  var panel = document.createElement('div');
+  panel.id = 'tb-customizer-panel';
+  panel.style.cssText = 'position:fixed;top:' + (rect.bottom + 6) + 'px;left:' + rect.left + 'px;background:#fff;border:1px solid var(--g200);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.14);padding:14px 12px;z-index:1000;min-width:200px;transform:translateX(-50%)';
+  panel.innerHTML =
+    '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px;padding:0 4px">Choose your shortcut</div>' +
+    _tbOptions.map(function(o) {
+      var isActive = o.page === _tbCustomBtn.page;
+      return '<button onclick="setTbCustomBtn(' + JSON.stringify(o) + ')" style="display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:' + (isActive?'700':'500') + ';color:' + (isActive?'var(--teal)':'var(--dark)') + ';background:' + (isActive?'rgba(29,158,117,0.08)':'none') + ';font-family:var(--font);text-align:left;transition:background 0.1s" onmouseover="if(!this.dataset.active)this.style.background=\'var(--g50)\'" onmouseout="if(!this.dataset.active)this.style.background=\'' + (isActive?'rgba(29,158,117,0.08)':'none') + '\'"' + (isActive?' data-active="1"':'') + '>' +
+        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:' + (isActive?'var(--teal)':'var(--g400)') + '">' + o.icon + '</svg>' +
+        o.label +
+        (isActive ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto"><polyline points="20 6 9 17 4 12"/></svg>' : '') +
+      '</button>';
+    }).join('');
+  document.body.appendChild(panel);
+  // Adjust if offscreen
+  setTimeout(function(){
+    var pb = panel.getBoundingClientRect();
+    if (pb.right > window.innerWidth - 8) panel.style.left = (window.innerWidth - pb.width - 8) + 'px';
+    if (pb.left < 8) panel.style.left = '8px';
+  }, 0);
+  setTimeout(function(){
+    document.addEventListener('click', function close(e) {
+      if (!panel.contains(e.target) && !e.target.closest('[onclick*="openTbCustomizer"]')) {
+        panel.remove(); document.removeEventListener('click', close);
+      }
+    });
+  }, 50);
 }
-
-// ── FILTER TOGGLE ────────────────────────────────────────────────────────────
-function toggleFilter(btn) {
-  const filterSvg = '<svg width="13" height="13" style="flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>';
-  const clearSvg = '<svg width="13" height="13" style="flex-shrink:0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
-  const active = btn.dataset.active;
-  if (active) {
-    btn.innerHTML = filterSvg + ' Filter';
-    btn.className = 'tb-btn btn-ghost';
-    btn.style.fontSize = '12px';
-    btn.style.color = '';
-    delete btn.dataset.active;
-  } else {
-    btn.innerHTML = clearSvg + ' Clear Filter';
-    btn.className = 'tb-btn btn-ghost';
-    btn.style.fontSize = '12px';
-    btn.style.color = 'var(--red)';
-    btn.dataset.active = '1';
-    showToast('Filter panel — coming soon in next release');
+function setTbCustomBtn(opt) {
+  _tbCustomBtn = opt;
+  var btn = document.getElementById('tb-custom-btn');
+  if (btn) {
+    btn.onclick = function(){ showPage(opt.page, null); };
+    btn.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + opt.icon + '</svg> ' + opt.label;
   }
+  var panel = document.getElementById('tb-customizer-panel');
+  if (panel) panel.remove();
+  showToast('Shortcut set to ' + opt.label);
 }
+// ── COLUMN CUSTOMIZER ─────────────────────────────────────────────────────────
+function openColumnCustomizer() {
+  var el = document.getElementById('col-customizer-panel');
+  if (el) { el.remove(); return; }
+  var btn = document.getElementById('btn-columns');
+  var panel = document.createElement('div');
+  panel.id = 'col-customizer-panel';
+  panel.style.cssText = 'position:fixed;top:' + (btn.getBoundingClientRect().bottom + 6) + 'px;right:' + (window.innerWidth - btn.getBoundingClientRect().right) + 'px;background:#fff;border:1px solid var(--g200);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,0.12);padding:14px;z-index:900;min-width:200px';
+  var cols = Object.keys(_peopleColumns);
+  panel.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:10px">Customize Columns</div>' +
+    cols.map(function(k) {
+      var c = _peopleColumns[k];
+      var disabled = c.required ? 'opacity:0.4;pointer-events:none' : '';
+      return '<label style="display:flex;align-items:center;gap:9px;font-size:13px;color:var(--dark);cursor:pointer;padding:5px 0;' + disabled + '">' +
+        '<input type="checkbox"' + (c.visible?' checked':'') + (c.required?' disabled':'') + ' onchange="toggleColumn(\'' + k + '\',this.checked)" style="width:15px;height:15px;cursor:pointer;accent-color:var(--teal)">' +
+        c.label + '</label>';
+    }).join('') +
+    '<div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--g100)"><button onclick="this.closest(\'#col-customizer-panel\').remove()" style="font-size:12px;font-weight:600;color:var(--g500);background:none;border:none;cursor:pointer;padding:4px 0">Done</button></div>';
+  document.body.appendChild(panel);
+  setTimeout(function(){ document.addEventListener('click', function close(e){ if(!panel.contains(e.target) && e.target.id!=='btn-columns'){ panel.remove(); document.removeEventListener('click',close); } }); },50);
+}
+function toggleColumn(col, visible) {
+  if (_peopleColumns[col]) _peopleColumns[col].visible = visible;
+  renderPeopleTable();
+}
+// ── ORG FILTER PANEL ──────────────────────────────────────────────────────────
+function openOrgFilterPanel() {
+  var el = document.getElementById('org-filter-panel');
+  if (el) { el.remove(); return; }
+  var btn = document.getElementById('btn-org-filter');
+  var industries = Object.keys(ORGS_DATA).map(function(n){ return ORGS_DATA[n].industry; }).filter(function(v,i,a){ return a.indexOf(v)===i; });
+  var owners = Object.keys(ORGS_DATA).map(function(n){ return ORGS_DATA[n].owner; }).filter(function(v,i,a){ return a.indexOf(v)===i; });
+  var panel = document.createElement('div');
+  panel.id = 'org-filter-panel';
+  panel.style.cssText = 'position:fixed;top:' + (btn.getBoundingClientRect().bottom + 6) + 'px;right:' + (window.innerWidth - btn.getBoundingClientRect().right) + 'px;background:#fff;border:1px solid var(--g200);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,0.12);padding:14px;z-index:900;min-width:220px';
+  panel.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:10px">Filter Accounts</div>' +
+    '<div style="margin-bottom:10px"><div style="font-size:11px;color:var(--g500);margin-bottom:5px;font-weight:600">Industry</div>' +
+    '<select onchange="renderOrgsTable(undefined,this.value,undefined)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none">' +
+    '<option value="">All Industries</option>' +
+    industries.map(function(i){ return '<option value="' + i + '"' + (i===_orgsFilterIndustry?' selected':'') + '>' + i + '</option>'; }).join('') + '</select></div>' +
+    '<div style="margin-bottom:10px"><div style="font-size:11px;color:var(--g500);margin-bottom:5px;font-weight:600">Owner</div>' +
+    '<select onchange="renderOrgsTable(undefined,undefined,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none">' +
+    '<option value="">All Owners</option>' +
+    owners.map(function(o){ return '<option value="' + o + '"' + (o===_orgsFilterOwner?' selected':'') + '>' + o + '</option>'; }).join('') + '</select></div>' +
+    '<button onclick="renderOrgsTable(\'\',\'\',\'\');this.closest(\'#org-filter-panel\').remove();" style="font-size:12px;color:var(--g500);background:none;border:none;cursor:pointer;padding:4px 0;font-weight:600">Clear Filters</button>';
+  document.body.appendChild(panel);
+  setTimeout(function(){ document.addEventListener('click', function close(e){ if(!panel.contains(e.target) && e.target.id!=='btn-org-filter'){ panel.remove(); document.removeEventListener('click',close); } }); },50);
+}
+// ── CUSTOM FIELDS ─────────────────────────────────────────────────────────────
+function renderCustomFieldsSection(name, prefix) {
+  var el = document.getElementById(prefix + '-custom-fields');
+  if (!el) return;
+  var fields = _customFields[name] || [];
+  var fieldHtml = fields.map(function(f, i) {
+    return '<div style="display:flex;justify-content:space-between;align-items:center;font-size:13px;padding:2px 0">' +
+      '<span style="color:var(--g500)">' + f.label + '</span>' +
+      '<div style="display:flex;align-items:center;gap:6px">' +
+      '<span style="font-weight:600;color:var(--dark);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + f.value + '">' + f.value + '</span>' +
+      '<span onclick="removeCustomField(\'' + name.replace(/'/g,"\\'") + '\',' + i + ',\'' + prefix + '\')" style="cursor:pointer;color:var(--g300);font-size:10px" title="Remove">✕</span>' +
+      '</div></div>';
+  }).join('');
+  el.innerHTML = '<div style="border-top:1px solid var(--g100);padding-top:16px;margin-bottom:20px">' +
+    '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">' +
+    '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400)">Custom Fields</div>' +
+    '<button onclick="openAddFieldForm(\'' + name.replace(/'/g,"\\'") + '\',\'' + prefix + '\')" style="font-size:11px;color:var(--teal);background:none;border:none;cursor:pointer;font-weight:700;padding:2px 4px">+ Add Field</button>' +
+    '</div>' +
+    (fieldHtml ? '<div style="display:flex;flex-direction:column;gap:6px">' + fieldHtml + '</div>' : '<div style="font-size:12px;color:var(--g300)">No custom fields yet</div>') +
+    '</div>';
+}
+function openAddFieldForm(name, prefix) {
+  var existing = document.getElementById(prefix + '-add-field-form');
+  if (existing) { existing.remove(); return; }
+  var container = document.getElementById(prefix + '-custom-fields');
+  if (!container) return;
+  var form = document.createElement('div');
+  form.id = prefix + '-add-field-form';
+  form.style.cssText = 'margin-top:10px;background:var(--g50);border-radius:8px;padding:10px;border:1px solid var(--g200)';
+  form.innerHTML = '<input id="' + prefix + '-cf-label" placeholder="Field name (e.g. LinkedIn)" style="width:100%;border:1.5px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;margin-bottom:6px;box-sizing:border-box">' +
+    '<input id="' + prefix + '-cf-value" placeholder="Value" style="width:100%;border:1.5px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;margin-bottom:8px;box-sizing:border-box">' +
+    '<div style="display:flex;gap:8px"><button onclick="saveCustomField(\'' + name.replace(/'/g,"\\'") + '\',\'' + prefix + '\')" style="padding:5px 14px;background:var(--teal);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save</button>' +
+    '<button onclick="this.closest(\'#' + prefix + '-add-field-form\').remove()" style="padding:5px 14px;background:none;color:var(--g500);border:1px solid var(--g200);border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--font)">Cancel</button></div>';
+  container.querySelector('[style*="Custom Fields"]').closest('div').parentElement.appendChild(form);
+}
+function saveCustomField(name, prefix) {
+  var label = document.getElementById(prefix + '-cf-label').value.trim();
+  var value = document.getElementById(prefix + '-cf-value').value.trim();
+  if (!label || !value) { showToast('Please fill both fields'); return; }
+  if (!_customFields[name]) _customFields[name] = [];
+  _customFields[name].push({label:label, value:value});
+  var form = document.getElementById(prefix + '-add-field-form');
+  if (form) form.remove();
+  renderCustomFieldsSection(name, prefix);
+  showToast('Field added');
+}
+function removeCustomField(name, idx, prefix) {
+  if (_customFields[name]) _customFields[name].splice(idx, 1);
+  renderCustomFieldsSection(name, prefix);
+}
+// ── TAG MANAGEMENT ────────────────────────────────────────────────────────────
+var _currentTagTarget = null;
+var _currentTagPrefix = null;
+function renderTagSection(name, prefix) {
+  var el = document.getElementById(prefix + '-tags-section');
+  if (!el) return;
+  _currentTagTarget = name; _currentTagPrefix = prefix;
+  var tags = _recordTags[name] || [];
+  el.innerHTML = '<div style="border-top:1px solid var(--g100);padding-top:16px;margin-bottom:20px">' +
+    '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px">Tags</div>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center">' +
+    tags.map(function(t){ return tagBadge(t,false); }).join('') +
+    '<button onclick="openTagPicker(\'' + name.replace(/'/g,"\\'") + '\',\'' + prefix + '\')" style="padding:3px 10px;border:1.5px dashed var(--g300);border-radius:20px;background:none;color:var(--g500);font-size:12px;cursor:pointer;font-family:var(--font)">+ Tag</button>' +
+    '</div></div>';
+}
+function removeTag(el, tag) {
+  var name = _currentTagTarget;
+  if (!name || !_recordTags[name]) return;
+  _recordTags[name] = _recordTags[name].filter(function(t){ return t!==tag; });
+  renderTagSection(name, _currentTagPrefix);
+  renderPeopleTable(); renderOrgsTable();
+}
+function openTagPicker(name, prefix) {
+  var allTags = ['Lead','Customer','VIP','Prospect'];
+  var existing = _recordTags[name] || [];
+  var available = allTags.filter(function(t){ return existing.indexOf(t)<0; });
+  if (!available.length) { showToast('All available tags are already applied'); return; }
+  var pName = prefix + '-tag-picker';
+  var old = document.getElementById(pName);
+  if (old) { old.remove(); return; }
+  var el = document.getElementById(prefix + '-tags-section');
+  if (!el) return;
+  var picker = document.createElement('div');
+  picker.id = pName;
+  picker.style.cssText = 'display:flex;flex-wrap:wrap;gap:6px;margin-top:8px';
+  picker.innerHTML = available.map(function(t) {
+    var c = _tagColors[t]||'#6366f1';
+    return '<button onclick="applyTag(\'' + name.replace(/'/g,"\\'") + '\',\'' + t + '\',\'' + prefix + '\')" style="padding:3px 10px;border:1.5px solid ' + c + ';border-radius:20px;background:transparent;color:' + c + ';font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">' + t + '</button>';
+  }).join('');
+  el.appendChild(picker);
+}
+function applyTag(name, tag, prefix) {
+  if (!_recordTags[name]) _recordTags[name] = [];
+  if (_recordTags[name].indexOf(tag) < 0) _recordTags[name].push(tag);
+  renderTagSection(name, prefix);
+  renderPeopleTable(); renderOrgsTable();
+  showToast('Tag "' + tag + '" applied');
+}
+// ── FILTER TOGGLE (legacy stub) ───────────────────────────────────────────────
+function toggleFilter(btn) { openOrgFilterPanel(); }
 
 // ── SKIP TARGET ──────────────────────────────────────────────────────────────
 function skipTarget(btn) {
@@ -6431,26 +6728,35 @@ document.addEventListener('keydown', function(e) {
   }
 });
 
-const searchIndex = [
-  { label:'Dashboard', page:'dashboard' },
-  { label:'Goals', page:'goals' },
-  { label:'Pipeline', page:'pipeline' },
-  { label:'Contacts', page:'contacts' },
-  { label:'Team', page:'team' },
-  { label:'Highlights', page:'highlights' },
-  { label:'Chat', page:'chat' },
-  { label:'Bonuses', page:'bonuses' },
-  { label:'Contests', page:'contests' },
-  { label:'Commissions', page:'commissions' },
-  { label:'Reports', page:'reports' },
-  { label:'Forecasting', page:'forecasting' },
-  { label:'Ask Ace', page:'askace' },
-  { label:'Settings', page:'settings' },
-  { label:'AR Solutions', action:'drawer' },
-  { label:'Timber Mill Inc', action:'drawer' },
-  { label:'Bridge Partners', action:'drawer' },
-  { label:'Apex Analytics', action:'drawer' },
-];
+// Build search index dynamically including pages + all people + orgs
+function buildSearchIndex() {
+  var pages = [
+    { label:'Dashboard', page:'dashboard', type:'Page' },
+    { label:'Goals', page:'goals', type:'Page' },
+    { label:'Pipeline', page:'pipeline', type:'Page' },
+    { label:'Contacts', page:'contacts', type:'Page' },
+    { label:'Team', page:'team', type:'Page' },
+    { label:'Highlights', page:'highlights', type:'Page' },
+    { label:'Chat', page:'chat', type:'Page' },
+    { label:'Bonuses', page:'bonuses', type:'Page' },
+    { label:'Contests', page:'contests', type:'Page' },
+    { label:'Commissions', page:'commissions', type:'Page' },
+    { label:'Reports', page:'reports', type:'Page' },
+    { label:'Forecasting', page:'forecasting', type:'Page' },
+    { label:'Ask Ace', page:'askace', type:'Page' },
+    { label:'Settings', page:'settings', type:'Page' },
+  ];
+  var people = Object.keys(PEOPLE_DATA).map(function(n) {
+    var d = PEOPLE_DATA[n];
+    return { label:n, subtitle:d.title + ' · ' + d.org, action:'person', type:'Person' };
+  });
+  var orgs = Object.keys(ORGS_DATA).map(function(n) {
+    var d = ORGS_DATA[n];
+    return { label:n, subtitle:d.industry, action:'org', type:'Account' };
+  });
+  return pages.concat(people).concat(orgs);
+}
+var searchIndex = buildSearchIndex();
 
 const searchInput = document.querySelector('.tb-search input');
 const searchDropEl = document.createElement('div');
@@ -6465,10 +6771,14 @@ if (searchInput) {
     if (!results.length) { searchDropEl.style.display = 'none'; return; }
     const r = searchInput.getBoundingClientRect();
     searchDropEl.style.top = (r.bottom + 6) + 'px';
+    var typeIcon = {Page:'📄', Person:'👤', Account:'🏢'};
     searchDropEl.innerHTML = results.map(i =>
-      `<div onclick="searchGo('${i.label}','${i.page||''}','${i.action||''}')" style="padding:11px 16px;font-size:13px;color:var(--dark);cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.1s" onmouseenter="this.style.background='var(--g50)'" onmouseleave="this.style.background=''">
-        <span style="font-weight:500">${i.label}</span>
-        <span style="font-size:11px;color:var(--g400);margin-left:6px">${i.page ? 'Page' : 'Account'}</span>
+      `<div onclick="searchGo('${i.label}','${i.page||''}','${i.action||''}')" style="padding:10px 16px;font-size:13px;color:var(--dark);cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.1s" onmouseenter="this.style.background='var(--g50)'" onmouseleave="this.style.background=''">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <span style="font-weight:600">${i.label}</span>
+          <span style="font-size:10px;font-weight:600;color:var(--g400);background:var(--g100);border-radius:20px;padding:2px 8px;text-transform:uppercase;letter-spacing:0.3px">${i.type||'Page'}</span>
+        </div>
+        ${i.subtitle ? `<div style="font-size:11px;color:var(--g400);margin-top:1px">${i.subtitle}</div>` : ''}
       </div>`
     ).join('');
     searchDropEl.style.display = 'block';
@@ -6480,7 +6790,9 @@ if (searchInput) {
 function searchGo(label, page, action) {
   searchInput.value = '';
   searchDropEl.style.display = 'none';
-  if (page) showPage(page, null);
+  if (page) { showPage(page, null); return; }
+  if (action === 'person') { showPage('contacts', null); setTimeout(function(){ openPersonDetail(label); }, 50); return; }
+  if (action === 'org') { showPage('contacts', null); setTimeout(function(){ openOrgDetail(label); }, 50); return; }
   if (action === 'drawer') openDrawer(label);
 }
 
@@ -6811,6 +7123,11 @@ function openRepDetail(initials) {
 
 // ── WIRE ALL INTERACTIVE ELEMENTS ───────────────────────────────────────────
 window.addEventListener('load', function() {
+  // Init contact/org tags and dynamic tables
+  initRecordTags();
+  renderPeopleTable();
+  renderOrgsTable();
+
   // Init Lucide icons
   if (window.lucide) lucide.createIcons();
   // Init sales chart
@@ -8789,6 +9106,10 @@ function lbSort(colIndex, th) {
       </div>
       <!-- Open opportunities mini -->
       <div id="pd-sidebar-opps" style="border-top:1px solid var(--g100);padding-top:16px"></div>
+      <!-- Tags -->
+      <div id="pd-tags-section"></div>
+      <!-- Custom Fields -->
+      <div id="pd-custom-fields"></div>
     </div>
     <!-- Right content -->
     <div style="flex:1;overflow-y:auto;padding:24px 28px">
@@ -8814,6 +9135,7 @@ function lbSort(colIndex, th) {
         <button id="pd-tab-opps" onclick="switchDetailTab('opps','pd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-2px;font-family:var(--font)">Opportunities</button>
         <button id="pd-tab-activity" onclick="switchDetailTab('activity','pd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Activity</button>
         <button id="pd-tab-notes" onclick="switchDetailTab('notes','pd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Notes</button>
+        <button id="pd-tab-files" onclick="switchDetailTab('files','pd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Files</button>
       </div>
       <!-- Tab content -->
       <div id="pd-content-opps" style="display:block"></div>
@@ -8822,6 +9144,19 @@ function lbSort(colIndex, th) {
         <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px">
           <textarea placeholder="Add a note..." style="width:100%;border:none;outline:none;font-family:var(--font);font-size:14px;color:var(--dark);resize:none;min-height:80px"></textarea>
           <div style="display:flex;justify-content:flex-end;margin-top:8px"><button onclick="showToast('Note saved')" style="padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save Note</button></div>
+        </div>
+      </div>
+      <div id="pd-content-files" style="display:none">
+        <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div style="font-size:14px;font-weight:700;color:var(--dark)">Files</div>
+            <button onclick="showToast('File upload — coming soon')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload File</button>
+          </div>
+          <div style="border:2px dashed var(--g200);border-radius:10px;padding:32px;text-align:center;color:var(--g400)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 10px;display:block;color:var(--g300)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">No files attached yet</div>
+            <div style="font-size:12px">Upload proposals, contracts, enrollment forms, and more</div>
+          </div>
         </div>
       </div>
     </div>
@@ -8885,6 +9220,10 @@ function lbSort(colIndex, th) {
       </div>
       <!-- People at org -->
       <div id="od-sidebar-people" style="border-top:1px solid var(--g100);padding-top:16px"></div>
+      <!-- Tags -->
+      <div id="od-tags-section"></div>
+      <!-- Custom Fields -->
+      <div id="od-custom-fields"></div>
     </div>
     <!-- Right content -->
     <div style="flex:1;overflow-y:auto;padding:24px 28px">
@@ -8911,6 +9250,7 @@ function lbSort(colIndex, th) {
         <button id="od-tab-activity" onclick="switchDetailTab('activity','od')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Activity</button>
         <button id="od-tab-people" onclick="switchDetailTab('people','od')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">People</button>
         <button id="od-tab-notes" onclick="switchDetailTab('notes','od')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Notes</button>
+        <button id="od-tab-files" onclick="switchDetailTab('files','od')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Files</button>
       </div>
       <!-- Tab content -->
       <div id="od-content-opps" style="display:block"></div>
@@ -8920,6 +9260,19 @@ function lbSort(colIndex, th) {
         <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px">
           <textarea placeholder="Add a note..." style="width:100%;border:none;outline:none;font-family:var(--font);font-size:14px;color:var(--dark);resize:none;min-height:80px"></textarea>
           <div style="display:flex;justify-content:flex-end;margin-top:8px"><button onclick="showToast('Note saved')" style="padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save Note</button></div>
+        </div>
+      </div>
+      <div id="od-content-files" style="display:none">
+        <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div style="font-size:14px;font-weight:700;color:var(--dark)">Files</div>
+            <button onclick="showToast('File upload — coming soon')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload File</button>
+          </div>
+          <div style="border:2px dashed var(--g200);border-radius:10px;padding:32px;text-align:center;color:var(--g400)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 10px;display:block;color:var(--g300)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">No files attached yet</div>
+            <div style="font-size:12px">Upload contracts, enrollment forms, and supporting documents</div>
+          </div>
         </div>
       </div>
     </div>
@@ -9017,6 +9370,7 @@ function lbSort(colIndex, th) {
         <button id="oppd-tab-activity" onclick="switchDetailTab('activity','oppd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-2px;font-family:var(--font)">Activity</button>
         <button id="oppd-tab-notes" onclick="switchDetailTab('notes','oppd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Notes</button>
         <button id="oppd-tab-history" onclick="switchDetailTab('history','oppd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">History</button>
+        <button id="oppd-tab-files" onclick="switchDetailTab('files','oppd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Files</button>
       </div>
       <div id="oppd-content-activity" style="display:block"></div>
       <div id="oppd-content-notes" style="display:none">
@@ -9026,6 +9380,19 @@ function lbSort(colIndex, th) {
         </div>
       </div>
       <div id="oppd-content-history" style="display:none"></div>
+      <div id="oppd-content-files" style="display:none">
+        <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div style="font-size:14px;font-weight:700;color:var(--dark)">Files</div>
+            <button onclick="showToast('File upload — coming soon')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Upload File</button>
+          </div>
+          <div style="border:2px dashed var(--g200);border-radius:10px;padding:32px;text-align:center;color:var(--g400)">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 10px;display:block;color:var(--g300)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            <div style="font-size:13px;font-weight:600;margin-bottom:4px">No files attached yet</div>
+            <div style="font-size:12px">Proposals, invoices, enrollment documents</div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
