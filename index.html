@@ -39,7 +39,8 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .sb-item.active .sb-label{color:#fff;font-weight:600}
 .sb-badge{position:absolute;top:6px;right:6px;background:var(--red);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:10px;line-height:1.4}
 .sb-badge-teal{background:var(--teal)}
-.sb-divider{height:1px;background:rgba(255,255,255,0.06);margin:4px 10px}
+.sb-divider{height:1px;background:rgba(255,255,255,0.14);margin:8px 10px}
+.sb-group-label{font-size:9px;font-weight:700;letter-spacing:0.8px;text-transform:uppercase;color:rgba(255,255,255,0.32);padding:0 14px;margin:4px 0 2px;display:block;user-select:none}
 .sb-footer{padding:8px 0 10px;border-top:1px solid rgba(255,255,255,0.06)}
 .sb-user{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 4px;margin:2px 6px;border-radius:10px;cursor:pointer}
 .sb-user:hover{background:rgba(255,255,255,0.06)}
@@ -81,7 +82,8 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .page-actions{display:flex;gap:8px;align-items:center}
 .card-link{font-size:12px;color:var(--teal);font-weight:500;cursor:pointer;text-decoration:none;border:none;background:none;font-family:var(--font)}
 .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
-.stat-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:22px 24px;transition:box-shadow 0.15s}
+.stat-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:22px 24px;transition:box-shadow 0.15s,border-color 0.15s}
+.stat-card[onclick]:hover{box-shadow:0 4px 16px rgba(29,158,117,0.12);border-color:var(--teal)}
 .stat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.06)}
 .stat-label{font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:7px}
 .stat-value{font-size:26px;font-weight:700;color:var(--dark);letter-spacing:-0.5px;font-family:var(--mono)}
@@ -263,6 +265,13 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .settings-avatar-row{display:flex;align-items:center;gap:16px;margin-bottom:20px}
 .settings-avatar{width:60px;height:60px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:#fff}
 .save-btn{background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);display:inline-flex;align-items:center;gap:7px}
+/* Toggle switch */
+.toggle-switch{position:relative;display:inline-block;width:42px;height:24px;flex-shrink:0}
+.toggle-switch input{opacity:0;width:0;height:0;position:absolute}
+.toggle-slider{position:absolute;cursor:pointer;inset:0;background:var(--g200);border-radius:24px;transition:background .2s}
+.toggle-slider::before{content:'';position:absolute;height:18px;width:18px;left:3px;top:3px;background:#fff;border-radius:50%;transition:transform .2s;box-shadow:0 1px 3px rgba(0,0,0,0.2)}
+.toggle-switch input:checked + .toggle-slider{background:var(--teal)}
+.toggle-switch input:checked + .toggle-slider::before{transform:translateX(18px)}
 /* Sales stage toggle */
 .stage-toggle{position:relative;display:inline-flex;width:38px;height:22px;cursor:pointer;flex-shrink:0}
 .stage-toggle input{opacity:0;width:0;height:0;position:absolute}
@@ -651,16 +660,23 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   width:30px;height:30px;border-radius:6px;
   display:flex;align-items:center;justify-content:center;
   transition:background 0.15s;
+  color:var(--g600) !important;
+  font-size:20px;
 }
-.side-panel-close:hover { background:var(--g100) }
+.side-panel-close:hover { background:var(--g200);color:var(--dark) !important }
+.side-panel-close svg { stroke:var(--g600) !important }
+.side-panel-close:hover svg { stroke:var(--dark) !important }
 
 /* Ace dialog close */
 .ace-dialog-close {
   width:28px;height:28px;border-radius:6px;
   display:flex;align-items:center;justify-content:center;
   transition:background 0.15s;
+  color:rgba(255,255,255,0.8) !important;
 }
-.ace-dialog-close:hover { background:rgba(255,255,255,0.1) }
+.ace-dialog-close:hover { background:rgba(255,255,255,0.15);color:#fff !important }
+.ace-dialog-close svg { stroke:rgba(255,255,255,0.8) !important }
+.ace-dialog-close:hover svg { stroke:#fff !important }
 
 /* Notif items */
 .notif-item { transition:all 0.15s;border-radius:8px }
@@ -1079,19 +1095,23 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 <nav class="sidebar" role="navigation" aria-label="Main navigation">
   <div class="sb-logo" style="flex-direction:column;gap:4px;padding:14px 8px 12px"><svg width="41" height="29" viewBox="0 0 41 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.7469 5.1311C23.9948 3.4409 23.9888 2.05568 23.327 2.03134C21.2165 1.95701 17.8982 9.7314 19.9741 9.54901C22.2617 9.3474 23.7469 5.13152 23.7469 5.13152L23.7369 7.60039C23.7369 7.60039 21.9568 11.2836 18.7937 11.2268C14.3663 11.1474 16.9977 0.843034 22.6624 0.462879C25.2107 0.292023 25.186 2.45677 24.7264 4.2734C24.4589 5.33185 23.6844 5.55909 23.7469 5.1311Z" fill="white"/><path d="M38.3001 13.952C33.9325 13.3967 28.7556 13.3796 24.1151 13.503C26.1517 7.30951 26.8834 1.50039 28.6507 1.03054C28.2239 0.351385 26.7953 -0.064222 25.604 0.676012C24.0626 1.63195 23.4588 7.54272 21.4998 13.609C10.4683 14.207 0.156585 17.0295 0.00185471 23.4644C-0.146942 29.7143 8.69047 30.2709 14.5474 27.1314C18.4389 25.0457 21.0534 21.3701 22.6691 17.3341C22.938 16.663 23.3227 15.6981 23.3227 15.6981L22.1424 15.3816C22.6048 15.3474 23.4706 15.3427 23.4711 15.3389C24.4597 15.3104 25.4654 15.2962 26.4881 15.2962H26.4908C30.5567 15.3017 36.7149 15.7442 40.0012 16.2718C40.0012 16.2748 40.5526 14.2377 38.3001 13.952ZM10.4911 26.7316C4.37036 28.1698 1.34331 25.9119 1.66783 23.1748C2.25206 18.2456 10.7855 16.0531 20.8608 15.4534C18.9369 20.6316 15.924 25.4561 10.4911 26.7316Z" fill="white"/></svg></div>
   <div class="sb-nav">
+    <span class="sb-group-label">Main</span>
     <button class="sb-item active" onclick="showPage('dashboard',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg><span class="sb-label">Dashboard</span></button>
     <button class="sb-item" onclick="showPage('goals',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg><span class="sb-label">Goals</span></button>
     <button class="sb-item" onclick="showPage('pipeline',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg><span class="sb-label">Pipeline</span></button>
     <button class="sb-item" onclick="showPage('contacts',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg><span class="sb-label">Accounts</span></button>
     <button class="sb-item" onclick="showPage('team',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><polyline points="17 11 19 13 23 9"/></svg><span class="sb-label">Team</span></button>
     <div class="sb-divider"></div>
+    <span class="sb-group-label">Engage</span>
     <button class="sb-item" onclick="showPage('highlights',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg><span class="sb-label">Highlights</span><span class="sb-badge sb-badge-teal">4</span></button>
     <button class="sb-item" onclick="showPage('chat',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg><span class="sb-label">Chat</span><span class="sb-badge">2</span></button>
     <button class="sb-item" onclick="showPage('bonuses',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg><span class="sb-label">Bonuses</span></button>
     <button class="sb-item" onclick="showPage('contests',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg><span class="sb-label">Contests</span></button>
     <div class="sb-divider"></div>
+    <span class="sb-group-label">Pay</span>
     <button class="sb-item" onclick="showPage('commissions',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="sb-label">Commissions</span></button>
     <div class="sb-divider"></div>
+    <span class="sb-group-label">Insights</span>
     <button class="sb-item" onclick="showPage('reports',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="sb-label">Reports</span></button>
     <button class="sb-item" onclick="showPage('forecasting',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg><span class="sb-label">Forecast</span></button>
     <button class="sb-item" onclick="showPage('marketplace',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 2 2 2 2 0 0 0 2-2"/><path d="M5 11v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/><line x1="9" y1="21" x2="9" y2="15"/><line x1="15" y1="21" x2="15" y2="15"/><line x1="9" y1="15" x2="15" y2="15"/></svg><span class="sb-label">Marketplace</span></button>
@@ -1284,7 +1304,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 <div style="display:flex;gap:14px;margin-bottom:14px;align-items:stretch" id="dash-stat-row">
 
   <!-- Annual Sales Goal hero card — 2/3 width -->
-  <div id="card-total-sales" data-card-name="Annual Goal" style="flex:2;min-width:0;background:var(--navy);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openModal('goal-setting-modal')" title="Edit annual goals">
+  <div id="card-total-sales" data-card-name="Annual Goal" style="flex:2;min-width:0;background:var(--navy);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openGoalsPage()" title="Edit annual goals">
     <!-- subtle teal glow background -->
     <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(29,158,117,0.18) 0%,transparent 70%);pointer-events:none"></div>
     <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
@@ -1342,27 +1362,27 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 
 <!-- Pipeline metric cards row -->
 <div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
-  <div id="card-leads" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px">
+  <div id="card-leads" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px;cursor:pointer" onclick="showPage('contacts',document.querySelector('.sb-item[onclick*=contacts]'))" title="View all leads in Contacts">
     <div class="stat-label">Leads</div>
     <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="kpi-leads">142</div>
     <div class="stat-delta positive">▲ 18 this week</div>
   </div>
-  <div id="card-opps" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px">
+  <div id="card-opps" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px;cursor:pointer" onclick="showPage('pipeline',document.querySelector('.sb-item[onclick*=pipeline]'))" title="View all opportunities in Pipeline">
     <div class="stat-label">Opportunities</div>
     <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="kpi-opps">67</div>
     <div class="stat-delta positive">▲ 9 this week</div>
   </div>
-  <div id="card-proposals" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px">
+  <div id="card-proposals" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px;cursor:pointer" onclick="showPage('pipeline',document.querySelector('.sb-item[onclick*=pipeline]'))" title="View proposals in Pipeline">
     <div class="stat-label">Proposals</div>
     <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="kpi-proposals">34</div>
     <div class="stat-delta" style="color:var(--amber)">— same as last week</div>
   </div>
-  <div id="card-closed" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px">
+  <div id="card-closed" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px;cursor:pointer" onclick="showPage('reports',document.querySelector('.sb-item[onclick*=reports]'))" title="View closed deals in Reports">
     <div class="stat-label">Closed / Won</div>
     <div style="font-size:22px;font-weight:700;color:var(--teal);font-family:var(--mono)" id="kpi-closed">19</div>
     <div class="stat-delta positive">▲ 3 this week</div>
   </div>
-  <div id="card-avg-deal" class="stat-card" style="flex:1;min-width:140px;padding:14px 16px">
+  <div id="card-avg-deal" class="stat-card" style="flex:1;min-width:140px;padding:14px 16px;cursor:pointer" onclick="showPage('reports',document.querySelector('.sb-item[onclick*=reports]'))" title="View deal analytics in Reports">
     <div class="stat-label">Avg Deal Size</div>
     <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="kpi-avg-deal">$82,900</div>
     <div class="stat-delta positive">▲ $4.2K vs last month</div>
@@ -1637,7 +1657,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div class="page-title">Goals</div>
   <div class="page-subtitle" id="goals-subtitle">Track individual and team progress toward annual targets</div>
   <div class="page-actions">
-    <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('goal-setting-modal')">Goal Setting ▾</button>
+    <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openGoalsPage()">Goal Setting ▾</button>
     <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('date-modal')">2026 ▾</button>
   </div>
 </div>
@@ -1649,7 +1669,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div style="display:flex;gap:18px;margin-bottom:24px;align-items:stretch">
 
     <!-- Annual Sales Goal — 2/3 -->
-    <div style="flex:2;min-width:0;background:var(--navy);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openModal('goal-setting-modal')">
+    <div style="flex:2;min-width:0;background:var(--navy);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openGoalsPage()">
       <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(29,158,117,0.15) 0%,transparent 70%);pointer-events:none"></div>
       <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
         <div>
@@ -1725,7 +1745,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
             <input id="goals-rep-search" type="text" placeholder="Search advisors…" oninput="filterGoalReps(null,null,this.value)" style="border:1.5px solid var(--g200);border-radius:8px;padding:4px 10px 4px 28px;font-size:12px;font-family:var(--font);outline:none;width:160px;color:var(--dark)">
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:8px;top:50%;transform:translateY(-50%)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
           </div>
-          <button onclick="openModal('goal-setting-modal')" style="font-size:11px;color:var(--teal);background:none;border:none;cursor:pointer;font-weight:600">Edit Goals →</button>
+          <button onclick="openGoalsPage()" style="font-size:11px;color:var(--teal);background:none;border:none;cursor:pointer;font-weight:600">Edit Goals →</button>
         </div>
       </div>
       <div id="goals-rep-list" style="display:flex;flex-direction:column;gap:14px">
@@ -3390,15 +3410,128 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <div class="settings-tab" onclick="switchSettingsTab(this)">Notifications</div>
         <div class="settings-tab" onclick="switchSettingsTab(this)">Subscription</div>
       </div>
-      <div class="settings-avatar-row"><div class="settings-avatar">PM</div><div style="display:flex;gap:8px"><button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Choose a photo to upload')">Change Picture</button><button class="tb-btn btn-ghost" style="font-size:12px;color:var(--red)" onclick="showToast('Profile picture removed')">Remove</button></div></div>
-      <div class="settings-section-title">Personal Information</div>
-      <div class="settings-section-sub">Manage your name, contact details, and profile information.</div>
-      <div class="settings-form">
-        <div class="form-row"><div class="form-field"><label>First Name</label><input type="text" value="Amanda"></div><div class="form-field"><label>Last Name</label><input type="text" value="Morrison"></div></div>
-        <div class="form-row"><div class="form-field"><label>Title</label><input type="text" value="Manager"></div><div class="form-field"><label>Email</label><input type="email" value="amanda@goals.com"></div></div>
-        <div class="form-row"><div class="form-field"><label>Date of Birth</label><input type="date"></div><div class="form-field"><label>Work Anniversary</label><input type="date"></div></div>
-        <div class="form-row"><div class="form-field"><label>Team Size</label><select><option>6-10</option><option>1-5</option><option>11-25</option><option>25+</option></select></div><div class="form-field"><label>Phone</label><input type="tel" placeholder="+1 (000) 000-0000"></div></div>
-        <div><button class="save-btn" onclick="showToast('Changes saved successfully')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg> Save Changes</button></div>
+      <!-- profile sub-panel -->
+      <div id="profile-sub-profile" style="display:block">
+        <div class="settings-avatar-row">
+          <img id="settings-profile-photo" src="https://randomuser.me/api/portraits/women/65.jpg" style="width:72px;height:72px;border-radius:50%;object-fit:cover;border:3px solid var(--g100)">
+          <div style="display:flex;gap:8px"><button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Choose a photo to upload')">Change Picture</button><button class="tb-btn btn-ghost" style="font-size:12px;color:var(--red)" onclick="showToast('Profile picture removed')">Remove</button></div>
+        </div>
+        <div class="settings-section-title">Personal Information</div>
+        <div class="settings-section-sub">Manage your name, contact details, and profile information.</div>
+        <div class="settings-form" id="profile-form-fields">
+          <div class="form-row"><div class="form-field"><label>First Name</label><input type="text" id="pf-first" value="Patricia"></div><div class="form-field"><label>Last Name</label><input type="text" id="pf-last" value="Moore"></div></div>
+          <div class="form-row"><div class="form-field"><label>Title</label><input type="text" id="pf-title" value="Sales Manager"></div><div class="form-field"><label>Email</label><input type="email" id="pf-email" value="patricia@midwestbenefits.com"></div></div>
+          <div class="form-row"><div class="form-field"><label>Phone</label><input type="tel" id="pf-phone" placeholder="+1 (000) 000-0000"></div><div class="form-field"><label>Work Anniversary</label><input type="date"></div></div>
+          <div class="form-row"><div class="form-field"><label>Team Size</label><select><option>6-10</option><option>1-5</option><option>11-25</option><option>25+</option></select></div><div class="form-field"><label>Company</label><input type="text" id="pf-company" value="Midwest Benefits Group"></div></div>
+          <div><button class="save-btn" onclick="showToast('✓ Profile saved')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="20 6 9 17 4 12"/></svg> Save Changes</button></div>
+        </div>
+      </div>
+      <!-- security sub-panel -->
+      <div id="profile-sub-security" style="display:none">
+        <div class="settings-section-title">Password</div>
+        <div class="settings-section-sub">Keep your account secure with a strong password.</div>
+        <div class="settings-form" style="max-width:400px">
+          <div class="form-field"><label>Current Password</label><input type="password" placeholder="••••••••"></div>
+          <div class="form-field"><label>New Password</label><input type="password" placeholder="At least 8 characters"></div>
+          <div class="form-field"><label>Confirm New Password</label><input type="password" placeholder="Repeat new password"></div>
+          <button class="save-btn" onclick="showToast('✓ Password updated')">Update Password</button>
+        </div>
+        <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--g100)">
+          <div class="settings-section-title">Two-Factor Authentication</div>
+          <div class="settings-section-sub">Add an extra layer of security to your account.</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--g200);border-radius:10px;margin-top:12px">
+            <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Authenticator App</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Use Google Authenticator or Authy</div></div>
+            <button class="tb-btn btn-teal" style="font-size:12px" onclick="showToast('Scan the QR code in your authenticator app')">Set Up 2FA</button>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--g200);border-radius:10px;margin-top:8px">
+            <div><div style="font-size:13px;font-weight:600;color:var(--dark)">SMS / Text Message</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Receive a code by text when you sign in</div></div>
+            <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Enter your mobile number to continue')">Configure</button>
+          </div>
+        </div>
+        <div style="margin-top:28px;padding-top:20px;border-top:1px solid var(--g100)">
+          <div class="settings-section-title">Active Sessions</div>
+          <div class="settings-section-sub">Devices currently signed in to your account.</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--g200);border-radius:10px">
+              <div style="display:flex;align-items:center;gap:10px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg><div><div style="font-size:13px;font-weight:600;color:var(--dark)">MacBook Pro — Chrome</div><div style="font-size:11px;color:var(--g400)">Minneapolis, MN · Active now</div></div></div>
+              <span style="font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:2px 8px">Current</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px;border:1px solid var(--g200);border-radius:10px">
+              <div style="display:flex;align-items:center;gap:10px"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><div><div style="font-size:13px;font-weight:600;color:var(--dark)">iPhone 15 — Safari</div><div style="font-size:11px;color:var(--g400)">Minneapolis, MN · 2 hours ago</div></div></div>
+              <button onclick="showToast('Session revoked')" style="font-size:11px;font-weight:600;color:var(--red);background:none;border:none;cursor:pointer">Sign Out</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- notifications sub-panel -->
+      <div id="profile-sub-notifications" style="display:none">
+        <div class="settings-section-title">Notification Preferences</div>
+        <div class="settings-section-sub">Control how and when Goals.com notifies you.</div>
+        <div style="display:flex;flex-direction:column;gap:0;margin-top:16px" id="profile-notif-list">
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--dark)">New opportunity assigned</div><div style="font-size:12px;color:var(--g400);margin-top:2px">When a rep assigns or tags you on a new opportunity</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked onchange="_toggleNotif(this)"><span class="toggle-slider"></span></label>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Goal milestone reached</div><div style="font-size:12px;color:var(--g400);margin-top:2px">When a rep hits 50%, 75%, or 100% of their goal</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked onchange="_toggleNotif(this)"><span class="toggle-slider"></span></label>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Ace AI coaching alerts</div><div style="font-size:12px;color:var(--g400);margin-top:2px">When Ace flags a risk or recommends immediate action</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked onchange="_toggleNotif(this)"><span class="toggle-slider"></span></label>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Weekly digest email</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Summary of team activity sent every Monday morning</div></div>
+            <label class="toggle-switch"><input type="checkbox" onchange="_toggleNotif(this)"><span class="toggle-slider"></span></label>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
+            <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Commission payout reminders</div><div style="font-size:12px;color:var(--g400);margin-top:2px">3 days before scheduled payout date</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked onchange="_toggleNotif(this)"><span class="toggle-slider"></span></label>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0">
+            <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Activity due reminders</div><div style="font-size:12px;color:var(--g400);margin-top:2px">When a follow-up or task is due in the next 24 hours</div></div>
+            <label class="toggle-switch"><input type="checkbox" checked onchange="_toggleNotif(this)"><span class="toggle-slider"></span></label>
+          </div>
+        </div>
+        <div style="margin-top:20px"><button class="save-btn" onclick="showToast('✓ Notification preferences saved')">Save Preferences</button></div>
+      </div>
+      <!-- subscription sub-panel -->
+      <div id="profile-sub-subscription" style="display:none">
+        <div class="settings-section-title">Your Plan</div>
+        <div style="border:1.5px solid var(--teal);border-radius:12px;padding:20px;background:rgba(29,158,117,0.04);margin-top:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+            <div><div style="font-size:18px;font-weight:800;color:var(--dark)">Goals Pro</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Midwest Benefits Group · 10 seats</div></div>
+            <span style="font-size:11px;font-weight:700;background:rgba(29,158,117,0.12);color:var(--teal);border-radius:20px;padding:4px 10px">Active</span>
+          </div>
+          <div style="display:flex;gap:16px;margin-bottom:16px">
+            <div style="text-align:center"><div style="font-size:20px;font-weight:800;color:var(--teal)">10</div><div style="font-size:11px;color:var(--g400)">Seats Used</div></div>
+            <div style="text-align:center"><div style="font-size:20px;font-weight:800;color:var(--dark)">$490</div><div style="font-size:11px;color:var(--g400)">/month</div></div>
+            <div style="text-align:center"><div style="font-size:20px;font-weight:800;color:var(--dark)">Jul 23</div><div style="font-size:11px;color:var(--g400)">Next renewal</div></div>
+          </div>
+          <div style="display:flex;gap:8px">
+            <button class="tb-btn btn-teal" style="font-size:12px" onclick="showToast('Opening plan upgrade page...')">Upgrade Plan</button>
+            <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Opening billing portal...')">Manage Billing</button>
+          </div>
+        </div>
+        <div style="margin-top:20px">
+          <div class="settings-section-title">Included Features</div>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dark)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Unlimited opportunities & contacts</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dark)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>ACE AI coaching & insights</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dark)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Company-wide pipeline management</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dark)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Commission tracking & reporting</div>
+            <div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--dark)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Integrations (Google, Outlook, Salesforce)</div>
+          </div>
+        </div>
+        <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--g100)">
+          <div class="settings-section-title">Billing History</div>
+          <table style="width:100%;border-collapse:collapse;margin-top:10px">
+            <tr style="background:var(--g50)"><th style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--g400);padding:8px 12px;text-align:left;border-bottom:1px solid var(--g200)">Date</th><th style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--g400);padding:8px 12px;text-align:left;border-bottom:1px solid var(--g200)">Description</th><th style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--g400);padding:8px 12px;text-align:right;border-bottom:1px solid var(--g200)">Amount</th><th style="font-size:11px;font-weight:700;text-transform:uppercase;color:var(--g400);padding:8px 12px;text-align:center;border-bottom:1px solid var(--g200)">Invoice</th></tr>
+            <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 12px;font-size:13px;color:var(--g500)">Jun 23, 2026</td><td style="padding:10px 12px;font-size:13px;color:var(--dark)">Goals Pro · 10 seats</td><td style="padding:10px 12px;font-size:13px;font-weight:600;color:var(--dark);text-align:right">$490.00</td><td style="padding:10px 12px;text-align:center"><button style="font-size:11px;color:var(--teal);background:none;border:none;cursor:pointer" onclick="showToast('Downloading invoice...')">PDF</button></td></tr>
+            <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 12px;font-size:13px;color:var(--g500)">May 23, 2026</td><td style="padding:10px 12px;font-size:13px;color:var(--dark)">Goals Pro · 10 seats</td><td style="padding:10px 12px;font-size:13px;font-weight:600;color:var(--dark);text-align:right">$490.00</td><td style="padding:10px 12px;text-align:center"><button style="font-size:11px;color:var(--teal);background:none;border:none;cursor:pointer" onclick="showToast('Downloading invoice...')">PDF</button></td></tr>
+            <tr><td style="padding:10px 12px;font-size:13px;color:var(--g500)">Apr 23, 2026</td><td style="padding:10px 12px;font-size:13px;color:var(--dark)">Goals Pro · 10 seats</td><td style="padding:10px 12px;font-size:13px;font-weight:600;color:var(--dark);text-align:right">$490.00</td><td style="padding:10px 12px;text-align:center"><button style="font-size:11px;color:var(--teal);background:none;border:none;cursor:pointer" onclick="showToast('Downloading invoice...')">PDF</button></td></tr>
+          </table>
+        </div>
       </div>
     </div>
 
@@ -3408,26 +3541,26 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div style="display:flex;flex-direction:column;gap:0">
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
       <div><div style="font-size:13px;font-weight:600;color:var(--dark)">New opportunity assigned</div><div style="font-size:12px;color:var(--g400);margin-top:2px">When a rep assigns or tags you on a new opportunity</div></div>
-      <label style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" checked style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:var(--teal);border-radius:20px;transition:.2s"></span></label>
+      <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
       <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Goal milestone reached</div><div style="font-size:12px;color:var(--g400);margin-top:2px">When a rep hits 50%, 75%, or 100% of their goal</div></div>
-      <label style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" checked style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:var(--teal);border-radius:20px;transition:.2s"></span></label>
+      <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
       <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Ace AI coaching alerts</div><div style="font-size:12px;color:var(--g400);margin-top:2px">When Ace flags a risk or recommends immediate action</div></div>
-      <label style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" checked style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:var(--teal);border-radius:20px;transition:.2s"></span></label>
+      <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
       <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Weekly digest email</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Summary of team activity sent every Monday morning</div></div>
-      <label style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:var(--g200);border-radius:20px;transition:.2s"></span></label>
+      <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0">
       <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Commission payout reminders</div><div style="font-size:12px;color:var(--g400);margin-top:2px">3 days before scheduled payout date</div></div>
-      <label style="position:relative;display:inline-block;width:36px;height:20px"><input type="checkbox" checked style="opacity:0;width:0;height:0"><span style="position:absolute;cursor:pointer;inset:0;background:var(--teal);border-radius:20px;transition:.2s"></span></label>
+      <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
     </div>
   </div>
-  <div style="margin-top:20px"><button class="tb-btn btn-primary" onclick="showToast('Notification preferences saved')">Save Preferences</button></div>
+  <div style="margin-top:20px"><button class="tb-btn btn-primary" onclick="showToast('✓ Notification preferences saved')">Save Preferences</button></div>
 </div>
 
 <div id="settings-pipeline-stages" style="display:none">
@@ -3868,20 +4001,256 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         </div>
       </div>
 
-      <div style="text-align:center;padding:20px;color:var(--g400);font-size:13px">No more duplicate people found.</div>
+      <!-- more people duplicates -->
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">
+        <div style="background:#fef9c3;border-bottom:1px solid var(--g200);padding:10px 14px;display:flex;align-items:center;gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span style="font-size:12px;font-weight:600;color:#a16207">Possible duplicate — 91% match</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:start">
+          <div style="padding:14px 16px">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px">Rachel Green</div>
+            <div style="font-size:11px;color:var(--g400)">r.green@cascadelogistics.com</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Cascade Logistics Partners</div>
+            <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">1 opportunity · Added Apr 3</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 8px;border-left:1px solid var(--g100);border-right:1px solid var(--g100)"><div style="font-size:18px;color:var(--g300)">⇄</div></div>
+          <div style="padding:14px 16px">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px">Rachel Greene</div>
+            <div style="font-size:11px;color:var(--g400)">rgreen@cascade-lp.com</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Cascade Logistics</div>
+            <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">0 opportunities · Added Jun 19</div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Merged — Rachel Green is now the primary record')">Merge → Keep Rachel Green</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+        </div>
+      </div>
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">
+        <div style="background:#fef9c3;border-bottom:1px solid var(--g200);padding:10px 14px;display:flex;align-items:center;gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span style="font-size:12px;font-weight:600;color:#a16207">Possible duplicate — 85% match</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:start">
+          <div style="padding:14px 16px">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px">David Park</div>
+            <div style="font-size:11px;color:var(--g400)">d.park@summitcu.org</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Summit Credit Union</div>
+            <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">2 opportunities · Added Mar 12</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 8px;border-left:1px solid var(--g100);border-right:1px solid var(--g100)"><div style="font-size:18px;color:var(--g300)">⇄</div></div>
+          <div style="padding:14px 16px">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px">Dave Park</div>
+            <div style="font-size:11px;color:var(--g400)">dpark@summit-creditunion.com</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Summit CU</div>
+            <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">0 opportunities · Added Jun 22</div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Merged — David Park is now the primary record')">Merge → Keep David Park</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+        </div>
+      </div>
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">
+        <div style="background:#fef9c3;border-bottom:1px solid var(--g200);padding:10px 14px;display:flex;align-items:center;gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span style="font-size:12px;font-weight:600;color:#a16207">Possible duplicate — 82% match</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:start">
+          <div style="padding:14px 16px">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px">Angela Ross</div>
+            <div style="font-size:11px;color:var(--g400)">a.ross@harborviewmed.com</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Harborview Medical Center</div>
+            <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">1 opportunity · Added May 5</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 8px;border-left:1px solid var(--g100);border-right:1px solid var(--g100)"><div style="font-size:18px;color:var(--g300)">⇄</div></div>
+          <div style="padding:14px 16px">
+            <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:4px">Angie Ross</div>
+            <div style="font-size:11px;color:var(--g400)">angela.r@harborview-medical.org</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Harborview Med</div>
+            <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">0 opportunities · Added Jun 17</div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Merged — Angela Ross is now the primary record')">Merge → Keep Angela Ross</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <div id="merge-orgs-content" style="display:none">
-    <div style="text-align:center;padding:60px 20px">
-      <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--g200)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 12px"><polyline points="20 6 9 17 4 12"/></svg>
-      <div style="font-size:15px;font-weight:600;color:var(--dark);margin-bottom:6px">No duplicate organizations</div>
-      <div style="font-size:13px;color:var(--g400)">Your organization records look clean.</div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">
+        <div style="background:#fef9c3;border-bottom:1px solid var(--g200);padding:10px 14px;display:flex;align-items:center;gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span style="font-size:12px;font-weight:600;color:#a16207">Possible duplicate — 93% match</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:start">
+          <div style="padding:14px 16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="width:28px;height:28px;border-radius:6px;background:rgba(79,126,247,0.12);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#4f7ef7">RF</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Riverside Financial Group</div></div>
+            <div style="font-size:11px;color:var(--g400)">riversidefg.com · 2 people · 1 open opp</div>
+            <div style="margin-top:6px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">Added Feb 10 · Minneapolis, MN</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 8px;border-left:1px solid var(--g100);border-right:1px solid var(--g100)"><div style="font-size:18px;color:var(--g300)">⇄</div></div>
+          <div style="padding:14px 16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="width:28px;height:28px;border-radius:6px;background:rgba(100,116,139,0.1);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#64748b">RFG</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Riverside Financial Grp</div></div>
+            <div style="font-size:11px;color:var(--g400)">riverside-fg.com · 0 people · 0 open opps</div>
+            <div style="margin-top:6px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">Added Jun 20 · Minneapolis</div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Organizations merged — Riverside Financial Group is now the primary record')">Merge → Keep Riverside Financial Group</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+        </div>
+      </div>
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">
+        <div style="background:#fef9c3;border-bottom:1px solid var(--g200);padding:10px 14px;display:flex;align-items:center;gap:6px">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a16207" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          <span style="font-size:12px;font-weight:600;color:#a16207">Possible duplicate — 87% match</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:0;align-items:start">
+          <div style="padding:14px 16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="width:28px;height:28px;border-radius:6px;background:rgba(224,92,135,0.12);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#e05c87">HM</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Harborview Medical Center</div></div>
+            <div style="font-size:11px;color:var(--g400)">harborviewmed.com · 4 people · 1 open opp</div>
+            <div style="margin-top:6px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">Added Jan 15 · Minneapolis, MN</div>
+          </div>
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px 8px;border-left:1px solid var(--g100);border-right:1px solid var(--g100)"><div style="font-size:18px;color:var(--g300)">⇄</div></div>
+          <div style="padding:14px 16px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><div style="width:28px;height:28px;border-radius:6px;background:rgba(100,116,139,0.1);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#64748b">HMC</div><div style="font-size:13px;font-weight:600;color:var(--dark)">Harborview Med Ctr</div></div>
+            <div style="font-size:11px;color:var(--g400)">harborview-medical.org · 1 person · 0 open opps</div>
+            <div style="margin-top:6px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">Added Jun 11 · Minneapolis</div>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Organizations merged — Harborview Medical Center is now the primary record')">Merge → Keep Harborview Medical Center</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+        </div>
+      </div>
+      <div style="text-align:center;padding:16px;color:var(--g400);font-size:13px">No more duplicate organizations found.</div>
     </div>
   </div>
 </div>
 
-<div id="settings-integrations" style="display:none"><div class="settings-section-title">Integrations</div><div class="settings-section-sub">Connect Goals.com with your existing tools.</div><div style="display:flex;flex-direction:column;gap:10px;margin-top:16px"><div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--g200);border-radius:10px"><div><div style="font-weight:600;font-size:13px">Redtail CRM</div><div style="font-size:12px;color:var(--g400)">Sync contacts and pipeline data</div></div><button class="tb-btn btn-teal" style="font-size:12px" onclick="connectIntegration(this,'Redtail CRM')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Connect</button></div><div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--g200);border-radius:10px"><div><div style="font-weight:600;font-size:13px">EZLynx</div><div style="font-size:12px;color:var(--g400)">Insurance agency management</div></div><button class="tb-btn btn-teal" style="font-size:12px" onclick="connectIntegration(this,'EZLynx')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Connect</button></div><div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--g200);border-radius:10px"><div><div style="font-weight:600;font-size:13px">Follow Up Boss</div><div style="font-size:12px;color:var(--g400)">Real estate CRM sync</div></div><button class="tb-btn btn-teal" style="font-size:12px" onclick="connectIntegration(this,'Follow Up Boss')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> Connect</button></div><div style="display:flex;align-items:center;justify-content:space-between;padding:14px;border:1px solid var(--g200);border-radius:10px"><div><div style="font-weight:600;font-size:13px">Google Calendar</div><div style="font-size:12px;color:var(--g400)"><span class="status-pill sp-green" style="font-size:10px"><span class="pill-dot"></span>Connected</span></div></div><button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Google Calendar disconnected')">Disconnect</button></div></div></div>
+<div id="settings-integrations" style="display:none">
+  <div class="settings-section-title">Integrations</div>
+  <div class="settings-section-sub">Connect Goals.com with your tools. My Integrations are personal — only you see them. Marketplace connects company-wide platforms.</div>
+  <!-- Integration tabs -->
+  <div style="display:flex;gap:0;border-bottom:2px solid var(--g200);margin:16px 0 20px" id="integ-tabs">
+    <div onclick="_switchIntegTab('mine',this)" style="padding:10px 18px;font-size:13px;font-weight:700;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-2px;cursor:pointer">My Integrations</div>
+    <div onclick="_switchIntegTab('marketplace',this)" style="padding:10px 18px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">Marketplace</div>
+  </div>
+
+  <!-- My Integrations -->
+  <div id="integ-mine">
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Email</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--g200);border-radius:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#fef2f2;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6z" fill="#EA4335" opacity=".2"/><polyline points="2,6 12,13 22,6" stroke="#EA4335" stroke-width="1.8" fill="none"/></svg></div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Gmail</div><div style="font-size:12px;color:var(--g400)">Log emails and sync contacts from Google</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:2px 8px">Connected</span><button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Gmail disconnected')">Disconnect</button></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--g200);border-radius:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="2" y="4" width="20" height="16" rx="2" fill="#0078D4" opacity=".15"/><path d="M2 8l10 6 10-6" stroke="#0078D4" stroke-width="1.8" fill="none"/></svg></div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Outlook Email</div><div style="font-size:12px;color:var(--g400)">Log and sync emails from Microsoft Outlook</div></div>
+        </div>
+        <button class="tb-btn btn-teal" style="font-size:12px" onclick="connectIntegration(this,'Outlook Email')">Connect</button>
+      </div>
+    </div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Calendar</div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--g200);border-radius:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#f0fdf4;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" fill="#1a73e8" opacity=".12"/><rect x="3" y="4" width="18" height="5" rx="1" fill="#1a73e8" opacity=".3"/><text x="12" y="17" text-anchor="middle" font-size="7" fill="#1a73e8" font-weight="700">CAL</text></svg></div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Google Calendar</div><div style="font-size:12px;color:var(--g400)">Sync meetings and create events from opportunities</div></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px"><span style="font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:2px 8px">Connected</span><button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Google Calendar disconnected')">Disconnect</button></div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--g200);border-radius:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="18" rx="2" fill="#0078D4" opacity=".12"/><rect x="3" y="4" width="18" height="5" rx="1" fill="#0078D4" opacity=".3"/><text x="12" y="17" text-anchor="middle" font-size="7" fill="#0078D4" font-weight="700">CAL</text></svg></div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Outlook Calendar</div><div style="font-size:12px;color:var(--g400)">Sync meetings and schedule from Microsoft 365</div></div>
+        </div>
+        <button class="tb-btn btn-teal" style="font-size:12px" onclick="connectIntegration(this,'Outlook Calendar')">Connect</button>
+      </div>
+    </div>
+    <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Meeting Intelligence</div>
+    <div style="display:flex;flex-direction:column;gap:8px">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--g200);border-radius:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#fdf4ff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#7c3aed">ff</div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Fireflies</div><div style="font-size:12px;color:var(--g400)">Auto-transcribe calls and sync notes to contacts</div></div>
+        </div>
+        <button class="tb-btn btn-teal" style="font-size:12px" onclick="connectIntegration(this,'Fireflies')">Connect</button>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--g200);border-radius:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#fff7ed;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:#ea580c">F</div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Fathom</div><div style="font-size:12px;color:var(--g400)">AI meeting notes — auto-log to opportunity timeline</div></div>
+        </div>
+        <button class="tb-btn btn-teal" style="font-size:12px" onclick="connectIntegration(this,'Fathom')">Connect</button>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;border:1px solid var(--g200);border-radius:10px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#f0fdf4;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#059669">MX</div>
+          <div><div style="font-size:13px;font-weight:600;color:var(--dark)">MX Connect</div><div style="font-size:12px;color:var(--g400)">Financial data aggregation for client accounts</div></div>
+        </div>
+        <button class="tb-btn btn-teal" style="font-size:12px" onclick="connectIntegration(this,'MX Connect')">Connect</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Marketplace -->
+  <div id="integ-marketplace" style="display:none">
+    <div style="font-size:12px;color:var(--g400);margin-bottom:16px">Company-wide integrations managed by your Sales Manager. Contact Patricia Moore to enable.</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+      <div style="border:1px solid var(--g200);border-radius:10px;padding:16px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#f0fdf4;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#00a1e0">SF</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Salesforce</div>
+        </div>
+        <div style="font-size:12px;color:var(--g400);margin-bottom:10px">Bi-directional sync — contacts, leads, opportunities</div>
+        <button class="tb-btn btn-ghost" style="font-size:12px;width:100%" onclick="showToast('Contact your Sales Manager to enable Salesforce')">Request Access</button>
+      </div>
+      <div style="border:1px solid var(--g200);border-radius:10px;padding:16px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#fff7ed;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#1ca874">QB</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">QuickBooks</div>
+        </div>
+        <div style="font-size:12px;color:var(--g400);margin-bottom:10px">Sync invoices and commission payouts</div>
+        <div style="display:flex;align-items:center;gap:6px"><span style="font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:2px 8px">Connected</span><button class="tb-btn btn-ghost" style="font-size:11px" onclick="showToast('QuickBooks settings updated')">Manage</button></div>
+      </div>
+      <div style="border:1px solid var(--g200);border-radius:10px;padding:16px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#fdf4ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#c026d3">RT</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Redtail CRM</div>
+        </div>
+        <div style="font-size:12px;color:var(--g400);margin-bottom:10px">Financial advisor CRM — import clients and history</div>
+        <button class="tb-btn btn-ghost" style="font-size:12px;width:100%" onclick="showToast('Contact your Sales Manager to enable Redtail')">Request Access</button>
+      </div>
+      <div style="border:1px solid var(--g200);border-radius:10px;padding:16px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#eff6ff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#3b82f6">EZ</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">EZLynx</div>
+        </div>
+        <div style="font-size:12px;color:var(--g400);margin-bottom:10px">Insurance agency management — policy and client sync</div>
+        <button class="tb-btn btn-ghost" style="font-size:12px;width:100%" onclick="showToast('Contact your Sales Manager to enable EZLynx')">Request Access</button>
+      </div>
+      <div style="border:1px solid var(--g200);border-radius:10px;padding:16px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">
+          <div style="width:36px;height:36px;border-radius:8px;background:#fef9c3;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:#ca8a04">FUB</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Follow Up Boss</div>
+        </div>
+        <div style="font-size:12px;color:var(--g400);margin-bottom:10px">CRM sync for real estate and financial teams</div>
+        <button class="tb-btn btn-ghost" style="font-size:12px;width:100%" onclick="showToast('Contact your Sales Manager to enable Follow Up Boss')">Request Access</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div id="settings-workflows" style="display:none">
       <div class="settings-section-title">Workflows</div>
       <div class="settings-section-sub">Automate follow-up sequences, task assignments, and notifications based on deal activity.</div>
@@ -4393,18 +4762,29 @@ function gsCalcTotals() {
   if (ttEl) ttEl.textContent = '$'+grandTotal.toLocaleString();
 }
 
+function openGoalsPage() {
+  var el = document.getElementById('goal-setting-modal');
+  if (el) { el.style.display = 'flex'; }
+}
+function closeGoalsPage() {
+  var el = document.getElementById('goal-setting-modal');
+  if (el) { el.style.display = 'none'; }
+}
+function gsPageSave() {
+  closeGoalsPage();
+  showToast('✓ Goals saved successfully');
+}
+
 function gsSetYear(btn, yr) {
   document.querySelectorAll('.gs-yr-btn').forEach(function(b) {
     b.style.background = 'none';
     b.style.color = 'var(--g500)';
-    b.style.borderColor = 'var(--g200)';
-    b.style.fontWeight = '400';
+    b.style.fontWeight = '600';
   });
   btn.style.background = 'var(--teal)';
   btn.style.color = '#fff';
-  btn.style.borderColor = 'var(--teal)';
   btn.style.fontWeight = '700';
-  var titleEl = document.querySelector('#goal-setting-modal .modal-title');
+  var titleEl = document.getElementById('gs-page-title');
   if (titleEl) titleEl.textContent = yr + ' Sales Goals';
 }
 
@@ -5237,13 +5617,123 @@ function _csGoalsSection() {
   return html;
 }
 function _csPipelineSection() {
-  var html = _csSectionTitle('Pipeline Stages', 'Define the stages in your sales pipeline. Changes apply to all new opportunities and the pipeline view.') +
-    '<div id="cs-pipeline-list" style="display:flex;flex-direction:column;gap:8px">';
-  _companySettings.pipelineStages.forEach(function(s, i) {
-    html += _csPipelineRow(i, s);
+  // Multi-pipeline UI: list all pipelines, click one to edit its stages
+  if (!_companySettings.pipelines) {
+    _companySettings.pipelines = [
+      { name:'Standard Sales Pipeline', description:'Default pipeline for all reps', visibility:'All reps', isDefault:true,
+        stages: _companySettings.pipelineStages.slice() }
+    ];
+  }
+  var html = _csSectionTitle('Pipelines', 'Create multiple pipelines for different sales motions. Each pipeline has its own stages and visibility settings.') +
+    '<div style="background:linear-gradient(135deg,#0d9488,#0891b2);border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:8px;margin-bottom:20px">' +
+    '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+    '<span style="font-size:12px;color:white">Each pipeline has independent stages. Reps see stages for the pipeline assigned to their opportunities.</span></div>' +
+    '<div style="display:flex;justify-content:flex-end;margin-bottom:14px"><button onclick="_csAddPipeline()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">+ Add Pipeline</button></div>' +
+    '<div id="cs-pipeline-cards" style="display:flex;flex-direction:column;gap:10px">';
+  _companySettings.pipelines.forEach(function(pl, pi) {
+    var stageCount = (pl.stages||[]).length;
+    html += '<div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#fff;cursor:pointer" onclick="_csEditPipeline(' + pi + ')">' +
+      '<div style="display:flex;align-items:center;gap:12px">' +
+      '<div style="width:36px;height:36px;border-radius:8px;background:' + (pi===0?'rgba(29,158,117,0.1)':pi===1?'rgba(91,143,232,0.1)':'rgba(155,114,208,0.1)') + ';display:flex;align-items:center;justify-content:center">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + (pi===0?'var(--teal)':pi===1?'#5b8fe8':'#9b72d0') + '" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>' +
+      '<div><div style="font-size:13px;font-weight:700;color:var(--dark)">' + pl.name + (pl.isDefault?'<span style="font-size:10px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:2px 6px;margin-left:6px">Default</span>':'') + '</div>' +
+      '<div style="font-size:11px;color:var(--g400);margin-top:2px">' + stageCount + ' stages · ' + (pl.visibility||'All reps') + '</div></div></div>' +
+      '<div style="display:flex;align-items:center;gap:8px">' +
+      '<div style="display:flex;gap:3px">' + (pl.stages||[]).slice(0,5).map(function(s){ return '<div style="width:18px;height:18px;border-radius:50%;background:' + s.color + '" title="' + s.name + '"></div>'; }).join('') + '</div>' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>' +
+      '</div></div>' +
+      '<div style="background:var(--g50);border-top:1px solid var(--g100);padding:10px 16px;display:flex;gap:8px">' +
+      '<button onclick="_csEditPipeline(' + pi + ')" style="font-size:11px;font-weight:600;color:var(--teal);background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.2);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:var(--font)">Edit Stages</button>' +
+      (!pl.isDefault ? '<button onclick="_csDeletePipeline(' + pi + ')" style="font-size:11px;font-weight:600;color:var(--red);background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.15);border-radius:6px;padding:4px 10px;cursor:pointer;font-family:var(--font)">Delete</button>' : '') +
+      '<button onclick="_csSetDefault(' + pi + ')" ' + (pl.isDefault?'disabled style="opacity:0.4;cursor:default"':'style="cursor:pointer"') + ' style="font-size:11px;font-weight:600;color:var(--g500);background:var(--g100);border:1px solid var(--g200);border-radius:6px;padding:4px 10px;font-family:var(--font)">Set Default</button>' +
+      '</div></div>';
   });
-  html += '</div><button onclick="_csAddStage()" style="margin-top:12px;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px dashed var(--g300);border-radius:8px;background:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--g500);font-family:var(--font)">+ Add Stage</button>';
+  html += '</div>';
+  // Stage editor (hidden by default)
+  html += '<div id="cs-stage-editor" style="display:none;margin-top:20px;border:1px solid var(--g200);border-radius:10px;overflow:hidden">' +
+    '<div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;display:flex;align-items:center;justify-content:space-between">' +
+    '<div style="display:flex;align-items:center;gap:8px"><button onclick="_csCloseEditor()" style="background:none;border:none;color:var(--teal);font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:4px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="15 18 9 12 15 6"/></svg>All Pipelines</button>' +
+    '<span style="color:var(--g300)">›</span><span id="cs-editor-title" style="font-size:13px;font-weight:600;color:var(--dark)">Pipeline Name</span></div>' +
+    '<button onclick="_csSaveStages()" style="font-size:12px;font-weight:700;background:var(--teal);color:#fff;border:none;border-radius:7px;padding:6px 14px;cursor:pointer;font-family:var(--font)">Save Stages</button></div>' +
+    '<div style="padding:16px">' +
+    '<div style="display:flex;gap:10px;margin-bottom:14px">' +
+    '<div style="flex:1"><label style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px">Pipeline Name</label><input id="cs-editor-name-input" type="text" style="border:1px solid var(--g200);border-radius:6px;padding:7px 10px;font-size:13px;font-family:var(--font);outline:none;width:100%;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'"></div>' +
+    '<div><label style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:4px">Visibility</label><select id="cs-editor-vis" style="border:1px solid var(--g200);border-radius:6px;padding:7px 10px;font-size:13px;font-family:var(--font);outline:none"><option>All reps</option><option>Assigned reps only</option><option>Managers only</option></select></div></div>' +
+    '<div style="display:grid;grid-template-columns:28px 1fr 80px 80px 36px;gap:8px;padding:6px 0 8px;border-bottom:2px solid var(--g200);margin-bottom:6px">' +
+    '<div></div><div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Stage Name</div>' +
+    '<div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;text-align:center">Win %</div>' +
+    '<div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;text-align:center">Color</div><div></div></div>' +
+    '<div id="cs-pipeline-list" style="display:flex;flex-direction:column;gap:6px"></div>' +
+    '<button onclick="_csAddStage()" style="margin-top:10px;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px dashed var(--g300);border-radius:8px;background:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--g500);font-family:var(--font);width:100%;box-sizing:border-box">+ Add Stage</button>' +
+    '</div></div>';
   return html;
+}
+var _csEditingPipelineIdx = 0;
+function _csEditPipeline(idx) {
+  _csEditingPipelineIdx = idx;
+  var pl = _companySettings.pipelines[idx];
+  var cards = document.getElementById('cs-pipeline-cards');
+  var editor = document.getElementById('cs-stage-editor');
+  if (cards) cards.style.display = 'none';
+  if (editor) editor.style.display = 'block';
+  var nameInput = document.getElementById('cs-editor-name-input');
+  if (nameInput) nameInput.value = pl.name;
+  var visInput = document.getElementById('cs-editor-vis');
+  if (visInput) visInput.value = pl.visibility || 'All reps';
+  var title = document.getElementById('cs-editor-title');
+  if (title) title.textContent = pl.name;
+  var list = document.getElementById('cs-pipeline-list');
+  if (!list) return;
+  list.innerHTML = '';
+  (pl.stages||[]).forEach(function(s, i) {
+    var row = document.createElement('div');
+    row.innerHTML = _csPipelineRow(i, s);
+    list.appendChild(row.firstChild);
+  });
+}
+function _csCloseEditor() {
+  var cards = document.getElementById('cs-pipeline-cards');
+  var editor = document.getElementById('cs-stage-editor');
+  if (cards) cards.style.display = 'flex';
+  if (editor) editor.style.display = 'none';
+  _csLoadSection('pipeline');
+}
+function _csSaveStages() {
+  var pl = _companySettings.pipelines[_csEditingPipelineIdx];
+  var nameInput = document.getElementById('cs-editor-name-input');
+  var visInput = document.getElementById('cs-editor-vis');
+  if (nameInput) pl.name = nameInput.value;
+  if (visInput) pl.visibility = visInput.value;
+  var list = document.getElementById('cs-pipeline-list');
+  if (list) {
+    var rows = list.querySelectorAll('[id^="cs-pipeline-row-"]');
+    var newStages = [];
+    rows.forEach(function(_, i) {
+      var nameEl = document.getElementById('cs-stage-name-' + i);
+      var colorEl = document.getElementById('cs-stage-color-' + i);
+      if (nameEl) newStages.push({ name: nameEl.value, color: colorEl ? colorEl.value : '#1d9e75' });
+    });
+    pl.stages = newStages;
+  }
+  if (_csEditingPipelineIdx === 0) _companySettings.pipelineStages = pl.stages;
+  showToast('✓ Pipeline saved');
+  _csCloseEditor();
+}
+function _csAddPipeline() {
+  _companySettings.pipelines.push({ name:'New Pipeline', description:'', visibility:'All reps', isDefault:false, stages:[{name:'Lead',color:'#5b8fe8'},{name:'Opportunity',color:'#9b72d0'},{name:'Proposal',color:'#e8923a'},{name:'Won',color:'#1d9e75'}] });
+  _csEditPipeline(_companySettings.pipelines.length - 1);
+}
+function _csDeletePipeline(idx) {
+  if (_companySettings.pipelines.length <= 1) { showToast('Need at least one pipeline'); return; }
+  _companySettings.pipelines.splice(idx, 1);
+  _csLoadSection('pipeline');
+}
+function _csSetDefault(idx) {
+  _companySettings.pipelines.forEach(function(pl, i) { pl.isDefault = (i === idx); });
+  _companySettings.pipelineStages = _companySettings.pipelines[idx].stages;
+  showToast('✓ Default pipeline updated');
+  _csLoadSection('pipeline');
 }
 function _csPipelineRow(i, s) {
   return '<div id="cs-pipeline-row-' + i + '" style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--g50);border-radius:9px">' +
@@ -6294,6 +6784,23 @@ function openOrgDetail(orgName) {
   document.getElementById('org-detail-overlay').style.display = 'flex';
 }
 
+function _odToggleMenu(btn) {
+  var m = document.getElementById('od-add-menu');
+  if (!m) return;
+  var isOpen = m.style.display !== 'none';
+  m.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) {
+    setTimeout(function(){ document.addEventListener('click', function h(e){ if(!m.contains(e.target)&&!btn.contains(e.target)){m.style.display='none';document.removeEventListener('click',h);}},true); }, 0);
+  }
+}
+function _odCloseMenu() { var m=document.getElementById('od-add-menu'); if(m) m.style.display='none'; }
+function _odAddContact() {
+  var org = _currentOrgName || '';
+  var input = document.getElementById('opp-org');
+  if (input) input.value = org;
+  openModal('deal-modal');
+  showToast('Adding contact to ' + org);
+}
 function _orgTogglePrimary(orgName, personName) {
   var d = ORGS_DATA[orgName];
   if (!d) return;
@@ -7316,6 +7823,25 @@ function applySettingsRoleView(roleId) {
 function switchSettingsTab(el) {
   el.closest('.settings-tab-bar').querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
   el.classList.add('active');
+  // Show/hide profile sub-panels
+  var tabName = el.textContent.trim().toLowerCase();
+  var subMap = {profile:'profile',security:'security',notifications:'notifications',subscription:'subscription'};
+  var key = subMap[tabName];
+  if (key) {
+    ['profile','security','notifications','subscription'].forEach(function(k){
+      var sub = document.getElementById('profile-sub-' + k);
+      if (sub) sub.style.display = (k === key) ? 'block' : 'none';
+    });
+  }
+}
+function _toggleNotif(cb) { /* toggle state tracked by checkbox itself */ }
+function _switchIntegTab(tab, el) {
+  document.querySelectorAll('#integ-tabs > div').forEach(function(t){
+    t.style.color = 'var(--g400)'; t.style.fontWeight = '500'; t.style.borderBottom = 'none';
+  });
+  el.style.color = 'var(--teal)'; el.style.fontWeight = '700'; el.style.borderBottom = '2px solid var(--teal)';
+  document.getElementById('integ-mine').style.display = tab === 'mine' ? 'block' : 'none';
+  document.getElementById('integ-marketplace').style.display = tab === 'marketplace' ? 'block' : 'none';
 }
 function switchPipelineTab(tabId, el) {
   el.closest('.settings-tab-bar').querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
@@ -8533,6 +9059,15 @@ function setRole(roleId) {
   if (pdName) pdName.textContent = role.name;
   if (pdRole) pdRole.textContent = role.title + ' · ' + (role.company || _companySettings.companyName);
   if (pdPhoto) pdPhoto.src = role.photo;
+  var spPhoto = document.getElementById('settings-profile-photo');
+  if (spPhoto) spPhoto.src = role.photo;
+  // Sync profile form fields
+  var pfFirst = document.getElementById('pf-first');
+  var pfLast = document.getElementById('pf-last');
+  var pfTitle = document.getElementById('pf-title');
+  if (pfFirst) pfFirst.value = role.name.split(' ')[0] || '';
+  if (pfLast) pfLast.value = role.name.split(' ').slice(1).join(' ') || '';
+  if (pfTitle) pfTitle.value = role.title || '';
 
   // Update checkmarks in dropdown
   const smCheck = document.getElementById('user-check-sm');
@@ -9323,29 +9858,42 @@ function lbSort(colIndex, th) {
   </div>
 </div>
 
-<!-- GOAL SETTING MODAL -->
-<div class="modal-overlay" role="dialog" aria-modal="true" aria-label="Goal Setting" id="goal-setting-modal" onclick="closeOnOverlay(event,'goal-setting-modal')">
-  <div class="modal" style="max-width:min(1140px,96vw);width:96vw">
-    <div class="modal-header" style="border-bottom:1px solid var(--g100);padding-bottom:14px">
+<!-- GOAL SETTING FULL-PAGE OVERLAY -->
+<div id="goal-setting-modal" style="position:fixed;inset:0;background:#f0f2f5;z-index:2200;display:none;flex-direction:column;overflow:hidden">
+  <!-- Top bar -->
+  <div style="background:#fff;border-bottom:1px solid var(--g200);padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+    <div style="display:flex;align-items:center;gap:16px">
+      <button onclick="closeGoalsPage()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:7px" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <div style="width:1px;height:24px;background:var(--g200)"></div>
       <div>
-        <div class="modal-title">2026 Sales Goals</div>
-        <div style="font-size:12px;color:var(--g400);margin-top:2px">Define each advisor's monthly sales goals. The sum determines the annual team goal.</div>
-      </div>
-      <div style="display:flex;align-items:center;gap:12px">
-        <div style="display:flex;gap:6px">
-          <button onclick="gsSetYear(this,2023)" class="gs-yr-btn" style="padding:4px 10px;border-radius:6px;border:1px solid var(--g200);background:none;font-size:12px;color:var(--g500);cursor:pointer">2023</button>
-          <button onclick="gsSetYear(this,2024)" class="gs-yr-btn" style="padding:4px 10px;border-radius:6px;border:1px solid var(--g200);background:none;font-size:12px;color:var(--g500);cursor:pointer">2024</button>
-          <button onclick="gsSetYear(this,2025)" class="gs-yr-btn" style="padding:4px 10px;border-radius:6px;border:1px solid var(--g200);background:none;font-size:12px;color:var(--g500);cursor:pointer">2025</button>
-          <button onclick="gsSetYear(this,2026)" class="gs-yr-btn" style="padding:4px 10px;border-radius:6px;border:1px solid var(--teal);background:var(--teal);font-size:12px;color:#fff;cursor:pointer;font-weight:700">2026</button>
-        </div>
-        <div style="text-align:right">
-          <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="gs-team-total">$19,355,000</div>
-          <div style="font-size:10px;color:var(--g400)">Annual Sales Goal</div>
-        </div>
-        <button class="modal-close" aria-label="Close dialog" onclick="closeModal('goal-setting-modal')" style="width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div style="font-size:16px;font-weight:800;color:var(--dark)" id="gs-page-title">2026 Sales Goals</div>
+        <div style="font-size:11px;color:var(--g400)">Define each advisor's monthly goals — the sum sets the team target</div>
       </div>
     </div>
-    <div class="modal-body" style="padding:0;overflow-y:auto;max-height:65vh">
+    <div style="display:flex;align-items:center;gap:14px">
+      <!-- Year selector -->
+      <div style="display:flex;gap:4px;background:var(--g50);border-radius:8px;padding:3px">
+        <button onclick="gsSetYear(this,2023)" class="gs-yr-btn" style="padding:5px 12px;border-radius:6px;border:none;background:none;font-size:12px;font-weight:600;color:var(--g500);cursor:pointer;font-family:var(--font)">2023</button>
+        <button onclick="gsSetYear(this,2024)" class="gs-yr-btn" style="padding:5px 12px;border-radius:6px;border:none;background:none;font-size:12px;font-weight:600;color:var(--g500);cursor:pointer;font-family:var(--font)">2024</button>
+        <button onclick="gsSetYear(this,2025)" class="gs-yr-btn" style="padding:5px 12px;border-radius:6px;border:none;background:none;font-size:12px;font-weight:600;color:var(--g500);cursor:pointer;font-family:var(--font)">2025</button>
+        <button onclick="gsSetYear(this,2026)" class="gs-yr-btn" style="padding:5px 12px;border-radius:6px;border:none;background:var(--teal);font-size:12px;font-weight:700;color:#fff;cursor:pointer;font-family:var(--font)">2026</button>
+      </div>
+      <!-- Team total KPI -->
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:8px 14px;text-align:right">
+        <div style="font-size:18px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1" id="gs-team-total">$19,355,000</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:2px">Annual Team Goal</div>
+      </div>
+      <button onclick="gsPageSave()" style="display:flex;align-items:center;gap:6px;background:var(--teal);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        Save Goals
+      </button>
+    </div>
+  </div>
+  <!-- Body -->
+  <div style="flex:1;overflow-y:auto;padding:24px 28px">
       <!-- Team summary table -->
       <div style="overflow-x:auto;border-bottom:2px solid var(--g200)">
         <table style="width:100%;border-collapse:collapse;font-size:11px;min-width:900px">
@@ -9559,16 +10107,8 @@ function lbSort(colIndex, th) {
         </div>
 
       </div><!-- end gs-reps-wrap -->
-    </div>
-    <div class="modal-footer" style="border-top:1px solid var(--g100)">
-      <div style="font-size:11px;color:var(--g400)">Changes affect goal tracking across all pages</div>
-      <div class="modal-actions">
-        <button class="modal-cancel" onclick="closeModal('goal-setting-modal')">Cancel</button>
-        <button class="modal-save" onclick="saveModal(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Save Goals</button>
-      </div>
-    </div>
-  </div>
-</div>
+    </div><!-- end scrollable body -->
+</div><!-- end goal-setting-modal full-page -->
 
 <!-- COMMENT MODAL -->
 <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="Comment" id="comment-modal" onclick="closeOnOverlay(event,'comment-modal')">
@@ -9822,9 +10362,9 @@ function lbSort(colIndex, th) {
       <div id="pd-topbar-avatar" style="width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:var(--teal)">ML</div>
       <span id="pd-topbar-name" style="font-size:15px;font-weight:700;color:var(--dark)">Marcus Lee</span>
     </div>
-    <button onclick="showToast('Opportunity added')" style="display:flex;align-items:center;gap:6px;border:none;background:var(--navy);color:#fff;cursor:pointer;font-size:13px;font-weight:600;padding:7px 16px;border-radius:8px">
+    <button onclick="openDealModal()" style="display:flex;align-items:center;gap:6px;border:none;background:var(--teal);color:#fff;cursor:pointer;font-size:13px;font-weight:600;padding:7px 16px;border-radius:8px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Opportunity
+      Add Opportunity
     </button>
   </div>
   <!-- Body -->
@@ -9941,10 +10481,31 @@ function lbSort(colIndex, th) {
       <div id="od-topbar-avatar" style="width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;background:#6366f1">RF</div>
       <span id="od-topbar-name" style="font-size:15px;font-weight:700;color:var(--dark)">Riverside Financial Group</span>
     </div>
-    <button onclick="showToast('Opportunity added')" style="display:flex;align-items:center;gap:6px;border:none;background:var(--navy);color:#fff;cursor:pointer;font-size:13px;font-weight:600;padding:7px 16px;border-radius:8px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Opportunity
-    </button>
+    <div style="display:flex;align-items:center;gap:6px;position:relative">
+      <button onclick="openDealModal()" style="display:flex;align-items:center;gap:6px;border:none;background:var(--teal);color:#fff;cursor:pointer;font-size:13px;font-weight:600;padding:7px 14px;border-radius:8px 0 0 8px;border-right:1px solid rgba(255,255,255,0.2)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add
+      </button>
+      <button onclick="_odToggleMenu(this)" style="display:flex;align-items:center;padding:7px 9px;border:none;background:var(--teal);color:#fff;cursor:pointer;font-size:11px;border-radius:0 8px 8px 0">▾</button>
+      <div id="od-add-menu" style="display:none;position:absolute;top:calc(100% + 4px);right:0;background:#fff;border:1px solid var(--g200);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.12);min-width:180px;z-index:200;overflow:hidden">
+        <div onclick="openDealModal();_odCloseMenu()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;font-weight:500;color:var(--dark)" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+          Add Opportunity
+        </div>
+        <div onclick="_odAddContact();_odCloseMenu()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;font-weight:500;color:var(--dark)" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#5b8fe8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Add Contact
+        </div>
+        <div onclick="openModal('note-modal');_odCloseMenu()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;font-weight:500;color:var(--dark)" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9b72d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Add Note
+        </div>
+        <div onclick="showToast('✓ Activity logged');_odCloseMenu()" style="display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;font-size:13px;font-weight:500;color:var(--dark);border-top:1px solid var(--g100)" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#e8923a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+          Log Activity
+        </div>
+      </div>
+    </div>
   </div>
   <!-- Body -->
   <div style="display:flex;flex:1;overflow:hidden">
