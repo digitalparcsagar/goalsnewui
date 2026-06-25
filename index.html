@@ -5116,7 +5116,7 @@ var PEOPLE_DATA = {
     email:'m.lee@riverside.com', phone:'(612) 555-0182',
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75', lastActivity:'Today',
     openOpps:[
-      {title:'Riverside Financial — Group Benefits', value:'$92,000', stage:'Prospect Registered', close:'Jun 30, 2026', prob:'35%', status:'open'}
+      {id:'deal-1', title:'Riverside Financial — Group Benefits', value:'$92,000', stage:'Prospect Registered', close:'Jun 30, 2026', prob:'35%', status:'open'}
     ],
     closedOpps:[
       {title:'Riverside Employee Benefits 2025', value:'$88,000', stage:'Won', close:'Nov 12, 2025', prob:'100%', status:'won'},
@@ -5432,6 +5432,11 @@ function openPersonDetail(name) {
   renderDetailOpps('pd', allOpen, allClosed);
   // Activity tab content
   renderDetailActivity('pd', d.activity);
+  // KPI row
+  var pendingSale = allOpen.reduce(function(s,o){ return s + parseInt(o.value.replace(/[$,]/g,'')); }, 0);
+  var salesYTD = allClosed.filter(function(o){ return o.status==='won' && o.close.indexOf('2025')>=0; }).reduce(function(s,o){ return s + parseInt(o.value.replace(/[$,]/g,'')); }, 0);
+  var salesLifetime = allClosed.filter(function(o){ return o.status==='won'; }).reduce(function(s,o){ return s + parseInt(o.value.replace(/[$,]/g,'')); }, 0);
+  renderKpiRow('pd', pendingSale, salesYTD, salesLifetime);
   // Show overlay
   switchDetailTab('opps','pd');
   document.getElementById('person-detail-overlay').style.display = 'flex';
@@ -5487,6 +5492,11 @@ function openOrgDetail(orgName) {
         '<div><div style="font-size:13px;font-weight:600;color:var(--navy)">' + p.name + '</div><div style="font-size:11px;color:var(--g400)">' + p.title + '</div></div>' +
       '</div>'; }).join('');
   } else { sidepeople.innerHTML = ''; }
+  // KPI row
+  var odPending = allOpen.reduce(function(s,o){ return s + parseInt(o.value.replace(/[$,]/g,'')); }, 0);
+  var odYTD = allClosed.filter(function(o){ return o.status==='won' && o.close.indexOf('2025')>=0; }).reduce(function(s,o){ return s + parseInt(o.value.replace(/[$,]/g,'')); }, 0);
+  var odLifetime = allClosed.filter(function(o){ return o.status==='won'; }).reduce(function(s,o){ return s + parseInt(o.value.replace(/[$,]/g,'')); }, 0);
+  renderKpiRow('od', odPending, odYTD, odLifetime);
   // Tabs content
   renderDetailOpps('od', allOpen, allClosed);
   renderDetailActivity('od', d.activity);
@@ -5517,7 +5527,7 @@ function openPersonDetailFromOrg(name) {
 
 // ── SHARED HELPERS ────────────────────────────────────────────────────────────
 function switchDetailTab(tab, prefix) {
-  var tabs = prefix === 'pd' ? ['opps','activity','notes'] : ['opps','activity','people','notes'];
+  var tabs = prefix === 'pd' ? ['opps','activity','notes'] : prefix === 'od' ? ['opps','activity','people','notes'] : ['activity','notes','history'];
   tabs.forEach(function(t) {
     var btn = document.getElementById(prefix + '-tab-' + t);
     var content = document.getElementById(prefix + '-content-' + t);
@@ -5541,7 +5551,10 @@ function renderDetailOpps(prefix, openOpps, closedOpps) {
     var stagePill = isOpen ? '<span style="background:' + (stageBg[o.stage]||'var(--g100)') + ';color:' + (stageColor[o.stage]||'var(--g600)') + ';border-radius:20px;padding:2px 10px;font-size:11px;font-weight:600">' + o.stage + '</span>' : (wonBadge || lostBadge);
     var border = isOpen ? '1px solid rgba(29,158,117,0.2)' : (o.status === 'won' ? '1px solid rgba(29,158,117,0.15)' : '1px solid rgba(239,68,68,0.15)');
     var bg = isOpen ? 'rgba(29,158,117,0.04)' : (o.status === 'won' ? 'rgba(29,158,117,0.03)' : 'rgba(239,68,68,0.03)');
-    return '<div style="background:' + bg + ';border:' + border + ';border-radius:12px;padding:16px;margin-bottom:10px">' +
+    var clickable = o.id ? 'cursor:pointer;' : '';
+    var clickAttr = o.id ? ' onclick="_oppDetailSource=\'' + prefix + '\';openOppDetail(\'' + o.id + '\')"' : '';
+    var hoverStyle = o.id ? ' onmouseover="this.style.boxShadow=\'0 2px 12px rgba(0,0,0,0.08)\'" onmouseout="this.style.boxShadow=\'none\'"' : '';
+    return '<div' + clickAttr + hoverStyle + ' style="' + clickable + 'background:' + bg + ';border:' + border + ';border-radius:12px;padding:16px;margin-bottom:10px;transition:box-shadow 0.15s">' +
       '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px">' +
         '<div style="font-size:14px;font-weight:700;color:var(--dark);line-height:1.3">' + o.title + '</div>' +
         stagePill +
@@ -5608,6 +5621,247 @@ function renderDetailPeople(prefix, people) {
         '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>' +
       '</div>';
     }).join('') + '</div>';
+}
+
+// ── OPPORTUNITY DETAIL DATA ───────────────────────────────────────────────────
+var OPP_DETAIL_DATA = {
+  'deal-1': {
+    pendingSale: 92000, salesYTD: 88000, salesLifetime: 133000,
+    proposals: [{label:'Group Benefits Proposal v2', date:'Jun 18, 2026', value:'$92,000'}, {label:'Initial Quote', date:'Jun 10, 2026', value:'$87,500'}],
+    invoices: [],
+    sales: [{label:'Riverside Employee Benefits 2025', date:'Nov 12, 2025', value:'$88,000'}, {label:'Key Person Coverage Pilot', date:'Mar 5, 2025', value:'$45,000', status:'lost'}],
+    activity: [
+      {type:'call', text:'Discovery call — Q3 renewal discussion', date:'Today', rep:'Brock Wilson'},
+      {type:'email', text:'Group benefits comparison overview sent', date:'Jun 20', rep:'Brock Wilson'},
+      {type:'meeting', text:'Initial meeting — team plan options reviewed', date:'Jun 15', rep:'Brock Wilson'}
+    ]
+  },
+  'deal-2': {
+    pendingSale: 70000, salesYTD: 62000, salesLifetime: 62000,
+    proposals: [{label:'Employee Dental & Health Plan', date:'Jun 19, 2026', value:'$70,000'}],
+    invoices: [],
+    sales: [{label:'Clearview Dental Wellness 2024', date:'Dec 8, 2024', value:'$62,000'}],
+    activity: [
+      {type:'email', text:'Intro deck and benefit options sent', date:'3 days ago', rep:'Russ Holt'},
+      {type:'call', text:'Intro call — budget range confirmed', date:'Jun 18', rep:'Russ Holt'}
+    ]
+  },
+  'deal-3': {
+    pendingSale: 145000, salesYTD: 193000, salesLifetime: 393000,
+    proposals: [{label:'Life & Disability Package', date:'Jun 14, 2026', value:'$145,000'}],
+    invoices: [],
+    sales: [{label:'Apex Executive Life 2024', date:'Oct 3, 2024', value:'$138,000'}, {label:'Group Disability Pilot', date:'Apr 18, 2024', value:'$55,000'}, {label:'Annuity Rollover Proposal', date:'Jan 22, 2024', value:'$200,000', status:'lost'}],
+    activity: [
+      {type:'note', text:'Budget freeze until Jul 1 — follow up after', date:'8 days ago', rep:'Jules Richards'},
+      {type:'email', text:'Revised proposal with updated disability terms', date:'Jun 14', rep:'Jules Richards'},
+      {type:'call', text:'Disability coverage gap discussion', date:'Jun 8', rep:'Jules Richards'}
+    ]
+  },
+  'deal-4': {
+    pendingSale: 128500, salesYTD: 112000, salesLifetime: 112000,
+    proposals: [{label:'Annuity Plan Comparison', date:'Jun 19, 2026', value:'$128,500'}],
+    invoices: [],
+    sales: [{label:'Summit CU Member Plan 2025', date:'Sep 15, 2025', value:'$112,000'}],
+    activity: [
+      {type:'call', text:'David reviewing annuity proposal internally', date:'Yesterday', rep:'Brock Wilson'},
+      {type:'email', text:'Annuity comparison report sent', date:'Jun 19', rep:'Brock Wilson'},
+      {type:'meeting', text:'In-person meeting at Summit CU branch', date:'Jun 11', rep:'Brock Wilson'}
+    ]
+  },
+  'deal-6': {
+    pendingSale: 158000, salesYTD: 177000, salesLifetime: 177000,
+    proposals: [{label:'Group Health Full Package', date:'Jun 16, 2026', value:'$158,000'}],
+    invoices: [{label:'Invoice #HM-2026-001', date:'Jun 22, 2026', value:'$158,000', status:'pending'}],
+    sales: [{label:'Harborview Staff Wellness 2025', date:'Jan 10, 2025', value:'$149,000'}, {label:'Harborview Dental Add-on', date:'Mar 22, 2024', value:'$28,000'}],
+    activity: [
+      {type:'meeting', text:'DocuSign sent — awaiting signatures', date:'Today', rep:'Russ Holt'},
+      {type:'email', text:'Final document package submitted', date:'Jun 21', rep:'Russ Holt'},
+      {type:'call', text:'Negotiated premium schedule and deductibles', date:'Jun 16', rep:'Russ Holt'}
+    ]
+  },
+  'deal-8': {
+    pendingSale: 174000, salesYTD: 245000, salesLifetime: 245000,
+    proposals: [{label:'Workers Comp Full Coverage', date:'Jun 13, 2026', value:'$174,000'}],
+    invoices: [{label:'Invoice #LB-2026-001', date:'Jun 25, 2026', value:'$174,000', status:'pending'}],
+    sales: [{label:'Lakewood Key Man Policy 2025', date:'Aug 30, 2025', value:'$160,000'}, {label:'Fleet & Equipment Coverage', date:'Feb 14, 2024', value:'$85,000'}],
+    activity: [
+      {type:'email', text:'Payment confirmation received — processing', date:'2 days ago', rep:'Aya Pedrad'},
+      {type:'call', text:'Chris confirmed payment schedule', date:'Jun 20', rep:'Aya Pedrad'},
+      {type:'meeting', text:'Workers comp terms reviewed', date:'Jun 13', rep:'Aya Pedrad'}
+    ]
+  },
+  'deal-9': {
+    pendingSale: 100000, salesYTD: 126000, salesLifetime: 144000,
+    proposals: [{label:'Admin Benefits Package 2026', date:'Jun 10, 2026', value:'$100,000'}],
+    invoices: [{label:'Invoice #MSD-2026-001', date:'Jun 20, 2026', value:'$100,000', status:'pending'}],
+    sales: [{label:'Meridian District Benefits 2025', date:'Jul 20, 2025', value:'$94,000'}, {label:'Meridian Summer Supplemental', date:'May 1, 2024', value:'$32,000'}, {label:'Voluntary Life Add-on', date:'Oct 12, 2023', value:'$18,000', status:'lost'}],
+    activity: [
+      {type:'email', text:'Final enrollment docs sent to district HR', date:'4 days ago', rep:'Brock Wilson'},
+      {type:'call', text:'Janet confirmed board approval', date:'Jun 18', rep:'Brock Wilson'},
+      {type:'meeting', text:'Board presentation — renewal proposal', date:'Jun 10', rep:'Brock Wilson'}
+    ]
+  },
+  'deal-10': {
+    pendingSale: 138000, salesYTD: 122000, salesLifetime: 122000,
+    proposals: [{label:'Executive Life Insurance Package', date:'Jun 17, 2026', value:'$138,000'}],
+    invoices: [{label:'Invoice #CLP-2026-001', date:'Jun 22, 2026', value:'$138,000', status:'pending'}],
+    sales: [{label:'Cascade Fleet Driver Benefits 2024', date:'Nov 5, 2024', value:'$122,000'}],
+    activity: [
+      {type:'call', text:'Enrollment confirmed — wrapping up onboarding', date:'Today', rep:'Russ Holt'},
+      {type:'email', text:'Enrollment forms submitted for exec staff', date:'Jun 22', rep:'Russ Holt'},
+      {type:'meeting', text:'Policy review and Q&A with HR team', date:'Jun 17', rep:'Russ Holt'}
+    ]
+  }
+};
+
+// stage order for pipeline progress bar
+var PIPELINE_STAGES_ORDER = ['Prospect Registered','Contact Made','Documents Collected','Payment Confirmed','Enrolled','Contract Signed'];
+var PIPELINE_STAGES_COLORS = ['#6366f1','#3b82f6','#f59e0b','var(--teal)','#10b981','#059669'];
+
+var _oppDetailSource = null; // 'person' | 'org'
+var _currentOppId = null;
+
+function renderKpiRow(prefix, pendingSale, salesYTD, salesLifetime) {
+  var el = document.getElementById(prefix + '-kpi-row');
+  if (!el) return;
+  function kpiCard(label, value, color) {
+    return '<div style="flex:1;background:#fff;border:1px solid var(--g200);border-radius:12px;padding:14px 18px;min-width:0">' +
+      '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:6px">' + label + '</div>' +
+      '<div style="font-size:22px;font-weight:800;color:' + color + '">' + fmtDollar(value) + '</div>' +
+    '</div>';
+  }
+  el.innerHTML =
+    kpiCard('Pending Sale', pendingSale, 'var(--teal)') +
+    kpiCard('Sales Year-To-Date', salesYTD, 'var(--navy)') +
+    kpiCard('Sales Lifetime', salesLifetime, 'var(--dark)');
+}
+
+function fmtDollar(v) {
+  if (v >= 1000000) return '$' + (v/1000000).toFixed(1) + 'M';
+  if (v >= 1000) return '$' + (v/1000).toFixed(0) + 'K';
+  return '$' + v.toLocaleString();
+}
+
+function openOppDetail(oppId) {
+  _currentOppId = oppId;
+  // Find opp in CRM_PIPELINES
+  var opp = null;
+  var keys = Object.keys(CRM_PIPELINES);
+  for (var i = 0; i < keys.length; i++) {
+    var found = CRM_PIPELINES[keys[i]].opps.find(function(o){ return o.id === oppId; });
+    if (found) { opp = found; break; }
+  }
+  // Also check PEOPLE_DATA/ORGS_DATA opps for historical
+  if (!opp) {
+    // Search people closed opps
+    var pKeys = Object.keys(PEOPLE_DATA);
+    for (var pi = 0; pi < pKeys.length; pi++) {
+      var pd = PEOPLE_DATA[pKeys[pi]];
+      var allO = (pd.openOpps||[]).concat(pd.closedOpps||[]);
+      var f2 = allO.find(function(o){ return o.id === oppId; });
+      if (f2) { opp = {title:f2.title, value:parseInt(f2.value.replace(/[$,]/g,'')), stage:f2.stage, close:f2.close, prob:f2.prob||'—', days:'—', org:pd.org, contact:pKeys[pi], owner:pd.owner, ownerInit:pd.ownerInit, ownerColor:pd.ownerColor}; break; }
+    }
+  }
+  if (!opp) { showToast('Opportunity detail coming soon'); return; }
+
+  var detail = OPP_DETAIL_DATA[oppId] || {};
+
+  // Top bar
+  document.getElementById('oppd-topbar-title').textContent = opp.title;
+  document.getElementById('oppd-back-label').textContent = _oppDetailSource === 'person' ? 'Contact' : 'Account';
+
+  // Stage pill
+  var stageEl = document.getElementById('oppd-stage-pill');
+  stageEl.textContent = opp.stage;
+  var stageIdx = PIPELINE_STAGES_ORDER.indexOf(opp.stage);
+  var stageColor = stageIdx >= 0 ? PIPELINE_STAGES_COLORS[stageIdx] : 'var(--teal)';
+  stageEl.style.background = 'rgba(29,158,117,0.1)';
+  stageEl.style.color = stageColor;
+
+  // Left sidebar
+  document.getElementById('oppd-title').textContent = opp.title;
+  document.getElementById('oppd-value').textContent = '$' + (opp.value||0).toLocaleString();
+  document.getElementById('oppd-org').textContent = opp.org || '—';
+  document.getElementById('oppd-contact').textContent = opp.contact || '—';
+  document.getElementById('oppd-close').textContent = opp.close || '—';
+  document.getElementById('oppd-prob').textContent = opp.prob || '—';
+  document.getElementById('oppd-days').textContent = opp.days || '—';
+  document.getElementById('oppd-owner-av').textContent = opp.ownerInit || '—';
+  document.getElementById('oppd-owner-av').style.background = opp.ownerColor || 'var(--teal)';
+  document.getElementById('oppd-owner-name').textContent = opp.owner || '—';
+
+  // Stage progress bar
+  var barEl = document.getElementById('oppd-stage-bar');
+  var stages = PIPELINE_STAGES_ORDER;
+  barEl.innerHTML = stages.map(function(s, idx) {
+    var active = idx <= (stageIdx >= 0 ? stageIdx : 0);
+    return '<div style="flex:1;height:6px;border-radius:3px;background:' + (active ? PIPELINE_STAGES_COLORS[idx] : 'var(--g100)') + ';transition:background 0.2s"></div>';
+  }).join('');
+  document.getElementById('oppd-stage-label').textContent = opp.stage;
+  document.getElementById('oppd-stage-prob').textContent = (opp.prob || '—') + ' probability';
+
+  // Proposals section
+  var propSec = document.getElementById('oppd-proposals-section');
+  var proposals = detail.proposals || [];
+  propSec.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">Proposals <span style="background:var(--g100);color:var(--g500);border-radius:20px;padding:1px 7px;font-size:11px">' + proposals.length + '</span></div>' +
+    (proposals.length ? proposals.map(function(p) {
+      return '<div style="background:var(--g50);border-radius:9px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">' +
+        '<div><div style="font-size:12px;font-weight:600;color:var(--dark)">' + p.label + '</div><div style="font-size:11px;color:var(--g400);margin-top:2px">' + p.date + '</div></div>' +
+        '<div style="font-size:13px;font-weight:700;color:var(--teal)">' + p.value + '</div>' +
+      '</div>';
+    }).join('') : '<div style="font-size:12px;color:var(--g400);padding:6px 0">No proposals yet</div>');
+
+  // Invoices section
+  var invSec = document.getElementById('oppd-invoices-section');
+  var invoices = detail.invoices || [];
+  invSec.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">Invoices <span style="background:var(--g100);color:var(--g500);border-radius:20px;padding:1px 7px;font-size:11px">' + invoices.length + '</span></div>' +
+    (invoices.length ? invoices.map(function(inv) {
+      return '<div style="background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.2);border-radius:9px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">' +
+        '<div><div style="font-size:12px;font-weight:600;color:var(--dark)">' + inv.label + '</div><div style="font-size:11px;color:var(--g400);margin-top:2px">' + inv.date + '</div></div>' +
+        '<div style="text-align:right"><div style="font-size:13px;font-weight:700;color:#f59e0b">' + inv.value + '</div><div style="font-size:10px;font-weight:600;color:#f59e0b;margin-top:1px">Pending</div></div>' +
+      '</div>';
+    }).join('') : '<div style="font-size:12px;color:var(--g400);padding:6px 0">No invoices yet</div>');
+
+  // Sales history
+  var salesSec = document.getElementById('oppd-sales-section');
+  var sales = detail.sales || [];
+  salesSec.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px;display:flex;align-items:center;justify-content:space-between">Sales History <span style="background:var(--g100);color:var(--g500);border-radius:20px;padding:1px 7px;font-size:11px">' + sales.length + '</span></div>' +
+    (sales.length ? sales.map(function(s) {
+      var won = s.status !== 'lost';
+      return '<div style="background:' + (won?'rgba(29,158,117,0.05)':'rgba(239,68,68,0.04)') + ';border:1px solid ' + (won?'rgba(29,158,117,0.15)':'rgba(239,68,68,0.15)') + ';border-radius:9px;padding:10px 12px;margin-bottom:6px;display:flex;justify-content:space-between;align-items:center">' +
+        '<div><div style="font-size:12px;font-weight:600;color:var(--dark)">' + s.label + '</div><div style="font-size:11px;color:var(--g400);margin-top:2px">' + s.date + '</div></div>' +
+        '<div style="text-align:right"><div style="font-size:13px;font-weight:700;color:' + (won?'var(--teal)':'#ef4444') + '">' + s.value + '</div><div style="font-size:10px;font-weight:700;margin-top:1px;color:' + (won?'var(--teal)':'#ef4444') + '">' + (won?'✓ Won':'✗ Lost') + '</div></div>' +
+      '</div>';
+    }).join('') : '<div style="font-size:12px;color:var(--g400);padding:6px 0">No sales history</div>');
+
+  // KPI row
+  renderKpiRow('oppd', detail.pendingSale || opp.value || 0, detail.salesYTD || 0, detail.salesLifetime || 0);
+
+  // Activity
+  renderDetailActivity('oppd', detail.activity || []);
+  // History = same as activity for now
+  document.getElementById('oppd-content-history').innerHTML = document.getElementById('oppd-content-activity').innerHTML;
+
+  switchDetailTab('activity','oppd');
+  document.getElementById('opp-detail-overlay').style.display = 'flex';
+}
+
+function closeOppDetail() {
+  document.getElementById('opp-detail-overlay').style.display = 'none';
+  _currentOppId = null;
+}
+
+function openOrgFromOpp() {
+  var orgName = document.getElementById('oppd-org').textContent;
+  closeOppDetail();
+  _orgDetailFromPerson = false;
+  openOrgDetail(orgName);
+}
+
+function openPersonFromOpp() {
+  var contactName = document.getElementById('oppd-contact').textContent;
+  closeOppDetail();
+  openPersonDetail(contactName);
 }
 
 function hexToRgb(hex) {
@@ -8553,6 +8807,8 @@ function lbSort(colIndex, th) {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Note
         </button>
       </div>
+      <!-- KPI row -->
+      <div id="pd-kpi-row" style="display:flex;gap:12px;margin-bottom:24px"></div>
       <!-- Tabs -->
       <div style="display:flex;gap:0;border-bottom:2px solid var(--g100);margin-bottom:24px">
         <button id="pd-tab-opps" onclick="switchDetailTab('opps','pd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-2px;font-family:var(--font)">Opportunities</button>
@@ -8647,6 +8903,8 @@ function lbSort(colIndex, th) {
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Note
         </button>
       </div>
+      <!-- KPI row -->
+      <div id="od-kpi-row" style="display:flex;gap:12px;margin-bottom:24px"></div>
       <!-- Tabs -->
       <div style="display:flex;gap:0;border-bottom:2px solid var(--g100);margin-bottom:24px">
         <button id="od-tab-opps" onclick="switchDetailTab('opps','od')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-2px;font-family:var(--font)">Opportunities</button>
@@ -8664,6 +8922,110 @@ function lbSort(colIndex, th) {
           <div style="display:flex;justify-content:flex-end;margin-top:8px"><button onclick="showToast('Note saved')" style="padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save Note</button></div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     OPPORTUNITY DETAIL OVERLAY
+═══════════════════════════════════════════════════════════ -->
+<div id="opp-detail-overlay" style="position:fixed;inset:0;background:#f0f2f5;z-index:2100;display:none;flex-direction:column;overflow:hidden">
+  <!-- Top bar -->
+  <div style="background:#fff;border-bottom:1px solid var(--g200);padding:0 28px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+    <button id="oppd-back-btn" onclick="closeOppDetail()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:7px" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <span id="oppd-back-label">Contacts</span>
+    </button>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div id="oppd-stage-pill" style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:3px 12px;font-size:12px;font-weight:700">Prospect Registered</div>
+      <span id="oppd-topbar-title" style="font-size:15px;font-weight:700;color:var(--dark)">Opportunity Title</span>
+    </div>
+    <div style="display:flex;gap:8px">
+      <button onclick="showToast('Stage updated')" style="border:1.5px solid var(--g200);background:#fff;color:var(--dark);cursor:pointer;font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;font-family:var(--font)">Move Stage</button>
+      <button onclick="showToast('Opportunity closed as won')" style="border:none;background:var(--teal);color:#fff;cursor:pointer;font-size:12px;font-weight:600;padding:6px 14px;border-radius:8px;font-family:var(--font)">Close Won</button>
+    </div>
+  </div>
+  <!-- Body -->
+  <div style="display:flex;flex:1;overflow:hidden">
+    <!-- Left sidebar -->
+    <div style="width:340px;flex-shrink:0;background:#fff;border-right:1px solid var(--g200);overflow-y:auto;padding:24px 22px">
+      <!-- Title + value -->
+      <div style="margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--g100)">
+        <div id="oppd-title" style="font-size:16px;font-weight:700;color:var(--dark);line-height:1.3;margin-bottom:10px">Opportunity Title</div>
+        <div id="oppd-value-badge" style="display:inline-block;background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:8px 16px">
+          <div style="font-size:10px;color:var(--teal);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:2px">Opportunity Value</div>
+          <div id="oppd-value" style="font-size:22px;font-weight:800;color:var(--dark)">$0</div>
+        </div>
+      </div>
+      <!-- Stage progress -->
+      <div style="margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--g100)">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Pipeline Stage</div>
+        <div id="oppd-stage-bar" style="display:flex;gap:3px;margin-bottom:8px"></div>
+        <div id="oppd-stage-label" style="font-size:13px;font-weight:700;color:var(--dark)">Prospect Registered</div>
+        <div id="oppd-stage-prob" style="font-size:12px;color:var(--g500);margin-top:2px">35% probability</div>
+      </div>
+      <!-- Details grid -->
+      <div style="margin-bottom:20px;padding-bottom:18px;border-bottom:1px solid var(--g100)">
+        <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Details</div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:28px;height:28px;border-radius:6px;background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <div><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--g400)">Account</div><div id="oppd-org" onclick="openOrgFromOpp()" style="font-size:13px;color:var(--navy);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px">—</div></div>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px">
+            <div style="width:28px;height:28px;border-radius:6px;background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--g400)">Contact</div><div id="oppd-contact" onclick="openPersonFromOpp()" style="font-size:13px;color:var(--navy);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:2px">—</div></div>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;align-items:center"><span style="color:var(--g500)">Close Date</span><span id="oppd-close" style="font-weight:700;color:var(--dark)">—</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;align-items:center"><span style="color:var(--g500)">Probability</span><span id="oppd-prob" style="font-weight:700;color:var(--teal)">—</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;align-items:center"><span style="color:var(--g500)">Days in Stage</span><span id="oppd-days" style="font-weight:700;color:var(--amber)">—</span></div>
+          <div style="display:flex;justify-content:space-between;font-size:13px;align-items:center"><span style="color:var(--g500)">Owner</span><div id="oppd-owner-row" style="display:flex;align-items:center;gap:6px"><div id="oppd-owner-av" style="width:20px;height:20px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">BW</div><span id="oppd-owner-name" style="font-weight:600;color:var(--dark)">—</span></div></div>
+        </div>
+      </div>
+      <!-- Proposals -->
+      <div id="oppd-proposals-section" style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--g100)"></div>
+      <!-- Invoices -->
+      <div id="oppd-invoices-section" style="margin-bottom:16px;padding-bottom:16px;border-bottom:1px solid var(--g100)"></div>
+      <!-- Sales -->
+      <div id="oppd-sales-section"></div>
+    </div>
+    <!-- Right content -->
+    <div style="flex:1;overflow-y:auto;padding:24px 28px">
+      <!-- KPI row -->
+      <div id="oppd-kpi-row" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:28px"></div>
+      <!-- Action bar -->
+      <div style="display:flex;gap:10px;margin-bottom:24px;flex-wrap:wrap">
+        <button onclick="showToast('Opening call dialer...')" style="display:flex;align-items:center;gap:7px;padding:9px 18px;background:var(--teal);color:#fff;border:none;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call
+        </button>
+        <button onclick="showToast('Email sent')" style="display:flex;align-items:center;gap:7px;padding:9px 18px;background:#fff;color:var(--dark);border:1.5px solid var(--g200);border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email
+        </button>
+        <button onclick="showToast('Task created')" style="display:flex;align-items:center;gap:7px;padding:9px 18px;background:#fff;color:var(--dark);border:1.5px solid var(--g200);border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Task
+        </button>
+        <button onclick="showToast('Note added')" style="display:flex;align-items:center;gap:7px;padding:9px 18px;background:#fff;color:var(--dark);border:1.5px solid var(--g200);border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Note
+        </button>
+      </div>
+      <!-- Tabs -->
+      <div style="display:flex;gap:0;border-bottom:2px solid var(--g100);margin-bottom:24px">
+        <button id="oppd-tab-activity" onclick="switchDetailTab('activity','oppd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-2px;font-family:var(--font)">Activity</button>
+        <button id="oppd-tab-notes" onclick="switchDetailTab('notes','oppd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">Notes</button>
+        <button id="oppd-tab-history" onclick="switchDetailTab('history','oppd')" style="padding:10px 20px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">History</button>
+      </div>
+      <div id="oppd-content-activity" style="display:block"></div>
+      <div id="oppd-content-notes" style="display:none">
+        <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px">
+          <textarea placeholder="Add a note..." style="width:100%;border:none;outline:none;font-family:var(--font);font-size:14px;color:var(--dark);resize:none;min-height:80px"></textarea>
+          <div style="display:flex;justify-content:flex-end;margin-top:8px"><button onclick="showToast('Note saved')" style="padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save Note</button></div>
+        </div>
+      </div>
+      <div id="oppd-content-history" style="display:none"></div>
     </div>
   </div>
 </div>
