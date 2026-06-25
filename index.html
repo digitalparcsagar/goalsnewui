@@ -70,25 +70,25 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .ace-tb-btn:hover{border-color:var(--teal);box-shadow:0 0 12px rgba(29,158,117,0.2)}
 
 /* PAGE AREA */
-.page-area{flex:1;overflow-y:auto;overflow-x:hidden;padding:24px;background:var(--off)}
+.page-area{flex:1;overflow-y:auto;overflow-x:hidden;padding:28px 32px;background:var(--off)}
 .page-area::-webkit-scrollbar{width:4px}
 .page-area::-webkit-scrollbar-thumb{background:var(--g300);border-radius:2px}
 .page{display:none}.page.active{display:block}
 
 /* SHARED */
-.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px}
+.page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
 .page-title{font-size:19px;font-weight:700;color:var(--dark);letter-spacing:-0.3px}
 .page-actions{display:flex;gap:8px;align-items:center}
 .card-link{font-size:12px;color:var(--teal);font-weight:500;cursor:pointer;text-decoration:none;border:none;background:none;font-family:var(--font)}
-.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
-.stat-card{background:var(--white);border-radius:12px;border:1px solid var(--g200);padding:18px 20px;transition:box-shadow 0.15s}
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.stat-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:22px 24px;transition:box-shadow 0.15s}
 .stat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.06)}
 .stat-label{font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:7px}
 .stat-value{font-size:26px;font-weight:700;color:var(--dark);letter-spacing:-0.5px;font-family:var(--mono)}
 .stat-value.teal{color:var(--teal)}
 .stat-change{font-size:11.5px;margin-top:4px}
 .stat-change.up{color:var(--teal)}.stat-change.down{color:var(--red)}
-.card{background:var(--white);border-radius:12px;border:1px solid var(--g200);padding:20px}
+.card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:24px}
 .card-dark{background:var(--navy);border-color:var(--navy)}
 .card-title{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
 .two-col{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:20px}
@@ -148,9 +148,9 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 
 /* GOALS PAGE */
 .goals-layout{display:grid;grid-template-columns:1fr 260px;gap:16px}
-.goals-main{display:flex;flex-direction:column;gap:12px}
-.goals-right{display:flex;flex-direction:column;gap:12px}
-.goal-rep-card{background:var(--white);border-radius:12px;border:1px solid var(--g200);padding:16px;cursor:pointer;transition:border-color 0.15s}
+.goals-main{display:flex;flex-direction:column;gap:14px}
+.goals-right{display:flex;flex-direction:column;gap:14px}
+.goal-rep-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:20px 18px;cursor:pointer;transition:border-color 0.15s}
 .goal-rep-card:hover{border-color:var(--teal)}
 .goal-rep-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
 .goal-rep-name{font-size:13px;font-weight:600;color:var(--dark)}
@@ -1639,7 +1639,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 <div id="goals-sm-view">
 
   <!-- Hero: Annual Goal (2/3) + Team ROI (1/3) -->
-  <div style="display:flex;gap:14px;margin-bottom:16px;align-items:stretch">
+  <div style="display:flex;gap:18px;margin-bottom:24px;align-items:stretch">
 
     <!-- Annual Sales Goal — 2/3 -->
     <div style="flex:2;min-width:0;background:var(--navy);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openModal('goal-setting-modal')">
@@ -1691,7 +1691,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   </div>
 
   <!-- Secondary KPIs -->
-  <div class="stat-row" style="margin-bottom:18px">
+  <div class="stat-row" style="margin-bottom:24px">
     <div class="stat-card" style="cursor:pointer" onclick="showPage('reports',null)"><div class="stat-label">Sales YTD</div><div class="stat-value teal">$7.95M</div><div class="stat-change up">▲ 12% vs last year</div></div>
     <div class="stat-card" style="cursor:pointer" onclick="showPage('reports',null)"><div class="stat-label">This Month</div><div class="stat-value">$1.58M</div><div class="stat-change up">▲ 8% MoM</div></div>
     <div class="stat-card" style="cursor:pointer" onclick="showPage('reports',null)"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$82K</div><div class="stat-change up">▲ $4.2K MoM</div></div>
@@ -1699,10 +1699,10 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   </div>
 
   <!-- Main layout: advisor cards (2/3) + ACE Insights (1/3) -->
-  <div style="display:flex;gap:14px;align-items:flex-start">
+  <div style="display:flex;gap:20px;align-items:flex-start">
 
     <!-- Advisor goal cards — 2/3 -->
-    <div style="flex:2;min-width:0;display:flex;flex-direction:column;gap:12px">
+    <div style="flex:2;min-width:0;display:flex;flex-direction:column;gap:14px">
       <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:4px">
         <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap">
           <span style="font-size:13px;font-weight:700;color:var(--dark)">Individual Advisor Goals</span>
@@ -1721,7 +1721,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           <button onclick="openModal('goal-setting-modal')" style="font-size:11px;color:var(--teal);background:none;border:none;cursor:pointer;font-weight:600">Edit Goals →</button>
         </div>
       </div>
-      <div id="goals-rep-list" style="display:flex;flex-direction:column;gap:12px">
+      <div id="goals-rep-list" style="display:flex;flex-direction:column;gap:14px">
 
       <!-- Brock Wilson — On Track -->
       <div style="background:#fff;border:1px solid var(--g100);border-radius:14px;padding:18px 20px;border-left:4px solid var(--teal);transition:all 0.18s;cursor:pointer" onclick="openRepProfile('Brock Wilson')" onmouseenter="this.style.boxShadow='0 4px 20px rgba(29,158,117,0.1)'" onmouseleave="this.style.boxShadow='none'">
@@ -2640,131 +2640,134 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div class="stat-card" onclick="openModal('date-modal')" title="Change period"><div class="stat-label">Sales This Month</div><div class="stat-value teal">$1.24M</div></div>
   <div class="stat-card" onclick="showToast('10 active reps this month')" title="Team roster"><div class="stat-label">Active Reps</div><div class="stat-value">10</div></div>
 </div>
-<div class="team-rep-grid">
-
-  <div class="team-rep-card" onclick="openRepProfile('Brock Wilson')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/men/54.jpg" class="team-rep-photo" alt="Brock Wilson"><span class="team-rep-status sp-green"></span></div>
-    <div class="team-rep-name">Brock Wilson</div>
-    <div class="team-rep-role">Senior Financial Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$953K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$65K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">107%</div></div>
+<!-- Team Leaderboard Table -->
+<div style="background:var(--white);border:1px solid var(--g200);border-radius:16px;overflow:hidden;margin-bottom:4px">
+  <div style="padding:18px 24px 14px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:14px;font-weight:700;color:var(--dark)">Advisor Performance</div>
+    <div style="display:flex;gap:8px">
+      <span style="font-size:11px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:3px 10px;font-weight:600">4 On Track</span>
+      <span style="font-size:11px;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:20px;padding:3px 10px;font-weight:600">5 At Risk</span>
+      <span style="font-size:11px;background:rgba(239,68,68,0.1);color:var(--red);border-radius:20px;padding:3px 10px;font-weight:600">1 Critical</span>
     </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>82%</span></div><div class="prog-track"><div class="prog-fill" style="width:82%"></div></div></div>
   </div>
+  <table style="width:100%;border-collapse:collapse">
+    <thead>
+      <tr style="background:var(--g50)">
+        <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left;width:36px">#</th>
+        <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Advisor</th>
+        <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left;min-width:180px">Goal Progress</th>
+        <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:right">Sales YTD</th>
+        <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:right">This Month</th>
+        <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:right">ROI</th>
+        <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- Rank 1: Aya Pedrad -->
+      <tr onclick="openRepProfile('Aya Pedrad')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--teal);text-align:center">1</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/women/44.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--green);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Aya Pedrad</div><div style="font-size:11px;color:var(--g400)">Sr. Financial Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:60%;height:100%;background:var(--teal);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--teal);min-width:32px;text-align:right">60%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$990K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$100K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal);font-family:var(--mono)">115%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:3px 9px">On Track</span></td>
+      </tr>
+      <!-- Rank 2: Brock Wilson -->
+      <tr onclick="openRepProfile('Brock Wilson')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">2</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--green);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Brock Wilson</div><div style="font-size:11px;color:var(--g400)">Senior Financial Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:82%;height:100%;background:var(--teal);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--teal);min-width:32px;text-align:right">82%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$953K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$65K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal);font-family:var(--mono)">107%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:3px 9px">On Track</span></td>
+      </tr>
+      <!-- Rank 3: Elena Vasquez -->
+      <tr onclick="openRepProfile('Elena Vasquez')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">3</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/women/68.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--green);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Elena Vasquez</div><div style="font-size:11px;color:var(--g400)">Financial Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:78%;height:100%;background:var(--teal);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--teal);min-width:32px;text-align:right">78%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$973K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$72K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal);font-family:var(--mono)">110%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:3px 9px">On Track</span></td>
+      </tr>
+      <!-- Rank 4: Russ Holt -->
+      <tr onclick="openRepProfile('Russ Holt')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">4</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/men/71.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--green);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Russ Holt</div><div style="font-size:11px;color:var(--g400)">Financial Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:74%;height:100%;background:#3b82f6;border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:#3b82f6;min-width:32px;text-align:right">74%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$844K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$48K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--g500);font-family:var(--mono)">98%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(59,130,246,0.1);color:#3b82f6;border-radius:20px;padding:3px 9px">On Pace</span></td>
+      </tr>
+      <!-- Rank 5: Marcus Bradley -->
+      <tr onclick="openRepProfile('Marcus Bradley')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">5</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/men/32.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--amber);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Marcus Bradley</div><div style="font-size:11px;color:var(--g400)">Associate Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:55%;height:100%;background:var(--amber);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--amber);min-width:32px;text-align:right">55%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$968K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$156K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--g500);font-family:var(--mono)">95%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:20px;padding:3px 9px">At Risk</span></td>
+      </tr>
+      <!-- Rank 6: Amanda Morrison -->
+      <tr onclick="openRepProfile('Amanda Morrison')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">6</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/women/33.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--green);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Amanda Morrison</div><div style="font-size:11px;color:var(--g400)">Sr. Financial Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:68%;height:100%;background:var(--amber);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--amber);min-width:32px;text-align:right">68%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$839K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$16K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal);font-family:var(--mono)">102%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:20px;padding:3px 9px">At Risk</span></td>
+      </tr>
+      <!-- Rank 7: Jules Richards -->
+      <tr onclick="openRepProfile('Jules Richards')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">7</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/women/15.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--amber);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Jules Richards</div><div style="font-size:11px;color:var(--g400)">Financial Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:51%;height:100%;background:var(--amber);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--amber);min-width:32px;text-align:right">51%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$919K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$121K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--g500);font-family:var(--mono)">88%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:20px;padding:3px 9px">At Risk</span></td>
+      </tr>
+      <!-- Rank 8: Derek Park -->
+      <tr onclick="openRepProfile('Derek Park')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">8</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/men/40.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--amber);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Derek Park</div><div style="font-size:11px;color:var(--g400)">Associate Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:58%;height:100%;background:var(--amber);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--amber);min-width:32px;text-align:right">58%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$701K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$45K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--g500);font-family:var(--mono)">82%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:20px;padding:3px 9px">At Risk</span></td>
+      </tr>
+      <!-- Rank 9: Priya Nair -->
+      <tr onclick="openRepProfile('Priya Nair')" style="cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">9</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/women/50.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--green);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Priya Nair</div><div style="font-size:11px;color:var(--g400)">Financial Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:62%;height:100%;background:var(--amber);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--amber);min-width:32px;text-align:right">62%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$659K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$40K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--g500);font-family:var(--mono)">79%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:20px;padding:3px 9px">At Risk</span></td>
+      </tr>
+      <!-- Rank 10: Doug Silverness -->
+      <tr onclick="openRepProfile('Doug Silverness')" style="cursor:pointer;transition:background 0.12s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background=''">
+        <td style="padding:14px 16px;font-size:13px;font-weight:700;color:var(--g400);text-align:center">10</td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:12px"><div style="position:relative;flex-shrink:0"><img src="https://randomuser.me/api/portraits/men/82.jpg" style="width:40px;height:40px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt=""><span style="position:absolute;bottom:1px;right:1px;width:10px;height:10px;background:var(--red);border-radius:50%;border:2px solid #fff;display:block"></span></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Doug Silverness</div><div style="font-size:11px;color:var(--g400)">Associate Advisor</div></div></div></td>
+        <td style="padding:14px 16px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:43%;height:100%;background:var(--red);border-radius:3px"></div></div><span style="font-size:11px;font-weight:600;color:var(--red);min-width:32px;text-align:right">43%</span></div></td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$777K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;color:var(--g600);font-family:var(--mono)">$55K</td>
+        <td style="padding:14px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--red);font-family:var(--mono)">72%</td>
+        <td style="padding:14px 16px;text-align:center"><span style="font-size:10px;font-weight:700;background:rgba(239,68,68,0.1);color:var(--red);border-radius:20px;padding:3px 9px">Critical</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
-  <div class="team-rep-card" onclick="openRepProfile('Russ Holt')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/men/71.jpg" class="team-rep-photo" alt="Russ Holt"><span class="team-rep-status sp-green"></span></div>
-    <div class="team-rep-name">Russ Holt</div>
-    <div class="team-rep-role">Financial Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$844K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$48K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">98%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>74%</span></div><div class="prog-track"><div class="prog-fill" style="width:74%"></div></div></div>
-  </div>
-
-  <div class="team-rep-card" onclick="openRepProfile('Jules Richards')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/women/15.jpg" class="team-rep-photo" alt="Jules Richards"><span class="team-rep-status sp-amber"></span></div>
-    <div class="team-rep-name">Jules Richards</div>
-    <div class="team-rep-role">Financial Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$919K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$121K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">88%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>51%</span></div><div class="prog-track"><div class="prog-fill prog-fill-amber" style="width:51%"></div></div></div>
-  </div>
-
-  <div class="team-rep-card" onclick="openRepProfile('Aya Pedrad')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/women/44.jpg" class="team-rep-photo" alt="Aya Pedrad"><span class="team-rep-status sp-green"></span></div>
-    <div class="team-rep-name">Aya Pedrad</div>
-    <div class="team-rep-role">Sr. Financial Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$990K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$100K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">115%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>60%</span></div><div class="prog-track"><div class="prog-fill" style="width:60%"></div></div></div>
-  </div>
-
-  <div class="team-rep-card" onclick="openRepProfile('Doug Silverness')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/men/82.jpg" class="team-rep-photo" alt="Doug Silverness"><span class="team-rep-status sp-red"></span></div>
-    <div class="team-rep-name">Doug Silverness</div>
-    <div class="team-rep-role">Associate Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$777K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$55K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">72%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>43%</span></div><div class="prog-track"><div class="prog-fill prog-fill-red" style="width:43%"></div></div></div>
-  </div>
-
-  <div class="team-rep-card" onclick="openRepProfile('Marcus Bradley')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/men/32.jpg" class="team-rep-photo" alt="Marcus Bradley"><span class="team-rep-status sp-amber"></span></div>
-    <div class="team-rep-name">Marcus Bradley</div>
-    <div class="team-rep-role">Associate Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$968K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$156K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">95%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>55%</span></div><div class="prog-track"><div class="prog-fill prog-fill-amber" style="width:55%"></div></div></div>
-  </div>
-
-  <div class="team-rep-card" onclick="openRepProfile('Elena Vasquez')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/women/68.jpg" class="team-rep-photo" alt="Elena Vasquez"><span class="team-rep-status sp-green"></span></div>
-    <div class="team-rep-name">Elena Vasquez</div>
-    <div class="team-rep-role">Financial Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$973K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$72K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">110%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>78%</span></div><div class="prog-track"><div class="prog-fill" style="width:78%"></div></div></div>
-  </div>
-
-  <div class="team-rep-card" onclick="openRepProfile('Amanda Morrison')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/women/33.jpg" class="team-rep-photo" alt="Amanda Morrison"><span class="team-rep-status sp-green"></span></div>
-    <div class="team-rep-name">Amanda Morrison</div>
-    <div class="team-rep-role">Sr. Financial Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$839K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$16K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">102%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>68%</span></div><div class="prog-track"><div class="prog-fill" style="width:68%"></div></div></div>
-  </div>
-
-  <div class="team-rep-card" onclick="openRepProfile('Derek Park')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/men/40.jpg" class="team-rep-photo" alt="Derek Park"><span class="team-rep-status sp-amber"></span></div>
-    <div class="team-rep-name">Derek Park</div>
-    <div class="team-rep-role">Associate Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$701K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$45K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">82%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>58%</span></div><div class="prog-track"><div class="prog-fill prog-fill-amber" style="width:58%"></div></div></div>
-  </div>
-
-  <div class="team-rep-card" onclick="openRepProfile('Priya Nair')">
-    <div class="team-rep-photo-wrap"><img src="https://randomuser.me/api/portraits/women/50.jpg" class="team-rep-photo" alt="Priya Nair"><span class="team-rep-status sp-green"></span></div>
-    <div class="team-rep-name">Priya Nair</div>
-    <div class="team-rep-role">Financial Advisor</div>
-    <div class="team-rep-stats-row">
-      <div><div class="team-rep-stat-label">Sales YTD</div><div class="team-rep-stat-val teal">$659K</div></div>
-      <div><div class="team-rep-stat-label">This Month</div><div class="team-rep-stat-val">$40K</div></div>
-      <div><div class="team-rep-stat-label">ROI</div><div class="team-rep-stat-val">79%</div></div>
-    </div>
-    <div class="prog-wrap" style="margin-top:10px"><div class="prog-label"><span>Goal Progress</span><span>62%</span></div><div class="prog-track"><div class="prog-fill" style="width:62%"></div></div></div>
-  </div>
-
-</div><!-- end team-rep-grid -->
-
-<div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-top:20px">
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:20px;margin-top:22px">
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
       <div class="card-title" style="margin:0">Sales Performance vs Goal — YTD</div>
@@ -5095,9 +5098,11 @@ function switchContactsTab(tab, btn) {
 var _peopleColumns = {
   person:       {label:'Person',        visible:true,  required:true},
   account:      {label:'Account',       visible:true},
+  title:        {label:'Title',         visible:false},
   phone:        {label:'Phone',         visible:true},
   email:        {label:'Email',         visible:true},
   opps:         {label:'Open Opps',     visible:true},
+  pipelineVal:  {label:'Pipeline $',    visible:false},
   owner:        {label:'Owner',         visible:true},
   lastActivity: {label:'Last Activity', visible:true},
   industry:     {label:'Industry',      visible:false},
@@ -5109,6 +5114,8 @@ var _peopleSearchQ = '';
 var _orgsSearchQ   = '';
 var _orgsFilterIndustry = '';
 var _orgsFilterOwner    = '';
+var _orgsFilterTag      = '';
+var _orgsFilterSize     = '';
 // ── CUSTOM FIELDS + TAGS STORAGE ─────────────────────────────────────────────
 var _customFields = {};  // { 'Marcus Lee': [{label:'', value:''}] }
 var _recordTags   = {};  // { 'Marcus Lee': ['Lead','Customer'] } — starts seeded from data
@@ -5160,8 +5167,13 @@ function renderPeopleTable(q) {
           return '<td style="font-size:12px;color:var(--g600)">' + d.phone + '</td>';
         case 'email':
           return '<td style="font-size:12px;color:var(--teal)">' + d.email + '</td>';
+        case 'title':
+          return '<td style="font-size:12px;color:var(--g600)">' + (d.title||'—') + '</td>';
         case 'opps':
           return '<td style="text-align:center"><span style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:12px;padding:2px 8px;font-size:12px;font-weight:600">' + (d.openOpps||[]).length + '</span></td>';
+        case 'pipelineVal':
+          var pv = (d.openOpps||[]).reduce(function(s,o){ return s + parseInt((o.value||'$0').replace(/[$,]/g,'')); },0);
+          return '<td style="font-size:12px;font-weight:600;color:var(--dark)">' + (pv > 0 ? '$' + pv.toLocaleString() : '—') + '</td>';
         case 'owner':
           return '<td><div class="crm-rep-avatar" style="background:' + d.ownerColor + '" title="' + d.owner + '">' + d.ownerInit + '</div></td>';
         case 'lastActivity':
@@ -5182,21 +5194,29 @@ function renderPeopleTable(q) {
   }).join('') || '<tr><td colspan="' + activeCols.length + '" style="text-align:center;padding:40px;color:var(--g400)">No people match your search</td></tr>';
 }
 // ── RENDER ORGS TABLE ─────────────────────────────────────────────────────────
-function renderOrgsTable(q, industry, owner) {
+function renderOrgsTable(q, industry, owner, tag, size) {
   if (q !== undefined) _orgsSearchQ = q;
   if (industry !== undefined) _orgsFilterIndustry = industry;
   if (owner !== undefined) _orgsFilterOwner = owner;
+  if (tag !== undefined) _orgsFilterTag = tag;
+  if (size !== undefined) _orgsFilterSize = size;
   var tbody = document.getElementById('orgs-tbody');
   if (!tbody) return;
   var names = Object.keys(ORGS_DATA);
   if (_orgsSearchQ) {
     var lq = _orgsSearchQ.toLowerCase();
-    names = names.filter(function(n){ return n.toLowerCase().includes(lq) || ORGS_DATA[n].industry.toLowerCase().includes(lq); });
+    names = names.filter(function(n){ return n.toLowerCase().includes(lq) || ORGS_DATA[n].industry.toLowerCase().includes(lq) || (ORGS_DATA[n].owner||'').toLowerCase().includes(lq); });
   }
   if (_orgsFilterIndustry) names = names.filter(function(n){ return ORGS_DATA[n].industry === _orgsFilterIndustry; });
   if (_orgsFilterOwner) names = names.filter(function(n){ return ORGS_DATA[n].owner === _orgsFilterOwner; });
-  var orgColors = {'Riverside Financial Group':'rgba(99,102,241,0.1)','Apex Holdings LLC':'rgba(245,158,11,0.1)','Harborview Medical Center':'rgba(239,68,68,0.1)','Lakewood Builders Inc.':'rgba(29,158,117,0.1)','Cascade Logistics Partners':'rgba(59,130,246,0.1)','Meridian School District':'rgba(139,92,246,0.1)'};
-  var orgTextColors = {'Riverside Financial Group':'#6366f1','Apex Holdings LLC':'#f59e0b','Harborview Medical Center':'#ef4444','Lakewood Builders Inc.':'var(--teal)','Cascade Logistics Partners':'#3b82f6','Meridian School District':'#8b5cf6'};
+  if (_orgsFilterTag) names = names.filter(function(n){ return (_recordTags[n]||[]).indexOf(_orgsFilterTag) >= 0; });
+  if (_orgsFilterSize) names = names.filter(function(n){ return (ORGS_DATA[n].employees||'').indexOf(_orgsFilterSize) >= 0; });
+  // Update active filter badge count
+  var activeCount = [_orgsFilterIndustry,_orgsFilterOwner,_orgsFilterTag,_orgsFilterSize].filter(Boolean).length;
+  var btn = document.getElementById('btn-org-filter');
+  if (btn) btn.innerHTML = activeCount > 0 ? 'Filter <span style="background:var(--teal);color:#fff;border-radius:9px;padding:0 5px;font-size:10px;margin-left:2px">' + activeCount + '</span>' : 'Filter';
+  var orgColors = {'Riverside Financial Group':'rgba(79,126,247,0.12)','Apex Holdings LLC':'rgba(232,146,58,0.12)','Harborview Medical Center':'rgba(224,92,135,0.12)','Lakewood Builders Inc.':'rgba(45,159,133,0.12)','Cascade Logistics Partners':'rgba(59,130,246,0.12)','Meridian School District':'rgba(155,114,208,0.12)','Ironside Manufacturing':'rgba(58,141,224,0.12)','NorthStar Tech Solutions':'rgba(200,109,212,0.12)','Pinnacle Wealth Advisors':'rgba(90,158,106,0.12)','Summit Credit Union':'rgba(79,126,247,0.12)','Clearview Dental Associates':'rgba(124,92,191,0.12)'};
+  var orgTextColors = {'Riverside Financial Group':'#4f7ef7','Apex Holdings LLC':'#e8923a','Harborview Medical Center':'#e05c87','Lakewood Builders Inc.':'#2d9f85','Cascade Logistics Partners':'#3b82f6','Meridian School District':'#9b72d0','Ironside Manufacturing':'#3a8de0','NorthStar Tech Solutions':'#c86dd4','Pinnacle Wealth Advisors':'#5a9e6a','Summit Credit Union':'#4f7ef7','Clearview Dental Associates':'#7c5cbf'};
   tbody.innerHTML = names.map(function(n) {
     var d = ORGS_DATA[n];
     var pipeVal = (d.openOpps||[]).reduce(function(s,o){ return s + parseInt((o.value||'$0').replace(/[$,]/g,'')); },0);
@@ -5218,7 +5238,7 @@ function filterContacts(q) {
 // ── CONTACT & ORG DETAIL DATA ────────────────────────────────────────────────
 var PEOPLE_DATA = {
   'Marcus Lee': {
-    initials:'ML', color:'#6366f1', title:'VP of Finance', org:'Riverside Financial Group',
+    initials:'ML', color:'#4f7ef7', title:'VP of Finance', org:'Riverside Financial Group',
     email:'m.lee@riverside.com', phone:'(612) 555-0182',
     linkedin:'linkedin.com/in/marcuslee-finance', industry:'Financial Services', city:'Minneapolis, MN', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75', lastActivity:'Today',
@@ -5237,7 +5257,7 @@ var PEOPLE_DATA = {
     ]
   },
   'Sara Kim': {
-    initials:'SK', color:'#8b5cf6', title:'HR Director', org:'Clearview Dental Associates',
+    initials:'SK', color:'#7c5cbf', title:'HR Director', org:'Clearview Dental Associates',
     email:'sara.kim@clearview.com', phone:'(651) 555-0247',
     linkedin:'linkedin.com/in/sarakim-hr', industry:'Healthcare / Dental', city:'St. Paul, MN', tags:['Lead','Customer'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6', lastActivity:'3 days ago',
@@ -5254,7 +5274,7 @@ var PEOPLE_DATA = {
     ]
   },
   'Tara Nguyen': {
-    initials:'TN', color:'#f59e0b', title:'CFO', org:'Apex Holdings LLC',
+    initials:'TN', color:'#e8923a', title:'CFO', org:'Apex Holdings LLC',
     email:'t.nguyen@apexholdings.com', phone:'(763) 555-0391',
     linkedin:'linkedin.com/in/taranguyen-cfo', industry:'Investment Holding', city:'Minneapolis, MN', tags:['Lead'],
     owner:'Jules Richards', ownerInit:'JR', ownerColor:'#f59e0b', lastActivity:'8 days ago — Overdue',
@@ -5273,7 +5293,7 @@ var PEOPLE_DATA = {
     ]
   },
   'David Park': {
-    initials:'DP', color:'#1d9e75', title:'Branch Manager', org:'Summit Credit Union',
+    initials:'DP', color:'#0ea882', title:'Branch Manager', org:'Summit Credit Union',
     email:'dpark@summitcu.org', phone:'(952) 555-0174',
     linkedin:'linkedin.com/in/davidpark-summit', industry:'Credit Union / Finance', city:'Burnsville, MN', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75', lastActivity:'Yesterday',
@@ -5290,7 +5310,7 @@ var PEOPLE_DATA = {
     ]
   },
   'Angela Ross': {
-    initials:'AR', color:'#ef4444', title:'Benefits Manager', org:'Harborview Medical Center',
+    initials:'AR', color:'#e05c87', title:'Benefits Manager', org:'Harborview Medical Center',
     email:'a.ross@harborviewmed.com', phone:'(612) 555-0528',
     linkedin:'linkedin.com/in/angelaross-benefits', industry:'Healthcare', city:'Minneapolis, MN', tags:['Customer','VIP'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6', lastActivity:'Today',
@@ -5308,7 +5328,7 @@ var PEOPLE_DATA = {
     ]
   },
   'Chris Brown': {
-    initials:'CB', color:'#1d9e75', title:'Owner', org:'Lakewood Builders Inc.',
+    initials:'CB', color:'#2d9f85', title:'Owner', org:'Lakewood Builders Inc.',
     email:'cbrown@lakewoodbuilders.com', phone:'(651) 555-0716',
     linkedin:'linkedin.com/in/chrisbrown-lakewood', industry:'Construction', city:'Lakewood, MN', tags:['Customer'],
     owner:'Aya Pedrad', ownerInit:'AP', ownerColor:'#3b82f6', lastActivity:'2 days ago',
@@ -5326,7 +5346,7 @@ var PEOPLE_DATA = {
     ]
   },
   'Rachel Green': {
-    initials:'RG', color:'#8b5cf6', title:'COO', org:'Cascade Logistics Partners',
+    initials:'RG', color:'#9b72d0', title:'COO', org:'Cascade Logistics Partners',
     email:'r.green@cascadelogistics.com', phone:'(763) 555-0843',
     linkedin:'linkedin.com/in/rachelgreen-coo', industry:'Logistics & Transport', city:'Eagan, MN', tags:['Customer','VIP'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6', lastActivity:'Today',
@@ -5343,10 +5363,10 @@ var PEOPLE_DATA = {
     ]
   },
   'Janet Moore': {
-    initials:'JM', color:'#8b5cf6', title:'Superintendent', org:'Meridian School District',
+    initials:'JM', color:'#5b8fe8', title:'Superintendent', org:'Meridian School District',
     email:'jmoore@meridiansd.edu', phone:'(952) 555-0962',
     linkedin:'linkedin.com/in/janetmoore-meridian', industry:'Education', city:'Roseville, MN', tags:['Customer'],
-    owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75', lastActivity:'4 days ago',
+    owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#0ea882', lastActivity:'4 days ago',
     openOpps:[
       {title:'Meridian Schools — Admin Benefits', value:'$100,000', stage:'Payment Confirmed', close:'Jun 25, 2026', prob:'80%', status:'open'}
     ],
@@ -5370,7 +5390,7 @@ var ORGS_DATA = {
     employees:'120–250', revenue:'$8.2M', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75',
     people:[
-      {name:'Marcus Lee', title:'VP of Finance', initials:'ML', color:'#6366f1'},
+      {name:'Marcus Lee', title:'VP of Finance', initials:'ML', color:'#4f7ef7'},
       {name:'Sarah Chen', title:'Director of HR', initials:'SC', color:'#8b5cf6'}
     ],
     openOpps:[
@@ -5392,7 +5412,7 @@ var ORGS_DATA = {
     employees:'50–100', revenue:'$42M', tags:['Lead'],
     owner:'Jules Richards', ownerInit:'JR', ownerColor:'#f59e0b',
     people:[
-      {name:'Tara Nguyen', title:'CFO', initials:'TN', color:'#f59e0b'},
+      {name:'Tara Nguyen', title:'CFO', initials:'TN', color:'#e8923a'},
       {name:'Derek Walsh', title:'VP Operations', initials:'DW', color:'#6366f1'},
       {name:'Kim Park', title:'Controller', initials:'KP', color:'#8b5cf6'}
     ],
@@ -5416,7 +5436,7 @@ var ORGS_DATA = {
     employees:'500–1,000', revenue:'$64M', tags:['Customer','VIP'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6',
     people:[
-      {name:'Angela Ross', title:'Benefits Manager', initials:'AR', color:'#ef4444'},
+      {name:'Angela Ross', title:'Benefits Manager', initials:'AR', color:'#e05c87'},
       {name:'Tom Liu', title:'CFO', initials:'TL', color:'#3b82f6'},
       {name:'Priya Shah', title:'HR Director', initials:'PS', color:'#8b5cf6'},
       {name:'James Ford', title:'CEO', initials:'JF', color:'#0a2540'}
@@ -5440,7 +5460,7 @@ var ORGS_DATA = {
     employees:'80–150', revenue:'$22M', tags:['Customer'],
     owner:'Aya Pedrad', ownerInit:'AP', ownerColor:'#3b82f6',
     people:[
-      {name:'Chris Brown', title:'Owner', initials:'CB', color:'#1d9e75'},
+      {name:'Chris Brown', title:'Owner', initials:'CB', color:'#2d9f85'},
       {name:'Mia Torres', title:'Operations Manager', initials:'MT', color:'#f59e0b'}
     ],
     openOpps:[
@@ -5462,7 +5482,7 @@ var ORGS_DATA = {
     employees:'200–400', revenue:'$38M', tags:['Customer','VIP'],
     owner:'Russ Holt', ownerInit:'RH', ownerColor:'#8b5cf6',
     people:[
-      {name:'Rachel Green', title:'COO', initials:'RG', color:'#8b5cf6'},
+      {name:'Rachel Green', title:'COO', initials:'RG', color:'#9b72d0'},
       {name:'Paul Kwan', title:'CFO', initials:'PK', color:'#3b82f6'},
       {name:'Nina West', title:'HR Manager', initials:'NW', color:'#f59e0b'}
     ],
@@ -5478,13 +5498,116 @@ var ORGS_DATA = {
       {type:'meeting', text:'Policy review and Q&A with HR team', date:'Jun 17', rep:'Russ Holt'}
     ]
   },
+  'Ironside Manufacturing': {
+    initials:'IM', color:'#3a8de0', industry:'Manufacturing',
+    website:'ironsidemfg.com', address:'840 Shepard Rd, St. Paul, MN',
+    employees:'300–600', revenue:'$55M', tags:['Lead'],
+    owner:'Jules Richards', ownerInit:'JR', ownerColor:'#e8923a',
+    people:[
+      {name:'Kevin Torres', title:'VP of Operations', initials:'KT', color:'#3a8de0'},
+      {name:'Omar Saleh', title:'President', initials:'OS', color:'#6ca3d4'}
+    ],
+    openOpps:[
+      {title:'Ironside Mfg — Group Health Pilot', value:'$210,000', stage:'Prospect Registered', close:'Jul 15, 2026', prob:'30%', status:'open', owner:'Jules Richards'},
+      {title:'Ironside — Key Person Life Policy', value:'$95,000', stage:'Prospect Registered', close:'Aug 10, 2026', prob:'25%', status:'open', owner:'Jules Richards'}
+    ],
+    closedOpps:[],
+    activity:[
+      {type:'call', text:'Kevin flagged benefits gaps with current carrier', date:'Yesterday', rep:'Jules Richards'},
+      {type:'meeting', text:'Omar intro — exec coverage overview', date:'3 days ago', rep:'Jules Richards'},
+      {type:'email', text:'Sent credentials and product overview', date:'Jun 21', rep:'Jules Richards'}
+    ]
+  },
+  'NorthStar Tech Solutions': {
+    initials:'NT', color:'#c86dd4', industry:'Technology',
+    website:'northstartech.com', address:'12 N 6th St, Minneapolis, MN',
+    employees:'150–300', revenue:'$31M', tags:['Customer','VIP'],
+    owner:'Aya Pedrad', ownerInit:'AP', ownerColor:'#4f7ef7',
+    people:[
+      {name:'Diane Foster', title:'Chief HR Officer', initials:'DF', color:'#c86dd4'},
+      {name:'Priya Mehta', title:'Director of Finance', initials:'PM', color:'#b86ab8'}
+    ],
+    openOpps:[
+      {title:'NorthStar — Supplemental Life 2026', value:'$185,000', stage:'Enrolled', close:'Jun 30, 2026', prob:'95%', status:'open', owner:'Aya Pedrad'},
+      {title:'NorthStar — Dental & Vision Add-on', value:'$42,000', stage:'Documents Collected', close:'Aug 1, 2026', prob:'60%', status:'open', owner:'Aya Pedrad'}
+    ],
+    closedOpps:[
+      {title:'NorthStar Group Benefits 2025', value:'$172,000', stage:'Won', close:'Dec 1, 2025', status:'won', owner:'Aya Pedrad'},
+      {title:'Key Person Life — CTO', value:'$78,000', stage:'Won', close:'Jun 10, 2024', status:'won', owner:'Aya Pedrad'}
+    ],
+    activity:[
+      {type:'meeting', text:'Final enrollment review completed', date:'Today', rep:'Aya Pedrad'},
+      {type:'email', text:'Sent census to carrier for final rates', date:'Jun 22', rep:'Aya Pedrad'},
+      {type:'call', text:'Diane approved plan terms', date:'Jun 17', rep:'Aya Pedrad'}
+    ]
+  },
+  'Pinnacle Wealth Advisors': {
+    initials:'PW', color:'#5a9e6a', industry:'Financial Services',
+    website:'pinnaclewealth.com', address:'9900 Bren Rd E, Eden Prairie, MN',
+    employees:'40–80', revenue:'$18M', tags:['Prospect'],
+    owner:'Russ Holt', ownerInit:'RH', ownerColor:'#9b72d0',
+    people:[
+      {name:'Michael Grant', title:'CFO', initials:'MG', color:'#5a9e6a'}
+    ],
+    openOpps:[
+      {title:'Pinnacle — Executive Disability Program', value:'$130,000', stage:'Contact Made', close:'Jul 30, 2026', prob:'40%', status:'open', owner:'Russ Holt'}
+    ],
+    closedOpps:[],
+    activity:[
+      {type:'call', text:'Discovery — disability gap for top 5 execs', date:'3 days ago', rep:'Russ Holt'},
+      {type:'email', text:'Sent initial proposal and case studies', date:'Jun 18', rep:'Russ Holt'}
+    ]
+  },
+  'Summit Credit Union': {
+    initials:'SC', color:'#4f7ef7', industry:'Banking & Credit',
+    website:'summitcu.org', address:'400 Robert St N, St. Paul, MN',
+    employees:'200–350', revenue:'$16M', tags:['Customer'],
+    owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#0ea882',
+    people:[
+      {name:'David Park', title:'Branch Manager', initials:'DP', color:'#0ea882'},
+      {name:'Lynn Okafor', title:'VP Lending', initials:'LO', color:'#4f7ef7'}
+    ],
+    openOpps:[
+      {title:'Summit CU — Staff Benefits Renewal', value:'$118,000', stage:'Proposal Sent', close:'Jul 20, 2026', prob:'55%', status:'open', owner:'Brock Wilson'}
+    ],
+    closedOpps:[
+      {title:'Summit CU Group Health 2025', value:'$112,000', stage:'Won', close:'Oct 5, 2025', status:'won', owner:'Brock Wilson'},
+      {title:'Summit CU Life Add-on 2024', value:'$29,000', stage:'Won', close:'Jan 18, 2024', status:'won', owner:'Brock Wilson'}
+    ],
+    activity:[
+      {type:'email', text:'Proposal sent — awaiting board review', date:'2 days ago', rep:'Brock Wilson'},
+      {type:'call', text:'David confirmed renewal meeting scheduled', date:'Jun 20', rep:'Brock Wilson'},
+      {type:'meeting', text:'Annual review — coverage and cost comparison', date:'Jun 12', rep:'Brock Wilson'}
+    ]
+  },
+  'Clearview Dental Associates': {
+    initials:'CD', color:'#7c5cbf', industry:'Healthcare',
+    website:'clearviewdental.com', address:'2280 Como Ave, St. Paul, MN',
+    employees:'60–120', revenue:'$9M', tags:['Customer'],
+    owner:'Jules Richards', ownerInit:'JR', ownerColor:'#e8923a',
+    people:[
+      {name:'Sara Kim', title:'HR Director', initials:'SK', color:'#7c5cbf'}
+    ],
+    openOpps:[
+      {title:'Clearview Dental — Staff Disability', value:'$68,000', stage:'Proposal Sent', close:'Jul 10, 2026', prob:'50%', status:'open', owner:'Jules Richards'}
+    ],
+    closedOpps:[
+      {title:'Clearview Group Health 2025', value:'$64,000', stage:'Won', close:'Sep 22, 2025', status:'won', owner:'Jules Richards'},
+      {title:'Clearview Dental Voluntary Life', value:'$22,000', stage:'Won', close:'Apr 3, 2024', status:'won', owner:'Jules Richards'}
+    ],
+    activity:[
+      {type:'call', text:'Sara confirmed team census finalized', date:'Yesterday', rep:'Jules Richards'},
+      {type:'email', text:'Sent disability proposal — three plan options', date:'Jun 21', rep:'Jules Richards'},
+      {type:'meeting', text:'Benefits review — team satisfaction survey results', date:'Jun 14', rep:'Jules Richards'}
+    ]
+  },
   'Meridian School District': {
     initials:'MS', color:'#8b5cf6', industry:'Education',
     website:'meridiansd.edu', address:'1400 Education Dr, Roseville, MN',
     employees:'1,000+', revenue:'$12M (public)', tags:['Customer'],
     owner:'Brock Wilson', ownerInit:'BW', ownerColor:'#1d9e75',
     people:[
-      {name:'Janet Moore', title:'Superintendent', initials:'JM', color:'#8b5cf6'},
+      {name:'Janet Moore', title:'Superintendent', initials:'JM', color:'#5b8fe8'},
       {name:'Alex Rivera', title:'Budget Director', initials:'AL', color:'#6366f1'}
     ],
     openOpps:[
@@ -5499,6 +5622,95 @@ var ORGS_DATA = {
       {type:'email', text:'Sent enrollment docs to district HR', date:'4 days ago', rep:'Brock Wilson'},
       {type:'call', text:'Janet confirmed board approval — moving to payment', date:'Jun 18', rep:'Brock Wilson'},
       {type:'meeting', text:'Board presentation — benefits renewal proposal', date:'Jun 10', rep:'Brock Wilson'}
+    ]
+  },
+  'Kevin Torres': {
+    initials:'KT', color:'#3a8de0', title:'VP of Operations', org:'Ironside Manufacturing',
+    email:'k.torres@ironside.com', phone:'(612) 555-0347',
+    linkedin:'linkedin.com/in/kevintorres-ops', industry:'Manufacturing', city:'St. Paul, MN', tags:['Lead'],
+    owner:'Jules Richards', ownerInit:'JR', ownerColor:'#e8923a', lastActivity:'Yesterday',
+    openOpps:[
+      {title:'Ironside Mfg — Group Health Pilot', value:'$210,000', stage:'Prospect Registered', close:'Jul 15, 2026', prob:'30%', status:'open'}
+    ],
+    closedOpps:[],
+    activity:[
+      {type:'call', text:'Intro call — Kevin flagged benefits gaps with current provider', date:'Yesterday', rep:'Jules Richards'},
+      {type:'email', text:'Sent credentials package and company overview', date:'Jun 21', rep:'Jules Richards'}
+    ]
+  },
+  'Diane Foster': {
+    initials:'DF', color:'#c86dd4', title:'Chief HR Officer', org:'NorthStar Tech Solutions',
+    email:'dfoster@northstartech.com', phone:'(651) 555-0529',
+    linkedin:'linkedin.com/in/dianefoster-hr', industry:'Technology', city:'Minneapolis, MN', tags:['Customer','VIP'],
+    owner:'Aya Pedrad', ownerInit:'AP', ownerColor:'#4f7ef7', lastActivity:'Today',
+    openOpps:[
+      {title:'NorthStar — Supplemental Life 2026', value:'$185,000', stage:'Enrolled', close:'Jun 30, 2026', prob:'95%', status:'open'},
+      {title:'NorthStar — Dental & Vision Add-on', value:'$42,000', stage:'Documents Collected', close:'Aug 1, 2026', prob:'60%', status:'open'}
+    ],
+    closedOpps:[
+      {title:'NorthStar Group Benefits 2025', value:'$172,000', stage:'Won', close:'Dec 1, 2025', prob:'100%', status:'won'},
+      {title:'Key Person Life — CTO', value:'$78,000', stage:'Won', close:'Jun 10, 2024', prob:'100%', status:'won'}
+    ],
+    activity:[
+      {type:'meeting', text:'Final enrollment review — all execs confirmed', date:'Today', rep:'Aya Pedrad'},
+      {type:'email', text:'Sent updated census to carrier for final rates', date:'Jun 22', rep:'Aya Pedrad'},
+      {type:'call', text:'Diane approved supplemental life plan terms', date:'Jun 17', rep:'Aya Pedrad'}
+    ]
+  },
+  'Michael Grant': {
+    initials:'MG', color:'#5a9e6a', title:'CFO', org:'Pinnacle Wealth Advisors',
+    email:'mgrant@pinnaclewealth.com', phone:'(763) 555-0814',
+    linkedin:'linkedin.com/in/michaelgrant-cfo', industry:'Financial Services', city:'Eden Prairie, MN', tags:['Prospect'],
+    owner:'Russ Holt', ownerInit:'RH', ownerColor:'#9b72d0', lastActivity:'3 days ago',
+    openOpps:[
+      {title:'Pinnacle — Executive Disability Program', value:'$130,000', stage:'Contact Made', close:'Jul 30, 2026', prob:'40%', status:'open'}
+    ],
+    closedOpps:[],
+    activity:[
+      {type:'call', text:'Discovery call — discussed disability gap for top 5 executives', date:'3 days ago', rep:'Russ Holt'},
+      {type:'email', text:'Sent initial proposal summary and case studies', date:'Jun 18', rep:'Russ Holt'}
+    ]
+  },
+  'Lisa Tran': {
+    initials:'LT', color:'#d97c3a', title:'Benefits Coordinator', org:'Cascade Logistics Partners',
+    email:'l.tran@cascadelogistics.com', phone:'(651) 555-0438',
+    linkedin:'linkedin.com/in/lisatran-benefits', industry:'Logistics & Transport', city:'Eagan, MN', tags:['Customer'],
+    owner:'Russ Holt', ownerInit:'RH', ownerColor:'#9b72d0', lastActivity:'5 days ago',
+    openOpps:[],
+    closedOpps:[
+      {title:'Cascade Driver Wellness Add-on 2025', value:'$38,000', stage:'Won', close:'Sep 14, 2025', prob:'100%', status:'won'}
+    ],
+    activity:[
+      {type:'email', text:'Sent renewal checklist for fall benefits window', date:'5 days ago', rep:'Russ Holt'},
+      {type:'call', text:'Lisa confirmed headcount changes for renewal census', date:'Jun 17', rep:'Russ Holt'}
+    ]
+  },
+  'Omar Saleh': {
+    initials:'OS', color:'#6ca3d4', title:'President', org:'Ironside Manufacturing',
+    email:'o.saleh@ironside.com', phone:'(612) 555-0291',
+    linkedin:'linkedin.com/in/omarsaleh-ironside', industry:'Manufacturing', city:'St. Paul, MN', tags:['Lead'],
+    owner:'Jules Richards', ownerInit:'JR', ownerColor:'#e8923a', lastActivity:'3 days ago',
+    openOpps:[
+      {title:'Ironside — Key Person Life Policy', value:'$95,000', stage:'Prospect Registered', close:'Aug 10, 2026', prob:'25%', status:'open'}
+    ],
+    closedOpps:[],
+    activity:[
+      {type:'meeting', text:'Omar intro — interested in exec coverage package', date:'3 days ago', rep:'Jules Richards'},
+      {type:'email', text:'Shared product overview and sample plan illustrations', date:'Jun 19', rep:'Jules Richards'}
+    ]
+  },
+  'Priya Mehta': {
+    initials:'PM', color:'#b86ab8', title:'Director of Finance', org:'NorthStar Tech Solutions',
+    email:'pmehta@northstartech.com', phone:'(952) 555-0673',
+    linkedin:'linkedin.com/in/priyamehta-finance', industry:'Technology', city:'Minneapolis, MN', tags:['Customer'],
+    owner:'Aya Pedrad', ownerInit:'AP', ownerColor:'#4f7ef7', lastActivity:'1 week ago',
+    openOpps:[],
+    closedOpps:[
+      {title:'NorthStar Finance Team Disability Plan', value:'$56,000', stage:'Won', close:'Nov 20, 2025', prob:'100%', status:'won'}
+    ],
+    activity:[
+      {type:'email', text:'Priya requested updated billing summary for Q2', date:'1 week ago', rep:'Aya Pedrad'},
+      {type:'call', text:'Quick check-in — plan running smoothly', date:'Jun 12', rep:'Aya Pedrad'}
     ]
   }
 };
@@ -6062,16 +6274,23 @@ function openTbCustomizer(triggerEl) {
   var panel = document.createElement('div');
   panel.id = 'tb-customizer-panel';
   panel.style.cssText = 'position:fixed;top:' + (rect.bottom + 6) + 'px;left:' + rect.left + 'px;background:#fff;border:1px solid var(--g200);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.14);padding:14px 12px;z-index:1000;min-width:200px;transform:translateX(-50%)';
-  panel.innerHTML =
-    '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px;padding:0 4px">Choose your shortcut</div>' +
-    _tbOptions.map(function(o) {
-      var isActive = o.page === _tbCustomBtn.page;
-      return '<button onclick="setTbCustomBtn(' + JSON.stringify(o) + ')" style="display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:' + (isActive?'700':'500') + ';color:' + (isActive?'var(--teal)':'var(--dark)') + ';background:' + (isActive?'rgba(29,158,117,0.08)':'none') + ';font-family:var(--font);text-align:left;transition:background 0.1s" onmouseover="if(!this.dataset.active)this.style.background=\'var(--g50)\'" onmouseout="if(!this.dataset.active)this.style.background=\'' + (isActive?'rgba(29,158,117,0.08)':'none') + '\'"' + (isActive?' data-active="1"':'') + '>' +
-        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:' + (isActive?'var(--teal)':'var(--g400)') + '">' + o.icon + '</svg>' +
-        o.label +
-        (isActive ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto"><polyline points="20 6 9 17 4 12"/></svg>' : '') +
-      '</button>';
-    }).join('');
+  var rows = _tbOptions.map(function(o, i) {
+    var isActive = o.page === _tbCustomBtn.page;
+    var activeBg = 'rgba(29,158,117,0.08)';
+    var row = document.createElement('button');
+    row.style.cssText = 'display:flex;align-items:center;gap:10px;width:100%;padding:8px 10px;border:none;border-radius:8px;cursor:pointer;font-size:13px;font-weight:' + (isActive?'700':'500') + ';color:' + (isActive?'var(--teal)':'var(--dark)') + ';background:' + (isActive?activeBg:'none') + ';font-family:var(--font);text-align:left;transition:background 0.1s';
+    row.innerHTML = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:' + (isActive?'var(--teal)':'var(--g400)') + '">' + o.icon + '</svg>' +
+      '<span>' + o.label + '</span>' +
+      (isActive ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto;flex-shrink:0"><polyline points="20 6 9 17 4 12"/></svg>' : '');
+    if (!isActive) {
+      row.addEventListener('mouseover', function(){ this.style.background = 'var(--g50)'; });
+      row.addEventListener('mouseout',  function(){ this.style.background = 'none'; });
+    }
+    row.addEventListener('click', function(){ setTbCustomBtn(i); });
+    return row;
+  });
+  panel.innerHTML = '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px;padding:0 4px">Choose your shortcut</div>';
+  rows.forEach(function(r){ panel.appendChild(r); });
   document.body.appendChild(panel);
   // Adjust if offscreen
   setTimeout(function(){
@@ -6087,7 +6306,9 @@ function openTbCustomizer(triggerEl) {
     });
   }, 50);
 }
-function setTbCustomBtn(opt) {
+function setTbCustomBtn(idx) {
+  var opt = _tbOptions[idx];
+  if (!opt) return;
   _tbCustomBtn = opt;
   var btn = document.getElementById('tb-custom-btn');
   if (btn) {
@@ -6128,23 +6349,34 @@ function openOrgFilterPanel() {
   var el = document.getElementById('org-filter-panel');
   if (el) { el.remove(); return; }
   var btn = document.getElementById('btn-org-filter');
-  var industries = Object.keys(ORGS_DATA).map(function(n){ return ORGS_DATA[n].industry; }).filter(function(v,i,a){ return a.indexOf(v)===i; });
-  var owners = Object.keys(ORGS_DATA).map(function(n){ return ORGS_DATA[n].owner; }).filter(function(v,i,a){ return a.indexOf(v)===i; });
+  var rect = btn.getBoundingClientRect();
+  var industries = Object.keys(ORGS_DATA).map(function(n){ return ORGS_DATA[n].industry; }).filter(function(v,i,a){ return a.indexOf(v)===i; }).sort();
+  var owners = Object.keys(ORGS_DATA).map(function(n){ return ORGS_DATA[n].owner; }).filter(function(v,i,a){ return a.indexOf(v)===i; }).sort();
+  var allTags = [];
+  Object.keys(ORGS_DATA).forEach(function(n){ (_recordTags[n]||[]).forEach(function(t){ if(allTags.indexOf(t)<0) allTags.push(t); }); });
+  var selStyle = 'width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;background:#fff;margin-top:4px';
+  var lblStyle = 'font-size:11px;color:var(--g500);font-weight:600';
   var panel = document.createElement('div');
   panel.id = 'org-filter-panel';
-  panel.style.cssText = 'position:fixed;top:' + (btn.getBoundingClientRect().bottom + 6) + 'px;right:' + (window.innerWidth - btn.getBoundingClientRect().right) + 'px;background:#fff;border:1px solid var(--g200);border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,0.12);padding:14px;z-index:900;min-width:220px';
-  panel.innerHTML = '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:10px">Filter Accounts</div>' +
-    '<div style="margin-bottom:10px"><div style="font-size:11px;color:var(--g500);margin-bottom:5px;font-weight:600">Industry</div>' +
-    '<select onchange="renderOrgsTable(undefined,this.value,undefined)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none">' +
-    '<option value="">All Industries</option>' +
-    industries.map(function(i){ return '<option value="' + i + '"' + (i===_orgsFilterIndustry?' selected':'') + '>' + i + '</option>'; }).join('') + '</select></div>' +
-    '<div style="margin-bottom:10px"><div style="font-size:11px;color:var(--g500);margin-bottom:5px;font-weight:600">Owner</div>' +
-    '<select onchange="renderOrgsTable(undefined,undefined,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none">' +
-    '<option value="">All Owners</option>' +
-    owners.map(function(o){ return '<option value="' + o + '"' + (o===_orgsFilterOwner?' selected':'') + '>' + o + '</option>'; }).join('') + '</select></div>' +
-    '<button onclick="renderOrgsTable(\'\',\'\',\'\');this.closest(\'#org-filter-panel\').remove();" style="font-size:12px;color:var(--g500);background:none;border:none;cursor:pointer;padding:4px 0;font-weight:600">Clear Filters</button>';
+  panel.style.cssText = 'position:fixed;top:' + (rect.bottom + 6) + 'px;right:' + (window.innerWidth - rect.right) + 'px;background:#fff;border:1px solid var(--g200);border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,0.14);padding:16px;z-index:900;min-width:240px';
+  panel.innerHTML = '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:14px;display:flex;justify-content:space-between;align-items:center">Filter Accounts <span style="font-size:11px;font-weight:500;color:var(--g400)">' + Object.keys(ORGS_DATA).length + ' total</span></div>' +
+    '<div style="display:grid;gap:12px">' +
+    '<div><div class="' + lblStyle + '">Industry</div><select id="orgf-industry" onchange="renderOrgsTable(undefined,this.value,undefined)" style="' + selStyle + '"><option value="">All Industries</option>' + industries.map(function(i){ return '<option value="' + i + '"' + (i===_orgsFilterIndustry?' selected':'') + '>' + i + '</option>'; }).join('') + '</select></div>' +
+    '<div><div class="' + lblStyle + '">Owner / Rep</div><select id="orgf-owner" onchange="renderOrgsTable(undefined,undefined,this.value)" style="' + selStyle + '"><option value="">All Reps</option>' + owners.map(function(o){ return '<option value="' + o + '"' + (o===_orgsFilterOwner?' selected':'') + '>' + o + '</option>'; }).join('') + '</select></div>' +
+    '<div><div class="' + lblStyle + '">Tag / Status</div><select id="orgf-tag" onchange="renderOrgsTable(undefined,undefined,undefined,this.value)" style="' + selStyle + '"><option value="">All Tags</option>' + allTags.map(function(t){ return '<option value="' + t + '"' + (t===_orgsFilterTag?' selected':'') + '>' + t + '</option>'; }).join('') + '</select></div>' +
+    '<div><div class="' + lblStyle + '">Company Size</div><select id="orgf-size" onchange="renderOrgsTable(undefined,undefined,undefined,undefined,this.value)" style="' + selStyle + '"><option value="">All Sizes</option><option value="40–" ' + (_orgsFilterSize==='40–'?'selected':'') + '>Small (< 100)</option><option value="150–" ' + (_orgsFilterSize==='150–'?'selected':'') + '>Mid (100–300)</option><option value="300–" ' + (_orgsFilterSize==='300–'?'selected':'') + '>Large (300+)</option><option value="1,000" ' + (_orgsFilterSize==='1,000'?'selected':'') + '>Enterprise (1,000+)</option></select></div>' +
+    '</div>' +
+    '<div style="margin-top:14px;border-top:1px solid var(--g100);padding-top:10px;display:flex;justify-content:space-between;align-items:center">' +
+    '<button id="orgf-clear" style="font-size:12px;color:var(--red,#e05c87);background:none;border:none;cursor:pointer;padding:0;font-weight:600;font-family:var(--font)">Clear All</button>' +
+    '<button id="orgf-done" style="font-size:12px;font-weight:600;background:var(--teal);color:#fff;border:none;border-radius:7px;padding:6px 16px;cursor:pointer;font-family:var(--font)">Done</button></div>';
   document.body.appendChild(panel);
-  setTimeout(function(){ document.addEventListener('click', function close(e){ if(!panel.contains(e.target) && e.target.id!=='btn-org-filter'){ panel.remove(); document.removeEventListener('click',close); } }); },50);
+  document.getElementById('orgf-clear').addEventListener('click', function(){
+    _orgsFilterIndustry=''; _orgsFilterOwner=''; _orgsFilterTag=''; _orgsFilterSize='';
+    renderOrgsTable('');
+    panel.remove();
+  });
+  document.getElementById('orgf-done').addEventListener('click', function(){ panel.remove(); });
+  setTimeout(function(){ document.addEventListener('click', function close(e){ if(!panel.contains(e.target) && !btn.contains(e.target)){ panel.remove(); document.removeEventListener('click',close); } }); },50);
 }
 // ── CUSTOM FIELDS ─────────────────────────────────────────────────────────────
 function renderCustomFieldsSection(name, prefix) {
@@ -6167,19 +6399,53 @@ function renderCustomFieldsSection(name, prefix) {
     (fieldHtml ? '<div style="display:flex;flex-direction:column;gap:6px">' + fieldHtml + '</div>' : '<div style="font-size:12px;color:var(--g300)">No custom fields yet</div>') +
     '</div>';
 }
+var _suggestedFields = [
+  {label:'LinkedIn',         icon:'🔗'}, {label:'Address',          icon:'📍'},
+  {label:'Twitter / X',      icon:'𝕏' }, {label:'Website',          icon:'🌐'},
+  {label:'Birthday',         icon:'🎂'}, {label:'Department',       icon:'🏢'},
+  {label:'Assistant',        icon:'👤'}, {label:'Preferred Contact', icon:'📞'},
+  {label:'Annual Revenue',   icon:'💰'}, {label:'Employee Count',   icon:'👥'},
+  {label:'Founded',          icon:'📅'}, {label:'Headquarters',     icon:'🏙'},
+  {label:'Source',           icon:'📌'}, {label:'Next Review Date', icon:'🗓'},
+];
 function openAddFieldForm(name, prefix) {
   var existing = document.getElementById(prefix + '-add-field-form');
   if (existing) { existing.remove(); return; }
   var container = document.getElementById(prefix + '-custom-fields');
   if (!container) return;
+  var usedLabels = (_customFields[name]||[]).map(function(f){ return f.label; });
+  var available = _suggestedFields.filter(function(f){ return usedLabels.indexOf(f.label) < 0; });
+  var safeName = name.replace(/'/g,"\\'");
   var form = document.createElement('div');
   form.id = prefix + '-add-field-form';
-  form.style.cssText = 'margin-top:10px;background:var(--g50);border-radius:8px;padding:10px;border:1px solid var(--g200)';
-  form.innerHTML = '<input id="' + prefix + '-cf-label" placeholder="Field name (e.g. LinkedIn)" style="width:100%;border:1.5px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;margin-bottom:6px;box-sizing:border-box">' +
-    '<input id="' + prefix + '-cf-value" placeholder="Value" style="width:100%;border:1.5px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;margin-bottom:8px;box-sizing:border-box">' +
-    '<div style="display:flex;gap:8px"><button onclick="saveCustomField(\'' + name.replace(/'/g,"\\'") + '\',\'' + prefix + '\')" style="padding:5px 14px;background:var(--teal);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save</button>' +
-    '<button onclick="this.closest(\'#' + prefix + '-add-field-form\').remove()" style="padding:5px 14px;background:none;color:var(--g500);border:1px solid var(--g200);border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--font)">Cancel</button></div>';
-  container.querySelector('[style*="Custom Fields"]').closest('div').parentElement.appendChild(form);
+  form.style.cssText = 'margin-top:10px;background:var(--g50);border-radius:10px;padding:12px;border:1px solid var(--g200)';
+  // Suggested field chips
+  var chipsHtml = available.length ? (
+    '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:8px">Quick Add</div>' +
+    '<div style="display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px">' +
+    available.slice(0,8).map(function(f) {
+      return '<button type="button" onclick="quickAddField(\'' + safeName + '\',\'' + prefix + '\',\'' + f.label + '\')" style="display:flex;align-items:center;gap:4px;padding:4px 9px;border:1px solid var(--g200);border-radius:20px;background:#fff;font-size:11px;font-weight:500;color:var(--dark);cursor:pointer;font-family:var(--font)" onmouseover="this.style.borderColor=\'var(--teal)\';this.style.color=\'var(--teal)\'" onmouseout="this.style.borderColor=\'var(--g200)\';this.style.color=\'var(--dark)\'">' + f.icon + ' ' + f.label + '</button>';
+    }).join('') + '</div><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:6px">Custom Field</div>'
+  ) : '';
+  form.innerHTML = chipsHtml +
+    '<input id="' + prefix + '-cf-label" placeholder="Field name" style="width:100%;border:1.5px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;margin-bottom:6px;box-sizing:border-box;background:#fff">' +
+    '<input id="' + prefix + '-cf-value" placeholder="Value" style="width:100%;border:1.5px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);outline:none;margin-bottom:8px;box-sizing:border-box;background:#fff">' +
+    '<div style="display:flex;gap:8px">' +
+    '<button type="button" onclick="saveCustomField(\'' + safeName + '\',\'' + prefix + '\')" style="padding:5px 14px;background:var(--teal);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save</button>' +
+    '<button type="button" id="' + prefix + '-cf-cancel" style="padding:5px 14px;background:none;color:var(--g500);border:1px solid var(--g200);border-radius:6px;font-size:12px;cursor:pointer;font-family:var(--font)">Cancel</button></div>';
+  container.appendChild(form);
+  // Cancel button via addEventListener — no inline onclick ID issues
+  document.getElementById(prefix + '-cf-cancel').addEventListener('click', function(){ form.remove(); });
+}
+function quickAddField(name, prefix, label) {
+  var value = prompt('Enter value for "' + label + '":');
+  if (!value || !value.trim()) return;
+  if (!_customFields[name]) _customFields[name] = [];
+  _customFields[name].push({label:label, value:value.trim()});
+  var form = document.getElementById(prefix + '-add-field-form');
+  if (form) form.remove();
+  renderCustomFieldsSection(name, prefix);
+  showToast(label + ' field added');
 }
 function saveCustomField(name, prefix) {
   var label = document.getElementById(prefix + '-cf-label').value.trim();
