@@ -1183,6 +1183,10 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
             <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
             My Profile
           </button>
+          <button onclick="openToolsSettings();toggleUserSwitcher()" class="profile-menu-item">
+            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
+            Tools &amp; Integrations
+          </button>
           <button onclick="showToast('Notifications');toggleUserSwitcher()" class="profile-menu-item">
             <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
             Notifications
@@ -1544,7 +1548,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <div style="font-size:10px;color:var(--g400)">Goal: 40</div>
       </div>
     </div>
-    <button onclick="openTargetsModal()" style="width:100%;margin-top:14px;padding:9px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">View Today's Targets →</button>
+    <button onclick="openTargetsModal()" style="width:100%;margin-top:14px;padding:9px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">View Today's Targets →</button>
   </div>
 
   </div><!-- end row 1 -->
@@ -1596,7 +1600,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <!-- Stage tabs -->
         <div style="display:flex;border-bottom:1px solid var(--g100);overflow-x:auto" id="sr-pipe-tabs">
           <button class="sr-pipe-tab active" onclick="switchSRPipeTab('recents',this)" style="padding:9px 14px;font-size:11px;font-weight:600;border:none;background:none;cursor:pointer;white-space:nowrap;color:var(--teal);border-bottom:2px solid var(--teal)">Recents</button>
-          <button class="sr-pipe-tab" onclick="switchSRPipeTab('actions',this)" style="padding:9px 14px;font-size:11px;font-weight:600;border:none;background:none;cursor:pointer;white-space:nowrap;color:var(--g400);border-bottom:2px solid transparent">Actions <span style="background:var(--navy);color:#fff;border-radius:8px;padding:1px 5px;font-size:10px">4</span></button>
+          <button class="sr-pipe-tab" onclick="switchSRPipeTab('actions',this)" style="padding:9px 14px;font-size:11px;font-weight:600;border:none;background:none;cursor:pointer;white-space:nowrap;color:var(--g400);border-bottom:2px solid transparent">Actions <span style="background:var(--dark);color:#fff;border-radius:8px;padding:1px 5px;font-size:10px">4</span></button>
           <button class="sr-pipe-tab" onclick="switchSRPipeTab('leads',this)" style="padding:9px 14px;font-size:11px;font-weight:600;border:none;background:none;cursor:pointer;white-space:nowrap;color:var(--g400);border-bottom:2px solid transparent">Leads <span style="background:var(--teal);color:#fff;border-radius:8px;padding:1px 5px;font-size:10px">671</span></button>
           <button class="sr-pipe-tab" onclick="switchSRPipeTab('opps',this)" style="padding:9px 14px;font-size:11px;font-weight:600;border:none;background:none;cursor:pointer;white-space:nowrap;color:var(--g400);border-bottom:2px solid transparent">Opportunities <span style="background:var(--g200);color:var(--dark);border-radius:8px;padding:1px 5px;font-size:10px">9</span></button>
           <button class="sr-pipe-tab" onclick="switchSRPipeTab('proposals',this)" style="padding:9px 14px;font-size:11px;font-weight:600;border:none;background:none;cursor:pointer;white-space:nowrap;color:var(--g400);border-bottom:2px solid transparent">Proposals <span style="background:var(--g200);color:var(--dark);border-radius:8px;padding:1px 5px;font-size:10px">9</span></button>
@@ -2035,10 +2039,10 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <button style="padding:5px 12px;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g400);font-size:12px;font-weight:600;cursor:pointer">2023</button>
         <button style="padding:5px 12px;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g400);font-size:12px;font-weight:600;cursor:pointer">2024</button>
         <button style="padding:5px 12px;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g400);font-size:12px;font-weight:600;cursor:pointer">2025</button>
-        <button style="padding:5px 12px;border-radius:6px;border:1px solid var(--navy);background:var(--navy);color:#fff;font-size:12px;font-weight:600;cursor:pointer">2026</button>
+        <button style="padding:5px 12px;border-radius:6px;border:1px solid var(--teal);background:var(--teal);color:#fff;font-size:12px;font-weight:600;cursor:pointer">2026</button>
       </div>
       <!-- Annual goal badge -->
-      <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--navy);border-radius:10px">
+      <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--g100);border-radius:10px">
         <div>
           <div style="font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Annual Goal</div>
           <div style="font-size:18px;font-weight:700;color:var(--dark);font-family:var(--mono)">$2,100,000</div>
@@ -2168,7 +2172,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     <div class="card" style="padding:18px 20px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
         <div style="font-size:13px;font-weight:700;color:var(--dark)">Sales Goals by Customer</div>
-        <button style="padding:6px 14px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">+ Add New Customer</button>
+        <button style="padding:6px 14px;background:var(--teal);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">+ Add New Customer</button>
       </div>
       <div style="font-size:12px;color:var(--g400);padding:20px;text-align:center">No customer goals set. Add your first customer goal to get started.</div>
     </div>
@@ -2177,7 +2181,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     <div class="card" style="padding:18px 20px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
         <div style="font-size:13px;font-weight:700;color:var(--dark)">Sales Goals by Product</div>
-        <button style="padding:6px 14px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">+ Add New Product</button>
+        <button style="padding:6px 14px;background:var(--teal);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer">+ Add New Product</button>
       </div>
       <div style="font-size:12px;color:var(--g400);padding:20px;text-align:center">No product goals set. Add your first product goal to get started.</div>
     </div>
@@ -2257,7 +2261,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <div style="padding:4px 12px"><button onclick="showToast('Pipeline builder coming soon')" style="font-size:11px;color:var(--teal);font-weight:600;background:none;border:none;cursor:pointer;font-family:var(--font)">+ New Pipeline</button></div>
       </div>
     </div>
-    <div id="crm-sr-pipeline-label" style="display:none;padding:5px 12px;background:var(--navy);color:#fff;border-radius:8px;font-size:12px;font-weight:600">
+    <div id="crm-sr-pipeline-label" style="display:none;padding:5px 12px;background:var(--dark);color:#fff;border-radius:8px;font-size:12px;font-weight:600">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-right:5px"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg>My Sales Pipeline
     </div>
   </div>
@@ -3071,7 +3075,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <div style="font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Next Payout</div>
         <div style="font-size:28px;font-weight:700;color:var(--teal);font-family:var(--mono);margin-bottom:4px">$18,200</div>
         <div style="font-size:12px;color:var(--g400);margin-bottom:12px">Estimated · Jun 30, 2026</div>
-        <div style="background:rgba(255,255,255,0.07);border-radius:8px;padding:10px 12px">
+        <div style="background:var(--g50);border-radius:8px;padding:10px 12px">
           <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:var(--g500)">Approved</span><span style="font-size:12px;font-weight:600;color:#34d399;font-family:var(--mono)">$11,980</span></div>
           <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--g500)">Pending</span><span style="font-size:12px;font-weight:600;color:#f59e0b;font-family:var(--mono)">$9,425</span></div>
         </div>
@@ -3449,30 +3453,20 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div class="settings-nav">
 
     <div class="settings-nav-section">My Profile</div>
-    <div class="settings-nav-item active" onclick="switchSettingsSection('profile',this)">Profile <span>›</span></div>
-    <div class="settings-nav-item" onclick="switchSettingsSection('notifications',this)">Notifications <span>›</span></div>
+    <div class="settings-nav-item active" onclick="switchSettingsSection('profile',this)"><span style="display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg> Profile</span><span>›</span></div>
+    <div class="settings-nav-item" onclick="switchSettingsSection('security',this)"><span style="display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Security</span><span>›</span></div>
+    <div class="settings-nav-item" onclick="switchSettingsSection('notifications',this)"><span style="display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg> Notifications</span><span>›</span></div>
+    <div class="settings-nav-item" onclick="switchSettingsSection('subscription',this)"><span style="display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg> Subscription</span><span>›</span></div>
+
+    <div class="settings-nav-section">Tools</div>
+    <div class="settings-nav-item" onclick="openToolsSettings()"><span style="display:flex;align-items:center;gap:8px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Tools &amp; Integrations</span><span>›</span></div>
 
     <div class="settings-nav-section sm-only-nav">Company</div>
     <div class="settings-nav-item sm-only-nav" onclick="openCompanySettings()" style="color:var(--teal)">Company Settings →</div>
-
-    <div class="settings-nav-section">Tools</div>
-    <div class="settings-nav-item" onclick="switchSettingsSection('import-data',this)">Import Data <span>›</span></div>
-    <div class="settings-nav-item" onclick="switchSettingsSection('merge-duplicates',this)">Merge Duplicates <span>›</span></div>
-
-    <div class="settings-nav-section">Advanced</div>
-    <div class="settings-nav-item" onclick="switchSettingsSection('integrations',this)">Integrations <span>›</span></div>
-    <div class="settings-nav-item" onclick="switchSettingsSection('workflows',this)">Workflows <span>›</span></div>
-    <div class="settings-nav-item" onclick="switchSettingsSection('ace',this)">Ask Ace Config <span>›</span></div>
   </div>
   <div class="settings-content">
 
 <div id="settings-profile" style="display:block">
-      <div class="settings-tab-bar">
-        <div class="settings-tab active" onclick="switchSettingsTab(this)">Profile</div>
-        <div class="settings-tab" onclick="switchSettingsTab(this)">Security</div>
-        <div class="settings-tab" onclick="switchSettingsTab(this)">Notifications</div>
-        <div class="settings-tab" onclick="switchSettingsTab(this)">Subscription</div>
-      </div>
       <!-- profile sub-panel -->
       <div id="profile-sub-profile" style="display:block">
         <div class="settings-avatar-row">
@@ -3831,7 +3825,247 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   </div>
 </div>
 
-<div id="settings-import-data" style="display:none">
+
+
+  </div>
+</div>
+</div>
+
+</div><!-- end page-area -->
+</div><!-- end .main -->
+<!-- END PAGE AREA / MAIN -->
+
+<!-- SHORTCUT MENU -->
+<div class="shortcut-menu" id="shortcut-menu" onmouseleave="closeShortcutMenu()">
+  <div style="padding:4px 12px 6px;font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Quick Add</div>
+  <div class="sc-item" onclick="openModal('person-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="sc-label">Person</span><span class="sc-kbd">P</span></div>
+  <div class="sc-item" onclick="openModal('org-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span class="sc-label">Organization</span><span class="sc-kbd">G</span></div>
+  <div class="sc-item" onclick="openDealModal();closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="sc-label">Opportunity</span><span class="sc-kbd">O</span></div>
+  <div class="sc-item" onclick="openModal('activity-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span class="sc-label">Activity</span><span class="sc-kbd">A</span></div>
+  <div class="sc-item" onclick="openModal('note-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span><span class="sc-label">Note</span><span class="sc-kbd">N</span></div>
+</div>
+
+<!-- ACE DRAGGABLE DIALOG -->
+<div class="ace-dialog" id="ace-dialog" role="dialog" aria-modal="false" aria-label="Ask Ace AI Coach">
+  <div class="ace-dialog-header" id="ace-drag-handle">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx=12 cy=8 r=5/><path d=M20 21a8 8 0 1 0-16 0/><line x1=12 y1=3 x2=12 y2=1/><line x1=8 y1=2 x2=8 y2=4/><line x1=16 y1=2 x2=16 y2=4/></svg>
+    <div class="ace-dialog-title">Ask <span>Ace</span></div>
+    <button class="ace-dialog-close" onclick="toggleAce()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button>
+  </div>
+  <div class="ace-dialog-body">
+    <div class="ace-msg">Based on today's data, here are your coaching insights:</div>
+    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Action</div><div class="ace-insight-text">Follow up on AR Solutions — proposal idle for 2 days. Call Jake Miller before EOD.</div></div>
+    <div class="ace-insight risk"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Alert</div><div class="ace-insight-text">Jules Richards is 31% behind monthly call goal. Coaching conversation recommended this week.</div></div>
+    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26A7 7 0 0 1 12 2z"/></svg> Insight</div><div class="ace-insight-text">Brock's close rate increases 40% when follow-up happens within 24 hours of initial contact.</div></div>
+  </div>
+  <div class="ace-dialog-input">
+    <input class="ace-input" type="text" placeholder="Ask Ace anything...">
+    <button class="ace-send" onclick="askAceDialog(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg> Ask</button>
+  </div>
+</div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="side-panel" id="notif-panel">
+  <div class="side-panel-header">Notifications <button class="side-panel-close" onclick="togglePanel('notif-panel')" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button></div>
+  <div class="notif-list">
+    <div class="notif-item unread"><div class="notif-title">New highlight from Brock Wilson</div><div class="notif-body">Jules Richards was recognized for closing AR Solutions.</div><div class="notif-time">2 hours ago</div></div>
+    <div class="notif-item unread"><div class="notif-title">Ace AI Alert</div><div class="notif-body">Timber Mill Inc has been idle for 4 days. Follow up recommended.</div><div class="notif-time">3 hours ago</div></div>
+    <div class="notif-item"><div class="notif-title">Goal milestone reached</div><div class="notif-body">Brock Wilson hit 80% of annual goal.</div><div class="notif-time">Yesterday</div></div>
+    <div class="notif-item"><div class="notif-title">New contest started</div><div class="notif-body">Spring Kickoff Blitz is now live. 15 days remaining.</div><div class="notif-time">2 days ago</div></div>
+  </div>
+</div>
+
+<!-- CALENDAR PANEL -->
+<div class="side-panel" id="cal-panel">
+  <div class="side-panel-header">Calendar <button class="side-panel-close" onclick="togglePanel('cal-panel')" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button></div>
+  <div class="cal-grid-wrap">
+    <div class="cal-month"><button class="cal-nav" onclick="calNav(-1)">‹</button><div class="cal-month-label">June 2026</div><button class="cal-nav" onclick="calNav(1)">›</button></div>
+    <div class="cal-days-header"><div class="cal-day-header">Su</div><div class="cal-day-header">Mo</div><div class="cal-day-header">Tu</div><div class="cal-day-header">We</div><div class="cal-day-header">Th</div><div class="cal-day-header">Fr</div><div class="cal-day-header">Sa</div></div>
+    <div class="cal-days">
+      <div class="cal-day other-month">25</div><div class="cal-day other-month">26</div><div class="cal-day other-month">27</div><div class="cal-day other-month">28</div><div class="cal-day other-month">29</div><div class="cal-day other-month">30</div><div class="cal-day other-month">31</div>
+      <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+      <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
+      <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day today">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
+      <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
+      <div class="cal-day">29</div><div class="cal-day">30</div>
+    </div>
+  </div>
+  <div class="cal-events">
+    <div class="cal-event-title">Today — June 17</div>
+    <div class="cal-event-item"><div class="cal-event-time">9:00 AM</div><div><div class="cal-event-name">Team All Hands</div><div class="cal-event-sub">Zoom · Weekly</div></div></div>
+    <div class="cal-event-item"><div class="cal-event-time">2:00 PM</div><div><div class="cal-event-name">AR Solutions Follow-Up</div><div class="cal-event-sub">Jake Miller</div></div></div>
+    <div class="cal-event-item"><div class="cal-event-time">4:00 PM</div><div><div class="cal-event-name">Timber Mill Discovery</div><div class="cal-event-sub">Sarah Chen</div></div></div>
+  </div>
+</div>
+
+<!-- TODAY'S TARGETS MODAL -->
+<div id="page-targets" class="page" style="padding:0">
+  <div style="background:#fff;border-radius:14px;border:1px solid var(--g200);overflow:hidden">
+
+    <!-- Header -->
+    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;background:#fff">
+      <div style="display:flex;align-items:center;gap:14px">
+        <button onclick="history.back()||showPage('dashboard',null)" style="width:32px;height:32px;border-radius:8px;background:var(--g100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g600);flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <div>
+          <div style="font-size:17px;font-weight:700;color:var(--dark)">Today's Targets</div>
+          <div style="font-size:12px;color:var(--g400);margin-top:2px" id="targets-date">June 18, 2026</div>
+        </div>
+      </div>
+      <button class="tb-btn btn-teal" style="font-size:12px" onclick="openModal('lead-modal')">+ Add Target</button>
+    </div>
+
+    <!-- KPI strip — clean stat cards, no rings -->
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g100)">
+      <div style="padding:18px 22px;border-right:1px solid var(--g100)">
+        <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Today — Calls</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="tgt-calls-label" style="font-size:26px;font-weight:800;color:var(--teal);font-family:var(--mono);line-height:1">1</span>
+          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
+        </div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-calls-bar" style="width:3%;height:100%;background:var(--teal);border-radius:2px;transition:width 0.4s"></div></div>
+      </div>
+      <div style="padding:18px 22px;border-right:1px solid var(--g100)">
+        <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Today — Emails</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="tgt-emails-label" style="font-size:26px;font-weight:800;color:#5b8fe8;font-family:var(--mono);line-height:1">0</span>
+          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
+        </div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width 0.4s"></div></div>
+      </div>
+      <div style="padding:18px 22px;border-right:1px solid var(--g100)">
+        <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Month — Calls</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="tgt-mo-calls" style="font-size:26px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">62</span>
+          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
+        </div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:2.6%;height:100%;background:var(--teal);border-radius:2px"></div></div>
+      </div>
+      <div style="padding:18px 22px">
+        <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Month — Emails</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="tgt-mo-emails" style="font-size:26px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">0</span>
+          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
+        </div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:0%;height:100%;background:#5b8fe8;border-radius:2px"></div></div>
+      </div>
+    </div>
+
+    <!-- Toolbar: search + rep filter + today/past toggle -->
+    <div style="padding:12px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;gap:10px;background:var(--g50)">
+      <div style="position:relative;flex:1;max-width:220px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="1.8" style="position:absolute;left:9px;top:50%;transform:translateY(-50%)" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="tgt-search" type="text" placeholder="Search accounts..." oninput="filterTargets()" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:6px 10px 6px 30px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;box-sizing:border-box">
+      </div>
+      <select id="tgt-rep-filter" onchange="loadTargetRep(this.value)" style="border:1px solid var(--g200);border-radius:8px;padding:6px 10px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;cursor:pointer">
+        <option value="all">All Reps</option>
+        <option value="BW">Brock Wilson</option>
+        <option value="RH">Russ Holt</option>
+        <option value="JR">Jules Richards</option>
+        <option value="AP">Aya Pedrad</option>
+        <option value="DS">Doug Silverness</option>
+        <option value="MB">Marcus Bradley</option>
+        <option value="EV">Elena Vasquez</option>
+        <option value="AM">Amanda Morrison</option>
+        <option value="DP">Derek Park</option>
+        <option value="PN">Priya Nair</option>
+      </select>
+      <div style="margin-left:auto;display:flex;gap:0;border:1.5px solid var(--g200);border-radius:8px;overflow:hidden">
+        <button id="tgt-btn-today" onclick="switchTargetView('today',this)" style="padding:6px 14px;font-size:12px;font-weight:600;background:var(--navy);color:#fff;border:none;cursor:pointer">Today</button>
+        <button id="tgt-btn-past" onclick="switchTargetView('past',this)" style="padding:6px 14px;font-size:12px;font-weight:600;background:#fff;color:var(--g600);border:none;cursor:pointer;border-left:1.5px solid var(--g200)">Past</button>
+      </div>
+      <button onclick="openModal('lead-modal')" style="padding:6px 14px;font-size:12px;font-weight:600;background:var(--teal);color:#fff;border:none;border-radius:8px;cursor:pointer">+ Add Targets</button>
+    </div>
+
+    <!-- Accounts table — simplified 6 columns -->
+    <div>
+      <table id="tgt-table" style="width:100%;border-collapse:collapse">
+        <thead style="position:sticky;top:0;z-index:2">
+          <tr style="background:var(--g50);border-bottom:2px solid var(--g200)">
+            <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Account</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Contact</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Pipeline Stage</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Last Interaction</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Status</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Action</th>
+          </tr>
+        </thead>
+        <tbody id="tgt-tbody">
+          <!-- populated by JS -->
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div><!-- end page-targets -->
+
+<!-- COMPANY SETTINGS PAGE (SM only) -->
+<div id="page-company-settings" style="position:fixed;inset:0;z-index:2100;background:#f0f2f5;display:none;flex-direction:column;overflow:hidden">
+  <!-- Top bar -->
+  <div style="background:#fff;border-bottom:1px solid var(--g200);padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+    <div style="display:flex;align-items:center;gap:16px">
+      <button onclick="closeCompanySettings()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:7px;font-family:var(--font)" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <div style="width:1px;height:24px;background:var(--g200)"></div>
+      <div>
+        <div style="font-size:16px;font-weight:800;color:var(--dark)">Company Settings</div>
+        <div style="font-size:11px;color:var(--g400)">Changes apply globally to all reps and views</div>
+      </div>
+    </div>
+    <button onclick="_csSave();showToast('✓ Saved — changes applied globally')" style="padding:9px 22px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Save Changes</button>
+  </div>
+  <div style="display:flex;flex:1;overflow:hidden">
+    <!-- Left nav -->
+    <div style="width:220px;flex-shrink:0;border-right:1px solid var(--g200);padding:16px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;background:var(--g50)">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:4px 10px 8px">Organization</div>
+      <button class="cs-nav-btn" data-section="company"     onclick="_csLoadSection('company')"     style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:var(--teal);border:none;cursor:pointer;font-size:13px;font-weight:700;color:#fff;text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Company Info</button>
+      <button class="cs-nav-btn" data-section="goals"       onclick="_csLoadSection('goals')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Goals &amp; Quotas</button>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Sales Process</div>
+      <button class="cs-nav-btn" data-section="pipeline"    onclick="_csLoadSection('pipeline')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg> Pipeline Stages</button>
+      <button class="cs-nav-btn" data-section="products"    onclick="_csLoadSection('products')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Products &amp; Services</button>
+      <button class="cs-nav-btn" data-section="commissions" onclick="_csLoadSection('commissions')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Commission Rules</button>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Team</div>
+      <button class="cs-nav-btn" data-section="territories" onclick="_csLoadSection('territories')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg> Territories</button>
+      <button class="cs-nav-btn" data-section="tags"        onclick="_csLoadSection('tags')"        style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> Tags &amp; Labels</button>
+      <button class="cs-nav-btn" data-section="rules"       onclick="_csLoadSection('rules')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Performance Rules</button>
+    </div>
+    <!-- Content area -->
+    <div id="cs-content" style="flex:1;overflow-y:auto;padding:32px 40px;max-width:820px"></div>
+  </div>
+</div><!-- end page-company-settings -->
+
+<!-- TOOLS & INTEGRATIONS PAGE -->
+<div id="page-tools-settings" style="position:fixed;inset:0;z-index:2100;background:#f0f2f5;display:none;flex-direction:column;overflow:hidden">
+  <!-- Top bar -->
+  <div style="background:#fff;border-bottom:1px solid var(--g200);padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+    <div style="display:flex;align-items:center;gap:16px">
+      <button onclick="closeToolsSettings()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:7px;font-family:var(--font)" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <div style="width:1px;height:24px;background:var(--g200)"></div>
+      <div>
+        <div style="font-size:16px;font-weight:800;color:var(--dark)">Tools &amp; Integrations</div>
+        <div style="font-size:11px;color:var(--g400)">Import data, manage integrations, and configure automation</div>
+      </div>
+    </div>
+  </div>
+  <div style="display:flex;flex:1;overflow:hidden">
+    <!-- Left nav -->
+    <div style="width:220px;flex-shrink:0;border-right:1px solid var(--g200);padding:16px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;background:var(--g50)">
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:4px 10px 8px">Data</div>
+      <button class="ts-nav-btn" data-section="import-data"      onclick="_tsLoadSection('import-data')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:var(--teal);border:none;cursor:pointer;font-size:13px;font-weight:700;color:#fff;text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Import Data</button>
+      <button class="ts-nav-btn" data-section="merge-duplicates" onclick="_tsLoadSection('merge-duplicates')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Merge Duplicates</button>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Connections</div>
+      <button class="ts-nav-btn" data-section="integrations"     onclick="_tsLoadSection('integrations')"     style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Integrations</button>
+      <button class="ts-nav-btn" data-section="workflows"        onclick="_tsLoadSection('workflows')"        style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Workflows</button>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">AI</div>
+      <button class="ts-nav-btn" data-section="ace"              onclick="_tsLoadSection('ace')"              style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg> Ask Ace Config</button>
+    </div>
+    <!-- Content area -->
+    <div id="ts-content" style="flex:1;overflow-y:auto;padding:32px 40px">
+<div id="settings-import-data" class="ts-section" style="display:block">
   <div class="settings-section-title">Import Data</div>
   <div class="settings-section-sub">Bring your existing contacts, organizations, and opportunities into Goals.com.</div>
 
@@ -4054,7 +4288,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 
 </div><!-- end settings-import-data -->
 
-<div id="settings-merge-duplicates" style="display:none">
+<div id="settings-merge-duplicates" class="ts-section" style="display:none">
   <div class="settings-section-title">Merge Duplicates</div>
   <div class="settings-section-sub">Goals.com scans your contacts and organizations for potential duplicates based on name and email similarity.</div>
   <div style="display:flex;gap:0;margin-bottom:20px;border-bottom:2px solid var(--g200)" id="merge-tabs">
@@ -4259,7 +4493,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   </div>
 </div>
 
-<div id="settings-integrations" style="display:none">
+<div id="settings-integrations" class="ts-section" style="display:none">
   <div class="settings-section-title">Integrations</div>
   <div class="settings-section-sub">Connect Goals.com with your tools. My Integrations are personal — only you see them. Marketplace connects company-wide platforms.</div>
   <!-- Integration tabs -->
@@ -4389,7 +4623,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     <button onclick="_openIntegRequestForm()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap">Request an Integration</button>
   </div>
 </div>
-<div id="settings-workflows" style="display:none">
+<div id="settings-workflows" class="ts-section" style="display:none">
       <div class="settings-section-title">Workflows</div>
       <div class="settings-section-sub">Automate follow-up sequences, task assignments, and notifications based on deal activity.</div>
       <div style="display:flex;justify-content:flex-end;margin-bottom:14px">
@@ -4428,7 +4662,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         </div>
       </div>
     </div>
-<div id="settings-ace" style="display:none">
+<div id="settings-ace" class="ts-section" style="display:none">
   <div class="settings-section-title">Ask ACE Configuration</div>
   <div class="settings-section-sub">Control how ACE coaches your team — tone, topics, access, and usage limits. Settings here apply to all users under your account.</div>
 
@@ -4576,215 +4810,10 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       </table>
     </div>
   </div>
-</div>
-
+</div>    </div>
   </div>
-</div>
-</div>
+</div><!-- end page-tools-settings -->
 
-</div><!-- end page-area -->
-</div><!-- end .main -->
-<!-- END PAGE AREA / MAIN -->
-
-<!-- SHORTCUT MENU -->
-<div class="shortcut-menu" id="shortcut-menu" onmouseleave="closeShortcutMenu()">
-  <div style="padding:4px 12px 6px;font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Quick Add</div>
-  <div class="sc-item" onclick="openModal('person-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="sc-label">Person</span><span class="sc-kbd">P</span></div>
-  <div class="sc-item" onclick="openModal('org-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span class="sc-label">Organization</span><span class="sc-kbd">G</span></div>
-  <div class="sc-item" onclick="openDealModal();closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="sc-label">Opportunity</span><span class="sc-kbd">O</span></div>
-  <div class="sc-item" onclick="openModal('activity-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span class="sc-label">Activity</span><span class="sc-kbd">A</span></div>
-  <div class="sc-item" onclick="openModal('note-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span><span class="sc-label">Note</span><span class="sc-kbd">N</span></div>
-</div>
-
-<!-- ACE DRAGGABLE DIALOG -->
-<div class="ace-dialog" id="ace-dialog" role="dialog" aria-modal="false" aria-label="Ask Ace AI Coach">
-  <div class="ace-dialog-header" id="ace-drag-handle">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx=12 cy=8 r=5/><path d=M20 21a8 8 0 1 0-16 0/><line x1=12 y1=3 x2=12 y2=1/><line x1=8 y1=2 x2=8 y2=4/><line x1=16 y1=2 x2=16 y2=4/></svg>
-    <div class="ace-dialog-title">Ask <span>Ace</span></div>
-    <button class="ace-dialog-close" onclick="toggleAce()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button>
-  </div>
-  <div class="ace-dialog-body">
-    <div class="ace-msg">Based on today's data, here are your coaching insights:</div>
-    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Action</div><div class="ace-insight-text">Follow up on AR Solutions — proposal idle for 2 days. Call Jake Miller before EOD.</div></div>
-    <div class="ace-insight risk"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Alert</div><div class="ace-insight-text">Jules Richards is 31% behind monthly call goal. Coaching conversation recommended this week.</div></div>
-    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26A7 7 0 0 1 12 2z"/></svg> Insight</div><div class="ace-insight-text">Brock's close rate increases 40% when follow-up happens within 24 hours of initial contact.</div></div>
-  </div>
-  <div class="ace-dialog-input">
-    <input class="ace-input" type="text" placeholder="Ask Ace anything...">
-    <button class="ace-send" onclick="askAceDialog(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg> Ask</button>
-  </div>
-</div>
-
-<!-- NOTIFICATION PANEL -->
-<div class="side-panel" id="notif-panel">
-  <div class="side-panel-header">Notifications <button class="side-panel-close" onclick="togglePanel('notif-panel')" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button></div>
-  <div class="notif-list">
-    <div class="notif-item unread"><div class="notif-title">New highlight from Brock Wilson</div><div class="notif-body">Jules Richards was recognized for closing AR Solutions.</div><div class="notif-time">2 hours ago</div></div>
-    <div class="notif-item unread"><div class="notif-title">Ace AI Alert</div><div class="notif-body">Timber Mill Inc has been idle for 4 days. Follow up recommended.</div><div class="notif-time">3 hours ago</div></div>
-    <div class="notif-item"><div class="notif-title">Goal milestone reached</div><div class="notif-body">Brock Wilson hit 80% of annual goal.</div><div class="notif-time">Yesterday</div></div>
-    <div class="notif-item"><div class="notif-title">New contest started</div><div class="notif-body">Spring Kickoff Blitz is now live. 15 days remaining.</div><div class="notif-time">2 days ago</div></div>
-  </div>
-</div>
-
-<!-- CALENDAR PANEL -->
-<div class="side-panel" id="cal-panel">
-  <div class="side-panel-header">Calendar <button class="side-panel-close" onclick="togglePanel('cal-panel')" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button></div>
-  <div class="cal-grid-wrap">
-    <div class="cal-month"><button class="cal-nav" onclick="calNav(-1)">‹</button><div class="cal-month-label">June 2026</div><button class="cal-nav" onclick="calNav(1)">›</button></div>
-    <div class="cal-days-header"><div class="cal-day-header">Su</div><div class="cal-day-header">Mo</div><div class="cal-day-header">Tu</div><div class="cal-day-header">We</div><div class="cal-day-header">Th</div><div class="cal-day-header">Fr</div><div class="cal-day-header">Sa</div></div>
-    <div class="cal-days">
-      <div class="cal-day other-month">25</div><div class="cal-day other-month">26</div><div class="cal-day other-month">27</div><div class="cal-day other-month">28</div><div class="cal-day other-month">29</div><div class="cal-day other-month">30</div><div class="cal-day other-month">31</div>
-      <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
-      <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
-      <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day today">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
-      <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
-      <div class="cal-day">29</div><div class="cal-day">30</div>
-    </div>
-  </div>
-  <div class="cal-events">
-    <div class="cal-event-title">Today — June 17</div>
-    <div class="cal-event-item"><div class="cal-event-time">9:00 AM</div><div><div class="cal-event-name">Team All Hands</div><div class="cal-event-sub">Zoom · Weekly</div></div></div>
-    <div class="cal-event-item"><div class="cal-event-time">2:00 PM</div><div><div class="cal-event-name">AR Solutions Follow-Up</div><div class="cal-event-sub">Jake Miller</div></div></div>
-    <div class="cal-event-item"><div class="cal-event-time">4:00 PM</div><div><div class="cal-event-name">Timber Mill Discovery</div><div class="cal-event-sub">Sarah Chen</div></div></div>
-  </div>
-</div>
-
-<!-- TODAY'S TARGETS MODAL -->
-<div id="page-targets" class="page" style="padding:0">
-  <div style="background:#fff;border-radius:14px;border:1px solid var(--g200);overflow:hidden">
-
-    <!-- Header -->
-    <div style="padding:20px 24px 16px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;background:#fff">
-      <div style="display:flex;align-items:center;gap:14px">
-        <button onclick="history.back()||showPage('dashboard',null)" style="width:32px;height:32px;border-radius:8px;background:var(--g100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g600);flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-        <div>
-          <div style="font-size:17px;font-weight:700;color:var(--dark)">Today's Targets</div>
-          <div style="font-size:12px;color:var(--g400);margin-top:2px" id="targets-date">June 18, 2026</div>
-        </div>
-      </div>
-      <button class="tb-btn btn-teal" style="font-size:12px" onclick="openModal('lead-modal')">+ Add Target</button>
-    </div>
-
-    <!-- KPI strip — clean stat cards, no rings -->
-    <div style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g100)">
-      <div style="padding:18px 22px;border-right:1px solid var(--g100)">
-        <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Today — Calls</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="tgt-calls-label" style="font-size:26px;font-weight:800;color:var(--teal);font-family:var(--mono);line-height:1">1</span>
-          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
-        </div>
-        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-calls-bar" style="width:3%;height:100%;background:var(--teal);border-radius:2px;transition:width 0.4s"></div></div>
-      </div>
-      <div style="padding:18px 22px;border-right:1px solid var(--g100)">
-        <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Today — Emails</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="tgt-emails-label" style="font-size:26px;font-weight:800;color:#5b8fe8;font-family:var(--mono);line-height:1">0</span>
-          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
-        </div>
-        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width 0.4s"></div></div>
-      </div>
-      <div style="padding:18px 22px;border-right:1px solid var(--g100)">
-        <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Month — Calls</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="tgt-mo-calls" style="font-size:26px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">62</span>
-          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
-        </div>
-        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:2.6%;height:100%;background:var(--teal);border-radius:2px"></div></div>
-      </div>
-      <div style="padding:18px 22px">
-        <div style="font-size:11px;font-weight:600;color:var(--g400);margin-bottom:6px;text-transform:uppercase;letter-spacing:0.4px">Month — Emails</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="tgt-mo-emails" style="font-size:26px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">0</span>
-          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
-        </div>
-        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:0%;height:100%;background:#5b8fe8;border-radius:2px"></div></div>
-      </div>
-    </div>
-
-    <!-- Toolbar: search + rep filter + today/past toggle -->
-    <div style="padding:12px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;gap:10px;background:var(--g50)">
-      <div style="position:relative;flex:1;max-width:220px">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="1.8" style="position:absolute;left:9px;top:50%;transform:translateY(-50%)" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="tgt-search" type="text" placeholder="Search accounts..." oninput="filterTargets()" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:6px 10px 6px 30px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;box-sizing:border-box">
-      </div>
-      <select id="tgt-rep-filter" onchange="loadTargetRep(this.value)" style="border:1px solid var(--g200);border-radius:8px;padding:6px 10px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;cursor:pointer">
-        <option value="all">All Reps</option>
-        <option value="BW">Brock Wilson</option>
-        <option value="RH">Russ Holt</option>
-        <option value="JR">Jules Richards</option>
-        <option value="AP">Aya Pedrad</option>
-        <option value="DS">Doug Silverness</option>
-        <option value="MB">Marcus Bradley</option>
-        <option value="EV">Elena Vasquez</option>
-        <option value="AM">Amanda Morrison</option>
-        <option value="DP">Derek Park</option>
-        <option value="PN">Priya Nair</option>
-      </select>
-      <div style="margin-left:auto;display:flex;gap:0;border:1.5px solid var(--g200);border-radius:8px;overflow:hidden">
-        <button id="tgt-btn-today" onclick="switchTargetView('today',this)" style="padding:6px 14px;font-size:12px;font-weight:600;background:var(--navy);color:#fff;border:none;cursor:pointer">Today</button>
-        <button id="tgt-btn-past" onclick="switchTargetView('past',this)" style="padding:6px 14px;font-size:12px;font-weight:600;background:#fff;color:var(--g600);border:none;cursor:pointer;border-left:1.5px solid var(--g200)">Past</button>
-      </div>
-      <button onclick="openModal('lead-modal')" style="padding:6px 14px;font-size:12px;font-weight:600;background:var(--teal);color:#fff;border:none;border-radius:8px;cursor:pointer">+ Add Targets</button>
-    </div>
-
-    <!-- Accounts table — simplified 6 columns -->
-    <div>
-      <table id="tgt-table" style="width:100%;border-collapse:collapse">
-        <thead style="position:sticky;top:0;z-index:2">
-          <tr style="background:var(--g50);border-bottom:2px solid var(--g200)">
-            <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Account</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Contact</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Pipeline Stage</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Last Interaction</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Status</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Action</th>
-          </tr>
-        </thead>
-        <tbody id="tgt-tbody">
-          <!-- populated by JS -->
-        </tbody>
-      </table>
-    </div>
-
-  </div>
-</div><!-- end page-targets -->
-
-<!-- COMPANY SETTINGS PAGE (SM only) -->
-<div id="page-company-settings" style="position:fixed;inset:0;z-index:2100;background:#f0f2f5;display:none;flex-direction:column;overflow:hidden">
-  <!-- Top bar -->
-  <div style="background:#fff;border-bottom:1px solid var(--g200);padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-    <div style="display:flex;align-items:center;gap:16px">
-      <button onclick="closeCompanySettings()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:7px;font-family:var(--font)" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Back
-      </button>
-      <div style="width:1px;height:24px;background:var(--g200)"></div>
-      <div>
-        <div style="font-size:16px;font-weight:800;color:var(--dark)">Company Settings</div>
-        <div style="font-size:11px;color:var(--g400)">Changes apply globally to all reps and views</div>
-      </div>
-    </div>
-    <button onclick="_csSave();showToast('✓ Saved — changes applied globally')" style="padding:9px 22px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Save Changes</button>
-  </div>
-  <div style="display:flex;flex:1;overflow:hidden">
-    <!-- Left nav -->
-    <div style="width:220px;flex-shrink:0;border-right:1px solid var(--g200);padding:16px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;background:var(--g50)">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:4px 10px 8px">Organization</div>
-      <button class="cs-nav-btn" data-section="company"     onclick="_csLoadSection('company')"     style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:var(--teal);border:none;cursor:pointer;font-size:13px;font-weight:700;color:#fff;text-align:left;width:100%;font-family:var(--font)">🏢 Company Info</button>
-      <button class="cs-nav-btn" data-section="goals"       onclick="_csLoadSection('goals')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">🎯 Goals &amp; Quotas</button>
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Sales Process</div>
-      <button class="cs-nav-btn" data-section="pipeline"    onclick="_csLoadSection('pipeline')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">📊 Pipeline Stages</button>
-      <button class="cs-nav-btn" data-section="products"    onclick="_csLoadSection('products')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">📦 Products &amp; Services</button>
-      <button class="cs-nav-btn" data-section="commissions" onclick="_csLoadSection('commissions')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">💰 Commission Rules</button>
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Team</div>
-      <button class="cs-nav-btn" data-section="territories" onclick="_csLoadSection('territories')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">🗺 Territories</button>
-      <button class="cs-nav-btn" data-section="tags"        onclick="_csLoadSection('tags')"        style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">🏷 Tags &amp; Labels</button>
-      <button class="cs-nav-btn" data-section="rules"       onclick="_csLoadSection('rules')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">⚡ Performance Rules</button>
-    </div>
-    <!-- Content area -->
-    <div id="cs-content" style="flex:1;overflow-y:auto;padding:32px 40px;max-width:820px"></div>
-  </div>
-</div><!-- end page-company-settings -->
 <!-- ADD LEAD MODAL — Pipedrive style -->
 <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="Lead" id="lead-modal" onclick="closeOnOverlay(event,'lead-modal')">
   <div class="modal modal-lg">
@@ -5833,6 +5862,30 @@ function openCompanySettings() {
 function closeCompanySettings() {
   var el = document.getElementById('page-company-settings');
   if (el) el.style.display = 'none';
+}
+var _tsCurrentSection = 'import-data';
+function openToolsSettings() {
+  var el = document.getElementById('page-tools-settings');
+  if (el) el.style.display = 'flex';
+  _tsLoadSection(_tsCurrentSection || 'import-data');
+}
+function closeToolsSettings() {
+  var el = document.getElementById('page-tools-settings');
+  if (el) el.style.display = 'none';
+}
+function _tsLoadSection(id) {
+  _tsCurrentSection = id;
+  document.querySelectorAll('.ts-nav-btn').forEach(function(b) {
+    var active = b.dataset.section === id;
+    b.style.background = active ? 'var(--teal)' : 'transparent';
+    b.style.color = active ? '#fff' : 'var(--g600)';
+    b.style.fontWeight = active ? '700' : '500';
+  });
+  document.querySelectorAll('.ts-section').forEach(function(s) {
+    s.style.display = 'none';
+  });
+  var el = document.getElementById('settings-' + id);
+  if (el) el.style.display = 'block';
 }
 var _csCurrentSection = 'company';
 function _csNavItem(id, icon, label, active) {
@@ -7811,16 +7864,46 @@ function calNav(dir) {
 function switchSettingsSection(id, el) {
   document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
   if (el) el.classList.add('active');
-  const sections = ['profile','notifications','pipeline-stages','products','commission-rules','team-territories','import-data','merge-duplicates','integrations','workflows','ace'];
+  // Profile sub-panel aliases — show settings-profile and switch to right tab
+  var profileSubs = ['security','notifications','subscription'];
+  var isProfileSub = profileSubs.includes(id);
+  var resolvedId = isProfileSub ? 'profile' : id;
+  var toolsNav = document.getElementById('settings-tools-nav');
+  if (toolsNav) toolsNav.style.display = 'none';
+  const sections = ['profile','notifications','pipeline-stages','products','commission-rules','team-territories'];
   sections.forEach(s => {
     const sec = document.getElementById('settings-' + s);
-    if (sec) sec.style.display = s === id ? 'block' : 'none';
+    if (sec) sec.style.display = (s === resolvedId) ? 'block' : 'none';
   });
+  if (isProfileSub) {
+    // Switch profile sub-tab
+    var tabMap = {security:'security',notifications:'notifications',subscription:'subscription'};
+    var targetSub = tabMap[id];
+    ['profile','security','notifications','subscription'].forEach(function(k) {
+      var sub = document.getElementById('profile-sub-' + k);
+      if (sub) sub.style.display = (k === targetSub) ? 'block' : 'none';
+    });
+    // Update profile tab bar active state
+    document.querySelectorAll('#settings-profile .settings-tab').forEach(function(t) {
+      var matches = t.textContent.trim().toLowerCase() === id;
+      t.classList.toggle('active', matches);
+    });
+  } else if (id === 'profile') {
+    // Reset profile to Profile sub-panel
+    ['profile','security','notifications','subscription'].forEach(function(k) {
+      var sub = document.getElementById('profile-sub-' + k);
+      if (sub) sub.style.display = (k === 'profile') ? 'block' : 'none';
+    });
+    document.querySelectorAll('#settings-profile .settings-tab').forEach(function(t) {
+      t.classList.toggle('active', t.textContent.trim().toLowerCase() === 'profile');
+    });
+  }
   if (id === 'pipeline-stages') {
     if (!_settingsPipelines) initPipelineSettings();
     else renderPipelineCards();
   }
 }
+
 
 function importGoToStep(n) {
   for (var s = 1; s <= 5; s++) {
@@ -9274,7 +9357,7 @@ const ROLES = {
     id:'sr', label:'SR', name:'Brock Wilson', initials:'BW',
     photo:'https://randomuser.me/api/portraits/men/54.jpg',
     title:'Senior Financial Advisor', company:'Midwest Benefits Group',
-    canSee: ['team','highlights','chat','commissions','reports','forecasting','askace','marketplace','settings','pipeline','goals','dashboard','targets'],
+    canSee: ['contacts','team','highlights','chat','commissions','reports','forecasting','askace','settings','pipeline','goals','dashboard','targets'],
     canCreate: [],
     greeting:'Good morning, Brock'
   }
