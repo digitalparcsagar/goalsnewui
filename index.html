@@ -1111,7 +1111,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     <button class="sb-item" onclick="showPage('reports',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="sb-label">Reports</span></button>
     <button class="sb-item" onclick="showPage('forecasting',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg><span class="sb-label">Forecast</span></button>
     <button class="sb-item" onclick="showPage('marketplace',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 2 2 2 2 0 0 0 2-2"/><path d="M5 11v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/><line x1="9" y1="21" x2="9" y2="15"/><line x1="15" y1="21" x2="15" y2="15"/><line x1="9" y1="15" x2="15" y2="15"/></svg><span class="sb-label">Marketplace</span></button>
-    <button class="sb-item sm-only" onclick="showPage('company-settings',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="sb-label">Company</span></button>
+    <button class="sb-item sm-only" onclick="openCompanySettings()"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><span class="sb-label">Company</span></button>
   </div>
 </nav>
 <div class="main">
@@ -2653,15 +2653,82 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 
 <!-- TEAM -->
 <div id="page-team" class="page">
-<div class="page-header">
-  <div class="page-title">Team</div>
-  <div class="page-subtitle">Advisor performance and goal tracking</div>
+<div class="page-header" style="display:flex;align-items:flex-start;justify-content:space-between">
+  <div>
+    <div class="page-title">Team</div>
+    <div class="page-subtitle">Advisor performance and goal tracking</div>
+  </div>
+  <div style="position:relative;margin-top:4px">
+    <button onclick="_teamToggleCustomize()" style="display:flex;align-items:center;gap:6px;border:1px solid var(--g200);background:#fff;color:var(--g600);border-radius:8px;padding:7px 13px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      Customize
+    </button>
+    <!-- Customize dropdown -->
+    <div id="team-customize-panel" style="display:none;position:absolute;right:0;top:42px;background:#fff;border:1px solid var(--g200);border-radius:12px;padding:14px 16px;min-width:230px;box-shadow:0 8px 24px rgba(0,0,0,0.1);z-index:100">
+      <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Show / Hide Cards</div>
+      <div style="display:flex;flex-direction:column;gap:8px" id="team-card-toggles">
+        <!-- rendered by JS -->
+      </div>
+      <button onclick="_teamApplyCustomize()" style="margin-top:12px;width:100%;background:var(--teal);color:#fff;border:none;border-radius:7px;padding:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Apply</button>
+    </div>
+  </div>
 </div>
-<div class="stat-row">
-  <div class="stat-card" onclick="showPage('reports',null)" title="View reports"><div class="stat-label">Sales YTD</div><div class="stat-value teal">$7.95M</div></div>
-  <div class="stat-card" onclick="showPage('reports',null)" title="View ROI report"><div class="stat-label">ROI YTD</div><div class="stat-value">285%</div></div>
-  <div class="stat-card" onclick="openModal('date-modal')" title="Change period"><div class="stat-label">Sales This Month</div><div class="stat-value teal">$1.24M</div></div>
-  <div class="stat-card" onclick="showToast('10 active reps this month')" title="Team roster"><div class="stat-label">Active Reps</div><div class="stat-value">10</div></div>
+
+<!-- Team KPI row — stat cards + goal progress card -->
+<div style="display:flex;gap:14px;margin-bottom:20px;flex-wrap:wrap" id="team-kpi-row">
+
+  <!-- Sales YTD -->
+  <div class="stat-card team-kpi-card" id="tkpi-sales-ytd" style="flex:1;min-width:130px;cursor:pointer" onclick="showPage('reports',null)">
+    <div class="stat-label">Sales YTD</div>
+    <div class="stat-value teal">$7.95M</div>
+    <div class="stat-delta positive">▲ 12% vs last year</div>
+  </div>
+
+  <!-- Goal Progress — VISUAL card -->
+  <div class="stat-card team-kpi-card" id="tkpi-goal-progress" style="flex:2.2;min-width:260px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+      <div class="stat-label" style="margin:0">Sales vs Annual Goal</div>
+      <div style="font-size:11px;font-weight:700;color:var(--teal);background:rgba(29,158,117,0.1);border-radius:20px;padding:2px 8px">On Pace</div>
+    </div>
+    <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:6px">
+      <div style="font-size:22px;font-weight:800;color:var(--dark);font-family:var(--mono)">$7.95M</div>
+      <div style="font-size:13px;color:var(--g400)">/ $19.35M goal</div>
+      <div style="margin-left:auto;font-size:14px;font-weight:800;color:var(--teal);font-family:var(--mono)">41%</div>
+    </div>
+    <!-- Progress track -->
+    <div style="height:10px;background:var(--g100);border-radius:6px;overflow:hidden;position:relative">
+      <div style="width:41%;height:100%;background:linear-gradient(90deg,var(--teal),#34d399);border-radius:6px;transition:width 0.6s ease"></div>
+      <!-- Pace marker at 50% (mid-year) -->
+      <div style="position:absolute;top:0;left:50%;width:2px;height:100%;background:var(--g400);opacity:0.5"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;margin-top:4px">
+      <div style="font-size:10px;color:var(--g400)">$0</div>
+      <div style="font-size:10px;color:var(--g400);margin-left:calc(50% - 20px)">Mid-year pace</div>
+      <div style="font-size:10px;color:var(--g400)">$19.35M</div>
+    </div>
+  </div>
+
+  <!-- ROI YTD -->
+  <div class="stat-card team-kpi-card" id="tkpi-roi-ytd" style="flex:1;min-width:120px;cursor:pointer" onclick="showPage('reports',null)">
+    <div class="stat-label">ROI YTD</div>
+    <div class="stat-value">285%</div>
+    <div class="stat-delta positive">▲ 22pp vs last year</div>
+  </div>
+
+  <!-- Sales This Month -->
+  <div class="stat-card team-kpi-card" id="tkpi-month" style="flex:1;min-width:130px">
+    <div class="stat-label">This Month</div>
+    <div class="stat-value teal">$1.24M</div>
+    <div class="stat-delta positive">▲ 8% MoM</div>
+  </div>
+
+  <!-- Active Reps -->
+  <div class="stat-card team-kpi-card" id="tkpi-reps" style="flex:1;min-width:110px">
+    <div class="stat-label">Active Reps</div>
+    <div class="stat-value">10</div>
+    <div class="stat-delta" style="color:var(--g400)">4 on track · 5 at risk</div>
+  </div>
+
 </div>
 <!-- Team Leaderboard Table -->
 <div style="background:var(--white);border:1px solid var(--g200);border-radius:16px;overflow:hidden;margin-bottom:4px">
@@ -3386,7 +3453,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     <div class="settings-nav-item" onclick="switchSettingsSection('notifications',this)">Notifications <span>›</span></div>
 
     <div class="settings-nav-section sm-only-nav">Company</div>
-    <div class="settings-nav-item sm-only-nav" onclick="showPage('company-settings',null)" style="color:var(--teal)">Company Settings →</div>
+    <div class="settings-nav-item sm-only-nav" onclick="openCompanySettings()" style="color:var(--teal)">Company Settings →</div>
 
     <div class="settings-nav-section">Tools</div>
     <div class="settings-nav-item" onclick="switchSettingsSection('import-data',this)">Import Data <span>›</span></div>
@@ -4019,9 +4086,10 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
             <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">1 opportunity · Added Jun 14</div>
           </div>
         </div>
-        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
-          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Contacts merged — Marcus Lee is now the primary record')">Merge → Keep Marcus Lee</button>
-          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa;align-items:center">
+          <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ Marcus Lee is recommended — more data, 3 opportunities</div>
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(0)">Review &amp; Merge →</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('.merge-pair').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
         </div>
       </div>
 
@@ -4047,9 +4115,10 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
             <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">0 opportunities · Added Jun 20</div>
           </div>
         </div>
-        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
-          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Contacts merged — Tara Nguyen is now the primary record')">Merge → Keep Tara Nguyen</button>
-          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa;align-items:center">
+          <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ Tara Nguyen is recommended — 2 opportunities, added earlier</div>
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(1)">Review &amp; Merge →</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Marked as not a duplicate')">Not a Duplicate</button>
         </div>
       </div>
 
@@ -4075,8 +4144,9 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           </div>
         </div>
         <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
-          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Merged — Rachel Green is now the primary record')">Merge → Keep Rachel Green</button>
-          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+          <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ Rachel Green is recommended — added earlier, 1 opportunity</div>
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(2)">Review &amp; Merge →</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Marked as not a duplicate')">Not a Duplicate</button>
         </div>
       </div>
       <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">
@@ -4100,8 +4170,9 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           </div>
         </div>
         <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
-          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Merged — David Park is now the primary record')">Merge → Keep David Park</button>
-          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+          <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ David Park is recommended — 2 opportunities, added earlier</div>
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(3)">Review &amp; Merge →</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Marked as not a duplicate')">Not a Duplicate</button>
         </div>
       </div>
       <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">
@@ -4125,8 +4196,9 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           </div>
         </div>
         <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
-          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Merged — Angela Ross is now the primary record')">Merge → Keep Angela Ross</button>
-          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+          <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ Angela Ross is recommended — added earlier, 1 note</div>
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(4)">Review &amp; Merge →</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Marked as not a duplicate')">Not a Duplicate</button>
         </div>
       </div>
     </div>
@@ -4153,8 +4225,9 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           </div>
         </div>
         <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
-          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Organizations merged — Riverside Financial Group is now the primary record')">Merge → Keep Riverside Financial Group</button>
-          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+          <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ Riverside Financial Group is recommended — full name, 3 contacts</div>
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(5)">Review &amp; Merge →</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Marked as not a duplicate')">Not a Duplicate</button>
         </div>
       </div>
       <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">
@@ -4176,8 +4249,9 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           </div>
         </div>
         <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa">
-          <button class="tb-btn btn-primary" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Organizations merged — Harborview Medical Center is now the primary record')">Merge → Keep Harborview Medical Center</button>
-          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('div[style*=border-radius]').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
+          <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ Harborview Medical Center is recommended — full name, 2 contacts</div>
+          <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(6)">Review &amp; Merge →</button>
+          <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Marked as not a duplicate')">Not a Duplicate</button>
         </div>
       </div>
       <div style="text-align:center;padding:16px;color:var(--g400);font-size:13px">No more duplicate organizations found.</div>
@@ -4302,6 +4376,18 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       </div>
     </div>
   </div>
+
+  <!-- Request an Integration -->
+  <div style="margin-top:28px;padding:20px 22px;border:1.5px dashed var(--g200);border-radius:12px;background:#fafafa;display:flex;align-items:center;gap:18px">
+    <div style="width:40px;height:40px;border-radius:10px;background:var(--g100);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--g500)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+    </div>
+    <div style="flex:1">
+      <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:3px">Don't see what you need?</div>
+      <div style="font-size:12px;color:var(--g400)">Submit a request and our team will evaluate it for a future release.</div>
+    </div>
+    <button onclick="_openIntegRequestForm()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap">Request an Integration</button>
+  </div>
 </div>
 <div id="settings-workflows" style="display:none">
       <div class="settings-section-title">Workflows</div>
@@ -4343,27 +4429,154 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       </div>
     </div>
 <div id="settings-ace" style="display:none">
-      <div class="settings-section-title">Ace AI Configuration</div>
-      <div class="settings-section-sub">Customize how Ace surfaces insights, coaching priorities, and alerts for your team.</div>
-      <div style="background:var(--navy);border-radius:12px;padding:18px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px">
-        <div style="width:40px;height:40px;background:var(--teal);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div>
-        <div><div style="font-weight:700;font-size:14px;color:#fff">Ace is Active</div><div style="font-size:12px;color:rgba(255,255,255,0.5);margin-top:2px">Analyzing your team data in real time · Last scan 4 min ago</div></div>
-        <div style="margin-left:auto"><span class="status-pill sp-green" style="font-size:11px"><span class="pill-dot"></span>Online</span></div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:14px">
-        <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden">
-          <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;font-size:12px;font-weight:600;color:var(--g600)">Insight Sensitivity</div>
-          <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
-            <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">At-Risk Threshold</div><div style="font-size:11px;color:var(--g400)">Alert when advisor is below this % of expected annual pace</div></div><input type="number" value="60" min="0" max="100" style="width:70px;border:1.5px solid var(--g200);border-radius:8px;padding:6px 10px;font-size:13px;text-align:center"></div>
-            <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Stalled Deal Threshold (days)</div><div style="font-size:11px;color:var(--g400)">Flag a deal when no activity in this many days</div></div><input type="number" value="14" min="1" max="90" style="width:70px;border:1.5px solid var(--g200);border-radius:8px;padding:6px 10px;font-size:13px;text-align:center"></div>
-            <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Daily Briefing</div><div style="font-size:11px;color:var(--g400)">Ace sends a daily summary to your dashboard each morning</div></div><label style="cursor:pointer"><input type="checkbox" checked style="accent-color:var(--teal)"> <span style="font-size:12px;color:var(--g500)">Enabled</span></label></div>
-            <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Coaching Suggestions</div><div style="font-size:11px;color:var(--g400)">Show personalized coaching notes on rep goal cards</div></div><label style="cursor:pointer"><input type="checkbox" checked style="accent-color:var(--teal)"> <span style="font-size:12px;color:var(--g500)">Enabled</span></label></div>
-            <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Slack Notifications</div><div style="font-size:11px;color:var(--g400)">Send Ace alerts to a Slack channel</div></div><label style="cursor:pointer"><input type="checkbox" style="accent-color:var(--teal)"> <span style="font-size:12px;color:var(--g500)">Disabled</span></label></div>
-          </div>
-        </div>
-        <div><button class="save-btn" onclick="showToast('Ace configuration saved')">Save Configuration</button></div>
+  <div class="settings-section-title">Ask ACE Configuration</div>
+  <div class="settings-section-sub">Control how ACE coaches your team — tone, topics, access, and usage limits. Settings here apply to all users under your account.</div>
+
+  <!-- Status bar -->
+  <div style="background:var(--navy);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px">
+    <div style="width:38px;height:38px;background:var(--teal);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div>
+    <div style="flex:1"><div style="font-weight:700;font-size:14px;color:#fff">ACE is Active</div><div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">Analyzing team data in real time · Last scan 4 min ago</div></div>
+    <div style="text-align:right;margin-right:12px"><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:3px">Credits used this month</div><div style="font-size:18px;font-weight:800;color:#fff;font-family:var(--mono)">4,821 <span style="font-size:12px;color:rgba(255,255,255,0.4)">/ 10,000</span></div></div>
+    <div style="width:80px"><div style="height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden"><div style="width:48%;height:100%;background:var(--teal);border-radius:3px"></div></div><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:3px;text-align:right">48% used</div></div>
+  </div>
+
+  <!-- ACE tabs -->
+  <div style="display:flex;gap:0;border-bottom:2px solid var(--g200);margin-bottom:20px" id="ace-config-tabs">
+    <div onclick="switchAceTab('coaching',this)" style="padding:9px 16px;font-size:13px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy);margin-bottom:-2px;cursor:pointer">Coaching Style</div>
+    <div onclick="switchAceTab('access',this)" style="padding:9px 16px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">Team Access</div>
+    <div onclick="switchAceTab('usage',this)" style="padding:9px 16px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">AI Usage</div>
+  </div>
+
+  <!-- Tab: Coaching Style -->
+  <div id="ace-tab-coaching">
+
+    <!-- Tone -->
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Coaching Tone</div><div style="font-size:11px;color:var(--g400);margin-top:2px">How ACE communicates with your reps when giving feedback</div></div>
+      <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
+        <label style="border:2px solid var(--g200);border-radius:10px;padding:14px;cursor:pointer;transition:.15s" onclick="this.style.borderColor='var(--teal)';this.style.background='#f0fdfa';document.querySelectorAll('.ace-tone-card').forEach(function(c){if(c!==this)c.style.borderColor='var(--g200)',c.style.background='#fff'}.bind(this))">
+          <input type="radio" name="ace-tone" value="direct" style="display:none">
+          <div style="font-size:22px;margin-bottom:6px">💬</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Direct &amp; Concise</div>
+          <div style="font-size:11px;color:var(--g400)">Short, to-the-point coaching. Facts first, minimal encouragement.</div>
+        </label>
+        <label style="border:2px solid var(--teal);border-radius:10px;padding:14px;cursor:pointer;background:#f0fdfa;transition:.15s">
+          <input type="radio" name="ace-tone" value="balanced" checked style="display:none">
+          <div style="font-size:22px;margin-bottom:6px">⚖️</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Balanced Coach</div>
+          <div style="font-size:11px;color:var(--g400);line-height:1.4">Data-backed insights with encouragement. Constructive and supportive.</div>
+        </label>
+        <label style="border:2px solid var(--g200);border-radius:10px;padding:14px;cursor:pointer;transition:.15s">
+          <input type="radio" name="ace-tone" value="motivational" style="display:none">
+          <div style="font-size:22px;margin-bottom:6px">🔥</div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Motivational</div>
+          <div style="font-size:11px;color:var(--g400)">High-energy, positive reinforcement. Emphasizes wins and momentum.</div>
+        </label>
       </div>
     </div>
+
+    <!-- Response depth -->
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Response Depth</div><div style="font-size:11px;color:var(--g400);margin-top:2px">How detailed ACE's answers should be</div></div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="brief" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Brief</div><div style="font-size:11px;color:var(--g400)">2–3 sentence answers. Good for quick checks during calls.</div></div></label>
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="standard" checked style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Standard <span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:1px 6px;margin-left:4px">Recommended</span></div><div style="font-size:11px;color:var(--g400)">A paragraph with context and next steps. Balanced detail.</div></div></label>
+        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="detailed" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Detailed</div><div style="font-size:11px;color:var(--g400)">Full analysis with data breakdown. Best for planning sessions.</div></div></label>
+      </div>
+    </div>
+
+    <!-- Topic controls -->
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Topics ACE Can Discuss with Reps</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Unchecked topics will not be surfaced to sales reps (managers always see everything)</div></div>
+      <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
+        <label class="toggle-switch" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);width:auto"><input type="checkbox" checked style="accent-color:var(--teal)"><span class="toggle-slider" style="flex-shrink:0"></span> Pipeline &amp; Opportunities</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal)"> Goal Progress &amp; Pace</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal)"> Contact Recommendations</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal)"> Activity Coaching</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" style="accent-color:var(--teal)"> Compensation &amp; Commission</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" style="accent-color:var(--teal)"> Team Performance Comparisons</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal)"> Product Knowledge</label>
+        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" style="accent-color:var(--teal)"> Forecasting &amp; Projections</label>
+      </div>
+    </div>
+
+    <!-- Insight sensitivity -->
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:16px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Alert Thresholds</div></div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:14px">
+        <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">At-Risk Pace Threshold</div><div style="font-size:11px;color:var(--g400)">Flag an advisor when below this % of expected annual pace</div></div><div style="display:flex;align-items:center;gap:8px"><input type="number" value="60" min="0" max="100" style="width:65px;border:1.5px solid var(--g200);border-radius:7px;padding:6px 10px;font-size:13px;text-align:center;font-family:var(--font)"><span style="font-size:13px;color:var(--g400)">%</span></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Stalled Opportunity (days)</div><div style="font-size:11px;color:var(--g400)">Flag an opportunity when no activity for this many days</div></div><div style="display:flex;align-items:center;gap:8px"><input type="number" value="14" min="1" max="90" style="width:65px;border:1.5px solid var(--g200);border-radius:7px;padding:6px 10px;font-size:13px;text-align:center;font-family:var(--font)"><span style="font-size:13px;color:var(--g400)">days</span></div></div>
+        <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Daily Team Briefing</div><div style="font-size:11px;color:var(--g400)">ACE sends manager a morning summary to the dashboard</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
+      </div>
+    </div>
+
+    <button class="save-btn" onclick="showToast('✓ ACE coaching configuration saved')">Save Configuration</button>
+  </div>
+
+  <!-- Tab: Team Access -->
+  <div id="ace-tab-access" style="display:none">
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
+        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Rep ACE Access</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Toggle ACE access per rep. Credit limits apply per user.</div></div>
+        <div style="font-size:12px;color:var(--g500)">8 / 10 reps enabled</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="background:var(--g50)"><th style="padding:9px 16px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th><th style="padding:9px 16px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Access Level</th><th style="padding:9px 16px;text-align:right;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Monthly Limit</th><th style="padding:9px 16px;text-align:center;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Enabled</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Aya Pedrad</div><div style="font-size:11px;color:var(--g400)">aya@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Brock Wilson</div><div style="font-size:11px;color:var(--g400)">brock@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Elena Vasquez</div><div style="font-size:11px;color:var(--g400)">elena@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option selected>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="500" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Doug Silverness</div><div style="font-size:11px;color:var(--g400)">doug@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option selected>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Jules Richards</div><div style="font-size:11px;color:var(--g400)">jules@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option selected>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="250" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr><td style="padding:10px 16px"><div style="font-weight:600">Priya Nair</div><div style="font-size:11px;color:var(--g400)">priya@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <button class="save-btn" onclick="showToast('✓ Team ACE access settings saved')">Save Access Settings</button>
+  </div>
+
+  <!-- Tab: AI Usage -->
+  <div id="ace-tab-usage" style="display:none">
+    <!-- Company total -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
+      <div style="background:var(--navy);border-radius:12px;padding:18px 20px;color:#fff">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:rgba(255,255,255,0.4);margin-bottom:8px">Total Credits Used</div>
+        <div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--teal)">4,821</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">of 10,000 this month</div>
+        <div style="height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;margin-top:10px"><div style="width:48%;height:100%;background:var(--teal);border-radius:3px"></div></div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:18px 20px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px">Queries This Month</div>
+        <div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--dark)">312</div>
+        <div style="font-size:11px;color:var(--g400);margin-top:4px">Avg 10.4/day</div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:18px 20px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px">Credits Remaining</div>
+        <div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--dark)">5,179</div>
+        <div style="font-size:11px;color:var(--teal);margin-top:4px">Resets Jul 1, 2026</div>
+      </div>
+    </div>
+
+    <!-- Per-user breakdown -->
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:13px;font-weight:700;color:var(--dark)">Usage by Rep</div>
+        <div style="font-size:11px;color:var(--g400)">June 2026</div>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="background:var(--g50)"><th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th><th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Queries</th><th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Credits</th><th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Usage bar</th></tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Patricia Monroe <span style="font-size:10px;background:rgba(79,126,247,0.1);color:var(--blue);border-radius:4px;padding:1px 6px;margin-left:4px">Manager</span></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--dark)">84</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--dark)">1,260</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:63%;height:100%;background:var(--blue);border-radius:3px"></div></div></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Aya Pedrad</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">61</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">915</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:46%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Brock Wilson</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">58</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">870</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:44%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Doug Silverness</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">47</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">705</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:35%;height:100%;background:var(--amber);border-radius:3px"></div></div></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Elena Vasquez</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">34</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">510</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:26%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
+          <tr><td style="padding:10px 16px;font-weight:600;color:var(--g400)" colspan="4" style="text-align:center;font-size:12px">+ 5 more reps · <button onclick="showToast('Full report coming soon')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer">View full report →</button></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
   </div>
 </div>
@@ -4537,17 +4750,25 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 </div><!-- end page-targets -->
 
 <!-- COMPANY SETTINGS PAGE (SM only) -->
-<div id="page-company-settings" class="page sm-only" style="padding:0">
-  <div style="background:#fff;border-bottom:1px solid var(--g200);padding:18px 32px;display:flex;align-items:center;justify-content:space-between">
-    <div>
-      <div style="font-size:19px;font-weight:800;color:var(--dark)">Company Settings</div>
-      <div style="font-size:12px;color:var(--g400);margin-top:2px">Changes apply globally to all reps and views</div>
+<div id="page-company-settings" style="position:fixed;inset:0;z-index:2100;background:#f0f2f5;display:none;flex-direction:column;overflow:hidden">
+  <!-- Top bar -->
+  <div style="background:#fff;border-bottom:1px solid var(--g200);padding:0 28px;height:62px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
+    <div style="display:flex;align-items:center;gap:16px">
+      <button onclick="closeCompanySettings()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:7px;font-family:var(--font)" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <div style="width:1px;height:24px;background:var(--g200)"></div>
+      <div>
+        <div style="font-size:16px;font-weight:800;color:var(--dark)">Company Settings</div>
+        <div style="font-size:11px;color:var(--g400)">Changes apply globally to all reps and views</div>
+      </div>
     </div>
-    <button onclick="_csSave();showToast('✓ Saved — changes applied globally')" style="padding:10px 24px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Save Changes</button>
+    <button onclick="_csSave();showToast('✓ Saved — changes applied globally')" style="padding:9px 22px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Save Changes</button>
   </div>
-  <div style="display:flex;height:calc(100vh - 120px)">
+  <div style="display:flex;flex:1;overflow:hidden">
     <!-- Left nav -->
-    <div style="width:210px;flex-shrink:0;border-right:1px solid var(--g200);padding:16px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;background:var(--g50)">
+    <div style="width:220px;flex-shrink:0;border-right:1px solid var(--g200);padding:16px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;background:var(--g50)">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:4px 10px 8px">Organization</div>
       <button class="cs-nav-btn" data-section="company"     onclick="_csLoadSection('company')"     style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:var(--teal);border:none;cursor:pointer;font-size:13px;font-weight:700;color:#fff;text-align:left;width:100%;font-family:var(--font)">🏢 Company Info</button>
       <button class="cs-nav-btn" data-section="goals"       onclick="_csLoadSection('goals')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">🎯 Goals &amp; Quotas</button>
@@ -4561,7 +4782,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       <button class="cs-nav-btn" data-section="rules"       onclick="_csLoadSection('rules')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)">⚡ Performance Rules</button>
     </div>
     <!-- Content area -->
-    <div id="cs-content" style="flex:1;overflow-y:auto;padding:32px 40px;max-width:780px"></div>
+    <div id="cs-content" style="flex:1;overflow-y:auto;padding:32px 40px;max-width:820px"></div>
   </div>
 </div><!-- end page-company-settings -->
 <!-- ADD LEAD MODAL — Pipedrive style -->
@@ -5605,9 +5826,13 @@ function _oppSave() {
   closeModal('deal-modal');
 }
 function openCompanySettings() {
-  if (typeof toggleUserSwitcher === 'function') toggleUserSwitcher();
-  showPage('company-settings', null);
+  var el = document.getElementById('page-company-settings');
+  if (el) el.style.display = 'flex';
   setTimeout(function(){ _csLoadSection(_csCurrentSection || 'company'); }, 50);
+}
+function closeCompanySettings() {
+  var el = document.getElementById('page-company-settings');
+  if (el) el.style.display = 'none';
 }
 var _csCurrentSection = 'company';
 function _csNavItem(id, icon, label, active) {
@@ -10774,6 +10999,68 @@ function lbSort(colIndex, th) {
   </div>
 </div>
 
+<!-- SMART MERGE OVERLAY -->
+<div id="smart-merge-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2400;display:none;align-items:center;justify-content:center;padding:24px">
+  <div style="background:#fff;border-radius:16px;width:100%;max-width:780px;max-height:90vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.2)">
+    <!-- Header -->
+    <div style="padding:18px 24px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+      <div>
+        <div style="font-size:16px;font-weight:800;color:var(--dark)" id="sm-title">Review &amp; Merge</div>
+        <div style="font-size:11px;color:var(--g400);margin-top:2px" id="sm-subtitle">Choose which version of each field to keep in the merged record</div>
+      </div>
+      <button onclick="closeSmartMerge()" style="width:30px;height:30px;border-radius:6px;border:none;background:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g600)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <!-- Body -->
+    <div style="overflow-y:auto;flex:1;padding:0" id="sm-body"></div>
+    <!-- Footer -->
+    <div style="padding:14px 24px;border-top:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#fafafa">
+      <div style="font-size:12px;color:var(--g400)" id="sm-footer-note">All linked opportunities, notes, and activities will be moved to the primary record.</div>
+      <div style="display:flex;gap:8px">
+        <button onclick="closeSmartMerge()" style="border:1px solid var(--g200);background:#fff;color:var(--g600);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel</button>
+        <button onclick="_confirmSmartMerge()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Confirm Merge</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REQUEST INTEGRATION MODAL -->
+<div class="modal-overlay" id="integ-request-modal" onclick="closeOnOverlay(event,'integ-request-modal')">
+  <div class="modal" style="max-width:480px;width:96vw">
+    <div class="modal-header">
+      <div class="modal-title">Request an Integration</div>
+      <button class="modal-close" onclick="closeModal('integ-request-modal')" style="width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--g600)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--g500);margin:0 0 20px;line-height:1.5">Tell us what integration would help your team. Our development team reviews all requests monthly.</p>
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--dark);display:block;margin-bottom:6px">Integration name <span style="color:var(--red)">*</span></label>
+          <input id="integ-req-name" type="text" placeholder="e.g. Salesforce, Zoho CRM, DocuSign…" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);box-sizing:border-box">
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--dark);display:block;margin-bottom:6px">What would you use it for? <span style="color:var(--red)">*</span></label>
+          <textarea id="integ-req-usecase" rows="3" placeholder="Describe the use case and how it would help your workflow…" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);box-sizing:border-box;resize:vertical"></textarea>
+        </div>
+        <div>
+          <label style="font-size:12px;font-weight:600;color:var(--dark);display:block;margin-bottom:8px">Priority</label>
+          <div style="display:flex;gap:8px">
+            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--g200);border-radius:8px;cursor:pointer;font-size:13px;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--g200)'"><input type="radio" name="integ-priority" value="nice-to-have" style="accent-color:var(--teal)"> Nice to have</label>
+            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--teal);background:#f0fdfa;border-radius:8px;cursor:pointer;font-size:13px;transition:.15s"><input type="radio" name="integ-priority" value="important" checked style="accent-color:var(--teal)"> Important</label>
+            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--g200);border-radius:8px;cursor:pointer;font-size:13px;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--g200)'"><input type="radio" name="integ-priority" value="critical" style="accent-color:var(--teal)"> Critical</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div style="font-size:11px;color:var(--g400)">Sent directly to the Goals.com dev team</div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="closeModal('integ-request-modal')">Cancel</button>
+        <button class="modal-save" onclick="_submitIntegRequest()">Send Request</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ═══════════════════════════════════════════════════════════
      IMPORT WIZARD — FULL-PAGE OVERLAY
 ═══════════════════════════════════════════════════════════ -->
@@ -10815,6 +11102,184 @@ function lbSort(colIndex, th) {
 </div>
 
 <script>
+// ── SMART MERGE ──────────────────────────────────────────────
+var _smData = [
+  { match:94, type:'Person',
+    a:{name:'Marcus Lee',  email:'m.lee@riversidefinancial.com', phone:'415-555-2210', org:'Riverside Financial Group', title:'VP of Operations',   added:'Jun 2, 2026',  opps:3, notes:2, tag:'⭐ Recommended — more data'},
+    b:{name:'Marc Lee',    email:'m.lee@riverside.com',          phone:'',              org:'Riverside Financial Group', title:'',                    added:'Jun 14, 2026', opps:1, notes:0, tag:'Newer record'}
+  },
+  { match:88, type:'Person',
+    a:{name:'Tara Nguyen', email:'tara.n@apexholdings.com',      phone:'312-555-8811', org:'Apex Holdings LLC',          title:'CFO',                added:'May 18, 2026', opps:2, notes:3, tag:'⭐ Recommended — earlier, 2 opps'},
+    b:{name:'Tara Nguyen-Park', email:'tnguyen@apexhldg.net',   phone:'312-555-8811', org:'Apex Holdings',              title:'Chief Financial Officer', added:'Jun 20, 2026', opps:0, notes:0, tag:'Newer record'}
+  },
+  { match:91, type:'Person',
+    a:{name:'Rachel Green',  email:'r.green@cascadelogistics.com', phone:'503-555-6640', org:'Cascade Logistics Partners', title:'Director of Logistics', added:'Apr 3, 2026', opps:1, notes:2, tag:'⭐ Recommended — earlier, 1 opp'},
+    b:{name:'Rachel Greene', email:'rgreen@cascade-lp.com',        phone:'',              org:'Cascade Logistics',          title:'',                     added:'Jun 19, 2026',opps:0, notes:0, tag:'Newer record'}
+  },
+  { match:85, type:'Person',
+    a:{name:'David Park',  email:'d.park@summitcu.org',              phone:'206-555-4422', org:'Summit Credit Union',  title:'Senior Loan Officer', added:'Mar 12, 2026', opps:2, notes:1, tag:'⭐ Recommended — 2 opps'},
+    b:{name:'Dave Park',   email:'dpark@summit-creditunion.com',     phone:'206-555-4422', org:'Summit CU',            title:'Loan Officer',        added:'Jun 22, 2026', opps:0, notes:0, tag:'Newer record'}
+  },
+  { match:82, type:'Person',
+    a:{name:'Angela Ross',  email:'a.ross@riverside.com',   phone:'619-555-8820', org:'Riverside Financial Group', title:'Account Manager',     added:'May 5, 2026',  opps:1, notes:1, tag:'⭐ Recommended — earlier, has note'},
+    b:{name:'Angie Ross',   email:'angie.ross@rfg.com',     phone:'',              org:'Riverside Financial',      title:'',                    added:'Jun 15, 2026', opps:0, notes:0, tag:'Newer record'}
+  },
+  { match:93, type:'Organization',
+    a:{name:'Riverside Financial Group', email:'', phone:'415-555-0100', org:'Financial Services', title:'Founded 2008 · 120 employees', added:'Jan 14, 2026', opps:4, notes:5, tag:'⭐ Recommended — full name, 4 opps'},
+    b:{name:'Riverside Financial Grp',   email:'', phone:'',              org:'Financial Services', title:'',                              added:'Jun 10, 2026', opps:0, notes:0, tag:'Newer record'}
+  },
+  { match:87, type:'Organization',
+    a:{name:'Harborview Medical Center', email:'', phone:'619-555-3300', org:'Healthcare', title:'Founded 2001 · 850 employees', added:'Feb 2, 2026',  opps:3, notes:4, tag:'⭐ Recommended — full name, 3 opps'},
+    b:{name:'Harborview Med Ctr',        email:'', phone:'',              org:'Healthcare', title:'',                             added:'Jun 18, 2026', opps:0, notes:0, tag:'Newer record'}
+  }
+];
+var _smIdx = 0;
+var _smChoices = {}; // field → 'a' or 'b'
+
+function _openSmartMerge(idx) {
+  _smIdx = idx;
+  var d = _smData[idx];
+  _smChoices = {};
+  document.getElementById('sm-title').textContent = 'Review & Merge — ' + d.type;
+  document.getElementById('sm-subtitle').textContent = d.match + '% match · Choose which field value to keep';
+  _smRenderBody();
+  document.getElementById('smart-merge-overlay').style.display = 'flex';
+}
+function closeSmartMerge() {
+  document.getElementById('smart-merge-overlay').style.display = 'none';
+}
+
+function _smRenderBody() {
+  var d = _smData[_smIdx];
+  var fields = d.type === 'Organization'
+    ? [{key:'name',label:'Name'},{key:'phone',label:'Phone'},{key:'org',label:'Industry'},{key:'title',label:'Details'}]
+    : [{key:'name',label:'Full Name'},{key:'email',label:'Email'},{key:'phone',label:'Phone'},{key:'org',label:'Organization'},{key:'title',label:'Job Title'}];
+
+  var html = '';
+  // Column header
+  html += '<div style="display:grid;grid-template-columns:120px 1fr 40px 1fr;gap:0;border-bottom:2px solid var(--g200);background:var(--g50)">';
+  html += '<div style="padding:10px 16px;font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Field</div>';
+  html += '<div style="padding:10px 16px;font-size:10px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:0.5px;border-left:1px solid var(--g200)">' + d.a.name + ' <span style="font-size:9px;font-weight:600;background:rgba(29,158,117,0.15);color:var(--teal);border-radius:4px;padding:1px 5px">' + d.a.tag + '</span></div>';
+  html += '<div></div>';
+  html += '<div style="padding:10px 16px;font-size:10px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:0.5px;border-left:1px solid var(--g200)">' + d.b.name + ' <span style="font-size:9px;color:var(--g400);border-radius:4px;padding:1px 5px">' + d.b.tag + '</span></div>';
+  html += '</div>';
+
+  // Field rows
+  fields.forEach(function(f, i) {
+    var valA = d.a[f.key] || '—';
+    var valB = d.b[f.key] || '—';
+    var defaultChoice = valA !== '—' ? 'a' : 'b';
+    if (!_smChoices[f.key]) _smChoices[f.key] = defaultChoice;
+    var chA = _smChoices[f.key] === 'a';
+    var chB = _smChoices[f.key] === 'b';
+    var bg = i % 2 === 0 ? '#fff' : '#fafafa';
+    html += '<div style="display:grid;grid-template-columns:120px 1fr 40px 1fr;align-items:center;border-bottom:1px solid var(--g100);background:' + bg + '">';
+    html += '<div style="padding:12px 16px;font-size:12px;font-weight:600;color:var(--g500)">' + f.label + '</div>';
+    // Side A
+    html += '<div style="padding:12px 16px;border-left:1px solid var(--g100);cursor:pointer;' + (chA ? 'background:#f0fdfa;border-right:2px solid var(--teal)' : '') + '" onclick="_smSelect(\'' + f.key + '\',\'a\')">';
+    html += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="smf-' + f.key + '" value="a" ' + (chA?'checked':'') + ' style="accent-color:var(--teal)" onchange="_smSelect(\'' + f.key + '\',\'a\')"><span style="font-size:13px;color:var(--dark);font-weight:' + (chA?'600':'400') + '">' + valA + '</span></label>';
+    html += '</div>';
+    // VS
+    html += '<div style="text-align:center;font-size:10px;font-weight:700;color:var(--g300)">VS</div>';
+    // Side B
+    html += '<div style="padding:12px 16px;border-left:1px solid var(--g100);cursor:pointer;' + (chB ? 'background:#f0fdfa;border-right:2px solid var(--teal)' : '') + '" onclick="_smSelect(\'' + f.key + '\',\'b\')">';
+    html += '<label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="radio" name="smf-' + f.key + '" value="b" ' + (chB?'checked':'') + ' style="accent-color:var(--teal)" onchange="_smSelect(\'' + f.key + '\',\'b\')"><span style="font-size:13px;color:var(--dark);font-weight:' + (chB?'600':'400') + '">' + valB + '</span></label>';
+    html += '</div>';
+    html += '</div>';
+  });
+
+  // What transfers section
+  html += '<div style="padding:14px 16px;background:#fffbeb;border-top:1px solid var(--amber20,#fde68a)">';
+  html += '<div style="font-size:11px;font-weight:700;color:var(--amber,#d97706);margin-bottom:8px">What will transfer to the merged record</div>';
+  html += '<div style="display:flex;gap:16px;flex-wrap:wrap">';
+  if (d.a.opps + d.b.opps > 0) html += '<div style="font-size:12px;color:var(--dark)"><strong>' + (d.a.opps + d.b.opps) + '</strong> opportunit' + (d.a.opps+d.b.opps===1?'y':'ies') + ' from both records</div>';
+  if (d.a.notes + d.b.notes > 0) html += '<div style="font-size:12px;color:var(--dark)"><strong>' + (d.a.notes + d.b.notes) + '</strong> note' + (d.a.notes+d.b.notes===1?'':'s') + ' from both records</div>';
+  html += '<div style="font-size:12px;color:var(--dark)">All activities and timeline history</div>';
+  html += '</div></div>';
+
+  document.getElementById('sm-body').innerHTML = html;
+}
+
+function _smSelect(field, side) {
+  _smChoices[field] = side;
+  _smRenderBody();
+}
+
+function _confirmSmartMerge() {
+  var d = _smData[_smIdx];
+  closeSmartMerge();
+  showToast('✓ Merged — ' + d.a.name + ' is now the primary record. ' + (d.a.opps+d.b.opps) + ' opportunities transferred.');
+}
+
+// ── ACE CONFIG TABS ──────────────────────────────────────────
+function switchAceTab(tab, btn) {
+  ['coaching','access','usage'].forEach(function(t) {
+    var el = document.getElementById('ace-tab-'+t);
+    if (el) el.style.display = (t===tab) ? 'block' : 'none';
+  });
+  document.querySelectorAll('#ace-config-tabs div').forEach(function(b) {
+    b.style.color = 'var(--g400)';
+    b.style.fontWeight = '500';
+    b.style.borderBottom = 'none';
+    b.style.marginBottom = '0';
+  });
+  if (btn) {
+    btn.style.color = 'var(--navy)';
+    btn.style.fontWeight = '700';
+    btn.style.borderBottom = '2px solid var(--navy)';
+    btn.style.marginBottom = '-2px';
+  }
+}
+
+// ── INTEGRATIONS REQUEST FORM ────────────────────────────────
+function _openIntegRequestForm() { openModal('integ-request-modal'); }
+function _submitIntegRequest() {
+  var name = (document.getElementById('integ-req-name')||{}).value || '';
+  var uc   = (document.getElementById('integ-req-usecase')||{}).value || '';
+  if (!name.trim()) { showToast('⚠ Please enter an integration name'); return; }
+  if (!uc.trim())   { showToast('⚠ Please describe the use case'); return; }
+  closeModal('integ-request-modal');
+  showToast('✓ Request for "' + name.trim() + '" sent to the dev team');
+}
+
+// ── TEAM PAGE CUSTOMIZE ──────────────────────────────────────
+var _teamCards = [
+  {id:'tkpi-sales-ytd',   label:'Sales YTD',            visible:true},
+  {id:'tkpi-goal-progress',label:'Sales vs Annual Goal', visible:true},
+  {id:'tkpi-roi-ytd',     label:'ROI YTD',              visible:true},
+  {id:'tkpi-month',       label:'Sales This Month',      visible:true},
+  {id:'tkpi-reps',        label:'Active Reps',           visible:true},
+];
+function _teamToggleCustomize() {
+  var p = document.getElementById('team-customize-panel');
+  if (!p) return;
+  var showing = p.style.display !== 'none';
+  if (showing) { p.style.display = 'none'; return; }
+  // render toggles
+  var html = '';
+  _teamCards.forEach(function(c,i) {
+    html += '<label style="display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;color:var(--dark);font-weight:500">'
+      + '<input type="checkbox" ' + (c.visible?'checked':'') + ' style="accent-color:var(--teal);width:15px;height:15px" onchange="_teamCards[' + i + '].visible=this.checked">'
+      + c.label + '</label>';
+  });
+  document.getElementById('team-card-toggles').innerHTML = html;
+  p.style.display = 'block';
+  // close on outside click
+  setTimeout(function(){
+    document.addEventListener('click', function _tcc(e){
+      if (!p.contains(e.target)) { p.style.display='none'; document.removeEventListener('click',_tcc); }
+    });
+  }, 10);
+}
+function _teamApplyCustomize() {
+  _teamCards.forEach(function(c) {
+    var el = document.getElementById(c.id);
+    if (el) el.style.display = c.visible ? '' : 'none';
+  });
+  document.getElementById('team-customize-panel').style.display = 'none';
+  showToast('Team view updated');
+}
+
 // ── IMPORT WIZARD ────────────────────────────────────────────
 var _iwStep = 1;
 var _iwTotal = 5;
