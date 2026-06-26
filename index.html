@@ -91,7 +91,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .stat-change{font-size:11.5px;margin-top:4px}
 .stat-change.up{color:var(--teal)}.stat-change.down{color:var(--red)}
 .card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:24px}
-.card-dark{background:var(--navy);border-color:var(--navy)}
+.card-dark{background:#fff;border-color:var(--g200)}
 .card-title{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
 .two-col{display:grid;grid-template-columns:2fr 1fr;gap:14px;margin-bottom:20px}
 .three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
@@ -100,7 +100,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .status-pill{display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:20px}
 .sp-green{background:rgba(34,197,94,0.1);color:#16a34a}
 .sp-amber{background:rgba(245,158,11,0.1);color:#d97706}
-.sp-red{background:rgba(239,68,68,0.1);color:#dc2626}
+.sp-red{background:rgba(239,68,68,0.08);color:#ef4444}
 .pill-dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex-shrink:0}
 
 /* PROGRESS */
@@ -111,13 +111,13 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .prog-fill-amber{background:var(--amber)}.prog-fill-red{background:var(--red)}
 
 /* GOAL CHART */
-.goal-chart-card{background:var(--navy);border-radius:12px;padding:22px 24px;overflow:hidden}
-.goal-chart-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:rgba(255,255,255,0.35);margin-bottom:4px}
-.goal-chart-amount{font-size:26px;font-weight:700;color:#fff;letter-spacing:-0.5px;font-family:var(--mono);margin-bottom:8px}
+.goal-chart-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:22px 24px;overflow:hidden}
+.goal-chart-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--g400);margin-bottom:4px}
+.goal-chart-amount{font-size:26px;font-weight:700;color:var(--dark);letter-spacing:-0.5px;font-family:var(--mono);margin-bottom:8px}
 .goal-chart-pills{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap}
 .goal-pill{font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
 .pill-green{background:rgba(34,197,94,0.15);color:#22c55e}
-.pill-red{background:rgba(239,68,68,0.15);color:#ef4444}
+.pill-red{background:rgba(239,68,68,0.1);color:#ef4444}
 .chart-svg-wrap{height:80px}
 .chart-svg-wrap svg{width:100%;height:100%}
 
@@ -341,7 +341,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .ace-dialog-title span{color:var(--teal)}
 .ace-dialog-close{color:rgba(255,255,255,0.4);cursor:pointer;font-size:18px;border:none;background:none;line-height:1}
 .ace-dialog-body{padding:14px 16px;overflow-y:auto;max-height:280px}
-.ace-msg{font-size:12.5px;color:rgba(255,255,255,0.45);line-height:1.65;margin-bottom:12px}
+.ace-msg{font-size:12.5px;color:var(--g500);line-height:1.65;margin-bottom:12px}
 .ace-insight{background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:10px 12px;margin-bottom:8px}
 .ace-insight.risk{background:rgba(245,158,11,0.08);border-color:rgba(245,158,11,0.2)}
 .ace-insight-type{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--teal);margin-bottom:3px}
@@ -349,7 +349,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .ace-insight-text{font-size:12.5px;color:rgba(255,255,255,0.7);line-height:1.5}
 .ace-dialog-input{padding:10px 14px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px}
 .ace-input{flex:1;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:8px;padding:8px 12px;font-size:12.5px;color:#fff;font-family:var(--font);outline:none}
-.ace-input::placeholder{color:rgba(255,255,255,0.25)}
+.ace-input::placeholder{color:var(--g300)}
 .ace-input:focus{border-color:var(--teal)}
 .ace-send{background:var(--teal);color:#fff;border:none;border-radius:7px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)}
 
@@ -545,7 +545,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 /* Status pills — ensure text meets 4.5:1 contrast */
 .sp-green { background:#e6f7ef;color:#0f6f3a }
 .sp-amber { background:#fef5e7;color:#8a4f00 }
-.sp-red   { background:#fde8e8;color:#9b1c1c }
+.sp-red   { background:rgba(239,68,68,0.08);color:#ef4444 }
 .stage-lead { background:#dbeafe;color:#1e40af }
 .stage-opp  { background:#ede9fe;color:#5b21b6 }
 .stage-prop { background:#fef3c7;color:#92400e }
@@ -895,8 +895,8 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 .ace-hist-item{padding:9px 12px;border-radius:8px;cursor:pointer;transition:background 0.12s;margin:2px 8px;position:relative}
 .ace-hist-item:hover{background:rgba(255,255,255,0.07)}
 .ace-hist-item.active{background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.25)}
-.ace-hist-title{font-size:12px;font-weight:500;color:rgba(255,255,255,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ace-hist-time{font-size:10px;color:rgba(255,255,255,0.35);margin-top:2px}
+.ace-hist-title{font-size:12px;font-weight:500;color:var(--g400);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ace-hist-time{font-size:10px;color:var(--g400);margin-top:2px}
 .ace-hist-section{font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.6px;margin:12px 0 4px;padding:0 12px}
 .ace-page-sidebar>div:not(.ace-page-sidebar-top){overflow-y:auto;flex:1;padding:8px 0}
 .ace-page-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
@@ -989,8 +989,8 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 .rep-stat-box .lbl{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--g400);margin-bottom:3px}
 .rep-stat-box .val{font-size:18px;font-weight:700;color:var(--dark);font-family:var(--mono)}
 .rep-stat-box .val.teal{color:var(--teal)}
-.rep-chart-card{background:var(--navy);border-radius:12px;padding:16px 18px;margin-bottom:14px}
-.rep-chart-card .lbl{font-size:12px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px}
+.rep-chart-card{background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px 18px;margin-bottom:14px}
+.rep-chart-card .lbl{font-size:12px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:4px}
 .rep-chart-card .val{font-size:24px;font-weight:700;color:var(--teal);font-family:var(--mono)}
 .rep-tabs{display:flex;gap:4px;border-bottom:1px solid var(--g200);margin-bottom:14px}
 .rep-tab{padding:8px 14px;font-size:12px;font-weight:600;color:var(--g400);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px}
@@ -1258,13 +1258,13 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 <div class="goal-chart-card" style="position:relative;padding:20px 22px 12px;margin-bottom:18px">
   <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:10px">
     <div>
-      <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Total Sales</div>
+      <div style="font-size:13px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">Total Sales</div>
       <div style="font-size:32px;font-weight:700;color:var(--teal);font-family:var(--mono)" id="chart-total-label">$7,955,967.58</div>
     </div>
     <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:10px 16px;text-align:center">
-        <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">Annual Goal</div>
-        <div class="cs-annual-goal" style="font-size:15px;font-weight:700;color:#fff;font-family:var(--mono)">$19,355,000</div>
+      <div style="background:var(--g100);border-radius:10px;padding:10px 16px;text-align:center">
+        <div style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">Annual Goal</div>
+        <div class="cs-annual-goal" style="font-size:15px;font-weight:700;color:var(--dark);font-family:var(--mono)">$19,355,000</div>
       </div>
       <div style="background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.3);border-radius:10px;padding:10px 16px;text-align:center">
         <div style="font-size:11px;font-weight:600;color:rgba(239,68,68,0.8);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">Short of Goal</div>
@@ -1280,7 +1280,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     </div>
   </div>
   <div style="display:flex;justify-content:space-between;padding:0 4px;margin-top:4px">
-    <span style="font-size:10px;color:rgba(255,255,255,0.35)">Jan</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Feb</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Mar</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Apr</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">May</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Jun</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Jul</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Aug</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Sep</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Oct</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Nov</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Dec</span>
+    <span style="font-size:10px;color:var(--g400)">Jan</span><span style="font-size:10px;color:var(--g400)">Feb</span><span style="font-size:10px;color:var(--g400)">Mar</span><span style="font-size:10px;color:var(--g400)">Apr</span><span style="font-size:10px;color:var(--g400)">May</span><span style="font-size:10px;color:var(--g400)">Jun</span><span style="font-size:10px;color:var(--g400)">Jul</span><span style="font-size:10px;color:var(--g400)">Aug</span><span style="font-size:10px;color:var(--g400)">Sep</span><span style="font-size:10px;color:var(--g400)">Oct</span><span style="font-size:10px;color:var(--g400)">Nov</span><span style="font-size:10px;color:var(--g400)">Dec</span>
   </div>
 </div>
 
@@ -1300,33 +1300,33 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 <div style="display:flex;gap:14px;margin-bottom:14px;align-items:stretch" id="dash-stat-row">
 
   <!-- Annual Sales Goal hero card — 2/3 width -->
-  <div id="card-total-sales" data-card-name="Annual Goal" style="flex:2;min-width:0;background:var(--navy);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openGoalsPage()" title="Edit annual goals">
+  <div id="card-total-sales" data-card-name="Annual Goal" style="flex:2;min-width:0;background:#fff;border:1px solid var(--g200);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openGoalsPage()" title="Edit annual goals">
     <!-- subtle teal glow background -->
     <div style="position:absolute;top:-40px;right:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(29,158,117,0.18) 0%,transparent 70%);pointer-events:none"></div>
     <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
       <div>
-        <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:6px">Annual Sales Goal</div>
-        <div class="cs-annual-goal" style="font-size:36px;font-weight:700;color:#fff;font-family:var(--mono);line-height:1;margin-bottom:6px">$19,355,000</div>
+        <div style="font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:6px">Annual Sales Goal</div>
+        <div class="cs-annual-goal" style="font-size:36px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1;margin-bottom:6px">$19,355,000</div>
         <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
           <span style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);color:#4ade80;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700">$7.95M Achieved</span>
           <span style="background:rgba(239,68,68,0.18);border:1px solid rgba(239,68,68,0.35);color:#f87171;border-radius:6px;padding:3px 9px;font-size:11px;font-weight:700">$11.4M Remaining</span>
         </div>
       </div>
       <div style="text-align:right">
-        <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:3px">YTD Pace</div>
+        <div style="font-size:11px;color:var(--g400);margin-bottom:3px">YTD Pace</div>
         <div style="font-size:42px;font-weight:700;color:var(--teal);font-family:var(--mono);line-height:1">41%</div>
-        <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px">of Annual</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:2px">of Annual</div>
       </div>
     </div>
     <!-- progress bar -->
-    <div style="margin-top:16px;background:rgba(255,255,255,0.08);border-radius:8px;height:6px;overflow:hidden">
+    <div style="margin-top:16px;background:var(--g100);border-radius:8px;height:6px;overflow:hidden">
       <div style="width:41%;height:100%;background:linear-gradient(90deg,var(--teal),#4ade80);border-radius:8px;position:relative">
         <div style="position:absolute;right:0;top:-4px;width:14px;height:14px;background:#fff;border-radius:50%;border:2px solid var(--teal);box-shadow:0 0 8px rgba(29,158,117,0.6)"></div>
       </div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:6px">
-      <span style="font-size:10px;color:rgba(255,255,255,0.3)">Jan 2026</span>
-      <span style="font-size:10px;color:rgba(255,255,255,0.3)">Dec 2026</span>
+      <span style="font-size:10px;color:var(--g400)">Jan 2026</span>
+      <span style="font-size:10px;color:var(--g400)">Dec 2026</span>
     </div>
   </div>
 
@@ -1503,13 +1503,13 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div class="goal-chart-card" style="flex:2;min-width:0;position:relative;padding:20px 22px 14px">
     <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:6px;flex-wrap:wrap;gap:10px">
       <div>
-        <div style="font-size:13px;font-weight:600;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">My Sales YTD</div>
+        <div style="font-size:13px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:4px">My Sales YTD</div>
         <div style="font-size:32px;font-weight:700;color:var(--teal);font-family:var(--mono)">$967,500.32</div>
       </div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:10px 16px;text-align:center">
-          <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">Annual Goal</div>
-          <div style="font-size:15px;font-weight:700;color:#fff;font-family:var(--mono)">$2,100,000</div>
+        <div style="background:var(--g100);border-radius:10px;padding:10px 16px;text-align:center">
+          <div style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">Annual Goal</div>
+          <div style="font-size:15px;font-weight:700;color:var(--dark);font-family:var(--mono)">$2,100,000</div>
         </div>
         <div style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.3);border-radius:10px;padding:10px 16px;text-align:center">
           <div style="font-size:11px;font-weight:600;color:rgba(245,158,11,0.9);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">At Risk</div>
@@ -1525,7 +1525,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       </svg>
     </div>
     <div style="display:flex;justify-content:space-between;padding:0 4px;margin-top:4px">
-      <span style="font-size:10px;color:rgba(255,255,255,0.35)">Jan</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Feb</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Mar</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Apr</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">May</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Jun</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Jul</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Aug</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Sep</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Oct</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Nov</span><span style="font-size:10px;color:rgba(255,255,255,0.35)">Dec</span>
+      <span style="font-size:10px;color:var(--g400)">Jan</span><span style="font-size:10px;color:var(--g400)">Feb</span><span style="font-size:10px;color:var(--g400)">Mar</span><span style="font-size:10px;color:var(--g400)">Apr</span><span style="font-size:10px;color:var(--g400)">May</span><span style="font-size:10px;color:var(--g400)">Jun</span><span style="font-size:10px;color:var(--g400)">Jul</span><span style="font-size:10px;color:var(--g400)">Aug</span><span style="font-size:10px;color:var(--g400)">Sep</span><span style="font-size:10px;color:var(--g400)">Oct</span><span style="font-size:10px;color:var(--g400)">Nov</span><span style="font-size:10px;color:var(--g400)">Dec</span>
     </div>
   </div>
 
@@ -1665,12 +1665,12 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div style="display:flex;gap:18px;margin-bottom:24px;align-items:stretch">
 
     <!-- Annual Sales Goal — 2/3 -->
-    <div style="flex:2;min-width:0;background:var(--navy);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openGoalsPage()">
+    <div style="flex:2;min-width:0;background:#fff;border:1px solid var(--g200);border-radius:14px;padding:22px 24px;position:relative;overflow:hidden;cursor:pointer" onclick="openGoalsPage()">
       <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(29,158,117,0.15) 0%,transparent 70%);pointer-events:none"></div>
       <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
         <div>
-          <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px">Annual Sales Goal — 2026</div>
-          <div class="cs-annual-goal" style="font-size:34px;font-weight:700;color:#fff;font-family:var(--mono);line-height:1;margin-bottom:8px">$19,355,000</div>
+          <div style="font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px">Annual Sales Goal — 2026</div>
+          <div class="cs-annual-goal" style="font-size:34px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1;margin-bottom:8px">$19,355,000</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap">
             <span style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);color:#4ade80;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">$7.95M Achieved</span>
             <span style="background:rgba(239,68,68,0.18);border:1px solid rgba(239,68,68,0.35);color:#f87171;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">$11.4M Remaining</span>
@@ -1678,21 +1678,21 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
           </div>
         </div>
         <div style="text-align:right;flex-shrink:0">
-          <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:2px">YTD Pace</div>
+          <div style="font-size:11px;color:var(--g400);margin-bottom:2px">YTD Pace</div>
           <div style="font-size:42px;font-weight:700;color:var(--teal);font-family:var(--mono);line-height:1">41%</div>
-          <div style="font-size:10px;color:rgba(255,255,255,0.3);margin-top:2px">of Annual Goal</div>
+          <div style="font-size:10px;color:var(--g400);margin-top:2px">of Annual Goal</div>
         </div>
       </div>
       <div style="margin-top:18px">
-        <div style="background:rgba(255,255,255,0.08);border-radius:8px;height:8px;overflow:visible;position:relative">
+        <div style="background:var(--g100);border-radius:8px;height:8px;overflow:visible;position:relative">
           <div style="width:41%;height:100%;background:linear-gradient(90deg,var(--teal),#34d399);border-radius:8px;position:relative">
             <div style="position:absolute;right:-6px;top:-4px;width:16px;height:16px;background:#fff;border-radius:50%;border:2.5px solid var(--teal);box-shadow:0 0 10px rgba(29,158,117,0.7)"></div>
           </div>
         </div>
         <div style="display:flex;justify-content:space-between;margin-top:5px">
-          <span style="font-size:10px;color:rgba(255,255,255,0.3)">Jan</span>
-          <span style="font-size:10px;color:rgba(255,255,255,0.45);font-weight:600">H2 Starts July</span>
-          <span style="font-size:10px;color:rgba(255,255,255,0.3)">Dec</span>
+          <span style="font-size:10px;color:var(--g400)">Jan</span>
+          <span style="font-size:10px;color:var(--g500);font-weight:600">H2 Starts July</span>
+          <span style="font-size:10px;color:var(--g400)">Dec</span>
         </div>
       </div>
     </div>
@@ -1937,19 +1937,19 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     <div style="flex:1;min-width:260px;max-width:340px;display:flex;flex-direction:column;gap:12px;position:sticky;top:20px">
 
       <!-- ACE header card -->
-      <div style="background:var(--navy);border-radius:14px;padding:18px 18px 14px;position:relative;overflow:hidden">
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:18px 18px 14px;position:relative;overflow:hidden">
         <div style="position:absolute;bottom:-20px;right:-20px;width:100px;height:100px;background:radial-gradient(circle,rgba(29,158,117,0.2) 0%,transparent 70%)"></div>
         <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
           <div style="width:32px;height:32px;background:var(--teal);border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg>
           </div>
           <div>
-            <div style="font-size:13px;font-weight:700;color:#fff">Ace Insights</div>
-            <div style="font-size:10px;color:rgba(255,255,255,0.4)">AI Sales Coach · Updated just now</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark)">Ace Insights</div>
+            <div style="font-size:10px;color:var(--g400)">AI Sales Coach · Updated just now</div>
           </div>
         </div>
         <div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:10px 12px">
-          <div style="font-size:12px;color:rgba(255,255,255,0.75);line-height:1.5">4 of 6 advisors on annual pace. <strong style="color:#34d399">H2 focus</strong> should be Jules and Doug — together they represent $2.2M in recoverable gap.</div>
+          <div style="font-size:12px;color:var(--g400);line-height:1.5">4 of 6 advisors on annual pace. <strong style="color:#34d399">H2 focus</strong> should be Jules and Doug — together they represent $2.2M in recoverable gap.</div>
         </div>
         <button onclick="showPage('askace',null)" style="width:100%;margin-top:10px;padding:8px;background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.35);border-radius:8px;color:var(--teal);font-size:11px;font-weight:600;cursor:pointer;text-align:center">Ask Ace a question →</button>
       </div>
@@ -2040,8 +2040,8 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       <!-- Annual goal badge -->
       <div style="display:flex;align-items:center;gap:8px;padding:8px 14px;background:var(--navy);border-radius:10px">
         <div>
-          <div style="font-size:10px;color:rgba(255,255,255,0.5);text-transform:uppercase;letter-spacing:0.5px">Annual Goal</div>
-          <div style="font-size:18px;font-weight:700;color:#fff;font-family:var(--mono)">$2,100,000</div>
+          <div style="font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Annual Goal</div>
+          <div style="font-size:18px;font-weight:700;color:var(--dark);font-family:var(--mono)">$2,100,000</div>
         </div>
         <span style="background:rgba(245,158,11,0.2);color:#f59e0b;border:1px solid rgba(245,158,11,0.4);border-radius:6px;padding:3px 8px;font-size:11px;font-weight:700">At Risk →</span>
       </div>
@@ -2778,15 +2778,15 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     </div>
   </div>
   <div style="display:flex;flex-direction:column;gap:14px">
-    <div class="card" style="background:var(--navy);border:none">
-      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:rgba(255,255,255,0.3);margin-bottom:6px">Team Pulse</div>
+    <div class="card" style="background:#fff;">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--g400);margin-bottom:6px">Team Pulse</div>
       <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:rgba(255,255,255,0.6)">On pace or above</span><span style="font-weight:700;font-size:16px;color:var(--teal)">4 / 10</span></div>
+        <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:12px;color:var(--g600)">On pace or above</span><span style="font-weight:700;font-size:16px;color:var(--teal)">4 / 10</span></div>
         <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden"><div style="width:40%;height:100%;background:var(--teal);border-radius:2px"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><span style="font-size:12px;color:rgba(255,255,255,0.6)">At risk (&lt;80% pace)</span><span style="font-weight:700;font-size:16px;color:var(--amber)">5 / 10</span></div>
-        <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden"><div style="width:50%;height:100%;background:var(--amber);border-radius:2px"></div></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><span style="font-size:12px;color:rgba(255,255,255,0.6)">Critical (&lt;50% pace)</span><span style="font-weight:700;font-size:16px;color:var(--red)">1 / 10</span></div>
-        <div style="height:4px;background:rgba(255,255,255,0.1);border-radius:2px;overflow:hidden"><div style="width:10%;height:100%;background:var(--red);border-radius:2px"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><span style="font-size:12px;color:var(--g600)">At risk (&lt;80% pace)</span><span style="font-weight:700;font-size:16px;color:var(--amber)">5 / 10</span></div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:50%;height:100%;background:var(--amber);border-radius:2px"></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px"><span style="font-size:12px;color:var(--g600)">Critical (&lt;50% pace)</span><span style="font-weight:700;font-size:16px;color:var(--red)">1 / 10</span></div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:10%;height:100%;background:var(--red);border-radius:2px"></div></div>
       </div>
     </div>
     <div class="card">
@@ -2885,7 +2885,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 <div class="two-col" style="margin-bottom:24px">
   <div class="card"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px"><div class="card-title" style="margin:0">Spring Kickoff Blitz</div><span class="status-pill sp-green" style="font-size:10px"><span class="pill-dot"></span>15 days left</span></div><div class="leader-list"><div class="leader-item"><div class="leader-rank gold">1</div><div class="leader-av" style="background:#1d9e75;padding:0;overflow:hidden"><img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="BW"></div><div class="leader-info"><div class="leader-name">Brock Wilson</div><div class="leader-prog"><div class="leader-prog-fill" style="width:90%"></div></div></div><div class="leader-val">$420K</div></div><div class="leader-item"><div class="leader-rank silver">2</div><div class="leader-av" style="background:#6366f1;padding:0;overflow:hidden"><img src="https://randomuser.me/api/portraits/men/71.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="RH"></div><div class="leader-info"><div class="leader-name">Russ Holt</div><div class="leader-prog"><div class="leader-prog-fill" style="width:72%"></div></div></div><div class="leader-val">$338K</div></div><div class="leader-item"><div class="leader-rank bronze">3</div><div class="leader-av" style="background:#f59e0b;padding:0;overflow:hidden"><img src="https://randomuser.me/api/portraits/women/15.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="JR"></div><div class="leader-info"><div class="leader-name">Jules Richards</div><div class="leader-prog"><div class="leader-prog-fill" style="width:58%"></div></div></div><div class="leader-val">$272K</div></div><div class="leader-item"><div class="leader-rank">4</div><div class="leader-av" style="background:#8b5cf6;padding:0;overflow:hidden"><img src="https://randomuser.me/api/portraits/men/82.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="DS"></div><div class="leader-info"><div class="leader-name">Doug Silverness</div><div class="leader-prog"><div class="leader-prog-fill" style="width:44%"></div></div></div><div class="leader-val">$206K</div></div></div></div>
   <div style="display:flex;flex-direction:column;gap:14px">
-    <div class="card card-dark" style="padding:22px;flex:1"><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:rgba(255,255,255,0.3);margin-bottom:4px">Prize Pool</div><div style="font-size:32px;font-weight:700;color:#fff;font-family:var(--mono);margin-bottom:4px">$1,000</div><div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px">Winner takes all · May 31</div><div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:4px">CURRENT LEADER</div><div style="display:flex;align-items:center;gap:8px;margin-top:4px"><img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div style="font-size:14px;font-weight:700;color:var(--teal)">Brock Wilson</div></div></div>
+    <div class="card card-dark" style="padding:22px;flex:1"><div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--g400);margin-bottom:4px">Prize Pool</div><div style="font-size:32px;font-weight:700;color:var(--dark);font-family:var(--mono);margin-bottom:4px">$1,000</div><div style="font-size:12px;color:var(--g500);margin-bottom:16px">Winner takes all · May 31</div><div style="font-size:11px;color:var(--g400);margin-bottom:4px">CURRENT LEADER</div><div style="display:flex;align-items:center;gap:8px;margin-top:4px"><img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div style="font-size:14px;font-weight:700;color:var(--teal)">Brock Wilson</div></div></div>
     <div class="card" style="padding:18px 20px"><div style="font-size:12px;font-weight:600;color:var(--dark);margin-bottom:10px">Most New Accounts — Q2</div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-size:13px;color:var(--g600)">Prize: <strong style="color:var(--teal)">$2,500</strong></span><span class="status-pill sp-green" style="font-size:10px"><span class="pill-dot"></span>38 days left</span></div><div class="prog-wrap"><div class="prog-label"><span>Team progress</span><span>7 / 20 accounts</span></div><div class="prog-track"><div class="prog-fill" style="width:35%"></div></div></div></div>
   </div>
 </div>
@@ -2951,14 +2951,14 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Mike Barnes</span><span style="font-family:var(--mono);font-weight:600;color:var(--g500)">$74K</span></div><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden"><div style="width:35%;height:100%;background:var(--g300);border-radius:3px"></div></div></div>
       </div>
     </div>
-    <div class="card" style="background:var(--navy);border:none">
-      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:rgba(255,255,255,0.35);margin-bottom:6px">Next Payout Date</div>
-      <div style="font-size:26px;font-weight:700;color:#fff;font-family:var(--mono);margin-bottom:4px">June 30, 2026</div>
-      <div style="font-size:12px;color:rgba(255,255,255,0.4);margin-bottom:16px">11 days away · $87,550 total</div>
+    <div class="card" style="background:#fff;">
+      <div style="font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.8px;color:var(--g400);margin-bottom:6px">Next Payout Date</div>
+      <div style="font-size:26px;font-weight:700;color:var(--dark);font-family:var(--mono);margin-bottom:4px">June 30, 2026</div>
+      <div style="font-size:12px;color:var(--g500);margin-bottom:16px">11 days away · $87,550 total</div>
       <div style="background:rgba(255,255,255,0.06);border-radius:8px;padding:10px 12px">
-        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px">PENDING APPROVAL</div>
-        <div style="font-size:13px;color:#fff;font-weight:500">All reps verified ✓</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:2px">Payroll submission due Jun 25</div>
+        <div style="font-size:11px;color:var(--g400);margin-bottom:6px">PENDING APPROVAL</div>
+        <div style="font-size:13px;color:var(--dark);font-weight:500">All reps verified ✓</div>
+        <div style="font-size:11px;color:var(--g400);margin-top:2px">Payroll submission due Jun 25</div>
       </div>
     </div>
   </div>
@@ -3067,15 +3067,15 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       </div>
 
       <!-- Upcoming payout card -->
-      <div class="card" style="background:var(--navy);border:none">
-        <div style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.45);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Next Payout</div>
+      <div class="card" style="background:#fff;">
+        <div style="font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Next Payout</div>
         <div style="font-size:28px;font-weight:700;color:var(--teal);font-family:var(--mono);margin-bottom:4px">$18,200</div>
-        <div style="font-size:12px;color:rgba(255,255,255,0.55);margin-bottom:12px">Estimated · Jun 30, 2026</div>
+        <div style="font-size:12px;color:var(--g400);margin-bottom:12px">Estimated · Jun 30, 2026</div>
         <div style="background:rgba(255,255,255,0.07);border-radius:8px;padding:10px 12px">
-          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:rgba(255,255,255,0.45)">Approved</span><span style="font-size:12px;font-weight:600;color:#34d399;font-family:var(--mono)">$11,980</span></div>
-          <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:rgba(255,255,255,0.45)">Pending</span><span style="font-size:12px;font-weight:600;color:#f59e0b;font-family:var(--mono)">$9,425</span></div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:6px"><span style="font-size:11px;color:var(--g500)">Approved</span><span style="font-size:12px;font-weight:600;color:#34d399;font-family:var(--mono)">$11,980</span></div>
+          <div style="display:flex;justify-content:space-between"><span style="font-size:11px;color:var(--g500)">Pending</span><span style="font-size:12px;font-weight:600;color:#f59e0b;font-family:var(--mono)">$9,425</span></div>
         </div>
-        <div style="margin-top:10px;font-size:10px;color:rgba(255,255,255,0.3);text-align:center">Payroll submission due Jun 25</div>
+        <div style="margin-top:10px;font-size:10px;color:var(--g400);text-align:center">Payroll submission due Jun 25</div>
       </div>
     </div>
   </div>
@@ -3324,10 +3324,10 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div style="flex:1">
     <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--teal);margin-bottom:6px">Featured Integration</div>
     <div style="font-size:20px;font-weight:700;color:#fff;margin-bottom:6px">Salesforce CRM Sync</div>
-    <div style="font-size:13px;color:rgba(255,255,255,0.65);line-height:1.6;max-width:480px">Bi-directional sync between Goals.com and Salesforce. Keep contacts, deals, and pipeline data in perfect alignment — automatically.</div>
+    <div style="font-size:13px;color:var(--g400);line-height:1.6;max-width:480px">Bi-directional sync between Goals.com and Salesforce. Keep contacts, deals, and pipeline data in perfect alignment — automatically.</div>
     <button onclick="showToast('Salesforce integration request submitted')" style="margin-top:14px;background:var(--teal);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Connect Now →</button>
   </div>
-  <div style="width:80px;height:80px;background:rgba(255,255,255,0.08);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:36px">☁</div>
+  <div style="width:80px;height:80px;background:var(--g100);border-radius:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:36px">☁</div>
 </div>
 
 <!-- Installed -->
