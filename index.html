@@ -132,6 +132,34 @@ body.dark-mode .profile-menu-item:hover{background:rgba(255,255,255,0.06)!import
 body.dark-mode .cs-nav-btn{color:var(--g600)!important}
 body.dark-mode [style*="background:#f0f2f5"]{background:var(--off)!important}
 body.dark-mode [style*="background: #f0f2f5"]{background:var(--off)!important}
+/* Profile menu icons — override hardcoded navy stroke */
+body.dark-mode .profile-menu-icon{background:rgba(255,255,255,0.08)!important}
+body.dark-mode .profile-menu-icon svg{stroke:rgba(255,255,255,0.72)!important}
+/* Merge duplicate cards */
+body.dark-mode [style*="background:#fef9c3"]{background:rgba(245,158,11,0.15)!important}
+body.dark-mode [style*="background: #fef9c3"]{background:rgba(245,158,11,0.15)!important}
+body.dark-mode [style*="background:#fffbeb"]{background:rgba(245,158,11,0.12)!important}
+body.dark-mode [style*="background:#fafafa"]{background:var(--g50)!important}
+body.dark-mode [style*="background: #fafafa"]{background:var(--g50)!important}
+/* Import data + integrations card backgrounds */
+body.dark-mode #settings-import-data [style*="background:#fff"]{background:var(--white)!important}
+body.dark-mode #settings-integrations [style*="background:#fff"]{background:var(--white)!important}
+/* Days/status badge amber */
+body.dark-mode .days-badge.amber{background:rgba(245,158,11,0.15)!important}
+/* Smart merge overlay */
+body.dark-mode #smart-merge-overlay .modal-box{background:var(--navy)!important}
+body.dark-mode #sm-body [style*="background:#fff"]{background:var(--white)!important}
+body.dark-mode #sm-body [style*="background:#fafafa"]{background:var(--g50)!important}
+body.dark-mode #sm-body [style*="background:#f0fdfa"]{background:var(--teal-bg)!important}
+body.dark-mode #sm-body [style*="background:#fffbeb"]{background:rgba(245,158,11,0.12)!important}
+/* Workflow cards */
+body.dark-mode #settings-workflows [style*="border:1px solid var(--g200)"]{border-color:rgba(255,255,255,0.08)!important}
+/* Topbar user btn */
+body.dark-mode #topbar-user-btn{background:transparent!important}
+body.dark-mode #topbar-user-btn:hover{background:rgba(255,255,255,0.06)!important}
+/* Notif panel text */
+body.dark-mode .notif-panel .notif-item{border-bottom-color:rgba(255,255,255,0.06)!important}
+
 
 html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);background:var(--off)}
 .app{display:flex;height:100vh;width:100vw;overflow:hidden}
@@ -1294,13 +1322,13 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <!-- Menu items group 1 -->
         <div style="padding:6px 6px 0">
           <button onclick="showPage('settings',null);toggleUserSwitcher()" class="profile-menu-item">
-            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
             My Profile
           </button>
           <div onclick="toggleDarkMode()" class="profile-menu-item" style="cursor:pointer">
             <span class="profile-menu-icon" style="background:var(--g100)" id="dm-icon-wrap">
-              <svg id="dm-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
-              <svg id="dm-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <svg id="dm-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <svg id="dm-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
             </span>
             <span id="dm-label">Dark Mode</span>
             <span style="margin-left:auto;display:flex;align-items:center">
@@ -1310,11 +1338,11 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
             </span>
           </div>
           <button onclick="openToolsSettings();toggleUserSwitcher()" class="profile-menu-item">
-            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
+            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
             Tools &amp; Integrations
           </button>
           <button onclick="showToast('Notifications');toggleUserSwitcher()" class="profile-menu-item">
-            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
+            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg></span>
             Notifications
           </button>
         </div>
@@ -1324,11 +1352,11 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <!-- Menu items group 2 -->
         <div style="padding:0 6px">
           <button onclick="showToast('Invite link copied to clipboard');toggleUserSwitcher()" class="profile-menu-item">
-            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></span>
+            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/></svg></span>
             Invite Your Team
           </button>
           <button onclick="showToast('Help center opening…');toggleUserSwitcher()" class="profile-menu-item">
-            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5" fill="#1A2035"/></svg></span>
+            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r="0.5" fill="currentColor"/></svg></span>
             Help &amp; Support
           </button>
         </div>
@@ -1359,7 +1387,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
         <!-- Logout -->
         <div style="padding:0 6px 2px">
           <button onclick="showToast('Logging out…');toggleUserSwitcher()" class="profile-menu-item" style="color:var(--red)">
-            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
+            <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
             Log Out
           </button>
         </div>
@@ -4203,7 +4231,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       <div style="font-size:11px;color:rgba(255,255,255,0.6);margin-bottom:18px;line-height:1.5">Import from CSV or Excel — map columns, preview, and handle duplicates before committing.</div>
       <button onclick="openImportWizard()" style="background:var(--teal);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Start Import →</button>
     </div>
-    <div style="flex:1;min-width:220px;background:#fff;border:1px solid var(--g200);border-radius:14px;padding:24px 22px">
+    <div style="flex:1;min-width:220px;background:var(--white);border:1px solid var(--g200);border-radius:14px;padding:24px 22px">
       <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:6px">Download Templates</div>
       <div style="font-size:11px;color:var(--g400);margin-bottom:14px;line-height:1.5">Pre-formatted Excel templates for each record type.</div>
       <div style="display:flex;flex-direction:column;gap:6px">
@@ -4446,7 +4474,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
             <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">1 opportunity · Added Jun 14</div>
           </div>
         </div>
-        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa;align-items:center">
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:var(--g50);align-items:center">
           <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ Marcus Lee is recommended — more data, 3 opportunities</div>
           <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(0)">Review &amp; Merge →</button>
           <button class="tb-btn btn-ghost" style="font-size:12px" onclick="this.closest('.merge-pair').style.opacity='0.4';showToast('Marked as not a duplicate')">Not a Duplicate</button>
@@ -4475,7 +4503,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
             <div style="margin-top:8px;font-size:11px;background:var(--g100);border-radius:4px;padding:3px 7px;display:inline-block;color:var(--g500)">0 opportunities · Added Jun 20</div>
           </div>
         </div>
-        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:#fafafa;align-items:center">
+        <div style="border-top:1px solid var(--g100);padding:10px 14px;display:flex;gap:8px;background:var(--g50);align-items:center">
           <div style="flex:1;font-size:11px;color:var(--teal);font-weight:600">⭐ Tara Nguyen is recommended — 2 opportunities, added earlier</div>
           <button class="tb-btn btn-primary" style="font-size:12px" onclick="_openSmartMerge(1)">Review &amp; Merge →</button>
           <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Marked as not a duplicate')">Not a Duplicate</button>
@@ -4738,7 +4766,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   </div>
 
   <!-- Request an Integration -->
-  <div style="margin-top:28px;padding:20px 22px;border:1.5px dashed var(--g200);border-radius:12px;background:#fafafa;display:flex;align-items:center;gap:18px">
+  <div style="margin-top:28px;padding:20px 22px;border:1.5px dashed var(--g200);border-radius:12px;background:var(--g50);display:flex;align-items:center;gap:18px">
     <div style="width:40px;height:40px;border-radius:10px;background:var(--g100);display:flex;align-items:center;justify-content:center;flex-shrink:0">
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--g500)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
     </div>
@@ -9824,6 +9852,10 @@ function toggleDarkMode() {
   _updateDarkModeUI(isDark);
 }
 function _updateDarkModeUI(isDark) {
+  // Update profile menu icon colors for dark mode
+  document.querySelectorAll('.profile-menu-icon svg').forEach(function(svg) {
+    svg.setAttribute('stroke', isDark ? 'rgba(255,255,255,0.72)' : 'currentColor');
+  });
   var track = document.getElementById('dm-toggle-track');
   var thumb = document.getElementById('dm-toggle-thumb');
   var label = document.getElementById('dm-label');
