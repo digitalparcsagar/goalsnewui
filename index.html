@@ -36,61 +36,102 @@ body.dark-mode {
   --teal-bg:rgba(29,158,117,0.14);
   --teal-border:rgba(29,158,117,0.28);
 }
-body.dark-mode .topbar { background:var(--navy);border-bottom-color:rgba(255,255,255,0.07) }
-body.dark-mode .tb-search { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.09) }
-body.dark-mode .tb-search:focus-within { border-color:var(--teal);background:rgba(255,255,255,0.08) }
-body.dark-mode .tb-search input { color:var(--dark) }
-body.dark-mode .tb-search input::placeholder { color:var(--g400) }
-body.dark-mode .tb-btn.btn-ghost { color:var(--g600);border-color:rgba(255,255,255,0.12) }
-body.dark-mode .tb-btn.btn-ghost:hover { background:rgba(255,255,255,0.07) }
-body.dark-mode .stat-card { border-color:rgba(255,255,255,0.08);box-shadow:none }
-body.dark-mode .card { border-color:rgba(255,255,255,0.08);box-shadow:none }
-body.dark-mode .rep-card { border-color:rgba(255,255,255,0.08) }
-body.dark-mode .goal-rep-card { border-color:rgba(255,255,255,0.08) }
-body.dark-mode .kanban-card { border-color:rgba(255,255,255,0.08) }
-body.dark-mode .contacts-wrap { border-color:rgba(255,255,255,0.08) }
-body.dark-mode .contacts-table th { border-bottom-color:rgba(255,255,255,0.08) }
-body.dark-mode .contacts-table tr:hover td { background:rgba(255,255,255,0.04) }
-body.dark-mode .pipe-list-table th { border-bottom-color:rgba(255,255,255,0.08) }
-body.dark-mode .pipe-list-table tbody tr:hover td { background:rgba(255,255,255,0.04) }
-body.dark-mode .settings-nav { border-right-color:rgba(255,255,255,0.08) }
-body.dark-mode .settings-nav-item:hover { background:rgba(255,255,255,0.05) }
-body.dark-mode .settings-nav-item.active { background:var(--teal-bg);color:var(--teal) }
-body.dark-mode .settings-content { background:var(--off) }
-body.dark-mode .settings-layout { background:var(--off) }
-body.dark-mode .stage-row { background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.09) }
-body.dark-mode .chat-layout { border-color:rgba(255,255,255,0.08) }
-body.dark-mode .chat-item:hover { background:rgba(255,255,255,0.04) }
-body.dark-mode .hl-card { border-color:rgba(255,255,255,0.08) }
-body.dark-mode .msg-bubble.them { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.08) }
-body.dark-mode .chat-input-area { border-top-color:rgba(255,255,255,0.08) }
-body.dark-mode .page-header { border-bottom-color:rgba(255,255,255,0.07) }
-body.dark-mode .modal-box { background:var(--navy);border-color:rgba(255,255,255,0.1) }
-body.dark-mode .modal-header { border-bottom-color:rgba(255,255,255,0.08) }
-body.dark-mode .modal-footer { border-top-color:rgba(255,255,255,0.08) }
-body.dark-mode .form-field input, body.dark-mode .form-field select, body.dark-mode .form-field textarea { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:var(--dark) }
-body.dark-mode .form-field input:focus, body.dark-mode .form-field select:focus { border-color:var(--teal);background:rgba(255,255,255,0.08) }
-body.dark-mode #topbar-user-btn:hover { background:rgba(255,255,255,0.07) !important }
-body.dark-mode #topbar-name, body.dark-mode #topbar-title { color:var(--dark) !important }
-body.dark-mode .profile-menu-item { color:var(--g700) }
-body.dark-mode .profile-menu-item:hover { background:rgba(255,255,255,0.06) }
-body.dark-mode #user-switcher-panel { background:var(--navy);border-color:rgba(255,255,255,0.1);box-shadow:0 8px 40px rgba(0,0,0,0.5) }
-body.dark-mode .crm-stage-col { background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.07) }
-body.dark-mode .crm-deal-card { background:var(--white);border-color:rgba(255,255,255,0.08) }
-body.dark-mode .goal-chart-card { background:var(--white);border-color:rgba(255,255,255,0.08) }
-body.dark-mode .rep-chart-card { background:var(--white);border-color:rgba(255,255,255,0.08) }
-body.dark-mode select { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:var(--dark) }
-body.dark-mode input[type="text"], body.dark-mode input[type="email"], body.dark-mode input[type="password"] { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:var(--dark) }
-body.dark-mode .notif-panel { background:var(--navy);border-color:rgba(255,255,255,0.1) }
-body.dark-mode .notif-item:hover { background:rgba(255,255,255,0.04) }
-body.dark-mode .page-company-settings-bg, body.dark-mode #page-company-settings, body.dark-mode #page-tools-settings { background:var(--off) }
-body.dark-mode #page-company-settings > div:first-child, body.dark-mode #page-tools-settings > div:first-child { background:var(--navy);border-bottom-color:rgba(255,255,255,0.08) }
-body.dark-mode #page-company-settings > div:last-child > div:first-child, body.dark-mode #page-tools-settings > div:last-child > div:first-child { background:var(--g50);border-right-color:rgba(255,255,255,0.08) }
-body.dark-mode .sc-item:hover { background:rgba(255,255,255,0.05) }
-body.dark-mode .leader-item:hover { background:rgba(255,255,255,0.04) }
-body.dark-mode .view-toggle { background:var(--g50);border-color:rgba(255,255,255,0.08) }
-body.dark-mode .view-toggle-btn { color:var(--g400) }
-body.dark-mode .view-toggle-btn.active { background:var(--white);color:var(--dark) }
+/* Topbar */
+body.dark-mode .topbar{background:var(--navy)!important;border-bottom-color:rgba(255,255,255,0.07)!important}
+body.dark-mode .tb-search{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.09)!important}
+body.dark-mode .tb-search:focus-within{border-color:var(--teal)!important;background:rgba(255,255,255,0.08)!important}
+body.dark-mode .tb-search input{color:var(--dark)!important}
+body.dark-mode .tb-search input::placeholder{color:var(--g400)!important}
+body.dark-mode .tb-btn.btn-ghost{color:var(--g600)!important;border-color:rgba(255,255,255,0.12)!important}
+body.dark-mode .tb-btn.btn-ghost:hover{background:rgba(255,255,255,0.07)!important}
+/* Cards and surfaces — override hardcoded #fff */
+body.dark-mode .stat-card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important;box-shadow:none!important}
+body.dark-mode .card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important;box-shadow:none!important}
+body.dark-mode .card-dark{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .rep-card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .goal-rep-card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .kanban-card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .goal-chart-card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .rep-chart-card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .stage-row{background:rgba(255,255,255,0.04)!important;border-color:rgba(255,255,255,0.09)!important}
+body.dark-mode .crm-deal-card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .contacts-wrap{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .hl-card{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .crm-stage-col{background:rgba(255,255,255,0.03)!important;border-color:rgba(255,255,255,0.07)!important}
+/* Dashboard goal card and inline-bg cards */
+body.dark-mode #card-total-sales{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode #card-total-sales [style*="background:#fff"]{background:var(--white)!important}
+body.dark-mode [style*="background:#fff"]{background:var(--white)!important}
+body.dark-mode [style*="background: #fff"]{background:var(--white)!important}
+/* Overlays with hardcoded #f0f2f5 */
+body.dark-mode #page-company-settings,
+body.dark-mode #page-tools-settings,
+body.dark-mode #goal-setting-modal,
+body.dark-mode #person-detail-overlay,
+body.dark-mode #org-detail-overlay,
+body.dark-mode #opp-detail-overlay,
+body.dark-mode #import-wizard-overlay{background:var(--off)!important}
+/* Overlay headers and sidebar */
+body.dark-mode #page-company-settings>div:first-child,
+body.dark-mode #page-tools-settings>div:first-child,
+body.dark-mode #goal-setting-modal>div:first-child,
+body.dark-mode #person-detail-overlay>div:first-child,
+body.dark-mode #org-detail-overlay>div:first-child,
+body.dark-mode #opp-detail-overlay>div:first-child{background:var(--navy)!important;border-bottom-color:rgba(255,255,255,0.08)!important}
+body.dark-mode #page-company-settings>div:last-child>div:first-child,
+body.dark-mode #page-tools-settings>div:last-child>div:first-child{background:var(--g50)!important;border-right-color:rgba(255,255,255,0.08)!important}
+body.dark-mode #cs-content{background:transparent!important}
+/* Side panels */
+body.dark-mode .deal-detail-panel,
+body.dark-mode #rep-profile-panel,
+body.dark-mode #card-manager-panel{background:var(--navy)!important;box-shadow:-4px 0 40px rgba(0,0,0,0.5)!important}
+body.dark-mode #user-switcher-panel{background:var(--navy)!important;border-color:rgba(255,255,255,0.1)!important;box-shadow:0 8px 40px rgba(0,0,0,0.5)!important}
+body.dark-mode .notif-panel{background:var(--navy)!important;border-color:rgba(255,255,255,0.1)!important}
+/* Tables */
+body.dark-mode .contacts-table th{background:var(--g50)!important;border-bottom-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .contacts-table tr:hover td{background:rgba(255,255,255,0.04)!important}
+body.dark-mode .pipe-list-table th{background:var(--g50)!important;border-bottom-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .pipe-list-table tbody tr:hover td{background:rgba(255,255,255,0.04)!important}
+/* Chat */
+body.dark-mode .chat-layout{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .chat-item:hover{background:rgba(255,255,255,0.04)!important}
+body.dark-mode .msg-bubble.them{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.08)!important;color:var(--dark)!important}
+body.dark-mode .chat-input-area{background:var(--white)!important;border-top-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .chat-messages{background:var(--g50)!important}
+/* Settings */
+body.dark-mode .settings-nav{border-right-color:rgba(255,255,255,0.08)!important;background:var(--g50)!important}
+body.dark-mode .settings-nav-item:hover{background:rgba(255,255,255,0.05)!important}
+body.dark-mode .settings-nav-item.active{background:var(--teal-bg)!important;color:var(--teal)!important}
+body.dark-mode .settings-layout,body.dark-mode .settings-content{background:var(--off)!important}
+/* AskAce */
+body.dark-mode .ace-page-layout{background:var(--white)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .ace-page-input-wrap{background:var(--white)!important;border-top-color:rgba(255,255,255,0.08)!important}
+/* Filter chips */
+body.dark-mode .filter-chip,body.dark-mode .hl-type-chip{background:var(--white)!important;border-color:rgba(255,255,255,0.1)!important;color:var(--g600)!important}
+body.dark-mode .filter-chip.active,body.dark-mode .hl-type-chip.active{background:var(--teal)!important;color:#fff!important;border-color:var(--teal)!important}
+/* Modals */
+body.dark-mode .modal-box{background:var(--navy)!important;border-color:rgba(255,255,255,0.1)!important}
+body.dark-mode .modal-header{border-bottom-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .modal-footer{border-top-color:rgba(255,255,255,0.08)!important}
+/* Form inputs */
+body.dark-mode input[type="text"],body.dark-mode input[type="email"],body.dark-mode input[type="password"],body.dark-mode input[type="number"],body.dark-mode select,body.dark-mode textarea{background:rgba(255,255,255,0.06)!important;border-color:rgba(255,255,255,0.1)!important;color:var(--dark)!important}
+body.dark-mode .form-field input:focus,body.dark-mode .form-field select:focus,body.dark-mode input:focus,body.dark-mode select:focus{border-color:var(--teal)!important;background:rgba(255,255,255,0.08)!important}
+/* Buttons */
+body.dark-mode button[style*="background:#fff"],body.dark-mode button[style*="background: #fff"]{background:var(--white)!important;color:var(--dark)!important;border-color:rgba(255,255,255,0.1)!important}
+/* Misc */
+body.dark-mode .sc-item:hover{background:rgba(255,255,255,0.05)!important}
+body.dark-mode .leader-item:hover{background:rgba(255,255,255,0.04)!important}
+body.dark-mode .notif-item:hover{background:rgba(255,255,255,0.04)!important}
+body.dark-mode .view-toggle{background:var(--g50)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .view-toggle-btn{color:var(--g400)!important}
+body.dark-mode .view-toggle-btn.active{background:var(--white)!important;color:var(--dark)!important}
+body.dark-mode .page-header{border-bottom-color:rgba(255,255,255,0.07)!important}
+body.dark-mode .rep-detail-stat{background:var(--g50)!important}
+body.dark-mode #topbar-name,body.dark-mode #topbar-title{color:var(--dark)!important}
+body.dark-mode .profile-menu-item:hover{background:rgba(255,255,255,0.06)!important}
+body.dark-mode .cs-nav-btn{color:var(--g600)!important}
+body.dark-mode [style*="background:#f0f2f5"]{background:var(--off)!important}
+body.dark-mode [style*="background: #f0f2f5"]{background:var(--off)!important}
 
 html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);background:var(--off)}
 .app{display:flex;height:100vh;width:100vw;overflow:hidden}
@@ -4238,11 +4279,11 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <div id="import-step-1">
     <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:16px">Select all that apply</div>
     <div style="display:flex;flex-direction:column;gap:8px;max-width:540px" id="import-type-list">
-      <label style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid var(--g200);border-radius:10px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--g200)'">
+      <label style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid var(--g200);border-radius:10px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="var inp=this.querySelector('input');this.style.borderColor=inp.checked?'var(--teal)':'var(--g200)';this.style.background=inp.checked?'var(--teal-bg)':'var(--white)'">
         <input type="checkbox" style="margin-top:2px;accent-color:var(--teal)" onchange="updateImportTypeStyle(this)">
         <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">People</div><div style="font-size:12px;color:var(--g400)">Individual contacts you communicate with directly</div></div>
       </label>
-      <label style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid var(--g200);border-radius:10px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--g200)'">
+      <label style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid var(--g200);border-radius:10px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="var inp=this.querySelector('input');this.style.borderColor=inp.checked?'var(--teal)':'var(--g200)';this.style.background=inp.checked?'var(--teal-bg)':'var(--white)'">
         <input type="checkbox" style="margin-top:2px;accent-color:var(--teal)" onchange="updateImportTypeStyle(this)">
         <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">Organizations</div><div style="font-size:12px;color:var(--g400)">Companies, employers, or other entities you work with</div></div>
       </label>
@@ -8980,15 +9021,19 @@ function drawSalesChart() {
   });
   ctx.stroke();
 
-  // Dot at last data point
-  const lastIdx = data.length - 1;
-  ctx.beginPath();
-  ctx.arc(xOf(lastIdx), yOf(data[lastIdx]), 5, 0, Math.PI * 2);
-  ctx.fillStyle = '#3b82f6';
-  ctx.fill();
-  ctx.strokeStyle = '#fff';
-  ctx.lineWidth = 2;
-  ctx.stroke();
+  // Dots at every data point
+  const isDark = document.body.classList.contains('dark-mode');
+  const dotBg = isDark ? '#0f1623' : '#ffffff';
+  data.forEach(function(v, i) {
+    const isLast = i === data.length - 1;
+    ctx.beginPath();
+    ctx.arc(xOf(i), yOf(v), isLast ? 5.5 : 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = isLast ? '#1d9e75' : dotBg;
+    ctx.fill();
+    ctx.strokeStyle = isLast ? '#fff' : '#1d9e75';
+    ctx.lineWidth = isLast ? 2.5 : 1.8;
+    ctx.stroke();
+  });
 
   // Hover interactivity
   canvas.onmousemove = function(e) {
@@ -11238,9 +11283,9 @@ function lbSort(colIndex, th) {
         <div>
           <label style="font-size:12px;font-weight:600;color:var(--dark);display:block;margin-bottom:8px">Priority</label>
           <div style="display:flex;gap:8px">
-            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--g200);border-radius:8px;cursor:pointer;font-size:13px;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--g200)'"><input type="radio" name="integ-priority" value="nice-to-have" style="accent-color:var(--teal)"> Nice to have</label>
+            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--g200);border-radius:8px;cursor:pointer;font-size:13px;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="var inp=this.querySelector('input');this.style.borderColor=inp.checked?'var(--teal)':'var(--g200)';this.style.background=inp.checked?'var(--teal-bg)':'var(--white)'"><input type="radio" name="integ-priority" value="nice-to-have" style="accent-color:var(--teal)"> Nice to have</label>
             <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--teal);background:#f0fdfa;border-radius:8px;cursor:pointer;font-size:13px;transition:.15s"><input type="radio" name="integ-priority" value="important" checked style="accent-color:var(--teal)"> Important</label>
-            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--g200);border-radius:8px;cursor:pointer;font-size:13px;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="if(!this.querySelector('input').checked)this.style.borderColor='var(--g200)'"><input type="radio" name="integ-priority" value="critical" style="accent-color:var(--teal)"> Critical</label>
+            <label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid var(--g200);border-radius:8px;cursor:pointer;font-size:13px;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="var inp=this.querySelector('input');this.style.borderColor=inp.checked?'var(--teal)':'var(--g200)';this.style.background=inp.checked?'var(--teal-bg)':'var(--white)'"><input type="radio" name="integ-priority" value="critical" style="accent-color:var(--teal)"> Critical</label>
           </div>
         </div>
       </div>
@@ -11260,38 +11305,34 @@ function lbSort(colIndex, th) {
 ═══════════════════════════════════════════════════════════ -->
 <div id="import-wizard-overlay" style="position:fixed;inset:0;background:#f0f2f5;z-index:2300;display:none;flex-direction:column;overflow:hidden">
 
-  <!-- Step bar topbar -->
-  <div style="background:#fff;border-bottom:1px solid var(--g200);padding:0;height:58px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 1px 4px rgba(0,0,0,0.06)">
-    <!-- Left: Back + title -->
-    <div style="display:flex;align-items:center;gap:14px;padding:0 20px">
-      <button onclick="closeImportWizard()" style="display:flex;align-items:center;gap:5px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:12px;font-weight:600;padding:5px 8px;border-radius:7px;font-family:var(--font)" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+  <!-- Topbar -->
+  <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <!-- Left: back + title -->
+    <div style="display:flex;align-items:center;gap:16px;min-width:160px">
+      <button onclick="closeImportWizard()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:8px;font-family:var(--font);transition:background .12s" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
         Back
       </button>
-      <div style="width:1px;height:22px;background:var(--g200)"></div>
-      <div style="font-size:14px;font-weight:800;color:var(--dark)">Import Data</div>
+      <div style="width:1px;height:24px;background:var(--g200)"></div>
+      <div style="font-size:15px;font-weight:800;color:var(--dark);letter-spacing:-0.2px">Import Data</div>
     </div>
 
-    <!-- Center: Step breadcrumb -->
-    <div style="display:flex;align-items:center;gap:0" id="iw-step-bar">
-      <!-- Steps rendered by JS -->
-    </div>
+    <!-- Center: step progress -->
+    <div style="display:flex;align-items:center;gap:0" id="iw-step-bar"><!-- rendered by JS --></div>
 
-    <!-- Right: Cancel -->
-    <div style="padding:0 20px">
-      <button onclick="closeImportWizard()" style="border:1px solid var(--g200);background:none;color:var(--g500);border-radius:7px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel import</button>
+    <!-- Right: cancel -->
+    <div style="min-width:160px;display:flex;justify-content:flex-end">
+      <button onclick="closeImportWizard()" style="border:1px solid var(--g200);background:none;color:var(--g500);border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel</button>
     </div>
   </div>
 
   <!-- Body -->
-  <div style="flex:1;overflow-y:auto;padding:28px 32px" id="iw-body">
-    <!-- Rendered by JS per step -->
-  </div>
+  <div style="flex:1;overflow-y:auto;padding:44px 56px" id="iw-body"><!-- rendered by JS --></div>
 
-  <!-- Footer nav -->
-  <div style="background:#fff;border-top:1px solid var(--g200);padding:14px 32px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0" id="iw-footer">
-    <button id="iw-back-btn" onclick="_iwBack()" style="border:1px solid var(--g200);background:none;color:var(--g600);border-radius:8px;padding:8px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">← Back</button>
-    <button id="iw-next-btn" onclick="_iwNext()" style="background:var(--teal);color:#fff;border:none;border-radius:8px;padding:8px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Next →</button>
+  <!-- Footer -->
+  <div style="background:var(--white);border-top:1px solid var(--g200);padding:16px 56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0" id="iw-footer">
+    <button id="iw-back-btn" onclick="_iwBack()" style="border:1px solid var(--g200);background:none;color:var(--g600);border-radius:9px;padding:9px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">← Back</button>
+    <button id="iw-next-btn" onclick="_iwNext()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Next →</button>
   </div>
 </div>
 
@@ -11491,7 +11532,21 @@ function closeImportWizard() {
 }
 function _iwBack() { if (_iwStep > 1) { _iwStep--; _iwRender(); } }
 function _iwNext() {
-  if (_iwStep === 5) { closeImportWizard(); showToast('✓ Import complete — 47 records added'); return; }
+  if (_iwStep === 5) {
+    var body = document.getElementById('iw-body');
+    var footer = document.getElementById('iw-footer');
+    if (body) body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:60px 40px">'
+      + '<div style="width:72px;height:72px;border-radius:50%;background:var(--teal-bg);display:flex;align-items:center;justify-content:center;margin:0 auto 22px">'
+      + '<svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>'
+      + '<h2 style="font-size:24px;font-weight:800;color:var(--dark);margin:0 0 10px;letter-spacing:-0.3px">Import complete</h2>'
+      + '<p style="font-size:14px;color:var(--g500);margin:0 0 28px;max-width:420px">47 records were successfully imported — 14 people, 9 organizations, and 3 notes added to your CRM.</p>'
+      + '<div style="display:flex;gap:12px;justify-content:center">'
+      + '<button onclick="closeImportWizard()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Go to Contacts</button>'
+      + '<button onclick="closeImportWizard()" style="background:var(--white);border:1.5px solid var(--g200);color:var(--dark);border-radius:9px;padding:10px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Close</button>'
+      + '</div></div>';
+    if (footer) footer.style.display = 'none';
+    return;
+  }
   _iwStep++;
   _iwRender();
 }
@@ -11505,25 +11560,31 @@ function _iwRender() {
 function _iwRenderStepBar() {
   var bar = document.getElementById('iw-step-bar');
   if (!bar) return;
-  var html = '';
+  var html = '<div style="display:flex;align-items:center;gap:0">';
   for (var i = 1; i <= _iwTotal; i++) {
-    var done = i < _iwStep;
+    var done   = i < _iwStep;
     var active = i === _iwStep;
-    var first = i === 1;
-    var last = i === _iwTotal;
-    var bg = active ? 'var(--navy)' : done ? 'var(--teal)' : 'var(--g100)';
-    var col = (active || done) ? '#fff' : 'var(--g400)';
-    var radius = first ? '20px 0 0 20px' : last ? '0 20px 20px 0' : '0';
-    var icon = done
-      ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
-      : '<span style="width:18px;height:18px;border-radius:50%;background:rgba(255,255,255,0.25);display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">' + i + '</span>';
-    if (i > 1) {
-      var arrowBg = (i-1 < _iwStep) ? (i-1 === _iwStep-1 && active ? 'var(--navy)' : 'var(--teal)') : 'var(--g100)';
-      // arrow chevron separator
-      html += '<div style="width:0;height:0;border-top:19px solid transparent;border-bottom:19px solid transparent;border-left:11px solid ' + arrowBg + ';flex-shrink:0"></div>';
+    // Circle
+    var circleBg      = done ? 'var(--teal)' : active ? 'var(--navy)' : 'var(--white)';
+    var circleBorder  = done || active ? 'none' : '2px solid var(--g300)';
+    var circleColor   = done || active ? '#fff' : 'var(--g400)';
+    var circleContent = done
+      ? '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+      : '<span style="font-size:11px;font-weight:700">' + i + '</span>';
+    // Label
+    var labelColor  = active ? 'var(--navy)' : done ? 'var(--teal)' : 'var(--g400)';
+    var labelWeight = active ? '700' : done ? '600' : '500';
+    html += '<div style="display:flex;flex-direction:column;align-items:center;gap:5px;padding:0 4px">';
+    html += '<div style="width:30px;height:30px;border-radius:50%;background:' + circleBg + ';border:' + circleBorder + ';display:flex;align-items:center;justify-content:center;color:' + circleColor + ';transition:all .2s">' + circleContent + '</div>';
+    html += '<span style="font-size:11px;font-weight:' + labelWeight + ';color:' + labelColor + ';white-space:nowrap">' + _iwStepNames[i-1] + '</span>';
+    html += '</div>';
+    // Connector line (between steps)
+    if (i < _iwTotal) {
+      var lineColor = i < _iwStep ? 'var(--teal)' : 'var(--g200)';
+      html += '<div style="width:52px;height:2px;background:' + lineColor + ';margin-top:-16px;flex-shrink:0;transition:background .2s"></div>';
     }
-    html += '<div style="display:flex;align-items:center;gap:6px;padding:6px 14px 6px ' + (first?'12px':'18px') + ';background:' + bg + ';color:' + col + ';font-size:12px;font-weight:600;border-radius:' + radius + ';white-space:nowrap">' + icon + _iwStepNames[i-1] + '</div>';
   }
+  html += '</div>';
   bar.innerHTML = html;
 }
 
@@ -11553,8 +11614,8 @@ function _iwRenderFooter() {
 
 // ── STEP 1: File info ────────────────────────────────────────
 function _iwStep1() {
-  return '<div style="max-width:680px">'
-    + '<h2 style="font-size:20px;font-weight:800;color:var(--dark);margin:0 0 6px">What would you like to import?</h2>'
+  return '<div style="max-width:700px">'
+    + '<h2 style="font-size:22px;font-weight:800;color:var(--dark);margin:0 0 8px;letter-spacing:-0.3px">What would you like to import?</h2>'
     + '<p style="font-size:13px;color:var(--g500);margin:0 0 24px">Choose one or more record types. Each type will be matched to a sheet in your file.</p>'
     + '<div style="display:flex;flex-direction:column;gap:10px">'
     + _iwTypeCard('people','People','Individual contacts — names, emails, phone numbers, job titles.','<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>',true)
@@ -11565,13 +11626,13 @@ function _iwStep1() {
     + '<div style="margin-top:22px;padding:14px 16px;background:#f8fafc;border:1px solid var(--g200);border-radius:10px">'
     + '<div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Tip — Download a template first</div>'
     + '<div style="display:flex;gap:8px;flex-wrap:wrap">'
-    + '<button onclick="showToast(\'People template downloaded\')" style="background:#fff;border:1px solid var(--g200);color:var(--dark);border-radius:7px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">⬇ People (.xlsx)</button>'
+    + '<button onclick="showToast(\'People template downloaded\')" style="background:var(--white);border:1px solid var(--g200);color:var(--dark);border-radius:7px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">⬇ People (.xlsx)</button>'
     + '<button onclick="showToast(\'Organizations template downloaded\')" style="background:#fff;border:1px solid var(--g200);color:var(--dark);border-radius:7px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">⬇ Organizations (.xlsx)</button>'
     + '<button onclick="showToast(\'Opportunities template downloaded\')" style="background:#fff;border:1px solid var(--g200);color:var(--dark);border-radius:7px;padding:6px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">⬇ Opportunities (.xlsx)</button>'
     + '</div></div></div>';
 }
 function _iwTypeCard(id,label,desc,icon,checked) {
-  var border = checked ? 'border:2px solid var(--teal);background:#f0fdfa' : 'border:2px solid var(--g200);background:#fff';
+  var border = checked ? 'border:2px solid var(--teal);background:var(--teal-bg)' : 'border:2px solid var(--g200);background:var(--white)';
   return '<label style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;' + border + ';border-radius:10px;cursor:pointer;transition:border-color .15s" onmouseover="if(!this.querySelector(\'input\').checked)this.style.borderColor=\'var(--teal)\'" onmouseout="if(!this.querySelector(\'input\').checked)this.style.borderColor=\'var(--g200)\'">'
     + '<div style="width:36px;height:36px;border-radius:8px;background:var(--g100);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + icon.replace('<svg','').replace('</svg>','') + '</svg></div>'
     + '<div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:3px">' + label + '</div><div style="font-size:12px;color:var(--g400)">' + desc + '</div></div>'
@@ -11657,7 +11718,7 @@ function _iwStep3() {
     });
     selectHtml += '</select>';
 
-    var bg = i%2===0 ? '#fff' : '#fafafa';
+    var bg = i%2===0 ? 'var(--white)' : 'var(--g50)';
     html += '<div style="display:grid;grid-template-columns:1fr 56px 1fr;align-items:center;padding:10px 16px;border-bottom:1px solid var(--g100);background:' + bg + '">';
     // Column 1: spreadsheet col + samples
     html += '<div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:3px">' + m.col + '</div>'
@@ -11713,7 +11774,7 @@ function _iwStep4() {
   // Summary bar
   html += '<div style="display:flex;gap:12px;margin-bottom:18px">';
   [{n:'47',l:'rows ready',c:'var(--teal)'},{n:'0',l:'errors',c:'var(--dark)'},{n:'3',l:'warnings',c:'var(--amber)'},{n:'1',l:'duplicates found',c:'var(--amber)'}].forEach(function(s){
-    html += '<div style="background:#fff;border:1px solid var(--g200);border-radius:8px;padding:10px 16px;display:flex;align-items:baseline;gap:6px"><span style="font-size:18px;font-weight:800;color:' + s.c + ';font-family:var(--mono)">' + s.n + '</span><span style="font-size:11px;color:var(--g500)">' + s.l + '</span></div>';
+    html += '<div style="background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:10px 16px;display:flex;align-items:baseline;gap:6px"><span style="font-size:18px;font-weight:800;color:' + s.c + ';font-family:var(--mono)">' + s.n + '</span><span style="font-size:11px;color:var(--g500)">' + s.l + '</span></div>';
   });
   html += '</div>';
 
@@ -11766,7 +11827,7 @@ function _iwStep5() {
 
   // Merge card
   var mergeActive = _iwDupChoice === 'merge';
-  html += '<label style="cursor:pointer;border:2px solid ' + (mergeActive?'var(--teal)':'var(--g200)') + ';background:' + (mergeActive?'#f0fdfa':'#fff') + ';border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;transition:.15s" onclick="_iwDupChoice=\'merge\';_iwRenderBody()">';
+  html += '<label style="cursor:pointer;border:2px solid ' + (mergeActive?'var(--teal)':'var(--g200)') + ';background:' + (mergeActive?'var(--teal-bg)':'var(--white)') + ';border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;transition:.15s" onclick="_iwDupChoice=\'merge\';_iwRenderBody()">';
   html += '<div style="display:flex;align-items:center;gap:10px"><div style="width:18px;height:18px;border-radius:50%;border:2px solid ' + (mergeActive?'var(--teal)':'var(--g300)') + ';display:flex;align-items:center;justify-content:center">' + (mergeActive?'<div style="width:9px;height:9px;border-radius:50%;background:var(--teal)"></div>':'') + '</div><span style="font-size:13px;font-weight:700;color:var(--dark)">Merge data</span></div>';
   html += '<div style="background:var(--g50);border-radius:8px;padding:10px 12px">';
   html += '<div style="font-size:11px;color:var(--g600);margin-bottom:4px"><strong>People</strong> with the same name and email are merged into one.</div>';
@@ -11775,7 +11836,7 @@ function _iwStep5() {
 
   // Create multiple card
   var createActive = _iwDupChoice === 'create';
-  html += '<label style="cursor:pointer;border:2px solid ' + (createActive?'var(--teal)':'var(--g200)') + ';background:' + (createActive?'#f0fdfa':'#fff') + ';border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;transition:.15s" onclick="_iwDupChoice=\'create\';_iwRenderBody()">';
+  html += '<label style="cursor:pointer;border:2px solid ' + (createActive?'var(--teal)':'var(--g200)') + ';background:' + (createActive?'var(--teal-bg)':'var(--white)') + ';border-radius:12px;padding:20px 18px;display:flex;flex-direction:column;gap:10px;transition:.15s" onclick="_iwDupChoice=\'create\';_iwRenderBody()">';
   html += '<div style="display:flex;align-items:center;gap:10px"><div style="width:18px;height:18px;border-radius:50%;border:2px solid ' + (createActive?'var(--teal)':'var(--g300)') + ';display:flex;align-items:center;justify-content:center">' + (createActive?'<div style="width:9px;height:9px;border-radius:50%;background:var(--teal)"></div>':'') + '</div><span style="font-size:13px;font-weight:700;color:var(--dark)">Create multiple records</span></div>';
   html += '<div style="background:var(--g50);border-radius:8px;padding:10px 12px">';
   html += '<div style="font-size:11px;color:var(--g600)">Separate records for the duplicate contacts.</div>';
@@ -11788,7 +11849,7 @@ function _iwStep5() {
   html += '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:12px">Import summary</div>';
   html += '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">';
   [{v:'+14',l:'People'},{v:'+9',l:'Organizations'},{v:'3',l:'Notes'}].forEach(function(s){
-    html += '<div style="text-align:center;background:#fff;border:1px solid var(--g200);border-radius:8px;padding:10px 8px"><div style="font-size:20px;font-weight:800;color:var(--teal);font-family:var(--mono)">' + s.v + '</div><div style="font-size:11px;color:var(--g500);margin-top:2px">' + s.l + '</div></div>';
+    html += '<div style="text-align:center;background:var(--white);border:1px solid var(--g200);border-radius:8px;padding:10px 8px"><div style="font-size:20px;font-weight:800;color:var(--teal);font-family:var(--mono)">' + s.v + '</div><div style="font-size:11px;color:var(--g500);margin-top:2px">' + s.l + '</div></div>';
   });
   html += '</div></div>';
   html += '</div>';
