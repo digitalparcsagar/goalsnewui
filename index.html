@@ -19,6 +19,79 @@
   --sb:72px;--topbar:54px;
   --g500:#6b7280;--g700:#374151;
 }
+/* ── DARK MODE ─────────────────────────────────────────────────────────────── */
+body.dark-mode {
+  --off:#0f1623;
+  --white:#1a2035;
+  --g50:#1e2640;
+  --g100:#243050;
+  --g200:rgba(255,255,255,0.09);
+  --g300:rgba(255,255,255,0.14);
+  --g400:rgba(255,255,255,0.38);
+  --g500:rgba(255,255,255,0.5);
+  --g600:rgba(255,255,255,0.62);
+  --g700:rgba(255,255,255,0.72);
+  --g800:rgba(255,255,255,0.85);
+  --dark:#e8edf4;
+  --teal-bg:rgba(29,158,117,0.14);
+  --teal-border:rgba(29,158,117,0.28);
+}
+body.dark-mode .topbar { background:var(--navy);border-bottom-color:rgba(255,255,255,0.07) }
+body.dark-mode .tb-search { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.09) }
+body.dark-mode .tb-search:focus-within { border-color:var(--teal);background:rgba(255,255,255,0.08) }
+body.dark-mode .tb-search input { color:var(--dark) }
+body.dark-mode .tb-search input::placeholder { color:var(--g400) }
+body.dark-mode .tb-btn.btn-ghost { color:var(--g600);border-color:rgba(255,255,255,0.12) }
+body.dark-mode .tb-btn.btn-ghost:hover { background:rgba(255,255,255,0.07) }
+body.dark-mode .stat-card { border-color:rgba(255,255,255,0.08);box-shadow:none }
+body.dark-mode .card { border-color:rgba(255,255,255,0.08);box-shadow:none }
+body.dark-mode .rep-card { border-color:rgba(255,255,255,0.08) }
+body.dark-mode .goal-rep-card { border-color:rgba(255,255,255,0.08) }
+body.dark-mode .kanban-card { border-color:rgba(255,255,255,0.08) }
+body.dark-mode .contacts-wrap { border-color:rgba(255,255,255,0.08) }
+body.dark-mode .contacts-table th { border-bottom-color:rgba(255,255,255,0.08) }
+body.dark-mode .contacts-table tr:hover td { background:rgba(255,255,255,0.04) }
+body.dark-mode .pipe-list-table th { border-bottom-color:rgba(255,255,255,0.08) }
+body.dark-mode .pipe-list-table tbody tr:hover td { background:rgba(255,255,255,0.04) }
+body.dark-mode .settings-nav { border-right-color:rgba(255,255,255,0.08) }
+body.dark-mode .settings-nav-item:hover { background:rgba(255,255,255,0.05) }
+body.dark-mode .settings-nav-item.active { background:var(--teal-bg);color:var(--teal) }
+body.dark-mode .settings-content { background:var(--off) }
+body.dark-mode .settings-layout { background:var(--off) }
+body.dark-mode .stage-row { background:rgba(255,255,255,0.04);border-color:rgba(255,255,255,0.09) }
+body.dark-mode .chat-layout { border-color:rgba(255,255,255,0.08) }
+body.dark-mode .chat-item:hover { background:rgba(255,255,255,0.04) }
+body.dark-mode .hl-card { border-color:rgba(255,255,255,0.08) }
+body.dark-mode .msg-bubble.them { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.08) }
+body.dark-mode .chat-input-area { border-top-color:rgba(255,255,255,0.08) }
+body.dark-mode .page-header { border-bottom-color:rgba(255,255,255,0.07) }
+body.dark-mode .modal-box { background:var(--navy);border-color:rgba(255,255,255,0.1) }
+body.dark-mode .modal-header { border-bottom-color:rgba(255,255,255,0.08) }
+body.dark-mode .modal-footer { border-top-color:rgba(255,255,255,0.08) }
+body.dark-mode .form-field input, body.dark-mode .form-field select, body.dark-mode .form-field textarea { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:var(--dark) }
+body.dark-mode .form-field input:focus, body.dark-mode .form-field select:focus { border-color:var(--teal);background:rgba(255,255,255,0.08) }
+body.dark-mode #topbar-user-btn:hover { background:rgba(255,255,255,0.07) !important }
+body.dark-mode #topbar-name, body.dark-mode #topbar-title { color:var(--dark) !important }
+body.dark-mode .profile-menu-item { color:var(--g700) }
+body.dark-mode .profile-menu-item:hover { background:rgba(255,255,255,0.06) }
+body.dark-mode #user-switcher-panel { background:var(--navy);border-color:rgba(255,255,255,0.1);box-shadow:0 8px 40px rgba(0,0,0,0.5) }
+body.dark-mode .crm-stage-col { background:rgba(255,255,255,0.03);border-color:rgba(255,255,255,0.07) }
+body.dark-mode .crm-deal-card { background:var(--white);border-color:rgba(255,255,255,0.08) }
+body.dark-mode .goal-chart-card { background:var(--white);border-color:rgba(255,255,255,0.08) }
+body.dark-mode .rep-chart-card { background:var(--white);border-color:rgba(255,255,255,0.08) }
+body.dark-mode select { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:var(--dark) }
+body.dark-mode input[type="text"], body.dark-mode input[type="email"], body.dark-mode input[type="password"] { background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.1);color:var(--dark) }
+body.dark-mode .notif-panel { background:var(--navy);border-color:rgba(255,255,255,0.1) }
+body.dark-mode .notif-item:hover { background:rgba(255,255,255,0.04) }
+body.dark-mode .page-company-settings-bg, body.dark-mode #page-company-settings, body.dark-mode #page-tools-settings { background:var(--off) }
+body.dark-mode #page-company-settings > div:first-child, body.dark-mode #page-tools-settings > div:first-child { background:var(--navy);border-bottom-color:rgba(255,255,255,0.08) }
+body.dark-mode #page-company-settings > div:last-child > div:first-child, body.dark-mode #page-tools-settings > div:last-child > div:first-child { background:var(--g50);border-right-color:rgba(255,255,255,0.08) }
+body.dark-mode .sc-item:hover { background:rgba(255,255,255,0.05) }
+body.dark-mode .leader-item:hover { background:rgba(255,255,255,0.04) }
+body.dark-mode .view-toggle { background:var(--g50);border-color:rgba(255,255,255,0.08) }
+body.dark-mode .view-toggle-btn { color:var(--g400) }
+body.dark-mode .view-toggle-btn.active { background:var(--white);color:var(--dark) }
+
 html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);background:var(--off)}
 .app{display:flex;height:100vh;width:100vw;overflow:hidden}
 
@@ -1183,6 +1256,18 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
             <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
             My Profile
           </button>
+          <div onclick="toggleDarkMode()" class="profile-menu-item" style="cursor:pointer">
+            <span class="profile-menu-icon" style="background:var(--g100)" id="dm-icon-wrap">
+              <svg id="dm-icon-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="display:none"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+              <svg id="dm-icon-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            </span>
+            <span id="dm-label">Dark Mode</span>
+            <span style="margin-left:auto;display:flex;align-items:center">
+              <span id="dm-toggle-track" style="width:32px;height:18px;background:var(--g200);border-radius:9px;position:relative;transition:background 0.2s;flex-shrink:0">
+                <span id="dm-toggle-thumb" style="position:absolute;top:2px;left:2px;width:14px;height:14px;background:#fff;border-radius:50%;transition:transform 0.2s;box-shadow:0 1px 3px rgba(0,0,0,0.2)"></span>
+              </span>
+            </span>
+          </div>
           <button onclick="openToolsSettings();toggleUserSwitcher()" class="profile-menu-item">
             <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#1A2035" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
             Tools &amp; Integrations
@@ -9687,6 +9772,32 @@ function switchSRFullPipeTab(tab, btn) {
   tbody.innerHTML = html;
 }
 
+
+function toggleDarkMode() {
+  var isDark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('goals-dark-mode', isDark ? '1' : '0');
+  _updateDarkModeUI(isDark);
+}
+function _updateDarkModeUI(isDark) {
+  var track = document.getElementById('dm-toggle-track');
+  var thumb = document.getElementById('dm-toggle-thumb');
+  var label = document.getElementById('dm-label');
+  var sun   = document.getElementById('dm-icon-sun');
+  var moon  = document.getElementById('dm-icon-moon');
+  if (track) track.style.background = isDark ? 'var(--teal)' : 'var(--g200)';
+  if (thumb) thumb.style.transform  = isDark ? 'translateX(14px)' : 'translateX(0)';
+  if (label) label.textContent = isDark ? 'Light Mode' : 'Dark Mode';
+  if (sun)  sun.style.display  = isDark ? 'block' : 'none';
+  if (moon) moon.style.display = isDark ? 'none'  : 'block';
+}
+// Apply saved preference on load
+(function(){
+  var saved = localStorage.getItem('goals-dark-mode');
+  if (saved === '1') {
+    document.body.classList.add('dark-mode');
+    document.addEventListener('DOMContentLoaded', function(){ _updateDarkModeUI(true); });
+  }
+})();
 function toggleUserSwitcher() {
   var panel = document.getElementById('user-switcher-panel');
   if (!panel) return;
