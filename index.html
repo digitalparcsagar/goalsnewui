@@ -4495,87 +4495,156 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
         <button id="tgt-btn-today" onclick="switchTargetView('today',this)" style="padding:6px 14px;font-size:11px;font-weight:600;background:var(--teal);color:#fff;border:none;cursor:pointer;font-family:var(--font)">Today</button>
         <button id="tgt-btn-past" onclick="switchTargetView('past',this)" style="padding:6px 14px;font-size:11px;font-weight:600;background:transparent;color:rgba(255,255,255,0.55);border:none;cursor:pointer;border-left:1.5px solid rgba(255,255,255,0.15);font-family:var(--font)">Past</button>
       </div>
-      <button onclick="openModal('lead-modal')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Target</button>
+      <button id="tgt-add-btn" onclick="openModal('lead-modal')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Target</button>
       <button onclick="closeTargets()" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-size:18px;line-height:1;font-family:var(--font)" title="Close">×</button>
     </div>
   </div>
 
-  <!-- KPI STRIP -->
-  <div style="background:var(--white);border-bottom:1px solid var(--g200);display:flex;flex-shrink:0">
-    <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Today — Calls</div>
-      <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-        <span id="tgt-calls-label" style="font-size:28px;font-weight:800;color:var(--teal);font-family:var(--mono);line-height:1">1</span>
-        <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
-      </div>
-      <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-calls-bar" style="width:3%;height:100%;background:var(--teal);border-radius:2px;transition:width 0.4s"></div></div>
-    </div>
-    <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Today — Emails</div>
-      <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-        <span id="tgt-emails-label" style="font-size:28px;font-weight:800;color:#5b8fe8;font-family:var(--mono);line-height:1">0</span>
-        <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
-      </div>
-      <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width 0.4s"></div></div>
-    </div>
-    <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Month — Calls</div>
-      <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-        <span id="tgt-mo-calls" style="font-size:28px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">62</span>
-        <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
-      </div>
-      <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:2.6%;height:100%;background:var(--teal);border-radius:2px"></div></div>
-    </div>
-    <div style="flex:1;padding:16px 24px">
-      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Month — Emails</div>
-      <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-        <span id="tgt-mo-emails" style="font-size:28px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">0</span>
-        <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
-      </div>
-      <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:0%;height:100%;background:#5b8fe8;border-radius:2px"></div></div>
-    </div>
-  </div>
+  <!-- ── SM VIEW ── -->
+  <div id="tgt-sm-content" style="display:flex;flex:1;flex-direction:column;overflow:hidden">
 
-  <!-- TOOLBAR -->
-  <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:12px 24px;display:flex;align-items:center;gap:10px;flex-shrink:0">
-    <div style="position:relative;flex:1;max-width:260px">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="1.8" style="position:absolute;left:10px;top:50%;transform:translateY(-50%)" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input id="tgt-search" type="text" placeholder="Search accounts..." oninput="filterTargets()" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:7px 10px 7px 32px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;box-sizing:border-box">
+    <!-- SM KPI strip -->
+    <div style="background:#fff;border-bottom:1px solid #e4e9f0;display:flex;flex-shrink:0">
+      <div style="flex:1;padding:16px 24px;border-right:1px solid #e4e9f0">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8796a5;margin-bottom:8px">Reps On Track</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="sm-kpi-on-track" style="font-size:28px;font-weight:800;color:#1d9e75;font-family:var(--mono);line-height:1">6</span>
+          <span style="font-size:13px;color:#8796a5;font-family:var(--mono)">/ 10 reps</span>
+        </div>
+        <div style="height:4px;background:#eef1f6;border-radius:2px;overflow:hidden"><div style="width:60%;height:100%;background:#1d9e75;border-radius:2px"></div></div>
+      </div>
+      <div style="flex:1;padding:16px 24px;border-right:1px solid #e4e9f0">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8796a5;margin-bottom:8px">Team Calls Today</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="sm-kpi-calls" style="font-size:28px;font-weight:800;color:#1d9e75;font-family:var(--mono);line-height:1">23</span>
+          <span style="font-size:13px;color:#8796a5;font-family:var(--mono)">/ 379</span>
+        </div>
+        <div style="height:4px;background:#eef1f6;border-radius:2px;overflow:hidden"><div style="width:6%;height:100%;background:#1d9e75;border-radius:2px"></div></div>
+      </div>
+      <div style="flex:1;padding:16px 24px;border-right:1px solid #e4e9f0">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8796a5;margin-bottom:8px">Team Emails Today</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="sm-kpi-emails" style="font-size:28px;font-weight:800;color:#5b8fe8;font-family:var(--mono);line-height:1">12</span>
+          <span style="font-size:13px;color:#8796a5;font-family:var(--mono)">/ 379</span>
+        </div>
+        <div style="height:4px;background:#eef1f6;border-radius:2px;overflow:hidden"><div style="width:3%;height:100%;background:#5b8fe8;border-radius:2px"></div></div>
+      </div>
+      <div style="flex:1;padding:16px 24px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8796a5;margin-bottom:8px">Overdue Accounts</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="sm-kpi-overdue" style="font-size:28px;font-weight:800;color:#ef4444;font-family:var(--mono);line-height:1">6</span>
+          <span style="font-size:13px;color:#8796a5;font-family:var(--mono)">accounts</span>
+        </div>
+        <div style="height:4px;background:#eef1f6;border-radius:2px;overflow:hidden"><div style="width:100%;height:100%;background:#ef4444;border-radius:2px;opacity:0.3"></div></div>
+      </div>
     </div>
-    <select id="tgt-rep-filter" onchange="loadTargetRep(this.value)" style="border:1px solid var(--g200);border-radius:8px;padding:7px 12px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;cursor:pointer">
-      <option value="all">All Reps</option>
-      <option value="BW">Brock Wilson</option>
-      <option value="RH">Russ Holt</option>
-      <option value="JR">Jules Richards</option>
-      <option value="AP">Aya Pedrad</option>
-      <option value="DS">Doug Silverness</option>
-      <option value="MB">Marcus Bradley</option>
-      <option value="EV">Elena Vasquez</option>
-      <option value="AM">Amanda Morrison</option>
-      <option value="DP">Derek Park</option>
-      <option value="PN">Priya Nair</option>
-    </select>
-  </div>
 
-  <!-- TABLE — scrollable body -->
-  <div style="flex:1;overflow-y:auto">
-    <table id="tgt-table" style="width:100%;border-collapse:collapse">
-      <thead style="position:sticky;top:0;z-index:2">
-        <tr style="background:var(--g50);border-bottom:2px solid var(--g200)">
-          <th style="padding:10px 20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Account</th>
-          <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Contact</th>
-          <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Pipeline Stage</th>
-          <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Last Interaction</th>
-          <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Rep</th>
-          <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Status</th>
-          <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Action</th>
-        </tr>
-      </thead>
-      <tbody id="tgt-tbody">
-        <!-- populated by JS -->
-      </tbody>
-    </table>
-  </div>
+    <!-- SM scrollable body -->
+    <div style="flex:1;overflow-y:auto;background:#f5f7fa;padding:24px 28px">
+
+      <!-- Rep Activity Grid -->
+      <div style="margin-bottom:28px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="font-size:13px;font-weight:700;color:#1a2332;letter-spacing:-0.1px">Rep Activity Today</div>
+          <div style="font-size:11px;color:#8796a5">Daily call &amp; email progress vs. goal</div>
+        </div>
+        <div id="sm-rep-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
+          <!-- populated by renderSMTargets() -->
+        </div>
+      </div>
+
+      <!-- Accounts Needing Attention -->
+      <div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="font-size:13px;font-weight:700;color:#1a2332;letter-spacing:-0.1px">Accounts Needing Attention</div>
+          <div style="font-size:11px;color:#8796a5">Overdue &amp; due-soon across your team</div>
+        </div>
+        <div style="background:#fff;border:1.5px solid #dde3ec;border-radius:12px;overflow:hidden">
+          <table style="width:100%;border-collapse:collapse">
+            <thead>
+              <tr style="background:#eef1f6;border-bottom:1.5px solid #dde3ec">
+                <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Account</th>
+                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Contact</th>
+                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Assigned Rep</th>
+                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Last Contact</th>
+                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Stage</th>
+                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:center">Urgency</th>
+                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:center">Action</th>
+              </tr>
+            </thead>
+            <tbody id="sm-overdue-tbody">
+              <!-- populated by renderSMTargets() -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- end tgt-sm-content -->
+
+  <!-- ── SR VIEW ── -->
+  <div id="tgt-sr-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
+    <!-- SR KPI strip -->
+    <div style="background:var(--white);border-bottom:1px solid var(--g200);display:flex;flex-shrink:0">
+      <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Today — Calls</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="tgt-calls-label" style="font-size:28px;font-weight:800;color:var(--teal);font-family:var(--mono);line-height:1">1</span>
+          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
+        </div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-calls-bar" style="width:3%;height:100%;background:var(--teal);border-radius:2px;transition:width 0.4s"></div></div>
+      </div>
+      <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Today — Emails</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="tgt-emails-label" style="font-size:28px;font-weight:800;color:#5b8fe8;font-family:var(--mono);line-height:1">0</span>
+          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
+        </div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width 0.4s"></div></div>
+      </div>
+      <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Month — Calls</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="tgt-mo-calls" style="font-size:28px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">62</span>
+          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
+        </div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:2.6%;height:100%;background:var(--teal);border-radius:2px"></div></div>
+      </div>
+      <div style="flex:1;padding:16px 24px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Month — Emails</div>
+        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
+          <span id="tgt-mo-emails" style="font-size:28px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">0</span>
+          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
+        </div>
+        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:0%;height:100%;background:#5b8fe8;border-radius:2px"></div></div>
+      </div>
+    </div>
+    <!-- SR Toolbar -->
+    <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:12px 24px;display:flex;align-items:center;gap:10px;flex-shrink:0">
+      <div style="position:relative;flex:1;max-width:260px">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="1.8" style="position:absolute;left:10px;top:50%;transform:translateY(-50%)" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="tgt-search" type="text" placeholder="Search accounts..." oninput="filterTargets()" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:7px 10px 7px 32px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;box-sizing:border-box">
+      </div>
+    </div>
+    <!-- SR Table -->
+    <div style="flex:1;overflow-y:auto">
+      <table id="tgt-table" style="width:100%;border-collapse:collapse">
+        <thead style="position:sticky;top:0;z-index:2">
+          <tr style="background:var(--g50);border-bottom:2px solid var(--g200)">
+            <th style="padding:10px 20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Account</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Contact</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Pipeline Stage</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Last Interaction</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Status</th>
+            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Action</th>
+          </tr>
+        </thead>
+        <tbody id="tgt-tbody">
+          <!-- populated by JS -->
+        </tbody>
+      </table>
+    </div>
+  </div><!-- end tgt-sr-content -->
 
 </div><!-- end targets-overlay -->
 <div id="page-targets" class="page" style="padding:0;display:none"><!-- legacy placeholder --></div>
@@ -10411,15 +10480,157 @@ let _targetView = 'today';
 function openTargetsModal() {
   var ov = document.getElementById('targets-overlay');
   if (ov) { ov.style.display = 'flex'; }
-  // Update date
   var d = document.getElementById('targets-date');
   if (d) { var now = new Date(); d.textContent = now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); }
-  setTimeout(function() { loadTargetRep('all'); }, 60);
+  var smView = document.getElementById('tgt-sm-content');
+  var srView = document.getElementById('tgt-sr-content');
+  var addBtn = document.getElementById('tgt-add-btn');
+  if (_currentRole === 'sm') {
+    if (smView) smView.style.display = 'flex';
+    if (srView) srView.style.display = 'none';
+    if (addBtn) addBtn.style.display = 'none';
+    setTimeout(renderSMTargets, 60);
+  } else {
+    if (smView) smView.style.display = 'none';
+    if (srView) srView.style.display = 'flex';
+    if (addBtn) addBtn.style.display = '';
+    setTimeout(function() { loadTargetRep('BW'); }, 60);
+  }
 }
 function closeTargets() {
   var ov = document.getElementById('targets-overlay');
   if (ov) ov.style.display = 'none';
 }
+function _smNotifyRep(btn) {
+  var rep = decodeURIComponent(btn.getAttribute('data-rep') || 'rep');
+  showToast('Notification sent to ' + rep);
+}
+
+function renderSMTargets() {
+  var reps = [
+    {key:'AP', name:'Aya Pedrad',      photo:'women/68', calls:5,  callGoal:40, emails:3,  emailGoal:40},
+    {key:'BW', name:'Brock Wilson',    photo:'men/54',   calls:1,  callGoal:40, emails:0,  emailGoal:40},
+    {key:'RH', name:'Russ Holt',       photo:'men/32',   calls:3,  callGoal:35, emails:1,  emailGoal:35},
+    {key:'JR', name:'Jules Richards',  photo:'women/44', calls:2,  callGoal:40, emails:2,  emailGoal:40},
+    {key:'DS', name:'Doug Silverness', photo:'men/41',   calls:0,  callGoal:35, emails:0,  emailGoal:35},
+    {key:'MB', name:'Marcus Bradley',  photo:'men/22',   calls:4,  callGoal:40, emails:2,  emailGoal:40},
+    {key:'EV', name:'Elena Vasquez',   photo:'women/55', calls:2,  callGoal:38, emails:1,  emailGoal:38},
+    {key:'AM', name:'Amanda Morrison', photo:'women/33', calls:1,  callGoal:38, emails:0,  emailGoal:38},
+    {key:'DP', name:'Derek Park',      photo:'men/29',   calls:2,  callGoal:35, emails:1,  emailGoal:35},
+    {key:'PN', name:'Priya Nair',      photo:'women/21', calls:3,  callGoal:38, emails:2,  emailGoal:38}
+  ];
+
+  // Compute SM KPIs
+  var totalCalls = reps.reduce(function(s,r){return s+r.calls;},0);
+  var totalEmails = reps.reduce(function(s,r){return s+r.emails;},0);
+  var totalCallGoal = reps.reduce(function(s,r){return s+r.callGoal;},0);
+  var totalEmailGoal = reps.reduce(function(s,r){return s+r.emailGoal;},0);
+  var onTrack = reps.filter(function(r){
+    var cp = r.calls/r.callGoal; var ep = r.emails/r.emailGoal;
+    return cp >= 0.4 && ep >= 0.3;
+  }).length;
+
+  // Count overdue accounts
+  var allAccs = allTargetAccounts();
+  var overdueAccs = allAccs.filter(function(a){ return a.lastInt > 30; });
+  var el = function(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; };
+  el('sm-kpi-calls', totalCalls);
+  el('sm-kpi-emails', totalEmails);
+  el('sm-kpi-on-track', onTrack);
+  el('sm-kpi-overdue', overdueAccs.filter(function(a){return a.lastInt>60;}).length);
+
+  // Rep grid
+  var grid = document.getElementById('sm-rep-grid');
+  if (grid) {
+    grid.innerHTML = '';
+    reps.forEach(function(r) {
+      var cp = r.callGoal > 0 ? r.calls/r.callGoal : 0;
+      var ep = r.emailGoal > 0 ? r.emails/r.emailGoal : 0;
+      var score = (cp + ep) / 2;
+      var status, statusBg, statusColor;
+      if (score >= 0.6) { status='On Track'; statusBg='rgba(29,158,117,0.1)'; statusColor='#1d9e75'; }
+      else if (score >= 0.25) { status='Behind'; statusBg='rgba(245,158,11,0.12)'; statusColor='#d97706'; }
+      else { status='At Risk'; statusBg='rgba(239,68,68,0.1)'; statusColor='#ef4444'; }
+      var callPct = Math.round(cp*100);
+      var emailPct = Math.round(ep*100);
+      var barColor = score >= 0.6 ? '#1d9e75' : score >= 0.25 ? '#f59e0b' : '#ef4444';
+      var card = document.createElement('div');
+      card.style.cssText = 'background:#fff;border:1.5px solid #dde3ec;border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;gap:10px;transition:.12s';
+      card.onmouseover = function(){ this.style.borderColor='#1d9e75'; this.style.boxShadow='0 4px 16px rgba(29,158,117,0.1)'; };
+      card.onmouseout  = function(){ this.style.borderColor='#dde3ec'; this.style.boxShadow=''; };
+      card.innerHTML =
+        '<div style="display:flex;align-items:center;gap:10px">' +
+          '<img src="https://randomuser.me/api/portraits/' + r.photo + '.jpg" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0">' +
+          '<div style="min-width:0">' +
+            '<div style="font-size:12px;font-weight:700;color:#1a2332;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + r.name.split(' ')[0] + ' ' + r.name.split(' ')[1] + '</div>' +
+            '<div style="display:inline-block;margin-top:3px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:'+statusBg+';color:'+statusColor+'">' + status + '</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:flex;flex-direction:column;gap:6px">' +
+          '<div>' +
+            '<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px">' +
+              '<span style="color:#8796a5;font-weight:600">CALLS</span>' +
+              '<span style="color:#1a2332;font-weight:700">' + r.calls + '<span style="color:#8796a5;font-weight:400"> / ' + r.callGoal + '</span></span>' +
+            '</div>' +
+            '<div style="height:5px;background:#eef1f6;border-radius:3px;overflow:hidden">' +
+              '<div style="width:' + callPct + '%;height:100%;background:' + barColor + ';border-radius:3px;transition:width 0.4s"></div>' +
+            '</div>' +
+          '</div>' +
+          '<div>' +
+            '<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px">' +
+              '<span style="color:#8796a5;font-weight:600">EMAILS</span>' +
+              '<span style="color:#1a2332;font-weight:700">' + r.emails + '<span style="color:#8796a5;font-weight:400"> / ' + r.emailGoal + '</span></span>' +
+            '</div>' +
+            '<div style="height:5px;background:#eef1f6;border-radius:3px;overflow:hidden">' +
+              '<div style="width:' + emailPct + '%;height:100%;background:#5b8fe8;border-radius:3px;transition:width 0.4s"></div>' +
+            '</div>' +
+          '</div>' +
+        '</div>';
+      grid.appendChild(card);
+    });
+  }
+
+  // Overdue table
+  var tbody = document.getElementById('sm-overdue-tbody');
+  if (tbody) {
+    tbody.innerHTML = '';
+    var attention = allAccs.filter(function(a){ return a.lastInt > 30; });
+    attention.sort(function(a,b){ return b.lastInt - a.lastInt; });
+    if (!attention.length) {
+      tbody.innerHTML = '<tr><td colspan="7" style="padding:32px;text-align:center;color:#8796a5;font-size:13px">All accounts are up to date.</td></tr>';
+      return;
+    }
+    attention.forEach(function(a) {
+      var overdue = a.lastInt > 60;
+      var urgBg = overdue ? 'rgba(239,68,68,0.1)' : 'rgba(245,158,11,0.1)';
+      var urgColor = overdue ? '#ef4444' : '#d97706';
+      var urgLabel = overdue ? 'Overdue' : 'Due Soon';
+      var lastLabel = a.lastInt + ' days ago';
+      var stageMap = {Customer:'stage-cust',Proposal:'stage-prop',Opportunity:'stage-opp',Lead:'stage-lead',Prospect:'stage-pros'};
+      var tr = document.createElement('tr');
+      tr.style.cssText = 'border-bottom:1px solid #eef1f6;transition:background .1s';
+      tr.onmouseover = function(){ this.style.background='#f9fafb'; };
+      tr.onmouseout  = function(){ this.style.background=''; };
+      var leftBorder = overdue ? '#ef4444' : '#f59e0b';
+      tr.innerHTML =
+        '<td style="padding:12px 0 12px 0"><div style="display:flex;align-items:center">' +
+          '<div style="width:3px;height:32px;background:'+leftBorder+';border-radius:0 2px 2px 0;margin-right:14px;flex-shrink:0"></div>' +
+          '<div style="font-size:13px;font-weight:600;color:#1a2332">' + a.co + '</div>' +
+        '</div></td>' +
+        '<td style="padding:12px 14px;font-size:12px;color:#4a5568">' + a.contact + '</td>' +
+        '<td style="padding:12px 14px"><div style="display:flex;align-items:center;gap:7px">' +
+          '<img src="https://randomuser.me/api/portraits/' + (a.repId==='AP'?'women/68':a.repId==='BW'?'men/54':a.repId==='JR'?'women/44':a.repId==='EV'?'women/55':a.repId==='AM'?'women/33':a.repId==='PN'?'women/21':'men/32') + '.jpg" style="width:22px;height:22px;border-radius:50%;object-fit:cover">' +
+          '<span style="font-size:12px;color:#4a5568">' + (a.repName||a.repId) + '</span>' +
+        '</div></td>' +
+        '<td style="padding:12px 14px;font-size:12px;color:'+urgColor+';font-weight:600">' + lastLabel + '</td>' +
+        '<td style="padding:12px 14px"><span class="stage-pill ' + (stageMap[a.stage]||'stage-lead') + '">' + a.stage + '</span></td>' +
+        '<td style="padding:12px 14px;text-align:center"><span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:'+urgBg+';color:'+urgColor+'">' + urgLabel + '</span></td>' +
+        '<td style="padding:12px 14px;text-align:center"><button data-rep="' + encodeURIComponent(a.repName||a.repId) + '" style="padding:5px 12px;border-radius:7px;border:1.5px solid #dde3ec;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);color:#4a5568;background:#fff" onclick="_smNotifyRep(this)" onmouseover="this.style.borderColor=\'#1d9e75\';this.style.color=\'#1d9e75\'" onmouseout="this.style.borderColor=\'#dde3ec\';this.style.color=\'#4a5568\'">Notify Rep</button></td>';
+      tbody.appendChild(tr);
+    });
+  }
+}
+
 
 function loadTargetRep(repId) {
   const allRows = repId === 'all' ? allTargetAccounts() : (TARGETS_DATA[repId]||TARGETS_DATA.BW).accounts.map(a=>({...a,repId,repName:TARGETS_DATA[repId].name}));
