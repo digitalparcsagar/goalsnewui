@@ -84,7 +84,13 @@ body.dark-mode #cs-content{background:transparent!important}
 /* Side panels */
 body.dark-mode .deal-detail-panel,
 body.dark-mode #rep-profile-panel,
-body.dark-mode #card-manager-panel{background:var(--navy)!important;box-shadow:-4px 0 40px rgba(0,0,0,0.5)!important}
+body.dark-mode #card-manager-panel{background:var(--navy)!important;box-shadow:-8px 0 40px rgba(0,0,0,0.5)!important}
+body.dark-mode .cm-header{background:var(--navy)!important;border-bottom-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .cm-row:hover{background:rgba(255,255,255,0.04)!important}
+body.dark-mode .cm-slot-card{background:var(--g50)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .cm-slot-label{background:rgba(255,255,255,0.04)!important;border-bottom-color:rgba(255,255,255,0.07)!important;color:var(--g400)!important}
+body.dark-mode .cm-slot-select{background:var(--g50)!important;color:var(--dark)!important}
+body.dark-mode .cm-section-line{background:rgba(255,255,255,0.07)!important}
 body.dark-mode #user-switcher-panel{background:var(--navy)!important;border-color:rgba(255,255,255,0.1)!important;box-shadow:0 8px 40px rgba(0,0,0,0.5)!important}
 body.dark-mode .notif-panel{background:var(--navy)!important;border-color:rgba(255,255,255,0.1)!important}
 /* Tables */
@@ -1253,6 +1259,26 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 .contacts-table-row{cursor:pointer;border-bottom:1px solid var(--g100);transition:background 0.1s}
 .contacts-table-row:hover{background:var(--g50)}
 .contacts-table-row:last-child{border-bottom:none}
+
+/* ── KPI card slot typeahead ── */
+.cm-slot-search-wrap{position:relative;padding:8px 10px 10px}
+.cm-slot-search{width:100%;box-sizing:border-box;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px 7px 28px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;transition:.12s}
+.cm-slot-search:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(29,158,117,0.1)}
+.cm-slot-search-wrap::before{content:'⌕';position:absolute;left:18px;top:50%;transform:translateY(-60%);font-size:14px;color:var(--g400);pointer-events:none}
+.cm-slot-results{position:absolute;left:10px;right:10px;top:calc(100% - 10px);background:var(--white);border:1.5px solid var(--g200);border-radius:8px;box-shadow:0 8px 24px rgba(0,0,0,0.12);z-index:600;max-height:220px;overflow-y:auto;display:none}
+.cm-slot-results.open{display:block}
+.cm-res-group{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.7px;color:var(--g400);padding:8px 12px 4px;background:var(--g50);border-bottom:1px solid var(--g100);position:sticky;top:0}
+.cm-res-item{padding:7px 12px;font-size:12px;color:var(--dark);cursor:pointer;border-bottom:1px solid var(--g100);transition:.1s;display:flex;align-items:center;justify-content:space-between}
+.cm-res-item:last-child{border-bottom:none}
+.cm-res-item:hover{background:rgba(29,158,117,0.07);color:var(--teal)}
+.cm-res-item .cm-res-val{font-size:11px;color:var(--g400);margin-left:8px;white-space:nowrap}
+.cm-slot-current{font-size:10px;font-weight:400;color:var(--teal);text-transform:none;letter-spacing:0;margin-left:6px;max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;display:inline-block;vertical-align:middle}
+body.dark-mode .cm-slot-search{background:var(--g50)!important;border-color:rgba(255,255,255,0.1)!important;color:var(--dark)!important}
+body.dark-mode .cm-slot-results{background:var(--g50)!important;border-color:rgba(255,255,255,0.12)!important}
+body.dark-mode .cm-res-group{background:rgba(255,255,255,0.04)!important;border-color:rgba(255,255,255,0.08)!important}
+body.dark-mode .cm-res-item{border-color:rgba(255,255,255,0.06)!important;color:var(--dark)}
+body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
+
 </style>
 </head>
 <body>
@@ -12553,24 +12579,143 @@ function _confirmSmartMerge() {
 // ── ACE CONFIG TABS ──────────────────────────────────────────
 
 
-// Card slot updater — called from Customize Dashboard panel selects
+
+// ── Pipeline KPI card typeahead data ──────────────────────────────────
+var _cmPipelineData = {
+  'Sales Pipeline': [
+    { label: 'Opportunities',   value: '67',     delta: '▲ 9 this week' },
+    { label: 'Proposals',       value: '34',     delta: '— same as last week' },
+    { label: 'Closed / Won',    value: '19',     delta: '▲ 3 this week' },
+    { label: 'Pipeline Value',  value: '$8.7M',  delta: 'Total active' },
+    { label: 'Win Rate',        value: '58%',    delta: '— flat vs last year' },
+    { label: 'Avg Deal Size',   value: '$82,900',delta: '▲ $4.2K vs last month' }
+  ],
+  'Renewals Pipeline': [
+    { label: 'Up for Renewal',      value: '1',     delta: '$145K at stake' },
+    { label: 'Review Sent',         value: '1',     delta: '$158K in review' },
+    { label: 'Meeting Scheduled',   value: '1',     delta: '$100K pipeline' },
+    { label: 'Terms Agreed',        value: '1',     delta: '$80K ready' },
+    { label: 'Renewed',             value: '1',     delta: '$174K this month' },
+    { label: 'Total Renewal Value', value: '$657K', delta: '5 active renewals' }
+  ],
+  'Enterprise Pipeline': [
+    { label: 'Enterprise Opps',     value: '3',     delta: '$1.1M total value' },
+    { label: 'Executive Meeting',   value: '1',     delta: '$385K pipeline' },
+    { label: 'Proposal Sent',       value: '2',     delta: '$720K in review' },
+    { label: 'Contract Review',     value: '1',     delta: '$510K pending' }
+  ],
+  'SMB Pipeline': [
+    { label: 'New Leads',           value: '42',    delta: '▲ 6 this week' },
+    { label: 'Qualified',           value: '28',    delta: '67% qualify rate' },
+    { label: 'Demo Booked',         value: '15',    delta: '▲ 2 this week' },
+    { label: 'Proposal Out',        value: '11',    delta: '$320K pending' },
+    { label: 'Closed / Won',        value: '7',     delta: '▲ 1 this week' }
+  ],
+  'Team Health': [
+    { label: 'Overdue Actions',     value: '7',     delta: 'Across all reps' },
+    { label: 'Stalled Deals',       value: '4',     delta: '30+ days no activity' },
+    { label: 'Calls This Month',    value: '247',   delta: 'vs 320 goal' },
+    { label: 'Emails This Month',   value: '214',   delta: 'vs 320 goal' },
+    { label: 'Meetings Booked',     value: '38',    delta: 'vs 50 goal' },
+    { label: 'Conversion Rate',     value: '31%',   delta: '▲ 2% vs last month' }
+  ]
+};
+
+// Current selection per slot
+var _cmSlotState = [
+  { pipeline: 'Renewals Pipeline', label: 'Renewed' },
+  { pipeline: 'Sales Pipeline',    label: 'Opportunities' },
+  { pipeline: 'Sales Pipeline',    label: 'Proposals' },
+  { pipeline: 'Sales Pipeline',    label: 'Closed / Won' },
+  { pipeline: 'Sales Pipeline',    label: 'Avg Deal Size' }
+];
+
+function _cmSearch(slot, query) {
+  var resultsEl = document.getElementById('cm-results-' + slot);
+  if (!resultsEl) return;
+  query = (query || '').toLowerCase().trim();
+  var html = '';
+  var count = 0;
+  Object.keys(_cmPipelineData).forEach(function(pipeline) {
+    var stages = _cmPipelineData[pipeline];
+    var matches = query
+      ? stages.filter(function(s) {
+          return s.label.toLowerCase().indexOf(query) >= 0 ||
+                 pipeline.toLowerCase().indexOf(query) >= 0;
+        })
+      : stages;
+    if (matches.length === 0) return;
+    html += '<div class="cm-res-group">' + pipeline + '</div>';
+    matches.forEach(function(s) {
+      var pEnc = encodeURIComponent(pipeline);
+      var lEnc = encodeURIComponent(s.label);
+      html += '<div class="cm-res-item" onclick="_cmPickResult(' + slot + ',decodeURIComponent(\'' + pEnc + '\'),decodeURIComponent(\'' + lEnc + '\'))">' +
+        '<span>' + s.label + '</span>' +
+        '<span class="cm-res-val">' + s.value + '</span>' +
+        '</div>';
+      count++;
+    });
+  });
+  if (count === 0) {
+    html = '<div style="padding:14px 12px;font-size:12px;color:var(--g400);text-align:center">No matches</div>';
+  }
+  resultsEl.innerHTML = html;
+  resultsEl.classList.add('open');
+}
+
+function _cmPickResult(slot, pipeline, stageLabel) {
+  var stages = _cmPipelineData[pipeline] || [];
+  var stage = null;
+  for (var i = 0; i < stages.length; i++) {
+    if (stages[i].label === stageLabel) { stage = stages[i]; break; }
+  }
+  if (!stage) return;
+
+  // Update dashboard card
+  var lbl = document.getElementById('cfg' + slot + '-label');
+  var val = document.getElementById('cfg' + slot + '-value');
+  var dlt = document.getElementById('cfg' + slot + '-delta');
+  if (lbl) lbl.textContent = stage.label;
+  if (val) val.textContent = stage.value;
+  if (dlt) { dlt.textContent = stage.delta; dlt.className = 'stat-delta'; }
+
+  // Update slot state + header chip
+  _cmSlotState[slot] = { pipeline: pipeline, label: stageLabel };
+  var chip = document.getElementById('cm-slot' + slot + '-current');
+  if (chip) chip.textContent = stageLabel;
+
+  // Clear search field + close results
+  var inp = document.getElementById('cm-search-' + slot);
+  if (inp) inp.value = '';
+  var res = document.getElementById('cm-results-' + slot);
+  if (res) res.classList.remove('open');
+}
+
+// Close results when clicking outside
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.cm-slot-search-wrap')) {
+    document.querySelectorAll('.cm-slot-results').forEach(function(r) {
+      r.classList.remove('open');
+    });
+  }
+});
+
+// Legacy — kept so nothing breaks
 function _cmSetSlot(slot, rawVal) {
   var parts = rawVal.split('|');
-  var label = parts[0] || '';
-  var value = parts[1] || '';
-  var delta = parts[2] || '';
   var lbl = document.getElementById('cfg'+slot+'-label');
   var val = document.getElementById('cfg'+slot+'-value');
   var dlt = document.getElementById('cfg'+slot+'-delta');
-  if (lbl) lbl.textContent = label;
-  if (val) val.textContent = value;
-  if (dlt) { dlt.textContent = delta; dlt.className = 'stat-delta'; }
+  if (lbl) lbl.textContent = parts[0] || '';
+  if (val) val.textContent = parts[1] || '';
+  if (dlt) { dlt.textContent = parts[2] || ''; dlt.className = 'stat-delta'; }
 }
-// Legacy stubs — no longer active but kept to avoid JS errors
-function _openSlotPicker() {}
-function _pickSlot() {}
-function _openDashCardPicker() {}
-function _setDashCard() {}
+
+// Legacy stubs
+function _openSlotPicker(){}
+function _pickSlot(){}
+function _openDashCardPicker(){}
+function _setDashCard(){}
 function _selectPersona(el, val) {
   document.querySelectorAll('.ace-persona-card').forEach(function(c) {
     c.style.borderColor = 'var(--g200)';
@@ -13011,173 +13156,71 @@ function _iwStep5() {
     <label class="cm-toggle"><input type="checkbox" id="cm-card-roi" checked onchange="cmToggle('card-roi',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
   </div>
   <div class="cm-section" style="display:flex;align-items:center;justify-content:space-between">Pipeline KPI Cards <span style="font-size:10px;color:var(--g400);font-weight:400;text-transform:none;letter-spacing:0">click a card to change it</span></div>
-  <!-- 5 configurable KPI card slots -->
+  <!-- 5 configurable KPI card slots — typeahead search -->
   <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:4px" id="cm-kpi-slots">
-    <div class="cm-kpi-row" data-slot="0">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 1</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(0,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option value="Proposals|34|— same as last week">Proposals</option>
-          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option selected value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
+    <div class="cm-slot-card" data-slot="0">
+      <div class="cm-slot-label">Card 1 <span class="cm-slot-current" id="cm-slot0-current">Renewals — Renewed</span></div>
+      <div class="cm-slot-search-wrap">
+        <input type="text" class="cm-slot-search" id="cm-search-0"
+               placeholder="Search pipelines &amp; stages…"
+               oninput="_cmSearch(0,this.value)"
+               onfocus="_cmSearch(0,this.value)">
+        <div class="cm-slot-results" id="cm-results-0"></div>
+      </div>
     </div>
-    <div class="cm-kpi-row" data-slot="1">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 2</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(1,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option selected value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option value="Proposals|34|— same as last week">Proposals</option>
-          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
+    <div class="cm-slot-card" data-slot="1">
+      <div class="cm-slot-label">Card 2 <span class="cm-slot-current" id="cm-slot1-current">Opportunities</span></div>
+      <div class="cm-slot-search-wrap">
+        <input type="text" class="cm-slot-search" id="cm-search-1"
+               placeholder="Search pipelines &amp; stages…"
+               oninput="_cmSearch(1,this.value)"
+               onfocus="_cmSearch(1,this.value)">
+        <div class="cm-slot-results" id="cm-results-1"></div>
+      </div>
     </div>
-    <div class="cm-kpi-row" data-slot="2">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 3</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(2,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option selected value="Proposals|34|— same as last week">Proposals</option>
-          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
+    <div class="cm-slot-card" data-slot="2">
+      <div class="cm-slot-label">Card 3 <span class="cm-slot-current" id="cm-slot2-current">Proposals</span></div>
+      <div class="cm-slot-search-wrap">
+        <input type="text" class="cm-slot-search" id="cm-search-2"
+               placeholder="Search pipelines &amp; stages…"
+               oninput="_cmSearch(2,this.value)"
+               onfocus="_cmSearch(2,this.value)">
+        <div class="cm-slot-results" id="cm-results-2"></div>
+      </div>
     </div>
-    <div class="cm-kpi-row" data-slot="3">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 4</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(3,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option value="Proposals|34|— same as last week">Proposals</option>
-          <option selected value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
+    <div class="cm-slot-card" data-slot="3">
+      <div class="cm-slot-label">Card 4 <span class="cm-slot-current" id="cm-slot3-current">Closed / Won</span></div>
+      <div class="cm-slot-search-wrap">
+        <input type="text" class="cm-slot-search" id="cm-search-3"
+               placeholder="Search pipelines &amp; stages…"
+               oninput="_cmSearch(3,this.value)"
+               onfocus="_cmSearch(3,this.value)">
+        <div class="cm-slot-results" id="cm-results-3"></div>
+      </div>
     </div>
-    <div class="cm-kpi-row" data-slot="4">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 5</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(4,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option value="Proposals|34|— same as last week">Proposals</option>
-          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option selected value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
+    <div class="cm-slot-card" data-slot="4">
+      <div class="cm-slot-label">Card 5 <span class="cm-slot-current" id="cm-slot4-current">Avg Deal Size</span></div>
+      <div class="cm-slot-search-wrap">
+        <input type="text" class="cm-slot-search" id="cm-search-4"
+               placeholder="Search pipelines &amp; stages…"
+               oninput="_cmSearch(4,this.value)"
+               onfocus="_cmSearch(4,this.value)">
+        <div class="cm-slot-results" id="cm-results-4"></div>
+      </div>
     </div>
   </div>
-  <div class="cm-section">Team Sections</div>
-  <div class="cm-row">
-    <span class="cm-row-label">Top Performers</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-top-performers" checked onchange="cmToggle('card-top-performers',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+  <div class="cm-section-wrap" style="margin-top:4px">
+    <div class="cm-section">Team Sections <div class="cm-section-line"></div></div>
+    <div class="cm-row">
+      <div><div class="cm-row-label">Top Performers</div><div class="cm-row-sub">Leaderboard highlights</div></div>
+      <label class="cm-toggle"><input type="checkbox" id="cm-card-top-performers" checked onchange="cmToggle('card-top-performers',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+    </div>
+    <div class="cm-row">
+      <div><div class="cm-row-label">Leaderboard</div><div class="cm-row-sub">Full rep ranking table</div></div>
+      <label class="cm-toggle"><input type="checkbox" id="cm-card-leaderboard" checked onchange="cmToggle('card-leaderboard',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+    </div>
   </div>
-  <div class="cm-row">
-    <span class="cm-row-label">Leaderboard</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-leaderboard" checked onchange="cmToggle('card-leaderboard',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
+  </div><!-- end cm-body -->
 </div>
 </body>
 </html>
