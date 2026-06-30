@@ -135,9 +135,26 @@ body.dark-mode [style*="background: #f0f2f5"]{background:var(--off)!important}
 /* Profile menu icons — override hardcoded navy stroke */
 body.dark-mode .profile-menu-icon{background:rgba(255,255,255,0.08)!important}
 body.dark-mode .profile-menu-icon svg{stroke:rgba(255,255,255,0.72)!important}
-/* Merge duplicate cards */
-body.dark-mode [style*="background:#fef9c3"]{background:rgba(245,158,11,0.15)!important}
-body.dark-mode [style*="background: #fef9c3"]{background:rgba(245,158,11,0.15)!important}
+/* Merge duplicate + import warning rows */
+body.dark-mode [style*="background:#fef9c3"]{background:rgba(245,158,11,0.12)!important;border-color:rgba(245,158,11,0.25)!important}
+body.dark-mode [style*="background: #fef9c3"]{background:rgba(245,158,11,0.12)!important;border-color:rgba(245,158,11,0.25)!important}
+/* Fix warning text color in dark mode */
+body.dark-mode [style*="color:#a16207"]{color:rgba(250,191,24,0.9)!important}
+/* Fix #fafafa footer rows in merge/import */
+body.dark-mode [style*="background:#fafafa"]{background:var(--g50)!important}
+body.dark-mode [style*="background: #fafafa"]{background:var(--g50)!important}
+/* Fix colored icon bg chips in import/integrations (purple, orange) */
+body.dark-mode [style*="background:#fdf4ff"]{background:rgba(139,92,246,0.15)!important}
+body.dark-mode [style*="background:#fff7ed"]{background:rgba(245,158,11,0.12)!important}
+body.dark-mode [style*="background:#f0fdfa"]{background:rgba(29,158,117,0.12)!important}
+body.dark-mode [style*="background:#f0f9ff"]{background:rgba(79,126,247,0.12)!important}
+body.dark-mode [style*="background:#ecfdf5"]{background:rgba(29,158,117,0.12)!important}
+/* Forecast canvas wrapper */
+body.dark-mode #page-forecasting .card{background:var(--white)!important}
+/* CM panel select in dark mode */
+body.dark-mode .cm-slot-select{background:var(--g50)!important;border-color:rgba(255,255,255,0.1)!important;color:var(--dark)!important}
+/* Import preview table */
+body.dark-mode [style*="background:#f8fafc"]{background:var(--g50)!important}
 body.dark-mode [style*="background:#fffbeb"]{background:rgba(245,158,11,0.12)!important}
 body.dark-mode [style*="background:#fafafa"]{background:var(--g50)!important}
 body.dark-mode [style*="background: #fafafa"]{background:var(--g50)!important}
@@ -852,6 +869,14 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 
 /* Topbar avatar ring on hover */
 .tb-avatar:hover { box-shadow:0 0 0 2px var(--teal) }
+.cfg-edit-icon { font-size:10px;color:var(--g200);transition:.12s;margin-left:4px }
+.dash-cfg-card:hover .cfg-edit-icon { color:var(--teal) }
+.dcm-opt { display:flex;flex-direction:column;padding:10px 12px;border:1.5px solid var(--g200);border-radius:8px;cursor:pointer;transition:.12s;gap:2px;font-family:var(--font) }
+.dcm-opt:hover { border-color:var(--teal);background:rgba(29,158,117,0.03) }
+.dcm-opt input { display:none }
+.dcm-opt span { font-size:12px;font-weight:600;color:var(--dark) }
+.dcm-opt small { font-size:10px;color:var(--g400) }
+.dcm-opt.selected { border-color:var(--teal);background:rgba(29,158,117,0.05) }
 /* Profile dropdown menu items */
 .profile-menu-item{width:100%;display:flex;align-items:center;gap:10px;padding:8px 10px;background:none;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--dark);border-radius:8px;transition:background 0.12s;text-align:left;font-family:var(--font)}
 .profile-menu-item:hover{background:var(--g50)}
@@ -1514,32 +1539,32 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 
 </div><!-- end hero row -->
 
-<!-- Pipeline metric cards row -->
-<div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap">
-  <div id="card-leads" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px;cursor:pointer" onclick="showPage('contacts',document.querySelector('.sb-item[onclick*=contacts]'))" title="View all leads in Contacts">
-    <div class="stat-label">Leads</div>
-    <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="kpi-leads">142</div>
-    <div class="stat-delta positive">▲ 18 this week</div>
+<!-- Pipeline metric cards row — all 5 configurable by SM -->
+<div style="display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap" id="dash-kpi-row">
+  <div class="stat-card dash-cfg-card sm-cfg" data-slot="0" style="flex:1;min-width:120px;padding:14px 16px;position:relative">
+    <div class="stat-label"><span id="cfg0-label" style="font-size:12px">Renewals — Renewed</span></div>
+    <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="cfg0-value">1</div>
+    <div class="stat-delta positive" id="cfg0-delta">$174K this month</div>
   </div>
-  <div id="card-opps" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px;cursor:pointer" onclick="showPage('pipeline',document.querySelector('.sb-item[onclick*=pipeline]'))" title="View all opportunities in Pipeline">
-    <div class="stat-label">Opportunities</div>
-    <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="kpi-opps">67</div>
-    <div class="stat-delta positive">▲ 9 this week</div>
+  <div class="stat-card dash-cfg-card sm-cfg" data-slot="1" style="flex:1;min-width:120px;padding:14px 16px;position:relative">
+    <div class="stat-label"><span id="cfg1-label" style="font-size:12px">Opportunities</span></div>
+    <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="cfg1-value" id="kpi-opps">67</div>
+    <div class="stat-delta positive" id="cfg1-delta">▲ 9 this week</div>
   </div>
-  <div id="card-proposals" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px;cursor:pointer" onclick="showPage('pipeline',document.querySelector('.sb-item[onclick*=pipeline]'))" title="View proposals in Pipeline">
-    <div class="stat-label">Proposals</div>
-    <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="kpi-proposals">34</div>
-    <div class="stat-delta" style="color:var(--amber)">— same as last week</div>
+  <div class="stat-card dash-cfg-card sm-cfg" data-slot="2" style="flex:1;min-width:120px;padding:14px 16px;position:relative">
+    <div class="stat-label"><span id="cfg2-label" style="font-size:12px">Proposals</span></div>
+    <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="cfg2-value" id="kpi-proposals">34</div>
+    <div class="stat-delta" style="color:var(--amber)" id="cfg2-delta">— same as last week</div>
   </div>
-  <div id="card-closed" class="stat-card" style="flex:1;min-width:120px;padding:14px 16px;cursor:pointer" onclick="showPage('reports',document.querySelector('.sb-item[onclick*=reports]'))" title="View closed deals in Reports">
-    <div class="stat-label">Closed / Won</div>
-    <div style="font-size:22px;font-weight:700;color:var(--teal);font-family:var(--mono)" id="kpi-closed">19</div>
-    <div class="stat-delta positive">▲ 3 this week</div>
+  <div class="stat-card dash-cfg-card sm-cfg" data-slot="3" style="flex:1;min-width:120px;padding:14px 16px;position:relative">
+    <div class="stat-label"><span id="cfg3-label" style="font-size:12px">Closed / Won</span></div>
+    <div style="font-size:22px;font-weight:700;color:var(--teal);font-family:var(--mono)" id="cfg3-value" id="kpi-closed">19</div>
+    <div class="stat-delta positive" id="cfg3-delta">▲ 3 this week</div>
   </div>
-  <div id="card-avg-deal" class="stat-card" style="flex:1;min-width:140px;padding:14px 16px;cursor:pointer" onclick="showPage('reports',document.querySelector('.sb-item[onclick*=reports]'))" title="View deal analytics in Reports">
-    <div class="stat-label">Avg Deal Size</div>
-    <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="kpi-avg-deal">$82,900</div>
-    <div class="stat-delta positive">▲ $4.2K vs last month</div>
+  <div class="stat-card dash-cfg-card sm-cfg" data-slot="4" style="flex:1;min-width:140px;padding:14px 16px;position:relative">
+    <div class="stat-label"><span id="cfg4-label" style="font-size:12px">Avg Deal Size</span></div>
+    <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="cfg4-value" id="kpi-avg-deal">$82,900</div>
+    <div class="stat-delta positive" id="cfg4-delta">▲ $4.2K vs last month</div>
   </div>
 </div>
 
@@ -2507,7 +2532,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 <div id="sr-personal-banner" style="display:none;background:linear-gradient(135deg,rgba(26,32,53,0.04) 0%,rgba(29,158,117,0.06) 100%);border:1px solid var(--g200);border-radius:12px;padding:14px 18px;margin-bottom:16px">
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px">
     <div style="display:flex;align-items:center;gap:10px">
-      <img src="https://randomuser.me/api/portraits/men/45.jpg" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0" alt="Brock Wilson">
+      <img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0" alt="Brock Wilson">
       <div>
         <div style="font-size:13px;font-weight:700;color:var(--dark)">Brock Wilson — My Pipeline</div>
         <div style="font-size:11px;color:var(--g400)">Showing your active opportunities only</div>
@@ -3381,36 +3406,179 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 
 <!-- REPORTS -->
 <div id="page-reports" class="page">
-<div class="page-header"><div class="page-title">Reports</div><div class="page-subtitle">Sales analytics and performance data</div><button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Preparing PDF download...')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg> Export</button></div>
-<div class="stat-row">
-  <div class="stat-card"><div class="stat-label">This Month</div><div class="stat-value teal">$1.24M</div></div>
-  <div class="stat-card"><div class="stat-label">Monthly Goal</div><div class="stat-value">$1.61M</div></div>
-  <div class="stat-card" onclick="showPage('pipeline',null)" title="View all deals"><div class="stat-label">Total Deals</div><div class="stat-value">34</div></div>
-  <div class="stat-card" onclick="showToast('Filtering by closed won')" title="Filter won deals"><div class="stat-label">Win Rate</div><div class="stat-value teal">58%</div></div>
+
+<!-- SM Reports -->
+<div id="reports-sm-view">
+<div class="page-header" style="flex-wrap:wrap;gap:10px">
+  <div><div class="page-title">Reports</div><div class="page-subtitle">Export and analyze company data</div></div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <select onchange="" style="border:1.5px solid var(--g200);border-radius:8px;padding:6px 10px;font-size:12px;font-family:var(--font);color:var(--dark)">
+      <option value="all">All Reps</option>
+      <option>Brock Wilson</option><option>Russ Holt</option><option>Jules Richards</option>
+      <option>Aya Pedrad</option><option>Doug Silverness</option><option>Marcus Kim</option>
+      <option>Lisa Torres</option><option>Nathan Price</option>
+    </select>
+    <select onchange="" style="border:1.5px solid var(--g200);border-radius:8px;padding:6px 10px;font-size:12px;font-family:var(--font);color:var(--dark)">
+      <option>This Month</option><option>Q2 2026</option><option selected>Year to Date</option><option>Full Year 2025</option>
+    </select>
+  </div>
 </div>
-<div class="two-col">
-  <div class="card"><div class="card-title">Sales by Rep</div><div class="leader-list"><div class="leader-item"><div class="leader-av" style="background:#1d9e75;padding:0;overflow:hidden"><img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="BW"></div><div class="leader-info"><div class="leader-name">Brock Wilson</div><div class="leader-prog"><div class="leader-prog-fill" style="width:88%"></div></div></div><div class="leader-val">$420K</div></div><div class="leader-item"><div class="leader-av" style="background:#6366f1;padding:0;overflow:hidden"><img src="https://randomuser.me/api/portraits/men/71.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="RH"></div><div class="leader-info"><div class="leader-name">Russ Holt</div><div class="leader-prog"><div class="leader-prog-fill" style="width:70%"></div></div></div><div class="leader-val">$338K</div></div><div class="leader-item"><div class="leader-av" style="background:#f59e0b;padding:0;overflow:hidden"><img src="https://randomuser.me/api/portraits/women/15.jpg" style="width:100%;height:100%;object-fit:cover;border-radius:50%" alt="JR"></div><div class="leader-info"><div class="leader-name">Jules Richards</div><div class="leader-prog"><div class="leader-prog-fill" style="width:55%"></div></div></div><div class="leader-val">$272K</div></div></div></div>
-  <div class="card"><div class="card-title">Lead Sources</div><div style="display:flex;flex-direction:column;gap:10px">
-    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Referral</span><div style="display:flex;align-items:center;gap:8px"><div style="width:110px;height:5px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="width:44%;height:100%;background:var(--teal)"></div></div><span style="font-size:12px;font-family:var(--mono);font-weight:600">44%</span></div></div>
-    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Website</span><div style="display:flex;align-items:center;gap:8px"><div style="width:110px;height:5px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="width:28%;height:100%;background:var(--blue)"></div></div><span style="font-size:12px;font-family:var(--mono);font-weight:600">28%</span></div></div>
-    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Cold Outreach</span><div style="display:flex;align-items:center;gap:8px"><div style="width:110px;height:5px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="width:18%;height:100%;background:var(--purple)"></div></div><span style="font-size:12px;font-family:var(--mono);font-weight:600">18%</span></div></div>
-    <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:13px">Other</span><div style="display:flex;align-items:center;gap:8px"><div style="width:110px;height:5px;background:var(--g200);border-radius:3px;overflow:hidden"><div style="width:10%;height:100%;background:var(--amber)"></div></div><span style="font-size:12px;font-family:var(--mono);font-weight:600">10%</span></div></div>
-  </div></div>
+<div class="stat-row" style="margin-bottom:18px">
+  <div class="stat-card"><div class="stat-label">Revenue YTD</div><div class="stat-value teal">$7.96M</div><div class="stat-delta positive">▲ 12% vs last year</div></div>
+  <div class="stat-card"><div class="stat-label">Opportunities</div><div class="stat-value">67</div><div class="stat-delta positive">▲ 9 this week</div></div>
+  <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value">58%</div><div class="stat-delta" style="color:var(--amber)">— flat vs last year</div></div>
+  <div class="stat-card"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$82.9K</div><div class="stat-delta positive">▲ $4.2K vs last mo</div></div>
 </div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:22px">
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,rgba(29,158,117,0.07) 0%,rgba(29,158,117,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(29,158,117,0.12);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Opportunities</div><div style="font-size:11px;color:var(--g400)">67 total · $8.7M combined</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Generating Opportunities CSV...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>All Opportunities</span><span style="color:var(--teal);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Generating Won Opportunities...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Closed / Won</span><span style="color:var(--teal);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Generating Pipeline by Stage...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Pipeline by Stage</span><span style="color:var(--teal);font-weight:600">↓ XLSX</span></button>
+      <button onclick="showToast('Generating Stalled Deals...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Stalled (30+ days)</span><span style="color:var(--teal);font-weight:600">↓ CSV</span></button>
+    </div>
+  </div>
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,rgba(79,126,247,0.07) 0%,rgba(79,126,247,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(79,126,247,0.12);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--blue)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Contacts</div><div style="font-size:11px;color:var(--g400)">1,240 people · 342 orgs</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Exporting People...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--g100)'"><span>All People</span><span style="color:var(--blue);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Exporting Organizations...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Organizations</span><span style="color:var(--blue);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Contacts by Owner...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--g100)'"><span>By Owner / Rep</span><span style="color:var(--blue);font-weight:600">↓ XLSX</span></button>
+      <button onclick="showToast('New Contacts...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--blue)'" onmouseout="this.style.borderColor='var(--g100)'"><span>New This Period</span><span style="color:var(--blue);font-weight:600">↓ CSV</span></button>
+    </div>
+  </div>
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,rgba(245,158,11,0.07) 0%,rgba(245,158,11,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(245,158,11,0.12);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6.18-6.13 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Activities</div><div style="font-size:11px;color:var(--g400)">Calls, emails, meetings, tasks</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Generating Call Log...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Call Log</span><span style="color:var(--amber);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Email Activity...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Email Activity</span><span style="color:var(--amber);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Activity by Rep...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Activity by Rep</span><span style="color:var(--amber);font-weight:600">↓ XLSX</span></button>
+      <button onclick="showToast('Meetings Log...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Meetings Log</span><span style="color:var(--amber);font-weight:600">↓ CSV</span></button>
+    </div>
+  </div>
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,rgba(139,92,246,0.07) 0%,rgba(139,92,246,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(139,92,246,0.12);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--purple)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Goals &amp; Performance</div><div style="font-size:11px;color:var(--g400)">Rep targets, pace, attainment</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Goal Attainment by Rep...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Goal Attainment by Rep</span><span style="color:var(--purple);font-weight:600">↓ XLSX</span></button>
+      <button onclick="showToast('Monthly Pace Tracker...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Monthly Pace Tracker</span><span style="color:var(--purple);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Call and Email Goals...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Call &amp; Email Goals</span><span style="color:var(--purple);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Leaderboard History...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--purple)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Leaderboard History</span><span style="color:var(--purple);font-weight:600">↓ XLSX</span></button>
+    </div>
+  </div>
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,rgba(26,32,53,0.05) 0%,rgba(26,32,53,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(26,32,53,0.08);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Commissions</div><div style="font-size:11px;color:var(--g400)">Payouts, bonuses, compensation</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Commission Statements...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Commission Statements</span><span style="color:var(--navy);font-weight:600">↓ PDF</span></button>
+      <button onclick="showToast('Payout History...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Payout History</span><span style="color:var(--navy);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Bonus Report...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Bonus &amp; Contest Payouts</span><span style="color:var(--navy);font-weight:600">↓ XLSX</span></button>
+    </div>
+  </div>
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(100,116,139,0.1);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Scheduled Reports</div><div style="font-size:11px;color:var(--g400)">Auto-deliver on a schedule</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Opening scheduler...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Weekly Team Summary</span><span style="font-size:11px;color:var(--g400)">Every Monday</span></button>
+      <button onclick="showToast('Opening scheduler...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Monthly Commission Report</span><span style="font-size:11px;color:var(--g400)">1st of month</span></button>
+      <button onclick="showToast('Opening report builder...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1.5px dashed var(--g200);border-radius:8px;background:#fff;cursor:pointer;font-family:var(--font);font-size:12px;color:var(--teal);font-weight:600;transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'"><span>+ Build Custom Report</span><span>→</span></button>
+    </div>
+  </div>
+</div>
+<div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+  <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 18px;display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:13px;font-weight:700;color:var(--dark)">Recent Exports</div>
+    <button onclick="showToast('Clearing history...')" style="background:none;border:none;font-size:12px;color:var(--g400);cursor:pointer;font-family:var(--font)">Clear history</button>
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="background:var(--g50)"><th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Report</th><th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Filters</th><th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Format</th><th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Exported</th><th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Action</th></tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Goal Attainment by Rep</td><td style="padding:10px 16px;font-size:12px;color:var(--g500)">All reps · YTD</td><td style="padding:10px 16px"><span style="font-size:11px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:2px 7px;font-weight:600">XLSX</span></td><td style="padding:10px 16px;font-size:12px;color:var(--g400)">Today 9:14 AM</td><td style="padding:10px 16px;text-align:right"><button onclick="showToast('Re-downloading...')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">↓ Re-download</button></td></tr>
+      <tr><td style="padding:10px 16px;font-weight:600">All Opportunities</td><td style="padding:10px 16px;font-size:12px;color:var(--g500)">All reps · Q2 2026</td><td style="padding:10px 16px"><span style="font-size:11px;background:rgba(79,126,247,0.1);color:var(--blue);border-radius:4px;padding:2px 7px;font-weight:600">CSV</span></td><td style="padding:10px 16px;font-size:12px;color:var(--g400)">Jun 28, 2026</td><td style="padding:10px 16px;text-align:right"><button onclick="showToast('Re-downloading...')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">↓ Re-download</button></td></tr>
+    </tbody>
+  </table>
+</div>
+</div><!-- end reports-sm-view -->
+
+<!-- SR Reports — personal data only -->
+<div id="reports-sr-view" style="display:none">
+<div class="page-header"><div class="page-title">My Reports</div><div class="page-subtitle">Your personal performance data and exports</div></div>
+<div class="stat-row" style="margin-bottom:18px">
+  <div class="stat-card"><div class="stat-label">My Revenue YTD</div><div class="stat-value teal">$953K</div><div class="stat-delta positive">47.6% of goal</div></div>
+  <div class="stat-card"><div class="stat-label">My Win Rate</div><div class="stat-value">71%</div><div class="stat-delta positive">▲ above team avg</div></div>
+  <div class="stat-card"><div class="stat-label">My Avg Deal</div><div class="stat-value">$82K</div><div class="stat-delta positive">▲ in line with team</div></div>
+  <div class="stat-card"><div class="stat-label">My Activities</div><div class="stat-value">247</div><div class="stat-delta positive">38 calls · 31 emails</div></div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px">
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,rgba(29,158,117,0.07) 0%,rgba(29,158,117,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(29,158,117,0.12);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">My Opportunities</div><div style="font-size:11px;color:var(--g400)">3 active · $394.5K pipeline</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Exporting My Opportunities...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>All My Opportunities</span><span style="color:var(--teal);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Exporting My Won Deals...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>My Closed / Won</span><span style="color:var(--teal);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Exporting Pipeline by Stage...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g100)'"><span>My Pipeline by Stage</span><span style="color:var(--teal);font-weight:600">↓ XLSX</span></button>
+    </div>
+  </div>
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,rgba(245,158,11,0.07) 0%,rgba(245,158,11,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(245,158,11,0.12);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6.18-6.13 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">My Activities</div><div style="font-size:11px;color:var(--g400)">Calls, emails, meetings</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Exporting My Call Log...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--g100)'"><span>My Call Log</span><span style="color:var(--amber);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Exporting My Emails...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--g100)'"><span>My Email Activity</span><span style="color:var(--amber);font-weight:600">↓ CSV</span></button>
+      <button onclick="showToast('Exporting Meetings...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--amber)'" onmouseout="this.style.borderColor='var(--g100)'"><span>My Meetings Log</span><span style="color:var(--amber);font-weight:600">↓ CSV</span></button>
+    </div>
+  </div>
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,rgba(26,32,53,0.05) 0%,rgba(26,32,53,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
+      <div style="width:34px;height:34px;border-radius:8px;background:rgba(26,32,53,0.08);display:flex;align-items:center;justify-content:center"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--navy)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+      <div><div style="font-size:13px;font-weight:700;color:var(--dark)">My Commissions</div><div style="font-size:11px;color:var(--g400)">YTD earnings &amp; statements</div></div>
+    </div>
+    <div style="padding:12px 16px;display:flex;flex-direction:column;gap:6px">
+      <button onclick="showToast('Commission Statement...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='var(--g100)'"><span>My Commission Statement</span><span style="color:var(--navy);font-weight:600">↓ PDF</span></button>
+      <button onclick="showToast('Payout History...')" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--g100);border-radius:8px;background:var(--g50);cursor:pointer;font-family:var(--font);font-size:12px;color:var(--dark);transition:.12s" onmouseover="this.style.borderColor='var(--navy)'" onmouseout="this.style.borderColor='var(--g100)'"><span>Payout History</span><span style="color:var(--navy);font-weight:600">↓ CSV</span></button>
+    </div>
+  </div>
+</div>
+</div><!-- end reports-sr-view -->
+
 </div>
 
 <!-- FORECASTING -->
 <div id="page-forecasting" class="page">
-<div class="page-header"><div class="page-title">Forecasting</div><div class="page-subtitle">Pipeline projections and revenue outlook</div></div>
-<div class="stat-row">
-  <div class="stat-card"><div class="stat-label">Forecast EOY</div><div class="stat-value teal">$16.2M</div></div>
-  <div class="stat-card"><div class="stat-label">Annual Goal</div><div class="stat-value">$19.35M</div></div>
-  <div class="stat-card" onclick="showToast('Filtering by closed won')" title="Filter won deals"><div class="stat-label">Win Rate</div><div class="stat-value">58%</div></div>
-  <div class="stat-card"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$42K</div></div>
+
+<!-- SM Forecasting (company-wide) -->
+<div id="forecast-sm-view">
+<div class="page-header"><div class="page-title">Forecasting</div><div class="page-subtitle">Company-wide pipeline projections and revenue outlook</div></div>
+<div class="stat-row" style="margin-bottom:18px">
+  <div class="stat-card"><div class="stat-label">Forecast EOY</div><div class="stat-value teal">$16.2M</div><div class="stat-delta" style="color:var(--amber)">84% to annual goal</div></div>
+  <div class="stat-card"><div class="stat-label">Annual Goal</div><div class="stat-value">$19.35M</div><div class="stat-delta" style="color:var(--g400)">Gap: $3.15M</div></div>
+  <div class="stat-card"><div class="stat-label">Pipeline Value</div><div class="stat-value">$8.7M</div><div class="stat-delta positive">▲ Active opportunities</div></div>
+  <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value">58%</div><div class="stat-delta" style="color:var(--g400)">Team average</div></div>
+  <div class="stat-card"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$42K</div><div class="stat-delta positive">▲ $4.2K vs last mo</div></div>
 </div>
-<div class="card">
+<div class="card" style="margin-bottom:18px">
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-    <div class="card-title" style="margin-bottom:0">Revenue Forecast vs Goal</div>
+    <div class="card-title" style="margin-bottom:0">Company Revenue Forecast vs Goal</div>
     <div style="display:flex;gap:16px;flex-wrap:wrap">
       <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:18px;height:3px;background:var(--teal);border-radius:2px"></div>Actual</div>
       <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:18px;height:0;border-top:2px dashed #1d9e75"></div>Projected</div>
@@ -3418,9 +3586,79 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       <div style="font-size:12px;color:var(--g400)">EOY: <strong style="color:var(--teal)">$16.2M</strong></div>
     </div>
   </div>
-  <!-- Canvas-based chart -->
-  <canvas id="fc-canvas" style="width:100%;height:220px;display:block;border-radius:10px"></canvas>
+  <canvas id="fc-canvas" style="width:100%;display:block;border-radius:10px;min-height:200px"></canvas>
 </div>
+<div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+  <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 18px;display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:13px;font-weight:700;color:var(--dark)">Forecast by Rep</div>
+    <button onclick="showToast('Exporting forecast...')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">↓ Export</button>
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="background:var(--g50)">
+      <th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th>
+      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Revenue YTD</th>
+      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Pipeline</th>
+      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Forecast EOY</th>
+      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Goal</th>
+      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">% to Goal</th>
+    </tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover">Brock Wilson</div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$953K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$321K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--teal)">$2.07M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--teal)">103%</span></td></tr>
+      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/women/44.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover">Aya Pedrad</div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$1.04M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$410K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--teal)">$2.26M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--teal)">113%</span></td></tr>
+      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/71.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover">Russ Holt</div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$810K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$280K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--amber)">$1.76M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--amber)">88%</span></td></tr>
+      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/women/15.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover">Jules Richards</div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$620K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$195K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--red)">$1.35M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--red)">67%</span></td></tr>
+      <tr><td style="padding:10px 16px;color:var(--g400);font-size:12px" colspan="6">+ 4 more reps <button onclick="showToast('Showing all reps')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">View all →</button></td></tr>
+    </tbody>
+  </table>
+</div>
+</div><!-- end forecast-sm-view -->
+
+<!-- SR Forecasting — personal only -->
+<div id="forecast-sr-view" style="display:none">
+<div class="page-header"><div class="page-title">My Forecast</div><div class="page-subtitle">Your personal pipeline projection vs annual goal</div></div>
+<div class="stat-row" style="margin-bottom:18px">
+  <div class="stat-card"><div class="stat-label">My Forecast EOY</div><div class="stat-value teal">$2.07M</div><div class="stat-delta positive">103% to goal</div></div>
+  <div class="stat-card"><div class="stat-label">My Annual Goal</div><div class="stat-value">$2.0M</div><div class="stat-delta" style="color:var(--g400)">$73K above goal</div></div>
+  <div class="stat-card"><div class="stat-label">Revenue YTD</div><div class="stat-value teal">$953K</div><div class="stat-delta positive">47.6% of goal</div></div>
+  <div class="stat-card"><div class="stat-label">Active Pipeline</div><div class="stat-value">$321K</div><div class="stat-delta positive">3 opportunities</div></div>
+</div>
+<div class="card" style="margin-bottom:18px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+    <div class="card-title" style="margin-bottom:0">My Revenue vs Goal</div>
+    <div style="display:flex;gap:16px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:18px;height:3px;background:var(--teal);border-radius:2px"></div>Actual</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:18px;height:0;border-top:2px dashed #1d9e75"></div>Projected</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:18px;height:0;border-top:2px dashed #94a3b8"></div>My Goal</div>
+    </div>
+  </div>
+  <canvas id="fc-sr-canvas" style="width:100%;display:block;border-radius:10px;min-height:200px"></canvas>
+</div>
+<div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
+  <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 18px;display:flex;align-items:center;justify-content:space-between">
+    <div style="font-size:13px;font-weight:700;color:var(--dark)">My Active Opportunities</div>
+    <span style="font-size:11px;color:var(--g400)">Weighted by probability</span>
+  </div>
+  <table style="width:100%;border-collapse:collapse;font-size:13px">
+    <thead><tr style="background:var(--g50)">
+      <th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Opportunity</th>
+      <th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Stage</th>
+      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Value</th>
+      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Prob</th>
+      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Weighted</th>
+    </tr></thead>
+    <tbody>
+      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Riverside Financial — Group Benefits</td><td style="padding:10px 16px"><span style="font-size:11px;background:rgba(99,102,241,0.1);color:#6366f1;border-radius:4px;padding:2px 7px;font-weight:600">Prospect</span></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">$92,000</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--amber)">20%</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600;color:var(--teal)">$18,400</td></tr>
+      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Summit Credit Union — Annuity</td><td style="padding:10px 16px"><span style="font-size:11px;background:rgba(234,179,8,0.1);color:#ca8a04;border-radius:4px;padding:2px 7px;font-weight:600">Contact Made</span></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">$128,500</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--amber)">40%</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600;color:var(--teal)">$51,400</td></tr>
+      <tr><td style="padding:10px 16px;font-weight:600">Lakewood Builders — Workers Comp</td><td style="padding:10px 16px"><span style="font-size:11px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:2px 7px;font-weight:600">Payment Confirmed</span></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">$174,000</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">90%</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--teal)">$156,600</td></tr>
+    </tbody>
+  </table>
+  <div style="padding:10px 16px;background:var(--g50);border-top:1px solid var(--g200);display:flex;justify-content:space-between">
+    <span style="font-size:12px;font-weight:600;color:var(--g500)">Weighted Total</span>
+    <span style="font-size:14px;font-weight:800;color:var(--teal);font-family:var(--mono)">$226,400</span>
+  </div>
+</div>
+</div><!-- end forecast-sr-view -->
+
 </div>
 
 <!-- ASK ACE PAGE -->
@@ -3847,6 +4085,20 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
       </div>
       <!-- subscription sub-panel -->
       <div id="profile-sub-subscription" style="display:none">
+        <!-- SR managed notice -->
+        <div id="sr-sub-managed" style="display:none;padding:32px 0;text-align:center">
+          <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 16px;display:block"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          <div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:8px">Subscription Managed by Your Company</div>
+          <div style="font-size:13px;color:var(--g500);max-width:340px;margin:0 auto;line-height:1.6">Your Goals.com subscription is managed by Midwest Benefits Group. Contact your Sales Manager for any billing or plan changes.</div>
+          <div style="margin-top:20px;padding:14px 18px;background:var(--g50);border:1px solid var(--g200);border-radius:10px;display:inline-block;text-align:left">
+            <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Your Plan</div>
+            <div style="font-size:15px;font-weight:700;color:var(--dark)">Goals Pro</div>
+            <div style="font-size:12px;color:var(--teal);margin-top:3px">Active · Renews Jul 23, 2026</div>
+          </div>
+          <div style="margin-top:16px"><a href="mailto:patricia@midwestbenefits.com" style="font-size:13px;color:var(--teal);font-weight:600;text-decoration:none">Contact Patricia Moore →</a></div>
+        </div>
+        <!-- SM full subscription (hidden for SR) -->
+        <div id="sr-sub-full">
         <div class="settings-section-title">Your Plan</div>
         <div style="border:1.5px solid var(--teal);border-radius:12px;padding:20px;background:rgba(29,158,117,0.04);margin-top:12px">
           <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
@@ -4990,6 +5242,54 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   <!-- Tab: Coaching Style -->
   <div id="ace-tab-coaching">
 
+    <!-- SR Personal Style Picker (hidden for SM) -->
+    <div id="ace-sr-style" style="display:none">
+      <div style="border:1.5px solid var(--teal);border-radius:14px;overflow:hidden;margin-bottom:14px;background:rgba(29,158,117,0.02)">
+        <div style="background:linear-gradient(135deg,rgba(26,32,53,0.06) 0%,rgba(29,158,117,0.08) 100%);border-bottom:1px solid var(--g200);padding:14px 18px">
+          <div style="font-size:14px;font-weight:700;color:var(--dark)">My Ace Style</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:2px">Choose how Ace coaches and communicates with you personally</div>
+        </div>
+        <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px" id="ace-persona-grid">
+          <label class="ace-persona-card" onclick="_selectPersona(this,'data-hawk')" style="border:2px solid var(--g200);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;background:#fff">
+            <input type="radio" name="ace-persona" value="data-hawk" style="display:none">
+            <div style="font-size:26px;margin-bottom:8px">📊</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Data Hawk</div>
+            <div style="font-size:11px;color:var(--g400);line-height:1.5">Deep in the numbers. Every insight is backed by data. Best if you want precise analytics and benchmarks with no fluff.</div>
+          </label>
+          <label class="ace-persona-card" onclick="_selectPersona(this,'field-coach')" style="border:2px solid var(--teal);border-radius:12px;padding:16px;cursor:pointer;background:rgba(29,158,117,0.04);transition:.15s">
+            <input type="radio" name="ace-persona" value="field-coach" checked style="display:none">
+            <div style="font-size:26px;margin-bottom:8px">🤝</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Field Coach</div>
+            <div style="font-size:11px;color:var(--g400);line-height:1.5">Real-world focused, peer-to-peer tone. Practical advice for what actually works in the field. Balanced and supportive.</div>
+          </label>
+          <label class="ace-persona-card" onclick="_selectPersona(this,'the-closer')" style="border:2px solid var(--g200);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;background:#fff">
+            <input type="radio" name="ace-persona" value="the-closer" style="display:none">
+            <div style="font-size:26px;margin-bottom:8px">🎯</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">The Closer</div>
+            <div style="font-size:11px;color:var(--g400);line-height:1.5">Push mode. Focused on next close, urgency, and momentum. Best when you want Ace to challenge you and push harder.</div>
+          </label>
+          <label class="ace-persona-card" onclick="_selectPersona(this,'steady-compass')" style="border:2px solid var(--g200);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;background:#fff">
+            <input type="radio" name="ace-persona" value="steady-compass" style="display:none">
+            <div style="font-size:26px;margin-bottom:8px">🧭</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Steady Compass</div>
+            <div style="font-size:11px;color:var(--g400);line-height:1.5">Calm, methodical, structured. Helps you think through strategy step-by-step. Great for planning and reflection.</div>
+          </label>
+        </div>
+      </div>
+      <!-- Response style for SR -->
+      <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
+        <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Response Length</div><div style="font-size:11px;color:var(--g400);margin-top:2px">How much detail Ace gives you</div></div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-sr-depth" value="brief" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Quick &amp; Direct</div><div style="font-size:11px;color:var(--g400)">2–3 sentences. Good during calls or quick checks.</div></div></label>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-sr-depth" value="standard" checked style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Balanced <span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:1px 6px;margin-left:4px">Default</span></div><div style="font-size:11px;color:var(--g400)">A full paragraph with context and next steps.</div></div></label>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-sr-depth" value="detailed" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Deep Dive</div><div style="font-size:11px;color:var(--g400)">Full breakdown with data. Best for planning sessions.</div></div></label>
+        </div>
+      </div>
+      <button class="save-btn" onclick="showToast('✓ Your Ace style saved')">Save My Style</button>
+    </div><!-- end ace-sr-style -->
+
+    <!-- SM Team Config (hidden for SR) -->
+    <div id="ace-sm-config">
     <!-- Tone -->
     <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
       <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Coaching Tone</div><div style="font-size:11px;color:var(--g400);margin-top:2px">How ACE communicates with your reps when giving feedback</div></div>
@@ -5051,6 +5351,7 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
     </div>
 
     <button class="save-btn" onclick="showToast('✓ ACE coaching configuration saved')">Save Configuration</button>
+    </div><!-- end ace-sm-config -->
   </div>
 
   <!-- Tab: Team Access -->
@@ -5077,7 +5378,8 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 
   <!-- Tab: AI Usage -->
   <div id="ace-tab-usage" style="display:none">
-    <!-- Company total -->
+    <!-- SM: Company total -->
+    <div id="ace-usage-sm">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
       <div style="background:var(--navy);border-radius:12px;padding:18px 20px;color:#fff">
         <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:rgba(255,255,255,0.4);margin-bottom:8px">Total Credits Used</div>
@@ -5120,6 +5422,55 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
   </div>
 </div><!-- end page-tools-settings -->
 
+
+<!-- Dashboard Card Picker Modal -->
+<div class="modal-overlay" id="dash-card-modal" onclick="closeOnOverlay(event,'dash-card-modal')" style="display:none">
+  <div class="modal" style="max-width:520px">
+    <div class="modal-header">
+      <div><div class="modal-title">Configure Card</div><div id="dash-card-slot-label" style="font-size:11px;color:var(--g400);margin-top:2px">Card slot 1 of 5</div></div>
+      <button class="modal-close" onclick="closeModal('dash-card-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:12px;color:var(--g500);margin-bottom:14px">Pick a metric or pipeline stage for this card slot. Changes apply immediately.</div>
+
+      <!-- Category: Pipeline Stages -->
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--g400);margin-bottom:8px">Sales Pipeline</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px" id="dcm-options">
+        <label class="dcm-opt" onclick="_pickSlot(this,'Opportunities','67','▲ 9 this week')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Opportunities</span><small>Active deals in pipeline</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Proposals','34','— same as last week')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Proposals</span><small>Deals at proposal stage</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Closed / Won','19','▲ 3 this week')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Closed / Won</span><small>Deals closed this period</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Avg Deal Size','$82,900','▲ $4.2K vs last month')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Avg Deal Size</span><small>Average opportunity value</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Pipeline Value','$8.7M','Total active value')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Pipeline Value</span><small>Total active pipeline $</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Win Rate','58%','— flat vs last year')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Win Rate</span><small>Closed won percentage</small></label>
+      </div>
+
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--g400);margin-bottom:8px">Renewals Pipeline</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px">
+        <label class="dcm-opt" onclick="_pickSlot(this,'Renewals — Up for Renewal','1','$145K at stake')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Up for Renewal</span><small>Stage: Up for Renewal</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Renewals — Review Sent','1','$158K in review')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Review Sent</span><small>Stage: Review Sent</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Renewals — Meeting Scheduled','1','$100K pipeline')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Meeting Scheduled</span><small>Stage: Meeting Scheduled</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Renewals — Terms Agreed','1','$80K ready to close')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Terms Agreed</span><small>Stage: Terms Agreed</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Renewals — Renewed','1','$174K this month')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Renewed</span><small>Stage: Renewed (closed)</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Renewals Pipeline Value','$657K','5 active renewals')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Total Renewal Value</span><small>All active renewal $</small></label>
+      </div>
+
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--g400);margin-bottom:8px">Enterprise Pipeline</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:14px">
+        <label class="dcm-opt" onclick="_pickSlot(this,'Enterprise Pipeline','3','$1.1M total value')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Active Enterprise Deals</span><small>All stages combined</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Enterprise — Executive Meeting','1','$385K pipeline')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Executive Meeting</span><small>Stage: Exec Meeting</small></label>
+      </div>
+
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.8px;color:var(--g400);margin-bottom:8px">Team Health</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px">
+        <label class="dcm-opt" onclick="_pickSlot(this,'Overdue Actions','7','Across all reps')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Overdue Actions</span><small>Past-due tasks & calls</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Stalled Deals','4','30+ days no activity')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Stalled Deals</span><small>No activity 30+ days</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Calls This Month','247','vs 320 goal')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Calls This Month</span><small>Team call activity</small></label>
+        <label class="dcm-opt" onclick="_pickSlot(this,'Emails This Month','214','vs 320 goal')"><input type="radio" name="dcm" style="accent-color:var(--teal)"><span>Emails This Month</span><small>Team email activity</small></label>
+      </div>
+    </div>
+    <div class="modal-footer"><div></div><div class="modal-actions"><button class="modal-cancel" onclick="closeModal('dash-card-modal')">Cancel</button><button class="modal-save" onclick="closeModal('dash-card-modal')">Done</button></div></div>
+  </div>
+</div>
 <!-- ADD LEAD MODAL — Pipedrive style -->
 <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="Lead" id="lead-modal" onclick="closeOnOverlay(event,'lead-modal')">
   <div class="modal modal-lg">
@@ -6328,7 +6679,7 @@ var _tsCurrentSection = 'import-data';
 function openToolsSettings() {
   var el = document.getElementById('page-tools-settings');
   if (el) el.style.display = 'flex';
-  _tsLoadSection(_tsCurrentSection || 'import-data');
+  _tsLoadSection(_tsCurrentSection || 'integrations');
 }
 function closeToolsSettings() {
   var el = document.getElementById('page-tools-settings');
@@ -8934,6 +9285,21 @@ function applySettingsRoleView(roleId) {
   smItems.forEach(function(el) {
     el.style.display = roleId === 'sr' ? 'none' : '';
   });
+  // SR: swap subscription content
+  var subFull = document.getElementById('sr-sub-full');
+  var subManaged = document.getElementById('sr-sub-managed');
+  if (subFull) subFull.style.display = roleId === 'sr' ? 'none' : 'block';
+  if (subManaged) subManaged.style.display = roleId === 'sr' ? 'block' : 'none';
+  // SR: personal AI usage vs company view
+  var usageSm = document.getElementById('ace-usage-sm');
+  var usageSr = document.getElementById('ace-usage-sr');
+  if (usageSm) usageSm.style.display = roleId === 'sr' ? 'none' : 'block';
+  if (usageSr) usageSr.style.display = roleId === 'sr' ? 'block' : 'none';
+  // SR: personal Ace style vs team config
+  var aceSmConfig = document.getElementById('ace-sm-config');
+  var aceSrStyle = document.getElementById('ace-sr-style');
+  if (aceSmConfig) aceSmConfig.style.display = roleId === 'sr' ? 'none' : 'block';
+  if (aceSrStyle) aceSrStyle.style.display = roleId === 'sr' ? 'block' : 'none';
 }
 function switchSettingsTab(el) {
   el.closest('.settings-tab-bar').querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
@@ -10151,6 +10517,20 @@ function setRole(roleId) {
   if (pipeSmToolbar) pipeSmToolbar.style.display = '';
   if (pipeSmContent) pipeSmContent.style.display = '';
   if (srBanner) srBanner.style.display = roleId === 'sr' ? '' : 'none';
+  var statsBar = document.getElementById('crm-stats-bar');
+  if (statsBar) statsBar.style.display = roleId === 'sr' ? 'none' : '';
+  // Forecasting role split
+  var fcSm = document.getElementById('forecast-sm-view');
+  var fcSr = document.getElementById('forecast-sr-view');
+  if (fcSm) fcSm.style.display = roleId === 'sr' ? 'none' : '';
+  if (fcSr) fcSr.style.display = roleId === 'sr' ? '' : 'none';
+  // Reports role split
+  var rptSm = document.getElementById('reports-sm-view');
+  var rptSr = document.getElementById('reports-sr-view');
+  if (rptSm) rptSm.style.display = roleId === 'sr' ? 'none' : '';
+  if (rptSr) rptSr.style.display = roleId === 'sr' ? '' : 'none';
+  // Dashboard KPI cards: hide cfg-edit-icons for SR
+  document.querySelectorAll('.cfg-edit-icon').forEach(function(i){ i.style.visibility = roleId === 'sr' ? 'hidden' : ''; });
   var ownerFilterRow = document.getElementById('crm-owner-filter-row');
   if (ownerFilterRow) ownerFilterRow.style.display = roleId === 'sr' ? 'none' : '';
   var pipeSelector = document.getElementById('crm-pipeline-selector');
@@ -10530,7 +10910,17 @@ document.addEventListener('DOMContentLoaded', function() {
   var tgtBtn = document.querySelector('[onclick*="targets-modal"]');
   if (tgtBtn) tgtBtn.setAttribute('onclick', "openTargetsModal()");
   drawForecastChart();
+  drawForecastSRChart();
   renderPipeline();
+  // Redraw forecast charts on resize
+  var _fcResizeTimer;
+  window.addEventListener('resize', function() {
+    clearTimeout(_fcResizeTimer);
+    _fcResizeTimer = setTimeout(function() {
+      drawForecastChart();
+      drawForecastSRChart();
+    }, 120);
+  });
   renderGoalsReps();
   renderTeamTable();
   renderPeopleTable();
@@ -10538,15 +10928,55 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ── Forecast Canvas Chart ─────────────────────────────────────────
+
+function drawForecastSRChart() {
+  var canvas = document.getElementById('fc-sr-canvas');
+  if (!canvas) return;
+  var dpr = window.devicePixelRatio || 1;
+  var W = Math.max(canvas.offsetWidth, canvas.parentElement ? canvas.parentElement.offsetWidth : 400) || 600;
+  var H = 220;
+  canvas.width = Math.round(W * dpr);
+  canvas.height = Math.round(H * dpr);
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  var ctx = canvas.getContext('2d');
+  ctx.scale(dpr, dpr);
+  ctx.clearRect(0,0,W,H);
+  var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var actual = [72000,88000,95000,110000,128000,145000,null,null,null,null,null,null];
+  var projected = [null,null,null,null,null,145000,158000,168000,175000,180000,185000,190000];
+  var goalLine = [166667,166667,166667,166667,166667,166667,166667,166667,166667,166667,166667,166667];
+  var pad={t:20,r:20,b:30,l:50};
+  var maxV=220000;
+  function px(i){return pad.l+(i/(months.length-1))*(W-pad.l-pad.r);}
+  function py(v){return pad.t+(1-v/maxV)*(H-pad.t-pad.b);}
+  ctx.beginPath(); ctx.setLineDash([6,4]); ctx.strokeStyle='rgba(148,163,184,0.6)'; ctx.lineWidth=1.5;
+  ctx.moveTo(px(0),py(goalLine[0]));
+  for(var i=1;i<12;i++) ctx.lineTo(px(i),py(goalLine[i]));
+  ctx.stroke(); ctx.setLineDash([]);
+  ctx.beginPath(); ctx.moveTo(px(0),H-pad.b);
+  for(var i=0;i<6;i++) ctx.lineTo(px(i),py(actual[i]));
+  ctx.lineTo(px(5),H-pad.b); ctx.closePath();
+  ctx.fillStyle='rgba(29,158,117,0.08)'; ctx.fill();
+  ctx.beginPath(); ctx.strokeStyle='#1d9e75'; ctx.lineWidth=2.5;
+  for(var i=0;i<6;i++){if(actual[i]!==null){if(i===0)ctx.moveTo(px(i),py(actual[i]));else ctx.lineTo(px(i),py(actual[i]));}}
+  ctx.stroke();
+  ctx.beginPath(); ctx.setLineDash([5,4]); ctx.strokeStyle='#1d9e75'; ctx.lineWidth=1.8;
+  ctx.moveTo(px(5),py(projected[5]));
+  for(var i=6;i<12;i++) ctx.lineTo(px(i),py(projected[i]));
+  ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='rgba(100,116,139,0.8)'; ctx.font='10px system-ui';
+  months.forEach(function(m,i){ctx.textAlign='center'; ctx.fillText(m,px(i),H-6);});
+}
 function drawForecastChart() {
   var canvas = document.getElementById('fc-canvas');
   if (!canvas) return;
   // Set physical pixel dimensions
-  var W = canvas.offsetWidth || 800;
+  var W = Math.max(canvas.offsetWidth, canvas.parentElement ? canvas.parentElement.offsetWidth - 40 : 600) || 800;
   var H = 220;
   var dpr = window.devicePixelRatio || 1;
-  canvas.width = W * dpr;
-  canvas.height = H * dpr;
+  canvas.width = Math.round(W * dpr);
+  canvas.height = Math.round(H * dpr);
   canvas.style.width = W + 'px';
   canvas.style.height = H + 'px';
   var ctx = canvas.getContext('2d');
@@ -10566,12 +10996,6 @@ function drawForecastChart() {
 
   function xOf(i) { return padL + (i / 11) * cW; }
   function yOf(v) { return padT + cH - (v / maxVal) * cH; }
-
-  // Background
-  ctx.fillStyle = '#f8fafc';
-  ctx.beginPath();
-  ctx.roundRect(0, 0, W, H, 10);
-  ctx.fill();
 
   // Y-axis gridlines + labels
   var gridVals = [0, 5, 10, 15, 20];
@@ -10703,6 +11127,7 @@ function drawForecastChart() {
 // Redraw on resize
 window.addEventListener('resize', function() {
   setTimeout(drawForecastChart, 100);
+  setTimeout(drawForecastSRChart, 100);
 });
 
 // ── Kanban Drag-and-Drop ─────────────────────────────────────────
@@ -11414,26 +11839,164 @@ function lbSort(colIndex, th) {
     <span class="cm-row-label">Team ROI</span>
     <label class="cm-toggle"><input type="checkbox" id="cm-card-roi" checked onchange="cmToggle('card-roi',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
   </div>
-  <div class="cm-section">Pipeline Metrics</div>
-  <div class="cm-row">
-    <span class="cm-row-label">Leads</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-leads" checked onchange="cmToggle('card-leads',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-  <div class="cm-row">
-    <span class="cm-row-label">Opportunities</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-opps" checked onchange="cmToggle('card-opps',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-  <div class="cm-row">
-    <span class="cm-row-label">Proposals</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-proposals" checked onchange="cmToggle('card-proposals',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-  <div class="cm-row">
-    <span class="cm-row-label">Closed / Won</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-closed" checked onchange="cmToggle('card-closed',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-  <div class="cm-row">
-    <span class="cm-row-label">Avg Deal Size</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-avg-deal" checked onchange="cmToggle('card-avg-deal',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+  <div class="cm-section" style="display:flex;align-items:center;justify-content:space-between">Pipeline KPI Cards <span style="font-size:10px;color:var(--g400);font-weight:400;text-transform:none;letter-spacing:0">click a card to change it</span></div>
+  <!-- 5 configurable KPI card slots -->
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:4px" id="cm-kpi-slots">
+    <div class="cm-kpi-row" data-slot="0">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 1</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(0,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option value="Proposals|34|— same as last week">Proposals</option>
+          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option selected value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cm-kpi-row" data-slot="1">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 2</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(1,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option selected value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option value="Proposals|34|— same as last week">Proposals</option>
+          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cm-kpi-row" data-slot="2">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 3</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(2,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option selected value="Proposals|34|— same as last week">Proposals</option>
+          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cm-kpi-row" data-slot="3">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 4</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(3,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option value="Proposals|34|— same as last week">Proposals</option>
+          <option selected value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cm-kpi-row" data-slot="4">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 5</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(4,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option value="Proposals|34|— same as last week">Proposals</option>
+          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option selected value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
   </div>
   <div class="cm-section">Team Sections</div>
   <div class="cm-row">
@@ -12177,6 +12740,34 @@ function _confirmSmartMerge() {
 }
 
 // ── ACE CONFIG TABS ──────────────────────────────────────────
+
+
+// Card slot updater — called from Customize Dashboard panel selects
+function _cmSetSlot(slot, rawVal) {
+  var parts = rawVal.split('|');
+  var label = parts[0] || '';
+  var value = parts[1] || '';
+  var delta = parts[2] || '';
+  var lbl = document.getElementById('cfg'+slot+'-label');
+  var val = document.getElementById('cfg'+slot+'-value');
+  var dlt = document.getElementById('cfg'+slot+'-delta');
+  if (lbl) lbl.textContent = label;
+  if (val) val.textContent = value;
+  if (dlt) { dlt.textContent = delta; dlt.className = 'stat-delta'; }
+}
+// Legacy stubs — no longer active but kept to avoid JS errors
+function _openSlotPicker() {}
+function _pickSlot() {}
+function _openDashCardPicker() {}
+function _setDashCard() {}
+function _selectPersona(el, val) {
+  document.querySelectorAll('.ace-persona-card').forEach(function(c) {
+    c.style.borderColor = 'var(--g200)';
+    c.style.background = '#fff';
+  });
+  el.style.borderColor = 'var(--teal)';
+  el.style.background = 'rgba(29,158,117,0.04)';
+}
 function switchAceTab(tab, btn) {
   ['coaching','access','usage'].forEach(function(t) {
     var el = document.getElementById('ace-tab-'+t);
