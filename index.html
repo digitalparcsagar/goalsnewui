@@ -11819,195 +11819,6 @@ function lbSort(colIndex, th) {
 <!-- REP PROFILE PANEL -->
 <div id="rep-overlay" onclick="closeRepProfile()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.3);z-index:499"></div>
 
-<!-- Card Manager Panel -->
-<div id="card-manager-overlay" onclick="closeCardManager()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.25);z-index:500"></div>
-<div id="card-manager-panel">
-  <div class="cm-header">
-    <h3>Customize Dashboard</h3>
-    <button class="cm-close" onclick="closeCardManager()">✕</button>
-  </div>
-  <div class="cm-section">KPI Cards</div>
-  <div class="cm-row">
-    <span class="cm-row-label">Total Sales YTD</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-total-sales" checked onchange="cmToggle('card-total-sales',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-  <div class="cm-row">
-    <span class="cm-row-label">This Month's Sales</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-month-sales" checked onchange="cmToggle('card-month-sales',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-  <div class="cm-row">
-    <span class="cm-row-label">Team ROI</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-roi" checked onchange="cmToggle('card-roi',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-  <div class="cm-section" style="display:flex;align-items:center;justify-content:space-between">Pipeline KPI Cards <span style="font-size:10px;color:var(--g400);font-weight:400;text-transform:none;letter-spacing:0">click a card to change it</span></div>
-  <!-- 5 configurable KPI card slots -->
-  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:4px" id="cm-kpi-slots">
-    <div class="cm-kpi-row" data-slot="0">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 1</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(0,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option value="Proposals|34|— same as last week">Proposals</option>
-          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option selected value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
-    </div>
-    <div class="cm-kpi-row" data-slot="1">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 2</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(1,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option selected value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option value="Proposals|34|— same as last week">Proposals</option>
-          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
-    </div>
-    <div class="cm-kpi-row" data-slot="2">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 3</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(2,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option selected value="Proposals|34|— same as last week">Proposals</option>
-          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
-    </div>
-    <div class="cm-kpi-row" data-slot="3">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 4</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(3,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option value="Proposals|34|— same as last week">Proposals</option>
-          <option selected value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
-    </div>
-    <div class="cm-kpi-row" data-slot="4">
-      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 5</div>
-      <select class="cm-slot-select" onchange="_cmSetSlot(4,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
-        <optgroup label="Sales Pipeline">
-          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
-          <option value="Proposals|34|— same as last week">Proposals</option>
-          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
-          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
-          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
-          <option selected value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
-        </optgroup>
-        <optgroup label="Renewals Pipeline">
-          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
-          <option value="Review Sent|1|$158K in review">Review Sent</option>
-          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
-          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
-          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
-          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
-        </optgroup>
-        <optgroup label="Enterprise">
-          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
-          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
-        </optgroup>
-        <optgroup label="Team Health">
-          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
-          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
-          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
-          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
-        </optgroup>
-      </select>
-    </div>
-  </div>
-  <div class="cm-section">Team Sections</div>
-  <div class="cm-row">
-    <span class="cm-row-label">Top Performers</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-top-performers" checked onchange="cmToggle('card-top-performers',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-  <div class="cm-row">
-    <span class="cm-row-label">Leaderboard</span>
-    <label class="cm-toggle"><input type="checkbox" id="cm-card-leaderboard" checked onchange="cmToggle('card-leaderboard',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
-  </div>
-</div>
 <div id="rep-profile-panel">
   <div class="rep-profile-header">
     <img id="rpp-avatar" class="rep-profile-avatar" src="" alt="">
@@ -13178,5 +12989,195 @@ function _iwStep5() {
 }
 </script>
 
+
+<!-- Card Manager Panel -->
+<div id="card-manager-overlay" onclick="closeCardManager()" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.25);z-index:500"></div>
+<div id="card-manager-panel">
+  <div class="cm-header">
+    <h3>Customize Dashboard</h3>
+    <button class="cm-close" onclick="closeCardManager()">✕</button>
+  </div>
+  <div class="cm-section">KPI Cards</div>
+  <div class="cm-row">
+    <span class="cm-row-label">Total Sales YTD</span>
+    <label class="cm-toggle"><input type="checkbox" id="cm-card-total-sales" checked onchange="cmToggle('card-total-sales',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+  </div>
+  <div class="cm-row">
+    <span class="cm-row-label">This Month's Sales</span>
+    <label class="cm-toggle"><input type="checkbox" id="cm-card-month-sales" checked onchange="cmToggle('card-month-sales',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+  </div>
+  <div class="cm-row">
+    <span class="cm-row-label">Team ROI</span>
+    <label class="cm-toggle"><input type="checkbox" id="cm-card-roi" checked onchange="cmToggle('card-roi',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+  </div>
+  <div class="cm-section" style="display:flex;align-items:center;justify-content:space-between">Pipeline KPI Cards <span style="font-size:10px;color:var(--g400);font-weight:400;text-transform:none;letter-spacing:0">click a card to change it</span></div>
+  <!-- 5 configurable KPI card slots -->
+  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:4px" id="cm-kpi-slots">
+    <div class="cm-kpi-row" data-slot="0">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 1</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(0,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option value="Proposals|34|— same as last week">Proposals</option>
+          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option selected value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cm-kpi-row" data-slot="1">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 2</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(1,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option selected value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option value="Proposals|34|— same as last week">Proposals</option>
+          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cm-kpi-row" data-slot="2">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 3</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(2,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option selected value="Proposals|34|— same as last week">Proposals</option>
+          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cm-kpi-row" data-slot="3">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 4</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(3,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option value="Proposals|34|— same as last week">Proposals</option>
+          <option selected value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+    <div class="cm-kpi-row" data-slot="4">
+      <div style="font-size:11px;color:var(--g400);margin-bottom:4px">Card 5</div>
+      <select class="cm-slot-select" onchange="_cmSetSlot(4,this.value)" style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white)">
+        <optgroup label="Sales Pipeline">
+          <option value="Opportunities|67|▲ 9 this week">Opportunities</option>
+          <option value="Proposals|34|— same as last week">Proposals</option>
+          <option value="Closed / Won|19|▲ 3 this week">Closed / Won</option>
+          <option value="Pipeline Value|$8.7M|Total active">Pipeline Value</option>
+          <option value="Win Rate|58%|— flat vs last year">Win Rate</option>
+          <option selected value="Avg Deal Size|$82,900|▲ $4.2K vs last month">Avg Deal Size</option>
+        </optgroup>
+        <optgroup label="Renewals Pipeline">
+          <option value="Up for Renewal|1|$145K at stake">Up for Renewal</option>
+          <option value="Review Sent|1|$158K in review">Review Sent</option>
+          <option value="Meeting Scheduled|1|$100K pipeline">Meeting Scheduled</option>
+          <option value="Terms Agreed|1|$80K ready">Terms Agreed</option>
+          <option value="Renewals — Renewed|1|$174K this month">Renewed</option>
+          <option value="Total Renewal Value|$657K|5 active renewals">Total Renewal Value</option>
+        </optgroup>
+        <optgroup label="Enterprise">
+          <option value="Enterprise Pipeline|3|$1.1M total value">Enterprise Pipeline</option>
+          <option value="Executive Meeting|1|$385K pipeline">Executive Meeting</option>
+        </optgroup>
+        <optgroup label="Team Health">
+          <option value="Overdue Actions|7|Across all reps">Overdue Actions</option>
+          <option value="Stalled Deals|4|30+ days no activity">Stalled Deals</option>
+          <option value="Calls This Month|247|vs 320 goal">Calls This Month</option>
+          <option value="Emails This Month|214|vs 320 goal">Emails This Month</option>
+        </optgroup>
+      </select>
+    </div>
+  </div>
+  <div class="cm-section">Team Sections</div>
+  <div class="cm-row">
+    <span class="cm-row-label">Top Performers</span>
+    <label class="cm-toggle"><input type="checkbox" id="cm-card-top-performers" checked onchange="cmToggle('card-top-performers',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+  </div>
+  <div class="cm-row">
+    <span class="cm-row-label">Leaderboard</span>
+    <label class="cm-toggle"><input type="checkbox" id="cm-card-leaderboard" checked onchange="cmToggle('card-leaderboard',this)"><div class="cm-toggle-track"></div><div class="cm-toggle-thumb"></div></label>
+  </div>
+</div>
 </body>
 </html>
