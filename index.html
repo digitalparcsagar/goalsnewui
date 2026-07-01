@@ -11581,143 +11581,6 @@ function lbSort(colIndex, th) {
 
 </script>
 
-<!-- TOAST NOTIFICATION -->
-<div id="toast" role="status" aria-live="polite" aria-atomic="true" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:9999;opacity:0;transition:all 0.25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,0.2);display:flex;align-items:center;gap:8px">
-  <span id="toast-icon">✓</span><span id="toast-msg"></span>
-</div>
-
-<!-- ACCOUNT DETAIL DRAWER -->
-<div id="account-drawer" style="position:fixed;top:0;right:-480px;width:480px;height:100vh;background:var(--white);border-left:1px solid var(--g200);z-index:1200;transition:right 0.3s ease;overflow-y:auto;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,0.12)">
-  <div style="padding:18px 22px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--white);z-index:1">
-    <div style="font-size:15px;font-weight:700;color:var(--dark)" id="drawer-title">AR Solutions</div>
-    <button onclick="closeDrawer()" style="border:none;background:none;color:var(--g400);cursor:pointer;display:flex;align-items:center;padding:4px" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button>
-  </div>
-  <div style="padding:20px 22px;flex:1">
-    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
-      <div style="width:52px;height:52px;border-radius:12px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff" id="drawer-ico">AR</div>
-      <div>
-        <div style="font-size:17px;font-weight:700;color:var(--dark)" id="drawer-name">AR Solutions</div>
-        <div style="font-size:13px;color:var(--g400)" id="drawer-contact">Jake Miller · jake@arsolutions.com</div>
-      </div>
-      <span class="stage-pill stage-prop" style="margin-left:auto" id="drawer-stage">Proposal</span>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
-      <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:4px">Deal Value</div><div style="font-size:18px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="drawer-value">$45,000</div></div>
-      <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:4px">Owner</div><div style="font-size:14px;font-weight:600;color:var(--dark)" id="drawer-owner">Brock Wilson</div></div>
-      <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:4px">Days in Stage</div><div style="font-size:18px;font-weight:700;color:var(--amber);font-family:var(--mono)">12</div></div>
-      <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:4px">Last Activity</div><div style="font-size:13px;font-weight:600;color:var(--dark)">2 days ago</div></div>
-    </div>
-    <div style="margin-bottom:16px">
-      <div style="font-size:12px;font-weight:600;color:var(--g600);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Actions</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap">
-        <button class="tb-btn btn-teal" style="font-size:12px" onclick="showToast('Opening call dialer...')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call</button>
-        <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openEmailComposer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</button>
-        <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('activity-modal');closeDrawer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Activity</button>
-        <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('note-modal');closeDrawer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Note</button>
-      </div>
-    </div>
-    <div>
-      <div style="font-size:12px;font-weight:600;color:var(--g600);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Activity Timeline</div>
-      <div style="display:flex;flex-direction:column;gap:0">
-        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(29,158,117,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1d9e75" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Call with Jake Miller</div><div style="font-size:11px;color:var(--g400);margin-top:1px">2 days ago · Brock Wilson · 14 min</div></div></div>
-        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Proposal sent via email</div><div style="font-size:11px;color:var(--g400);margin-top:1px">5 days ago · Brock Wilson</div><span class="email-track-badge email-track-opened"><span class="email-track-dot"></span>Opened · Jun 26 at 10:42am · 2 opens</span></div></div>
-        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Intro &amp; Needs Assessment</div><div style="font-size:11px;color:var(--g400);margin-top:1px">10 days ago · Brock Wilson</div><span class="email-track-badge email-track-unopened"><span class="email-track-dot"></span>Not opened</span></div></div>
-        <div style="display:flex;gap:12px;padding:10px 0"><div style="width:30px;height:30px;border-radius:50%;background:rgba(139,92,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Discovery meeting</div><div style="font-size:11px;color:var(--g400);margin-top:1px">12 days ago · Brock Wilson · 45 min</div></div></div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="drawer-overlay" onclick="closeDrawer()" style="position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:1100;display:none"></div>
-
-<!-- Deal Detail Panel -->
-<div id="deal-detail-panel" class="deal-detail-panel">
-  <div class="deal-detail-header">
-    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
-      <div style="flex:1;min-width:0">
-        <div id="ddp-title" style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:3px">Opportunity Title</div>
-        <div id="ddp-org" style="font-size:12px;color:var(--g500);display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> <span>Organization</span></div>
-      </div>
-      <button onclick="closeDealDetail()" style="width:30px;height:30px;border-radius:8px;background:var(--g100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g500);flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    </div>
-    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
-      <div style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:6px 14px;text-align:center">
-        <div style="font-size:10px;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Value</div>
-        <div id="ddp-value" style="font-size:18px;font-weight:700;color:var(--dark)">$0</div>
-      </div>
-      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:6px 14px;text-align:center">
-        <div style="font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Stage</div>
-        <div id="ddp-stage" style="font-size:13px;font-weight:700;color:var(--dark)">Stage</div>
-      </div>
-      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:6px 14px;text-align:center">
-        <div style="font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Close Date</div>
-        <div id="ddp-close" style="font-size:13px;font-weight:700;color:var(--dark)">—</div>
-      </div>
-    </div>
-    <div style="display:flex;gap:6px;margin-top:12px">
-      <button onclick="showToast('Log call recorded')" style="flex:1;padding:7px;background:var(--g50);border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call</button>
-      <button onclick="openEmailComposer()" style="flex:1;padding:7px;background:var(--g50);border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</button>
-      <button onclick="showToast('Task created')" style="flex:1;padding:7px;background:var(--g50);border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Task</button>
-      <button onclick="showToast('Note added')" style="flex:1;padding:7px;background:var(--g50);border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Note</button>
-    </div>
-  </div>
-  <div class="deal-detail-body">
-    <!-- Deal fields -->
-    <div style="margin-bottom:20px">
-      <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Deal Information</div>
-      <div id="ddp-fields">
-        <div class="deal-field-row"><span class="deal-field-label">Contact Person</span><span class="deal-field-value" id="ddp-contact">—</span></div>
-        <div class="deal-field-row"><span class="deal-field-label">Owner</span><span class="deal-field-value" id="ddp-owner">—</span></div>
-        <div class="deal-field-row"><span class="deal-field-label">Pipeline</span><span class="deal-field-value">Sales Pipeline</span></div>
-        <div class="deal-field-row"><span class="deal-field-label">Expected Close</span><span class="deal-field-value" id="ddp-close2">—</span></div>
-        <div class="deal-field-row"><span class="deal-field-label">Win Probability</span><span class="deal-field-value" id="ddp-prob">—</span></div>
-        <div class="deal-field-row"><span class="deal-field-label">Days in Stage</span><span class="deal-field-value" id="ddp-days">—</span></div>
-      </div>
-    </div>
-    <!-- Activity timeline -->
-    <div>
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Activity Timeline</div>
-        <button onclick="showToast('Activity logged')" style="font-size:11px;color:var(--teal);font-weight:600;background:none;border:none;cursor:pointer;font-family:var(--font)">+ Log activity</button>
-      </div>
-      <div id="ddp-timeline">
-        <div class="deal-activity-item">
-          <div class="deal-activity-icon" style="background:rgba(29,158,117,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
-          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--dark)">Discovery call — 28 min</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Discussed group benefits structure and headcount. Decision maker confirmed. Following up with proposal by Friday.</div><div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 19, 2026 · Brock Wilson</div></div>
-        </div>
-        <div class="deal-activity-item">
-          <div class="deal-activity-icon" style="background:rgba(59,130,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div style="flex:1">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-              <div style="font-size:12px;font-weight:600;color:var(--dark)">Email sent — Intro &amp; Needs Assessment</div>
-              <span class="email-track-badge email-track-opened" style="flex-shrink:0"><span class="email-track-dot"></span>Opened</span>
-            </div>
-            <div style="font-size:11px;color:var(--g400);margin-top:2px">Sent introduction email with benefits overview PDF and calendar link for discovery call.</div>
-            <div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 17, 2026 · Brock Wilson</div>
-            <div style="font-size:10px;color:#1d9e75;margin-top:3px;font-weight:500">&#10003; Opened Jun 18 at 8:53am &nbsp;·&nbsp; Opened again Jun 19 at 2:11pm &nbsp;·&nbsp; 2 total opens</div>
-          </div>
-        </div>
-        <div class="deal-activity-item">
-          <div class="deal-activity-icon" style="background:rgba(59,130,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div style="flex:1">
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
-              <div style="font-size:12px;font-weight:600;color:var(--dark)">Email sent — Follow-up: Benefits Summary</div>
-              <span class="email-track-badge email-track-pending" style="flex-shrink:0"><span class="email-track-dot"></span>Pending</span>
-            </div>
-            <div style="font-size:11px;color:var(--g400);margin-top:2px">Sent follow-up with full benefits comparison and group rate breakdown.</div>
-            <div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 16, 2026 · Brock Wilson</div>
-            <div style="font-size:10px;color:#94a3b8;margin-top:3px;font-weight:500">Sent 16h ago &nbsp;·&nbsp; Awaiting open</div>
-          </div>
-        </div>
-        <div class="deal-activity-item">
-          <div class="deal-activity-icon" style="background:rgba(139,92,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
-          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--dark)">Opportunity created</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Opportunity added to Sales Pipeline — Prospect Registered stage.</div><div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 16, 2026 · Brock Wilson</div></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="deal-detail-overlay" onclick="closeDealDetail()" style="position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:1199;display:none"></div>
-
 <!-- DATE / PERIOD MODAL -->
 <div class="modal-overlay" role="dialog" aria-modal="true" aria-label="Date" id="date-modal" onclick="closeOnOverlay(event,'date-modal')">
   <div class="modal modal-sm">
@@ -12176,6 +12039,144 @@ function lbSort(colIndex, th) {
   </div>
 </div><!-- end rep-profile-panel -->
 </div><!-- end .app -->
+
+<!-- TOAST NOTIFICATION -->
+<div id="toast" role="status" aria-live="polite" aria-atomic="true" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--navy);color:#fff;padding:11px 20px;border-radius:10px;font-size:13px;font-weight:500;z-index:9999;opacity:0;transition:all 0.25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,0.2);display:flex;align-items:center;gap:8px">
+  <span id="toast-icon">✓</span><span id="toast-msg"></span>
+</div>
+
+<!-- ACCOUNT DETAIL DRAWER -->
+<div id="account-drawer" style="position:fixed;top:0;right:-480px;width:480px;height:100vh;background:var(--white);border-left:1px solid var(--g200);z-index:1200;transition:right 0.3s ease;overflow-y:auto;display:flex;flex-direction:column;box-shadow:-8px 0 32px rgba(0,0,0,0.12)">
+  <div style="padding:18px 22px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:var(--white);z-index:1">
+    <div style="font-size:15px;font-weight:700;color:var(--dark)" id="drawer-title">AR Solutions</div>
+    <button onclick="closeDrawer()" style="border:none;background:none;color:var(--g400);cursor:pointer;display:flex;align-items:center;padding:4px" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button>
+  </div>
+  <div style="padding:20px 22px;flex:1">
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:20px">
+      <div style="width:52px;height:52px;border-radius:12px;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:700;color:#fff" id="drawer-ico">AR</div>
+      <div>
+        <div style="font-size:17px;font-weight:700;color:var(--dark)" id="drawer-name">AR Solutions</div>
+        <div style="font-size:13px;color:var(--g400)" id="drawer-contact">Jake Miller · jake@arsolutions.com</div>
+      </div>
+      <span class="stage-pill stage-prop" style="margin-left:auto" id="drawer-stage">Proposal</span>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px">
+      <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:4px">Deal Value</div><div style="font-size:18px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="drawer-value">$45,000</div></div>
+      <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:4px">Owner</div><div style="font-size:14px;font-weight:600;color:var(--dark)" id="drawer-owner">Brock Wilson</div></div>
+      <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:4px">Days in Stage</div><div style="font-size:18px;font-weight:700;color:var(--amber);font-family:var(--mono)">12</div></div>
+      <div style="background:var(--g50);border-radius:10px;padding:12px"><div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:4px">Last Activity</div><div style="font-size:13px;font-weight:600;color:var(--dark)">2 days ago</div></div>
+    </div>
+    <div style="margin-bottom:16px">
+      <div style="font-size:12px;font-weight:600;color:var(--g600);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Actions</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="tb-btn btn-teal" style="font-size:12px" onclick="showToast('Opening call dialer...')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call</button>
+        <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openEmailComposer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</button>
+        <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('activity-modal');closeDrawer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Activity</button>
+        <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('note-modal');closeDrawer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Note</button>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:12px;font-weight:600;color:var(--g600);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Activity Timeline</div>
+      <div style="display:flex;flex-direction:column;gap:0">
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(29,158,117,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1d9e75" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Call with Jake Miller</div><div style="font-size:11px;color:var(--g400);margin-top:1px">2 days ago · Brock Wilson · 14 min</div></div></div>
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Proposal sent via email</div><div style="font-size:11px;color:var(--g400);margin-top:1px">5 days ago · Brock Wilson</div><span class="email-track-badge email-track-opened"><span class="email-track-dot"></span>Opened · Jun 26 at 10:42am · 2 opens</span></div></div>
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Intro &amp; Needs Assessment</div><div style="font-size:11px;color:var(--g400);margin-top:1px">10 days ago · Brock Wilson</div><span class="email-track-badge email-track-unopened"><span class="email-track-dot"></span>Not opened</span></div></div>
+        <div style="display:flex;gap:12px;padding:10px 0"><div style="width:30px;height:30px;border-radius:50%;background:rgba(139,92,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Discovery meeting</div><div style="font-size:11px;color:var(--g400);margin-top:1px">12 days ago · Brock Wilson · 45 min</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="drawer-overlay" onclick="closeDrawer()" style="position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:1100;display:none"></div>
+
+<!-- Deal Detail Panel -->
+<div id="deal-detail-panel" class="deal-detail-panel">
+  <div class="deal-detail-header">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px">
+      <div style="flex:1;min-width:0">
+        <div id="ddp-title" style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:3px">Opportunity Title</div>
+        <div id="ddp-org" style="font-size:12px;color:var(--g500);display:flex;align-items:center;gap:5px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg> <span>Organization</span></div>
+      </div>
+      <button onclick="closeDealDetail()" style="width:30px;height:30px;border-radius:8px;background:var(--g100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g500);flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap">
+      <div style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:6px 14px;text-align:center">
+        <div style="font-size:10px;color:var(--teal);font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Value</div>
+        <div id="ddp-value" style="font-size:18px;font-weight:700;color:var(--dark)">$0</div>
+      </div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:6px 14px;text-align:center">
+        <div style="font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Stage</div>
+        <div id="ddp-stage" style="font-size:13px;font-weight:700;color:var(--dark)">Stage</div>
+      </div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:6px 14px;text-align:center">
+        <div style="font-size:10px;color:var(--g400);font-weight:600;text-transform:uppercase;letter-spacing:0.5px">Close Date</div>
+        <div id="ddp-close" style="font-size:13px;font-weight:700;color:var(--dark)">—</div>
+      </div>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:12px">
+      <button onclick="showToast('Log call recorded')" style="flex:1;padding:7px;background:var(--g50);border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call</button>
+      <button onclick="openEmailComposer()" style="flex:1;padding:7px;background:var(--g50);border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</button>
+      <button onclick="showToast('Task created')" style="flex:1;padding:7px;background:var(--g50);border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg> Task</button>
+      <button onclick="showToast('Note added')" style="flex:1;padding:7px;background:var(--g50);border:1.5px solid var(--g200);border-radius:8px;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);display:flex;align-items:center;justify-content:center;gap:4px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> Note</button>
+    </div>
+  </div>
+  <div class="deal-detail-body">
+    <!-- Deal fields -->
+    <div style="margin-bottom:20px">
+      <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Deal Information</div>
+      <div id="ddp-fields">
+        <div class="deal-field-row"><span class="deal-field-label">Contact Person</span><span class="deal-field-value" id="ddp-contact">—</span></div>
+        <div class="deal-field-row"><span class="deal-field-label">Owner</span><span class="deal-field-value" id="ddp-owner">—</span></div>
+        <div class="deal-field-row"><span class="deal-field-label">Pipeline</span><span class="deal-field-value">Sales Pipeline</span></div>
+        <div class="deal-field-row"><span class="deal-field-label">Expected Close</span><span class="deal-field-value" id="ddp-close2">—</span></div>
+        <div class="deal-field-row"><span class="deal-field-label">Win Probability</span><span class="deal-field-value" id="ddp-prob">—</span></div>
+        <div class="deal-field-row"><span class="deal-field-label">Days in Stage</span><span class="deal-field-value" id="ddp-days">—</span></div>
+      </div>
+    </div>
+    <!-- Activity timeline -->
+    <div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Activity Timeline</div>
+        <button onclick="showToast('Activity logged')" style="font-size:11px;color:var(--teal);font-weight:600;background:none;border:none;cursor:pointer;font-family:var(--font)">+ Log activity</button>
+      </div>
+      <div id="ddp-timeline">
+        <div class="deal-activity-item">
+          <div class="deal-activity-icon" style="background:rgba(29,158,117,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.56 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.64a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--dark)">Discovery call — 28 min</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Discussed group benefits structure and headcount. Decision maker confirmed. Following up with proposal by Friday.</div><div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 19, 2026 · Brock Wilson</div></div>
+        </div>
+        <div class="deal-activity-item">
+          <div class="deal-activity-icon" style="background:rgba(59,130,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div style="flex:1">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+              <div style="font-size:12px;font-weight:600;color:var(--dark)">Email sent — Intro &amp; Needs Assessment</div>
+              <span class="email-track-badge email-track-opened" style="flex-shrink:0"><span class="email-track-dot"></span>Opened</span>
+            </div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Sent introduction email with benefits overview PDF and calendar link for discovery call.</div>
+            <div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 17, 2026 · Brock Wilson</div>
+            <div style="font-size:10px;color:#1d9e75;margin-top:3px;font-weight:500">&#10003; Opened Jun 18 at 8:53am &nbsp;·&nbsp; Opened again Jun 19 at 2:11pm &nbsp;·&nbsp; 2 total opens</div>
+          </div>
+        </div>
+        <div class="deal-activity-item">
+          <div class="deal-activity-icon" style="background:rgba(59,130,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div style="flex:1">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+              <div style="font-size:12px;font-weight:600;color:var(--dark)">Email sent — Follow-up: Benefits Summary</div>
+              <span class="email-track-badge email-track-pending" style="flex-shrink:0"><span class="email-track-dot"></span>Pending</span>
+            </div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Sent follow-up with full benefits comparison and group rate breakdown.</div>
+            <div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 16, 2026 · Brock Wilson</div>
+            <div style="font-size:10px;color:#94a3b8;margin-top:3px;font-weight:500">Sent 16h ago &nbsp;·&nbsp; Awaiting open</div>
+          </div>
+        </div>
+        <div class="deal-activity-item">
+          <div class="deal-activity-icon" style="background:rgba(139,92,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--dark)">Opportunity created</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Opportunity added to Sales Pipeline — Prospect Registered stage.</div><div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 16, 2026 · Brock Wilson</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="deal-detail-overlay" onclick="closeDealDetail()" style="position:fixed;inset:0;background:rgba(0,0,0,0.2);z-index:1199;display:none"></div>
+
 
 <!-- ══════════════════════════════════════════════════════════
      PERSON DETAIL OVERLAY
