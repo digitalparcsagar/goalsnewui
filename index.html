@@ -6291,25 +6291,11 @@ function initDragDrop() {
 let crmDragCard = null;
 
 function openDealDetail(dealId) {
-  const pipe = CRM_PIPELINES[activePipelineKey];
-  const d = pipe.opps.find(o=>o.id===dealId);
-  if (!d) return;
-  document.getElementById('ddp-title').textContent = d.title;
-  document.getElementById('ddp-org').querySelector('span').textContent = d.org;
-  document.getElementById('ddp-value').textContent = fmt(d.value);
-  document.getElementById('ddp-stage').textContent = d.stage;
-  document.getElementById('ddp-close').textContent = d.close;
-  document.getElementById('ddp-close2').textContent = d.close;
-  document.getElementById('ddp-contact').textContent = d.contact;
-  document.getElementById('ddp-owner').textContent = d.owner;
-  document.getElementById('ddp-prob').textContent = d.prob;
-  document.getElementById('ddp-days').textContent = d.days;
-  document.getElementById('deal-detail-panel').classList.add('open');
-  document.getElementById('deal-detail-overlay').style.display = 'block';
+  _oppDetailSource = 'pipeline';
+  openOppDetail(dealId);
 }
 function closeDealDetail() {
-  document.getElementById('deal-detail-panel').classList.remove('open');
-  document.getElementById('deal-detail-overlay').style.display = 'none';
+  closeOppDetail();
 }
 
 // ── Custom Stage Builder ──
@@ -8663,7 +8649,7 @@ function openOppDetail(oppId) {
 
   // Top bar
   document.getElementById('oppd-header-title').textContent = opp.title;
-  document.getElementById('oppd-back-label').textContent = _oppDetailSource === 'person' ? 'Contact' : 'Account';
+  document.getElementById('oppd-back-label').textContent = _oppDetailSource === 'person' ? 'Contact' : _oppDetailSource === 'pipeline' ? 'Pipeline' : 'Account';
 
   // Stage pill
   var stageEl = document.getElementById('oppd-stage-pill');
