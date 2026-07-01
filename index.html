@@ -1286,6 +1286,36 @@ body.dark-mode .cm-res-group{background:rgba(255,255,255,0.05)!important;border-
 body.dark-mode .cm-res-item{border-color:rgba(255,255,255,0.06)!important;color:var(--dark)}
 body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 
+
+/* ── Email open tracking ── */
+.email-track-badge{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;margin-top:5px;letter-spacing:0.1px}
+.email-track-opened{background:rgba(29,158,117,0.1);color:#1d9e75}
+.email-track-pending{background:rgba(148,163,184,0.15);color:#64748b}
+.email-track-unopened{background:rgba(239,68,68,0.1);color:#ef4444}
+.email-track-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0}
+.email-track-opened .email-track-dot{background:#1d9e75}
+.email-track-pending .email-track-dot{background:#94a3b8}
+.email-track-unopened .email-track-dot{background:#ef4444}
+
+/* ── Email composer overlay ── */
+#email-composer{position:fixed;bottom:0;right:0;width:520px;background:#fff;border-radius:14px 0 0 0;box-shadow:-4px -4px 32px rgba(0,0,0,0.16);z-index:1400;display:none;flex-direction:column;max-height:520px}
+#email-composer.open{display:flex}
+.ec-header{background:#1a2332;border-radius:14px 0 0 0;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.ec-header span{font-size:13px;font-weight:700;color:#fff}
+.ec-header-actions{display:flex;gap:8px}
+.ec-header-actions button{background:rgba(255,255,255,0.12);border:none;border-radius:6px;color:rgba(255,255,255,0.7);cursor:pointer;width:26px;height:26px;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.12s}
+.ec-header-actions button:hover{background:rgba(255,255,255,0.22);color:#fff}
+.ec-body{padding:14px 16px;display:flex;flex-direction:column;gap:10px;flex:1;overflow-y:auto}
+.ec-field{display:flex;flex-direction:column;gap:3px}
+.ec-field label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5}
+.ec-field input,.ec-field textarea{border:1.5px solid #dde3ec;border-radius:7px;padding:7px 10px;font-size:12px;font-family:var(--font);color:#1a2332;outline:none;resize:none;transition:.12s}
+.ec-field input:focus,.ec-field textarea:focus{border-color:#1d9e75;box-shadow:0 0 0 3px rgba(29,158,117,0.08)}
+.ec-toolbar{padding:10px 16px;border-top:1px solid #eef1f6;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;background:#f9fafb;border-radius:0 0 0 0}
+.ec-track-toggle{display:flex;align-items:center;gap:8px;font-size:12px;color:#4a5568}
+.ec-track-toggle input[type=checkbox]{width:14px;height:14px;accent-color:#1d9e75;cursor:pointer}
+.ec-track-label{font-size:12px;font-weight:500;color:#4a5568}
+.ec-track-hint{font-size:10px;color:#8796a5}
+
 </style>
 </head>
 <body>
@@ -11578,7 +11608,7 @@ function lbSort(colIndex, th) {
       <div style="font-size:12px;font-weight:600;color:var(--g600);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Actions</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="tb-btn btn-teal" style="font-size:12px" onclick="showToast('Opening call dialer...')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg> Call</button>
-        <button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Opening email composer...')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</button>
+        <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openEmailComposer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg> Email</button>
         <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('activity-modal');closeDrawer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg> Activity</button>
         <button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('note-modal');closeDrawer()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Note</button>
       </div>
@@ -11586,9 +11616,10 @@ function lbSort(colIndex, th) {
     <div>
       <div style="font-size:12px;font-weight:600;color:var(--g600);margin-bottom:8px;text-transform:uppercase;letter-spacing:0.5px">Activity Timeline</div>
       <div style="display:flex;flex-direction:column;gap:0">
-        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(29,158,117,0.1);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div style="font-size:13px;font-weight:500;color:var(--dark)">Call with Jake Miller</div><div style="font-size:11px;color:var(--g400)">2 days ago · Brock Wilson</div></div></div>
-        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div><div style="font-size:13px;font-weight:500;color:var(--dark)">Proposal sent via email</div><div style="font-size:11px;color:var(--g400)">5 days ago · Brock Wilson</div></div></div>
-        <div style="display:flex;gap:12px;padding:10px 0"><div style="width:30px;height:30px;border-radius:50%;background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div style="font-size:13px;font-weight:500;color:var(--dark)">Discovery meeting</div><div style="font-size:11px;color:var(--g400)">12 days ago · Brock Wilson</div></div></div>
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(29,158,117,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#1d9e75" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Call with Jake Miller</div><div style="font-size:11px;color:var(--g400);margin-top:1px">2 days ago · Brock Wilson · 14 min</div></div></div>
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Proposal sent via email</div><div style="font-size:11px;color:var(--g400);margin-top:1px">5 days ago · Brock Wilson</div><span class="email-track-badge email-track-opened"><span class="email-track-dot"></span>Opened · Jun 26 at 10:42am · 2 opens</span></div></div>
+        <div style="display:flex;gap:12px;padding:10px 0;border-bottom:1px solid var(--g100)"><div style="width:30px;height:30px;border-radius:50%;background:rgba(59,130,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div><div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)">Intro &amp; Needs Assessment</div><div style="font-size:11px;color:var(--g400);margin-top:1px">10 days ago · Brock Wilson</div><span class="email-track-badge email-track-unopened"><span class="email-track-dot"></span>Not opened</span></div></div>
+        <div style="display:flex;gap:12px;padding:10px 0"><div style="width:30px;height:30px;border-radius:50%;background:rgba(139,92,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Discovery meeting</div><div style="font-size:11px;color:var(--g400);margin-top:1px">12 days ago · Brock Wilson · 45 min</div></div></div>
       </div>
     </div>
   </div>
@@ -11652,7 +11683,27 @@ function lbSort(colIndex, th) {
         </div>
         <div class="deal-activity-item">
           <div class="deal-activity-icon" style="background:rgba(59,130,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div style="flex:1"><div style="font-size:12px;font-weight:600;color:var(--dark)">Email sent — Intro &amp; Needs Assessment</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Sent introduction email with benefits overview PDF and calendar link for discovery call.</div><div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 17, 2026 · Brock Wilson</div></div>
+          <div style="flex:1">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+              <div style="font-size:12px;font-weight:600;color:var(--dark)">Email sent — Intro &amp; Needs Assessment</div>
+              <span class="email-track-badge email-track-opened" style="flex-shrink:0"><span class="email-track-dot"></span>Opened</span>
+            </div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Sent introduction email with benefits overview PDF and calendar link for discovery call.</div>
+            <div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 17, 2026 · Brock Wilson</div>
+            <div style="font-size:10px;color:#1d9e75;margin-top:3px;font-weight:500">&#10003; Opened Jun 18 at 8:53am &nbsp;·&nbsp; Opened again Jun 19 at 2:11pm &nbsp;·&nbsp; 2 total opens</div>
+          </div>
+        </div>
+        <div class="deal-activity-item">
+          <div class="deal-activity-icon" style="background:rgba(59,130,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+          <div style="flex:1">
+            <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px">
+              <div style="font-size:12px;font-weight:600;color:var(--dark)">Email sent — Follow-up: Benefits Summary</div>
+              <span class="email-track-badge email-track-pending" style="flex-shrink:0"><span class="email-track-dot"></span>Pending</span>
+            </div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Sent follow-up with full benefits comparison and group rate breakdown.</div>
+            <div style="font-size:10px;color:var(--g400);margin-top:4px">Jun 16, 2026 · Brock Wilson</div>
+            <div style="font-size:10px;color:#94a3b8;margin-top:3px;font-weight:500">Sent 16h ago &nbsp;·&nbsp; Awaiting open</div>
+          </div>
         </div>
         <div class="deal-activity-item">
           <div class="deal-activity-icon" style="background:rgba(139,92,246,0.1)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
@@ -13350,6 +13401,18 @@ function _iwStep5() {
   html += '</div>';
   return html;
 }
+
+function openEmailComposer() {
+  document.getElementById('email-composer').classList.add('open');
+}
+function _ecSend() {
+  var tracked = document.getElementById('ec-track-toggle').checked;
+  document.getElementById('email-composer').classList.remove('open');
+  var msg = tracked
+    ? 'Email sent. Open tracking enabled — check the timeline for updates.'
+    : 'Email sent.';
+  showToast(msg);
+}
 </script>
 
 
@@ -13446,5 +13509,40 @@ function _iwStep5() {
   </div>
   </div><!-- end cm-body -->
 </div>
+
+<!-- Email Composer -->
+<div id="email-composer">
+  <div class="ec-header">
+    <span>New Email</span>
+    <div class="ec-header-actions">
+      <button onclick="document.getElementById('email-composer').classList.remove('open')" title="Close">&#x2715;</button>
+    </div>
+  </div>
+  <div class="ec-body">
+    <div class="ec-field">
+      <label>To</label>
+      <input type="text" id="ec-to" value="Jake Miller &lt;jake@arsolutions.com&gt;">
+    </div>
+    <div class="ec-field">
+      <label>Subject</label>
+      <input type="text" id="ec-subject" placeholder="Email subject...">
+    </div>
+    <div class="ec-field">
+      <label>Message</label>
+      <textarea id="ec-body" rows="6" placeholder="Write your message..."></textarea>
+    </div>
+  </div>
+  <div class="ec-toolbar">
+    <div class="ec-track-toggle">
+      <input type="checkbox" id="ec-track-toggle" checked>
+      <div>
+        <div class="ec-track-label">&#128269; Track email opens</div>
+        <div class="ec-track-hint">You&#39;ll see when this email is opened in the activity timeline</div>
+      </div>
+    </div>
+    <button onclick="_ecSend()" style="padding:8px 18px;background:#1d9e75;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send</button>
+  </div>
+</div>
+
 </body>
 </html>
