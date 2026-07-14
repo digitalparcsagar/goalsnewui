@@ -1329,6 +1329,9 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .tgt-view-btn.active{background:var(--teal);color:#fff}
 .tgt-add-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--teal);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);transition:.15s}
 .tgt-add-btn:hover{background:var(--teal2)}
+.tgt-period-opt{padding:7px 10px;border-radius:6px;font-size:12px;font-weight:500;color:var(--g700);cursor:pointer;transition:.1s}
+.tgt-period-opt:hover{background:var(--g50);color:var(--teal)}
+.tgt-period-opt.active{color:var(--teal);font-weight:700;background:rgba(29,158,117,.07)}
 .tgt-body{display:grid;grid-template-columns:1fr 272px;flex:1;overflow:hidden}
 .tgt-left{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--g200)}
 .tgt-right{display:flex;flex-direction:column;overflow-y:auto;background:var(--g50)}
@@ -4667,9 +4670,44 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
-      <div class="tgt-view-toggle">
-        <button id="tgt-btn-today" class="tgt-view-btn active" onclick="switchTargetView('today',this)">Today</button>
-        <button id="tgt-btn-past"  class="tgt-view-btn"        onclick="switchTargetView('past',this)">Past</button>
+      <!-- Period filter -->
+      <div style="position:relative" id="tgt-period-wrap">
+        <button id="tgt-period-btn" onclick="_tgtTogglePeriodMenu()" style="display:flex;align-items:center;gap:6px;padding:5px 12px;border:1.5px solid rgba(255,255,255,0.18);border-radius:7px;background:transparent;color:rgba(255,255,255,0.8);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);transition:.15s" onmouseover="this.style.borderColor='rgba(255,255,255,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span id="tgt-period-label">Today</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <!-- Dropdown menu -->
+        <div id="tgt-period-menu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--white);border:1px solid var(--g200);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.14);min-width:180px;z-index:400;overflow:hidden">
+          <div style="padding:6px">
+            <div class="tgt-period-opt active" data-period="today"      onclick="_tgtSetPeriod(this,'today','Today')">Today</div>
+            <div class="tgt-period-opt"         data-period="yesterday"  onclick="_tgtSetPeriod(this,'yesterday','Yesterday')">Yesterday</div>
+            <div class="tgt-period-opt"         data-period="week"       onclick="_tgtSetPeriod(this,'week','This Week')">This Week</div>
+            <div class="tgt-period-opt"         data-period="last7"      onclick="_tgtSetPeriod(this,'last7','Last 7 Days')">Last 7 Days</div>
+            <div class="tgt-period-opt"         data-period="month"      onclick="_tgtSetPeriod(this,'month','This Month')">This Month</div>
+            <div class="tgt-period-opt"         data-period="last30"     onclick="_tgtSetPeriod(this,'last30','Last 30 Days')">Last 30 Days</div>
+            <div class="tgt-period-opt"         data-period="quarter"    onclick="_tgtSetPeriod(this,'quarter','This Quarter')">This Quarter</div>
+            <div class="tgt-period-opt"         data-period="year"       onclick="_tgtSetPeriod(this,'year','This Year')">This Year</div>
+            <div style="height:1px;background:var(--g200);margin:4px 0"></div>
+            <div class="tgt-period-opt"         data-period="custom"     onclick="_tgtSetPeriod(this,'custom','Custom range')">
+              Custom range&hellip;
+            </div>
+          </div>
+          <!-- Custom date inputs — shown when custom selected -->
+          <div id="tgt-custom-range" style="display:none;padding:10px 12px 12px;border-top:1px solid var(--g200)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+              <div>
+                <label style="font-size:10px;font-weight:600;color:var(--g400);display:block;margin-bottom:3px">From</label>
+                <input type="date" id="tgt-custom-from" style="width:100%;padding:5px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box">
+              </div>
+              <div>
+                <label style="font-size:10px;font-weight:600;color:var(--g400);display:block;margin-bottom:3px">To</label>
+                <input type="date" id="tgt-custom-to" style="width:100%;padding:5px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box">
+              </div>
+            </div>
+            <button onclick="_tgtApplyCustomRange()" style="width:100%;padding:6px;background:var(--teal);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Apply</button>
+          </div>
+        </div>
       </div>
       <button id="tgt-add-btn" class="tgt-add-btn" onclick="openModal('lead-modal')">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
@@ -11562,12 +11600,96 @@ function filterTargets() {
 }
 
 // ── TODAY / PAST TOGGLE ───────────────────────────────────────────────────────
-function switchTargetView(view, btn) {
-  _targetView = view;
-  document.querySelectorAll('.tgt-view-btn').forEach(function(b){ b.classList.remove('active'); });
-  if (btn) btn.classList.add('active');
-  if (view === 'past') showToast('Past view — showing last 30 days of activity');
+var _tgtPeriod = 'today';
+
+function _tgtTogglePeriodMenu() {
+  var menu = document.getElementById('tgt-period-menu');
+  if (!menu) return;
+  var isOpen = menu.style.display !== 'none';
+  menu.style.display = isOpen ? 'none' : 'block';
+  if (!isOpen) {
+    // close on outside click
+    setTimeout(function() {
+      document.addEventListener('click', function _closePeriod(e) {
+        var wrap = document.getElementById('tgt-period-wrap');
+        if (wrap && !wrap.contains(e.target)) {
+          menu.style.display = 'none';
+          document.removeEventListener('click', _closePeriod);
+        }
+      });
+    }, 10);
+  }
 }
+
+function _tgtSetPeriod(el, period, label) {
+  _tgtPeriod = period;
+  // update active state
+  document.querySelectorAll('.tgt-period-opt').forEach(function(o){ o.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  // update button label
+  var lbl = document.getElementById('tgt-period-label');
+  if (lbl) lbl.textContent = label;
+  // show/hide custom range inputs
+  var custom = document.getElementById('tgt-custom-range');
+  if (custom) custom.style.display = period === 'custom' ? 'block' : 'none';
+  // close menu (unless custom — let user pick dates first)
+  if (period !== 'custom') {
+    var menu = document.getElementById('tgt-period-menu');
+    if (menu) menu.style.display = 'none';
+    _tgtApplyPeriodFilter();
+  }
+}
+
+function _tgtApplyCustomRange() {
+  var from = document.getElementById('tgt-custom-from');
+  var to   = document.getElementById('tgt-custom-to');
+  var fromVal = from ? from.value : '';
+  var toVal   = to   ? to.value   : '';
+  if (!fromVal || !toVal) { showToast('Please select both dates'); return; }
+  var lbl = document.getElementById('tgt-period-label');
+  if (lbl) {
+    var f = new Date(fromVal), t = new Date(toVal);
+    lbl.textContent = f.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' – ' + t.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  }
+  var menu = document.getElementById('tgt-period-menu');
+  if (menu) menu.style.display = 'none';
+  _tgtApplyPeriodFilter();
+}
+
+function _tgtApplyPeriodFilter() {
+  // For today/yesterday: show live queue data as normal
+  // For past periods: show a summary toast + update KPIs with period-scaled data
+  var periodLabels = {
+    today:'Today', yesterday:'Yesterday', week:'This Week',
+    last7:'Last 7 Days', month:'This Month', last30:'Last 30 Days',
+    quarter:'This Quarter', year:'This Year', custom:'Custom range'
+  };
+  var label = periodLabels[_tgtPeriod] || _tgtPeriod;
+  if (_tgtPeriod === 'today') {
+    // normal live view
+    if (_currentRole === 'sm') _tgtRenderSM();
+    else loadTargetRep(_tgtCurrentSRRepId);
+    return;
+  }
+  // For non-today periods, scale the stats to simulate historical data
+  // (dev team will wire real API here — this shows the UX intent)
+  var multipliers = { yesterday:0.9, week:5.2, last7:4.8, month:18, last30:17, quarter:52, year:210, custom:30 };
+  var mult = multipliers[_tgtPeriod] || 1;
+  showToast('Showing ' + label + ' — dev team: filter queue by date range here');
+  // Update KPI strip values to reflect the selected period
+  if (_currentRole === 'sm') {
+    _tgtUpdateSMKPIs(mult);
+  } else {
+    var d = TARGETS_DATA[_tgtCurrentSRRepId];
+    if (d) {
+      function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+      setEl('tgt-mo-calls',  Math.round(d.moCallsVal  * (mult/18)));
+      setEl('tgt-mo-emails', Math.round(d.moEmailsVal * (mult/18)));
+    }
+  }
+}
+
+function switchTargetView(view, btn) { /* legacy stub */ }
 
 
 
