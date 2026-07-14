@@ -240,7 +240,6 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .page-area::-webkit-scrollbar{width:4px}
 .page-area::-webkit-scrollbar-thumb{background:var(--g300);border-radius:2px}
 .page{display:none}.page.active{display:block}
-#page-targets.active{display:flex;flex-direction:column;position:fixed;top:var(--topbar);left:var(--sb);right:0;bottom:0;z-index:5;background:var(--off)}
 
 /* SHARED */
 .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
@@ -4717,376 +4716,6 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 </div>
 </div>
 
-<!-- TODAY'S TARGETS REDESIGN -->
-<div id="page-targets" class="page" style="flex-direction:column;overflow:hidden;background:var(--off)">
-
-  <!-- PAGE HEADER — matches platform standard -->
-  <div class="page-header" style="flex-shrink:0">
-    <div class="page-title">Today's Targets</div>
-    <div class="page-subtitle" id="targets-date"></div>
-    <div class="page-actions">
-      <!-- Period filter -->
-      <div style="position:relative" id="tgt-period-wrap">
-        <button id="tgt-period-btn" onclick="_tgtTogglePeriodMenu()" class="tb-btn btn-ghost" style="display:flex;align-items:center;gap:6px;font-size:12px">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-          <span id="tgt-period-label">Today</span>
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
-        </button>
-        <div id="tgt-period-menu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--white);border:1px solid var(--g200);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.14);min-width:180px;z-index:400;overflow:hidden">
-          <div style="padding:6px">
-            <div class="tgt-period-opt active" data-period="today"    onclick="_tgtSetPeriod(this,'today','Today')">Today</div>
-            <div class="tgt-period-opt" data-period="yesterday"       onclick="_tgtSetPeriod(this,'yesterday','Yesterday')">Yesterday</div>
-            <div class="tgt-period-opt" data-period="week"            onclick="_tgtSetPeriod(this,'week','This Week')">This Week</div>
-            <div class="tgt-period-opt" data-period="last7"           onclick="_tgtSetPeriod(this,'last7','Last 7 Days')">Last 7 Days</div>
-            <div class="tgt-period-opt" data-period="month"           onclick="_tgtSetPeriod(this,'month','This Month')">This Month</div>
-            <div class="tgt-period-opt" data-period="last30"          onclick="_tgtSetPeriod(this,'last30','Last 30 Days')">Last 30 Days</div>
-            <div class="tgt-period-opt" data-period="quarter"         onclick="_tgtSetPeriod(this,'quarter','This Quarter')">This Quarter</div>
-            <div class="tgt-period-opt" data-period="year"            onclick="_tgtSetPeriod(this,'year','This Year')">This Year</div>
-            <div style="height:1px;background:var(--g200);margin:4px 0"></div>
-            <div class="tgt-period-opt" data-period="custom"          onclick="_tgtSetPeriod(this,'custom','Custom range')">Custom range&hellip;</div>
-          </div>
-          <div id="tgt-custom-range" style="display:none;padding:10px 12px 12px;border-top:1px solid var(--g200)">
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
-              <div>
-                <label style="font-size:10px;font-weight:600;color:var(--g400);display:block;margin-bottom:3px">From</label>
-                <input type="date" id="tgt-custom-from" style="width:100%;padding:5px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box">
-              </div>
-              <div>
-                <label style="font-size:10px;font-weight:600;color:var(--g400);display:block;margin-bottom:3px">To</label>
-                <input type="date" id="tgt-custom-to" style="width:100%;padding:5px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box">
-              </div>
-            </div>
-            <button onclick="_tgtApplyCustomRange()" style="width:100%;padding:6px;background:var(--teal);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Apply</button>
-          </div>
-        </div>
-      </div>
-      <button id="tgt-add-btn" class="tgt-add-btn" onclick="openModal('lead-modal')">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Add targets
-      </button>
-    </div>
-  </div>
-
-  <!-- Scrollable content below header -->
-  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
-
-  <!-- ── SM VIEW ── -->
-  <div id="tgt-sm-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
-
-    <!-- SM KPI rings -->
-    <div id="sm-kpi-strip" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0">
-      <div class="tgt-kpi-ring">
-        <div class="tgt-kpi-ring-label">Reps on track</div>
-        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
-          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
-            <circle id="sm-kpi-on-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--teal)" stroke-width="7"
-              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="95.50400000000002"
-              style="transition:stroke-dashoffset .5s ease"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <span id="sm-kpi-on-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">60%</span>
-          </div>
-        </div>
-        <div id="sm-kpi-on-track-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
-      </div>
-      <div class="tgt-kpi-ring">
-        <div class="tgt-kpi-ring-label">Team calls today</div>
-        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
-          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
-            <circle id="sm-kpi-calls-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--teal)" stroke-width="7"
-              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
-              style="transition:stroke-dashoffset .5s ease"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <span id="sm-kpi-calls-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
-          </div>
-        </div>
-        <div id="sm-kpi-calls-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
-      </div>
-      <div class="tgt-kpi-ring">
-        <div class="tgt-kpi-ring-label">Team emails today</div>
-        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
-          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
-            <circle id="sm-kpi-emails-ring" cx="48" cy="48" r="38" fill="none" stroke="#5b8fe8" stroke-width="7"
-              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
-              style="transition:stroke-dashoffset .5s ease"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <span id="sm-kpi-emails-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
-          </div>
-        </div>
-        <div id="sm-kpi-emails-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
-      </div>
-      <div class="tgt-kpi-ring">
-        <div class="tgt-kpi-ring-label">Overdue accounts</div>
-        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
-          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
-            <circle id="sm-kpi-overdue-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--red)" stroke-width="7"
-              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
-              style="transition:stroke-dashoffset .5s ease"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <span id="sm-kpi-overdue-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
-          </div>
-        </div>
-        <div id="sm-kpi-overdue-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
-      </div>
-    </div>
-
-    <!-- SM Body: two-column -->
-    <div class="tgt-body">
-      <!-- LEFT: rep selector + queue -->
-      <div class="tgt-left">
-        <!-- Rep filter: handled via team list on right -->
-        <div id="sm-rep-selector" style="display:none"></div>
-        <!-- ACE insight -->
-        <!-- ACE insight -->
-        <div class="tgt-ace-card" id="sm-ace-card">
-          <div class="tgt-ace-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-2px;margin-right:4px"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>ACE recommendation</div>
-          <div class="tgt-ace-text" id="sm-ace-text">Loading insights...</div>
-        </div>
-
-        <!-- Filter bar: tabs + rep + status filters -->
-        <div class="tgt-filter-bar">
-          <!-- Tabs -->
-          <div style="display:flex;gap:2px">
-            <div class="tgt-tab active" id="sm-tab-queue"     onclick="switchSMQueueTab('queue',this)">Queue (<span id="sm-queue-count">0</span>)</div>
-            <div class="tgt-tab"        id="sm-tab-completed" onclick="switchSMQueueTab('completed',this)">Completed (<span id="sm-done-count">0</span>)</div>
-            <div class="tgt-tab"        id="sm-tab-attention" onclick="switchSMQueueTab('attention',this)">Needs attention (<span id="sm-attn-count">0</span>)</div>
-          </div>
-          <!-- Right-side filters -->
-          <div style="display:flex;align-items:center;gap:8px">
-            <!-- Search -->
-            <div style="position:relative">
-              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--g300);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              <input id="tgt-search-input" type="text" placeholder="Search accounts or contacts…" oninput="_tgtSetSearch(this.value)"
-                style="padding:5px 10px 5px 28px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;width:220px;transition:.15s"
-                onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'">
-            </div>
-            <!-- Rep filter -->
-            <select id="tgt-rep-filter" onchange="_tgtSetRepFilter(this.value)" class="tgt-filter-select">
-              <option value="all">All reps</option>
-            </select>
-            <!-- Status filter -->
-            <select id="tgt-status-filter" onchange="_tgtSetStatusFilter(this.value)" class="tgt-filter-select">
-              <option value="all">All status</option>
-              <option value="overdue">Overdue (&gt;60d)</option>
-              <option value="due_soon">Due soon (30–60d)</option>
-              <option value="on_track">On track (&lt;30d)</option>
-            </select>
-          </div>
-        </div>
-
-        <!-- Queue table -->
-        <div class="tgt-queue" id="sm-queue-list"></div>
-      </div>
-
-      <!-- RIGHT: SM team cards with rings + goal editing -->
-      <div class="tgt-right" style="min-width:0;overflow:hidden">
-        <div style="padding:14px 16px 10px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400)">Team Today</span>
-          <button class="tgt-assign-open-btn" onclick="openAssignTargets(null)" title="Assign accounts to a rep">
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            Assign targets
-          </button>
-        </div>
-        <div id="sm-team-list" style="flex:1;overflow-y:auto;padding:6px 0"></div>
-      </div>
-    </div>
-  </div><!-- end tgt-sm-content -->
-
-  <!-- ── SR VIEW ── -->
-  <div id="tgt-sr-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
-    <!-- SR KPI strip -->
-    <div class="tgt-kpi-strip">
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Calls today</div>
-        <div class="tgt-kpi-val"><span id="tgt-calls-label">0</span> <span id="tgt-calls-goal-lbl">/ 5</span></div>
-        <div class="tgt-kpi-track"><div id="tgt-calls-bar" class="tgt-kpi-fill" style="width:0%;background:var(--teal)"></div></div>
-      </div>
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Emails today</div>
-        <div class="tgt-kpi-val"><span id="tgt-emails-label">0</span> <span id="tgt-emails-goal-lbl">/ 3</span></div>
-        <div class="tgt-kpi-track"><div id="tgt-emails-bar" class="tgt-kpi-fill" style="width:0%;background:#5b8fe8"></div></div>
-      </div>
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Queue completed</div>
-        <div class="tgt-kpi-val"><span id="tgt-done-label">0</span> <span id="tgt-done-of-lbl">/ 0</span></div>
-        <div class="tgt-kpi-track"><div id="tgt-done-bar" class="tgt-kpi-fill" style="width:0%;background:#8b5cf6"></div></div>
-      </div>
-    </div>
-
-    <!-- SR two-column body -->
-    <div class="tgt-body">
-      <!-- LEFT: ace + tabs + queue -->
-      <div class="tgt-left">
-        <!-- ACE insight -->
-        <div class="tgt-ace-card" id="sr-ace-card">
-          <div class="tgt-ace-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-2px;margin-right:4px"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>ACE recommendation</div>
-          <div class="tgt-ace-text" id="sr-ace-text">Loading your queue...</div>
-        </div>
-        <!-- search -->
-        <div class="tgt-search-wrap">
-          <svg class="tgt-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input id="tgt-search" class="tgt-search-input" type="text" placeholder="Search accounts..." oninput="filterTargets()">
-        </div>
-        <!-- Tabs -->
-        <div class="tgt-tab-bar">
-          <div class="tgt-tab active" id="sr-tab-queue"     onclick="switchSRQueueTab('queue',this)">Queue (<span id="sr-queue-count">0</span>)</div>
-          <div class="tgt-tab"        id="sr-tab-done"      onclick="switchSRQueueTab('done',this)">Completed (<span id="sr-done-count">0</span>)</div>
-          <div class="tgt-tab"        id="sr-tab-skipped"   onclick="switchSRQueueTab('skipped',this)">Skipped (<span id="sr-skip-count">0</span>)</div>
-        </div>
-        <!-- Queue list -->
-        <div class="tgt-queue" id="tgt-tbody"></div>
-      </div>
-
-      <!-- RIGHT: SR daily goals + log activity -->
-      <div class="tgt-right">
-        <!-- Rep identity -->
-        <div style="padding:14px 16px 12px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px;flex-shrink:0">
-          <img id="sr-panel-photo" src="" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0">
-          <div>
-            <div id="sr-panel-name" style="font-size:13px;font-weight:700;color:var(--dark)"></div>
-            <div style="font-size:11px;color:var(--g400)">Sales Rep</div>
-          </div>
-        </div>
-        <!-- Daily goal rings -->
-        <div class="tgt-panel-section">
-          <div class="tgt-panel-title">Today's goals</div>
-          <div class="tgt-goal-rings">
-            <div class="tgt-ring-card">
-              <div class="tgt-ring-num" id="sr-ring-calls" style="color:var(--teal)">0</div>
-              <div class="tgt-ring-of" id="sr-ring-calls-of">of 5 calls</div>
-              <div class="tgt-ring-track"><div id="sr-ring-calls-bar" style="width:0%;height:100%;background:var(--teal);border-radius:2px;transition:width .4s"></div></div>
-              <div class="tgt-ring-label">Calls</div>
-            </div>
-            <div class="tgt-ring-card">
-              <div class="tgt-ring-num" id="sr-ring-emails" style="color:#5b8fe8">0</div>
-              <div class="tgt-ring-of" id="sr-ring-emails-of">of 3 emails</div>
-              <div class="tgt-ring-track"><div id="sr-ring-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width .4s"></div></div>
-              <div class="tgt-ring-label">Emails</div>
-            </div>
-          </div>
-        </div>
-        <!-- Log activity -->
-        <div class="tgt-panel-section">
-          <div class="tgt-panel-title">Log activity</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--g500);display:block;margin-bottom:4px">Account</label>
-              <select id="sr-log-account" style="width:100%;padding:7px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none">
-                <option value="">— select account —</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--g500);display:block;margin-bottom:4px">Notes (optional)</label>
-              <textarea id="sr-log-notes" rows="2" placeholder="Quick note..." style="width:100%;padding:7px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;resize:none;box-sizing:border-box;line-height:1.5"></textarea>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <button class="tgt-act-btn tgt-primary" onclick="_tgtLogActivityPanel('call')" style="display:flex;align-items:center;justify-content:center;gap:6px">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                Log Call
-              </button>
-              <button class="tgt-act-btn tgt-email" onclick="_tgtLogActivityPanel('email')" style="display:flex;align-items:center;justify-content:center;gap:6px">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                Log Email
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- This month -->
-        <div class="tgt-panel-section">
-          <div class="tgt-panel-title">This month</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;justify-content:space-between;align-items:baseline">
-              <span style="font-size:12px;color:var(--g600)">Calls</span>
-              <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--dark)" id="tgt-mo-calls">0</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline">
-              <span style="font-size:12px;color:var(--g600)">Emails</span>
-              <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--dark)" id="tgt-mo-emails">0</span>
-            </div>
-          </div>
-        </div>
-        <!-- Legend -->
-        <div class="tgt-panel-section" style="flex:1">
-          <div class="tgt-panel-title">Priority legend</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">Overdue — 60+ days</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--amber);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">Due soon — 30–60 days</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--teal);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">On track — under 30 days</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div><!-- end tgt-sr-content -->
-
-  </div><!-- end scroll wrapper -->
-
-  <!-- ── ASSIGN TARGETS MODAL (SM only) ── -->
-  <div id="tgt-assign-modal" style="display:none;position:absolute;inset:0;z-index:300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center">
-    <div style="background:var(--white);border-radius:14px;width:860px;max-width:96vw;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.3)">
-      <!-- Header -->
-      <div style="padding:18px 24px 14px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-        <div style="flex:1;min-width:0">
-          <div style="font-size:16px;font-weight:700;color:var(--dark)">Assign Targets</div>
-          <div style="font-size:12px;color:var(--g400);margin-top:2px">Select accounts to add to a rep's queue for today</div>
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
-          <span style="font-size:12px;font-weight:600;color:var(--g600)">Assign to:</span>
-          <select id="tgt-assign-rep" style="padding:6px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:13px;font-weight:600;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;cursor:pointer" onchange="_tgtAssignRepChanged()">
-          </select>
-          <div id="tgt-assign-selected-badge" style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--g100);color:var(--g500);white-space:nowrap">0 selected</div>
-          <button onclick="closeAssignTargets()" style="width:28px;height:28px;border-radius:7px;background:var(--g100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g500);flex-shrink:0">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-          </button>
-        </div>
-      </div>
-      <!-- Type tabs -->
-      <div style="display:flex;border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0" id="tgt-assign-tabs">
-        <div class="tgt-assign-tab active" data-stage="all"      onclick="_tgtAssignTab(this,'all')">All</div>
-        <div class="tgt-assign-tab"        data-stage="pipeline" onclick="_tgtAssignTab(this,'pipeline')">Pipeline</div>
-        <div class="tgt-assign-tab"        data-stage="account"  onclick="_tgtAssignTab(this,'account')">Accounts</div>
-        <div class="tgt-assign-tab"        data-stage="people"   onclick="_tgtAssignTab(this,'people')">People</div>
-      </div>
-      <!-- Search -->
-      <div style="padding:10px 16px;border-bottom:1px solid var(--g200);flex-shrink:0;position:relative">
-        <svg style="position:absolute;left:26px;top:50%;transform:translateY(-50%);color:var(--g400)" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="tgt-assign-search" type="text" placeholder="Search accounts or contacts..." oninput="_tgtAssignRender()" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:8px 12px 8px 32px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s">
-      </div>
-      <!-- Table -->
-      <div style="flex:1;overflow-y:auto">
-        <table style="width:100%;border-collapse:collapse;font-size:13px">
-          <thead style="position:sticky;top:0;background:var(--g50);z-index:1">
-            <tr>
-              <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200);width:36px">
-                <input type="checkbox" id="tgt-assign-select-all" onchange="_tgtAssignSelectAll(this)" style="cursor:pointer">
-              </th>
-              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Account</th>
-              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Contact</th>
-              <th style="padding:10px 12px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Days Aging</th>
-              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Last Interaction</th>
-              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Source</th>
-            </tr>
-          </thead>
-          <tbody id="tgt-assign-tbody"></tbody>
-        </table>
-      </div>
-      <!-- Footer -->
-      <div style="padding:14px 24px;border-top:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-        <span id="tgt-assign-footer-note" style="font-size:12px;color:var(--g400)">Select accounts above, then confirm to add to rep's queue.</span>
-        <div style="display:flex;gap:10px">
-          <button onclick="closeAssignTargets()" style="padding:8px 18px;border-radius:8px;border:1.5px solid var(--g200);background:var(--white);font-size:13px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font)">Cancel</button>
-          <button onclick="_tgtConfirmAssign()" style="padding:8px 20px;border-radius:8px;border:none;background:var(--teal);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Confirm</button>
-        </div>
-      </div>
-    </div>
-  </div><!-- end tgt-assign-modal -->
-</div><!-- end page-targets -->
 
 </div><!-- end page-area -->
 </div><!-- end .main -->
@@ -10156,6 +9785,9 @@ function searchGo(label, page, action) {
 // Update aria-current on page navigation
 const _origShowPage = showPage;
 showPage = function(id, btn) {
+  // Hide targets overlay when navigating to any other page
+  var tgtPage = document.getElementById('page-targets');
+  if (tgtPage) tgtPage.style.display = 'none';
   _origShowPage(id, btn);
   // Update aria-current
   document.querySelectorAll('.sb-item').forEach(b => b.removeAttribute('aria-current'));
@@ -11036,8 +10668,8 @@ function _tgtAceInsight(accounts) {
 
 // ── OPEN / CLOSE ──────────────────────────────────────────────────────────────
 function openTargetsModal() {
-  // Navigate to targets as a standard page (sidebar + topbar stay visible)
-  showPage('targets');
+  var tgtPage = document.getElementById('page-targets');
+  if (tgtPage) tgtPage.style.display = 'flex';
   // Highlight the Today's Targets button in the top bar (no sidebar item)
   var d = document.getElementById('targets-date');
   if (d) d.textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
@@ -11063,7 +10695,8 @@ function openTargetsModal() {
 }
 
 function closeTargets() {
-  showPage('dashboard');
+  var tgtPage = document.getElementById('page-targets');
+  if (tgtPage) tgtPage.style.display = 'none';
 }
 
 // ── SM RENDER ─────────────────────────────────────────────────────────────────
@@ -11185,9 +10818,13 @@ function _tgtRenderSMQueue() {
   var attention = accs.filter(function(a){ return a.lastInt > 60; });
 
   function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
-  setEl('sm-queue-count', queue.length);
-  setEl('sm-done-count',  done.length);
-  setEl('sm-attn-count',  attention.length);
+  // Update dropdown option labels with counts
+  var qOpt = document.getElementById('sm-queue-count-opt');
+  var dOpt = document.getElementById('sm-done-count-opt');
+  var aOpt = document.getElementById('sm-attn-count-opt');
+  if (qOpt) qOpt.textContent = 'Queue (' + queue.length + ')';
+  if (dOpt) dOpt.textContent = 'Completed (' + done.length + ')';
+  if (aOpt) aOpt.textContent = 'Needs attention (' + attention.length + ')';
 
   var aceEl = document.getElementById('sm-ace-text');
   if (aceEl) aceEl.textContent = _tgtAceInsight(queue.length ? queue : accs);
@@ -11317,6 +10954,16 @@ function _tgtSetSearch(val) {
 }
 
 
+function _tgtFilterRepList(query) {
+  var q = (query || '').toLowerCase().trim();
+  var container = document.getElementById('sm-team-list');
+  if (!container) return;
+  container.querySelectorAll('[data-rep-card]').forEach(function(el) {
+    var name = (el.getAttribute('data-rep-name') || '').toLowerCase();
+    el.style.display = (!q || name.indexOf(q) !== -1) ? '' : 'none';
+  });
+}
+
 function _tgtRenderSMTeamList() {
   var container = document.getElementById('sm-team-list');
   if (!container) return;
@@ -11335,6 +10982,8 @@ function _tgtRenderSMTeamList() {
     var card = document.createElement('div');
     card.className = 'tgt-rep-card';
     card.id = 'tgt-row-' + r.id;
+    card.setAttribute('data-rep-card', '1');
+    card.setAttribute('data-rep-name', r.name);
     card.innerHTML =
       '<div class="tgt-rep-card-header">' +
         '<img class="tgt-rep-av" src="' + r.photo + '" alt="' + r.name + '" onerror="this.style.display=\'none\'" style="cursor:pointer;width:30px;height:30px" onclick="_tgtSelectSMRep(\'' + r.id + '\',null)">' +
@@ -11628,8 +11277,9 @@ function _tgtConfirmAssign() {
 
 function switchSMQueueTab(tab, el) {
   _tgtSMQueueTab = tab;
-  document.querySelectorAll('.tgt-tab-bar:first-of-type .tgt-tab, #sm-tab-queue, #sm-tab-completed, #sm-tab-attention').forEach(function(t){ t.classList.remove('active'); });
-  if (el) el.classList.add('active');
+  // Sync the view dropdown if it exists
+  var dd = document.getElementById('sm-view-filter');
+  if (dd) dd.value = tab === 'attention' ? 'attention' : tab;
   _tgtRenderSMQueue();
 }
 // ── SR RENDER ─────────────────────────────────────────────────────────────────
@@ -14775,6 +14425,371 @@ function _ecSend() {
     <button onclick="_ecSend()" style="padding:8px 18px;background:#1d9e75;color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>Send</button>
   </div>
 </div>
+
+
+<!-- TODAY'S TARGETS REDESIGN -->
+<div id="page-targets" style="display:none;position:fixed;top:var(--topbar);left:var(--sb);right:0;bottom:0;z-index:200;flex-direction:column;overflow:hidden;background:var(--off)">
+
+  <!-- PAGE HEADER — matches platform standard -->
+  <div class="page-header" style="flex-shrink:0">
+    <div class="page-title">Today's Targets</div>
+    <div class="page-subtitle" id="targets-date"></div>
+    <div class="page-actions">
+      <!-- Period filter -->
+      <div style="position:relative" id="tgt-period-wrap">
+        <button id="tgt-period-btn" onclick="_tgtTogglePeriodMenu()" class="tb-btn btn-ghost" style="display:flex;align-items:center;gap:6px;font-size:12px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span id="tgt-period-label">Today</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div id="tgt-period-menu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--white);border:1px solid var(--g200);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.14);min-width:180px;z-index:400;overflow:hidden">
+          <div style="padding:6px">
+            <div class="tgt-period-opt active" data-period="today"    onclick="_tgtSetPeriod(this,'today','Today')">Today</div>
+            <div class="tgt-period-opt" data-period="yesterday"       onclick="_tgtSetPeriod(this,'yesterday','Yesterday')">Yesterday</div>
+            <div class="tgt-period-opt" data-period="week"            onclick="_tgtSetPeriod(this,'week','This Week')">This Week</div>
+            <div class="tgt-period-opt" data-period="last7"           onclick="_tgtSetPeriod(this,'last7','Last 7 Days')">Last 7 Days</div>
+            <div class="tgt-period-opt" data-period="month"           onclick="_tgtSetPeriod(this,'month','This Month')">This Month</div>
+            <div class="tgt-period-opt" data-period="last30"          onclick="_tgtSetPeriod(this,'last30','Last 30 Days')">Last 30 Days</div>
+            <div class="tgt-period-opt" data-period="quarter"         onclick="_tgtSetPeriod(this,'quarter','This Quarter')">This Quarter</div>
+            <div class="tgt-period-opt" data-period="year"            onclick="_tgtSetPeriod(this,'year','This Year')">This Year</div>
+            <div style="height:1px;background:var(--g200);margin:4px 0"></div>
+            <div class="tgt-period-opt" data-period="custom"          onclick="_tgtSetPeriod(this,'custom','Custom range')">Custom range&hellip;</div>
+          </div>
+          <div id="tgt-custom-range" style="display:none;padding:10px 12px 12px;border-top:1px solid var(--g200)">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
+              <div>
+                <label style="font-size:10px;font-weight:600;color:var(--g400);display:block;margin-bottom:3px">From</label>
+                <input type="date" id="tgt-custom-from" style="width:100%;padding:5px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box">
+              </div>
+              <div>
+                <label style="font-size:10px;font-weight:600;color:var(--g400);display:block;margin-bottom:3px">To</label>
+                <input type="date" id="tgt-custom-to" style="width:100%;padding:5px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box">
+              </div>
+            </div>
+            <button onclick="_tgtApplyCustomRange()" style="width:100%;padding:6px;background:var(--teal);color:#fff;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Apply</button>
+          </div>
+        </div>
+      </div>
+      <button id="tgt-add-btn" class="tgt-add-btn" onclick="openModal('lead-modal')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add targets
+      </button>
+    </div>
+  </div>
+
+  <!-- Scrollable content below header -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
+
+  <!-- ── SM VIEW ── -->
+  <div id="tgt-sm-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
+
+    <!-- KPI rings: full-width strip at top -->
+    <div id="sm-kpi-strip" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0">
+      <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
+        <div class="tgt-kpi-ring-label">Reps on track</div>
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
+          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
+            <circle id="sm-kpi-on-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--teal)" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="95.504"
+              style="transition:stroke-dashoffset .5s ease"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span id="sm-kpi-on-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">60%</span>
+          </div>
+        </div>
+        <div id="sm-kpi-on-track-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
+      </div>
+      <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
+        <div class="tgt-kpi-ring-label">Overdue accounts</div>
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
+          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
+            <circle id="sm-kpi-overdue-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--red)" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
+              style="transition:stroke-dashoffset .5s ease"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span id="sm-kpi-overdue-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
+          </div>
+        </div>
+        <div id="sm-kpi-overdue-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
+      </div>
+      <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
+        <div class="tgt-kpi-ring-label">Team calls today</div>
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
+          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
+            <circle id="sm-kpi-calls-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--teal)" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
+              style="transition:stroke-dashoffset .5s ease"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span id="sm-kpi-calls-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
+          </div>
+        </div>
+        <div id="sm-kpi-calls-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
+      </div>
+      <div class="tgt-kpi-ring">
+        <div class="tgt-kpi-ring-label">Team emails today</div>
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
+          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
+            <circle id="sm-kpi-emails-ring" cx="48" cy="48" r="38" fill="none" stroke="#5b8fe8" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
+              style="transition:stroke-dashoffset .5s ease"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span id="sm-kpi-emails-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
+          </div>
+        </div>
+        <div id="sm-kpi-emails-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
+      </div>
+    </div>
+
+    <!-- Bottom: 50/50 split -->
+    <div class="tgt-body" style="flex:1;overflow:hidden;display:grid;grid-template-columns:1fr 1fr">
+
+      <!-- LEFT 50%: filter bar + queue -->
+      <div class="tgt-left" style="display:flex;flex-direction:column;overflow:hidden">
+        <!-- Filter bar -->
+        <div class="tgt-filter-bar">
+          <div style="position:relative;flex:1;max-width:340px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--g300);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="tgt-search-input" type="text" placeholder="Search accounts or contacts…" oninput="_tgtSetSearch(this.value)"
+              style="width:100%;padding:6px 12px 6px 32px;border:1.5px solid var(--g200);border-radius:8px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s"
+              onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'">
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <select id="sm-view-filter" onchange="switchSMQueueTab(this.value,null)" class="tgt-filter-select">
+              <option value="queue" id="sm-queue-count-opt">Queue</option>
+              <option value="completed" id="sm-done-count-opt">Completed</option>
+              <option value="attention" id="sm-attn-count-opt">Needs attention</option>
+            </select>
+            <select id="tgt-rep-filter" onchange="_tgtSetRepFilter(this.value)" class="tgt-filter-select">
+              <option value="all">All reps</option>
+            </select>
+            <select id="tgt-status-filter" onchange="_tgtSetStatusFilter(this.value)" class="tgt-filter-select">
+              <option value="all">All status</option>
+              <option value="overdue">Overdue (&gt;60d)</option>
+              <option value="due_soon">Due soon (30–60d)</option>
+              <option value="on_track">On track (&lt;30d)</option>
+            </select>
+          </div>
+        </div>
+        <div class="tgt-queue" id="sm-queue-list"></div>
+      </div>
+
+      <!-- RIGHT 50%: Team Today + rep search -->
+      <div class="tgt-right" style="display:flex;flex-direction:column;overflow:hidden">
+        <div style="padding:14px 16px 10px;border-bottom:1px solid var(--g200);flex-shrink:0">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+            <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400)">Team Today</span>
+            <button class="tgt-assign-open-btn" onclick="openAssignTargets(null)" title="Assign accounts to a rep">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              Assign targets
+            </button>
+          </div>
+          <div style="position:relative">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--g300);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="tgt-rep-search" type="text" placeholder="Search reps…" oninput="_tgtFilterRepList(this.value)"
+              style="width:100%;padding:6px 10px 6px 28px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s"
+              onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'">
+          </div>
+        </div>
+        <div id="sm-team-list" style="flex:1;overflow-y:auto;padding:6px 0"></div>
+      </div>
+    </div>
+  </div><!-- end tgt-sm-content -->
+
+  <!-- ── SR VIEW ── -->
+  <div id="tgt-sr-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
+    <!-- SR KPI strip -->
+    <div class="tgt-kpi-strip">
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Calls today</div>
+        <div class="tgt-kpi-val"><span id="tgt-calls-label">0</span> <span id="tgt-calls-goal-lbl">/ 5</span></div>
+        <div class="tgt-kpi-track"><div id="tgt-calls-bar" class="tgt-kpi-fill" style="width:0%;background:var(--teal)"></div></div>
+      </div>
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Emails today</div>
+        <div class="tgt-kpi-val"><span id="tgt-emails-label">0</span> <span id="tgt-emails-goal-lbl">/ 3</span></div>
+        <div class="tgt-kpi-track"><div id="tgt-emails-bar" class="tgt-kpi-fill" style="width:0%;background:#5b8fe8"></div></div>
+      </div>
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Queue completed</div>
+        <div class="tgt-kpi-val"><span id="tgt-done-label">0</span> <span id="tgt-done-of-lbl">/ 0</span></div>
+        <div class="tgt-kpi-track"><div id="tgt-done-bar" class="tgt-kpi-fill" style="width:0%;background:#8b5cf6"></div></div>
+      </div>
+    </div>
+
+    <!-- SR two-column body -->
+    <div class="tgt-body">
+      <!-- LEFT: ace + tabs + queue -->
+      <div class="tgt-left">
+        <!-- ACE insight -->
+        <div class="tgt-ace-card" id="sr-ace-card">
+          <div class="tgt-ace-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-2px;margin-right:4px"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>ACE recommendation</div>
+          <div class="tgt-ace-text" id="sr-ace-text">Loading your queue...</div>
+        </div>
+        <!-- search -->
+        <div class="tgt-search-wrap">
+          <svg class="tgt-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="tgt-search" class="tgt-search-input" type="text" placeholder="Search accounts..." oninput="filterTargets()">
+        </div>
+        <!-- Tabs -->
+        <div class="tgt-tab-bar">
+          <div class="tgt-tab active" id="sr-tab-queue"     onclick="switchSRQueueTab('queue',this)">Queue (<span id="sr-queue-count">0</span>)</div>
+          <div class="tgt-tab"        id="sr-tab-done"      onclick="switchSRQueueTab('done',this)">Completed (<span id="sr-done-count">0</span>)</div>
+          <div class="tgt-tab"        id="sr-tab-skipped"   onclick="switchSRQueueTab('skipped',this)">Skipped (<span id="sr-skip-count">0</span>)</div>
+        </div>
+        <!-- Queue list -->
+        <div class="tgt-queue" id="tgt-tbody"></div>
+      </div>
+
+      <!-- RIGHT: SR daily goals + log activity -->
+      <div class="tgt-right">
+        <!-- Rep identity -->
+        <div style="padding:14px 16px 12px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <img id="sr-panel-photo" src="" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0">
+          <div>
+            <div id="sr-panel-name" style="font-size:13px;font-weight:700;color:var(--dark)"></div>
+            <div style="font-size:11px;color:var(--g400)">Sales Rep</div>
+          </div>
+        </div>
+        <!-- Daily goal rings -->
+        <div class="tgt-panel-section">
+          <div class="tgt-panel-title">Today's goals</div>
+          <div class="tgt-goal-rings">
+            <div class="tgt-ring-card">
+              <div class="tgt-ring-num" id="sr-ring-calls" style="color:var(--teal)">0</div>
+              <div class="tgt-ring-of" id="sr-ring-calls-of">of 5 calls</div>
+              <div class="tgt-ring-track"><div id="sr-ring-calls-bar" style="width:0%;height:100%;background:var(--teal);border-radius:2px;transition:width .4s"></div></div>
+              <div class="tgt-ring-label">Calls</div>
+            </div>
+            <div class="tgt-ring-card">
+              <div class="tgt-ring-num" id="sr-ring-emails" style="color:#5b8fe8">0</div>
+              <div class="tgt-ring-of" id="sr-ring-emails-of">of 3 emails</div>
+              <div class="tgt-ring-track"><div id="sr-ring-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width .4s"></div></div>
+              <div class="tgt-ring-label">Emails</div>
+            </div>
+          </div>
+        </div>
+        <!-- Log activity -->
+        <div class="tgt-panel-section">
+          <div class="tgt-panel-title">Log activity</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div>
+              <label style="font-size:11px;font-weight:600;color:var(--g500);display:block;margin-bottom:4px">Account</label>
+              <select id="sr-log-account" style="width:100%;padding:7px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none">
+                <option value="">— select account —</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:600;color:var(--g500);display:block;margin-bottom:4px">Notes (optional)</label>
+              <textarea id="sr-log-notes" rows="2" placeholder="Quick note..." style="width:100%;padding:7px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;resize:none;box-sizing:border-box;line-height:1.5"></textarea>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <button class="tgt-act-btn tgt-primary" onclick="_tgtLogActivityPanel('call')" style="display:flex;align-items:center;justify-content:center;gap:6px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Log Call
+              </button>
+              <button class="tgt-act-btn tgt-email" onclick="_tgtLogActivityPanel('email')" style="display:flex;align-items:center;justify-content:center;gap:6px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Log Email
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- This month -->
+        <div class="tgt-panel-section">
+          <div class="tgt-panel-title">This month</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:12px;color:var(--g600)">Calls</span>
+              <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--dark)" id="tgt-mo-calls">0</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:12px;color:var(--g600)">Emails</span>
+              <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--dark)" id="tgt-mo-emails">0</span>
+            </div>
+          </div>
+        </div>
+        <!-- Legend -->
+        <div class="tgt-panel-section" style="flex:1">
+          <div class="tgt-panel-title">Priority legend</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">Overdue — 60+ days</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--amber);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">Due soon — 30–60 days</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--teal);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">On track — under 30 days</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end tgt-sr-content -->
+
+  </div><!-- end scroll wrapper -->
+
+  <!-- ── ASSIGN TARGETS MODAL (SM only) ── -->
+  <div id="tgt-assign-modal" style="display:none;position:absolute;inset:0;z-index:300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center">
+    <div style="background:var(--white);border-radius:14px;width:860px;max-width:96vw;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.3)">
+      <!-- Header -->
+      <div style="padding:18px 24px 14px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:16px;font-weight:700;color:var(--dark)">Assign Targets</div>
+          <div style="font-size:12px;color:var(--g400);margin-top:2px">Select accounts to add to a rep's queue for today</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <span style="font-size:12px;font-weight:600;color:var(--g600)">Assign to:</span>
+          <select id="tgt-assign-rep" style="padding:6px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:13px;font-weight:600;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;cursor:pointer" onchange="_tgtAssignRepChanged()">
+          </select>
+          <div id="tgt-assign-selected-badge" style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--g100);color:var(--g500);white-space:nowrap">0 selected</div>
+          <button onclick="closeAssignTargets()" style="width:28px;height:28px;border-radius:7px;background:var(--g100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g500);flex-shrink:0">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Type tabs -->
+      <div style="display:flex;border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0" id="tgt-assign-tabs">
+        <div class="tgt-assign-tab active" data-stage="all"      onclick="_tgtAssignTab(this,'all')">All</div>
+        <div class="tgt-assign-tab"        data-stage="pipeline" onclick="_tgtAssignTab(this,'pipeline')">Pipeline</div>
+        <div class="tgt-assign-tab"        data-stage="account"  onclick="_tgtAssignTab(this,'account')">Accounts</div>
+        <div class="tgt-assign-tab"        data-stage="people"   onclick="_tgtAssignTab(this,'people')">People</div>
+      </div>
+      <!-- Search -->
+      <div style="padding:10px 16px;border-bottom:1px solid var(--g200);flex-shrink:0;position:relative">
+        <svg style="position:absolute;left:26px;top:50%;transform:translateY(-50%);color:var(--g400)" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="tgt-assign-search" type="text" placeholder="Search accounts or contacts..." oninput="_tgtAssignRender()" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:8px 12px 8px 32px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s">
+      </div>
+      <!-- Table -->
+      <div style="flex:1;overflow-y:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead style="position:sticky;top:0;background:var(--g50);z-index:1">
+            <tr>
+              <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200);width:36px">
+                <input type="checkbox" id="tgt-assign-select-all" onchange="_tgtAssignSelectAll(this)" style="cursor:pointer">
+              </th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Account</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Contact</th>
+              <th style="padding:10px 12px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Days Aging</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Last Interaction</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Source</th>
+            </tr>
+          </thead>
+          <tbody id="tgt-assign-tbody"></tbody>
+        </table>
+      </div>
+      <!-- Footer -->
+      <div style="padding:14px 24px;border-top:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <span id="tgt-assign-footer-note" style="font-size:12px;color:var(--g400)">Select accounts above, then confirm to add to rep's queue.</span>
+        <div style="display:flex;gap:10px">
+          <button onclick="closeAssignTargets()" style="padding:8px 18px;border-radius:8px;border:1.5px solid var(--g200);background:var(--white);font-size:13px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font)">Cancel</button>
+          <button onclick="_tgtConfirmAssign()" style="padding:8px 20px;border-radius:8px;border:none;background:var(--teal);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- end tgt-assign-modal -->
+</div><!-- end page-targets -->
 
 </body>
 </html>
