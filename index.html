@@ -1343,6 +1343,32 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .tgt-kpi-val span{font-size:12px;color:var(--g400);font-weight:400}
 .tgt-kpi-track{height:3px;background:var(--g200);border-radius:2px;overflow:hidden}
 .tgt-kpi-fill{height:100%;border-radius:2px;transition:width .4s}
+/* Ring KPI cards */
+.tgt-kpi-ring{padding:22px 16px 18px;border-right:1px solid var(--g200);display:flex;flex-direction:column;align-items:center}
+.tgt-kpi-ring:last-child{border-right:none}
+.tgt-kpi-ring-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:14px;text-align:center}
+/* Breathing room overrides */
+.tgt-ace-card{margin:20px 24px 0;padding:16px 18px}
+.tgt-ace-text{font-size:13px;line-height:1.65}
+.tgt-tab-bar{margin-top:16px}
+.tgt-tab{padding:13px 22px;font-size:12px}
+.tgt-q-inner{padding:18px 22px;gap:14px}
+.tgt-q-co{font-size:15px}
+.tgt-q-contact{font-size:12px;margin-top:4px}
+.tgt-q-reason{font-size:12px;margin-top:8px}
+.tgt-q-pills{margin-top:10px;gap:7px}
+.tgt-q-actions{padding:18px 20px 18px 0;gap:7px}
+.tgt-act-btn{padding:8px 15px;font-size:12px}
+.tgt-empty-state{padding:70px 40px;font-size:14px}
+.tgt-rep-card{padding:16px 18px}
+.tgt-rep-card-header{gap:10px;margin-bottom:12px}
+.tgt-rep-card-name{font-size:13px}
+.tgt-rep-ring{padding:10px 12px}
+.tgt-rep-ring-top{margin-bottom:5px}
+.tgt-rep-ring-num{font-size:18px}
+.tgt-panel-section{padding:22px 20px}
+.tgt-search-wrap{padding:14px 22px}
+.tgt-search-input{padding:10px 12px 10px 36px;font-size:13px}
 .tgt-ace-card{margin:16px 20px 0;padding:14px 16px;background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.2);border-radius:10px;flex-shrink:0}
 .tgt-ace-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:3px}
 .tgt-ace-text{font-size:13px;color:var(--g600);line-height:1.6}
@@ -4720,27 +4746,67 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <!-- ── SM VIEW ── -->
   <div id="tgt-sm-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
 
-    <!-- SM KPI strip -->
-    <div class="tgt-kpi-strip" id="sm-kpi-strip" style="grid-template-columns:repeat(4,1fr)">
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Reps on track</div>
-        <div class="tgt-kpi-val"><span id="sm-kpi-on-track">6</span> <span style="font-size:12px;color:var(--g400)">/ 10</span></div>
-        <div class="tgt-kpi-track"><div id="sm-kpi-on-bar" class="tgt-kpi-fill" style="width:60%;background:var(--teal)"></div></div>
+    <!-- SM KPI rings -->
+    <div id="sm-kpi-strip" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0">
+      <div class="tgt-kpi-ring">
+        <div class="tgt-kpi-ring-label">Reps on track</div>
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
+          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
+            <circle id="sm-kpi-on-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--teal)" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="95.50400000000002"
+              style="transition:stroke-dashoffset .5s ease"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span id="sm-kpi-on-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">60%</span>
+          </div>
+        </div>
+        <div id="sm-kpi-on-track-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
       </div>
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Team calls today</div>
-        <div class="tgt-kpi-val"><span id="sm-kpi-calls">0</span> <span id="sm-kpi-calls-goal" style="font-size:12px;color:var(--g400)">/ 0</span></div>
-        <div class="tgt-kpi-track"><div id="sm-kpi-calls-bar" class="tgt-kpi-fill" style="width:0%;background:var(--teal)"></div></div>
+      <div class="tgt-kpi-ring">
+        <div class="tgt-kpi-ring-label">Team calls today</div>
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
+          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
+            <circle id="sm-kpi-calls-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--teal)" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
+              style="transition:stroke-dashoffset .5s ease"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span id="sm-kpi-calls-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
+          </div>
+        </div>
+        <div id="sm-kpi-calls-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
       </div>
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Team emails today</div>
-        <div class="tgt-kpi-val"><span id="sm-kpi-emails">0</span> <span id="sm-kpi-emails-goal" style="font-size:12px;color:var(--g400)">/ 0</span></div>
-        <div class="tgt-kpi-track"><div id="sm-kpi-emails-bar" class="tgt-kpi-fill" style="width:0%;background:#5b8fe8"></div></div>
+      <div class="tgt-kpi-ring">
+        <div class="tgt-kpi-ring-label">Team emails today</div>
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
+          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
+            <circle id="sm-kpi-emails-ring" cx="48" cy="48" r="38" fill="none" stroke="#5b8fe8" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
+              style="transition:stroke-dashoffset .5s ease"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span id="sm-kpi-emails-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
+          </div>
+        </div>
+        <div id="sm-kpi-emails-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
       </div>
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Overdue accounts</div>
-        <div class="tgt-kpi-val"><span id="sm-kpi-overdue" style="color:var(--red)">0</span> <span style="font-size:12px;color:var(--g400)">accounts</span></div>
-        <div class="tgt-kpi-track"><div id="sm-kpi-overdue-bar" class="tgt-kpi-fill" style="width:100%;background:var(--red);opacity:.3"></div></div>
+      <div class="tgt-kpi-ring">
+        <div class="tgt-kpi-ring-label">Overdue accounts</div>
+        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
+          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
+            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
+            <circle id="sm-kpi-overdue-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--red)" stroke-width="7"
+              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
+              style="transition:stroke-dashoffset .5s ease"/>
+          </svg>
+          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
+            <span id="sm-kpi-overdue-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
+          </div>
+        </div>
+        <div id="sm-kpi-overdue-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
       </div>
     </div>
 
@@ -10856,6 +10922,11 @@ function openTargetsModal() {
     if (smView) smView.style.display = 'flex';
     if (srView) srView.style.display = 'none';
     if (addBtn) addBtn.style.display = 'none';
+    // reset SM queue tab to 'queue' each time modal opens
+    _tgtSMQueueTab = 'queue';
+    _tgtSRQueueTab = 'queue';
+    document.querySelectorAll('.tgt-tab').forEach(function(t){ t.classList.remove('active'); });
+    var qt = document.getElementById('sm-tab-queue'); if(qt) qt.classList.add('active');
     setTimeout(_tgtRenderSM, 60);
   } else {
     if (smView) smView.style.display = 'none';
@@ -10912,34 +10983,44 @@ function _tgtSelectSMRep(repId, chipEl) {
 
 function _tgtUpdateSMKPIs() {
   var totalCalls = 0, totalCallGoal = 0, totalEmails = 0, totalEmailGoal = 0, onTrack = 0;
+  var totalReps = 0;
   TGT_REPS.forEach(function(r) {
     var d = TARGETS_DATA[r.id]; if (!d) return;
+    totalReps++;
     var g = _tgtGoalFor(r.id);
-    totalCalls    += d.callsToday;
-    totalCallGoal += g.callGoal;
-    totalEmails   += d.emailsToday;
+    totalCalls     += d.callsToday;
+    totalCallGoal  += g.callGoal;
+    totalEmails    += d.emailsToday;
     totalEmailGoal += g.emailGoal;
-    var cp = g.callGoal > 0 ? d.callsToday / g.callGoal : 0;
+    var cp = g.callGoal  > 0 ? d.callsToday  / g.callGoal  : 0;
     var ep = g.emailGoal > 0 ? d.emailsToday / g.emailGoal : 0;
     if ((cp + ep) / 2 >= 0.4) onTrack++;
   });
-  var allAccs   = allTargetAccounts();
-  var overdue   = allAccs.filter(function(a){ return a.lastInt > 60; }).length;
-  var totalReps = TGT_REPS.filter(function(r){ return !!TARGETS_DATA[r.id]; }).length;
+  var allAccs = allTargetAccounts();
+  var overdue = allAccs.filter(function(a){ return a.lastInt > 60; }).length;
+  var CIRC = 238.76;
 
-  function setEl(id, v){ var e=document.getElementById(id); if(e) e.textContent=v; }
-  function setW(id, pct){ var e=document.getElementById(id); if(e) e.style.width=Math.min(pct,100)+'%'; }
-  setEl('sm-kpi-on-track', onTrack);
-  document.querySelector('#sm-kpi-strip .tgt-kpi:first-child .tgt-kpi-val').innerHTML =
-    '<span id="sm-kpi-on-track">' + onTrack + '</span> <span style="font-size:12px;color:var(--g400)">/ ' + totalReps + '</span>';
-  setW('sm-kpi-on-bar', totalReps > 0 ? onTrack/totalReps*100 : 0);
-  setEl('sm-kpi-calls', totalCalls);
-  document.getElementById('sm-kpi-calls-goal').textContent = '/ ' + totalCallGoal;
-  setW('sm-kpi-calls-bar', totalCallGoal > 0 ? totalCalls/totalCallGoal*100 : 0);
-  setEl('sm-kpi-emails', totalEmails);
-  document.getElementById('sm-kpi-emails-goal').textContent = '/ ' + totalEmailGoal;
-  setW('sm-kpi-emails-bar', totalEmailGoal > 0 ? totalEmails/totalEmailGoal*100 : 0);
-  setEl('sm-kpi-overdue', overdue);
+  function setRing(fillId, pctId, subId, pct, subText) {
+    pct = Math.min(Math.round(pct), 100);
+    var fill = document.getElementById(fillId);
+    var pctEl = document.getElementById(pctId);
+    var subEl = document.getElementById(subId);
+    if (fill)  fill.setAttribute('stroke-dashoffset', CIRC - CIRC * pct / 100);
+    if (pctEl) pctEl.textContent = pct + '%';
+    if (subEl) subEl.textContent = subText;
+  }
+
+  var onPct       = totalReps > 0       ? onTrack / totalReps * 100        : 0;
+  var callPct     = totalCallGoal > 0   ? totalCalls / totalCallGoal * 100  : 0;
+  var emailPct    = totalEmailGoal > 0  ? totalEmails / totalEmailGoal * 100: 0;
+  // For overdue: % of total accounts that are overdue (inverted — lower is better)
+  var totalAccs   = allAccs.length || 1;
+  var overduePct  = overdue / totalAccs * 100;
+
+  setRing('sm-kpi-on-ring',      'sm-kpi-on-pct',      'sm-kpi-on-track-sub', onPct,      onTrack + ' / ' + totalReps + ' reps');
+  setRing('sm-kpi-calls-ring',   'sm-kpi-calls-pct',   'sm-kpi-calls-sub',    callPct,    totalCalls + ' / ' + totalCallGoal + ' calls');
+  setRing('sm-kpi-emails-ring',  'sm-kpi-emails-pct',  'sm-kpi-emails-sub',   emailPct,   totalEmails + ' / ' + totalEmailGoal + ' emails');
+  setRing('sm-kpi-overdue-ring', 'sm-kpi-overdue-pct', 'sm-kpi-overdue-sub',  overduePct, overdue + ' accounts');
 }
 
 function _tgtUpdateSMGoalPanel() {
