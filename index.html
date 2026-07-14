@@ -3908,49 +3908,174 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
 <!-- SM Forecasting (company-wide) -->
 <div id="forecast-sm-view">
-<div class="page-header"><div class="page-title">Forecasting</div><div class="page-subtitle">Company-wide pipeline projections and revenue outlook</div></div>
-<div class="stat-row" style="margin-bottom:18px">
-  <div class="stat-card"><div class="stat-label">Forecast EOY</div><div class="stat-value teal">$16.2M</div><div class="stat-delta" style="color:var(--amber)">84% to annual goal</div></div>
-  <div class="stat-card"><div class="stat-label">Annual Goal</div><div class="stat-value">$19.35M</div><div class="stat-delta" style="color:var(--g400)">Gap: $3.15M</div></div>
-  <div class="stat-card"><div class="stat-label">Pipeline Value</div><div class="stat-value">$8.7M</div><div class="stat-delta positive">▲ Active opportunities</div></div>
-  <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value">58%</div><div class="stat-delta" style="color:var(--g400)">Team average</div></div>
-  <div class="stat-card"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$42K</div><div class="stat-delta positive">▲ $4.2K vs last mo</div></div>
-</div>
-<div class="card" style="margin-bottom:18px">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-    <div class="card-title" style="margin-bottom:0">Company Revenue Forecast vs Goal</div>
-    <div style="display:flex;gap:16px;flex-wrap:wrap">
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:18px;height:3px;background:var(--teal);border-radius:2px"></div>Actual</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:18px;height:0;border-top:2px dashed #1d9e75"></div>Projected</div>
-      <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:18px;height:0;border-top:2px dashed #94a3b8"></div>Annual Goal</div>
-      <div style="font-size:12px;color:var(--g400)">EOY: <strong style="color:var(--teal)">$16.2M</strong></div>
+
+<!-- Full-page two-column layout: left 2/3 content, right 1/3 Ace panel -->
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:0;min-height:calc(100vh - var(--topbar))">
+
+  <!-- LEFT: scrollable main content -->
+  <div style="overflow-y:auto;padding:24px 20px 32px 24px;border-right:1px solid var(--g200)">
+
+    <!-- Header row -->
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-bottom:20px">
+      <div>
+        <div class="page-title" style="margin-bottom:4px">Forecast</div>
+        <div class="page-subtitle">Company revenue outlook from closed wins and probability-weighted pipeline.</div>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <select class="tgt-filter-select" style="font-size:12px;padding:6px 28px 6px 10px">
+          <option>Year to Date</option>
+          <option>This Quarter</option>
+          <option>This Month</option>
+          <option>Last Year</option>
+        </select>
+        <select id="fc-rep-filter" class="tgt-filter-select" style="font-size:12px;padding:6px 28px 6px 10px">
+          <option value="all">All Reps</option>
+          <option value="BW">Brock Wilson</option>
+          <option value="RH">Russ Holt</option>
+          <option value="JR">Jules Richards</option>
+          <option value="AP">Aya Pedrad</option>
+          <option value="MK">Marcus Kim</option>
+          <option value="LT">Lisa Torres</option>
+          <option value="DS">Doug Silverness</option>
+          <option value="NP">Nathan Price</option>
+        </select>
+        <select class="tgt-filter-select" style="font-size:12px;padding:6px 28px 6px 10px">
+          <option>All Pipelines</option>
+          <option>Sales Pipeline</option>
+          <option>Renewals</option>
+          <option>Enterprise</option>
+        </select>
+      </div>
     </div>
-  </div>
-  <canvas id="fc-canvas" style="width:100%;display:block;border-radius:10px;min-height:200px"></canvas>
-</div>
-<div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
-  <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 18px;display:flex;align-items:center;justify-content:space-between">
-    <div style="font-size:13px;font-weight:700;color:var(--dark)">Forecast by Rep</div>
-    <button onclick="showToast('Exporting forecast...')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">↓ Export</button>
-  </div>
-  <table style="width:100%;border-collapse:collapse;font-size:13px">
-    <thead><tr style="background:var(--g50)">
-      <th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th>
-      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Revenue YTD</th>
-      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Pipeline</th>
-      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Forecast EOY</th>
-      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Goal</th>
-      <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">% to Goal</th>
-    </tr></thead>
-    <tbody>
-      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover">Brock Wilson</div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$953K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$321K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--teal)">$2.07M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--teal)">103%</span></td></tr>
-      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/women/44.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover">Aya Pedrad</div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$1.04M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$410K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--teal)">$2.26M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--teal)">113%</span></td></tr>
-      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/71.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover">Russ Holt</div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$810K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$280K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--amber)">$1.76M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--amber)">88%</span></td></tr>
-      <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/women/15.jpg" style="width:24px;height:24px;border-radius:50%;object-fit:cover">Jules Richards</div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$620K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$195K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--red)">$1.35M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--red)">67%</span></td></tr>
-      <tr><td style="padding:10px 16px;color:var(--g400);font-size:12px" colspan="6">+ 4 more reps <button onclick="showToast('Showing all reps')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">View all →</button></td></tr>
-    </tbody>
-  </table>
-</div>
+
+    <!-- KPI stat cards -->
+    <div class="stat-row" style="margin-bottom:18px">
+      <div class="stat-card"><div class="stat-label">Forecast EOY</div><div class="stat-value teal">$16.2M</div><div class="stat-delta" style="color:var(--amber)">84% to annual goal</div></div>
+      <div class="stat-card"><div class="stat-label">Annual Goal</div><div class="stat-value">$19.35M</div><div class="stat-delta" style="color:var(--g400)">Gap: $3.15M</div></div>
+      <div class="stat-card"><div class="stat-label">Pipeline Value</div><div class="stat-value">$8.7M</div><div class="stat-delta positive">22 active opportunities</div></div>
+      <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value">58%</div><div class="stat-delta" style="color:var(--g400)">Team average</div></div>
+      <div class="stat-card"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$42K</div><div class="stat-delta positive">Weighted $38.5K</div></div>
+    </div>
+
+    <!-- Chart card -->
+    <div class="card" style="margin-bottom:18px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:8px">
+        <div>
+          <div class="card-title" style="margin-bottom:2px">Company revenue forecast vs goal</div>
+          <div style="font-size:12px;color:var(--g400)">Actual closed revenue with projected path to year end.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:10px;height:10px;border-radius:50%;background:var(--teal)"></div>Actual</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:10px;height:10px;border-radius:50%;background:#1d9e75"></div>Projected</div>
+          <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--g500)"><div style="width:10px;height:10px;border-radius:50%;background:#94a3b8"></div>Annual Goal</div>
+          <div style="text-align:right">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400)">Projected EOY</div>
+            <div style="font-size:14px;font-weight:800;color:var(--teal);font-family:var(--mono)">$16,200,000</div>
+          </div>
+        </div>
+      </div>
+      <canvas id="fc-canvas" style="width:100%;display:block;border-radius:10px;min-height:220px"></canvas>
+    </div>
+
+    <!-- Forecast by rep table -->
+    <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden;margin-bottom:18px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 18px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Forecast by rep</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:2px">EOY forecast = revenue YTD + probability-weighted open pipeline.</div>
+        </div>
+        <button onclick="showToast('Exporting forecast...')" style="background:var(--white);border:1px solid var(--g200);color:var(--dark);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);padding:6px 14px;border-radius:8px">Export</button>
+      </div>
+      <table style="width:100%;border-collapse:collapse;font-size:13px">
+        <thead><tr style="background:var(--g50)">
+          <th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th>
+          <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Revenue YTD</th>
+          <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Pipeline</th>
+          <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Forecast EOY</th>
+          <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Goal</th>
+          <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">% to Goal</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/54.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div><div style="font-weight:600;font-size:13px">Brock Wilson</div><div style="font-size:11px;color:var(--g400)">Senior Financial Advisor</div></div></div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$1.64M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$321K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--teal)">$1.87M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.0M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--teal)">94%</span></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/women/68.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div><div style="font-weight:600;font-size:13px">Aya Pedrad</div><div style="font-size:11px;color:var(--g400)">Senior Financial Advisor</div></div></div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$1.37M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$410K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--teal)">$1.65M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$1.75M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--teal)">94%</span></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/women/29.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div><div style="font-weight:600;font-size:13px">Lisa Torres</div><div style="font-size:11px;color:var(--g400)">Associate Advisor</div></div></div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$1.14M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$215K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--teal)">$1.30M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$1.3M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--teal)">100%</span></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/32.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div><div style="font-weight:600;font-size:13px">Russ Holt</div><div style="font-size:11px;color:var(--g400)">Financial Advisor</div></div></div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$1.26M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$280K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--amber)">$1.44M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$1.7M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--amber)">85%</span></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/17.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div><div style="font-weight:600;font-size:13px">Marcus Kim</div><div style="font-size:11px;color:var(--g400)">Financial Advisor</div></div></div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$868K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$245K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--amber)">$1.00M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$1.4M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--amber)">72%</span></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/women/44.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div><div style="font-weight:600;font-size:13px">Jules Richards</div><div style="font-size:11px;color:var(--g400)">Financial Advisor</div></div></div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$826K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$195K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--red)">$930K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$1.4M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--red)">66%</span></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/82.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div><div style="font-weight:600;font-size:13px">Doug Silverness</div><div style="font-size:11px;color:var(--g400)">Associate Advisor</div></div></div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$903K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$310K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--red)">$1.03M</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$2.1M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--red)">49%</span></td></tr>
+          <tr><td style="padding:10px 16px"><div style="display:flex;align-items:center;gap:8px"><img src="https://randomuser.me/api/portraits/men/61.jpg" style="width:28px;height:28px;border-radius:50%;object-fit:cover"><div><div style="font-weight:600;font-size:13px">Nathan Price</div><div style="font-size:11px;color:var(--g400)">Financial Advisor</div></div></div></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:600">$658K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--teal)">$180K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);font-weight:700;color:var(--red)">$737K</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--g500)">$1.4M</td><td style="padding:10px 16px;text-align:right"><span style="font-size:12px;font-weight:700;color:var(--red)">53%</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div><!-- end left content -->
+
+  <!-- RIGHT: sticky Ace Forecast panel, full height -->
+  <div style="position:sticky;top:0;height:calc(100vh - var(--topbar));display:flex;flex-direction:column;background:var(--white)">
+
+    <!-- Panel header -->
+    <div style="padding:16px 18px 14px;border-bottom:1px solid var(--g200);background:linear-gradient(135deg,rgba(29,158,117,.06) 0%,rgba(91,143,232,.06) 100%);flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,var(--teal),#5b8fe8);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--dark)">Ace Forecast</div>
+          <div style="font-size:11px;color:var(--g400)">AI-powered revenue insights</div>
+        </div>
+        <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
+          <div style="width:6px;height:6px;border-radius:50%;background:#22c55e"></div>
+          <span style="font-size:11px;color:var(--g400)">Live</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Context pill -->
+    <div style="padding:10px 16px;border-bottom:1px solid var(--g200);background:rgba(29,158,117,.04);flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
+        <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400)">Context:</span>
+        <span style="font-size:11px;background:rgba(29,158,117,.1);color:var(--teal);border-radius:4px;padding:2px 8px;font-weight:600">Year to Date</span>
+        <span style="font-size:11px;background:rgba(29,158,117,.1);color:var(--teal);border-radius:4px;padding:2px 8px;font-weight:600">All Reps</span>
+        <span style="font-size:11px;background:rgba(29,158,117,.1);color:var(--teal);border-radius:4px;padding:2px 8px;font-weight:600">All Pipelines</span>
+      </div>
+    </div>
+
+    <!-- Chat messages area -->
+    <div id="fc-ace-messages" style="flex:1;overflow-y:auto;padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+      <div style="display:flex;gap:10px;align-items:flex-start">
+        <div style="width:24px;height:24px;border-radius:7px;background:linear-gradient(135deg,var(--teal),#5b8fe8);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+        </div>
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px 12px 12px 3px;padding:12px 14px;font-size:12.5px;color:var(--dark);line-height:1.6;max-width:100%">
+          I've analyzed your team's forecast data. At current pace you're projected to hit <strong style="color:var(--amber)">$16.2M</strong> — a <strong style="color:var(--red)">$3.15M gap</strong> to your $19.35M annual goal.<br><br>
+          Ask me anything about your pipeline, rep performance, or scenario planning.
+        </div>
+      </div>
+    </div>
+
+    <!-- Suggestion chips -->
+    <div style="padding:10px 16px;border-top:1px solid var(--g200);display:flex;flex-wrap:wrap;gap:6px;flex-shrink:0">
+      <button onclick="_fcAceAsk('What\'s the fastest path to close the $3.15M gap?')" class="ace-suggest-chip" style="font-size:11px;padding:4px 10px">Close the gap</button>
+      <button onclick="_fcAceAsk('Which reps are most at risk of missing quota?')" class="ace-suggest-chip" style="font-size:11px;padding:4px 10px">At-risk reps</button>
+      <button onclick="_fcAceAsk('What if win rate improves to 65%?')" class="ace-suggest-chip" style="font-size:11px;padding:4px 10px">Win rate scenario</button>
+      <button onclick="_fcAceAsk('Summarize Q3 pipeline health')" class="ace-suggest-chip" style="font-size:11px;padding:4px 10px">Q3 pipeline</button>
+    </div>
+
+    <!-- Input row -->
+    <div style="padding:12px 16px 14px;border-top:1px solid var(--g200);display:flex;gap:8px;flex-shrink:0">
+      <input id="fc-ace-input" type="text" placeholder="Ask about your forecast…"
+        style="flex:1;padding:8px 14px;border:1.5px solid var(--g200);border-radius:10px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;transition:.15s"
+        onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'"
+        onkeydown="if(event.key==='Enter'&&this.value.trim())_fcAceAsk(this.value.trim())">
+      <button onclick="_fcAceAsk(document.getElementById('fc-ace-input').value.trim())"
+        style="width:36px;height:36px;border-radius:10px;background:var(--teal);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+      </button>
+    </div>
+
+  </div><!-- end right Ace panel -->
+
+</div><!-- end two-column grid -->
 </div><!-- end forecast-sm-view -->
 
 <!-- SR Forecasting — personal only -->
@@ -12284,6 +12409,54 @@ window.addEventListener('resize', function() {
   setTimeout(drawForecastChart, 100);
   setTimeout(drawForecastSRChart, 100);
 });
+
+// ── Ace Forecast Chat ─────────────────────────────────────────────
+var _FC_ACE_RESPONSES = {
+  'close the gap': '<strong style="color:var(--dark)">Three levers to close the $3.15M gap:</strong><br><br>1. <strong>Lift Doug & Jules win rate</strong> to team average (58%) → +$1.1M projected<br>2. <strong>Reduce stall time</strong> on deals 30+ days idle → +$420K from reactivation<br>3. <strong>Add 8 qualified opportunities</strong> across Aya & Brock\'s pipeline → +$650K weighted<br><br><span style="color:var(--g400);font-size:11px">Best case: $19.3M. Probability: ~38% given current pace.</span>',
+  'at-risk reps': '<strong>Two reps need immediate attention:</strong><br><br>🔴 <strong>Doug Silverness</strong> — 49% to goal, lowest win rate (42%). Pipeline thin at $310K with only 5 months left.<br>🔴 <strong>Nathan Price</strong> — 53% to goal. Call volume is 65% below target, pipeline at $180K.<br><br>🟡 <strong>Jules Richards</strong> — 66% to goal. Win rate recovering but proposal volume is low.<br><br><span style="color:var(--g400);font-size:11px">Coaching focus: deal qualification and proposal cadence.</span>',
+  'win rate scenario': '<strong>Win rate sensitivity analysis:</strong><br><br><table style="width:100%;font-size:11px;border-collapse:collapse;margin:6px 0"><tr style="color:var(--g400)"><td style="padding:3px 0">Scenario</td><td style="padding:3px 0;text-align:right">EOY</td><td style="padding:3px 0;text-align:right">vs Goal</td></tr><tr><td style="padding:3px 0">Current (58%)</td><td style="padding:3px 0;text-align:right;font-family:var(--mono)">$16.2M</td><td style="padding:3px 0;text-align:right;color:var(--red);font-family:var(--mono)">-$3.15M</td></tr><tr><td style="padding:3px 0">+5% → 63%</td><td style="padding:3px 0;text-align:right;font-family:var(--mono)">$17.4M</td><td style="padding:3px 0;text-align:right;color:var(--amber);font-family:var(--mono)">-$1.95M</td></tr><tr><td style="padding:3px 0">+7% → 65%</td><td style="padding:3px 0;text-align:right;font-family:var(--mono)">$18.1M</td><td style="padding:3px 0;text-align:right;color:var(--amber);font-family:var(--mono)">-$1.25M</td></tr><tr style="font-weight:700"><td style="padding:3px 0">+10% → 68%</td><td style="padding:3px 0;text-align:right;font-family:var(--mono);color:var(--teal)">$19.5M</td><td style="padding:3px 0;text-align:right;color:var(--teal);font-family:var(--mono)">+$150K</td></tr></table><span style="color:var(--g400);font-size:11px">A 10% win rate lift across the team closes the gap entirely.</span>',
+  'q3 pipeline': '<strong>Q3 Pipeline Health:</strong><br><br>Active opportunities: <strong>22</strong> | Total value: <strong>$8.7M</strong><br>Weighted (probability-adj): <strong>$5.05M</strong><br><br>🟢 <strong>Strong:</strong> Brock ($321K), Aya ($410K), Lisa ($215K)<br>🟡 <strong>Moderate:</strong> Russ ($280K), Marcus K ($245K)<br>🔴 <strong>Thin:</strong> Jules ($195K), Doug ($310K — but low close rate), Nathan ($180K)<br><br><span style="color:var(--g400);font-size:11px">7 deals stalled 30+ days. Recommend pipeline review this week.</span>',
+  'default': 'I\'m analyzing your team\'s current pipeline and performance data. Based on what I see, the key focus areas are <strong>win rate improvement</strong> for at-risk reps and <strong>pipeline velocity</strong> on stalled deals. Want me to dig deeper into any specific rep or scenario?'
+};
+
+function _fcAceAsk(query) {
+  if (!query) return;
+  var input = document.getElementById('fc-ace-input');
+  if (input) input.value = '';
+  var msgs = document.getElementById('fc-ace-messages');
+  if (!msgs) return;
+
+  // User bubble
+  var userBubble = document.createElement('div');
+  userBubble.style.cssText = 'display:flex;justify-content:flex-end';
+  userBubble.innerHTML = '<div style="background:var(--teal);color:#fff;border-radius:12px 12px 3px 12px;padding:8px 12px;font-size:12px;line-height:1.5;max-width:85%">' + query.replace(/</g,'&lt;') + '</div>';
+  msgs.appendChild(userBubble);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Typing indicator
+  var typing = document.createElement('div');
+  typing.style.cssText = 'display:flex;gap:8px;align-items:flex-start';
+  typing.innerHTML = '<div style="width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--teal),#5b8fe8);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px 12px 12px 3px;padding:10px 14px;font-size:12px;color:var(--g400)">Analyzing forecast data…</div>';
+  msgs.appendChild(typing);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Find response
+  var ql = query.toLowerCase();
+  var resp = _FC_ACE_RESPONSES['default'];
+  if (ql.includes('gap') || ql.includes('close')) resp = _FC_ACE_RESPONSES['close the gap'];
+  else if (ql.includes('risk') || ql.includes('miss') || ql.includes('behind')) resp = _FC_ACE_RESPONSES['at-risk reps'];
+  else if (ql.includes('win rate') || ql.includes('scenario') || ql.includes('65') || ql.includes('68')) resp = _FC_ACE_RESPONSES['win rate scenario'];
+  else if (ql.includes('q3') || ql.includes('pipeline') || ql.includes('quarter')) resp = _FC_ACE_RESPONSES['q3 pipeline'];
+
+  setTimeout(function() {
+    msgs.removeChild(typing);
+    var aceBubble = document.createElement('div');
+    aceBubble.style.cssText = 'display:flex;gap:8px;align-items:flex-start';
+    aceBubble.innerHTML = '<div style="width:22px;height:22px;border-radius:6px;background:linear-gradient(135deg,var(--teal),#5b8fe8);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div><div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px 12px 12px 3px;padding:10px 12px;font-size:12px;color:var(--dark);line-height:1.6;max-width:100%">' + resp + '</div>';
+    msgs.appendChild(aceBubble);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 900);
+}
 
 // ── Kanban Drag-and-Drop ─────────────────────────────────────────
 (function initKanbanDnD() {
