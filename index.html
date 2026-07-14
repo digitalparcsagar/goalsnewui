@@ -1316,6 +1316,151 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .ec-track-label{font-size:12px;font-weight:500;color:#4a5568}
 .ec-track-hint{font-size:10px;color:#8796a5}
 
+/* ── TODAY'S TARGETS REDESIGN ───────────────────────────────────────────────── */
+.tgt-header{background:var(--navy);padding:0 24px;height:54px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.07)}
+.tgt-header-left{display:flex;align-items:center;gap:14px}
+.tgt-back{width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,0.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.65);transition:.15s;flex-shrink:0}
+.tgt-back:hover{background:rgba(255,255,255,0.15)}
+.tgt-title-block .tgt-title{font-size:14px;font-weight:700;color:#fff;letter-spacing:-.2px}
+.tgt-title-block .tgt-date{font-size:11px;color:rgba(255,255,255,0.45);margin-top:1px}
+.tgt-view-toggle{display:flex;border:1.5px solid rgba(255,255,255,0.15);border-radius:7px;overflow:hidden}
+.tgt-view-btn{padding:5px 13px;font-size:11px;font-weight:600;background:transparent;color:rgba(255,255,255,0.5);border:none;cursor:pointer;font-family:var(--font);transition:.15s}
+.tgt-view-btn+.tgt-view-btn{border-left:1.5px solid rgba(255,255,255,0.15)}
+.tgt-view-btn.active{background:var(--teal);color:#fff}
+.tgt-add-btn{display:flex;align-items:center;gap:6px;padding:6px 14px;background:var(--teal);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);transition:.15s}
+.tgt-add-btn:hover{background:var(--teal2)}
+.tgt-body{display:grid;grid-template-columns:1fr 272px;flex:1;overflow:hidden}
+.tgt-left{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--g200)}
+.tgt-right{display:flex;flex-direction:column;overflow-y:auto;background:var(--g50)}
+.tgt-kpi-strip{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0}
+.tgt-kpi{padding:20px 24px;border-right:1px solid var(--g200)}
+.tgt-kpi:last-child{border-right:none}
+.tgt-kpi-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:8px}
+.tgt-kpi-val{font-size:28px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1;margin-bottom:8px}
+.tgt-kpi-val span{font-size:12px;color:var(--g400);font-weight:400}
+.tgt-kpi-track{height:3px;background:var(--g200);border-radius:2px;overflow:hidden}
+.tgt-kpi-fill{height:100%;border-radius:2px;transition:width .4s}
+.tgt-ace-card{margin:16px 20px 0;padding:14px 16px;background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.2);border-radius:10px;flex-shrink:0}
+.tgt-ace-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--teal);margin-bottom:3px}
+.tgt-ace-text{font-size:13px;color:var(--g600);line-height:1.6}
+.tgt-tab-bar{display:flex;border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0;margin-top:14px}
+.tgt-tab{padding:11px 20px;font-size:12px;font-weight:500;color:var(--g400);cursor:pointer;border-bottom:2px solid transparent;transition:.15s;white-space:nowrap}
+.tgt-tab:hover{color:var(--dark)}
+.tgt-tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:600}
+.tgt-queue{flex:1;overflow-y:auto}
+.tgt-queue-item{display:flex;align-items:flex-start;border-bottom:1px solid var(--g100);transition:background .1s}
+.tgt-queue-item:hover{background:var(--g50)}
+.tgt-queue-item.done-item{opacity:.5}
+.tgt-priority-bar{width:4px;flex-shrink:0;align-self:stretch}
+.tgt-q-inner{display:flex;align-items:flex-start;gap:12px;padding:16px 20px;flex:1;min-width:0}
+.tgt-q-num{width:22px;height:22px;border-radius:50%;background:var(--g100);border:1px solid var(--g200);font-size:10px;font-weight:600;color:var(--g400);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
+.tgt-q-main{flex:1;min-width:0}
+.tgt-q-co{font-size:14px;font-weight:600;color:var(--dark)}
+.tgt-q-contact{font-size:12px;color:var(--g400);margin-top:3px}
+.tgt-q-reason{font-size:12px;margin-top:6px}
+.tgt-q-pills{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
+.tgt-pill{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px}
+.tgt-pill-red{background:rgba(239,68,68,.1);color:var(--red)}
+.tgt-pill-amber{background:rgba(245,158,11,.1);color:#d97706}
+.tgt-pill-teal{background:rgba(29,158,117,.1);color:var(--teal)}
+.tgt-pill-gray{background:var(--g100);color:var(--g600);border:1px solid var(--g200)}
+.tgt-pill-done{background:rgba(34,197,94,.1);color:#16a34a}
+.tgt-q-actions{display:flex;flex-direction:column;gap:5px;flex-shrink:0;padding:16px 18px 16px 0}
+.tgt-act-btn{padding:7px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:var(--font);border:1.5px solid var(--g200);background:var(--white);color:var(--g700);transition:.12s}
+.tgt-act-btn:hover{border-color:var(--teal);color:var(--teal)}
+.tgt-act-btn.tgt-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.tgt-act-btn.tgt-primary:hover{background:var(--teal2)}
+.tgt-act-btn.tgt-email{background:rgba(91,143,232,.08);color:#2563eb;border-color:rgba(91,143,232,.3)}
+.tgt-act-btn.tgt-email:hover{background:rgba(91,143,232,.18)}
+.tgt-empty-state{padding:60px 40px;text-align:center;color:var(--g400);font-size:13px;line-height:1.6}
+.tgt-panel-section{padding:20px;border-bottom:1px solid var(--g200)}
+.tgt-panel-section:last-child{border-bottom:none}
+.tgt-panel-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.tgt-panel-edit{font-size:11px;font-weight:500;color:var(--teal);cursor:pointer;text-transform:none;letter-spacing:0;border:none;background:none;font-family:var(--font)}
+.tgt-goal-rings{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.tgt-ring-card{background:var(--white);border:1px solid var(--g200);border-radius:10px;padding:14px 12px;text-align:center}
+.tgt-ring-num{font-size:26px;font-weight:700;font-family:var(--mono);line-height:1}
+.tgt-ring-of{font-size:11px;color:var(--g400);margin-top:1px}
+.tgt-ring-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--g400);margin-top:4px}
+.tgt-ring-track{height:3px;background:var(--g200);border-radius:2px;overflow:hidden;margin-top:5px}
+.tgt-goal-setter{background:var(--white);border:1px solid var(--g200);border-radius:9px;padding:12px}
+.tgt-gs-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:9px}
+.tgt-gs-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:7px}
+.tgt-gs-row:last-child{margin-bottom:0}
+.tgt-gs-label{font-size:12px;color:var(--g600)}
+.tgt-gs-input{width:56px;padding:4px 8px;border:1.5px solid var(--g200);border-radius:6px;font-size:13px;font-weight:700;text-align:center;background:var(--white);color:var(--dark);font-family:var(--mono);outline:none;transition:.15s}
+.tgt-gs-input:focus{border-color:var(--teal)}
+.tgt-rep-row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--g100);cursor:pointer;transition:.1s}
+.tgt-rep-row:hover{opacity:.8}
+.tgt-rep-row:last-child{border-bottom:none}
+.tgt-rep-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.tgt-rep-info{flex:1;min-width:0}
+.tgt-rep-name{font-size:12px;font-weight:500;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tgt-rep-bars{display:flex;gap:3px;margin-top:3px}
+.tgt-rep-bar-wrap{flex:1;height:3px;background:var(--g200);border-radius:2px;overflow:hidden}
+.tgt-rep-bar-fill{height:100%;border-radius:2px;transition:width .3s}
+.tgt-rep-status{font-size:10px;font-weight:700;flex-shrink:0}
+.tgt-search-wrap{position:relative;padding:12px 20px;background:var(--white);border-bottom:1px solid var(--g200);flex-shrink:0}
+.tgt-search-icon{position:absolute;left:26px;top:50%;transform:translateY(-50%);pointer-events:none;color:var(--g400)}
+.tgt-search-input{width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px 9px 34px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s}
+.tgt-search-input:focus{border-color:var(--teal)}
+.tgt-rep-selector{display:flex;gap:8px;padding:12px 20px;background:var(--white);border-bottom:1px solid var(--g200);overflow-x:auto;flex-shrink:0;scrollbar-width:none}
+.tgt-rep-selector::-webkit-scrollbar{display:none}
+.tgt-rep-chip{display:flex;align-items:center;gap:5px;padding:4px 10px 4px 5px;border-radius:20px;border:1.5px solid var(--g200);background:var(--white);cursor:pointer;font-size:11px;font-weight:500;color:var(--g600);font-family:var(--font);white-space:nowrap;transition:.12s;flex-shrink:0}
+.tgt-rep-chip:hover{border-color:var(--teal);color:var(--teal)}
+.tgt-rep-chip.active{border-color:var(--teal);background:rgba(29,158,117,.08);color:var(--teal)}
+.tgt-rep-chip img{width:20px;height:20px;border-radius:50%;object-fit:cover}
+body.dark-mode .tgt-goal-setter{background:var(--white)!important}
+body.dark-mode .tgt-ring-card{background:var(--white)!important}
+body.dark-mode .tgt-gs-input{background:var(--g50)!important;color:var(--dark)!important}
+body.dark-mode .tgt-rep-chip{background:var(--g50)!important}
+body.dark-mode .tgt-act-btn{background:var(--g50)!important;color:var(--dark)!important}
+
+/* Inline rep goal editor */
+.tgt-rep-row{cursor:default!important;opacity:1!important;flex-wrap:wrap;align-items:center}
+.tgt-rep-row-main{display:flex;align-items:center;gap:10px;width:100%;padding:12px 0}
+.tgt-rep-edit-btn{margin-left:auto;flex-shrink:0;border:none;background:none;cursor:pointer;color:var(--g300);padding:3px 5px;border-radius:5px;transition:.12s;font-size:12px;display:flex;align-items:center}
+.tgt-rep-edit-btn:hover{color:var(--teal);background:rgba(29,158,117,.08)}
+.tgt-rep-inline-editor{width:100%;padding:12px 14px 14px;background:var(--g50);border-radius:10px;margin-bottom:8px;border:1px solid var(--g200);display:none}
+.tgt-rep-inline-editor.open{display:block}
+.tgt-rie-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:7px}
+.tgt-rie-fields{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.tgt-rie-field{display:flex;align-items:center;gap:5px}
+.tgt-rie-label{font-size:11px;color:var(--g600)}
+.tgt-rie-input{width:52px;padding:4px 6px;border:1.5px solid var(--g200);border-radius:6px;font-size:13px;font-weight:700;text-align:center;background:var(--white);color:var(--dark);font-family:var(--mono);outline:none;transition:.15s}
+.tgt-rie-input:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(29,158,117,.12)}
+.tgt-rie-save{padding:4px 12px;border-radius:6px;background:var(--teal);color:#fff;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);transition:.12s}
+.tgt-rie-save:hover{background:var(--teal2)}
+.tgt-rie-cancel{padding:4px 10px;border-radius:6px;background:none;color:var(--g400);border:1px solid var(--g200);font-size:11px;cursor:pointer;font-family:var(--font)}
+.tgt-goal-count{font-size:10px;color:var(--g400);font-family:var(--mono)}
+body.dark-mode .tgt-rep-inline-editor{background:var(--g100)!important}
+/* Assign targets modal */
+.tgt-assign-open-btn{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:7px;background:var(--teal);color:#fff;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font);transition:.12s}
+.tgt-assign-open-btn:hover{background:var(--teal2)}
+.tgt-assign-tab{padding:10px 16px;font-size:12px;font-weight:500;color:var(--g400);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:.15s}
+.tgt-assign-tab:hover{color:var(--dark)}
+.tgt-assign-tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:600}
+#tgt-assign-modal table tr:hover td{background:var(--g50)}
+#tgt-assign-modal table tr.selected td{background:rgba(29,158,117,.05)}
+/* Rep card rings */
+.tgt-rep-card{padding:12px 14px;border-bottom:1px solid var(--g100)}
+.tgt-rep-card:last-child{border-bottom:none}
+.tgt-rep-card-header{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+.tgt-rep-card-name{flex:1;font-size:13px;font-weight:600;color:var(--dark)}
+.tgt-rep-card-assign{font-size:10px;font-weight:600;color:var(--teal);background:rgba(29,158,117,.08);border:1px solid rgba(29,158,117,.2);border-radius:5px;padding:2px 7px;cursor:pointer;white-space:nowrap;font-family:var(--font)}
+.tgt-rep-card-assign:hover{background:rgba(29,158,117,.16)}
+.tgt-rep-ring-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.tgt-rep-ring{background:var(--g50);border-radius:8px;padding:8px 10px;border:1px solid var(--g100)}
+.tgt-rep-ring-top{display:flex;align-items:baseline;gap:4px;margin-bottom:4px}
+.tgt-rep-ring-num{font-size:17px;font-weight:700;font-family:var(--mono);line-height:1}
+.tgt-rep-ring-denom{font-size:10px;color:var(--g400)}
+.tgt-rep-ring-pct{margin-left:auto;font-size:10px;font-weight:700;font-family:var(--mono)}
+.tgt-rep-ring-label{font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--g400);margin-bottom:3px}
+.tgt-rep-ring-bar{height:3px;background:var(--g200);border-radius:2px;overflow:hidden}
+.tgt-rep-ring-fill{height:100%;border-radius:2px;transition:width .4s}
+
+body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!important}
+
 </style>
 </head>
 <body>
@@ -4506,176 +4651,282 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
   </div>
 </div>
 
-<!-- TODAY'S TARGETS MODAL -->
+<!-- TODAY'S TARGETS REDESIGN -->
 <div id="targets-overlay" style="position:fixed;inset:0;z-index:2200;background:var(--off);display:none;flex-direction:column;overflow:hidden">
 
-  <!-- HEADER: navy bar with back + title + date + action -->
-  <div style="background:var(--navy);padding:0 24px;height:58px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,0.07)">
-    <div style="display:flex;align-items:center;gap:14px">
-      <button onclick="closeTargets()" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.7);flex-shrink:0;transition:.15s" onmouseover="this.style.background='rgba(255,255,255,0.14)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg></button>
-      <div style="width:1px;height:22px;background:rgba(255,255,255,0.12)"></div>
-      <div>
-        <div style="font-size:15px;font-weight:700;color:#fff;letter-spacing:-0.2px">Today's Targets</div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px" id="targets-date">June 29, 2026</div>
+  <!-- HEADER -->
+  <div class="tgt-header">
+    <div class="tgt-header-left">
+      <button class="tgt-back" onclick="closeTargets()" aria-label="Close targets">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div style="width:1px;height:20px;background:rgba(255,255,255,0.12)"></div>
+      <div class="tgt-title-block">
+        <div class="tgt-title">Today's Targets</div>
+        <div class="tgt-date" id="targets-date"></div>
       </div>
     </div>
     <div style="display:flex;align-items:center;gap:10px">
-      <!-- view toggle -->
-      <div style="display:flex;gap:0;border:1.5px solid rgba(255,255,255,0.15);border-radius:8px;overflow:hidden">
-        <button id="tgt-btn-today" onclick="switchTargetView('today',this)" style="padding:6px 14px;font-size:11px;font-weight:600;background:var(--teal);color:#fff;border:none;cursor:pointer;font-family:var(--font)">Today</button>
-        <button id="tgt-btn-past" onclick="switchTargetView('past',this)" style="padding:6px 14px;font-size:11px;font-weight:600;background:transparent;color:rgba(255,255,255,0.55);border:none;cursor:pointer;border-left:1.5px solid rgba(255,255,255,0.15);font-family:var(--font)">Past</button>
+      <div class="tgt-view-toggle">
+        <button id="tgt-btn-today" class="tgt-view-btn active" onclick="switchTargetView('today',this)">Today</button>
+        <button id="tgt-btn-past"  class="tgt-view-btn"        onclick="switchTargetView('past',this)">Past</button>
       </div>
-      <button id="tgt-add-btn" onclick="openModal('lead-modal')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Target</button>
-      <button onclick="closeTargets()" style="width:32px;height:32px;border-radius:8px;background:rgba(255,255,255,0.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-size:18px;line-height:1;font-family:var(--font)" title="Close">×</button>
+      <button id="tgt-add-btn" class="tgt-add-btn" onclick="openModal('lead-modal')">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        Add targets
+      </button>
+      <button onclick="closeTargets()" style="width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,0.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-size:18px;line-height:1;font-family:var(--font)" title="Close"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
   </div>
 
   <!-- ── SM VIEW ── -->
-  <div id="tgt-sm-content" style="display:flex;flex:1;flex-direction:column;overflow:hidden">
+  <div id="tgt-sm-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
 
     <!-- SM KPI strip -->
-    <div style="background:#fff;border-bottom:1px solid #e4e9f0;display:flex;flex-shrink:0">
-      <div style="flex:1;padding:16px 24px;border-right:1px solid #e4e9f0">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8796a5;margin-bottom:8px">Reps On Track</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="sm-kpi-on-track" style="font-size:28px;font-weight:800;color:#1d9e75;font-family:var(--mono);line-height:1">6</span>
-          <span style="font-size:13px;color:#8796a5;font-family:var(--mono)">/ 10 reps</span>
-        </div>
-        <div style="height:4px;background:#eef1f6;border-radius:2px;overflow:hidden"><div style="width:60%;height:100%;background:#1d9e75;border-radius:2px"></div></div>
+    <div class="tgt-kpi-strip" id="sm-kpi-strip" style="grid-template-columns:repeat(4,1fr)">
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Reps on track</div>
+        <div class="tgt-kpi-val"><span id="sm-kpi-on-track">6</span> <span style="font-size:12px;color:var(--g400)">/ 10</span></div>
+        <div class="tgt-kpi-track"><div id="sm-kpi-on-bar" class="tgt-kpi-fill" style="width:60%;background:var(--teal)"></div></div>
       </div>
-      <div style="flex:1;padding:16px 24px;border-right:1px solid #e4e9f0">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8796a5;margin-bottom:8px">Team Calls Today</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="sm-kpi-calls" style="font-size:28px;font-weight:800;color:#1d9e75;font-family:var(--mono);line-height:1">23</span>
-          <span style="font-size:13px;color:#8796a5;font-family:var(--mono)">/ 379</span>
-        </div>
-        <div style="height:4px;background:#eef1f6;border-radius:2px;overflow:hidden"><div style="width:6%;height:100%;background:#1d9e75;border-radius:2px"></div></div>
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Team calls today</div>
+        <div class="tgt-kpi-val"><span id="sm-kpi-calls">0</span> <span id="sm-kpi-calls-goal" style="font-size:12px;color:var(--g400)">/ 0</span></div>
+        <div class="tgt-kpi-track"><div id="sm-kpi-calls-bar" class="tgt-kpi-fill" style="width:0%;background:var(--teal)"></div></div>
       </div>
-      <div style="flex:1;padding:16px 24px;border-right:1px solid #e4e9f0">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8796a5;margin-bottom:8px">Team Emails Today</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="sm-kpi-emails" style="font-size:28px;font-weight:800;color:#5b8fe8;font-family:var(--mono);line-height:1">12</span>
-          <span style="font-size:13px;color:#8796a5;font-family:var(--mono)">/ 379</span>
-        </div>
-        <div style="height:4px;background:#eef1f6;border-radius:2px;overflow:hidden"><div style="width:3%;height:100%;background:#5b8fe8;border-radius:2px"></div></div>
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Team emails today</div>
+        <div class="tgt-kpi-val"><span id="sm-kpi-emails">0</span> <span id="sm-kpi-emails-goal" style="font-size:12px;color:var(--g400)">/ 0</span></div>
+        <div class="tgt-kpi-track"><div id="sm-kpi-emails-bar" class="tgt-kpi-fill" style="width:0%;background:#5b8fe8"></div></div>
       </div>
-      <div style="flex:1;padding:16px 24px">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:#8796a5;margin-bottom:8px">Overdue Accounts</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="sm-kpi-overdue" style="font-size:28px;font-weight:800;color:#ef4444;font-family:var(--mono);line-height:1">6</span>
-          <span style="font-size:13px;color:#8796a5;font-family:var(--mono)">accounts</span>
-        </div>
-        <div style="height:4px;background:#eef1f6;border-radius:2px;overflow:hidden"><div style="width:100%;height:100%;background:#ef4444;border-radius:2px;opacity:0.3"></div></div>
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Overdue accounts</div>
+        <div class="tgt-kpi-val"><span id="sm-kpi-overdue" style="color:var(--red)">0</span> <span style="font-size:12px;color:var(--g400)">accounts</span></div>
+        <div class="tgt-kpi-track"><div id="sm-kpi-overdue-bar" class="tgt-kpi-fill" style="width:100%;background:var(--red);opacity:.3"></div></div>
       </div>
     </div>
 
-    <!-- SM scrollable body -->
-    <div style="flex:1;overflow-y:auto;background:#f5f7fa;padding:24px 28px">
-
-      <!-- Rep Activity Grid -->
-      <div style="margin-bottom:28px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div style="font-size:13px;font-weight:700;color:#1a2332;letter-spacing:-0.1px">Rep Activity Today</div>
-          <div style="font-size:11px;color:#8796a5">Daily call &amp; email progress vs. goal</div>
+    <!-- SM Body: two-column -->
+    <div class="tgt-body">
+      <!-- LEFT: rep selector + queue -->
+      <div class="tgt-left">
+        <!-- Rep filter: handled via team list on right -->
+        <div id="sm-rep-selector" style="display:none"></div>
+        <!-- ACE insight -->
+        <div class="tgt-ace-card" id="sm-ace-card">
+          <div class="tgt-ace-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-2px;margin-right:4px"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>ACE recommendation</div>
+          <div class="tgt-ace-text" id="sm-ace-text">Loading insights...</div>
         </div>
-        <div id="sm-rep-grid" style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px">
-          <!-- populated by renderSMTargets() -->
+        <!-- Tabs -->
+        <div class="tgt-tab-bar">
+          <div class="tgt-tab active" id="sm-tab-queue"     onclick="switchSMQueueTab('queue',this)">Queue (<span id="sm-queue-count">0</span>)</div>
+          <div class="tgt-tab"        id="sm-tab-completed" onclick="switchSMQueueTab('completed',this)">Completed (<span id="sm-done-count">0</span>)</div>
+          <div class="tgt-tab"        id="sm-tab-attention" onclick="switchSMQueueTab('attention',this)">Needs attention (<span id="sm-attn-count">0</span>)</div>
         </div>
+        <!-- Queue list -->
+        <div class="tgt-queue" id="sm-queue-list"></div>
       </div>
 
-      <!-- Accounts Needing Attention -->
-      <div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
-          <div style="font-size:13px;font-weight:700;color:#1a2332;letter-spacing:-0.1px">Accounts Needing Attention</div>
-          <div style="font-size:11px;color:#8796a5">Overdue &amp; due-soon across your team</div>
+      <!-- RIGHT: SM team cards with rings + goal editing -->
+      <div class="tgt-right" style="width:300px;min-width:260px">
+        <div style="padding:14px 16px 10px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+          <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400)">Team Today</span>
+          <button class="tgt-assign-open-btn" onclick="openAssignTargets(null)" title="Assign accounts to a rep">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            Assign targets
+          </button>
         </div>
-        <div style="background:#fff;border:1.5px solid #dde3ec;border-radius:12px;overflow:hidden">
-          <table style="width:100%;border-collapse:collapse">
-            <thead>
-              <tr style="background:#eef1f6;border-bottom:1.5px solid #dde3ec">
-                <th style="padding:10px 16px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Account</th>
-                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Contact</th>
-                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Assigned Rep</th>
-                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Last Contact</th>
-                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:left">Stage</th>
-                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:center">Urgency</th>
-                <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:#8796a5;text-align:center">Action</th>
-              </tr>
-            </thead>
-            <tbody id="sm-overdue-tbody">
-              <!-- populated by renderSMTargets() -->
-            </tbody>
-          </table>
-        </div>
+        <div id="sm-team-list" style="flex:1;overflow-y:auto;padding:6px 0"></div>
       </div>
-
     </div>
   </div><!-- end tgt-sm-content -->
 
   <!-- ── SR VIEW ── -->
   <div id="tgt-sr-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
     <!-- SR KPI strip -->
-    <div style="background:var(--white);border-bottom:1px solid var(--g200);display:flex;flex-shrink:0">
-      <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Today — Calls</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="tgt-calls-label" style="font-size:28px;font-weight:800;color:var(--teal);font-family:var(--mono);line-height:1">1</span>
-          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
-        </div>
-        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-calls-bar" style="width:3%;height:100%;background:var(--teal);border-radius:2px;transition:width 0.4s"></div></div>
+    <div class="tgt-kpi-strip">
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Calls today</div>
+        <div class="tgt-kpi-val"><span id="tgt-calls-label">0</span> <span id="tgt-calls-goal-lbl">/ 5</span></div>
+        <div class="tgt-kpi-track"><div id="tgt-calls-bar" class="tgt-kpi-fill" style="width:0%;background:var(--teal)"></div></div>
       </div>
-      <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Today — Emails</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="tgt-emails-label" style="font-size:28px;font-weight:800;color:#5b8fe8;font-family:var(--mono);line-height:1">0</span>
-          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 40</span>
-        </div>
-        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div id="tgt-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width 0.4s"></div></div>
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Emails today</div>
+        <div class="tgt-kpi-val"><span id="tgt-emails-label">0</span> <span id="tgt-emails-goal-lbl">/ 3</span></div>
+        <div class="tgt-kpi-track"><div id="tgt-emails-bar" class="tgt-kpi-fill" style="width:0%;background:#5b8fe8"></div></div>
       </div>
-      <div style="flex:1;padding:16px 24px;border-right:1px solid var(--g200)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Month — Calls</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="tgt-mo-calls" style="font-size:28px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">62</span>
-          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
-        </div>
-        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:2.6%;height:100%;background:var(--teal);border-radius:2px"></div></div>
-      </div>
-      <div style="flex:1;padding:16px 24px">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:6px">Month — Emails</div>
-        <div style="display:flex;align-items:baseline;gap:6px;margin-bottom:8px">
-          <span id="tgt-mo-emails" style="font-size:28px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">0</span>
-          <span style="font-size:13px;color:var(--g400);font-family:var(--mono)">/ 2,400</span>
-        </div>
-        <div style="height:4px;background:var(--g100);border-radius:2px;overflow:hidden"><div style="width:0%;height:100%;background:#5b8fe8;border-radius:2px"></div></div>
+      <div class="tgt-kpi">
+        <div class="tgt-kpi-label">Queue completed</div>
+        <div class="tgt-kpi-val"><span id="tgt-done-label">0</span> <span id="tgt-done-of-lbl">/ 0</span></div>
+        <div class="tgt-kpi-track"><div id="tgt-done-bar" class="tgt-kpi-fill" style="width:0%;background:#8b5cf6"></div></div>
       </div>
     </div>
-    <!-- SR Toolbar -->
-    <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:12px 24px;display:flex;align-items:center;gap:10px;flex-shrink:0">
-      <div style="position:relative;flex:1;max-width:260px">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="1.8" style="position:absolute;left:10px;top:50%;transform:translateY(-50%)" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input id="tgt-search" type="text" placeholder="Search accounts..." oninput="filterTargets()" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:7px 10px 7px 32px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;box-sizing:border-box">
+
+    <!-- SR two-column body -->
+    <div class="tgt-body">
+      <!-- LEFT: ace + tabs + queue -->
+      <div class="tgt-left">
+        <!-- ACE insight -->
+        <div class="tgt-ace-card" id="sr-ace-card">
+          <div class="tgt-ace-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-2px;margin-right:4px"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>ACE recommendation</div>
+          <div class="tgt-ace-text" id="sr-ace-text">Loading your queue...</div>
+        </div>
+        <!-- search -->
+        <div class="tgt-search-wrap">
+          <svg class="tgt-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="tgt-search" class="tgt-search-input" type="text" placeholder="Search accounts..." oninput="filterTargets()">
+        </div>
+        <!-- Tabs -->
+        <div class="tgt-tab-bar">
+          <div class="tgt-tab active" id="sr-tab-queue"     onclick="switchSRQueueTab('queue',this)">Queue (<span id="sr-queue-count">0</span>)</div>
+          <div class="tgt-tab"        id="sr-tab-done"      onclick="switchSRQueueTab('done',this)">Completed (<span id="sr-done-count">0</span>)</div>
+          <div class="tgt-tab"        id="sr-tab-skipped"   onclick="switchSRQueueTab('skipped',this)">Skipped (<span id="sr-skip-count">0</span>)</div>
+        </div>
+        <!-- Queue list -->
+        <div class="tgt-queue" id="tgt-tbody"></div>
       </div>
-    </div>
-    <!-- SR Table -->
-    <div style="flex:1;overflow-y:auto">
-      <table id="tgt-table" style="width:100%;border-collapse:collapse">
-        <thead style="position:sticky;top:0;z-index:2">
-          <tr style="background:var(--g50);border-bottom:2px solid var(--g200)">
-            <th style="padding:10px 20px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Account</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Contact</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Pipeline Stage</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:left">Last Interaction</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Status</th>
-            <th style="padding:10px 14px;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);text-align:center">Action</th>
-          </tr>
-        </thead>
-        <tbody id="tgt-tbody">
-          <!-- populated by JS -->
-        </tbody>
-      </table>
+
+      <!-- RIGHT: SR daily goals + log activity -->
+      <div class="tgt-right">
+        <!-- Rep identity -->
+        <div style="padding:14px 16px 12px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <img id="sr-panel-photo" src="" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0">
+          <div>
+            <div id="sr-panel-name" style="font-size:13px;font-weight:700;color:var(--dark)"></div>
+            <div style="font-size:11px;color:var(--g400)">Sales Rep</div>
+          </div>
+        </div>
+        <!-- Daily goal rings -->
+        <div class="tgt-panel-section">
+          <div class="tgt-panel-title">Today's goals</div>
+          <div class="tgt-goal-rings">
+            <div class="tgt-ring-card">
+              <div class="tgt-ring-num" id="sr-ring-calls" style="color:var(--teal)">0</div>
+              <div class="tgt-ring-of" id="sr-ring-calls-of">of 5 calls</div>
+              <div class="tgt-ring-track"><div id="sr-ring-calls-bar" style="width:0%;height:100%;background:var(--teal);border-radius:2px;transition:width .4s"></div></div>
+              <div class="tgt-ring-label">Calls</div>
+            </div>
+            <div class="tgt-ring-card">
+              <div class="tgt-ring-num" id="sr-ring-emails" style="color:#5b8fe8">0</div>
+              <div class="tgt-ring-of" id="sr-ring-emails-of">of 3 emails</div>
+              <div class="tgt-ring-track"><div id="sr-ring-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width .4s"></div></div>
+              <div class="tgt-ring-label">Emails</div>
+            </div>
+          </div>
+        </div>
+        <!-- Log activity -->
+        <div class="tgt-panel-section">
+          <div class="tgt-panel-title">Log activity</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div>
+              <label style="font-size:11px;font-weight:600;color:var(--g500);display:block;margin-bottom:4px">Account</label>
+              <select id="sr-log-account" style="width:100%;padding:7px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none">
+                <option value="">— select account —</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:11px;font-weight:600;color:var(--g500);display:block;margin-bottom:4px">Notes (optional)</label>
+              <textarea id="sr-log-notes" rows="2" placeholder="Quick note..." style="width:100%;padding:7px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;resize:none;box-sizing:border-box;line-height:1.5"></textarea>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+              <button class="tgt-act-btn tgt-primary" onclick="_tgtLogActivityPanel('call')" style="display:flex;align-items:center;justify-content:center;gap:6px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                Log Call
+              </button>
+              <button class="tgt-act-btn tgt-email" onclick="_tgtLogActivityPanel('email')" style="display:flex;align-items:center;justify-content:center;gap:6px">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Log Email
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- This month -->
+        <div class="tgt-panel-section">
+          <div class="tgt-panel-title">This month</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:12px;color:var(--g600)">Calls</span>
+              <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--dark)" id="tgt-mo-calls">0</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:baseline">
+              <span style="font-size:12px;color:var(--g600)">Emails</span>
+              <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--dark)" id="tgt-mo-emails">0</span>
+            </div>
+          </div>
+        </div>
+        <!-- Legend -->
+        <div class="tgt-panel-section" style="flex:1">
+          <div class="tgt-panel-title">Priority legend</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">Overdue — 60+ days</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--amber);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">Due soon — 30–60 days</span></div>
+            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--teal);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">On track — under 30 days</span></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div><!-- end tgt-sr-content -->
 
+
+  <!-- ── ASSIGN TARGETS MODAL (SM only) ── -->
+  <div id="tgt-assign-modal" style="display:none;position:absolute;inset:0;z-index:300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center">
+    <div style="background:var(--white);border-radius:14px;width:860px;max-width:96vw;max-height:88vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,0.3)">
+      <!-- Header -->
+      <div style="padding:18px 24px 14px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <div style="flex:1;min-width:0">
+          <div style="font-size:16px;font-weight:700;color:var(--dark)">Assign Targets</div>
+          <div style="font-size:12px;color:var(--g400);margin-top:2px">Select accounts to add to a rep's queue for today</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+          <span style="font-size:12px;font-weight:600;color:var(--g600)">Assign to:</span>
+          <select id="tgt-assign-rep" style="padding:6px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:13px;font-weight:600;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;cursor:pointer" onchange="_tgtAssignRepChanged()">
+          </select>
+          <div id="tgt-assign-selected-badge" style="font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;background:var(--g100);color:var(--g500);white-space:nowrap">0 selected</div>
+          <button onclick="closeAssignTargets()" style="width:28px;height:28px;border-radius:7px;background:var(--g100);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--g500);flex-shrink:0">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        </div>
+      </div>
+      <!-- Type tabs -->
+      <div style="display:flex;border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0" id="tgt-assign-tabs">
+        <div class="tgt-assign-tab active" data-stage="all"      onclick="_tgtAssignTab(this,'all')">All</div>
+        <div class="tgt-assign-tab"        data-stage="pipeline" onclick="_tgtAssignTab(this,'pipeline')">Pipeline</div>
+        <div class="tgt-assign-tab"        data-stage="account"  onclick="_tgtAssignTab(this,'account')">Accounts</div>
+        <div class="tgt-assign-tab"        data-stage="people"   onclick="_tgtAssignTab(this,'people')">People</div>
+      </div>
+      <!-- Search -->
+      <div style="padding:10px 16px;border-bottom:1px solid var(--g200);flex-shrink:0;position:relative">
+        <svg style="position:absolute;left:26px;top:50%;transform:translateY(-50%);color:var(--g400)" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input id="tgt-assign-search" type="text" placeholder="Search accounts or contacts..." oninput="_tgtAssignRender()" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:8px 12px 8px 32px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s">
+      </div>
+      <!-- Table -->
+      <div style="flex:1;overflow-y:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead style="position:sticky;top:0;background:var(--g50);z-index:1">
+            <tr>
+              <th style="padding:10px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200);width:36px">
+                <input type="checkbox" id="tgt-assign-select-all" onchange="_tgtAssignSelectAll(this)" style="cursor:pointer">
+              </th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Account</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Contact</th>
+              <th style="padding:10px 12px;text-align:center;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Days Aging</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Last Interaction</th>
+              <th style="padding:10px 12px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Source</th>
+            </tr>
+          </thead>
+          <tbody id="tgt-assign-tbody"></tbody>
+        </table>
+      </div>
+      <!-- Footer -->
+      <div style="padding:14px 24px;border-top:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+        <span id="tgt-assign-footer-note" style="font-size:12px;color:var(--g400)">Select accounts above, then confirm to add to rep's queue.</span>
+        <div style="display:flex;gap:10px">
+          <button onclick="closeAssignTargets()" style="padding:8px 18px;border-radius:8px;border:1.5px solid var(--g200);background:var(--white);font-size:13px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font)">Cancel</button>
+          <button onclick="_tgtConfirmAssign()" style="padding:8px 20px;border-radius:8px;border:none;background:var(--teal);color:#fff;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- end tgt-assign-modal -->
 </div><!-- end targets-overlay -->
 <div id="page-targets" class="page" style="padding:0;display:none"><!-- legacy placeholder --></div>
 <!-- COMPANY SETTINGS PAGE (SM only) -->
@@ -6513,7 +6764,7 @@ function _openTeamGoalEditor() {
   el.innerHTML = '<div style="background:#fff;border-radius:16px;padding:28px 28px 22px;width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.18)">'
     + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">'
     + '<div><div style="font-size:15px;font-weight:700;color:var(--dark)">Team Monthly Goals</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Set activity targets for the whole team</div></div>'
-    + '<button onclick="document.getElementById(\'team-goal-editor\').style.display=\'none\'" style="width:28px;height:28px;border-radius:7px;background:var(--g100);border:none;cursor:pointer;font-size:16px;color:var(--g500)">&#215;</button></div>'
+    + '<button onclick="document.getElementById(\'team-goal-editor\').style.display=\'none\'" style="width:28px;height:28px;border-radius:7px;background:var(--g100);border:none;cursor:pointer;font-size:16px;color:var(--g500)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>'
     + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">'
     + '<div><label style="font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px">Monthly Call Goal</label>'
     + '<input id="team-goal-calls" type="number" value="' + _teamActivityGoals.callGoal + '" min="1" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:15px;font-weight:700;font-family:var(--mono);color:var(--dark);outline:none;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'"></div>'
@@ -6549,7 +6800,7 @@ function _openRepGoalEditor(repId) {
   el.innerHTML = '<div style="background:#fff;border-radius:16px;padding:28px 28px 22px;width:380px;box-shadow:0 20px 60px rgba(0,0,0,0.18)">'
     + '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">'
     + '<div><div style="font-size:15px;font-weight:700;color:var(--dark)">Set Activity Goals</div><div style="font-size:11px;color:var(--g400);margin-top:2px">' + rep.name + '</div></div>'
-    + '<button onclick="document.getElementById(\'rep-goal-editor\').style.display=\'none\'" style="width:28px;height:28px;border-radius:7px;background:var(--g100);border:none;cursor:pointer;font-size:16px;color:var(--g500)">&#215;</button></div>'
+    + '<button onclick="document.getElementById(\'rep-goal-editor\').style.display=\'none\'" style="width:28px;height:28px;border-radius:7px;background:var(--g100);border:none;cursor:pointer;font-size:16px;color:var(--g500)"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button></div>'
     + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">'
     + '<div><label style="font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:0.5px;display:block;margin-bottom:6px">Monthly Call Goal</label>'
     + '<input id="rep-goal-calls" type="number" value="' + cur.callGoal + '" min="1" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:15px;font-weight:700;font-family:var(--mono);color:var(--dark);outline:none;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'"></div>'
@@ -10494,13 +10745,72 @@ function allTargetAccounts() {
   return rows;
 }
 
-let _targetView = 'today';
+// ── TARGETS STATE ─────────────────────────────────────────────────────────────
+var _targetView       = 'today';
+var _tgtActiveRepId   = 'all';   // which rep is selected in SM chip bar
+var _tgtSMQueueTab    = 'queue';
+var _tgtSRQueueTab    = 'queue';
+// Per-account completion state: { 'repId:coName': 'done'|'skipped' }
+var _tgtItemState     = {};
+// SM daily goals per rep (fallback to TARGETS_DATA values)
+var _tgtGoals = {};  // { repId: { callGoal, emailGoal } }
 
+// Rep metadata: photo + colour used across the new UI
+var TGT_REPS = [
+  {id:'BW', name:'Brock Wilson',    photo:'https://randomuser.me/api/portraits/men/54.jpg',   color:'#1d9e75'},
+  {id:'RH', name:'Russ Holt',       photo:'https://randomuser.me/api/portraits/men/71.jpg',   color:'#6366f1'},
+  {id:'JR', name:'Jules Richards',  photo:'https://randomuser.me/api/portraits/women/15.jpg', color:'#ef4444'},
+  {id:'AP', name:'Aya Pedrad',      photo:'https://randomuser.me/api/portraits/women/44.jpg', color:'#f59e0b'},
+  {id:'DS', name:'Doug Silverness', photo:'https://randomuser.me/api/portraits/men/82.jpg',   color:'#8b5cf6'},
+  {id:'MB', name:'Marcus Bradley',  photo:'https://randomuser.me/api/portraits/men/32.jpg',   color:'#0ea5e9'},
+  {id:'EV', name:'Elena Vasquez',   photo:'https://randomuser.me/api/portraits/women/68.jpg', color:'#ec4899'},
+  {id:'AM', name:'Amanda Morrison', photo:'https://randomuser.me/api/portraits/women/33.jpg', color:'#14b8a6'},
+  {id:'DP', name:'Derek Park',      photo:'https://randomuser.me/api/portraits/men/40.jpg',   color:'#f97316'},
+  {id:'PN', name:'Priya Nair',      photo:'https://randomuser.me/api/portraits/women/50.jpg', color:'#a855f7'},
+];
+
+function _tgtGoalFor(repId) {
+  if (_tgtGoals[repId]) return _tgtGoals[repId];
+  var d = TARGETS_DATA[repId];
+  return { callGoal: d ? d.callsGoal : 5, emailGoal: d ? d.emailsGoal : 3 };
+}
+
+function _tgtStateKey(repId, coName) { return repId + ':' + coName; }
+
+function _tgtPriorityColor(lastInt) {
+  if (lastInt > 60) return 'var(--red)';
+  if (lastInt > 30) return 'var(--amber)';
+  return 'var(--teal)';
+}
+function _tgtPriorityLabel(lastInt) {
+  if (lastInt > 60) return '<span class="tgt-pill tgt-pill-red">Overdue</span>';
+  if (lastInt > 30) return '<span class="tgt-pill tgt-pill-amber">Due soon</span>';
+  return '<span class="tgt-pill tgt-pill-teal">On track</span>';
+}
+function _tgtStagePill(stage) {
+  return '<span class="tgt-pill tgt-pill-gray">' + (stage||'') + '</span>';
+}
+function _tgtReasonText(a) {
+  var color = a.lastInt > 60 ? 'var(--red)' : a.lastInt > 30 ? 'var(--amber)' : 'var(--teal)';
+  var txt = a.lastInt === 0 ? 'Contacted today' : a.lastInt === 1 ? '1 day since last contact' : a.lastInt + ' days since last contact';
+  return '<span style="color:' + color + '">' + txt + '</span>';
+}
+function _tgtAceInsight(accounts) {
+  if (!accounts || !accounts.length) return 'No accounts in queue. Add targets to get started.';
+  var sorted = accounts.slice().sort(function(a,b){ return b.lastInt - a.lastInt; });
+  var top = sorted[0];
+  var overdue = accounts.filter(function(a){ return a.lastInt > 60; }).length;
+  var msg = '‘' + top.co + '’ hasn’t been contacted in ' + top.lastInt + ' days — start here.';
+  if (overdue > 1) msg += ' ' + overdue + ' accounts are overdue across your queue.';
+  return msg;
+}
+
+// ── OPEN / CLOSE ──────────────────────────────────────────────────────────────
 function openTargetsModal() {
   var ov = document.getElementById('targets-overlay');
-  if (ov) { ov.style.display = 'flex'; }
+  if (ov) ov.style.display = 'flex';
   var d = document.getElementById('targets-date');
-  if (d) { var now = new Date(); d.textContent = now.toLocaleDateString('en-US',{month:'long',day:'numeric',year:'numeric'}); }
+  if (d) d.textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   var smView = document.getElementById('tgt-sm-content');
   var srView = document.getElementById('tgt-sr-content');
   var addBtn = document.getElementById('tgt-add-btn');
@@ -10508,236 +10818,758 @@ function openTargetsModal() {
     if (smView) smView.style.display = 'flex';
     if (srView) srView.style.display = 'none';
     if (addBtn) addBtn.style.display = 'none';
-    setTimeout(renderSMTargets, 60);
+    setTimeout(_tgtRenderSM, 60);
   } else {
     if (smView) smView.style.display = 'none';
     if (srView) srView.style.display = 'flex';
     if (addBtn) addBtn.style.display = '';
-    setTimeout(function() { loadTargetRep('BW'); }, 60);
+    setTimeout(function(){ loadTargetRep('BW'); }, 60);
   }
 }
+
 function closeTargets() {
   var ov = document.getElementById('targets-overlay');
   if (ov) ov.style.display = 'none';
 }
+
+// ── SM RENDER ─────────────────────────────────────────────────────────────────
+function renderSMTargets() { _tgtRenderSM(); }  // alias for legacy calls
+
+function _tgtRenderSM() {
+  _tgtBuildRepChips();
+  _tgtUpdateSMKPIs();
+  _tgtUpdateSMGoalPanel();
+  _tgtRenderSMQueue();
+  _tgtRenderSMTeamList();
+}
+
+function _tgtBuildRepChips() {
+  var sel = document.getElementById('sm-rep-selector');
+  if (!sel) return;
+  sel.innerHTML = '';
+  // "All" chip
+  var allChip = document.createElement('button');
+  allChip.className = 'tgt-rep-chip' + (_tgtActiveRepId === 'all' ? ' active' : '');
+  allChip.innerHTML = 'All reps';
+  allChip.onclick = function(){ _tgtSelectSMRep('all', this); };
+  sel.appendChild(allChip);
+
+  TGT_REPS.forEach(function(r) {
+    if (!TARGETS_DATA[r.id]) return;
+    var chip = document.createElement('button');
+    chip.className = 'tgt-rep-chip' + (_tgtActiveRepId === r.id ? ' active' : '');
+    chip.innerHTML = '<img src="' + r.photo + '" onerror="this.style.display=\'none\'"> ' + r.name.split(' ')[0];
+    chip.onclick = (function(rid, el){ return function(){ _tgtSelectSMRep(rid, el); }; })(r.id, chip);
+    sel.appendChild(chip);
+  });
+}
+
+function _tgtSelectSMRep(repId, chipEl) {
+  _tgtActiveRepId = repId;
+  document.querySelectorAll('.tgt-rep-chip').forEach(function(c){ c.classList.remove('active'); });
+  if (chipEl) chipEl.classList.add('active');
+  _tgtUpdateSMGoalPanel();
+  _tgtRenderSMQueue();
+}
+
+function _tgtUpdateSMKPIs() {
+  var totalCalls = 0, totalCallGoal = 0, totalEmails = 0, totalEmailGoal = 0, onTrack = 0;
+  TGT_REPS.forEach(function(r) {
+    var d = TARGETS_DATA[r.id]; if (!d) return;
+    var g = _tgtGoalFor(r.id);
+    totalCalls    += d.callsToday;
+    totalCallGoal += g.callGoal;
+    totalEmails   += d.emailsToday;
+    totalEmailGoal += g.emailGoal;
+    var cp = g.callGoal > 0 ? d.callsToday / g.callGoal : 0;
+    var ep = g.emailGoal > 0 ? d.emailsToday / g.emailGoal : 0;
+    if ((cp + ep) / 2 >= 0.4) onTrack++;
+  });
+  var allAccs   = allTargetAccounts();
+  var overdue   = allAccs.filter(function(a){ return a.lastInt > 60; }).length;
+  var totalReps = TGT_REPS.filter(function(r){ return !!TARGETS_DATA[r.id]; }).length;
+
+  function setEl(id, v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  function setW(id, pct){ var e=document.getElementById(id); if(e) e.style.width=Math.min(pct,100)+'%'; }
+  setEl('sm-kpi-on-track', onTrack);
+  document.querySelector('#sm-kpi-strip .tgt-kpi:first-child .tgt-kpi-val').innerHTML =
+    '<span id="sm-kpi-on-track">' + onTrack + '</span> <span style="font-size:12px;color:var(--g400)">/ ' + totalReps + '</span>';
+  setW('sm-kpi-on-bar', totalReps > 0 ? onTrack/totalReps*100 : 0);
+  setEl('sm-kpi-calls', totalCalls);
+  document.getElementById('sm-kpi-calls-goal').textContent = '/ ' + totalCallGoal;
+  setW('sm-kpi-calls-bar', totalCallGoal > 0 ? totalCalls/totalCallGoal*100 : 0);
+  setEl('sm-kpi-emails', totalEmails);
+  document.getElementById('sm-kpi-emails-goal').textContent = '/ ' + totalEmailGoal;
+  setW('sm-kpi-emails-bar', totalEmailGoal > 0 ? totalEmails/totalEmailGoal*100 : 0);
+  setEl('sm-kpi-overdue', overdue);
+}
+
+function _tgtUpdateSMGoalPanel() {
+  var repId  = _tgtActiveRepId;
+  var isAll  = repId === 'all';
+  var label  = isAll ? 'All reps' : (TGT_REPS.find(function(r){ return r.id===repId; })||{name:'Rep'}).name.split(' ')[0];
+  var nameEl = document.getElementById('sm-goal-rep-name');
+  if (nameEl) nameEl.textContent = label;
+
+  var g = isAll ? { callGoal:5, emailGoal:3 } : _tgtGoalFor(repId);
+  var callsInput  = document.getElementById('sm-gs-calls');
+  var emailsInput = document.getElementById('sm-gs-emails');
+  if (callsInput)  callsInput.value  = g.callGoal;
+  if (emailsInput) emailsInput.value = g.emailGoal;
+
+  // Update rings
+  var d    = isAll ? null : TARGETS_DATA[repId];
+  var calls   = d ? d.callsToday   : TGT_REPS.reduce(function(s,r){ return s + ((TARGETS_DATA[r.id]||{callsToday:0}).callsToday);}, 0);
+  var emails  = d ? d.emailsToday  : TGT_REPS.reduce(function(s,r){ return s + ((TARGETS_DATA[r.id]||{emailsToday:0}).emailsToday);}, 0);
+  var cGoal   = isAll ? TGT_REPS.reduce(function(s,r){ var gg=_tgtGoalFor(r.id); return s+gg.callGoal; },0) : g.callGoal;
+  var eGoal   = isAll ? TGT_REPS.reduce(function(s,r){ var gg=_tgtGoalFor(r.id); return s+gg.emailGoal;},0) : g.emailGoal;
+  var cPct    = cGoal > 0 ? Math.round(calls/cGoal*100) : 0;
+  var ePct    = eGoal > 0 ? Math.round(emails/eGoal*100) : 0;
+
+  function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  function setW(id,v) { var e=document.getElementById(id); if(e) e.style.width=Math.min(v,100)+'%'; }
+  setEl('sm-ring-calls', calls);
+  document.getElementById('sm-ring-calls-of').textContent = 'of ' + cGoal + ' calls';
+  setW('sm-ring-calls-bar', cPct);
+  setEl('sm-ring-emails', emails);
+  document.getElementById('sm-ring-emails-of').textContent = 'of ' + eGoal + ' emails';
+  setW('sm-ring-emails-bar', ePct);
+}
+
+function _tgtGoalPreview() { /* handled inline per-rep now */ }
+function _tgtSaveGoals()    { /* handled inline per-rep now */ }
+
+function _tgtRenderSMQueue() {
+  var container = document.getElementById('sm-queue-list');
+  if (!container) return;
+
+  var repId = _tgtActiveRepId;
+  var accs  = repId === 'all' ? allTargetAccounts()
+            : (TARGETS_DATA[repId]||{accounts:[]}).accounts.map(function(a){ return Object.assign({},a,{repId:repId,repName:TARGETS_DATA[repId].name}); });
+
+  // Sort by lastInt descending (most overdue first)
+  accs = accs.slice().sort(function(a,b){ return b.lastInt - a.lastInt; });
+
+  var queue     = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(a.repId,a.co)] !== 'done' && _tgtItemState[_tgtStateKey(a.repId,a.co)] !== 'skipped'; });
+  var done      = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(a.repId,a.co)] === 'done'; });
+  var attention = accs.filter(function(a){ return a.lastInt > 60; });
+
+  // Update tab counts
+  function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  setEl('sm-queue-count', queue.length);
+  setEl('sm-done-count',  done.length);
+  setEl('sm-attn-count',  attention.length);
+
+  // ACE insight
+  var aceEl = document.getElementById('sm-ace-text');
+  if (aceEl) aceEl.textContent = _tgtAceInsight(queue.length ? queue : accs);
+
+  var list = _tgtSMQueueTab === 'queue' ? queue : _tgtSMQueueTab === 'completed' ? done : attention;
+
+  container.innerHTML = '';
+  if (!list.length) {
+    container.innerHTML = '<div class="tgt-empty-state">' +
+      (_tgtSMQueueTab === 'completed' ? 'No completed contacts yet.' :
+       _tgtSMQueueTab === 'attention' ? 'No overdue accounts — great job!' :
+       'Queue is empty. Add targets to get started.') + '</div>';
+    return;
+  }
+
+  list.forEach(function(a, i) {
+    var key      = _tgtStateKey(a.repId, a.co);
+    var state    = _tgtItemState[key] || 'queue';
+    var pColor   = _tgtPriorityColor(a.lastInt);
+    var repMeta  = TGT_REPS.find(function(r){ return r.id===a.repId; }) || {photo:'',name:a.repName,color:'#94a3b8'};
+    var isDone   = state === 'done';
+    var item     = document.createElement('div');
+    item.className = 'tgt-queue-item' + (isDone ? ' done-item' : '');
+
+    var repBadge = repId === 'all'
+      ? '<img src="' + repMeta.photo + '" style="width:18px;height:18px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:4px" onerror="this.style.display=\'none\'">' + repMeta.name.split(' ')[0]
+      : '';
+
+    item.innerHTML =
+      '<div class="tgt-priority-bar" style="background:' + pColor + '"></div>' +
+      '<div class="tgt-q-inner">' +
+        '<div class="tgt-q-num">' + (i+1) + '</div>' +
+        '<div class="tgt-q-main">' +
+          '<div class="tgt-q-co">' + a.co + (repBadge ? '<span style="font-size:10px;font-weight:400;color:var(--g400);margin-left:6px">' + repBadge + '</span>' : '') + '</div>' +
+          '<div class="tgt-q-contact">' + a.contact + (a.phone ? ' &middot; ' + a.phone : '') + '</div>' +
+          '<div class="tgt-q-reason">' + _tgtReasonText(a) + '</div>' +
+          '<div class="tgt-q-pills">' + _tgtPriorityLabel(a.lastInt) + _tgtStagePill(a.stage) + (isDone ? '<span class="tgt-pill tgt-pill-done"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-1px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg>Logged</span>' : '') + '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="tgt-q-actions">' +
+        (isDone
+          ? '<button class="tgt-act-btn" onclick="_tgtUndo(\'' + key + '\')">Undo</button>'
+          : '<button class="tgt-act-btn tgt-primary" onclick="_tgtLogAction(\'' + key + '\',\'call\')">Log call</button>' +
+            '<button class="tgt-act-btn tgt-email" onclick="_tgtLogAction(\'' + key + '\',\'email\')">Log email</button>'
+        ) +
+        '<button class="tgt-act-btn" onclick="_tgtNotifyRep(\'' + (a.repName||a.repId) + '\')" title="Notify rep">Notify</button>' +
+      '</div>';
+
+    container.appendChild(item);
+  });
+}
+
+function _tgtRenderSMTeamList() {
+  var container = document.getElementById('sm-team-list');
+  if (!container) return;
+  container.innerHTML = '';
+  var PENCIL_SVG = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>';
+  TGT_REPS.forEach(function(r) {
+    var d = TARGETS_DATA[r.id]; if (!d) return;
+    var g = _tgtGoalFor(r.id);
+    var cp = g.callGoal  > 0 ? d.callsToday  / g.callGoal  : 0;
+    var ep = g.emailGoal > 0 ? d.emailsToday / g.emailGoal : 0;
+    var cPct = Math.min(Math.round(cp * 100), 100);
+    var ePct = Math.min(Math.round(ep * 100), 100);
+    var cColor = cPct >= 60 ? 'var(--teal)' : cPct >= 25 ? 'var(--amber)' : 'var(--red)';
+    var eColor = ePct >= 60 ? '#5b8fe8'     : ePct >= 25 ? 'var(--amber)' : 'var(--red)';
+
+    var card = document.createElement('div');
+    card.className = 'tgt-rep-card';
+    card.id = 'tgt-row-' + r.id;
+    card.innerHTML =
+      '<div class="tgt-rep-card-header">' +
+        '<img class="tgt-rep-av" src="' + r.photo + '" alt="' + r.name + '" onerror="this.style.display=\'none\'" style="cursor:pointer;width:30px;height:30px" onclick="_tgtSelectSMRep(\'' + r.id + '\',null)">' +
+        '<span class="tgt-rep-card-name" style="cursor:pointer" onclick="_tgtSelectSMRep(\'' + r.id + '\',null)">' + r.name + '</span>' +
+        '<button class="tgt-rep-card-assign" onclick="openAssignTargets(\'' + r.id + '\')">+ Assign</button>' +
+        '<button class="tgt-rep-edit-btn" title="Edit goals" onclick="_tgtToggleInlineEditor(\'' + r.id + '\')">' + PENCIL_SVG + '</button>' +
+      '</div>' +
+      '<div class="tgt-rep-ring-row">' +
+        '<div class="tgt-rep-ring">' +
+          '<div class="tgt-rep-ring-label">Calls</div>' +
+          '<div class="tgt-rep-ring-top">' +
+            '<span class="tgt-rep-ring-num" id="tgt-cb-num-' + r.id + '" style="color:' + cColor + '">' + d.callsToday + '</span>' +
+            '<span class="tgt-rep-ring-denom">/' + g.callGoal + '</span>' +
+            '<span class="tgt-rep-ring-pct" id="tgt-cb-pct-' + r.id + '" style="color:' + cColor + '">' + cPct + '%</span>' +
+          '</div>' +
+          '<div class="tgt-rep-ring-bar"><div class="tgt-rep-ring-fill" id="tgt-cb-' + r.id + '" style="width:' + cPct + '%;background:' + cColor + '"></div></div>' +
+        '</div>' +
+        '<div class="tgt-rep-ring">' +
+          '<div class="tgt-rep-ring-label">Emails</div>' +
+          '<div class="tgt-rep-ring-top">' +
+            '<span class="tgt-rep-ring-num" id="tgt-eb-num-' + r.id + '" style="color:' + eColor + '">' + d.emailsToday + '</span>' +
+            '<span class="tgt-rep-ring-denom">/' + g.emailGoal + '</span>' +
+            '<span class="tgt-rep-ring-pct" id="tgt-eb-pct-' + r.id + '" style="color:' + eColor + '">' + ePct + '%</span>' +
+          '</div>' +
+          '<div class="tgt-rep-ring-bar"><div class="tgt-rep-ring-fill" id="tgt-eb-' + r.id + '" style="width:' + ePct + '%;background:' + eColor + '"></div></div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="tgt-rep-inline-editor" id="tgt-rie-' + r.id + '">' +
+        '<div class="tgt-rie-title">Daily goals for ' + r.name.split(' ')[0] + '</div>' +
+        '<div class="tgt-rie-fields">' +
+          '<div class="tgt-rie-field"><span class="tgt-rie-label">Calls</span>' +
+            '<input class="tgt-rie-input" id="tgt-rie-calls-' + r.id + '" type="number" min="0" max="99" value="' + g.callGoal + '" oninput="_tgtInlinePreview(\'' + r.id + '\')">' +
+          '</div>' +
+          '<div class="tgt-rie-field"><span class="tgt-rie-label">Emails</span>' +
+            '<input class="tgt-rie-input" id="tgt-rie-emails-' + r.id + '" type="number" min="0" max="99" value="' + g.emailGoal + '" oninput="_tgtInlinePreview(\'' + r.id + '\')">' +
+          '</div>' +
+          '<button class="tgt-rie-save" onclick="_tgtInlineSave(\'' + r.id + '\')">Save</button>' +
+          '<button class="tgt-rie-cancel" onclick="_tgtToggleInlineEditor(\'' + r.id + '\')">Cancel</button>' +
+        '</div>' +
+      '</div>';
+    container.appendChild(card);
+  });
+}
+
+function _tgtToggleInlineEditor(repId) {
+  document.querySelectorAll('.tgt-rep-inline-editor.open').forEach(function(el) {
+    if (el.id !== 'tgt-rie-' + repId) el.classList.remove('open');
+  });
+  var editor = document.getElementById('tgt-rie-' + repId);
+  if (!editor) return;
+  if (editor.classList.contains('open')) {
+    editor.classList.remove('open');
+  } else {
+    editor.classList.add('open');
+    var inp = document.getElementById('tgt-rie-calls-' + repId);
+    if (inp) setTimeout(function(){ inp.select(); }, 50);
+  }
+}
+
+function _tgtInlinePreview(repId) {
+  var callsEl  = document.getElementById('tgt-rie-calls-'  + repId);
+  var emailsEl = document.getElementById('tgt-rie-emails-' + repId);
+  if (!callsEl || !emailsEl) return;
+  var d = TARGETS_DATA[repId]; if (!d) return;
+  var cGoal = parseInt(callsEl.value) || 1;
+  var eGoal = parseInt(emailsEl.value) || 1;
+  var cPct = Math.min(Math.round(d.callsToday / cGoal * 100), 100);
+  var ePct = Math.min(Math.round(d.emailsToday / eGoal * 100), 100);
+  var cColor = cPct >= 60 ? 'var(--teal)' : cPct >= 25 ? 'var(--amber)' : 'var(--red)';
+  var eColor = ePct >= 60 ? '#5b8fe8'     : ePct >= 25 ? 'var(--amber)' : 'var(--red)';
+  function se(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  function sw(id,v){ var e=document.getElementById(id); if(e) e.style.width=v+'%'; }
+  function sc(id,c){ var e=document.getElementById(id); if(e) e.style.color=c; }
+  se('tgt-cb-pct-'+repId, cPct+'%'); sc('tgt-cb-pct-'+repId, cColor);
+  se('tgt-eb-pct-'+repId, ePct+'%'); sc('tgt-eb-pct-'+repId, eColor);
+  sw('tgt-cb-'+repId, cPct); var cb=document.getElementById('tgt-cb-'+repId); if(cb) cb.style.background=cColor;
+  sw('tgt-eb-'+repId, ePct); var eb=document.getElementById('tgt-eb-'+repId); if(eb) eb.style.background=eColor;
+  // legacy IDs used by _tgtUpdateSMKPIs
+  var st = document.getElementById('tgt-st-'+repId);
+  if(st){ var lbl=cPct>=60&&ePct>=60?'On track':cPct>=25||ePct>=25?'Behind':'At risk'; st.textContent=lbl; st.style.color=cPct>=60&&ePct>=60?'var(--teal)':cPct>=25||ePct>=25?'var(--amber)':'var(--red)'; }
+}
+
+function _tgtInlineSave(repId) {
+  var callsEl  = document.getElementById('tgt-rie-calls-'  + repId);
+  var emailsEl = document.getElementById('tgt-rie-emails-' + repId);
+  if (!callsEl || !emailsEl) return;
+  var cGoal = parseInt(callsEl.value) || 1;
+  var eGoal = parseInt(emailsEl.value) || 1;
+  _tgtGoals[repId] = { callGoal: cGoal, emailGoal: eGoal };
+  _tgtToggleInlineEditor(repId);
+  _tgtUpdateSMKPIs();
+  var rep = TGT_REPS.find(function(r){ return r.id === repId; });
+  showToast('Goals saved for ' + (rep ? rep.name.split(' ')[0] : repId));
+}
+
+// ── ASSIGN TARGETS ────────────────────────────────────────────────────────────
+var TGT_ACCOUNT_POOL = [
+  // type:'pipeline' — deals needing follow-up
+  {type:'pipeline', co:'Riverside Financial Group',  contact:'Marcus Lee',      phone:'612-441-7823', email:'mlee@riverside.com',    pipeline:'Sales Pipeline',     stage:'Contact Made',           lastInt:5,   source:'Sales Pipeline',   owner:'Brock Wilson'},
+  {type:'pipeline', co:'Apex Holdings LLC',          contact:'Tara Nguyen',     phone:'651-229-3401', email:'tnguyen@apex.com',       pipeline:'Sales Pipeline',     stage:'Contact Made',           lastInt:8,   source:'Sales Pipeline',   owner:'Jules Richards'},
+  {type:'pipeline', co:'Clearview Dental Associates',contact:'Sara Kim',        phone:'612-556-1122', email:'skim@clearview.com',     pipeline:'Sales Pipeline',     stage:'Prospect Registered',    lastInt:1,   source:'Sales Pipeline',   owner:'Russ Holt'},
+  {type:'pipeline', co:'National Health Co.',        contact:'James Whitfield', phone:'612-771-0934', email:'jwhitfield@nathlth.com', pipeline:'Enterprise Pipeline', stage:'Identified',             lastInt:4,   source:'Enterprise Pipeline', owner:'Brock Wilson'},
+  {type:'pipeline', co:'Cascade Financial Group',    contact:'Patricia Olsen',  phone:'612-449-8801', email:'polsen@cascadefin.com',  pipeline:'Enterprise Pipeline', stage:'Executive Meeting',      lastInt:7,   source:'Enterprise Pipeline', owner:'Russ Holt'},
+  {type:'pipeline', co:'Summit Credit Union',        contact:'David Park',      phone:'651-223-0045', email:'dpark@summitcu.com',     pipeline:'Renewal Pipeline',   stage:'Renewal Identified',     lastInt:1,   source:'Renewal Pipeline',  owner:'Brock Wilson'},
+  {type:'pipeline', co:'Harborview Medical Center',  contact:'Angela Ross',     phone:'651-334-6612', email:'aross@harborview.com',   pipeline:'Enterprise Pipeline', stage:'Needs Analysis',         lastInt:4,   source:'Enterprise Pipeline', owner:'Jules Richards'},
+  {type:'pipeline', co:'Pioneer Technology Inc.',    contact:'Ben Torres',      phone:'612-667-2210', email:'btorres@pioneer.com',    pipeline:'Enterprise Pipeline', stage:'Proposal Sent',          lastInt:7,   source:'Enterprise Pipeline', owner:'Brock Wilson'},
+  // type:'account' — companies/organizations
+  {type:'account', co:'Northgate Logistics',  contact:'Karen Yee',      phone:'612-441-9823', email:'kyee@northgate.com',    pipeline:'', stage:'', lastInt:364, source:'Website'},
+  {type:'account', co:'Big Coat Factory',     contact:'Tom Johnson',    phone:'612-556-1122', email:'tjohnson@bigcoat.com',  pipeline:'', stage:'', lastInt:363, source:'Cold Outreach'},
+  {type:'account', co:'Omega Solutions',      contact:'Darren Koch',    phone:'612-338-7712', email:'dkoch@omegasol.com',    pipeline:'', stage:'', lastInt:180, source:'Referral'},
+  {type:'account', co:'Great Lakes Mfg',      contact:'Colleen Brady',  phone:'651-334-6612', email:'cbrady@greatlakes.com', pipeline:'', stage:'', lastInt:120, source:'External API'},
+  {type:'account', co:'Sunrise Health',       contact:'Phil Nguyen',    phone:'612-667-2210', email:'pnguyen@sunrise.com',   pipeline:'', stage:'', lastInt:90,  source:'Website'},
+  {type:'account', co:'Crestview Dental',     contact:'Marcus Webb',    phone:'612-445-3301', email:'mwebb@crestview.com',   pipeline:'', stage:'', lastInt:200, source:'Instantly'},
+  {type:'account', co:'Ironclad Services',    contact:'Brett Solis',    phone:'612-778-3300', email:'bsolis@ironclad.com',   pipeline:'', stage:'', lastInt:90,  source:'Referral'},
+  {type:'account', co:'Blue Ridge Capital',   contact:'Evan Shore',     phone:'612-449-8801', email:'eshore@blueridge.com',  pipeline:'', stage:'', lastInt:60,  source:'External API'},
+  // type:'people' — individual contacts
+  {type:'people', co:'',                      contact:'Robert Hear',    phone:'207-556-9900', email:'rhear@coastofmaine.com',  pipeline:'', stage:'', lastInt:364, source:'Website',       title:'VP Sales'},
+  {type:'people', co:'',                      contact:'Jenny Smith',    phone:'612-887-4411', email:'jsmith@hustlebustle.com', pipeline:'', stage:'', lastInt:357, source:'Instantly',     title:'Owner'},
+  {type:'people', co:'Digital Media Co',      contact:'John Peter',     phone:'651-229-3401', email:'jpeter@digitalmedia.com', pipeline:'', stage:'', lastInt:363, source:'Website',       title:'Director of Marketing'},
+  {type:'people', co:'Pinnacle Group',        contact:'Marcie Owens',   phone:'651-557-2211', email:'mowens@pinnacle.com',     pipeline:'', stage:'', lastInt:45,  source:'Cold Outreach', title:'CFO'},
+  {type:'people', co:'TechForward Inc',       contact:'Nadia Patel',    phone:'651-223-0045', email:'npatel@techfwd.com',      pipeline:'', stage:'', lastInt:30,  source:'Website',       title:'HR Director'},
+  {type:'people', co:'Lakewood Partners',     contact:'Sandra Bloom',   phone:'651-223-7788', email:'sbloom@lakewood.com',     pipeline:'', stage:'', lastInt:60,  source:'Referral',      title:'President'},
+];
+
+var _tgtAssignStageFilter
+
+var _tgtAssignStageFilter = 'all';
+var _tgtAssignSelected    = {};  // { idx: true }
+var _tgtAssignForRepId    = null;
+
+function openAssignTargets(repId) {
+  _tgtAssignSelected = {};
+  _tgtAssignStageFilter = 'all';
+  _tgtAssignForRepId = repId;
+
+  // Populate rep selector
+  var sel = document.getElementById('tgt-assign-rep');
+  if (sel) {
+    sel.innerHTML = '';
+    TGT_REPS.forEach(function(r) {
+      if (!TARGETS_DATA[r.id]) return;
+      var opt = document.createElement('option');
+      opt.value = r.id;
+      opt.textContent = r.name;
+      if (r.id === repId) opt.selected = true;
+      sel.appendChild(opt);
+    });
+  }
+
+  // Reset tabs
+  document.querySelectorAll('.tgt-assign-tab').forEach(function(t){ t.classList.remove('active'); });
+  var allTab = document.querySelector('.tgt-assign-tab[data-stage="all"]');
+  if (allTab) allTab.classList.add('active');
+
+  // Reset search
+  var srch = document.getElementById('tgt-assign-search');
+  if (srch) srch.value = '';
+
+  _tgtAssignRender();
+
+  var modal = document.getElementById('tgt-assign-modal');
+  if (modal) modal.style.display = 'flex';
+}
+
+function closeAssignTargets() {
+  var modal = document.getElementById('tgt-assign-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+function _tgtAssignRepChanged() {
+  var sel = document.getElementById('tgt-assign-rep');
+  if (sel) _tgtAssignForRepId = sel.value;
+}
+
+function _tgtAssignTab(el, stage) {
+  _tgtAssignStageFilter = stage;
+  document.querySelectorAll('.tgt-assign-tab').forEach(function(t){ t.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  _tgtAssignRender();
+}
+
+function _tgtAssignSelectAll(cb) {
+  var rows = document.querySelectorAll('#tgt-assign-tbody tr');
+  rows.forEach(function(row) {
+    var idx = row.getAttribute('data-idx');
+    var box = row.querySelector('input[type=checkbox]');
+    if (cb.checked) { _tgtAssignSelected[idx] = true; if(box) box.checked=true; row.classList.add('selected'); }
+    else            { delete _tgtAssignSelected[idx];  if(box) box.checked=false; row.classList.remove('selected'); }
+  });
+  _tgtAssignUpdateBadge();
+}
+
+function _tgtAssignToggleRow(idx, cb) {
+  if (cb.checked) { _tgtAssignSelected[idx] = true;  }
+  else            { delete _tgtAssignSelected[idx]; }
+  var row = document.querySelector('#tgt-assign-tbody tr[data-idx="' + idx + '"]');
+  if (row) row.classList.toggle('selected', !!cb.checked);
+  _tgtAssignUpdateBadge();
+}
+
+function _tgtAssignUpdateBadge() {
+  var n = Object.keys(_tgtAssignSelected).length;
+  var badge = document.getElementById('tgt-assign-selected-badge');
+  if (badge) {
+    badge.textContent = n + ' selected';
+    badge.style.background = n > 0 ? 'rgba(29,158,117,.12)' : 'var(--g100)';
+    badge.style.color      = n > 0 ? 'var(--teal)'          : 'var(--g500)';
+  }
+  var note = document.getElementById('tgt-assign-footer-note');
+  if (note) note.textContent = n > 0
+    ? n + ' account' + (n > 1 ? 's' : '') + ' will be added to the selected rep\'s queue.'
+    : 'Select accounts above, then confirm to add to rep\'s queue.';
+}
+
+function _tgtAssignRender() {
+  var tbody = document.getElementById('tgt-assign-tbody');
+  if (!tbody) return;
+  var query = (document.getElementById('tgt-assign-search') || {value:''}).value.toLowerCase();
+
+  var filtered = TGT_ACCOUNT_POOL.filter(function(a, i) {
+    a._idx = i;
+    var typeOk = _tgtAssignStageFilter === 'all' || a.type === _tgtAssignStageFilter;
+    var searchOk = !query || (a.co||'').toLowerCase().includes(query) || (a.contact||'').toLowerCase().includes(query);
+    return typeOk && searchOk;
+  });
+
+  tbody.innerHTML = '';
+  if (!filtered.length) {
+    tbody.innerHTML = '<tr><td colspan="6" style="padding:40px;text-align:center;color:var(--g400);font-size:13px">No accounts match</td></tr>';
+    return;
+  }
+
+  filtered.forEach(function(a) {
+    var idx = a._idx;
+    var aging = a.lastInt;
+    var agingColor = aging > 180 ? '#ef4444' : aging > 60 ? '#f59e0b' : 'var(--g600)';
+    var agingBg    = aging > 180 ? 'rgba(239,68,68,.08)' : aging > 60 ? 'rgba(245,158,11,.08)' : 'transparent';
+    var lastTxt    = aging === 0 ? 'Today' : aging === 1 ? '1 day ago' : aging + ' days ago';
+    var lastColor  = aging > 60 ? '#ef4444' : 'var(--g500)';
+    // Sub-label: pipeline name+stage for pipeline type, title for people, blank for account
+    var subLabel = a.type === 'pipeline' ? (a.pipeline + ' · ' + a.stage)
+                 : a.type === 'people'   ? (a.title || '')
+                 : '';
+    var displayCo = a.type === 'people' ? (a.co || '—') : a.co;
+    var tr = document.createElement('tr');
+    tr.setAttribute('data-idx', idx);
+    if (_tgtAssignSelected[idx]) { tr.classList.add('selected'); }
+    tr.style.borderBottom = '1px solid var(--g100)';
+    tr.innerHTML =
+      '<td style="padding:11px 16px"><input type="checkbox" ' + (_tgtAssignSelected[idx]?'checked':'') + ' onchange="_tgtAssignToggleRow(' + idx + ',this)" style="cursor:pointer"></td>' +
+      '<td style="padding:11px 12px;font-weight:600;color:var(--dark)">' + displayCo +
+        (subLabel ? '<div style="font-size:10px;font-weight:500;color:var(--g400);margin-top:1px">' + subLabel + '</div>' : '') + '</td>' +
+      '<td style="padding:11px 12px;color:var(--teal);font-weight:500">' + a.contact + '</td>' +
+      '<td style="padding:11px 12px;text-align:center"><span style="display:inline-block;padding:3px 8px;border-radius:12px;font-size:11px;font-weight:700;font-family:var(--mono);color:' + agingColor + ';background:' + agingBg + '">' + aging + '</span></td>' +
+      '<td style="padding:11px 12px;font-size:12px;color:' + lastColor + '">' + lastTxt + '</td>' +
+      '<td style="padding:11px 12px;font-size:12px;color:var(--g400)">' + (a.source || '—') + '</td>';
+    tbody.appendChild(tr);
+  });
+
+  // update select-all state
+  var allCb = document.getElementById('tgt-assign-select-all');
+  if (allCb) allCb.indeterminate = false;
+}
+
+function _tgtConfirmAssign() {
+  var sel = document.getElementById('tgt-assign-rep');
+  var repId = sel ? sel.value : _tgtAssignForRepId;
+  if (!repId) { showToast('Please select a rep first'); return; }
+  var d = TARGETS_DATA[repId];
+  if (!d) { TARGETS_DATA[repId] = { name:repId, callsToday:0, callsGoal:5, emailsToday:0, emailsGoal:3, moCallsPct:'0%', moCallsVal:0, moEmailsPct:'0%', moEmailsVal:0, accounts:[] }; d = TARGETS_DATA[repId]; }
+
+  var selected = Object.keys(_tgtAssignSelected).map(Number);
+  if (!selected.length) { showToast('Select at least one account'); return; }
+
+  var rep    = TGT_REPS.find(function(r){ return r.id === repId; });
+  var added  = 0;
+  selected.forEach(function(idx) {
+    var a = TGT_ACCOUNT_POOL[idx];
+    if (!a) return;
+    var exists = d.accounts.some(function(x){ return x.co === a.co && x.contact === a.contact; });
+    if (!exists) {
+      d.accounts.push({ co:a.co, contact:a.contact, phone:a.phone, email:a.email, stage:a.stage, date:'Today', lastInt:a.lastInt, status:'Contact' });
+      added++;
+    }
+  });
+
+  closeAssignTargets();
+  _tgtRenderSM();
+  showToast(added + ' account' + (added !== 1 ? 's' : '') + ' assigned to ' + (rep ? rep.name.split(' ')[0] : repId));
+}
+
+function switchSMQueueTab(tab, el) {
+  _tgtSMQueueTab = tab;
+  document.querySelectorAll('.tgt-tab-bar:first-of-type .tgt-tab, #sm-tab-queue, #sm-tab-completed, #sm-tab-attention').forEach(function(t){ t.classList.remove('active'); });
+  if (el) el.classList.add('active');
+  _tgtRenderSMQueue();
+}
+// ── SR RENDER ─────────────────────────────────────────────────────────────────
+function loadTargetRep(repId) {
+  var d = TARGETS_DATA[repId] || TARGETS_DATA.BW;
+  var g = _tgtGoalFor(repId);
+  var rep = TGT_REPS.find(function(r){ return r.id === repId; }) || {};
+
+  // Update KPI strip
+  var cPct = g.callGoal  > 0 ? Math.round(d.callsToday  / g.callGoal  * 100) : 0;
+  var ePct = g.emailGoal > 0 ? Math.round(d.emailsToday / g.emailGoal * 100) : 0;
+
+  // Count done items for this rep
+  var accs = d.accounts.map(function(a){ return Object.assign({},a,{repId:repId}); });
+  var done  = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(repId,a.co)] === 'done'; }).length;
+  var total = accs.length;
+  var dPct  = total > 0 ? Math.round(done/total*100) : 0;
+
+  function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  function setW(id,v) { var e=document.getElementById(id); if(e) e.style.width=Math.min(v,100)+'%'; }
+
+  setEl('tgt-calls-label',  d.callsToday);
+  setEl('tgt-emails-label', d.emailsToday);
+  setEl('tgt-done-label',   done);
+  setEl('tgt-mo-calls',     d.moCallsVal);
+  setEl('tgt-mo-emails',    d.moEmailsVal);
+  var cgl = document.getElementById('tgt-calls-goal-lbl');  if(cgl)  cgl.textContent  = '/ ' + g.callGoal;
+  var egl = document.getElementById('tgt-emails-goal-lbl'); if(egl)  egl.textContent  = '/ ' + g.emailGoal;
+  var dol = document.getElementById('tgt-done-of-lbl');     if(dol)  dol.textContent  = '/ ' + total;
+  setW('tgt-calls-bar',  cPct);
+  setW('tgt-emails-bar', ePct);
+  setW('tgt-done-bar',   dPct);
+
+  // Right panel: rep identity
+  var photo = document.getElementById('sr-panel-photo');
+  if (photo) { photo.src = rep.photo || ''; photo.alt = rep.name || ''; }
+  setEl('sr-panel-name', rep.name || d.name || repId);
+
+  // Right panel rings
+  setEl('sr-ring-calls',  d.callsToday);
+  var cof = document.getElementById('sr-ring-calls-of');  if(cof)  cof.textContent  = 'of ' + g.callGoal  + ' calls';
+  setW('sr-ring-calls-bar',  cPct);
+  setEl('sr-ring-emails', d.emailsToday);
+  var eof = document.getElementById('sr-ring-emails-of'); if(eof)  eof.textContent  = 'of ' + g.emailGoal + ' emails';
+  setW('sr-ring-emails-bar', ePct);
+
+  // Ring colours by pct
+  var cColor = cPct >= 60 ? 'var(--teal)' : cPct >= 25 ? 'var(--amber)' : 'var(--red)';
+  var eColor = ePct >= 60 ? '#5b8fe8'     : ePct >= 25 ? 'var(--amber)' : 'var(--red)';
+  var cnum = document.getElementById('sr-ring-calls');  if(cnum)  cnum.style.color = cColor;
+  var emailEl = document.getElementById('sr-ring-emails'); if(emailEl)  emailEl.style.color = eColor;
+  var cbar = document.getElementById('sr-ring-calls-bar');  if(cbar)  cbar.style.background = cColor;
+  var ebar = document.getElementById('sr-ring-emails-bar'); if(ebar)  ebar.style.background = eColor;
+
+  // Right panel: populate account dropdown for log activity
+  var sel = document.getElementById('sr-log-account');
+  if (sel) {
+    sel.innerHTML = '<option value="">— select account —</option>';
+    d.accounts.forEach(function(a) {
+      var opt = document.createElement('option');
+      opt.value = a.co;
+      opt.textContent = a.co + (a.contact ? ' – ' + a.contact : '');
+      sel.appendChild(opt);
+    });
+  }
+
+  _tgtCurrentSRRepId = repId;
+  renderTargetRows(accs.map(function(a){ return Object.assign({},a,{repName:d.name}); }));
+}
+
+var _tgtCurrentSRRepId = 'BW';
+
+function _tgtLogActivityPanel(type) {
+  var repId = _tgtCurrentSRRepId;
+  var d     = TARGETS_DATA[repId]; if (!d) return;
+  var sel   = document.getElementById('sr-log-account');
+  var coName = sel ? sel.value : '';
+
+  if (type === 'call') {
+    d.callsToday += 1;
+    d.moCallsVal  = (d.moCallsVal || 0) + 1;
+  } else {
+    d.emailsToday += 1;
+    d.moEmailsVal  = (d.moEmailsVal || 0) + 1;
+  }
+
+  // Mark the account as done if one was selected
+  if (coName) {
+    _tgtItemState[_tgtStateKey(repId, coName)] = 'done';
+  }
+
+  // Clear notes
+  var notes = document.getElementById('sr-log-notes');
+  if (notes) notes.value = '';
+
+  // Refresh SR view
+  loadTargetRep(repId);
+  showToast((type === 'call' ? 'Call' : 'Email') + ' logged' + (coName ? ' — ' + coName : ''));
+}
+
+function renderTargetRows(rows) {
+  var container = document.getElementById('tgt-tbody');
+  if (!container) return;
+  var search = ((document.getElementById('tgt-search')||{}).value||'').toLowerCase();
+  var repId  = _tgtCurrentSRRepId;
+
+  var filtered = rows.filter(function(r){
+    if (search && !r.co.toLowerCase().includes(search) && !(r.contact||'').toLowerCase().includes(search)) return false;
+    return true;
+  });
+
+  var queue   = filtered.filter(function(a){ var s=_tgtItemState[_tgtStateKey(repId,a.co)]; return s!=='done'&&s!=='skipped'; });
+  var done    = filtered.filter(function(a){ return _tgtItemState[_tgtStateKey(repId,a.co)]==='done'; });
+  var skipped = filtered.filter(function(a){ return _tgtItemState[_tgtStateKey(repId,a.co)]==='skipped'; });
+
+  // Update tab counts
+  function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
+  setEl('sr-queue-count', queue.length);
+  setEl('sr-done-count',  done.length);
+  setEl('sr-skip-count',  skipped.length);
+
+  // ACE insight
+  var aceEl = document.getElementById('sr-ace-text');
+  if (aceEl) aceEl.textContent = _tgtAceInsight(queue.length ? queue : filtered);
+
+  var list = _tgtSRQueueTab === 'queue' ? queue : _tgtSRQueueTab === 'done' ? done : skipped;
+
+  // Sort queue by lastInt desc
+  list = list.slice().sort(function(a,b){ return b.lastInt - a.lastInt; });
+
+  container.innerHTML = '';
+  if (!list.length) {
+    container.innerHTML = '<div class="tgt-empty-state">' +
+      (_tgtSRQueueTab === 'done'    ? '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:-2px;margin-right:4px"><polyline points="20 6 9 17 4 12"/></svg>All caught up — great work.' :
+       _tgtSRQueueTab === 'skipped' ? 'No skipped accounts.' :
+       search ? 'No accounts match "' + search + '".' :
+       'Your queue is empty. Add targets to get started.') + '</div>';
+    return;
+  }
+
+  list.forEach(function(a, i) {
+    var key    = _tgtStateKey(repId, a.co);
+    var state  = _tgtItemState[key] || 'queue';
+    var pColor = _tgtPriorityColor(a.lastInt);
+    var isDone = state === 'done';
+
+    var item = document.createElement('div');
+    item.className = 'tgt-queue-item' + (isDone ? ' done-item' : '');
+
+    item.innerHTML =
+      '<div class="tgt-priority-bar" style="background:' + pColor + '"></div>' +
+      '<div class="tgt-q-inner">' +
+        '<div class="tgt-q-num">' + (i+1) + '</div>' +
+        '<div class="tgt-q-main">' +
+          '<div class="tgt-q-co" style="cursor:pointer" onclick="openDrawer(\'' + a.co.replace(/'/g,"\\'") + '\')">' + a.co + '</div>' +
+          '<div class="tgt-q-contact">' + (a.contact||'') + (a.phone ? ' &middot; ' + a.phone : '') + '</div>' +
+          '<div class="tgt-q-reason">' + _tgtReasonText(a) + '</div>' +
+          '<div class="tgt-q-pills">' + _tgtPriorityLabel(a.lastInt) + _tgtStagePill(a.stage) +
+            (isDone ? '<span class="tgt-pill tgt-pill-done"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-1px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg>Logged</span>' : '') +
+            (state==='skipped' ? '<span class="tgt-pill tgt-pill-gray">Skipped</span>' : '') +
+          '</div>' +
+        '</div>' +
+      '</div>' +
+      '<div class="tgt-q-actions">' +
+        (isDone || state==='skipped'
+          ? '<button class="tgt-act-btn" onclick="_tgtUndo(\'' + key + '\',\'' + repId + '\')">Undo</button>'
+          : '<button class="tgt-act-btn tgt-primary" onclick="_tgtLogSR(\'' + key + '\',\'call\',\'' + a.co.replace(/'/g,"\\'") + '\',\'' + repId + '\')">Log call</button>' +
+            '<button class="tgt-act-btn tgt-email"   onclick="_tgtLogSR(\'' + key + '\',\'email\',\'' + a.co.replace(/'/g,"\\'") + '\',\'' + repId + '\')">Log email</button>' +
+            '<button class="tgt-act-btn" onclick="_tgtSkipSR(\'' + key + '\',\'' + repId + '\')">Skip</button>'
+        ) +
+      '</div>';
+
+    container.appendChild(item);
+  });
+}
+
+// ── ACTIONS ───────────────────────────────────────────────────────────────────
+function _tgtLogAction(key, type) {  // SM version
+  _tgtItemState[key] = 'done';
+  showToast((type==='call' ? 'Call logged' : 'Email logged'));
+  _tgtRenderSMQueue();
+  _tgtUpdateSMKPIs();
+}
+
+function _tgtLogSR(key, type, coName, repId) {  // SR version
+  _tgtItemState[key] = 'done';
+  // Increment today count in TARGETS_DATA
+  var d = TARGETS_DATA[repId];
+  if (d) {
+    if (type === 'call')  d.callsToday  = (d.callsToday  || 0) + 1;
+    if (type === 'email') d.emailsToday = (d.emailsToday || 0) + 1;
+  }
+  showToast((type==='call' ? 'Call' : 'Email') + ' logged for ' + coName);
+  loadTargetRep(repId);
+}
+
+function _tgtSkipSR(key, repId) {
+  _tgtItemState[key] = 'skipped';
+  showToast('Skipped — moved to Skipped tab');
+  loadTargetRep(repId);
+}
+
+function _tgtUndo(key, repId) {
+  delete _tgtItemState[key];
+  // Try to decrement if we incremented on log
+  showToast('Action undone');
+  if (repId) loadTargetRep(repId);
+  else _tgtRenderSMQueue();
+}
+
+function _tgtNotifyRep(repName) {
+  showToast('Notification sent to ' + repName);
+}
+
 function _smNotifyRep(btn) {
   var rep = decodeURIComponent(btn.getAttribute('data-rep') || 'rep');
   showToast('Notification sent to ' + rep);
 }
 
-function renderSMTargets() {
-  var reps = [
-    {key:'AP', name:'Aya Pedrad',      photo:'women/68', calls:5,  callGoal:40, emails:3,  emailGoal:40},
-    {key:'BW', name:'Brock Wilson',    photo:'men/54',   calls:1,  callGoal:40, emails:0,  emailGoal:40},
-    {key:'RH', name:'Russ Holt',       photo:'men/32',   calls:3,  callGoal:35, emails:1,  emailGoal:35},
-    {key:'JR', name:'Jules Richards',  photo:'women/44', calls:2,  callGoal:40, emails:2,  emailGoal:40},
-    {key:'DS', name:'Doug Silverness', photo:'men/41',   calls:0,  callGoal:35, emails:0,  emailGoal:35},
-    {key:'MB', name:'Marcus Bradley',  photo:'men/22',   calls:4,  callGoal:40, emails:2,  emailGoal:40},
-    {key:'EV', name:'Elena Vasquez',   photo:'women/55', calls:2,  callGoal:38, emails:1,  emailGoal:38},
-    {key:'AM', name:'Amanda Morrison', photo:'women/33', calls:1,  callGoal:38, emails:0,  emailGoal:38},
-    {key:'DP', name:'Derek Park',      photo:'men/29',   calls:2,  callGoal:35, emails:1,  emailGoal:35},
-    {key:'PN', name:'Priya Nair',      photo:'women/21', calls:3,  callGoal:38, emails:2,  emailGoal:38}
-  ];
-
-  // Compute SM KPIs
-  var totalCalls = reps.reduce(function(s,r){return s+r.calls;},0);
-  var totalEmails = reps.reduce(function(s,r){return s+r.emails;},0);
-  var totalCallGoal = reps.reduce(function(s,r){return s+r.callGoal;},0);
-  var totalEmailGoal = reps.reduce(function(s,r){return s+r.emailGoal;},0);
-  var onTrack = reps.filter(function(r){
-    var cp = r.calls/r.callGoal; var ep = r.emails/r.emailGoal;
-    return cp >= 0.4 && ep >= 0.3;
-  }).length;
-
-  // Count overdue accounts
-  var allAccs = allTargetAccounts();
-  var overdueAccs = allAccs.filter(function(a){ return a.lastInt > 30; });
-  var el = function(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; };
-  el('sm-kpi-calls', totalCalls);
-  el('sm-kpi-emails', totalEmails);
-  el('sm-kpi-on-track', onTrack);
-  el('sm-kpi-overdue', overdueAccs.filter(function(a){return a.lastInt>60;}).length);
-
-  // Rep grid
-  var grid = document.getElementById('sm-rep-grid');
-  if (grid) {
-    grid.innerHTML = '';
-    reps.forEach(function(r) {
-      var cp = r.callGoal > 0 ? r.calls/r.callGoal : 0;
-      var ep = r.emailGoal > 0 ? r.emails/r.emailGoal : 0;
-      var score = (cp + ep) / 2;
-      var status, statusBg, statusColor;
-      if (score >= 0.6) { status='On Track'; statusBg='rgba(29,158,117,0.1)'; statusColor='#1d9e75'; }
-      else if (score >= 0.25) { status='Behind'; statusBg='rgba(245,158,11,0.12)'; statusColor='#d97706'; }
-      else { status='At Risk'; statusBg='rgba(239,68,68,0.1)'; statusColor='#ef4444'; }
-      var callPct = Math.round(cp*100);
-      var emailPct = Math.round(ep*100);
-      var barColor = score >= 0.6 ? '#1d9e75' : score >= 0.25 ? '#f59e0b' : '#ef4444';
-      var card = document.createElement('div');
-      card.style.cssText = 'background:#fff;border:1.5px solid #dde3ec;border-radius:12px;padding:16px 14px;display:flex;flex-direction:column;gap:10px;transition:.12s';
-      card.onmouseover = function(){ this.style.borderColor='#1d9e75'; this.style.boxShadow='0 4px 16px rgba(29,158,117,0.1)'; };
-      card.onmouseout  = function(){ this.style.borderColor='#dde3ec'; this.style.boxShadow=''; };
-      card.innerHTML =
-        '<div style="display:flex;align-items:center;gap:10px">' +
-          '<img src="https://randomuser.me/api/portraits/' + r.photo + '.jpg" style="width:36px;height:36px;border-radius:50%;object-fit:cover;flex-shrink:0">' +
-          '<div style="min-width:0">' +
-            '<div style="font-size:12px;font-weight:700;color:#1a2332;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + r.name.split(' ')[0] + ' ' + r.name.split(' ')[1] + '</div>' +
-            '<div style="display:inline-block;margin-top:3px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:'+statusBg+';color:'+statusColor+'">' + status + '</div>' +
-          '</div>' +
-        '</div>' +
-        '<div style="display:flex;flex-direction:column;gap:6px">' +
-          '<div>' +
-            '<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px">' +
-              '<span style="color:#8796a5;font-weight:600">CALLS</span>' +
-              '<span style="color:#1a2332;font-weight:700">' + r.calls + '<span style="color:#8796a5;font-weight:400"> / ' + r.callGoal + '</span></span>' +
-            '</div>' +
-            '<div style="height:5px;background:#eef1f6;border-radius:3px;overflow:hidden">' +
-              '<div style="width:' + callPct + '%;height:100%;background:' + barColor + ';border-radius:3px;transition:width 0.4s"></div>' +
-            '</div>' +
-          '</div>' +
-          '<div>' +
-            '<div style="display:flex;justify-content:space-between;font-size:10px;margin-bottom:3px">' +
-              '<span style="color:#8796a5;font-weight:600">EMAILS</span>' +
-              '<span style="color:#1a2332;font-weight:700">' + r.emails + '<span style="color:#8796a5;font-weight:400"> / ' + r.emailGoal + '</span></span>' +
-            '</div>' +
-            '<div style="height:5px;background:#eef1f6;border-radius:3px;overflow:hidden">' +
-              '<div style="width:' + emailPct + '%;height:100%;background:#5b8fe8;border-radius:3px;transition:width 0.4s"></div>' +
-            '</div>' +
-          '</div>' +
-        '</div>';
-      grid.appendChild(card);
-    });
-  }
-
-  // Overdue table
-  var tbody = document.getElementById('sm-overdue-tbody');
-  if (tbody) {
-    tbody.innerHTML = '';
-    var attention = allAccs.filter(function(a){ return a.lastInt > 30; });
-    attention.sort(function(a,b){ return b.lastInt - a.lastInt; });
-    if (!attention.length) {
-      tbody.innerHTML = '<tr><td colspan="7" style="padding:32px;text-align:center;color:#8796a5;font-size:13px">All accounts are up to date.</td></tr>';
-      return;
-    }
-    attention.forEach(function(a) {
-      var overdue = a.lastInt > 60;
-      var urgBg = overdue ? 'rgba(239,68,68,0.1)' : 'rgba(245,158,11,0.1)';
-      var urgColor = overdue ? '#ef4444' : '#d97706';
-      var urgLabel = overdue ? 'Overdue' : 'Due Soon';
-      var lastLabel = a.lastInt + ' days ago';
-      var stageMap = {Customer:'stage-cust',Proposal:'stage-prop',Opportunity:'stage-opp',Lead:'stage-lead',Prospect:'stage-pros'};
-      var tr = document.createElement('tr');
-      tr.style.cssText = 'border-bottom:1px solid #eef1f6;transition:background .1s';
-      tr.onmouseover = function(){ this.style.background='#f9fafb'; };
-      tr.onmouseout  = function(){ this.style.background=''; };
-      var leftBorder = overdue ? '#ef4444' : '#f59e0b';
-      tr.innerHTML =
-        '<td style="padding:12px 0 12px 0"><div style="display:flex;align-items:center">' +
-          '<div style="width:3px;height:32px;background:'+leftBorder+';border-radius:0 2px 2px 0;margin-right:14px;flex-shrink:0"></div>' +
-          '<div style="font-size:13px;font-weight:600;color:#1a2332">' + a.co + '</div>' +
-        '</div></td>' +
-        '<td style="padding:12px 14px;font-size:12px;color:#4a5568">' + a.contact + '</td>' +
-        '<td style="padding:12px 14px"><div style="display:flex;align-items:center;gap:7px">' +
-          '<img src="https://randomuser.me/api/portraits/' + (a.repId==='AP'?'women/68':a.repId==='BW'?'men/54':a.repId==='JR'?'women/44':a.repId==='EV'?'women/55':a.repId==='AM'?'women/33':a.repId==='PN'?'women/21':'men/32') + '.jpg" style="width:22px;height:22px;border-radius:50%;object-fit:cover">' +
-          '<span style="font-size:12px;color:#4a5568">' + (a.repName||a.repId) + '</span>' +
-        '</div></td>' +
-        '<td style="padding:12px 14px;font-size:12px;color:'+urgColor+';font-weight:600">' + lastLabel + '</td>' +
-        '<td style="padding:12px 14px"><span class="stage-pill ' + (stageMap[a.stage]||'stage-lead') + '">' + a.stage + '</span></td>' +
-        '<td style="padding:12px 14px;text-align:center"><span style="font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;background:'+urgBg+';color:'+urgColor+'">' + urgLabel + '</span></td>' +
-        '<td style="padding:12px 14px;text-align:center"><button data-rep="' + encodeURIComponent(a.repName||a.repId) + '" style="padding:5px 12px;border-radius:7px;border:1.5px solid #dde3ec;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);color:#4a5568;background:#fff" onclick="_smNotifyRep(this)" onmouseover="this.style.borderColor=\'#1d9e75\';this.style.color=\'#1d9e75\'" onmouseout="this.style.borderColor=\'#dde3ec\';this.style.color=\'#4a5568\'">Notify Rep</button></td>';
-      tbody.appendChild(tr);
-    });
-  }
-}
-
-
-function loadTargetRep(repId) {
-  const allRows = repId === 'all' ? allTargetAccounts() : (TARGETS_DATA[repId]||TARGETS_DATA.BW).accounts.map(a=>({...a,repId,repName:TARGETS_DATA[repId].name}));
-  
-  // Update rings & stats
-  let c=0,cg=40,e=0,eg=40,mc=62,me=0;
-  if (repId === 'all') {
-    const vals = Object.values(TARGETS_DATA);
-    c  = vals.reduce((s,d)=>s+d.callsToday,0);
-    cg = vals.reduce((s,d)=>s+d.callsGoal,0);
-    e  = vals.reduce((s,d)=>s+d.emailsToday,0);
-    eg = vals.reduce((s,d)=>s+d.emailsGoal,0);
-    mc = vals.reduce((s,d)=>s+d.moCallsVal,0);
-    me = vals.reduce((s,d)=>s+d.moEmailsVal,0);
-  } else {
-    const d = TARGETS_DATA[repId] || TARGETS_DATA.BW;
-    c=d.callsToday; cg=d.callsGoal; e=d.emailsToday; eg=d.emailsGoal;
-    mc=d.moCallsVal; me=d.moEmailsVal;
-  }
-  const cPct = cg > 0 ? Math.round(c/cg*100) : 0;
-  const ePct = eg > 0 ? Math.round(e/eg*100) : 0;
-  const set = (id,v) => { const el=document.getElementById(id); if(el) el.textContent=v; };
-  const setW = (id,v) => { const el=document.getElementById(id); if(el) el.style.width=v+'%'; };
-  // Update KPI strip (new progress-bar design)
-  set('tgt-calls-label', c);
-  set('tgt-emails-label', e);
-  set('tgt-mo-calls', mc);
-  set('tgt-mo-emails', me);
-  setW('tgt-calls-bar', cPct);
-  setW('tgt-emails-bar', ePct);
-  // Update KPI /goal text nodes if present
-  var clGoal = document.querySelector('#tgt-calls-label + span');
-  if (clGoal) clGoal.textContent = '/ ' + cg;
-  var elGoal = document.querySelector('#tgt-emails-label + span');
-  if (elGoal) elGoal.textContent = '/ ' + eg;
-
-  renderTargetRows(allRows);
-}
-
-function renderTargetRows(rows) {
-  const tbody = document.getElementById('tgt-tbody');
-  if (!tbody) return;
-  const search = (document.getElementById('tgt-search')||{value:''}).value.toLowerCase();
-  tbody.innerHTML = '';
-  rows.forEach(function(r) {
-    if (search && !r.co.toLowerCase().includes(search) && !r.contact.toLowerCase().includes(search)) return;
-    // Priority border color
-    const overdue = r.lastInt > 60;
-    const dueToday = r.lastInt > 30 && r.lastInt <= 60;
-    const priorityColor = overdue ? 'var(--red)' : dueToday ? 'var(--amber)' : 'var(--teal)';
-    const lastIntLabel = r.lastInt === 0 ? 'Today' : r.lastInt === 1 ? 'Yesterday' : r.lastInt + ' days ago';
-    const lastIntColor = overdue ? 'var(--red)' : dueToday ? 'var(--amber)' : 'var(--g500)';
-    const stageMap = {Customer:'stage-cust',Proposal:'stage-prop',Opportunity:'stage-opp',Lead:'stage-lead',Prospect:'stage-pros'};
-    const stageCls = stageMap[r.stage] || 'stage-lead';
-    const actionBg = overdue ? 'background:rgba(239,68,68,0.08);color:var(--red);border-color:rgba(239,68,68,0.25)' : 'background:rgba(29,158,117,0.08);color:var(--teal);border-color:rgba(29,158,117,0.25)';
-    const tr = document.createElement('tr');
-    tr.style.cssText = 'border-bottom:1px solid var(--g100);transition:background 0.12s';
-    tr.onmouseover = function(){ this.style.background='var(--g50)'; };
-    tr.onmouseout  = function(){ this.style.background=''; };
-    tr.innerHTML =
-      '<td style="padding:13px 0 13px 0"><div style="display:flex;align-items:center;gap:0"><div style="width:3px;height:36px;background:'+priorityColor+';border-radius:0 2px 2px 0;margin-right:14px;flex-shrink:0"></div><div><div style="font-size:13px;font-weight:600;color:var(--dark);cursor:pointer" onclick="openDrawer(\''+r.co.replace(/'/g,"\\'")+'\')">' + r.co + '</div><div style="font-size:11px;color:var(--g400);margin-top:1px">' + r.date + '</div></div></div></td>' +
-      '<td style="padding:13px 14px"><div style="font-size:13px;color:var(--dark)">' + r.contact + '</div><div style="font-size:11px;color:var(--g400);margin-top:1px">' + (r.phone||'') + '</div></td>' +
-      '<td style="padding:13px 14px"><span class="stage-pill ' + stageCls + '">' + r.stage + '</span></td>' +
-      '<td style="padding:13px 14px;font-size:12px;color:' + lastIntColor + ';font-weight:' + (overdue?'600':'400') + '">' + lastIntLabel + '</td>' +
-      '<td style="padding:13px 14px;text-align:center">' + (overdue ? '<span style="font-size:10px;font-weight:700;background:rgba(239,68,68,0.1);color:var(--red);border-radius:20px;padding:3px 9px">Overdue</span>' : dueToday ? '<span style="font-size:10px;font-weight:700;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:20px;padding:3px 9px">Due Soon</span>' : '<span style="font-size:10px;font-weight:700;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:3px 9px">On Track</span>') + '</td>' +
-      '<td style="padding:13px 14px;text-align:center"><button style="padding:5px 12px;border-radius:7px;border:1.5px solid;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);' + actionBg + '" onclick="showToast(\'✓ Contact logged for ' + r.co.replace(/'/g,"\\'") + '\')">Log Contact</button></td>';
-    tbody.appendChild(tr);
+// ── TABS ──────────────────────────────────────────────────────────────────────
+function switchSRQueueTab(tab, el) {
+  _tgtSRQueueTab = tab;
+  ['sr-tab-queue','sr-tab-done','sr-tab-skipped'].forEach(function(id){
+    var t = document.getElementById(id); if(t) t.classList.remove('active');
   });
-  if (!tbody.children.length) {
-    const tr = document.createElement('tr');
-    tr.innerHTML = '<td colspan="6" style="padding:40px;text-align:center;color:var(--g400);font-size:13px">No accounts match your filter.</td>';
-    tbody.appendChild(tr);
-  }
+  if (el) el.classList.add('active');
+  loadTargetRep(_tgtCurrentSRRepId);
 }
 
+// ── FILTER / SEARCH ───────────────────────────────────────────────────────────
 function filterTargets() {
-  const repId = (document.getElementById('tgt-rep-filter')||{value:'all'}).value;
-  const rows = repId === 'all' ? allTargetAccounts() : (TARGETS_DATA[repId]||TARGETS_DATA.BW).accounts.map(a=>({...a,repId,repName:TARGETS_DATA[repId].name}));
+  var d   = TARGETS_DATA[_tgtCurrentSRRepId] || TARGETS_DATA.BW;
+  var rows = d.accounts.map(function(a){ return Object.assign({},a,{repId:_tgtCurrentSRRepId,repName:d.name}); });
   renderTargetRows(rows);
 }
 
+// ── TODAY / PAST TOGGLE ───────────────────────────────────────────────────────
 function switchTargetView(view, btn) {
   _targetView = view;
-  document.getElementById('tgt-btn-today').style.background = view==='today' ? 'var(--navy)' : '#fff';
-  document.getElementById('tgt-btn-today').style.color      = view==='today' ? '#fff' : 'var(--g600)';
-  document.getElementById('tgt-btn-past').style.background  = view==='past'  ? 'var(--navy)' : '#fff';
-  document.getElementById('tgt-btn-past').style.color       = view==='past'  ? '#fff' : 'var(--g600)';
+  document.querySelectorAll('.tgt-view-btn').forEach(function(b){ b.classList.remove('active'); });
+  if (btn) btn.classList.add('active');
+  if (view === 'past') showToast('Past view — showing last 30 days of activity');
 }
+
+
 
 // ── USER ROLE SYSTEM ──────────────────────────────────────────────────────────
 const ROLES = {
