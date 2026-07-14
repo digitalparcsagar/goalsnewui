@@ -1332,7 +1332,7 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .tgt-period-opt{padding:7px 10px;border-radius:6px;font-size:12px;font-weight:500;color:var(--g700);cursor:pointer;transition:.1s}
 .tgt-period-opt:hover{background:var(--g50);color:var(--teal)}
 .tgt-period-opt.active{color:var(--teal);font-weight:700;background:rgba(29,158,117,.07)}
-.tgt-body{display:grid;grid-template-columns:1fr 272px;flex:1;overflow:hidden}
+.tgt-body{display:grid;grid-template-columns:1fr 300px;flex:1;overflow:hidden}
 .tgt-left{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--g200)}
 .tgt-right{display:flex;flex-direction:column;overflow-y:auto;background:var(--g50)}
 .tgt-kpi-strip{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0}
@@ -4832,7 +4832,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       </div>
 
       <!-- RIGHT: SM team cards with rings + goal editing -->
-      <div class="tgt-right" style="width:300px;min-width:260px">
+      <div class="tgt-right" style="min-width:0;overflow:hidden">
         <div style="padding:14px 16px 10px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
           <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400)">Team Today</span>
           <button class="tgt-assign-open-btn" onclick="openAssignTargets(null)" title="Assign accounts to a rep">
@@ -10945,11 +10945,11 @@ function closeTargets() {
 function renderSMTargets() { _tgtRenderSM(); }  // alias for legacy calls
 
 function _tgtRenderSM() {
-  _tgtBuildRepChips();
-  _tgtUpdateSMKPIs();
-  _tgtUpdateSMGoalPanel();
-  _tgtRenderSMQueue();
-  _tgtRenderSMTeamList();
+  try { _tgtBuildRepChips(); }    catch(e){ console.warn('_tgtBuildRepChips',e); }
+  try { _tgtUpdateSMKPIs(); }     catch(e){ console.warn('_tgtUpdateSMKPIs',e); }
+  try { _tgtUpdateSMGoalPanel(); }catch(e){ console.warn('_tgtUpdateSMGoalPanel',e); }
+  try { _tgtRenderSMQueue(); }    catch(e){ console.warn('_tgtRenderSMQueue',e); }
+  try { _tgtRenderSMTeamList(); } catch(e){ console.warn('_tgtRenderSMTeamList',e); }
 }
 
 function _tgtBuildRepChips() {
@@ -11024,35 +11024,7 @@ function _tgtUpdateSMKPIs() {
 }
 
 function _tgtUpdateSMGoalPanel() {
-  var repId  = _tgtActiveRepId;
-  var isAll  = repId === 'all';
-  var label  = isAll ? 'All reps' : (TGT_REPS.find(function(r){ return r.id===repId; })||{name:'Rep'}).name.split(' ')[0];
-  var nameEl = document.getElementById('sm-goal-rep-name');
-  if (nameEl) nameEl.textContent = label;
-
-  var g = isAll ? { callGoal:5, emailGoal:3 } : _tgtGoalFor(repId);
-  var callsInput  = document.getElementById('sm-gs-calls');
-  var emailsInput = document.getElementById('sm-gs-emails');
-  if (callsInput)  callsInput.value  = g.callGoal;
-  if (emailsInput) emailsInput.value = g.emailGoal;
-
-  // Update rings
-  var d    = isAll ? null : TARGETS_DATA[repId];
-  var calls   = d ? d.callsToday   : TGT_REPS.reduce(function(s,r){ return s + ((TARGETS_DATA[r.id]||{callsToday:0}).callsToday);}, 0);
-  var emails  = d ? d.emailsToday  : TGT_REPS.reduce(function(s,r){ return s + ((TARGETS_DATA[r.id]||{emailsToday:0}).emailsToday);}, 0);
-  var cGoal   = isAll ? TGT_REPS.reduce(function(s,r){ var gg=_tgtGoalFor(r.id); return s+gg.callGoal; },0) : g.callGoal;
-  var eGoal   = isAll ? TGT_REPS.reduce(function(s,r){ var gg=_tgtGoalFor(r.id); return s+gg.emailGoal;},0) : g.emailGoal;
-  var cPct    = cGoal > 0 ? Math.round(calls/cGoal*100) : 0;
-  var ePct    = eGoal > 0 ? Math.round(emails/eGoal*100) : 0;
-
-  function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
-  function setW(id,v) { var e=document.getElementById(id); if(e) e.style.width=Math.min(v,100)+'%'; }
-  setEl('sm-ring-calls', calls);
-  document.getElementById('sm-ring-calls-of').textContent = 'of ' + cGoal + ' calls';
-  setW('sm-ring-calls-bar', cPct);
-  setEl('sm-ring-emails', emails);
-  document.getElementById('sm-ring-emails-of').textContent = 'of ' + eGoal + ' emails';
-  setW('sm-ring-emails-bar', ePct);
+  // SM goal panel removed — goals are now set inline per-rep via pencil icon
 }
 
 function _tgtGoalPreview() { /* handled inline per-rep now */ }
