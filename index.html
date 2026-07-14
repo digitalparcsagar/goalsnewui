@@ -240,6 +240,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .page-area::-webkit-scrollbar{width:4px}
 .page-area::-webkit-scrollbar-thumb{background:var(--g300);border-radius:2px}
 .page{display:none}.page.active{display:block}
+#page-targets.active{display:flex;flex-direction:column;position:fixed;top:var(--topbar);left:var(--sb);right:0;bottom:0;z-index:5;background:var(--off)}
 
 /* SHARED */
 .page-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px}
@@ -1332,7 +1333,7 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .tgt-period-opt{padding:7px 10px;border-radius:6px;font-size:12px;font-weight:500;color:var(--g700);cursor:pointer;transition:.1s}
 .tgt-period-opt:hover{background:var(--g50);color:var(--teal)}
 .tgt-period-opt.active{color:var(--teal);font-weight:700;background:rgba(29,158,117,.07)}
-.tgt-body{display:grid;grid-template-columns:1fr 300px;flex:1;overflow:hidden}
+.tgt-body{display:grid;grid-template-columns:2fr 1fr;flex:1;overflow:hidden}
 .tgt-left{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--g200)}
 .tgt-right{display:flex;flex-direction:column;overflow-y:auto;background:var(--g50)}
 .tgt-kpi-strip{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0}
@@ -1377,32 +1378,54 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .tgt-tab:hover{color:var(--dark)}
 .tgt-tab.active{color:var(--teal);border-bottom-color:var(--teal);font-weight:600}
 .tgt-queue{flex:1;overflow-y:auto}
-.tgt-queue-item{display:flex;align-items:flex-start;border-bottom:1px solid var(--g100);transition:background .1s}
-.tgt-queue-item:hover{background:var(--g50)}
-.tgt-queue-item.done-item{opacity:.5}
-.tgt-priority-bar{width:4px;flex-shrink:0;align-self:stretch}
-.tgt-q-inner{display:flex;align-items:flex-start;gap:12px;padding:16px 20px;flex:1;min-width:0}
-.tgt-q-num{width:22px;height:22px;border-radius:50%;background:var(--g100);border:1px solid var(--g200);font-size:10px;font-weight:600;color:var(--g400);display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.tgt-q-main{flex:1;min-width:0}
-.tgt-q-co{font-size:14px;font-weight:600;color:var(--dark)}
-.tgt-q-contact{font-size:12px;color:var(--g400);margin-top:3px}
-.tgt-q-reason{font-size:12px;margin-top:6px}
-.tgt-q-pills{display:flex;gap:6px;margin-top:8px;flex-wrap:wrap}
-.tgt-pill{font-size:10px;font-weight:600;padding:2px 7px;border-radius:10px}
+/* Filter bar */
+.tgt-filter-bar{display:flex;align-items:center;justify-content:space-between;padding:0 20px 0 16px;border-bottom:1px solid var(--g100);background:var(--white);flex-shrink:0;gap:12px;min-height:44px}
+.tgt-filter-select{padding:5px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-weight:500;color:var(--dark);background:var(--white);font-family:var(--font);cursor:pointer;outline:none;transition:.12s}
+.tgt-filter-select:focus{border-color:var(--teal)}
+
+/* Queue — table layout matching platform style */
+.tgt-queue{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.tgt-queue-table{width:100%;border-collapse:collapse}
+.tgt-queue-table thead tr{border-bottom:1.5px solid var(--g200);position:sticky;top:0;background:var(--white);z-index:1}
+.tgt-queue-table th{padding:10px 14px;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap;text-align:left}
+.tgt-queue-table th:first-child{width:36px;padding-left:20px}
+.tgt-queue-table tbody tr{border-bottom:1px solid var(--g100);transition:background .1s;cursor:default}
+.tgt-queue-table tbody tr:hover{background:var(--g50)}
+.tgt-queue-table tbody tr.tgt-row-done{opacity:.45}
+.tgt-queue-table td{padding:11px 14px;font-size:13px;color:var(--dark);vertical-align:middle}
+.tgt-queue-table td:first-child{padding-left:20px;font-size:12px;color:var(--g300);font-weight:500;width:36px}
+/* Account cell */
+.tgt-td-account{font-weight:600;color:var(--dark);display:flex;align-items:center;gap:8px}
+.tgt-td-account-init{width:28px;height:28px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
+/* Contact cell */
+.tgt-td-contact{color:var(--g600);font-size:12.5px}
+.tgt-td-phone{color:var(--g400);font-size:12px;margin-top:1px}
+/* Last contact cell */
+.tgt-td-days{font-weight:700;font-family:var(--mono);font-size:13px}
+.tgt-td-days.overdue{color:var(--red)}
+.tgt-td-days.due-soon{color:var(--amber)}
+.tgt-td-days.ok{color:var(--g400)}
+/* Status pill */
+.tgt-td-status{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px}
+/* Actions cell */
+.tgt-td-actions{display:flex;align-items:center;gap:5px;opacity:0;transition:opacity .12s;pointer-events:none}
+.tgt-queue-table tbody tr:hover .tgt-td-actions{opacity:1;pointer-events:auto}
+.tgt-td-btn{padding:4px 12px;border-radius:6px;font-size:11.5px;font-weight:600;cursor:pointer;border:1.5px solid var(--g200);background:var(--white);color:var(--g600);font-family:var(--font);white-space:nowrap;transition:.12s}
+.tgt-td-btn:hover{border-color:var(--teal);color:var(--teal)}
+.tgt-td-btn-call{background:var(--teal);color:#fff;border-color:var(--teal)}
+.tgt-td-btn-call:hover{background:var(--teal2);border-color:var(--teal2)}
+.tgt-td-btn-email{background:rgba(37,99,235,.07);color:#2563eb;border-color:rgba(37,99,235,.2)}
+.tgt-td-btn-email:hover{background:rgba(37,99,235,.14)}
+.tgt-empty-state{padding:72px 40px;text-align:center;color:var(--g300);font-size:14px;line-height:1.6}
+/* Pills (still used in some places) */
+.tgt-pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px;white-space:nowrap;line-height:1.5}
 .tgt-pill-red{background:rgba(239,68,68,.1);color:var(--red)}
 .tgt-pill-amber{background:rgba(245,158,11,.1);color:#d97706}
 .tgt-pill-teal{background:rgba(29,158,117,.1);color:var(--teal)}
-.tgt-pill-gray{background:var(--g100);color:var(--g600);border:1px solid var(--g200)}
+.tgt-pill-gray{background:var(--g100);color:var(--g500)}
 .tgt-pill-done{background:rgba(34,197,94,.1);color:#16a34a}
-.tgt-q-actions{display:flex;flex-direction:column;gap:5px;flex-shrink:0;padding:16px 18px 16px 0}
-.tgt-act-btn{padding:7px 13px;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap;font-family:var(--font);border:1.5px solid var(--g200);background:var(--white);color:var(--g700);transition:.12s}
-.tgt-act-btn:hover{border-color:var(--teal);color:var(--teal)}
-.tgt-act-btn.tgt-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
-.tgt-act-btn.tgt-primary:hover{background:var(--teal2)}
-.tgt-act-btn.tgt-email{background:rgba(91,143,232,.08);color:#2563eb;border-color:rgba(91,143,232,.3)}
-.tgt-act-btn.tgt-email:hover{background:rgba(91,143,232,.18)}
-.tgt-empty-state{padding:60px 40px;text-align:center;color:var(--g400);font-size:13px;line-height:1.6}
-.tgt-panel-section{padding:20px;border-bottom:1px solid var(--g200)}
+/* Unused legacy queue classes */
+.tgt-qcard,.tgt-qi-body,.tgt-qi-main,.tgt-qi-meta,.tgt-qi-days,.tgt-qi-actions{display:none!important}
 .tgt-panel-section:last-child{border-bottom:none}
 .tgt-panel-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
 .tgt-panel-edit{font-size:11px;font-weight:500;color:var(--teal);cursor:pointer;text-transform:none;letter-spacing:0;border:none;background:none;font-family:var(--font)}
@@ -1490,6 +1513,87 @@ body.dark-mode .tgt-rep-inline-editor{background:var(--g100)!important}
 
 body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!important}
 
+
+/* ── TARGETS MODERN REFRESH ─────────────────────────────────────────────────── */
+
+/* Header — slightly taller, refined divider */
+.tgt-header{height:60px;padding:0 28px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.tgt-title-block .tgt-title{font-size:16px;font-weight:700;letter-spacing:-.4px}
+.tgt-title-block .tgt-date{font-size:11px;color:rgba(255,255,255,0.38);margin-top:3px}
+.tgt-back{border-radius:8px;background:rgba(255,255,255,0.06);width:32px;height:32px}
+.tgt-back:hover{background:rgba(255,255,255,0.12)}
+.tgt-add-btn{padding:7px 15px;border-radius:8px;font-size:12px;letter-spacing:-.1px}
+
+/* KPI ring cards — more air, sentence-case labels */
+.tgt-kpi-ring{padding:28px 20px 22px}
+.tgt-kpi-ring-label{font-size:11px;font-weight:500;text-transform:none;letter-spacing:0;color:var(--g400);margin-bottom:16px}
+
+/* Tab bar — pill style, no underline */
+.tgt-tab-bar{display:flex;align-items:center;padding:10px 16px;gap:2px;border-bottom:1px solid var(--g100);background:var(--white);flex-shrink:0;margin-top:0}
+.tgt-tab{padding:6px 14px;font-size:12px;font-weight:500;color:var(--g400);cursor:pointer;border-bottom:none!important;border-radius:7px;transition:.15s;white-space:nowrap}
+.tgt-tab:hover{color:var(--dark);background:var(--g50)}
+.tgt-tab.active{color:var(--teal);background:rgba(29,158,117,.1);font-weight:600;border-bottom-color:transparent!important}
+
+/* Rep filter chips — rounder pills */
+.tgt-rep-chip{border-radius:100px;padding:4px 12px 4px 6px;font-size:11px;border:1.5px solid var(--g100)}
+.tgt-rep-chip:hover{border-color:rgba(29,158,117,.35);background:rgba(29,158,117,.04)}
+.tgt-rep-chip.active{border-color:rgba(29,158,117,.4);background:rgba(29,158,117,.08)}
+.tgt-rep-chip img{width:20px;height:20px}
+
+/* Search — cleaner */
+.tgt-search-wrap{padding:12px 20px;background:var(--white);border-bottom:1px solid var(--g100)}
+.tgt-search-input{border-color:var(--g100);border-radius:9px;padding:9px 12px 9px 34px;font-size:13px}
+.tgt-search-input:focus{border-color:rgba(29,158,117,.4);box-shadow:0 0 0 3px rgba(29,158,117,.08)}
+
+/* ACE card — gradient instead of flat */
+.tgt-ace-card{background:linear-gradient(135deg,rgba(29,158,117,.05) 0%,rgba(91,143,232,.04) 100%);border:1px solid rgba(29,158,117,.14);border-radius:12px;margin:16px 18px 0}
+.tgt-ace-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--teal);margin-bottom:4px}
+.tgt-ace-text{font-size:13px;color:var(--g600);line-height:1.65}
+
+/* Queue items — remove number badge, clean rows */
+.tgt-q-num{display:none}
+.tgt-queue-item{border-bottom:1px solid rgba(0,0,0,.04)}
+.tgt-queue-item:hover{background:#fafbfc}
+.tgt-q-inner{padding:0;gap:0}
+.tgt-q-co{font-size:15px;font-weight:650;color:var(--dark)}
+.tgt-q-contact{font-size:12px;color:var(--g400);margin-top:3px}
+.tgt-q-reason{font-size:12px;color:var(--g500);margin-top:6px;line-height:1.55}
+.tgt-q-pills{margin-top:9px;gap:5px}
+.tgt-pill{font-size:10px;font-weight:600;padding:2px 8px;border-radius:100px}
+.tgt-priority-bar{width:3px}
+
+/* Queue action buttons — more refined */
+/* act-btn styles moved to tgt-qi-btn */
+
+/* Right panel — white, cleaner sections */
+.tgt-right{background:var(--white)}
+.tgt-panel-section{padding:18px 18px;border-bottom:1px solid var(--g100)}
+.tgt-panel-title{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.7px;color:var(--g300);margin-bottom:14px}
+.tgt-panel-edit{color:var(--teal);font-size:11px}
+
+/* Rep cards in right panel */
+.tgt-rep-card{padding:12px 16px;border-bottom:1px solid var(--g100)}
+.tgt-rep-card-header{gap:9px;margin-bottom:10px}
+.tgt-rep-card-name{font-size:13px;font-weight:600}
+.tgt-rep-ring{background:#fafbfc;border-radius:9px;padding:9px 11px;border:1px solid var(--g100)}
+.tgt-rep-ring-label{font-size:9px;text-transform:uppercase;letter-spacing:.3px;color:var(--g300);margin-bottom:4px}
+.tgt-rep-ring-num{font-size:17px}
+.tgt-rep-ring-bar{height:3px;background:var(--g100)}
+.tgt-rep-card-assign{font-size:10px;padding:2px 8px;border-radius:100px;border:1px solid rgba(29,158,117,.25)}
+
+/* Goal ring cards (SR view) */
+.tgt-ring-card{border:1px solid var(--g100);border-radius:10px;background:#fafbfc}
+.tgt-ring-num{font-size:26px;font-weight:700}
+.tgt-ring-of{font-size:11px;color:var(--g400);margin-top:2px}
+.tgt-ring-track{height:3px;background:var(--g100);margin-top:6px}
+
+/* Empty state */
+.tgt-empty-state{padding:72px 40px;font-size:14px;color:var(--g300)}
+
+/* Body layout */
+.tgt-body{grid-template-columns:2fr 1fr}
+.tgt-left{border-right:1px solid var(--g100)}
+/* ─────────────────────────────────────────────────────────────────────────── */
 </style>
 </head>
 <body>
@@ -4613,113 +4717,34 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 </div>
 </div>
 
-</div><!-- end page-area -->
-</div><!-- end .main -->
-<!-- END PAGE AREA / MAIN -->
-
-<!-- SHORTCUT MENU -->
-<div class="shortcut-menu" id="shortcut-menu" onmouseleave="closeShortcutMenu()">
-  <div style="padding:4px 12px 6px;font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Quick Add</div>
-  <div class="sc-item" onclick="openModal('person-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="sc-label">Person</span><span class="sc-kbd">P</span></div>
-  <div class="sc-item" onclick="openModal('org-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span class="sc-label">Organization</span><span class="sc-kbd">G</span></div>
-  <div class="sc-item" onclick="openDealModal();closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="sc-label">Opportunity</span><span class="sc-kbd">O</span></div>
-  <div class="sc-item" onclick="openModal('activity-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span class="sc-label">Activity</span><span class="sc-kbd">A</span></div>
-  <div class="sc-item" onclick="openModal('note-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span><span class="sc-label">Note</span><span class="sc-kbd">N</span></div>
-</div>
-
-<!-- ACE DRAGGABLE DIALOG -->
-<div class="ace-dialog" id="ace-dialog" role="dialog" aria-modal="false" aria-label="Ask Ace AI Coach">
-  <div class="ace-dialog-header" id="ace-drag-handle">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx=12 cy=8 r=5/><path d=M20 21a8 8 0 1 0-16 0/><line x1=12 y1=3 x2=12 y2=1/><line x1=8 y1=2 x2=8 y2=4/><line x1=16 y1=2 x2=16 y2=4/></svg>
-    <div class="ace-dialog-title">Ask <span>Ace</span></div>
-    <button class="ace-dialog-close" onclick="toggleAce()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button>
-  </div>
-  <div class="ace-dialog-body">
-    <div class="ace-msg">Based on today's data, here are your coaching insights:</div>
-    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Action</div><div class="ace-insight-text">Follow up on AR Solutions — proposal idle for 2 days. Call Jake Miller before EOD.</div></div>
-    <div class="ace-insight risk"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Alert</div><div class="ace-insight-text">Jules Richards is 31% behind monthly call goal. Coaching conversation recommended this week.</div></div>
-    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26A7 7 0 0 1 12 2z"/></svg> Insight</div><div class="ace-insight-text">Brock's close rate increases 40% when follow-up happens within 24 hours of initial contact.</div></div>
-  </div>
-  <div class="ace-dialog-input">
-    <input class="ace-input" type="text" placeholder="Ask Ace anything...">
-    <button class="ace-send" onclick="askAceDialog(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg> Ask</button>
-  </div>
-</div>
-
-<!-- NOTIFICATION PANEL -->
-<div class="side-panel" id="notif-panel">
-  <div class="side-panel-header">Notifications <button class="side-panel-close" onclick="togglePanel('notif-panel')" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button></div>
-  <div class="notif-list">
-    <div class="notif-item unread"><div class="notif-title">New highlight from Brock Wilson</div><div class="notif-body">Jules Richards was recognized for closing AR Solutions.</div><div class="notif-time">2 hours ago</div></div>
-    <div class="notif-item unread"><div class="notif-title">Ace AI Alert</div><div class="notif-body">Timber Mill Inc has been idle for 4 days. Follow up recommended.</div><div class="notif-time">3 hours ago</div></div>
-    <div class="notif-item"><div class="notif-title">Goal milestone reached</div><div class="notif-body">Brock Wilson hit 80% of annual goal.</div><div class="notif-time">Yesterday</div></div>
-    <div class="notif-item"><div class="notif-title">New contest started</div><div class="notif-body">Spring Kickoff Blitz is now live. 15 days remaining.</div><div class="notif-time">2 days ago</div></div>
-  </div>
-</div>
-
-<!-- CALENDAR PANEL -->
-<div class="side-panel" id="cal-panel">
-  <div class="side-panel-header">Calendar <button class="side-panel-close" onclick="togglePanel('cal-panel')" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button></div>
-  <div class="cal-grid-wrap">
-    <div class="cal-month"><button class="cal-nav" onclick="calNav(-1)">‹</button><div class="cal-month-label">June 2026</div><button class="cal-nav" onclick="calNav(1)">›</button></div>
-    <div class="cal-days-header"><div class="cal-day-header">Su</div><div class="cal-day-header">Mo</div><div class="cal-day-header">Tu</div><div class="cal-day-header">We</div><div class="cal-day-header">Th</div><div class="cal-day-header">Fr</div><div class="cal-day-header">Sa</div></div>
-    <div class="cal-days">
-      <div class="cal-day other-month">25</div><div class="cal-day other-month">26</div><div class="cal-day other-month">27</div><div class="cal-day other-month">28</div><div class="cal-day other-month">29</div><div class="cal-day other-month">30</div><div class="cal-day other-month">31</div>
-      <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
-      <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
-      <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day today">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
-      <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
-      <div class="cal-day">29</div><div class="cal-day">30</div>
-    </div>
-  </div>
-  <div class="cal-events">
-    <div class="cal-event-title">Today — June 17</div>
-    <div class="cal-event-item"><div class="cal-event-time">9:00 AM</div><div><div class="cal-event-name">Team All Hands</div><div class="cal-event-sub">Zoom · Weekly</div></div></div>
-    <div class="cal-event-item"><div class="cal-event-time">2:00 PM</div><div><div class="cal-event-name">AR Solutions Follow-Up</div><div class="cal-event-sub">Jake Miller</div></div></div>
-    <div class="cal-event-item"><div class="cal-event-time">4:00 PM</div><div><div class="cal-event-name">Timber Mill Discovery</div><div class="cal-event-sub">Sarah Chen</div></div></div>
-  </div>
-</div>
-
 <!-- TODAY'S TARGETS REDESIGN -->
-<div id="targets-overlay" style="position:fixed;inset:0;z-index:2200;background:var(--off);display:none;flex-direction:column;overflow:hidden">
+<div id="page-targets" class="page" style="flex-direction:column;overflow:hidden;background:var(--off)">
 
-  <!-- HEADER -->
-  <div class="tgt-header">
-    <div class="tgt-header-left">
-      <button class="tgt-back" onclick="closeTargets()" aria-label="Close targets">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      </button>
-      <div style="width:1px;height:20px;background:rgba(255,255,255,0.12)"></div>
-      <div class="tgt-title-block">
-        <div class="tgt-title">Today's Targets</div>
-        <div class="tgt-date" id="targets-date"></div>
-      </div>
-    </div>
-    <div style="display:flex;align-items:center;gap:10px">
+  <!-- PAGE HEADER — matches platform standard -->
+  <div class="page-header" style="flex-shrink:0">
+    <div class="page-title">Today's Targets</div>
+    <div class="page-subtitle" id="targets-date"></div>
+    <div class="page-actions">
       <!-- Period filter -->
       <div style="position:relative" id="tgt-period-wrap">
-        <button id="tgt-period-btn" onclick="_tgtTogglePeriodMenu()" style="display:flex;align-items:center;gap:6px;padding:5px 12px;border:1.5px solid rgba(255,255,255,0.18);border-radius:7px;background:transparent;color:rgba(255,255,255,0.8);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);transition:.15s" onmouseover="this.style.borderColor='rgba(255,255,255,0.4)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.18)'">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        <button id="tgt-period-btn" onclick="_tgtTogglePeriodMenu()" class="tb-btn btn-ghost" style="display:flex;align-items:center;gap:6px;font-size:12px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
           <span id="tgt-period-label">Today</span>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
         </button>
-        <!-- Dropdown menu -->
         <div id="tgt-period-menu" style="display:none;position:absolute;right:0;top:calc(100% + 6px);background:var(--white);border:1px solid var(--g200);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.14);min-width:180px;z-index:400;overflow:hidden">
           <div style="padding:6px">
-            <div class="tgt-period-opt active" data-period="today"      onclick="_tgtSetPeriod(this,'today','Today')">Today</div>
-            <div class="tgt-period-opt"         data-period="yesterday"  onclick="_tgtSetPeriod(this,'yesterday','Yesterday')">Yesterday</div>
-            <div class="tgt-period-opt"         data-period="week"       onclick="_tgtSetPeriod(this,'week','This Week')">This Week</div>
-            <div class="tgt-period-opt"         data-period="last7"      onclick="_tgtSetPeriod(this,'last7','Last 7 Days')">Last 7 Days</div>
-            <div class="tgt-period-opt"         data-period="month"      onclick="_tgtSetPeriod(this,'month','This Month')">This Month</div>
-            <div class="tgt-period-opt"         data-period="last30"     onclick="_tgtSetPeriod(this,'last30','Last 30 Days')">Last 30 Days</div>
-            <div class="tgt-period-opt"         data-period="quarter"    onclick="_tgtSetPeriod(this,'quarter','This Quarter')">This Quarter</div>
-            <div class="tgt-period-opt"         data-period="year"       onclick="_tgtSetPeriod(this,'year','This Year')">This Year</div>
+            <div class="tgt-period-opt active" data-period="today"    onclick="_tgtSetPeriod(this,'today','Today')">Today</div>
+            <div class="tgt-period-opt" data-period="yesterday"       onclick="_tgtSetPeriod(this,'yesterday','Yesterday')">Yesterday</div>
+            <div class="tgt-period-opt" data-period="week"            onclick="_tgtSetPeriod(this,'week','This Week')">This Week</div>
+            <div class="tgt-period-opt" data-period="last7"           onclick="_tgtSetPeriod(this,'last7','Last 7 Days')">Last 7 Days</div>
+            <div class="tgt-period-opt" data-period="month"           onclick="_tgtSetPeriod(this,'month','This Month')">This Month</div>
+            <div class="tgt-period-opt" data-period="last30"          onclick="_tgtSetPeriod(this,'last30','Last 30 Days')">Last 30 Days</div>
+            <div class="tgt-period-opt" data-period="quarter"         onclick="_tgtSetPeriod(this,'quarter','This Quarter')">This Quarter</div>
+            <div class="tgt-period-opt" data-period="year"            onclick="_tgtSetPeriod(this,'year','This Year')">This Year</div>
             <div style="height:1px;background:var(--g200);margin:4px 0"></div>
-            <div class="tgt-period-opt"         data-period="custom"     onclick="_tgtSetPeriod(this,'custom','Custom range')">
-              Custom range&hellip;
-            </div>
+            <div class="tgt-period-opt" data-period="custom"          onclick="_tgtSetPeriod(this,'custom','Custom range')">Custom range&hellip;</div>
           </div>
-          <!-- Custom date inputs — shown when custom selected -->
           <div id="tgt-custom-range" style="display:none;padding:10px 12px 12px;border-top:1px solid var(--g200)">
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px">
               <div>
@@ -4739,9 +4764,11 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         Add targets
       </button>
-      <button onclick="closeTargets()" style="width:30px;height:30px;border-radius:7px;background:rgba(255,255,255,0.08);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,0.6);font-size:18px;line-height:1;font-family:var(--font)" title="Close"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
     </div>
   </div>
+
+  <!-- Scrollable content below header -->
+  <div style="flex:1;display:flex;flex-direction:column;overflow:hidden">
 
   <!-- ── SM VIEW ── -->
   <div id="tgt-sm-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
@@ -4817,17 +4844,44 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         <!-- Rep filter: handled via team list on right -->
         <div id="sm-rep-selector" style="display:none"></div>
         <!-- ACE insight -->
+        <!-- ACE insight -->
         <div class="tgt-ace-card" id="sm-ace-card">
           <div class="tgt-ace-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-2px;margin-right:4px"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>ACE recommendation</div>
           <div class="tgt-ace-text" id="sm-ace-text">Loading insights...</div>
         </div>
-        <!-- Tabs -->
-        <div class="tgt-tab-bar">
-          <div class="tgt-tab active" id="sm-tab-queue"     onclick="switchSMQueueTab('queue',this)">Queue (<span id="sm-queue-count">0</span>)</div>
-          <div class="tgt-tab"        id="sm-tab-completed" onclick="switchSMQueueTab('completed',this)">Completed (<span id="sm-done-count">0</span>)</div>
-          <div class="tgt-tab"        id="sm-tab-attention" onclick="switchSMQueueTab('attention',this)">Needs attention (<span id="sm-attn-count">0</span>)</div>
+
+        <!-- Filter bar: tabs + rep + status filters -->
+        <div class="tgt-filter-bar">
+          <!-- Tabs -->
+          <div style="display:flex;gap:2px">
+            <div class="tgt-tab active" id="sm-tab-queue"     onclick="switchSMQueueTab('queue',this)">Queue (<span id="sm-queue-count">0</span>)</div>
+            <div class="tgt-tab"        id="sm-tab-completed" onclick="switchSMQueueTab('completed',this)">Completed (<span id="sm-done-count">0</span>)</div>
+            <div class="tgt-tab"        id="sm-tab-attention" onclick="switchSMQueueTab('attention',this)">Needs attention (<span id="sm-attn-count">0</span>)</div>
+          </div>
+          <!-- Right-side filters -->
+          <div style="display:flex;align-items:center;gap:8px">
+            <!-- Search -->
+            <div style="position:relative">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--g300);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="tgt-search-input" type="text" placeholder="Search accounts or contacts…" oninput="_tgtSetSearch(this.value)"
+                style="padding:5px 10px 5px 28px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;width:220px;transition:.15s"
+                onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'">
+            </div>
+            <!-- Rep filter -->
+            <select id="tgt-rep-filter" onchange="_tgtSetRepFilter(this.value)" class="tgt-filter-select">
+              <option value="all">All reps</option>
+            </select>
+            <!-- Status filter -->
+            <select id="tgt-status-filter" onchange="_tgtSetStatusFilter(this.value)" class="tgt-filter-select">
+              <option value="all">All status</option>
+              <option value="overdue">Overdue (&gt;60d)</option>
+              <option value="due_soon">Due soon (30–60d)</option>
+              <option value="on_track">On track (&lt;30d)</option>
+            </select>
+          </div>
         </div>
-        <!-- Queue list -->
+
+        <!-- Queue table -->
         <div class="tgt-queue" id="sm-queue-list"></div>
       </div>
 
@@ -4971,6 +5025,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
   </div><!-- end tgt-sr-content -->
 
+  </div><!-- end scroll wrapper -->
 
   <!-- ── ASSIGN TARGETS MODAL (SM only) ── -->
   <div id="tgt-assign-modal" style="display:none;position:absolute;inset:0;z-index:300;background:rgba(0,0,0,0.45);align-items:center;justify-content:center">
@@ -5031,8 +5086,75 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       </div>
     </div>
   </div><!-- end tgt-assign-modal -->
-</div><!-- end targets-overlay -->
-<div id="page-targets" class="page" style="padding:0;display:none"><!-- legacy placeholder --></div>
+</div><!-- end page-targets -->
+
+</div><!-- end page-area -->
+</div><!-- end .main -->
+<!-- END PAGE AREA / MAIN -->
+
+<!-- SHORTCUT MENU -->
+<div class="shortcut-menu" id="shortcut-menu" onmouseleave="closeShortcutMenu()">
+  <div style="padding:4px 12px 6px;font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Quick Add</div>
+  <div class="sc-item" onclick="openModal('person-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span><span class="sc-label">Person</span><span class="sc-kbd">P</span></div>
+  <div class="sc-item" onclick="openModal('org-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg></span><span class="sc-label">Organization</span><span class="sc-kbd">G</span></div>
+  <div class="sc-item" onclick="openDealModal();closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="sc-label">Opportunity</span><span class="sc-kbd">O</span></div>
+  <div class="sc-item" onclick="openModal('activity-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span class="sc-label">Activity</span><span class="sc-kbd">A</span></div>
+  <div class="sc-item" onclick="openModal('note-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span><span class="sc-label">Note</span><span class="sc-kbd">N</span></div>
+</div>
+
+<!-- ACE DRAGGABLE DIALOG -->
+<div class="ace-dialog" id="ace-dialog" role="dialog" aria-modal="false" aria-label="Ask Ace AI Coach">
+  <div class="ace-dialog-header" id="ace-drag-handle">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx=12 cy=8 r=5/><path d=M20 21a8 8 0 1 0-16 0/><line x1=12 y1=3 x2=12 y2=1/><line x1=8 y1=2 x2=8 y2=4/><line x1=16 y1=2 x2=16 y2=4/></svg>
+    <div class="ace-dialog-title">Ask <span>Ace</span></div>
+    <button class="ace-dialog-close" onclick="toggleAce()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button>
+  </div>
+  <div class="ace-dialog-body">
+    <div class="ace-msg">Based on today's data, here are your coaching insights:</div>
+    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Action</div><div class="ace-insight-text">Follow up on AR Solutions — proposal idle for 2 days. Call Jake Miller before EOD.</div></div>
+    <div class="ace-insight risk"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Alert</div><div class="ace-insight-text">Jules Richards is 31% behind monthly call goal. Coaching conversation recommended this week.</div></div>
+    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26A7 7 0 0 1 12 2z"/></svg> Insight</div><div class="ace-insight-text">Brock's close rate increases 40% when follow-up happens within 24 hours of initial contact.</div></div>
+  </div>
+  <div class="ace-dialog-input">
+    <input class="ace-input" type="text" placeholder="Ask Ace anything...">
+    <button class="ace-send" onclick="askAceDialog(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg> Ask</button>
+  </div>
+</div>
+
+<!-- NOTIFICATION PANEL -->
+<div class="side-panel" id="notif-panel">
+  <div class="side-panel-header">Notifications <button class="side-panel-close" onclick="togglePanel('notif-panel')" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button></div>
+  <div class="notif-list">
+    <div class="notif-item unread"><div class="notif-title">New highlight from Brock Wilson</div><div class="notif-body">Jules Richards was recognized for closing AR Solutions.</div><div class="notif-time">2 hours ago</div></div>
+    <div class="notif-item unread"><div class="notif-title">Ace AI Alert</div><div class="notif-body">Timber Mill Inc has been idle for 4 days. Follow up recommended.</div><div class="notif-time">3 hours ago</div></div>
+    <div class="notif-item"><div class="notif-title">Goal milestone reached</div><div class="notif-body">Brock Wilson hit 80% of annual goal.</div><div class="notif-time">Yesterday</div></div>
+    <div class="notif-item"><div class="notif-title">New contest started</div><div class="notif-body">Spring Kickoff Blitz is now live. 15 days remaining.</div><div class="notif-time">2 days ago</div></div>
+  </div>
+</div>
+
+<!-- CALENDAR PANEL -->
+<div class="side-panel" id="cal-panel">
+  <div class="side-panel-header">Calendar <button class="side-panel-close" onclick="togglePanel('cal-panel')" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button></div>
+  <div class="cal-grid-wrap">
+    <div class="cal-month"><button class="cal-nav" onclick="calNav(-1)">‹</button><div class="cal-month-label">June 2026</div><button class="cal-nav" onclick="calNav(1)">›</button></div>
+    <div class="cal-days-header"><div class="cal-day-header">Su</div><div class="cal-day-header">Mo</div><div class="cal-day-header">Tu</div><div class="cal-day-header">We</div><div class="cal-day-header">Th</div><div class="cal-day-header">Fr</div><div class="cal-day-header">Sa</div></div>
+    <div class="cal-days">
+      <div class="cal-day other-month">25</div><div class="cal-day other-month">26</div><div class="cal-day other-month">27</div><div class="cal-day other-month">28</div><div class="cal-day other-month">29</div><div class="cal-day other-month">30</div><div class="cal-day other-month">31</div>
+      <div class="cal-day">1</div><div class="cal-day">2</div><div class="cal-day">3</div><div class="cal-day">4</div><div class="cal-day">5</div><div class="cal-day">6</div><div class="cal-day">7</div>
+      <div class="cal-day">8</div><div class="cal-day">9</div><div class="cal-day">10</div><div class="cal-day">11</div><div class="cal-day">12</div><div class="cal-day">13</div><div class="cal-day">14</div>
+      <div class="cal-day">15</div><div class="cal-day">16</div><div class="cal-day today">17</div><div class="cal-day">18</div><div class="cal-day">19</div><div class="cal-day">20</div><div class="cal-day">21</div>
+      <div class="cal-day">22</div><div class="cal-day">23</div><div class="cal-day">24</div><div class="cal-day">25</div><div class="cal-day">26</div><div class="cal-day">27</div><div class="cal-day">28</div>
+      <div class="cal-day">29</div><div class="cal-day">30</div>
+    </div>
+  </div>
+  <div class="cal-events">
+    <div class="cal-event-title">Today — June 17</div>
+    <div class="cal-event-item"><div class="cal-event-time">9:00 AM</div><div><div class="cal-event-name">Team All Hands</div><div class="cal-event-sub">Zoom · Weekly</div></div></div>
+    <div class="cal-event-item"><div class="cal-event-time">2:00 PM</div><div><div class="cal-event-name">AR Solutions Follow-Up</div><div class="cal-event-sub">Jake Miller</div></div></div>
+    <div class="cal-event-item"><div class="cal-event-time">4:00 PM</div><div><div class="cal-event-name">Timber Mill Discovery</div><div class="cal-event-sub">Sarah Chen</div></div></div>
+  </div>
+</div>
+
 <!-- COMPANY SETTINGS PAGE (SM only) -->
 <div id="page-company-settings" style="position:fixed;inset:0;z-index:2100;background:#f0f2f5;display:none;flex-direction:column;overflow:hidden">
   <!-- Top bar -->
@@ -10853,6 +10975,9 @@ function allTargetAccounts() {
 var _targetView       = 'today';
 var _tgtActiveRepId   = 'all';   // which rep is selected in SM chip bar
 var _tgtSMQueueTab    = 'queue';
+var _tgtRepFilter     = 'all';   // rep filter dropdown
+var _tgtStatusFilter  = 'all';   // status filter dropdown
+var _tgtSearchQuery   = '';      // text search
 var _tgtSRQueueTab    = 'queue';
 // Per-account completion state: { 'repId:coName': 'done'|'skipped' }
 var _tgtItemState     = {};
@@ -10911,8 +11036,9 @@ function _tgtAceInsight(accounts) {
 
 // ── OPEN / CLOSE ──────────────────────────────────────────────────────────────
 function openTargetsModal() {
-  var ov = document.getElementById('targets-overlay');
-  if (ov) ov.style.display = 'flex';
+  // Navigate to targets as a standard page (sidebar + topbar stay visible)
+  showPage('targets');
+  // Highlight the Today's Targets button in the top bar (no sidebar item)
   var d = document.getElementById('targets-date');
   if (d) d.textContent = new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
   var smView = document.getElementById('tgt-sm-content');
@@ -10922,9 +11048,9 @@ function openTargetsModal() {
     if (smView) smView.style.display = 'flex';
     if (srView) srView.style.display = 'none';
     if (addBtn) addBtn.style.display = 'none';
-    // reset SM queue tab to 'queue' each time modal opens
     _tgtSMQueueTab = 'queue';
     _tgtSRQueueTab = 'queue';
+    _tgtRepFilter = 'all'; _tgtStatusFilter = 'all'; _tgtSearchQuery = '';
     document.querySelectorAll('.tgt-tab').forEach(function(t){ t.classList.remove('active'); });
     var qt = document.getElementById('sm-tab-queue'); if(qt) qt.classList.add('active');
     setTimeout(_tgtRenderSM, 60);
@@ -10937,8 +11063,7 @@ function openTargetsModal() {
 }
 
 function closeTargets() {
-  var ov = document.getElementById('targets-overlay');
-  if (ov) ov.style.display = 'none';
+  showPage('dashboard');
 }
 
 // ── SM RENDER ─────────────────────────────────────────────────────────────────
@@ -11034,74 +11159,163 @@ function _tgtRenderSMQueue() {
   var container = document.getElementById('sm-queue-list');
   if (!container) return;
 
-  var repId = _tgtActiveRepId;
-  var accs  = repId === 'all' ? allTargetAccounts()
-            : (TARGETS_DATA[repId]||{accounts:[]}).accounts.map(function(a){ return Object.assign({},a,{repId:repId,repName:TARGETS_DATA[repId].name}); });
+  // Populate rep filter dropdown (once)
+  var repSel = document.getElementById('tgt-rep-filter');
+  if (repSel && repSel.options.length === 1) {
+    TGT_REPS.forEach(function(r) {
+      var o = document.createElement('option');
+      o.value = r.id; o.textContent = r.name;
+      repSel.appendChild(o);
+    });
+    repSel.value = _tgtRepFilter;
+  }
 
-  // Sort by lastInt descending (most overdue first)
+  // Get accounts for the selected rep
+  var repId = _tgtActiveRepId;
+  var accs  = repId === 'all'
+    ? allTargetAccounts()
+    : (TARGETS_DATA[repId]||{accounts:[]}).accounts.map(function(a){
+        return Object.assign({},a,{repId:repId,repName:TARGETS_DATA[repId].name});
+      });
+
   accs = accs.slice().sort(function(a,b){ return b.lastInt - a.lastInt; });
 
   var queue     = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(a.repId,a.co)] !== 'done' && _tgtItemState[_tgtStateKey(a.repId,a.co)] !== 'skipped'; });
   var done      = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(a.repId,a.co)] === 'done'; });
   var attention = accs.filter(function(a){ return a.lastInt > 60; });
 
-  // Update tab counts
   function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
   setEl('sm-queue-count', queue.length);
   setEl('sm-done-count',  done.length);
   setEl('sm-attn-count',  attention.length);
 
-  // ACE insight
   var aceEl = document.getElementById('sm-ace-text');
   if (aceEl) aceEl.textContent = _tgtAceInsight(queue.length ? queue : accs);
 
   var list = _tgtSMQueueTab === 'queue' ? queue : _tgtSMQueueTab === 'completed' ? done : attention;
 
+  // Apply rep filter from dropdown
+  if (_tgtRepFilter !== 'all') {
+    list = list.filter(function(a){ return a.repId === _tgtRepFilter; });
+  }
+
+  // Apply status filter
+  if (_tgtStatusFilter === 'overdue')  list = list.filter(function(a){ return a.lastInt > 60; });
+  if (_tgtStatusFilter === 'due_soon') list = list.filter(function(a){ return a.lastInt >= 30 && a.lastInt <= 60; });
+  if (_tgtStatusFilter === 'on_track') list = list.filter(function(a){ return a.lastInt < 30; });
+
+  // Apply text search
+  if (_tgtSearchQuery.trim()) {
+    var q = _tgtSearchQuery.trim().toLowerCase();
+    list = list.filter(function(a){
+      return (a.co||'').toLowerCase().includes(q) ||
+             (a.contact||'').toLowerCase().includes(q) ||
+             (a.phone||'').toLowerCase().includes(q) ||
+             (a.stage||'').toLowerCase().includes(q) ||
+             (a.source||'').toLowerCase().includes(q);
+    });
+  }
+
   container.innerHTML = '';
   if (!list.length) {
     container.innerHTML = '<div class="tgt-empty-state">' +
       (_tgtSMQueueTab === 'completed' ? 'No completed contacts yet.' :
-       _tgtSMQueueTab === 'attention' ? 'No overdue accounts — great job!' :
-       'Queue is empty. Add targets to get started.') + '</div>';
+       _tgtSMQueueTab === 'attention' ? 'No overdue accounts — great work!' :
+       'No accounts match the current filters.') + '</div>';
     return;
   }
 
-  list.forEach(function(a, i) {
-    var key      = _tgtStateKey(a.repId, a.co);
-    var state    = _tgtItemState[key] || 'queue';
-    var pColor   = _tgtPriorityColor(a.lastInt);
-    var repMeta  = TGT_REPS.find(function(r){ return r.id===a.repId; }) || {photo:'',name:a.repName,color:'#94a3b8'};
-    var isDone   = state === 'done';
-    var item     = document.createElement('div');
-    item.className = 'tgt-queue-item' + (isDone ? ' done-item' : '');
+  // Build table
+  var html = '<table class="tgt-queue-table"><thead><tr>' +
+    '<th>#</th>' +
+    '<th>Account</th>' +
+    '<th>Contact</th>' +
+    '<th>Phone</th>' +
+    '<th>Stage / Source</th>' +
+    '<th>Last contact</th>' +
+    '<th>Status</th>' +
+    '<th></th>' +
+  '</tr></thead><tbody>';
 
-    var repBadge = repId === 'all'
-      ? '<img src="' + repMeta.photo + '" style="width:18px;height:18px;border-radius:50%;object-fit:cover;vertical-align:middle;margin-right:4px" onerror="this.style.display=\'none\'">' + repMeta.name.split(' ')[0]
+  list.forEach(function(a, i) {
+    var key     = _tgtStateKey(a.repId, a.co);
+    var state   = _tgtItemState[key] || 'queue';
+    var isDone  = state === 'done';
+    var repMeta = TGT_REPS.find(function(r){ return r.id===a.repId; }) || {name:a.repName||'',color:'#94a3b8'};
+
+    // Initials avatar color
+    var initials = a.co.split(' ').slice(0,2).map(function(w){ return w[0]||''; }).join('').toUpperCase();
+    var avatarBg = repMeta.color || '#94a3b8';
+
+    // Days class
+    var daysClass = a.lastInt > 60 ? 'overdue' : a.lastInt > 30 ? 'due-soon' : 'ok';
+    var daysLabel = a.lastInt > 0 ? a.lastInt + ' days ago' : 'Today';
+
+    // Status badge
+    var statusHtml;
+    if (isDone) {
+      statusHtml = '<span class="tgt-td-status" style="background:rgba(34,197,94,.1);color:#16a34a">Logged</span>';
+    } else if (a.lastInt > 60) {
+      statusHtml = '<span class="tgt-td-status" style="background:rgba(239,68,68,.1);color:var(--red)">Overdue</span>';
+    } else if (a.lastInt > 30) {
+      statusHtml = '<span class="tgt-td-status" style="background:rgba(245,158,11,.1);color:#d97706">Due soon</span>';
+    } else {
+      statusHtml = '<span class="tgt-td-status" style="background:rgba(29,158,117,.1);color:var(--teal)">On track</span>';
+    }
+
+    // Stage / source
+    var typeMap = {pipeline:'Pipeline', account:'Account', people:'Contact'};
+    var stageTxt = a.stage || a.source || (typeMap[a.type] || '—');
+
+    // Rep chip (shown when filtering all reps)
+    var repChip = (_tgtRepFilter === 'all')
+      ? '<div style="font-size:11px;color:var(--g400);margin-top:2px">' + repMeta.name + '</div>'
       : '';
 
-    item.innerHTML =
-      '<div class="tgt-priority-bar" style="background:' + pColor + '"></div>' +
-      '<div class="tgt-q-inner">' +
-        '<div class="tgt-q-num">' + (i+1) + '</div>' +
-        '<div class="tgt-q-main">' +
-          '<div class="tgt-q-co">' + a.co + (repBadge ? '<span style="font-size:10px;font-weight:400;color:var(--g400);margin-left:6px">' + repBadge + '</span>' : '') + '</div>' +
-          '<div class="tgt-q-contact">' + a.contact + (a.phone ? ' &middot; ' + a.phone : '') + '</div>' +
-          '<div class="tgt-q-reason">' + _tgtReasonText(a) + '</div>' +
-          '<div class="tgt-q-pills">' + _tgtPriorityLabel(a.lastInt) + _tgtStagePill(a.stage) + (isDone ? '<span class="tgt-pill tgt-pill-done"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-1px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg>Logged</span>' : '') + '</div>' +
-        '</div>' +
-      '</div>' +
-      '<div class="tgt-q-actions">' +
+    html +=
+      '<tr class="' + (isDone ? 'tgt-row-done' : '') + '">' +
+      '<td>' + (i+1) + '</td>' +
+      '<td><div class="tgt-td-account">' +
+        '<div class="tgt-td-account-init" style="background:' + avatarBg + '">' + initials + '</div>' +
+        '<div><div>' + a.co + '</div>' + repChip + '</div>' +
+      '</div></td>' +
+      '<td><div class="tgt-td-contact">' + a.contact + '</div>' +
+        (a.title ? '<div class="tgt-td-phone">' + a.title + '</div>' : '') +
+      '</td>' +
+      '<td style="color:var(--g500);font-size:12.5px">' + (a.phone || '—') + '</td>' +
+      '<td style="color:var(--g500);font-size:12.5px">' + stageTxt + '</td>' +
+      '<td><span class="tgt-td-days ' + daysClass + '">' + daysLabel + '</span></td>' +
+      '<td>' + statusHtml + '</td>' +
+      '<td><div class="tgt-td-actions">' +
         (isDone
-          ? '<button class="tgt-act-btn" onclick="_tgtUndo(\'' + key + '\')">Undo</button>'
-          : '<button class="tgt-act-btn tgt-primary" onclick="_tgtLogAction(\'' + key + '\',\'call\')">Log call</button>' +
-            '<button class="tgt-act-btn tgt-email" onclick="_tgtLogAction(\'' + key + '\',\'email\')">Log email</button>'
+          ? '<button class="tgt-td-btn" onclick="_tgtUndo(\'' + key + '\')">Undo</button>'
+          : '<button class="tgt-td-btn tgt-td-btn-call" onclick="_tgtLogAction(\'' + key + '\',\'call\')">Log call</button>' +
+            '<button class="tgt-td-btn tgt-td-btn-email" onclick="_tgtLogAction(\'' + key + '\',\'email\')">Log email</button>'
         ) +
-        '<button class="tgt-act-btn" onclick="_tgtNotifyRep(\'' + (a.repName||a.repId) + '\')" title="Notify rep">Notify</button>' +
-      '</div>';
-
-    container.appendChild(item);
+        '<button class="tgt-td-btn" onclick="_tgtNotifyRep(\'' + (a.repName||a.repId) + '\')">Notify</button>' +
+      '</div></td>' +
+      '</tr>';
   });
+
+  html += '</tbody></table>';
+  container.innerHTML = html;
 }
+
+function _tgtSetRepFilter(val) {
+  _tgtRepFilter = val;
+  _tgtRenderSMQueue();
+}
+
+function _tgtSetStatusFilter(val) {
+  _tgtStatusFilter = val;
+  _tgtRenderSMQueue();
+}
+
+function _tgtSetSearch(val) {
+  _tgtSearchQuery = val;
+  _tgtRenderSMQueue();
+}
+
 
 function _tgtRenderSMTeamList() {
   var container = document.getElementById('sm-team-list');
@@ -11556,36 +11770,57 @@ function renderTargetRows(rows) {
     return;
   }
 
-  list.forEach(function(a, i) {
-    var key    = _tgtStateKey(repId, a.co);
-    var state  = _tgtItemState[key] || 'queue';
-    var pColor = _tgtPriorityColor(a.lastInt);
-    var isDone = state === 'done';
+  list.forEach(function(a) {
+    var key     = _tgtStateKey(a.repId, a.co);
+    var state   = _tgtItemState[key] || 'queue';
+    var pColor  = _tgtPriorityColor(a.lastInt);
+    var repMeta = TGT_REPS.find(function(r){ return r.id===a.repId; }) || {photo:'',name:a.repName||'',color:'#94a3b8'};
+    var isDone  = state === 'done';
+    var item    = document.createElement('div');
+    item.className = 'tgt-qcard' + (isDone ? ' tgt-qcard-done' : '');
 
-    var item = document.createElement('div');
-    item.className = 'tgt-queue-item' + (isDone ? ' done-item' : '');
+    var daysColor = a.lastInt > 60 ? 'var(--red)' : a.lastInt > 30 ? 'var(--amber)' : 'var(--g400)';
+    var daysVal   = a.lastInt > 0 ? a.lastInt + 'd' : 'Today';
+    var typeMap   = {pipeline:'Pipeline', account:'Account', people:'Contact'};
+    var srcLabel  = a.stage || a.source || (typeMap[a.type] || '');
+
+    var repBadge = repId === 'all'
+      ? '<img src="' + repMeta.photo + '" style="width:18px;height:18px;border-radius:50%;object-fit:cover;flex-shrink:0" onerror="this.style.display=\'none\'">' +
+        '<span>' + repMeta.name.split(' ')[0] + '</span>'
+      : '';
 
     item.innerHTML =
-      '<div class="tgt-priority-bar" style="background:' + pColor + '"></div>' +
-      '<div class="tgt-q-inner">' +
-        '<div class="tgt-q-num">' + (i+1) + '</div>' +
-        '<div class="tgt-q-main">' +
-          '<div class="tgt-q-co" style="cursor:pointer" onclick="openDrawer(\'' + a.co.replace(/'/g,"\\'") + '\')">' + a.co + '</div>' +
-          '<div class="tgt-q-contact">' + (a.contact||'') + (a.phone ? ' &middot; ' + a.phone : '') + '</div>' +
-          '<div class="tgt-q-reason">' + _tgtReasonText(a) + '</div>' +
-          '<div class="tgt-q-pills">' + _tgtPriorityLabel(a.lastInt) + _tgtStagePill(a.stage) +
-            (isDone ? '<span class="tgt-pill tgt-pill-done"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-1px;margin-right:3px"><polyline points="20 6 9 17 4 12"/></svg>Logged</span>' : '') +
-            (state==='skipped' ? '<span class="tgt-pill tgt-pill-gray">Skipped</span>' : '') +
+      // Card top: company info + days badge
+      '<div class="tgt-qcard-top">' +
+        '<div class="tgt-qcard-left">' +
+          '<div class="tgt-qcard-bar" style="background:' + pColor + '"></div>' +
+          '<div class="tgt-qcard-info">' +
+            '<div class="tgt-qcard-co">' + a.co + '</div>' +
+            '<div class="tgt-qcard-contact">' + a.contact + (a.phone ? ' · ' + a.phone : '') + '</div>' +
+            (repId === 'all' ? '<div class="tgt-qcard-rep">' + repBadge + '</div>' : '') +
           '</div>' +
         '</div>' +
+        '<div class="tgt-qcard-days" style="color:' + daysColor + '">' +
+          '<span class="tgt-qcard-days-val">' + daysVal + '</span>' +
+          '<span class="tgt-qcard-days-lbl">ago</span>' +
+        '</div>' +
       '</div>' +
-      '<div class="tgt-q-actions">' +
-        (isDone || state==='skipped'
-          ? '<button class="tgt-act-btn" onclick="_tgtUndo(\'' + key + '\',\'' + repId + '\')">Undo</button>'
-          : '<button class="tgt-act-btn tgt-primary" onclick="_tgtLogSR(\'' + key + '\',\'call\',\'' + a.co.replace(/'/g,"\\'") + '\',\'' + repId + '\')">Log call</button>' +
-            '<button class="tgt-act-btn tgt-email"   onclick="_tgtLogSR(\'' + key + '\',\'email\',\'' + a.co.replace(/'/g,"\\'") + '\',\'' + repId + '\')">Log email</button>' +
-            '<button class="tgt-act-btn" onclick="_tgtSkipSR(\'' + key + '\',\'' + repId + '\')">Skip</button>'
+
+      // Pills row
+      '<div class="tgt-qcard-pills">' +
+        _tgtPriorityLabel(a.lastInt) +
+        (srcLabel ? '<span class="tgt-pill tgt-pill-gray">' + srcLabel + '</span>' : '') +
+        (isDone ? '<span class="tgt-pill tgt-pill-done">Logged</span>' : '') +
+      '</div>' +
+
+      // Actions footer
+      '<div class="tgt-qcard-actions">' +
+        (isDone
+          ? '<button class="tgt-qcard-btn" onclick="_tgtUndo(\'' + key + '\')">Undo</button>'
+          : '<button class="tgt-qcard-btn tgt-qcard-btn-call" onclick="_tgtLogAction(\'' + key + '\',\'call\')">Log call</button>' +
+            '<button class="tgt-qcard-btn tgt-qcard-btn-email" onclick="_tgtLogAction(\'' + key + '\',\'email\')">Log email</button>'
         ) +
+        '<button class="tgt-qcard-btn tgt-qcard-btn-ghost" onclick="_tgtNotifyRep(\'' + (a.repName||a.repId) + '\')">Notify</button>' +
       '</div>';
 
     container.appendChild(item);
