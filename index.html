@@ -5657,204 +5657,313 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
 <div id="settings-ace" class="ts-section" style="display:none">
   <div class="settings-section-title">Ask ACE Configuration</div>
-  <div class="settings-section-sub">Control how ACE coaches your team — tone, topics, access, and usage limits. Settings here apply to all users under your account.</div>
+  <div class="settings-section-sub">Control how ACE coaches your team — personality, topics, access, and usage limits.</div>
 
   <!-- Status bar -->
-  <div style="background:var(--navy);border-radius:12px;padding:16px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px">
-    <div style="width:38px;height:38px;background:var(--teal);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div>
-    <div style="flex:1"><div style="font-weight:700;font-size:14px;color:#fff">ACE is Active</div><div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">Analyzing team data in real time · Last scan 4 min ago</div></div>
-    <div style="text-align:right;margin-right:12px"><div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:3px">Credits used this month</div><div style="font-size:18px;font-weight:800;color:#fff;font-family:var(--mono)">4,821 <span style="font-size:12px;color:rgba(255,255,255,0.4)">/ 10,000</span></div></div>
-    <div style="width:80px"><div style="height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden"><div style="width:48%;height:100%;background:var(--teal);border-radius:3px"></div></div><div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:3px;text-align:right">48% used</div></div>
+  <div style="background:var(--navy);border-radius:12px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:14px">
+    <div style="width:38px;height:38px;background:var(--teal);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg>
+    </div>
+    <div style="flex:1">
+      <div style="font-weight:700;font-size:14px;color:#fff">ACE is Active</div>
+      <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:2px">Analyzing team data in real time · Last scan 4 min ago</div>
+    </div>
+    <div style="text-align:right;margin-right:16px">
+      <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-bottom:3px">Credits used this month</div>
+      <div style="font-size:20px;font-weight:800;color:#fff;font-family:var(--mono)">4,821 <span style="font-size:12px;color:rgba(255,255,255,0.4);font-weight:400">/ 10,000</span></div>
+    </div>
+    <div style="width:90px">
+      <div style="height:6px;background:rgba(255,255,255,0.15);border-radius:3px;overflow:hidden"><div style="width:48%;height:100%;background:var(--teal);border-radius:3px"></div></div>
+      <div style="font-size:10px;color:rgba(255,255,255,0.4);margin-top:4px;text-align:right">48% used</div>
+    </div>
   </div>
 
-  <!-- ACE tabs -->
-  <div style="display:flex;gap:0;border-bottom:2px solid var(--g200);margin-bottom:20px" id="ace-config-tabs">
-    <div onclick="switchAceTab('coaching',this)" style="padding:9px 16px;font-size:13px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy);margin-bottom:-2px;cursor:pointer">Coaching Style</div>
-    <div onclick="switchAceTab('access',this)" style="padding:9px 16px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">Team Access</div>
-    <div onclick="switchAceTab('usage',this)" style="padding:9px 16px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">AI Usage</div>
+  <!-- Tabs -->
+  <div style="display:flex;gap:0;border-bottom:2px solid var(--g200);margin-bottom:24px" id="ace-config-tabs">
+    <div onclick="switchAceTab('coaching',this)" style="padding:9px 18px;font-size:13px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy);margin-bottom:-2px;cursor:pointer">Coaching Style</div>
+    <div onclick="switchAceTab('topics',this)" style="padding:9px 18px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">Topics &amp; Alerts</div>
+    <div onclick="switchAceTab('access',this)" style="padding:9px 18px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">Team Access</div>
+    <div onclick="switchAceTab('usage',this)" style="padding:9px 18px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">AI Usage</div>
   </div>
 
-  <!-- Tab: Coaching Style -->
+  <!-- ─── Tab: Coaching Style ─────────────────────────────────────── -->
   <div id="ace-tab-coaching">
 
-    <!-- SR Personal Style Picker (hidden for SM) -->
+    <!-- SR view -->
     <div id="ace-sr-style" style="display:none">
-      <div style="border:1.5px solid var(--teal);border-radius:14px;overflow:hidden;margin-bottom:14px;background:rgba(29,158,117,0.02)">
-        <div style="background:linear-gradient(135deg,rgba(26,32,53,0.06) 0%,rgba(29,158,117,0.08) 100%);border-bottom:1px solid var(--g200);padding:14px 18px">
-          <div style="font-size:14px;font-weight:700;color:var(--dark)">My Ace Style</div>
+      <div style="border:1.5px solid var(--teal);border-radius:14px;overflow:hidden;margin-bottom:16px">
+        <div style="background:linear-gradient(135deg,rgba(26,32,53,0.05) 0%,rgba(29,158,117,0.07) 100%);border-bottom:1px solid var(--g200);padding:14px 18px">
+          <div style="font-size:14px;font-weight:700;color:var(--dark)">My Ace Personality</div>
           <div style="font-size:11px;color:var(--g400);margin-top:2px">Choose how Ace coaches and communicates with you personally</div>
         </div>
         <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px" id="ace-persona-grid">
-          <label class="ace-persona-card" onclick="_selectPersona(this,'data-hawk')" style="border:2px solid var(--g200);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;background:#fff">
-            <input type="radio" name="ace-persona" value="data-hawk" style="display:none">
+          <label class="ace-persona-card" onclick="_selectPersona(this,'data-nerd')" style="border:2px solid var(--g200);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;background:#fff">
+            <input type="radio" name="ace-persona" value="data-nerd" style="display:none">
             <div style="font-size:26px;margin-bottom:8px">📊</div>
-            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Data Hawk</div>
-            <div style="font-size:11px;color:var(--g400);line-height:1.5">Deep in the numbers. Every insight is backed by data. Best if you want precise analytics and benchmarks with no fluff.</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Data Nerd</div>
+            <div style="font-size:11px;color:var(--g400);line-height:1.5">Every insight backed by a number. Benchmarks, trends, and precision. Best if you want zero fluff and full analytics.</div>
           </label>
           <label class="ace-persona-card" onclick="_selectPersona(this,'field-coach')" style="border:2px solid var(--teal);border-radius:12px;padding:16px;cursor:pointer;background:rgba(29,158,117,0.04);transition:.15s">
             <input type="radio" name="ace-persona" value="field-coach" checked style="display:none">
             <div style="font-size:26px;margin-bottom:8px">🤝</div>
-            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Field Coach</div>
-            <div style="font-size:11px;color:var(--g400);line-height:1.5">Real-world focused, peer-to-peer tone. Practical advice for what actually works in the field. Balanced and supportive.</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Friendly Coach</div>
+            <div style="font-size:11px;color:var(--g400);line-height:1.5">Warm, peer-to-peer tone. Practical advice with encouragement. Balanced and confidence-building.</div>
           </label>
           <label class="ace-persona-card" onclick="_selectPersona(this,'the-closer')" style="border:2px solid var(--g200);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;background:#fff">
             <input type="radio" name="ace-persona" value="the-closer" style="display:none">
             <div style="font-size:26px;margin-bottom:8px">🎯</div>
-            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">The Closer</div>
-            <div style="font-size:11px;color:var(--g400);line-height:1.5">Push mode. Focused on next close, urgency, and momentum. Best when you want Ace to challenge you and push harder.</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Direct</div>
+            <div style="font-size:11px;color:var(--g400);line-height:1.5">No fluff. Clear feedback, specific next actions. Best for experienced reps who want straight talk.</div>
           </label>
-          <label class="ace-persona-card" onclick="_selectPersona(this,'steady-compass')" style="border:2px solid var(--g200);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;background:#fff">
-            <input type="radio" name="ace-persona" value="steady-compass" style="display:none">
-            <div style="font-size:26px;margin-bottom:8px">🧭</div>
-            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Steady Compass</div>
-            <div style="font-size:11px;color:var(--g400);line-height:1.5">Calm, methodical, structured. Helps you think through strategy step-by-step. Great for planning and reflection.</div>
+          <label class="ace-persona-card" onclick="_selectPersona(this,'aggressive')" style="border:2px solid var(--g200);border-radius:12px;padding:16px;cursor:pointer;transition:.15s;background:#fff">
+            <input type="radio" name="ace-persona" value="aggressive" style="display:none">
+            <div style="font-size:26px;margin-bottom:8px">🔥</div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Aggressive</div>
+            <div style="font-size:11px;color:var(--g400);line-height:1.5">High-pressure, challenge-driven. Pushes hard on urgency and pipeline. Best for competitive reps chasing big targets.</div>
           </label>
         </div>
       </div>
-      <!-- Response style for SR -->
-      <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
+      <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:16px">
         <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Response Length</div><div style="font-size:11px;color:var(--g400);margin-top:2px">How much detail Ace gives you</div></div>
-        <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
+        <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
           <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-sr-depth" value="brief" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Quick &amp; Direct</div><div style="font-size:11px;color:var(--g400)">2–3 sentences. Good during calls or quick checks.</div></div></label>
           <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-sr-depth" value="standard" checked style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Balanced <span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:1px 6px;margin-left:4px">Default</span></div><div style="font-size:11px;color:var(--g400)">A full paragraph with context and next steps.</div></div></label>
           <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-sr-depth" value="detailed" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Deep Dive</div><div style="font-size:11px;color:var(--g400)">Full breakdown with data. Best for planning sessions.</div></div></label>
         </div>
       </div>
       <button class="save-btn" onclick="showToast('✓ Your Ace style saved')">Save My Style</button>
-    </div><!-- end ace-sr-style -->
+    </div>
 
-    <!-- SM Team Config (hidden for SR) -->
+    <!-- SM view -->
     <div id="ace-sm-config">
-    <!-- Tone -->
-    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
-      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Coaching Tone</div><div style="font-size:11px;color:var(--g400);margin-top:2px">How ACE communicates with your reps when giving feedback</div></div>
-      <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px">
-        <label style="border:2px solid var(--g200);border-radius:10px;padding:14px;cursor:pointer;transition:.15s" onclick="this.style.borderColor='var(--teal)';this.style.background='#f0fdfa';document.querySelectorAll('.ace-tone-card').forEach(function(c){if(c!==this)c.style.borderColor='var(--g200)',c.style.background='#fff'}.bind(this))">
-          <input type="radio" name="ace-tone" value="direct" style="display:none">
-          <div style="font-size:22px;margin-bottom:6px">💬</div>
-          <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Direct &amp; Concise</div>
-          <div style="font-size:11px;color:var(--g400)">Short, to-the-point coaching. Facts first, minimal encouragement.</div>
-        </label>
-        <label style="border:2px solid var(--teal);border-radius:10px;padding:14px;cursor:pointer;background:#f0fdfa;transition:.15s">
-          <input type="radio" name="ace-tone" value="balanced" checked style="display:none">
-          <div style="font-size:22px;margin-bottom:6px">⚖️</div>
-          <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Balanced Coach</div>
-          <div style="font-size:11px;color:var(--g400);line-height:1.4">Data-backed insights with encouragement. Constructive and supportive.</div>
-        </label>
-        <label style="border:2px solid var(--g200);border-radius:10px;padding:14px;cursor:pointer;transition:.15s">
-          <input type="radio" name="ace-tone" value="motivational" style="display:none">
-          <div style="font-size:22px;margin-bottom:6px">🔥</div>
-          <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:4px">Motivational</div>
-          <div style="font-size:11px;color:var(--g400)">High-energy, positive reinforcement. Emphasizes wins and momentum.</div>
-        </label>
-      </div>
-    </div>
 
-    <!-- Response depth -->
-    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
-      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Response Depth</div><div style="font-size:11px;color:var(--g400);margin-top:2px">How detailed ACE's answers should be</div></div>
-      <div style="padding:16px;display:flex;flex-direction:column;gap:10px">
-        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="brief" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Brief</div><div style="font-size:11px;color:var(--g400)">2–3 sentence answers. Good for quick checks during calls.</div></div></label>
-        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="standard" checked style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Standard <span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:1px 6px;margin-left:4px">Recommended</span></div><div style="font-size:11px;color:var(--g400)">A paragraph with context and next steps. Balanced detail.</div></div></label>
-        <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="detailed" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Detailed</div><div style="font-size:11px;color:var(--g400)">Full analysis with data breakdown. Best for planning sessions.</div></div></label>
-      </div>
-    </div>
+      <!-- Personality picker -->
+      <div style="margin-bottom:20px">
+        <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px">Ace Coaching Personality</div>
+        <div style="font-size:12px;color:var(--g400);margin-bottom:14px">Choose how Ace communicates with your reps. This sets the tone across all coaching, nudges, and insights your team receives.</div>
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:10px" id="ace-sm-personality-grid">
 
-    <!-- Topic controls -->
-    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
-      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Topics ACE Can Discuss with Reps</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Unchecked topics will not be surfaced to sales reps (managers always see everything)</div></div>
-      <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px">
-        <label class="toggle-switch" style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);width:auto"><input type="checkbox" checked style="accent-color:var(--teal)"><span class="toggle-slider" style="flex-shrink:0"></span> Pipeline &amp; Opportunities</label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal)"> Goal Progress &amp; Pace</label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal)"> Contact Recommendations</label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal)"> Activity Coaching</label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" style="accent-color:var(--teal)"> Compensation &amp; Commission</label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" style="accent-color:var(--teal)"> Team Performance Comparisons</label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal)"> Product Knowledge</label>
-        <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark)"><input type="checkbox" style="accent-color:var(--teal)"> Forecasting &amp; Projections</label>
-      </div>
-    </div>
+          <label onclick="_selectSMPersonality(this,'data-nerd')" style="border:2px solid var(--g200);border-radius:12px;padding:16px 12px;cursor:pointer;transition:.15s;background:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px">
+            <input type="radio" name="ace-sm-personality" value="data-nerd" style="display:none">
+            <div style="font-size:28px">📊</div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)">Data Nerd</div>
+            <div style="font-size:10px;color:var(--g400);line-height:1.4">Metrics-first. Every insight tied to a number. Zero fluff.</div>
+          </label>
 
-    <!-- Insight sensitivity -->
-    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:16px">
-      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Alert Thresholds</div></div>
-      <div style="padding:16px;display:flex;flex-direction:column;gap:14px">
-        <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">At-Risk Pace Threshold</div><div style="font-size:11px;color:var(--g400)">Flag an advisor when below this % of expected annual pace</div></div><div style="display:flex;align-items:center;gap:8px"><input type="number" value="60" min="0" max="100" style="width:65px;border:1.5px solid var(--g200);border-radius:7px;padding:6px 10px;font-size:13px;text-align:center;font-family:var(--font)"><span style="font-size:13px;color:var(--g400)">%</span></div></div>
-        <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Stalled Opportunity (days)</div><div style="font-size:11px;color:var(--g400)">Flag an opportunity when no activity for this many days</div></div><div style="display:flex;align-items:center;gap:8px"><input type="number" value="14" min="1" max="90" style="width:65px;border:1.5px solid var(--g200);border-radius:7px;padding:6px 10px;font-size:13px;text-align:center;font-family:var(--font)"><span style="font-size:13px;color:var(--g400)">days</span></div></div>
-        <div style="display:flex;align-items:center;justify-content:space-between"><div><div style="font-size:13px;font-weight:500">Daily Team Briefing</div><div style="font-size:11px;color:var(--g400)">ACE sends manager a morning summary to the dashboard</div></div><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></div>
-      </div>
-    </div>
+          <label onclick="_selectSMPersonality(this,'friendly')" style="border:2px solid var(--teal);border-radius:12px;padding:16px 12px;cursor:pointer;background:rgba(29,158,117,0.05);transition:.15s;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px">
+            <input type="radio" name="ace-sm-personality" value="friendly" checked style="display:none">
+            <div style="font-size:28px">🤝</div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)">Friendly</div>
+            <div style="font-size:10px;color:var(--g400);line-height:1.4">Warm and encouraging. Builds confidence alongside performance.</div>
+          </label>
 
-    <button class="save-btn" onclick="showToast('✓ ACE coaching configuration saved')">Save Configuration</button>
-    </div><!-- end ace-sm-config -->
+          <label onclick="_selectSMPersonality(this,'direct')" style="border:2px solid var(--g200);border-radius:12px;padding:16px 12px;cursor:pointer;transition:.15s;background:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px">
+            <input type="radio" name="ace-sm-personality" value="direct" style="display:none">
+            <div style="font-size:28px">💬</div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)">Direct</div>
+            <div style="font-size:10px;color:var(--g400);line-height:1.4">Clear, no fluff. Specific actions, honest feedback.</div>
+          </label>
+
+          <label onclick="_selectSMPersonality(this,'aggressive')" style="border:2px solid var(--g200);border-radius:12px;padding:16px 12px;cursor:pointer;transition:.15s;background:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px">
+            <input type="radio" name="ace-sm-personality" value="aggressive" style="display:none">
+            <div style="font-size:28px">🔥</div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)">Aggressive</div>
+            <div style="font-size:10px;color:var(--g400);line-height:1.4">High-pressure coaching. Pushes urgency and pipeline momentum.</div>
+          </label>
+
+          <label onclick="_selectSMPersonality(this,'strategic')" style="border:2px solid var(--g200);border-radius:12px;padding:16px 12px;cursor:pointer;transition:.15s;background:#fff;display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px">
+            <input type="radio" name="ace-sm-personality" value="strategic" style="display:none">
+            <div style="font-size:28px">🧭</div>
+            <div style="font-size:12px;font-weight:700;color:var(--dark)">Strategic</div>
+            <div style="font-size:10px;color:var(--g400);line-height:1.4">Big-picture thinking. Connects daily actions to long-term goals.</div>
+          </label>
+
+        </div>
+      </div>
+
+      <!-- Response depth -->
+      <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:20px">
+        <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px"><div style="font-size:13px;font-weight:700;color:var(--dark)">Response Depth</div><div style="font-size:11px;color:var(--g400);margin-top:2px">How detailed ACE's answers should be</div></div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:12px">
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="brief" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Brief</div><div style="font-size:11px;color:var(--g400)">2–3 sentences. Good for quick checks during calls.</div></div></label>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="standard" checked style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Standard <span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:1px 6px;margin-left:4px">Recommended</span></div><div style="font-size:11px;color:var(--g400)">A paragraph with context and next steps. Balanced detail.</div></div></label>
+          <label style="display:flex;align-items:flex-start;gap:12px;cursor:pointer"><input type="radio" name="ace-depth" value="detailed" style="accent-color:var(--teal);margin-top:2px"><div><div style="font-size:13px;font-weight:600;color:var(--dark)">Detailed</div><div style="font-size:11px;color:var(--g400)">Full analysis with data breakdown. Best for planning sessions.</div></div></label>
+        </div>
+      </div>
+
+      <button class="save-btn" onclick="showToast('✓ ACE coaching style saved')">Save Coaching Style</button>
+    </div>
   </div>
 
-  <!-- Tab: Team Access -->
+  <!-- ─── Tab: Topics & Alerts ───────────────────────────────────── -->
+  <div id="ace-tab-topics" style="display:none">
+
+    <!-- Topics — grouped by sensitivity -->
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:16px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px">
+        <div style="font-size:13px;font-weight:700;color:var(--dark)">Topics ACE Can Discuss with Reps</div>
+        <div style="font-size:11px;color:var(--g400);margin-top:2px">Managers always see everything. Unchecked topics are hidden from sales reps.</div>
+      </div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:16px">
+
+        <!-- Standard topics -->
+        <div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:8px">Coaching &amp; Performance</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);cursor:pointer"><label class="toggle-switch" style="margin:0"><input type="checkbox" checked><span class="toggle-slider"></span></label> Pipeline &amp; Opportunities</label>
+            <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);cursor:pointer"><label class="toggle-switch" style="margin:0"><input type="checkbox" checked><span class="toggle-slider"></span></label> Goal Progress &amp; Pace</label>
+            <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);cursor:pointer"><label class="toggle-switch" style="margin:0"><input type="checkbox" checked><span class="toggle-slider"></span></label> Contact Recommendations</label>
+            <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);cursor:pointer"><label class="toggle-switch" style="margin:0"><input type="checkbox" checked><span class="toggle-slider"></span></label> Activity Coaching</label>
+            <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);cursor:pointer"><label class="toggle-switch" style="margin:0"><input type="checkbox" checked><span class="toggle-slider"></span></label> Product Knowledge</label>
+            <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);cursor:pointer"><label class="toggle-switch" style="margin:0"><input type="checkbox" checked><span class="toggle-slider"></span></label> Forecasting &amp; Projections</label>
+          </div>
+        </div>
+
+        <div style="border-top:1px solid var(--g100);padding-top:16px">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+            <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--amber)">Sensitive Topics</div>
+            <span style="font-size:10px;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:4px;padding:1px 7px;font-weight:600">Review before enabling</span>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);cursor:pointer"><label class="toggle-switch" style="margin:0"><input type="checkbox"><span class="toggle-slider"></span></label> Compensation &amp; Commission</label>
+            <label style="display:flex;align-items:center;gap:10px;font-size:13px;color:var(--dark);cursor:pointer"><label class="toggle-switch" style="margin:0"><input type="checkbox"><span class="toggle-slider"></span></label> Team Performance Comparisons</label>
+          </div>
+          <div style="font-size:11px;color:var(--g400);margin-top:8px">These topics may surface salary info or peer rankings. Enable only if your team culture supports it.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert thresholds -->
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:16px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px">
+        <div style="font-size:13px;font-weight:700;color:var(--dark)">Alert Thresholds</div>
+        <div style="font-size:11px;color:var(--g400);margin-top:2px">Define when ACE flags an advisor or deal as needing attention</div>
+      </div>
+      <div style="padding:16px;display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--dark)">At-Risk Pace Threshold</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Flag an advisor when below this % of expected annual pace</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="number" value="60" min="0" max="100" style="width:65px;border:1.5px solid var(--g200);border-radius:7px;padding:6px 10px;font-size:13px;text-align:center;font-family:var(--font)">
+            <span style="font-size:13px;color:var(--g400)">%</span>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--g100);padding-top:16px;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--dark)">Stalled Opportunity</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Flag an opportunity when no activity for this many days</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input type="number" value="14" min="1" max="90" style="width:65px;border:1.5px solid var(--g200);border-radius:7px;padding:6px 10px;font-size:13px;text-align:center;font-family:var(--font)">
+            <span style="font-size:13px;color:var(--g400)">days</span>
+          </div>
+        </div>
+        <div style="border-top:1px solid var(--g100);padding-top:16px;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:13px;font-weight:600;color:var(--dark)">Daily Team Briefing</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">ACE sends you a morning summary to the dashboard each day</div>
+          </div>
+          <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+        </div>
+      </div>
+    </div>
+
+    <button class="save-btn" onclick="showToast('✓ Topics &amp; alert settings saved')">Save Settings</button>
+  </div>
+
+  <!-- ─── Tab: Team Access ───────────────────────────────────────── -->
   <div id="ace-tab-access" style="display:none">
-    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:16px">
       <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
-        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Rep ACE Access</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Toggle ACE access per rep. Credit limits apply per user.</div></div>
-        <div style="font-size:12px;color:var(--g500)">8 / 10 reps enabled</div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Rep ACE Access</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:2px">Toggle access and credit limits per rep.</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="font-size:12px;color:var(--g500)">6 / 6 reps enabled</span>
+          <div style="display:flex;align-items:center;gap:6px">
+            <span style="font-size:11px;color:var(--g400)">Set all to</span>
+            <select onchange="_aceSetAllAccess(this.value)" style="border:1.5px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)">
+              <option value="">— choose —</option>
+              <option value="Full Access">Full Access</option>
+              <option value="Coaching Only">Coaching Only</option>
+              <option value="Read Only">Read Only</option>
+            </select>
+          </div>
+        </div>
       </div>
       <table style="width:100%;border-collapse:collapse;font-size:13px">
-        <thead><tr style="background:var(--g50)"><th style="padding:9px 16px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th><th style="padding:9px 16px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Access Level</th><th style="padding:9px 16px;text-align:right;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Monthly Limit</th><th style="padding:9px 16px;text-align:center;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Enabled</th></tr></thead>
-        <tbody>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Aya Pedrad</div><div style="font-size:11px;color:var(--g400)">aya@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Brock Wilson</div><div style="font-size:11px;color:var(--g400)">brock@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Elena Vasquez</div><div style="font-size:11px;color:var(--g400)">elena@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option selected>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="500" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Doug Silverness</div><div style="font-size:11px;color:var(--g400)">doug@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option selected>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Jules Richards</div><div style="font-size:11px;color:var(--g400)">jules@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option selected>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="250" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
-          <tr><td style="padding:10px 16px"><div style="font-weight:600">Priya Nair</div><div style="font-size:11px;color:var(--g400)">priya@goals.com</div></td><td style="padding:10px 16px"><select style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label></td></tr>
+        <thead>
+          <tr style="background:var(--g50)">
+            <th style="padding:9px 16px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th>
+            <th style="padding:9px 16px;text-align:left;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Access Level</th>
+            <th style="padding:9px 16px;text-align:right;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Monthly Limit</th>
+            <th style="padding:9px 16px;text-align:center;font-weight:600;font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Enabled</th>
+          </tr>
+        </thead>
+        <tbody id="ace-access-tbody">
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Aya Pedrad</div><div style="font-size:11px;color:var(--g400)">aya@goals.com</div></td><td style="padding:10px 16px"><select class="ace-access-level" style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Brock Wilson</div><div style="font-size:11px;color:var(--g400)">brock@goals.com</div></td><td style="padding:10px 16px"><select class="ace-access-level" style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Elena Vasquez</div><div style="font-size:11px;color:var(--g400)">elena@goals.com</div></td><td style="padding:10px 16px"><select class="ace-access-level" style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option selected>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="500" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Doug Silverness</div><div style="font-size:11px;color:var(--g400)">doug@goals.com</div></td><td style="padding:10px 16px"><select class="ace-access-level" style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px"><div style="font-weight:600">Jules Richards</div><div style="font-size:11px;color:var(--g400)">jules@goals.com</div></td><td style="padding:10px 16px"><select class="ace-access-level" style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option selected>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="250" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
+          <tr><td style="padding:10px 16px"><div style="font-weight:600">Priya Nair</div><div style="font-size:11px;color:var(--g400)">priya@goals.com</div></td><td style="padding:10px 16px"><select class="ace-access-level" style="border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;font-family:var(--font)"><option>Full Access</option><option>Coaching Only</option><option>Read Only</option></select></td><td style="padding:10px 16px;text-align:right"><input type="number" value="1000" style="width:80px;border:1px solid var(--g200);border-radius:6px;padding:4px 8px;font-size:12px;text-align:right;font-family:var(--font)"> <span style="font-size:11px;color:var(--g400)">credits</span></td><td style="padding:10px 16px;text-align:center"><label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label></td></tr>
         </tbody>
       </table>
     </div>
-    <button class="save-btn" onclick="showToast('✓ Team ACE access settings saved')">Save Access Settings</button>
+    <button class="save-btn" onclick="showToast('✓ Team access settings saved')">Save Access Settings</button>
   </div>
 
-  <!-- Tab: AI Usage -->
+  <!-- ─── Tab: AI Usage ─────────────────────────────────────────── -->
   <div id="ace-tab-usage" style="display:none">
-    <!-- SM: Company total -->
-    <div id="ace-usage-sm">
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px">
       <div style="background:var(--navy);border-radius:12px;padding:18px 20px;color:#fff">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:rgba(255,255,255,0.4);margin-bottom:8px">Total Credits Used</div>
-        <div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--teal)">4,821</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:rgba(255,255,255,0.4);margin-bottom:8px">Total Credits Used</div>
+        <div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--teal)">4,821</div>
         <div style="font-size:11px;color:rgba(255,255,255,0.4);margin-top:4px">of 10,000 this month</div>
-        <div style="height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;margin-top:10px"><div style="width:48%;height:100%;background:var(--teal);border-radius:3px"></div></div>
+        <div style="height:5px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden;margin-top:12px"><div style="width:48%;height:100%;background:var(--teal);border-radius:3px"></div></div>
       </div>
       <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:18px 20px">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px">Queries This Month</div>
-        <div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--dark)">312</div>
-        <div style="font-size:11px;color:var(--g400);margin-top:4px">Avg 10.4/day</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:8px">Queries This Month</div>
+        <div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--dark)">312</div>
+        <div style="font-size:11px;color:var(--g400);margin-top:4px">Avg 10.4 / day</div>
       </div>
       <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:18px 20px">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px">Credits Remaining</div>
-        <div style="font-size:26px;font-weight:800;font-family:var(--mono);color:var(--dark)">5,179</div>
-        <div style="font-size:11px;color:var(--teal);margin-top:4px">Resets Jul 1, 2026</div>
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:8px">Credits Remaining</div>
+        <div style="font-size:28px;font-weight:800;font-family:var(--mono);color:var(--dark)">5,179</div>
+        <div style="font-size:11px;color:var(--teal);margin-top:4px">Resets Aug 1, 2026</div>
       </div>
     </div>
 
-    <!-- Per-user breakdown -->
     <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden">
       <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
         <div style="font-size:13px;font-weight:700;color:var(--dark)">Usage by Rep</div>
-        <div style="font-size:11px;color:var(--g400)">June 2026</div>
+        <div style="font-size:11px;color:var(--g400)">July 2026</div>
       </div>
       <table style="width:100%;border-collapse:collapse;font-size:13px">
-        <thead><tr style="background:var(--g50)"><th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th><th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Queries</th><th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Credits</th><th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Usage bar</th></tr></thead>
+        <thead>
+          <tr style="background:var(--g50)">
+            <th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Rep</th>
+            <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Queries</th>
+            <th style="padding:9px 16px;text-align:right;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Credits</th>
+            <th style="padding:9px 16px;text-align:left;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);border-bottom:1px solid var(--g200)">Usage</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Patricia Monroe <span style="font-size:10px;background:rgba(79,126,247,0.1);color:var(--blue);border-radius:4px;padding:1px 6px;margin-left:4px">Manager</span></td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--dark)">84</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono);color:var(--dark)">1,260</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:63%;height:100%;background:var(--blue);border-radius:3px"></div></div></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Aya Pedrad</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">61</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">915</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:46%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Brock Wilson</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">58</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">870</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:44%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Doug Silverness</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">47</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">705</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:35%;height:100%;background:var(--amber);border-radius:3px"></div></div></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Elena Vasquez</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">34</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">510</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;width:100%;max-width:200px"><div style="width:26%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
-          <tr><td style="padding:10px 16px;font-weight:600;color:var(--g400)" colspan="4" style="text-align:center;font-size:12px">+ 5 more reps · <button onclick="showToast('Full report coming soon')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer">View full report →</button></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Aya Pedrad</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">61</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">915</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;max-width:200px"><div style="width:46%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Brock Wilson</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">58</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">870</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;max-width:200px"><div style="width:44%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Doug Silverness</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">47</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">705</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;max-width:200px"><div style="width:35%;height:100%;background:var(--amber);border-radius:3px"></div></div></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Elena Vasquez</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">34</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">510</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;max-width:200px"><div style="width:26%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
+          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:10px 16px;font-weight:600">Jules Richards</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">29</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">435</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;max-width:200px"><div style="width:22%;height:100%;background:var(--teal);border-radius:3px"></div></div></td></tr>
+          <tr><td style="padding:10px 16px;font-weight:600">Priya Nair</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">19</td><td style="padding:10px 16px;text-align:right;font-family:var(--mono)">285</td><td style="padding:10px 16px"><div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;max-width:200px"><div style="width:14%;height:100%;background:var(--g300);border-radius:3px"></div></div></td></tr>
         </tbody>
       </table>
     </div>
   </div>
-</div>    </div>
-  </div>
+
+</div><!-- end settings-ace -->
 </div><!-- end page-tools-settings -->
 
 
@@ -14191,7 +14300,7 @@ function _selectPersona(el, val) {
   el.style.background = 'rgba(29,158,117,0.04)';
 }
 function switchAceTab(tab, btn) {
-  ['coaching','access','usage'].forEach(function(t) {
+  ['coaching','topics','access','usage'].forEach(function(t) {
     var el = document.getElementById('ace-tab-'+t);
     if (el) el.style.display = (t===tab) ? 'block' : 'none';
   });
@@ -14207,6 +14316,25 @@ function switchAceTab(tab, btn) {
     btn.style.borderBottom = '2px solid var(--navy)';
     btn.style.marginBottom = '-2px';
   }
+}
+
+function _selectSMPersonality(el, val) {
+  document.querySelectorAll('#ace-sm-personality-grid label').forEach(function(l) {
+    l.style.borderColor = 'var(--g200)';
+    l.style.background  = '#fff';
+  });
+  el.style.borderColor = 'var(--teal)';
+  el.style.background  = 'rgba(29,158,117,0.05)';
+}
+
+function _aceSetAllAccess(val) {
+  if (!val) return;
+  document.querySelectorAll('#ace-access-tbody .ace-access-level').forEach(function(sel) {
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].text === val) { sel.selectedIndex = i; break; }
+    }
+  });
+  showToast('All reps set to ' + val);
 }
 
 // ── INTEGRATIONS REQUEST FORM ────────────────────────────────
