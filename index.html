@@ -1344,9 +1344,81 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .tgt-kpi-track{height:3px;background:var(--g200);border-radius:2px;overflow:hidden}
 .tgt-kpi-fill{height:100%;border-radius:2px;transition:width .4s}
 /* Ring KPI cards */
+/* ── Mission section headers ─────────────── */
+.tgt-section-hdr{display:flex;align-items:center;gap:8px;padding:8px 16px 6px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.55px;border-bottom:1px solid var(--g100);flex-shrink:0;position:sticky;top:0;z-index:2;background:var(--white)}
+.tgt-section-hdr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.tgt-section-hdr-count{margin-left:auto;font-size:11px;font-weight:500;color:var(--g400);text-transform:none;letter-spacing:0}
+.tgt-section-hdr-toggle{background:none;border:none;cursor:pointer;color:var(--g300);padding:0 2px;display:flex;align-items:center;font-size:11px;gap:4px;font-family:var(--font)}
+/* ── Mission rows (flexbox, no table) ─────── */
+.tgt-mission-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--g100);transition:background .12s}
+.tgt-mission-row:hover{background:var(--g50)}
+.tgt-mission-row.tgt-row-done{opacity:.55}
+.tgt-mission-row .tgt-mission-actions{opacity:0;transition:opacity .15s}
+.tgt-mission-row:hover .tgt-mission-actions{opacity:1}
+.tgt-mission-row .tgt-mission-urgency{transition:opacity .15s}
+.tgt-mission-acct-init{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:.5px}
+.tgt-mission-acct{flex:1;min-width:0}
+.tgt-mission-acct-name{font-size:13px;font-weight:600;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tgt-mission-acct-sub{font-size:11px;color:var(--g400);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tgt-mission-rep{display:flex;align-items:center;gap:5px;flex-shrink:0;width:90px}
+.tgt-mission-rep img{width:20px;height:20px;border-radius:50%;object-fit:cover}
+.tgt-mission-rep-name{font-size:11px;color:var(--g500);white-space:nowrap}
+.tgt-mission-urgency{font-size:12px;font-weight:700;font-family:var(--mono);flex-shrink:0;width:72px;text-align:right}
+.tgt-mission-actions{display:flex;gap:5px;flex-shrink:0}
+.tgt-mission-btn{padding:5px 11px;border-radius:6px;font-size:11px;font-weight:600;font-family:var(--font);cursor:pointer;border:1.5px solid transparent;transition:.12s;white-space:nowrap}
+.tgt-mission-btn-call{background:rgba(29,158,117,.08);color:var(--teal);border-color:rgba(29,158,117,.2)}
+.tgt-mission-btn-call:hover{background:rgba(29,158,117,.16)}
+.tgt-mission-btn-email{background:rgba(91,143,232,.08);color:#5b8fe8;border-color:rgba(91,143,232,.2)}
+.tgt-mission-btn-email:hover{background:rgba(91,143,232,.16)}
+.tgt-mission-btn-undo{background:var(--g50);color:var(--g500);border-color:var(--g200)}
+.tgt-mission-icon-btn{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;background:none;border:1.5px solid var(--g200);cursor:pointer;transition:.12s;flex-shrink:0}
+.tgt-mission-icon-btn:hover{background:var(--g100);border-color:var(--g300)}
+/* ── Team Pulse cards ─────────────────────── */
+.tgt-pulse-card{padding:14px 16px;border-bottom:1px solid var(--g100)}
+.tgt-pulse-card-hdr{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.tgt-pulse-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.tgt-pulse-name{font-size:13px;font-weight:600;color:var(--dark);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tgt-pulse-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;flex-shrink:0;white-space:nowrap}
+.tgt-pulse-assign{padding:4px 10px;border-radius:6px;font-size:11px;font-weight:600;font-family:var(--font);cursor:pointer;border:1.5px solid var(--g200);background:var(--white);color:var(--g500);flex-shrink:0;transition:.12s}
+.tgt-pulse-assign:hover{border-color:var(--teal);color:var(--teal)}
+.tgt-pulse-activity{font-size:12px;color:var(--g500);margin-bottom:7px}
+.tgt-pulse-activity strong{color:var(--dark);font-weight:700}
+.tgt-pulse-bar-wrap{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:6px}
+.tgt-pulse-stat{display:flex;flex-direction:column;gap:3px}
+.tgt-pulse-stat-row{display:flex;align-items:baseline;gap:3px}
+.tgt-pulse-stat-num{font-size:15px;font-weight:800;font-family:var(--mono);line-height:1}
+.tgt-pulse-stat-den{font-size:11px;color:var(--g400);font-family:var(--mono)}
+.tgt-pulse-stat-lbl{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--g400)}
+.tgt-pulse-bar{height:3px;background:var(--g100);border-radius:3px;overflow:hidden}
+.tgt-pulse-bar-fill{height:100%;border-radius:3px;transition:width .5s ease}
+.tgt-pulse-last{font-size:10px;color:var(--g300);margin-top:2px}
+/* ── KPI Pill strip ─────────────────────── */
+.tgt-kpi-pill{padding:14px 20px 12px;display:flex;flex-direction:column;gap:4px}
+.tgt-kpi-pill-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.tgt-kpi-pill-label{font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px}
+.tgt-kpi-pill-pct{font-size:22px;font-weight:800;font-family:var(--mono);line-height:1;flex-shrink:0}
+.tgt-kpi-pill-sub{font-size:12px;color:var(--g400);font-family:var(--mono)}
+.tgt-kpi-pill-track{height:4px;background:var(--g100);border-radius:4px;margin-top:6px;overflow:hidden}
+.tgt-kpi-pill-fill{height:100%;border-radius:4px;transition:width .6s ease}
+/* legacy ring classes (kept for compatibility) */
 .tgt-kpi-ring{padding:22px 16px 18px;border-right:1px solid var(--g200);display:flex;flex-direction:column;align-items:center}
 .tgt-kpi-ring:last-child{border-right:none}
 .tgt-kpi-ring-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:14px;text-align:center}
+/* ── Rep card redesign ───────────────────── */
+.tgt-rep-card{padding:14px 16px;border-bottom:1px solid var(--g100)}
+.tgt-rep-card-header{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.tgt-rep-av{width:32px;height:32px;border-radius:50%;object-fit:cover;flex-shrink:0}
+.tgt-rep-card-name{font-size:13px;font-weight:600;color:var(--dark);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tgt-rep-status-badge{font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;flex-shrink:0;white-space:nowrap}
+.tgt-rep-card-assign{display:none}
+.tgt-rep-stats-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:8px}
+.tgt-rep-stat{display:flex;flex-direction:column;gap:3px}
+.tgt-rep-stat-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;color:var(--g400)}
+.tgt-rep-stat-nums{display:flex;align-items:baseline;gap:3px}
+.tgt-rep-stat-num{font-size:16px;font-weight:800;font-family:var(--mono);line-height:1}
+.tgt-rep-stat-denom{font-size:11px;color:var(--g400);font-family:var(--mono)}
+.tgt-rep-stat-bar{height:3px;background:var(--g100);border-radius:3px;overflow:hidden;margin-top:2px}
+.tgt-rep-stat-fill{height:100%;border-radius:3px;transition:width .5s ease}
 /* Breathing room overrides */
 .tgt-ace-card{margin:20px 24px 0;padding:16px 18px}
 .tgt-ace-text{font-size:13px;line-height:1.65}
@@ -10881,29 +10953,37 @@ function _tgtUpdateSMKPIs() {
   });
   var allAccs = allTargetAccounts();
   var overdue = allAccs.filter(function(a){ return a.lastInt > 60; }).length;
-  var CIRC = 238.76;
-
-  function setRing(fillId, pctId, subId, pct, subText) {
-    pct = Math.min(Math.round(pct), 100);
-    var fill = document.getElementById(fillId);
+  // Drive SVG ring arcs + center text
+  var CIRCUMFERENCE = 276; // 2 * π * 44
+  function setRing(arcId, pctId, subId, pct, pctText, subText, color) {
+    pct = Math.min(Math.max(pct, 0), 100);
+    var arcEl = document.getElementById(arcId);
     var pctEl = document.getElementById(pctId);
     var subEl = document.getElementById(subId);
-    if (fill)  fill.setAttribute('stroke-dashoffset', CIRC - CIRC * pct / 100);
-    if (pctEl) pctEl.textContent = pct + '%';
+    if (arcEl) {
+      arcEl.style.strokeDashoffset = CIRCUMFERENCE - (pct / 100 * CIRCUMFERENCE);
+      arcEl.style.stroke = color;
+    }
+    if (pctEl) { pctEl.textContent = pctText; pctEl.setAttribute('fill', color); }
     if (subEl) subEl.textContent = subText;
   }
 
-  var onPct       = totalReps > 0       ? onTrack / totalReps * 100        : 0;
-  var callPct     = totalCallGoal > 0   ? totalCalls / totalCallGoal * 100  : 0;
-  var emailPct    = totalEmailGoal > 0  ? totalEmails / totalEmailGoal * 100: 0;
-  // For overdue: % of total accounts that are overdue (inverted — lower is better)
-  var totalAccs   = allAccs.length || 1;
-  var overduePct  = overdue / totalAccs * 100;
+  var totalAccs    = allAccs.length || 1;
+  var touchedToday = allAccs.filter(function(a){ return _tgtItemState[_tgtStateKey(a.repId, a.co)] === 'done'; }).length;
+  var touchedPct   = touchedToday / totalAccs * 100;
+  var callPct      = totalCallGoal  > 0 ? totalCalls  / totalCallGoal  * 100 : 0;
+  var emailPct     = totalEmailGoal > 0 ? totalEmails / totalEmailGoal * 100 : 0;
 
-  setRing('sm-kpi-on-ring',      'sm-kpi-on-pct',      'sm-kpi-on-track-sub', onPct,      onTrack + ' / ' + totalReps + ' reps');
-  setRing('sm-kpi-calls-ring',   'sm-kpi-calls-pct',   'sm-kpi-calls-sub',    callPct,    totalCalls + ' / ' + totalCallGoal + ' calls');
-  setRing('sm-kpi-emails-ring',  'sm-kpi-emails-pct',  'sm-kpi-emails-sub',   emailPct,   totalEmails + ' / ' + totalEmailGoal + ' emails');
-  setRing('sm-kpi-overdue-ring', 'sm-kpi-overdue-pct', 'sm-kpi-overdue-sub',  overduePct, overdue + ' accounts');
+  var criticalColor = overdue === 0 ? 'var(--teal)' : overdue <= 2 ? 'var(--amber)' : 'var(--red)';
+  var criticalPct   = Math.min(overdue / totalAccs * 100, 100);
+  var touchedColor  = touchedPct >= 60 ? 'var(--teal)' : touchedPct >= 25 ? 'var(--amber)' : 'var(--g400)';
+  var callColor     = callPct  >= 60 ? 'var(--teal)' : callPct  >= 25 ? 'var(--amber)' : 'var(--red)';
+  var emailColor    = emailPct >= 60 ? '#5b8fe8'     : emailPct >= 25 ? 'var(--amber)' : 'var(--red)';
+
+  setRing('sm-kpi-on-arc',      'sm-kpi-on-pct',      'sm-kpi-on-track-sub', criticalPct, String(overdue),            overdue === 0 ? 'all clear' : 'need action', criticalColor);
+  setRing('sm-kpi-overdue-arc', 'sm-kpi-overdue-pct', 'sm-kpi-overdue-sub',  touchedPct,  String(touchedToday),       'of ' + totalAccs,                           touchedColor);
+  setRing('sm-kpi-calls-arc',   'sm-kpi-calls-pct',   'sm-kpi-calls-sub',    callPct,     Math.round(callPct) + '%',  totalCalls + ' / ' + totalCallGoal,           callColor);
+  setRing('sm-kpi-emails-arc',  'sm-kpi-emails-pct',  'sm-kpi-emails-sub',   emailPct,    Math.round(emailPct) + '%', totalEmails + ' / ' + totalEmailGoal,         emailColor);
 }
 
 function _tgtUpdateSMGoalPanel() {
@@ -10979,93 +11059,135 @@ function _tgtRenderSMQueue() {
   }
 
   container.innerHTML = '';
-  if (!list.length) {
-    container.innerHTML = '<div class="tgt-empty-state">' +
-      (_tgtSMQueueTab === 'completed' ? 'No completed contacts yet.' :
-       _tgtSMQueueTab === 'attention' ? 'No overdue accounts — great work!' :
-       'No accounts match the current filters.') + '</div>';
+
+  // For "completed" tab — flat done list
+  if (_tgtSMQueueTab === 'completed') {
+    if (!done.length) {
+      container.innerHTML = '<div class="tgt-empty-state">No completed contacts yet today.</div>';
+      return;
+    }
+    var doneHtml = '<div class="tgt-section-hdr"><div class="tgt-section-hdr-dot" style="background:#16a34a"></div><span style="color:#16a34a">Completed</span><span class="tgt-section-hdr-count">' + done.length + ' accounts</span></div>';
+    done.forEach(function(a) {
+      doneHtml += _tgtMissionRow(a, true);
+    });
+    container.innerHTML = doneHtml;
     return;
   }
 
-  // Build table
-  var html = '<table class="tgt-queue-table"><thead><tr>' +
-    '<th>#</th>' +
-    '<th>Account</th>' +
-    '<th>Contact</th>' +
-    '<th>Phone</th>' +
-    '<th>Stage / Source</th>' +
-    '<th>Last contact</th>' +
-    '<th>Status</th>' +
-    '<th></th>' +
-  '</tr></thead><tbody>';
+  // For queue / attention — tiered sections
+  var pending = list.filter(function(a){ return _tgtItemState[_tgtStateKey(a.repId,a.co)] !== 'done'; });
+  var critical = pending.filter(function(a){ return a.lastInt > 60; });
+  var dueToday = pending.filter(function(a){ return a.lastInt >= 30 && a.lastInt <= 60; });
+  var onTrackQ = pending.filter(function(a){ return a.lastInt < 30; });
 
-  list.forEach(function(a, i) {
-    var key     = _tgtStateKey(a.repId, a.co);
-    var state   = _tgtItemState[key] || 'queue';
-    var isDone  = state === 'done';
-    var repMeta = TGT_REPS.find(function(r){ return r.id===a.repId; }) || {name:a.repName||'',color:'#94a3b8'};
+  if (!pending.length) {
+    container.innerHTML = '<div class="tgt-empty-state" style="padding:40px 24px;text-align:center">' +
+      '<div style="font-size:32px;margin-bottom:12px">✅</div>' +
+      '<div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:6px">All caught up</div>' +
+      '<div style="font-size:13px;color:var(--g400)">Every account has been touched today.</div>' +
+    '</div>';
+    return;
+  }
 
-    // Initials avatar color
-    var initials = a.co.split(' ').slice(0,2).map(function(w){ return w[0]||''; }).join('').toUpperCase();
-    var avatarBg = repMeta.color || '#94a3b8';
+  var html = '';
 
-    // Days class
-    var daysClass = a.lastInt > 60 ? 'overdue' : a.lastInt > 30 ? 'due-soon' : 'ok';
-    var daysLabel = a.lastInt > 0 ? a.lastInt + ' days ago' : 'Today';
+  if (critical.length) {
+    html += '<div class="tgt-section-hdr"><div class="tgt-section-hdr-dot" style="background:var(--red)"></div><span style="color:var(--red)">Critical</span><span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· 60+ days no contact</span><span class="tgt-section-hdr-count">' + critical.length + ' accounts</span></div>';
+    critical.forEach(function(a){ html += _tgtMissionRow(a, false); });
+  }
 
-    // Status badge
-    var statusHtml;
-    if (isDone) {
-      statusHtml = '<span class="tgt-td-status" style="background:rgba(34,197,94,.1);color:#16a34a">Logged</span>';
-    } else if (a.lastInt > 60) {
-      statusHtml = '<span class="tgt-td-status" style="background:rgba(239,68,68,.1);color:var(--red)">Overdue</span>';
-    } else if (a.lastInt > 30) {
-      statusHtml = '<span class="tgt-td-status" style="background:rgba(245,158,11,.1);color:#d97706">Due soon</span>';
-    } else {
-      statusHtml = '<span class="tgt-td-status" style="background:rgba(29,158,117,.1);color:var(--teal)">On track</span>';
-    }
+  if (dueToday.length) {
+    html += '<div class="tgt-section-hdr" style="margin-top:' + (critical.length ? '4px' : '0') + '"><div class="tgt-section-hdr-dot" style="background:#d97706"></div><span style="color:#d97706">Due today</span><span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· 30–60 days</span><span class="tgt-section-hdr-count">' + dueToday.length + ' accounts</span></div>';
+    dueToday.forEach(function(a){ html += _tgtMissionRow(a, false); });
+  }
 
-    // Stage / source
-    var typeMap = {pipeline:'Pipeline', account:'Account', people:'Contact'};
-    var stageTxt = a.stage || a.source || (typeMap[a.type] || '—');
+  if (onTrackQ.length) {
+    var mtTop = (critical.length||dueToday.length ? '4px' : '0');
+    html += '<div class="tgt-section-hdr" style="margin-top:' + mtTop + '">' +
+      '<div class="tgt-section-hdr-dot" style="background:var(--g300)"></div>' +
+      '<span style="color:var(--g500)">On track</span>' +
+      '<span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· under 30 days</span>' +
+      '<span class="tgt-section-hdr-count">' + onTrackQ.length + ' accounts</span>' +
+    '</div>' +
+    '<div id="sm-ontrack-rows" style="display:none">' +
+      onTrackQ.map(function(a){ return _tgtMissionRow(a, false); }).join('') +
+    '</div>' +
+    '<button id="sm-ontrack-toggle" onclick="_tgtToggleOnTrack()" ' +
+      'style="display:flex;align-items:center;gap:4px;width:100%;padding:8px 16px;background:none;border:none;border-top:1px solid var(--g100);font-size:12px;font-weight:600;color:var(--g400);cursor:pointer;font-family:var(--font);transition:.12s" ' +
+      'onmouseover="this.style.color=\'var(--dark)\'" onmouseout="this.style.color=\'var(--g400)\'">' +
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="sm-ontrack-chevron"><polyline points="6 9 12 15 18 9"/></svg>' +
+      'Show ' + onTrackQ.length + ' on-track accounts' +
+    '</button>';
+  }
 
-    // Rep chip (shown when filtering all reps)
-    var repChip = (_tgtRepFilter === 'all')
-      ? '<div style="font-size:11px;color:var(--g400);margin-top:2px">' + repMeta.name + '</div>'
-      : '';
-
-    html +=
-      '<tr class="' + (isDone ? 'tgt-row-done' : '') + '">' +
-      '<td>' + (i+1) + '</td>' +
-      '<td><div class="tgt-td-account">' +
-        '<div class="tgt-td-account-init" style="background:' + avatarBg + '">' + initials + '</div>' +
-        '<div><div>' + a.co + '</div>' + repChip + '</div>' +
-      '</div></td>' +
-      '<td><div class="tgt-td-contact">' + a.contact + '</div>' +
-        (a.title ? '<div class="tgt-td-phone">' + a.title + '</div>' : '') +
-      '</td>' +
-      '<td style="color:var(--g500);font-size:12.5px">' + (a.phone || '—') + '</td>' +
-      '<td style="color:var(--g500);font-size:12.5px">' + stageTxt + '</td>' +
-      '<td><span class="tgt-td-days ' + daysClass + '">' + daysLabel + '</span></td>' +
-      '<td>' + statusHtml + '</td>' +
-      '<td><div class="tgt-td-actions">' +
-        (isDone
-          ? '<button class="tgt-td-btn" onclick="_tgtUndo(\'' + key + '\')">Undo</button>'
-          : '<button class="tgt-td-btn tgt-td-btn-call" onclick="_tgtLogAction(\'' + key + '\',\'call\')">Log call</button>' +
-            '<button class="tgt-td-btn tgt-td-btn-email" onclick="_tgtLogAction(\'' + key + '\',\'email\')">Log email</button>'
-        ) +
-        '<button class="tgt-td-btn" onclick="_tgtNotifyRep(\'' + (a.repName||a.repId) + '\')">Notify</button>' +
-      '</div></td>' +
-      '</tr>';
-  });
-
-  html += '</tbody></table>';
   container.innerHTML = html;
+}
+
+function _tgtMissionRow(a, isDone) {
+  var key     = _tgtStateKey(a.repId, a.co);
+  var repMeta = TGT_REPS.find(function(r){ return r.id === a.repId; }) || {name: a.repName||'', color:'#94a3b8', photo:''};
+  var initials = a.co.split(' ').slice(0,2).map(function(w){ return w[0]||''; }).join('').toUpperCase();
+  var avatarBg = repMeta.color || '#94a3b8';
+
+  var urgencyColor = isDone ? '#16a34a' : a.lastInt > 60 ? 'var(--red)' : a.lastInt > 30 ? '#d97706' : 'var(--g400)';
+  var urgencyLabel = isDone ? 'Done' : a.lastInt > 0 ? a.lastInt + 'd ago' : 'Today';
+
+  var contactLine = a.contact + (a.title ? ' · ' + a.title : '');
+  var repPhoto    = repMeta.photo ? '<img src="' + repMeta.photo + '" style="width:20px;height:20px;border-radius:50%;object-fit:cover;flex-shrink:0" onerror="this.style.display=\'none\'">' : '';
+
+  var actions = isDone
+    ? '<button class="tgt-mission-icon-btn" title="Mark as reviewed" onclick="_tgtUndo(\'' + key + '\')" style="color:var(--g400)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>' +
+      '</button>'
+    : '<button class="tgt-mission-icon-btn" title="Notify rep" onclick="_tgtNotifyRep(\'' + key + '\')" style="color:var(--g500)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' +
+      '</button>' +
+      '<button class="tgt-mission-icon-btn" title="Reassign account" onclick="_tgtReassign(\'' + key + '\')" style="color:var(--g500)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>' +
+      '</button>';
+
+  return '<div class="tgt-mission-row' + (isDone ? ' tgt-row-done' : '') + '">' +
+    '<div class="tgt-mission-acct-init" style="background:' + avatarBg + '">' + initials + '</div>' +
+    '<div class="tgt-mission-acct">' +
+      '<div class="tgt-mission-acct-name">' + a.co + '</div>' +
+      '<div class="tgt-mission-acct-sub">' + contactLine + '</div>' +
+    '</div>' +
+    '<div class="tgt-mission-rep">' + repPhoto + '<span class="tgt-mission-rep-name">' + (repMeta.name.split(' ')[0] || '') + '</span></div>' +
+    '<div class="tgt-mission-urgency" style="color:' + urgencyColor + '">' + urgencyLabel + '</div>' +
+    '<div class="tgt-mission-actions">' + actions + '</div>' +
+  '</div>';
 }
 
 function _tgtSetRepFilter(val) {
   _tgtRepFilter = val;
   _tgtRenderSMQueue();
+}
+
+function _tgtToggleOnTrack() {
+  var rows    = document.getElementById('sm-ontrack-rows');
+  var btn     = document.getElementById('sm-ontrack-toggle');
+  var chevron = document.getElementById('sm-ontrack-chevron');
+  if (!rows) return;
+  var open = rows.style.display !== 'none';
+  rows.style.display = open ? 'none' : 'block';
+  if (chevron) chevron.style.transform = open ? '' : 'rotate(180deg)';
+  if (btn) {
+    var count = rows.querySelectorAll('.tgt-mission-row').length;
+    btn.innerHTML = btn.innerHTML.replace(open ? 'Hide' : 'Show', open ? 'Show' : 'Hide');
+  }
+}
+
+function _tgtToggleSMFilters() {
+  var panel = document.getElementById('sm-filter-panel');
+  var btn   = document.getElementById('sm-filter-btn');
+  if (!panel) return;
+  var open = panel.style.display === 'flex';
+  panel.style.display = open ? 'none' : 'flex';
+  if (btn) {
+    btn.style.background  = open ? 'var(--g50)' : 'rgba(29,158,117,.1)';
+    btn.style.borderColor = open ? 'var(--g200)' : 'rgba(29,158,117,.4)';
+    btn.style.color       = open ? 'var(--g500)' : 'var(--teal)';
+  }
 }
 
 function _tgtSetStatusFilter(val) {
@@ -11105,37 +11227,43 @@ function _tgtRenderSMTeamList() {
     var eColor = ePct >= 60 ? '#5b8fe8'     : ePct >= 25 ? 'var(--amber)' : 'var(--red)';
 
     var card = document.createElement('div');
-    card.className = 'tgt-rep-card';
+    card.className = 'tgt-pulse-card';
     card.id = 'tgt-row-' + r.id;
     card.setAttribute('data-rep-card', '1');
     card.setAttribute('data-rep-name', r.name);
+    var overall     = Math.round((cPct + ePct) / 2);
+    var statusLabel = overall >= 60 ? 'On track' : overall >= 25 ? 'Behind' : 'At risk';
+    var badgeBg     = overall >= 60 ? 'rgba(29,158,117,.12);color:var(--teal)' : overall >= 25 ? 'rgba(245,158,11,.12);color:#d97706' : 'rgba(239,68,68,.12);color:var(--red)';
+
+    // Simulate "last active" based on activity level (in a real app this would be a timestamp)
+    var totalActs = d.callsToday + d.emailsToday;
+    var lastActive = totalActs === 0 ? 'No activity yet today'
+      : totalActs <= 2 ? 'Last active ~2h ago'
+      : totalActs <= 5 ? 'Last active ~45 min ago'
+      : 'Last active ~12 min ago';
+
+    var activitySummary = [];
+    if (d.callsToday > 0) activitySummary.push('<strong>' + d.callsToday + '</strong> call' + (d.callsToday !== 1 ? 's' : ''));
+    if (d.emailsToday > 0) activitySummary.push('<strong>' + d.emailsToday + '</strong> email' + (d.emailsToday !== 1 ? 's' : ''));
+    var activityText = activitySummary.length ? activitySummary.join(' · ') + ' today' : 'No activity logged yet';
+
+    var dotColor = overall >= 60 ? 'var(--teal)' : overall >= 25 ? 'var(--amber)' : 'var(--red)';
+    var actTotal = d.callsToday + d.emailsToday;
+    var actLabel = actTotal === 0 ? 'No activity yet' : actTotal + ' action' + (actTotal !== 1 ? 's' : '') + ' today';
+
     card.innerHTML =
-      '<div class="tgt-rep-card-header">' +
-        '<img class="tgt-rep-av" src="' + r.photo + '" alt="' + r.name + '" onerror="this.style.display=\'none\'" style="cursor:pointer;width:30px;height:30px" onclick="_tgtSelectSMRep(\'' + r.id + '\',null)">' +
-        '<span class="tgt-rep-card-name" style="cursor:pointer" onclick="_tgtSelectSMRep(\'' + r.id + '\',null)">' + r.name + '</span>' +
-        '<button class="tgt-rep-card-assign" onclick="openAssignTargets(\'' + r.id + '\')">+ Assign</button>' +
-        '<button class="tgt-rep-edit-btn" title="Edit goals" onclick="_tgtToggleInlineEditor(\'' + r.id + '\')">' + PENCIL_SVG + '</button>' +
+      '<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-bottom:1px solid var(--g100)">' +
+        (r.photo ? '<img src="' + r.photo + '" style="width:28px;height:28px;border-radius:50%;object-fit:cover;flex-shrink:0;cursor:pointer" onclick="_tgtSelectSMRep(\'' + r.id + '\',null)" onerror="this.style.display=\'none\'">' : '') +
+        '<span style="flex:1;font-size:13px;font-weight:600;color:var(--dark);cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" onclick="_tgtSelectSMRep(\'' + r.id + '\',null)">' + r.name + '</span>' +
+        '<svg width="8" height="8" viewBox="0 0 8 8" style="flex-shrink:0"><circle cx="4" cy="4" r="4" fill="' + dotColor + '"/></svg>' +
+        '<span style="font-size:11px;color:var(--g400);white-space:nowrap">' + actLabel + '</span>' +
+        '<button class="tgt-pulse-assign" onclick="openAssignTargets(\'' + r.id + '\')">Assign</button>' +
       '</div>' +
-      '<div class="tgt-rep-ring-row">' +
-        '<div class="tgt-rep-ring">' +
-          '<div class="tgt-rep-ring-label">Calls</div>' +
-          '<div class="tgt-rep-ring-top">' +
-            '<span class="tgt-rep-ring-num" id="tgt-cb-num-' + r.id + '" style="color:' + cColor + '">' + d.callsToday + '</span>' +
-            '<span class="tgt-rep-ring-denom">/' + g.callGoal + '</span>' +
-            '<span class="tgt-rep-ring-pct" id="tgt-cb-pct-' + r.id + '" style="color:' + cColor + '">' + cPct + '%</span>' +
-          '</div>' +
-          '<div class="tgt-rep-ring-bar"><div class="tgt-rep-ring-fill" id="tgt-cb-' + r.id + '" style="width:' + cPct + '%;background:' + cColor + '"></div></div>' +
-        '</div>' +
-        '<div class="tgt-rep-ring">' +
-          '<div class="tgt-rep-ring-label">Emails</div>' +
-          '<div class="tgt-rep-ring-top">' +
-            '<span class="tgt-rep-ring-num" id="tgt-eb-num-' + r.id + '" style="color:' + eColor + '">' + d.emailsToday + '</span>' +
-            '<span class="tgt-rep-ring-denom">/' + g.emailGoal + '</span>' +
-            '<span class="tgt-rep-ring-pct" id="tgt-eb-pct-' + r.id + '" style="color:' + eColor + '">' + ePct + '%</span>' +
-          '</div>' +
-          '<div class="tgt-rep-ring-bar"><div class="tgt-rep-ring-fill" id="tgt-eb-' + r.id + '" style="width:' + ePct + '%;background:' + eColor + '"></div></div>' +
-        '</div>' +
-      '</div>' +
+      /* hidden elements to keep _tgtInlinePreview IDs intact */
+      '<span style="display:none" id="tgt-cb-num-' + r.id + '">' + d.callsToday + '</span>' +
+      '<span style="display:none" id="tgt-eb-num-' + r.id + '">' + d.emailsToday + '</span>' +
+      '<span style="display:none" id="tgt-cb-' + r.id + '"></span>' +
+      '<span style="display:none" id="tgt-eb-' + r.id + '"></span>' +
       '<div class="tgt-rep-inline-editor" id="tgt-rie-' + r.id + '">' +
         '<div class="tgt-rie-title">Daily goals for ' + r.name.split(' ')[0] + '</div>' +
         '<div class="tgt-rie-fields">' +
@@ -11182,10 +11310,9 @@ function _tgtInlinePreview(repId) {
   function se(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
   function sw(id,v){ var e=document.getElementById(id); if(e) e.style.width=v+'%'; }
   function sc(id,c){ var e=document.getElementById(id); if(e) e.style.color=c; }
-  se('tgt-cb-pct-'+repId, cPct+'%'); sc('tgt-cb-pct-'+repId, cColor);
-  se('tgt-eb-pct-'+repId, ePct+'%'); sc('tgt-eb-pct-'+repId, eColor);
-  sw('tgt-cb-'+repId, cPct); var cb=document.getElementById('tgt-cb-'+repId); if(cb) cb.style.background=cColor;
-  sw('tgt-eb-'+repId, ePct); var eb=document.getElementById('tgt-eb-'+repId); if(eb) eb.style.background=eColor;
+  // Update num colors + bar fills
+  sc('tgt-cb-num-'+repId, cColor); sw('tgt-cb-'+repId, cPct); var cb=document.getElementById('tgt-cb-'+repId); if(cb) cb.style.background=cColor;
+  sc('tgt-eb-num-'+repId, eColor); sw('tgt-eb-'+repId, ePct); var eb=document.getElementById('tgt-eb-'+repId); if(eb) eb.style.background=eColor;
   // legacy IDs used by _tgtUpdateSMKPIs
   var st = document.getElementById('tgt-st-'+repId);
   if(st){ var lbl=cPct>=60&&ePct>=60?'On track':cPct>=25||ePct>=25?'Behind':'At risk'; st.textContent=lbl; st.style.color=cPct>=60&&ePct>=60?'var(--teal)':cPct>=25||ePct>=25?'var(--amber)':'var(--red)'; }
@@ -11643,6 +11770,21 @@ function _tgtNotifyRep(repName) {
 function _smNotifyRep(btn) {
   var rep = decodeURIComponent(btn.getAttribute('data-rep') || 'rep');
   showToast('Notification sent to ' + rep);
+}
+
+function _tgtNotifyRep(key) {
+  // key format: "repId|company" — extract rep name for the toast
+  var parts = key.split('|');
+  var repId = parts[0];
+  var co    = parts[1] || 'account';
+  var rep   = (TGT_REPS.find(function(r){ return r.id === repId; }) || {}).name || repId;
+  showToast('Nudge sent to ' + rep.split(' ')[0] + ' · ' + co);
+}
+
+function _tgtReassign(key) {
+  var parts = key.split('|');
+  var co    = parts[1] || 'account';
+  showToast('Reassign coming soon · ' + co);
 }
 
 // ── TABS ──────────────────────────────────────────────────────────────────────
@@ -14658,121 +14800,108 @@ function _ecSend() {
 
     <!-- KPI rings: full-width strip at top -->
     <div id="sm-kpi-strip" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0">
+
       <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
-        <div class="tgt-kpi-ring-label">Reps on track</div>
-        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
-          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
-            <circle id="sm-kpi-on-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--teal)" stroke-width="7"
-              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="95.504"
-              style="transition:stroke-dashoffset .5s ease"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <span id="sm-kpi-on-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">60%</span>
-          </div>
-        </div>
-        <div id="sm-kpi-on-track-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
+        <div class="tgt-kpi-ring-label">Critical accounts</div>
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="8"/>
+          <circle id="sm-kpi-on-arc" cx="55" cy="55" r="44" fill="none" stroke="var(--red)" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+          <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="700" fill="var(--red)" id="sm-kpi-on-pct">0</text>
+          <text x="55" y="67" text-anchor="middle" font-family="var(--font)" font-size="10" fill="var(--g400)" id="sm-kpi-on-track-sub">accounts</text>
+        </svg>
+        <div style="font-size:10px;color:var(--g400);margin-top:4px;text-align:center">60+ days no contact</div>
       </div>
+
       <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
-        <div class="tgt-kpi-ring-label">Overdue accounts</div>
-        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
-          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
-            <circle id="sm-kpi-overdue-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--red)" stroke-width="7"
-              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
-              style="transition:stroke-dashoffset .5s ease"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <span id="sm-kpi-overdue-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
-          </div>
-        </div>
-        <div id="sm-kpi-overdue-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
+        <div class="tgt-kpi-ring-label">Touched today</div>
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="8"/>
+          <circle id="sm-kpi-overdue-arc" cx="55" cy="55" r="44" fill="none" stroke="var(--teal)" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+          <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="700" fill="var(--teal)" id="sm-kpi-overdue-pct">0</text>
+          <text x="55" y="67" text-anchor="middle" font-family="var(--font)" font-size="10" fill="var(--g400)" id="sm-kpi-overdue-sub">of 0</text>
+        </svg>
+        <div style="font-size:10px;color:var(--g400);margin-top:4px;text-align:center">accounts contacted</div>
       </div>
+
       <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
         <div class="tgt-kpi-ring-label">Team calls today</div>
-        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
-          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
-            <circle id="sm-kpi-calls-ring" cx="48" cy="48" r="38" fill="none" stroke="var(--teal)" stroke-width="7"
-              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
-              style="transition:stroke-dashoffset .5s ease"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <span id="sm-kpi-calls-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
-          </div>
-        </div>
-        <div id="sm-kpi-calls-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="8"/>
+          <circle id="sm-kpi-calls-arc" cx="55" cy="55" r="44" fill="none" stroke="var(--teal)" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+          <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="700" fill="var(--teal)" id="sm-kpi-calls-pct">0%</text>
+          <text x="55" y="67" text-anchor="middle" font-family="var(--font)" font-size="10" fill="var(--g400)" id="sm-kpi-calls-sub">0 / 0</text>
+        </svg>
+        <div style="font-size:10px;color:var(--g400);margin-top:4px;text-align:center">of daily call goal</div>
       </div>
+
       <div class="tgt-kpi-ring">
         <div class="tgt-kpi-ring-label">Team emails today</div>
-        <div style="position:relative;width:96px;height:96px;margin:0 auto 10px">
-          <svg width="96" height="96" viewBox="0 0 96 96" style="transform:rotate(-90deg)">
-            <circle cx="48" cy="48" r="38" fill="none" stroke="var(--g100)" stroke-width="7"/>
-            <circle id="sm-kpi-emails-ring" cx="48" cy="48" r="38" fill="none" stroke="#5b8fe8" stroke-width="7"
-              stroke-linecap="round" stroke-dasharray="238.76" stroke-dashoffset="238.76"
-              style="transition:stroke-dashoffset .5s ease"/>
-          </svg>
-          <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center">
-            <span id="sm-kpi-emails-pct" style="font-size:20px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1">0%</span>
-          </div>
-        </div>
-        <div id="sm-kpi-emails-sub" style="font-size:12px;color:var(--g500);text-align:center;font-family:var(--mono);font-weight:600">—</div>
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="8"/>
+          <circle id="sm-kpi-emails-arc" cx="55" cy="55" r="44" fill="none" stroke="#5b8fe8" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+          <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="700" fill="#5b8fe8" id="sm-kpi-emails-pct">0%</text>
+          <text x="55" y="67" text-anchor="middle" font-family="var(--font)" font-size="10" fill="var(--g400)" id="sm-kpi-emails-sub">0 / 0</text>
+        </svg>
+        <div style="font-size:10px;color:var(--g400);margin-top:4px;text-align:center">of daily email goal</div>
       </div>
+
     </div>
 
-    <!-- Bottom: 50/50 split -->
-    <div class="tgt-body" style="flex:1;overflow:hidden;display:grid;grid-template-columns:1fr 1fr">
+    <!-- Full-width account queue -->
+    <div style="flex:1;overflow:hidden;display:flex;flex-direction:column">
 
-      <!-- LEFT 50%: filter bar + queue -->
-      <div class="tgt-left" style="display:flex;flex-direction:column;overflow:hidden">
-        <!-- Filter bar -->
-        <div class="tgt-filter-bar">
-          <div style="position:relative;flex:1;max-width:340px">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--g300);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input id="tgt-search-input" type="text" placeholder="Search accounts or contacts…" oninput="_tgtSetSearch(this.value)"
-              style="width:100%;padding:6px 12px 6px 32px;border:1.5px solid var(--g200);border-radius:8px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s"
-              onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'">
-          </div>
-          <div style="display:flex;align-items:center;gap:8px">
-            <select id="sm-view-filter" onchange="switchSMQueueTab(this.value,null)" class="tgt-filter-select">
-              <option value="queue" id="sm-queue-count-opt">Queue</option>
-              <option value="completed" id="sm-done-count-opt">Completed</option>
-              <option value="attention" id="sm-attn-count-opt">Needs attention</option>
-            </select>
-            <select id="tgt-rep-filter" onchange="_tgtSetRepFilter(this.value)" class="tgt-filter-select">
-              <option value="all">All reps</option>
-            </select>
-            <select id="tgt-status-filter" onchange="_tgtSetStatusFilter(this.value)" class="tgt-filter-select">
-              <option value="all">All status</option>
-              <option value="overdue">Overdue (&gt;60d)</option>
-              <option value="due_soon">Due soon (30–60d)</option>
-              <option value="on_track">On track (&lt;30d)</option>
-            </select>
-          </div>
-        </div>
-        <div class="tgt-queue" id="sm-queue-list"></div>
+      <!-- Header -->
+      <div style="display:flex;align-items:center;padding:10px 20px;border-bottom:1px solid var(--g200);gap:10px;flex-shrink:0">
+        <span style="font-size:13px;font-weight:700;color:var(--dark);flex:1" id="sm-queue-header-label">Accounts</span>
+        <button id="sm-completed-btn" onclick="switchSMQueueTab('completed',null)"
+          style="font-size:11px;font-weight:600;color:var(--g400);background:none;border:none;cursor:pointer;font-family:var(--font);padding:4px 8px;border-radius:6px;transition:.12s"
+          onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'">Completed</button>
+        <button onclick="openAssignTargets(null)" class="tgt-assign-open-btn">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Assign targets
+        </button>
+        <button onclick="_tgtToggleSMFilters()"
+          style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--g500);background:var(--g50);border:1.5px solid var(--g200);cursor:pointer;font-family:var(--font);padding:4px 10px;border-radius:6px;transition:.12s" id="sm-filter-btn">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filter
+        </button>
       </div>
 
-      <!-- RIGHT 50%: Team Today + rep search -->
-      <div class="tgt-right" style="display:flex;flex-direction:column;overflow:hidden">
-        <div style="padding:14px 16px 10px;border-bottom:1px solid var(--g200);flex-shrink:0">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-            <span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400)">Team Today</span>
-            <button class="tgt-assign-open-btn" onclick="openAssignTargets(null)" title="Assign accounts to a rep">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-              Assign targets
-            </button>
-          </div>
-          <div style="position:relative">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--g300);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <input id="tgt-rep-search" type="text" placeholder="Search reps…" oninput="_tgtFilterRepList(this.value)"
-              style="width:100%;padding:6px 10px 6px 28px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s"
-              onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'">
-          </div>
+      <!-- Collapsible filter panel -->
+      <div id="sm-filter-panel" style="display:none;padding:10px 20px;border-bottom:1px solid var(--g200);background:var(--g50);flex-shrink:0;gap:8px;flex-wrap:wrap;align-items:center">
+        <div style="position:relative;flex:1;min-width:200px;max-width:380px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--g300);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="tgt-search-input" type="text" placeholder="Search accounts…" oninput="_tgtSetSearch(this.value)"
+            style="width:100%;padding:5px 10px 5px 28px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s"
+            onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'">
         </div>
-        <div id="sm-team-list" style="flex:1;overflow-y:auto;padding:6px 0"></div>
+        <select id="tgt-rep-filter" onchange="_tgtSetRepFilter(this.value)" class="tgt-filter-select" style="font-size:12px">
+          <option value="all">All reps</option>
+        </select>
+        <!-- hidden selects kept for JS compatibility -->
+        <select id="sm-view-filter" onchange="switchSMQueueTab(this.value,null)" style="display:none">
+          <option value="queue" id="sm-queue-count-opt">Queue</option>
+          <option value="completed" id="sm-done-count-opt">Completed</option>
+          <option value="attention" id="sm-attn-count-opt">Needs attention</option>
+        </select>
+        <select id="tgt-status-filter" onchange="_tgtSetStatusFilter(this.value)" style="display:none">
+          <option value="all">All status</option>
+          <option value="overdue">Overdue</option>
+          <option value="due_soon">Due soon</option>
+          <option value="on_track">On track</option>
+        </select>
       </div>
+
+      <!-- Hidden team list kept for JS compatibility -->
+      <div id="sm-team-list" style="display:none"></div>
+
+      <div class="tgt-queue" id="sm-queue-list"></div>
     </div>
+
   </div><!-- end tgt-sm-content -->
 
   <!-- ── SR VIEW ── -->
