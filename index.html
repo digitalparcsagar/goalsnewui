@@ -214,7 +214,7 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 
 /* MAIN + TOPBAR */
 .main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.topbar{height:var(--topbar);flex-shrink:0;background:var(--white);border-bottom:1px solid var(--g200);display:flex;align-items:center;padding:0 20px;gap:10px}
+.topbar{height:var(--topbar);flex-shrink:0;background:var(--white);border-bottom:1px solid var(--g200);display:flex;align-items:center;padding:0 20px;gap:10px;position:relative;z-index:500}
 .tb-left{display:flex;align-items:center;gap:8px}
 .tb-center{flex:1;display:flex;align-items:center;justify-content:center}
 .tb-right{display:flex;align-items:center;gap:8px}
@@ -1727,7 +1727,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       </button>
 
       <!-- Profile dropdown -->
-      <div id="user-switcher-panel" style="display:none;position:absolute;top:calc(100% + 8px);right:0;width:256px;background:#fff;border:1px solid var(--g200);border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,0.13);z-index:1000;overflow:hidden;padding-bottom:6px">
+      <div id="user-switcher-panel" style="display:none;position:fixed;top:56px;right:16px;width:256px;background:#fff;border:1px solid var(--g200);border-radius:14px;box-shadow:0 12px 36px rgba(0,0,0,0.13);z-index:9000;overflow:hidden;padding-bottom:6px">
 
         <!-- Header -->
         <div style="padding:16px 16px 12px;border-bottom:1px solid var(--g100);display:flex;align-items:center;gap:11px">
@@ -1837,15 +1837,20 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 <div id="page-dashboard" class="page active">
 <div class="page-header">
   <div class="page-title">Dashboard</div>
-  <div class="page-subtitle">Good morning, Sagar — here is your team snapshot</div>
+  <div class="page-subtitle" id="dash-subtitle">Good morning, Sagar — here is your team snapshot</div>
   <div class="page-actions">
-    <button class="tb-btn btn-ghost" style="font-size:12px;display:flex;align-items:center;gap:5px" onclick="openCardManager()">
+    <button id="dash-morning-brief-btn" onclick="_showMorningBrief()" style="display:none;font-size:12px;align-items:center;gap:6px;padding:7px 14px;background:var(--navy);color:#fff;border:none;border-radius:8px;cursor:pointer;font-family:var(--font);font-weight:600">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/></svg>
+      Morning Brief
+    </button>
+    <button class="tb-btn btn-ghost" id="dash-customize-btn" style="font-size:12px;display:flex;align-items:center;gap:5px" onclick="openCardManager()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
       Customize
     </button>
   </div>
 </div>
 
+<!-- SR: Morning brief shortcut (only visible in SR role) -->
 <!-- SM-only dashboard content -->
 <div id="dash-sm-view">
 
@@ -1868,7 +1873,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
   </div>
   <div style="position:relative">
-    <canvas id="sales-chart" height="90" style="width:100%;cursor:crosshair;display:block"></canvas>
+    <canvas id="sales-chart" height="90" style="width:100%;height:90px;cursor:crosshair;display:block"></canvas>
     <div id="chart-tooltip" style="display:none;position:absolute;background:rgba(255,255,255,0.95);color:var(--dark);border-radius:10px;padding:8px 14px;font-size:13px;font-weight:600;pointer-events:none;box-shadow:0 4px 16px rgba(0,0,0,0.2);text-align:center;min-width:90px">
       <div id="tooltip-month" style="font-size:11px;color:var(--g600);margin-bottom:2px"></div>
       <div id="tooltip-val" style="font-family:var(--mono);color:var(--teal)"></div>
@@ -2257,7 +2262,6 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         </div>
         <div style="font-size:11px;color:var(--g400)">78% · 12 days remaining</div>
       </div>
-
 
     </div>
   </div>
@@ -5008,6 +5012,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <button class="cs-nav-btn" data-section="pipeline"    onclick="_csLoadSection('pipeline')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg> Pipeline Stages</button>
       <button class="cs-nav-btn" data-section="products"    onclick="_csLoadSection('products')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Products &amp; Services</button>
       <button class="cs-nav-btn" data-section="commissions" onclick="_csLoadSection('commissions')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Commission Rules</button>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">AI & Culture</div>
+      <button class="cs-nav-btn" data-section="values"      onclick="_csLoadSection('values')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Culture &amp; Values</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Team</div>
       <button class="cs-nav-btn" data-section="territories" onclick="_csLoadSection('territories')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg> Territories</button>
       <button class="cs-nav-btn" data-section="tags"        onclick="_csLoadSection('tags')"        style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> Tags &amp; Labels</button>
@@ -5732,6 +5738,26 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         </div>
       </div>
       <button class="save-btn" onclick="showToast('✓ Your Ace style saved')">Save My Style</button>
+
+      <!-- Personal Goals (private to rep, lives here in Ace settings) -->
+      <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-top:20px">
+        <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark)">My Personal Goals</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Private to you — Ace uses these to translate your quota progress into real life</div>
+          </div>
+          <span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:2px 8px;font-weight:600">Private</span>
+        </div>
+        <div style="padding:16px;display:flex;flex-direction:column;gap:14px" id="sr-personal-goals-list">
+          <!-- rendered by _renderPersonalGoals() -->
+        </div>
+        <div style="padding:10px 16px 14px">
+          <button onclick="_openPersonalGoals()" style="width:100%;padding:9px;border:1.5px dashed var(--g200);border-radius:8px;background:none;font-size:12px;font-weight:600;color:var(--g400);cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)';this.style.color='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)';this.style.color='var(--g400)'">Edit goals</button>
+        </div>
+        <div style="padding:10px 16px 14px;border-top:1px solid var(--g100);background:rgba(29,158,117,0.03)">
+          <div style="font-size:11px;color:var(--g500);line-height:1.6" id="sr-goals-ace-line">At your current pace, you're on track to hit quota this month.</div>
+        </div>
+      </div>
     </div>
 
     <!-- SM view -->
@@ -5966,6 +5992,172 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 </div><!-- end settings-ace -->
 </div><!-- end page-tools-settings -->
 
+
+<!-- Morning Brief Modal -->
+<div class="modal-overlay" id="morning-brief-modal" style="display:none">
+  <div class="modal" style="max-width:520px;border-radius:16px;overflow:hidden;padding:0">
+
+    <!-- Header -->
+    <div style="background:var(--navy);padding:24px 24px 20px;position:relative">
+      <button class="modal-close" onclick="closeModal('morning-brief-modal')" style="position:absolute;top:16px;right:16px;color:rgba(255,255,255,0.5)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+        <div style="width:36px;height:36px;background:var(--teal);border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
+        </div>
+        <div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.45);font-weight:600;text-transform:uppercase;letter-spacing:.6px">Morning Brief</div>
+          <div style="font-size:16px;font-weight:700;color:#fff" id="mb-greeting">Good morning, Brock</div>
+        </div>
+      </div>
+      <div style="font-size:12px;color:rgba(255,255,255,0.45)" id="mb-date">Wednesday, July 16, 2026</div>
+
+      <!-- Month progress bar -->
+      <div style="margin-top:16px">
+        <div style="display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.45);margin-bottom:6px">
+          <span>Monthly quota</span>
+          <span id="mb-quota-pct" style="color:#fff;font-weight:700">89% · $156K of $175K</span>
+        </div>
+        <div style="height:6px;background:rgba(255,255,255,0.1);border-radius:3px;overflow:hidden">
+          <div id="mb-quota-bar" style="width:89%;height:100%;background:var(--teal);border-radius:3px"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Body -->
+    <div style="padding:20px 24px">
+
+      <!-- Today's numbers -->
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:10px">Today's Activity</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:20px">
+        <div style="background:var(--g50);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:22px;font-weight:700;color:var(--teal);font-family:var(--mono)" id="mb-calls">1</div>
+          <div style="font-size:10px;color:var(--g400);margin-top:2px">Calls <span style="color:var(--g300)">/ 40</span></div>
+        </div>
+        <div style="background:var(--g50);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:22px;font-weight:700;color:#5b8fe8;font-family:var(--mono)" id="mb-emails">0</div>
+          <div style="font-size:10px;color:var(--g400);margin-top:2px">Emails <span style="color:var(--g300)">/ 40</span></div>
+        </div>
+        <div style="background:var(--g50);border-radius:10px;padding:12px;text-align:center">
+          <div style="font-size:22px;font-weight:700;color:var(--dark);font-family:var(--mono)" id="mb-opps">7</div>
+          <div style="font-size:10px;color:var(--g400);margin-top:2px">Open Opps</div>
+        </div>
+      </div>
+
+      <!-- Personal goals section -->
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--g400);margin-bottom:10px">What this means for your goals</div>
+      <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px" id="mb-personal-goals">
+        <!-- rendered by _renderMorningBrief() -->
+      </div>
+
+      <!-- Ace insight -->
+      <div style="background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.15);border-radius:10px;padding:12px 14px;display:flex;gap:10px">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg>
+        <div style="font-size:12px;color:var(--dark);line-height:1.5" id="mb-ace-insight">You're 3 deals away from your monthly target. Focus on your 2 stalled opportunities today — moving either one forward puts your Europe trip fund ahead of schedule.</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div style="padding:14px 24px 20px;display:flex;gap:8px">
+      <button onclick="closeModal('morning-brief-modal')" style="flex:1;padding:10px;background:var(--g100);border:none;border-radius:8px;font-size:13px;font-weight:600;color:var(--g500);cursor:pointer;font-family:var(--font)">Dismiss</button>
+      <button onclick="closeModal('morning-brief-modal');showPage('targets',null)" style="flex:2;padding:10px;background:var(--teal);border:none;border-radius:8px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:var(--font)">Open Today's Targets →</button>
+    </div>
+
+  </div>
+</div>
+
+<!-- Personal Goals Setup Modal -->
+<div class="modal-overlay" id="personal-goals-modal" onclick="closeOnOverlay(event,'personal-goals-modal')" style="display:none">
+  <div class="modal" style="max-width:460px">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title">My Personal Goals</div>
+        <div style="font-size:11px;color:var(--g400);margin-top:2px">Ace uses these to show what your sales numbers mean in real life</div>
+      </div>
+      <button class="modal-close" onclick="closeModal('personal-goals-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    </div>
+    <div class="modal-body">
+      <div style="display:flex;flex-direction:column;gap:14px" id="personal-goals-form">
+
+        <div style="font-size:12px;color:var(--g400);background:var(--g50);border-radius:8px;padding:10px 12px;line-height:1.5">
+          Add up to 3 personal goals. Ace will translate your quota progress into savings toward each one.
+        </div>
+
+        <!-- Goal 1 -->
+        <div style="border:1.5px solid var(--g200);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px" id="pg-row-0">
+          <div style="display:flex;gap:8px">
+            <select id="pg-emoji-0" style="width:52px;border:1.5px solid var(--g200);border-radius:7px;padding:5px;font-size:16px;font-family:var(--font);text-align:center">
+              <option>🚗</option><option>✈️</option><option>🏠</option><option>💳</option><option>🏍️</option><option>🎓</option><option>💍</option><option>⛵</option>
+            </select>
+            <input id="pg-name-0" type="text" value="New Car" placeholder="Goal name" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);color:var(--dark);outline:none">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">Target $</span>
+            <input id="pg-target-0" type="number" value="25000" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:right;outline:none">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">Saved $</span>
+            <input id="pg-saved-0" type="number" value="8200" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:right;outline:none">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">% of commission goes here</span>
+            <input id="pg-pct-0" type="number" value="30" min="0" max="100" style="width:60px;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:center;outline:none">
+            <span style="font-size:12px;color:var(--g400)">%</span>
+          </div>
+        </div>
+
+        <!-- Goal 2 -->
+        <div style="border:1.5px solid var(--g200);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px" id="pg-row-1">
+          <div style="display:flex;gap:8px">
+            <select id="pg-emoji-1" style="width:52px;border:1.5px solid var(--g200);border-radius:7px;padding:5px;font-size:16px;font-family:var(--font);text-align:center">
+              <option>🏍️</option><option>🚗</option><option>✈️</option><option>🏠</option><option>💳</option><option>🎓</option><option>💍</option><option>⛵</option>
+            </select>
+            <input id="pg-name-1" type="text" value="Pay Off Motorcycle" placeholder="Goal name" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);color:var(--dark);outline:none">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">Target $</span>
+            <input id="pg-target-1" type="number" value="6400" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:right;outline:none">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">Saved $</span>
+            <input id="pg-saved-1" type="number" value="4100" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:right;outline:none">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">% of commission goes here</span>
+            <input id="pg-pct-1" type="number" value="20" min="0" max="100" style="width:60px;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:center;outline:none">
+            <span style="font-size:12px;color:var(--g400)">%</span>
+          </div>
+        </div>
+
+        <!-- Goal 3 -->
+        <div style="border:1.5px solid var(--g200);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:10px" id="pg-row-2">
+          <div style="display:flex;gap:8px">
+            <select id="pg-emoji-2" style="width:52px;border:1.5px solid var(--g200);border-radius:7px;padding:5px;font-size:16px;font-family:var(--font);text-align:center">
+              <option>✈️</option><option>🚗</option><option>🏠</option><option>💳</option><option>🏍️</option><option>🎓</option><option>💍</option><option>⛵</option>
+            </select>
+            <input id="pg-name-2" type="text" value="Europe Trip" placeholder="Goal name" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);color:var(--dark);outline:none">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">Target $</span>
+            <input id="pg-target-2" type="number" value="8000" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:right;outline:none">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">Saved $</span>
+            <input id="pg-saved-2" type="number" value="1500" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:right;outline:none">
+          </div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <span style="font-size:12px;color:var(--g400);white-space:nowrap">% of commission goes here</span>
+            <input id="pg-pct-2" type="number" value="15" min="0" max="100" style="width:60px;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-family:var(--font);text-align:center;outline:none">
+            <span style="font-size:12px;color:var(--g400)">%</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div></div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="closeModal('personal-goals-modal')">Cancel</button>
+        <button class="modal-save" onclick="_savePersonalGoals()">Save Goals</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Dashboard Card Picker Modal -->
 <div class="modal-overlay" id="dash-card-modal" onclick="closeOnOverlay(event,'dash-card-modal')" style="display:none">
@@ -6230,6 +6422,10 @@ function showPage(id, btn) {
   });
   closeAllPanels();
   closeDrawer();
+  // Redraw sales chart when returning to dashboard
+  if (id === 'dashboard') {
+    setTimeout(drawSalesChart, 60);
+  }
   // When navigating to company-settings, load active section
   if (id === 'company-settings') {
     setTimeout(function(){ _csLoadSection(_csCurrentSection || 'company'); }, 30);
@@ -7083,6 +7279,15 @@ var _companySettings = {
     {name:'VIP',      color:'#f59e0b'},
     {name:'Prospect', color:'#8b5cf6'},
   ],
+  // Company culture & values — consumed by Ace when coaching reps
+  companyMission: 'Help families in the Midwest navigate benefits with clarity and confidence.',
+  companyValues: [
+    { name: 'Client relationships over volume',  desc: 'We win through trust, not transactions. Long-term retention beats short-term quota.' },
+    { name: 'Radical transparency',              desc: 'Reps and managers share the same numbers. No hidden scorecards.' },
+    { name: 'Continuous improvement',            desc: 'Every call is a chance to get 1% better. We review, learn, and adjust.' },
+    { name: 'Own your outcomes',                 desc: 'No excuses. We take responsibility for pipeline, activity, and results.' },
+  ],
+  coachingCultureNote: 'Ace coaching should reinforce relationship-first selling. Avoid language that encourages volume at the expense of quality. When a rep\'s activity drops, ask why before judging.',
 };
 // Apply company settings — updates live DOM elements that reference global values
 function applyCompanySettings() {
@@ -7254,6 +7459,7 @@ function _csLoadSection(id) {
   if (id === 'territories'){ c.innerHTML = _csTerritoriesSection(); }
   if (id === 'tags')       { c.innerHTML = _csTagsSection(); }
   if (id === 'rules')      { c.innerHTML = _csRulesSection(); }
+  if (id === 'values')     { c.innerHTML = _csValuesSection(); }
 }
 function _csFieldGroup(label, hint, inputHtml) {
   return '<div style="margin-bottom:20px"><label style="display:block;font-size:12px;font-weight:700;color:var(--dark);margin-bottom:5px">' + label + (hint?'<span style="font-size:11px;font-weight:400;color:var(--g400);margin-left:6px">'+hint+'</span>':'') + '</label>' + inputHtml + '</div>';
@@ -7475,6 +7681,61 @@ function _csRulesSection() {
     '<div style="font-size:12px;color:var(--g500)">Pace = (Sales YTD ÷ Annual Quota) ÷ (Days Elapsed ÷ 365). A rep at 100% pace is exactly on track for their annual number.</div>' +
     '</div>';
 }
+function _csValuesSection() {
+  var s = _companySettings;
+  var valuesHtml = (s.companyValues || []).map(function(v, i) {
+    return '<div style="background:#fff;border:1.5px solid var(--g200);border-radius:10px;padding:14px 16px;margin-bottom:10px" id="cs-val-row-'+i+'">' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:8px">' +
+        '<div style="width:22px;height:22px;border-radius:50%;background:rgba(29,158,117,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:var(--teal);flex-shrink:0">' + (i+1) + '</div>' +
+        '<input id="cs-val-name-'+i+'" type="text" value="'+v.name+'" placeholder="Value name" style="flex:1;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;font-weight:600;font-family:var(--font);outline:none" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">' +
+        '<button onclick="_csRemoveValue('+i+')" title="Remove" style="border:none;background:none;cursor:pointer;color:var(--g400);padding:4px;border-radius:5px;display:flex;align-items:center" onmouseover="this.style.color=\'var(--red)\'" onmouseout="this.style.color=\'var(--g400)\'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>' +
+      '</div>' +
+      '<textarea id="cs-val-desc-'+i+'" rows="2" placeholder="How this shows up in day-to-day selling..." style="width:100%;border:1.5px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--g500);font-family:var(--font);outline:none;resize:none;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">'+v.desc+'</textarea>' +
+    '</div>';
+  }).join('');
+
+  return _csSectionTitle('Culture & Values', 'Ace uses this context to coach reps in a way that reflects your team\'s identity and priorities.') +
+    '<div style="background:rgba(29,158,117,0.05);border:1px solid rgba(29,158,117,0.2);border-radius:10px;padding:12px 16px;margin-bottom:24px;display:flex;gap:10px;align-items:flex-start">' +
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>' +
+      '<div style="font-size:12px;color:var(--g500)">These values are automatically injected into Ace\'s coaching context. Ace won\'t quote them verbatim — they shape the tone, priorities, and guidance Ace gives each rep.</div>' +
+    '</div>' +
+    _csFieldGroup('Mission Statement', 'One sentence. What does your team exist to do?',
+      '<textarea id="cs-mission" rows="2" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);outline:none;resize:none;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">'+( s.companyMission||'')+'</textarea>') +
+    '<div style="margin-bottom:8px"><label style="display:block;font-size:12px;font-weight:700;color:var(--dark);margin-bottom:5px">Core Values <span style="font-size:11px;font-weight:400;color:var(--g400);margin-left:6px">How your team wins — Ace references these when giving feedback</span></label></div>' +
+    valuesHtml +
+    '<button onclick="_csAddValue()" style="display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px dashed var(--g300);border-radius:8px;background:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--g500);font-family:var(--font);margin-bottom:24px">+ Add Value</button>' +
+    _csFieldGroup('Coaching Culture Note', 'Optional guidance for Ace — how should it approach conversations with reps?',
+      '<textarea id="cs-coaching-note" rows="3" placeholder="e.g. Avoid punitive language. Focus on behaviors, not outcomes. Ask questions before giving advice." style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);outline:none;resize:none;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">'+( s.coachingCultureNote||'')+'</textarea>') +
+    '<div style="background:var(--g50);border-radius:10px;padding:14px 16px;border:1px solid var(--g200)">' +
+      '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:8px">Preview — Ace context summary</div>' +
+      '<div id="cs-values-preview" style="font-size:12px;color:var(--g500);line-height:1.6;font-style:italic">' + _csValuesPreview() + '</div>' +
+    '</div>';
+}
+function _csValuesPreview() {
+  var s = _companySettings;
+  var vals = (s.companyValues || []).map(function(v){ return '"' + v.name + '"'; }).join(', ');
+  return 'Mission: ' + (s.companyMission || '—') + '<br>Values: ' + (vals || '—') + (s.coachingCultureNote ? '<br>Coaching note: ' + s.coachingCultureNote : '');
+}
+function _csAddValue() {
+  _companySettings.companyValues = _companySettings.companyValues || [];
+  _companySettings.companyValues.push({ name: '', desc: '' });
+  _csLoadSection('values');
+}
+function _csRemoveValue(i) {
+  if (_companySettings.companyValues) _companySettings.companyValues.splice(i, 1);
+  _csLoadSection('values');
+}
+function _csSaveValues() {
+  var s = _companySettings;
+  var m = document.getElementById('cs-mission'); if (m) s.companyMission = m.value.trim();
+  var n = document.getElementById('cs-coaching-note'); if (n) s.coachingCultureNote = n.value.trim();
+  (s.companyValues || []).forEach(function(v, i) {
+    var nameEl = document.getElementById('cs-val-name-'+i);
+    var descEl = document.getElementById('cs-val-desc-'+i);
+    if (nameEl) v.name = nameEl.value.trim();
+    if (descEl) v.desc = descEl.value.trim();
+  });
+}
 function _csProductsSection() {
   return _csSectionTitle('Products & Services', 'Define what your team sells. These appear as line items on opportunities and commissions.') +
     '<div style="display:flex;flex-direction:column;gap:10px">' +
@@ -7525,6 +7786,8 @@ function _csSave() {
   // Rules
   var ot = document.getElementById('cs-ontrack-min'); if(ot) _companySettings.onTrackMin = parseInt(ot.value)||70;
   var ar = document.getElementById('cs-atrisk-min'); if(ar) _companySettings.atRiskMin = parseInt(ar.value)||50;
+  // Culture & Values
+  _csSaveValues();
   // Apply ripple
   applyCompanySettings();
 }
@@ -9832,7 +10095,10 @@ function applySettingsRoleView(roleId) {
   var aceSmConfig = document.getElementById('ace-sm-config');
   var aceSrStyle = document.getElementById('ace-sr-style');
   if (aceSmConfig) aceSmConfig.style.display = roleId === 'sr' ? 'none' : 'block';
-  if (aceSrStyle) aceSrStyle.style.display = roleId === 'sr' ? 'block' : 'none';
+  if (aceSrStyle) {
+    aceSrStyle.style.display = roleId === 'sr' ? 'block' : 'none';
+    if (roleId === 'sr') _renderPersonalGoals();
+  }
 }
 function switchSettingsTab(el) {
   el.closest('.settings-tab-bar').querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
@@ -12074,13 +12340,25 @@ function setRole(roleId) {
   var smView = document.getElementById('dash-sm-view');
   var srView = document.getElementById('dash-sr-view');
   if (smView) smView.style.display = roleId === 'sm' ? '' : 'none';
-  if (srView) {
-    srView.style.display = roleId === 'sr' ? '' : 'none';
-    if (roleId === 'sr') {
-      // Init SR pipeline tab on first switch
-      var firstTab = document.querySelector('.sr-pipe-tab.active');
-      switchSRPipeTab('recents', firstTab);
-    }
+  if (srView) srView.style.display = roleId === 'sr' ? '' : 'none';
+
+  var briefBtn = document.getElementById('dash-morning-brief-btn');
+  var custBtn = document.getElementById('dash-customize-btn');
+  var sub = document.getElementById('dash-subtitle');
+
+  if (roleId === 'sr') {
+    var firstTab = document.querySelector('.sr-pipe-tab.active');
+    switchSRPipeTab('recents', firstTab);
+    _renderPersonalGoals();
+    if (briefBtn) briefBtn.style.display = 'flex';
+    if (custBtn) custBtn.style.display = 'none';
+    if (sub) sub.textContent = 'Good morning, Brock — here\'s your day';
+    setTimeout(function() { _showMorningBrief(); }, 600);
+  } else {
+    if (briefBtn) briefBtn.style.display = 'none';
+    if (custBtn) custBtn.style.display = 'flex';
+    if (sub) sub.textContent = 'Good morning, Sagar — here is your team snapshot';
+    setTimeout(drawSalesChart, 60);
   }
 
   // Update topbar user switcher
@@ -12172,9 +12450,11 @@ function setRole(roleId) {
   // SR: filter commissions table to only their rows
   applyRoleCommissionFilter(roleId);
 
-  // Update dashboard greeting
-  const sub = document.querySelector('#page-dashboard .page-subtitle');
-  if (sub) sub.textContent = role.greeting + ' — here is your team snapshot';
+  // Update dashboard greeting (handled per-role above; this is fallback for SM)
+  if (roleId === 'sm') {
+    var subGreet = document.querySelector('#page-dashboard .page-subtitle');
+    if (subGreet) subGreet.textContent = role.greeting + ' — here is your team snapshot';
+  }
 
   // If current page is now hidden for this role, go to dashboard
   const activePage = document.querySelector('.page.active');
@@ -14315,6 +14595,157 @@ function switchAceTab(tab, btn) {
     btn.style.fontWeight = '700';
     btn.style.borderBottom = '2px solid var(--navy)';
     btn.style.marginBottom = '-2px';
+  }
+}
+
+// ── PERSONAL GOALS + MORNING BRIEF ────────────────────────────────────────────
+
+var _personalGoals = [
+  { emoji:'🚗', name:'New Car',           target:25000, saved:8200,  pct:30 },
+  { emoji:'🏍️', name:'Pay Off Motorcycle', target:6400,  saved:4100,  pct:20 },
+  { emoji:'✈️', name:'Europe Trip',        target:8000,  saved:1500,  pct:15 }
+];
+
+// Commission rate assumption and monthly numbers (would be live in production)
+var _SR_MONTHLY_COMM = 10485;
+var _SR_QUOTA_PCT    = 0.89;
+var _SR_QUOTA_AMT    = 156000;
+var _SR_QUOTA_GOAL   = 175000;
+
+function _renderPersonalGoals() {
+  var list = document.getElementById('sr-personal-goals-list');
+  if (!list) return;
+  if (!_personalGoals.length) {
+    list.innerHTML = '<div style="text-align:center;padding:16px;font-size:12px;color:var(--g400)">No goals set · <button onclick="_openPersonalGoals()" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Add goals</button></div>';
+    return;
+  }
+  list.innerHTML = _personalGoals.map(function(g) {
+    var pct      = Math.min(Math.round(g.saved / g.target * 100), 100);
+    var monthly  = Math.round(_SR_MONTHLY_COMM * g.pct / 100);
+    var remaining = Math.max(g.target - g.saved, 0);
+    var months   = monthly > 0 ? Math.ceil(remaining / monthly) : '—';
+    var eta      = monthly > 0 ? (months === 1 ? 'next month' : 'in ~' + months + ' months') : '—';
+    var barColor = pct >= 75 ? 'var(--teal)' : pct >= 40 ? 'var(--amber)' : '#5b8fe8';
+    return '<div>' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px">' +
+        '<div style="display:flex;align-items:center;gap:6px">' +
+          '<span style="font-size:16px">' + g.emoji + '</span>' +
+          '<span style="font-size:13px;font-weight:600;color:var(--dark)">' + g.name + '</span>' +
+        '</div>' +
+        '<span style="font-size:11px;font-weight:700;color:var(--g500);font-family:var(--mono)">' + pct + '%</span>' +
+      '</div>' +
+      '<div style="height:6px;background:var(--g100);border-radius:3px;overflow:hidden;margin-bottom:4px">' +
+        '<div style="width:' + pct + '%;height:100%;background:' + barColor + ';border-radius:3px;transition:width .4s ease"></div>' +
+      '</div>' +
+      '<div style="display:flex;justify-content:space-between;font-size:10px;color:var(--g400)">' +
+        '<span>$' + g.saved.toLocaleString() + ' of $' + g.target.toLocaleString() + '</span>' +
+        '<span style="color:' + barColor + '">' + eta + '</span>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // Ace insight line
+  var ace = document.getElementById('sr-goals-ace-line');
+  if (ace) {
+    var closest = _personalGoals.reduce(function(a, b) {
+      return (b.saved / b.target) > (a.saved / a.target) ? b : a;
+    });
+    var monthly = Math.round(_SR_MONTHLY_COMM * closest.pct / 100);
+    var rem = Math.max(closest.target - closest.saved, 0);
+    var mo = monthly > 0 ? Math.ceil(rem / monthly) : null;
+    ace.textContent = mo
+      ? 'At this pace, your ' + closest.name + ' fund closes in ~' + mo + ' month' + (mo !== 1 ? 's' : '') + '.'
+      : 'Keep closing deals — your personal goals are tracking well.';
+  }
+}
+
+function _renderMorningBrief() {
+  var mbGoals = document.getElementById('mb-personal-goals');
+  if (!mbGoals) return;
+
+  // Update date
+  var d = new Date();
+  var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  var dateEl = document.getElementById('mb-date');
+  if (dateEl) dateEl.textContent = days[d.getDay()] + ', ' + months[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
+
+  mbGoals.innerHTML = _personalGoals.map(function(g) {
+    var monthly  = Math.round(_SR_MONTHLY_COMM * g.pct / 100);
+    var remaining = Math.max(g.target - g.saved, 0);
+    var pct      = Math.min(Math.round(g.saved / g.target * 100), 100);
+    var barColor = pct >= 75 ? 'var(--teal)' : pct >= 40 ? 'var(--amber)' : '#5b8fe8';
+    return '<div style="display:flex;align-items:center;gap:12px;background:var(--g50);border-radius:10px;padding:10px 12px">' +
+      '<span style="font-size:20px;flex-shrink:0">' + g.emoji + '</span>' +
+      '<div style="flex:1;min-width:0">' +
+        '<div style="display:flex;justify-content:space-between;margin-bottom:5px">' +
+          '<span style="font-size:12px;font-weight:600;color:var(--dark)">' + g.name + '</span>' +
+          '<span style="font-size:11px;color:' + barColor + ';font-weight:700;font-family:var(--mono)">' + pct + '%</span>' +
+        '</div>' +
+        '<div style="height:5px;background:var(--g200);border-radius:3px;overflow:hidden;margin-bottom:5px">' +
+          '<div style="width:' + pct + '%;height:100%;background:' + barColor + ';border-radius:3px"></div>' +
+        '</div>' +
+        '<div style="font-size:10px;color:var(--g400)">This month\'s commission adds <strong style="color:var(--dark)">$' + monthly.toLocaleString() + '</strong> · $' + remaining.toLocaleString() + ' to go</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  // Dynamic Ace insight
+  var insight = document.getElementById('mb-ace-insight');
+  if (insight) {
+    var best = _personalGoals.reduce(function(a, b) {
+      return (b.saved / b.target) > (a.saved / a.target) ? b : a;
+    });
+    var worstRem = _personalGoals.reduce(function(a, b) {
+      return (b.target - b.saved) > (a.target - a.saved) ? b : a;
+    });
+    insight.textContent = 'You\'re closest to completing your ' + best.name + ' goal — ' +
+      Math.round(best.saved / best.target * 100) + '% there. ' +
+      'Hitting quota this month adds $' + Math.round(_SR_MONTHLY_COMM * worstRem.pct / 100).toLocaleString() +
+      ' toward your ' + worstRem.name + '.';
+  }
+}
+
+function _openPersonalGoals() {
+  // Sync form from data
+  _personalGoals.forEach(function(g, i) {
+    var nameEl  = document.getElementById('pg-name-'  + i);
+    var targetEl = document.getElementById('pg-target-'+ i);
+    var savedEl = document.getElementById('pg-saved-' + i);
+    var pctEl   = document.getElementById('pg-pct-'   + i);
+    if (nameEl)   nameEl.value   = g.name;
+    if (targetEl) targetEl.value = g.target;
+    if (savedEl)  savedEl.value  = g.saved;
+    if (pctEl)    pctEl.value    = g.pct;
+  });
+  var ov = document.getElementById('personal-goals-modal');
+  if (ov) { ov.style.display = 'flex'; }
+}
+
+function _savePersonalGoals() {
+  for (var i = 0; i < 3; i++) {
+    var nameEl   = document.getElementById('pg-name-'   + i);
+    var targetEl = document.getElementById('pg-target-' + i);
+    var savedEl  = document.getElementById('pg-saved-'  + i);
+    var pctEl    = document.getElementById('pg-pct-'    + i);
+    if (nameEl && _personalGoals[i]) {
+      _personalGoals[i].name   = nameEl.value   || _personalGoals[i].name;
+      _personalGoals[i].target = parseFloat(targetEl.value) || _personalGoals[i].target;
+      _personalGoals[i].saved  = parseFloat(savedEl.value)  || 0;
+      _personalGoals[i].pct    = parseFloat(pctEl.value)    || _personalGoals[i].pct;
+    }
+  }
+  closeModal('personal-goals-modal');
+  _renderPersonalGoals();
+  showToast('✓ Personal goals saved');
+}
+
+function _showMorningBrief() {
+  _renderMorningBrief();
+  var ov = document.getElementById('morning-brief-modal');
+  if (ov) {
+    ov.style.display    = 'flex';
+    ov.style.alignItems = 'center';
   }
 }
 
