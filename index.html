@@ -6541,6 +6541,9 @@ function closeAllPanels() {
     const el = document.getElementById(id);
     if (el) el.classList.remove('open');
   });
+  // Close floating modals that should dismiss on navigation
+  var mbModal = document.getElementById('morning-brief-modal');
+  if (mbModal) mbModal.style.display = 'none';
 }
 
 // ── ACE DIALOG ───────────────────────────────────────────────────────────────
@@ -7708,13 +7711,13 @@ function _csValuesSection() {
       '<textarea id="cs-coaching-note" rows="3" placeholder="e.g. Avoid punitive language. Focus on behaviors, not outcomes. Ask questions before giving advice." style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);outline:none;resize:none;box-sizing:border-box" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">'+( s.coachingCultureNote||'')+'</textarea>') +
     '<div style="background:var(--g50);border-radius:10px;padding:14px 16px;border:1px solid var(--g200)">' +
       '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);margin-bottom:8px">Preview — Ace context summary</div>' +
-      '<div id="cs-values-preview" style="font-size:12px;color:var(--g500);line-height:1.6;font-style:italic">' + _csValuesPreview() + '</div>' +
+      '<div id="cs-values-preview" style="font-size:12px;color:var(--g500);line-height:1.8;font-style:italic;white-space:pre-line">' + _csValuesPreview() + '</div>' +
     '</div>';
 }
 function _csValuesPreview() {
   var s = _companySettings;
   var vals = (s.companyValues || []).map(function(v){ return '"' + v.name + '"'; }).join(', ');
-  return 'Mission: ' + (s.companyMission || '—') + '<br>Values: ' + (vals || '—') + (s.coachingCultureNote ? '<br>Coaching note: ' + s.coachingCultureNote : '');
+  return 'Mission: ' + (s.companyMission || '—') + '\nValues: ' + (vals || '—') + (s.coachingCultureNote ? '\nCoaching note: ' + s.coachingCultureNote : '');
 }
 function _csAddValue() {
   _companySettings.companyValues = _companySettings.companyValues || [];
@@ -12358,6 +12361,9 @@ function setRole(roleId) {
     if (briefBtn) briefBtn.style.display = 'none';
     if (custBtn) custBtn.style.display = 'flex';
     if (sub) sub.textContent = 'Good morning, Sagar — here is your team snapshot';
+    // Close morning brief if it was left open from SR session
+    var mbModal = document.getElementById('morning-brief-modal');
+    if (mbModal) mbModal.style.display = 'none';
     setTimeout(drawSalesChart, 60);
   }
 
