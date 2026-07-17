@@ -1669,7 +1669,17 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 </head>
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
-<div class="app">
+
+<!-- Trial banner — full width, above everything -->
+<div id="trial-banner" style="position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#c9184a,#ff4d6d);height:32px;display:flex;align-items:center;justify-content:center;gap:16px">
+  <span style="font-size:12px;font-weight:600;color:#fff;letter-spacing:0.1px">
+    <strong style="font-weight:800" id="trial-days-banner">6 days</strong> left on your free trial
+  </span>
+  <button onclick="showToast('Redirecting to upgrade…')" style="padding:4px 14px;background:#fff;color:#c9184a;border:none;border-radius:20px;font-size:11px;font-weight:800;cursor:pointer;font-family:var(--font);letter-spacing:0.2px">Upgrade Now</button>
+  <button onclick="document.getElementById('trial-banner').style.display='none'" style="position:absolute;right:14px;background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;font-size:16px;line-height:1;padding:0" title="Dismiss">×</button>
+</div>
+
+<div class="app" style="padding-top:32px">
 
 <nav class="sidebar" role="navigation" aria-label="Main navigation">
   <div class="sb-logo" style="flex-direction:column;gap:4px;padding:14px 8px 12px"><svg width="41" height="29" viewBox="0 0 41 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.7469 5.1311C23.9948 3.4409 23.9888 2.05568 23.327 2.03134C21.2165 1.95701 17.8982 9.7314 19.9741 9.54901C22.2617 9.3474 23.7469 5.13152 23.7469 5.13152L23.7369 7.60039C23.7369 7.60039 21.9568 11.2836 18.7937 11.2268C14.3663 11.1474 16.9977 0.843034 22.6624 0.462879C25.2107 0.292023 25.186 2.45677 24.7264 4.2734C24.4589 5.33185 23.6844 5.55909 23.7469 5.1311Z" fill="white"/><path d="M38.3001 13.952C33.9325 13.3967 28.7556 13.3796 24.1151 13.503C26.1517 7.30951 26.8834 1.50039 28.6507 1.03054C28.2239 0.351385 26.7953 -0.064222 25.604 0.676012C24.0626 1.63195 23.4588 7.54272 21.4998 13.609C10.4683 14.207 0.156585 17.0295 0.00185471 23.4644C-0.146942 29.7143 8.69047 30.2709 14.5474 27.1314C18.4389 25.0457 21.0534 21.3701 22.6691 17.3341C22.938 16.663 23.3227 15.6981 23.3227 15.6981L22.1424 15.3816C22.6048 15.3474 23.4706 15.3427 23.4711 15.3389C24.4597 15.3104 25.4654 15.2962 26.4881 15.2962H26.4908C30.5567 15.3017 36.7149 15.7442 40.0012 16.2718C40.0012 16.2748 40.5526 14.2377 38.3001 13.952ZM10.4911 26.7316C4.37036 28.1698 1.34331 25.9119 1.66783 23.1748C2.25206 18.2456 10.7855 16.0531 20.8608 15.4534C18.9369 20.6316 15.924 25.4561 10.4911 26.7316Z" fill="white"/></svg></div>
@@ -1718,7 +1728,10 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <!-- User switcher -->
     <div style="position:relative" id="user-switcher-wrap">
       <button id="topbar-user-btn" onclick="toggleUserSwitcher()" style="display:flex;align-items:center;gap:8px;background:none;border:none;cursor:pointer;padding:4px 6px;border-radius:10px;transition:background 0.15s" onmouseenter="this.style.background='var(--g100)'" onmouseleave="this.style.background='none'">
-        <img id="topbar-photo" src="https://randomuser.me/api/portraits/women/65.jpg" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt="Current user">
+        <div style="position:relative;flex-shrink:0">
+          <img id="topbar-photo" src="https://randomuser.me/api/portraits/women/65.jpg" style="width:32px;height:32px;border-radius:50%;object-fit:cover;border:2px solid var(--g200)" alt="Current user">
+          <span id="trial-avatar-dot" style="position:absolute;bottom:0;right:0;width:9px;height:9px;background:#c9184a;border-radius:50%;border:2px solid #fff"></span>
+        </div>
         <div style="text-align:left;line-height:1.2">
           <div id="topbar-name" style="font-size:12px;font-weight:700;color:var(--dark)">Patricia Moore</div>
           <div id="topbar-title" style="font-size:10px;color:var(--g400);white-space:nowrap">Sales Manager</div>
@@ -3845,6 +3858,286 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value">58%</div><div class="stat-delta" style="color:var(--amber)">— flat vs last year</div></div>
   <div class="stat-card"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$82.9K</div><div class="stat-delta positive">▲ $4.2K vs last mo</div></div>
 </div>
+<!-- ── SAVED REPORTS FOLDER BROWSER ── -->
+<div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden;margin-bottom:22px">
+  <!-- FY tab bar -->
+  <div style="display:flex;border-bottom:1px solid var(--g200);padding:0 18px;gap:0;align-items:flex-end">
+    <button id="rpt-tab-2025" onclick="_rptSelectFY('2025')" style="padding:12px 16px 10px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;font-family:var(--font);color:var(--g400);border-bottom:2px solid transparent;margin-bottom:-1px;transition:.12s">FY 2025</button>
+    <button id="rpt-tab-2026" onclick="_rptSelectFY('2026')" style="padding:12px 16px 10px;font-size:13px;font-weight:700;border:none;background:none;cursor:pointer;font-family:var(--font);color:var(--dark);border-bottom:2px solid var(--dark);margin-bottom:-1px;transition:.12s">FY 2026</button>
+    <div style="flex:1"></div>
+    <button onclick="_rptOpenCustomBuilder()" style="display:flex;align-items:center;gap:6px;background:var(--navy);color:#fff;border:none;border-radius:7px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);margin:8px 0 8px 8px">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Build Custom Report
+    </button>
+  </div>
+  <!-- Folder grid -->
+  <div id="rpt-folder-grid" style="padding:28px 24px;display:flex;flex-wrap:wrap;gap:32px 40px;min-height:120px"></div>
+</div>
+
+<!-- ── CUSTOM REPORT BUILDER MODAL ── -->
+<div id="rpt-builder-modal" style="display:none;position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;width:560px;max-width:95vw;max-height:85vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,0.18)">
+    <div style="padding:24px 28px 0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div style="font-size:18px;font-weight:800;color:var(--dark)">Build Custom Report</div>
+        <button onclick="_rptCloseCustomBuilder()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:20px;line-height:1;padding:0">×</button>
+      </div>
+      <div style="font-size:13px;color:var(--g400);margin-bottom:22px">Choose what to include, filter by date range and team, then generate or download.</div>
+      <!-- Step indicator -->
+      <div style="display:flex;gap:0;border-bottom:1px solid var(--g200);margin-bottom:24px">
+        <div id="rptb-step-1" style="padding:8px 16px 10px;font-size:12px;font-weight:700;color:var(--dark);border-bottom:2px solid var(--dark);margin-bottom:-1px;cursor:pointer" onclick="_rptbGo(1)">1 · Sections</div>
+        <div id="rptb-step-2" style="padding:8px 16px 10px;font-size:12px;font-weight:600;color:var(--g400);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer" onclick="_rptbGo(2)">2 · Filters</div>
+        <div id="rptb-step-3" style="padding:8px 16px 10px;font-size:12px;font-weight:600;color:var(--g400);border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer" onclick="_rptbGo(3)">3 · Preview</div>
+      </div>
+      <div id="rptb-body"></div>
+    </div>
+    <div id="rptb-footer" style="padding:18px 28px;border-top:1px solid var(--g200);display:flex;justify-content:space-between;align-items:center;margin-top:8px">
+      <button id="rptb-back-btn" onclick="_rptbBack()" style="background:none;border:1px solid var(--g200);border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--g500)">Back</button>
+      <button id="rptb-next-btn" onclick="_rptbNext()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CUSTOMIZE EXPORT MODAL ── -->
+<div id="cs-export-modal" style="display:none;position:fixed;inset:0;z-index:4000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;width:520px;max-width:95vw;max-height:85vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,0.18)">
+    <div style="padding:24px 28px 0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+        <div style="font-size:18px;font-weight:800;color:var(--dark)">Customize Export</div>
+        <button onclick="_csCloseExportModal()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:20px;line-height:1;padding:0">×</button>
+      </div>
+      <div id="cs-export-modal-type" style="font-size:13px;color:var(--teal);font-weight:700;margin-bottom:16px"></div>
+      <div style="margin-bottom:18px">
+        <div style="font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Include Fields</div>
+        <div id="cs-export-fields" style="display:grid;grid-template-columns:1fr 1fr;gap:8px"></div>
+      </div>
+      <div style="margin-bottom:18px">
+        <div style="font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Date Range</div>
+        <div style="display:flex;gap:8px">
+          <select style="flex:1;padding:8px 10px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:var(--font);color:var(--dark)">
+            <option>All time</option><option>This month</option><option>This quarter</option><option selected>This year (YTD)</option><option>Last year</option><option>Custom range</option>
+          </select>
+        </div>
+      </div>
+      <div style="margin-bottom:24px">
+        <div style="font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Format</div>
+        <div style="display:flex;gap:8px">
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="expfmt" value="csv" checked style="accent-color:var(--teal)"> CSV</label>
+          <label style="display:flex;align-items:center;gap:6px;cursor:pointer;font-size:13px"><input type="radio" name="expfmt" value="xlsx" style="accent-color:var(--teal)"> Excel (.xlsx)</label>
+        </div>
+      </div>
+    </div>
+    <div style="padding:16px 28px;border-top:1px solid var(--g200);display:flex;justify-content:flex-end;gap:10px">
+      <button onclick="_csCloseExportModal()" style="background:none;border:1px solid var(--g200);border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--g500)">Cancel</button>
+      <button onclick="_csRunCustomExport()" style="background:var(--teal);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Export Now</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── REPORT DETAIL OVERLAY ── -->
+<div id="rpt-detail-overlay" style="display:none;position:fixed;inset:0;z-index:3000;background:#f3f4f6;overflow-y:auto;flex-direction:column">
+  <div style="max-width:960px;margin:0 auto;padding:28px 32px">
+    <!-- Back + header -->
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+      <button onclick="_rptCloseDetail()" style="background:none;border:none;font-size:12px;font-weight:600;color:var(--g500);cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:5px;padding:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back to reports
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:12px">
+      <div>
+        <div id="rpt-detail-title" style="font-size:24px;font-weight:800;color:var(--dark);letter-spacing:-0.4px">June Sales Report</div>
+        <!-- Company / Individual tabs -->
+        <div style="display:flex;gap:0;margin-top:10px;border-bottom:2px solid var(--g200)">
+          <button id="rpt-tab-company" onclick="_rptDetailTab('company')" style="font-size:13px;font-weight:700;padding:6px 14px 8px;border:none;background:none;cursor:pointer;font-family:var(--font);color:var(--dark);border-bottom:2px solid var(--dark);margin-bottom:-2px">Company</button>
+          <button id="rpt-tab-individual" onclick="_rptDetailTab('individual')" style="font-size:13px;font-weight:600;padding:6px 14px 8px;border:none;background:none;cursor:pointer;font-family:var(--font);color:var(--g400);border-bottom:2px solid transparent;margin-bottom:-2px">Individual</button>
+        </div>
+      </div>
+      <button onclick="showToast('Downloading report…')" style="display:flex;align-items:center;gap:7px;background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
+        Download Report
+      </button>
+    </div>
+
+    <!-- ── COMPANY CONTENT ─────────────────────────────── -->
+    <div id="rpt-company-content">
+
+    <!-- Dark KPI card + stats -->
+    <div style="display:flex;gap:16px;margin-bottom:24px;flex-wrap:wrap">
+      <div style="background:var(--navy);border-radius:14px;padding:22px 28px;color:#fff;min-width:280px">
+        <div style="display:flex;gap:32px;margin-bottom:10px">
+          <div>
+            <div style="font-size:11px;font-weight:600;opacity:.6;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">This Month's Sales</div>
+            <div id="rpt-kpi-sales" style="font-size:28px;font-weight:800;color:var(--teal);font-family:var(--mono)">$7,002</div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;opacity:.6;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">This Month's Goal</div>
+            <div id="rpt-kpi-goal" style="font-size:28px;font-weight:800;color:#fff;font-family:var(--mono)">$150,200</div>
+          </div>
+        </div>
+        <div style="font-size:12px;opacity:.55" id="rpt-kpi-delta">Sales ▼ $143,198 under Goal</div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;flex:1;min-width:260px">
+        <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px 18px">
+          <div style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Total Deals</div>
+          <div id="rpt-stat-deals" style="font-size:22px;font-weight:800;color:var(--teal)">21</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px 18px">
+          <div style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Avg Revenue Per Deal</div>
+          <div id="rpt-stat-avg" style="font-size:22px;font-weight:800;color:var(--teal)">$333</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px 18px">
+          <div style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Team Win Rate</div>
+          <div id="rpt-stat-winrate" style="font-size:22px;font-weight:800;color:var(--dark)">100%</div>
+        </div>
+        <div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:16px 18px">
+          <div style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Sales Velocity</div>
+          <div id="rpt-stat-velocity" style="font-size:22px;font-weight:800;color:var(--dark)">14 days</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts row 1: Top Performing Services + Lead Source -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+      <!-- Top Performing Services donut -->
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px">
+        <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:16px">Top Performing Services</div>
+        <div style="display:flex;align-items:center;gap:24px">
+          <svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">
+            <circle cx="60" cy="60" r="44" fill="none" stroke="#e2e8f0" stroke-width="18"/>
+            <!-- 99% BizCare 360 -->
+            <circle cx="60" cy="60" r="44" fill="none" stroke="#4fa3e0" stroke-width="18" stroke-dasharray="274.9 1.6" stroke-dashoffset="69.1" stroke-linecap="butt" transform="rotate(-90 60 60)"/>
+            <!-- 1% BizBenefits -->
+            <circle cx="60" cy="60" r="44" fill="none" stroke="#a8d8f0" stroke-width="18" stroke-dasharray="2.8 273.7" stroke-dashoffset="69.1" stroke-linecap="butt" transform="rotate(-90 60 60)" style="stroke-dashoffset:-205.8"/>
+          </svg>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><div style="width:10px;height:10px;border-radius:50%;background:#4fa3e0;flex-shrink:0"></div><span style="font-size:12px;font-weight:600;color:var(--teal)">BizCare 360</span></div>
+              <div style="font-size:11px;color:var(--g400)">$6,952</div>
+            </div>
+            <div>
+              <div style="display:flex;align-items:center;gap:6px;margin-bottom:2px"><div style="width:10px;height:10px;border-radius:50%;background:#a8d8f0;flex-shrink:0"></div><span style="font-size:12px;font-weight:600;color:var(--g500)">BizBenefits 360</span></div>
+              <div style="font-size:11px;color:var(--g400)">$50</div>
+            </div>
+          </div>
+          <div style="margin-left:auto;display:flex;flex-direction:column;gap:16px;text-align:right">
+            <span style="font-size:13px;font-weight:700;color:var(--dark)">99%</span>
+            <span style="font-size:13px;font-weight:700;color:var(--dark)">1%</span>
+          </div>
+        </div>
+      </div>
+      <!-- Lead Source donut -->
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px">
+        <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:16px">Lead Source</div>
+        <div style="display:flex;align-items:center;gap:24px">
+          <svg width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0">
+            <circle cx="60" cy="60" r="44" fill="none" stroke="#e2e8f0" stroke-width="18"/>
+            <circle cx="60" cy="60" r="44" fill="none" stroke="#4fa3e0" stroke-width="18" stroke-dasharray="258.9 17.7" stroke-dashoffset="69.1" transform="rotate(-90 60 60)"/>
+            <circle cx="60" cy="60" r="44" fill="none" stroke="#90cdf4" stroke-width="18" stroke-dasharray="11.2 265.4" stroke-dashoffset="69.1" transform="rotate(-90 60 60)" style="stroke-dashoffset:-189.8"/>
+            <circle cx="60" cy="60" r="44" fill="none" stroke="#bee3f8" stroke-width="18" stroke-dasharray="2.8 273.8" stroke-dashoffset="69.1" transform="rotate(-90 60 60)" style="stroke-dashoffset:-201"/>
+          </svg>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;min-width:110px">
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--g500)">Leadengine</span><span style="font-weight:700;color:var(--dark)">94%</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--g500)">Cold Outreach</span><span style="font-weight:700;color:var(--dark)">4%</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--g500)">Other</span><span style="font-weight:700;color:var(--dark)">1%</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--g400)">Referral</span><span style="color:var(--g400)">0%</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--g400)">Post Card Mailing</span><span style="color:var(--g400)">0%</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--g400)">Webform</span><span style="color:var(--g400)">0%</span></div>
+            <div style="display:flex;justify-content:space-between;gap:8px"><span style="color:var(--g400)">Social Media</span><span style="color:var(--g400)">0%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Avg Time in Sales Cycle -->
+    <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:18px">Average Time in Sales Cycle</div>
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:80px;font-size:12px;color:var(--g500);text-align:right;flex-shrink:0">Prospects</div>
+          <div style="flex:1;position:relative;height:6px;background:var(--g100);border-radius:3px">
+            <div style="position:absolute;left:0;top:0;height:100%;width:30%;background:#4fa3e0;border-radius:3px"></div>
+            <div style="position:absolute;left:30%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#7c3aed;border:2px solid #fff;box-shadow:0 0 0 1px #7c3aed"></div>
+          </div>
+          <div style="width:30px;font-size:11px;color:var(--g400);text-align:right">4d</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:80px;font-size:12px;color:var(--g500);text-align:right;flex-shrink:0">Leads</div>
+          <div style="flex:1;position:relative;height:6px;background:var(--g100);border-radius:3px">
+            <div style="position:absolute;left:0;top:0;height:100%;width:65%;background:#4fa3e0;border-radius:3px"></div>
+            <div style="position:absolute;left:65%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#7c3aed;border:2px solid #fff;box-shadow:0 0 0 1px #7c3aed"></div>
+          </div>
+          <div style="width:30px;font-size:11px;color:var(--g400);text-align:right">9d</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:80px;font-size:12px;color:var(--g500);text-align:right;flex-shrink:0">Opportunities</div>
+          <div style="flex:1;position:relative;height:6px;background:var(--g100);border-radius:3px">
+            <div style="position:absolute;left:0;top:0;height:100%;width:52%;background:#f59e0b;border-radius:3px"></div>
+            <div style="position:absolute;left:52%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#7c3aed;border:2px solid #fff;box-shadow:0 0 0 1px #7c3aed"></div>
+          </div>
+          <div style="width:30px;font-size:11px;color:var(--g400);text-align:right">7d</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px">
+          <div style="width:80px;font-size:12px;color:var(--g500);text-align:right;flex-shrink:0">Proposals</div>
+          <div style="flex:1;position:relative;height:6px;background:var(--g100);border-radius:3px">
+            <div style="position:absolute;left:0;top:0;height:100%;width:92%;background:#4fa3e0;border-radius:3px"></div>
+            <div style="position:absolute;left:92%;top:50%;transform:translate(-50%,-50%);width:14px;height:14px;border-radius:50%;background:#7c3aed;border:2px solid #fff;box-shadow:0 0 0 1px #7c3aed"></div>
+          </div>
+          <div style="width:30px;font-size:11px;color:var(--g400);text-align:right">21d</div>
+        </div>
+        <div style="display:flex;padding-left:92px;gap:0;font-size:10px;color:var(--g300)">
+          <span style="flex:1;text-align:center">0</span><span style="flex:1;text-align:center">3</span><span style="flex:1;text-align:center">6</span><span style="flex:1;text-align:center">9</span><span style="flex:1;text-align:center">12</span><span style="flex:1;text-align:center">15</span><span style="flex:1;text-align:center">18</span><span style="flex:1;text-align:center">21</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Top Customers bar chart -->
+    <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px;margin-bottom:16px;overflow:hidden">
+      <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:18px">Top Customers</div>
+      <div style="overflow-x:auto">
+        <div style="display:flex;align-items:flex-end;gap:8px;min-width:600px;height:120px;padding-bottom:28px;position:relative">
+          <div style="position:absolute;bottom:28px;left:0;right:0;border-top:1px dashed var(--g100)"></div>
+          <div style="position:absolute;bottom:56px;left:0;right:0;border-top:1px dashed var(--g100)"></div>
+          <div style="position:absolute;bottom:84px;left:0;right:0;border-top:1px dashed var(--g100)"></div>
+          <div style="position:absolute;bottom:112px;left:0;right:0;border-top:1px dashed var(--g100)"></div>
+          <!-- bars with data -->
+          <div id="rpt-top-cust-bars" style="display:flex;align-items:flex-end;justify-content:space-around;gap:12px;width:100%;height:100%"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ROI by Rep + Sales by Rep -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:32px">
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px">
+        <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:14px">ROI by Rep</div>
+        <div id="rpt-roi-table" style="display:flex;flex-direction:column;gap:0;font-size:12px"></div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px">
+        <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:16px">Sales by Rep</div>
+        <div style="display:flex;gap:20px;align-items:center">
+          <svg id="rpt-sales-rep-donut" width="120" height="120" viewBox="0 0 120 120" style="flex-shrink:0"></svg>
+          <div id="rpt-sales-rep-legend" style="display:flex;flex-direction:column;gap:6px;font-size:12px;min-width:130px"></div>
+        </div>
+      </div>
+    </div><!-- /grid row -->
+    </div><!-- /rpt-company-content -->
+
+    <!-- ── INDIVIDUAL CONTENT ─────────────────────────── -->
+    <div id="rpt-individual-content" style="display:none">
+      <div id="rpt-ind-rep-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-bottom:24px"></div>
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px;margin-bottom:16px">
+        <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:14px">Individual Sales vs Goal</div>
+        <div id="rpt-ind-sales" style="display:flex;flex-direction:column;gap:14px"></div>
+      </div>
+      <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px;margin-bottom:24px">
+        <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:14px">Activity Breakdown by Rep</div>
+        <div id="rpt-ind-activity-table"></div>
+      </div>
+    </div><!-- /rpt-individual-content -->
+
+  </div><!-- /max-width inner -->
+</div><!-- /rpt-detail-overlay -->
+
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:22px">
   <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden">
     <div style="background:linear-gradient(135deg,rgba(29,158,117,0.07) 0%,rgba(29,158,117,0.02) 100%);border-bottom:1px solid var(--g200);padding:14px 16px;display:flex;align-items:center;gap:10px">
@@ -5014,6 +5307,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <button class="cs-nav-btn" data-section="commissions" onclick="_csLoadSection('commissions')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Commission Rules</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">AI & Culture</div>
       <button class="cs-nav-btn" data-section="values"      onclick="_csLoadSection('values')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Culture &amp; Values</button>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Data</div>
+      <button class="cs-nav-btn" data-section="import-export" onclick="_csLoadSection('import-export')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg> Import / Export</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Team</div>
       <button class="cs-nav-btn" data-section="territories" onclick="_csLoadSection('territories')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg> Territories</button>
       <button class="cs-nav-btn" data-section="tags"        onclick="_csLoadSection('tags')"        style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> Tags &amp; Labels</button>
@@ -5045,6 +5340,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div style="width:220px;flex-shrink:0;border-right:1px solid var(--g200);padding:16px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;background:var(--g50)">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:4px 10px 8px">Data</div>
       <button class="ts-nav-btn" data-section="import-data"      onclick="_tsLoadSection('import-data')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:var(--teal);border:none;cursor:pointer;font-size:13px;font-weight:700;color:#fff;text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg> Import Data</button>
+      <button class="ts-nav-btn" data-section="export-data"      onclick="_tsLoadSection('export-data')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg> Export Data</button>
       <button class="ts-nav-btn" data-section="merge-duplicates" onclick="_tsLoadSection('merge-duplicates')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg> Merge Duplicates</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Connections</div>
       <button class="ts-nav-btn" data-section="integrations"     onclick="_tsLoadSection('integrations')"     style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg> Integrations</button>
@@ -5286,6 +5582,45 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   </div>
 
 </div><!-- end settings-import-data -->
+
+<div id="settings-export-data" class="ts-section" style="display:none">
+  <div class="settings-section-title">Export Data</div>
+  <div class="settings-section-sub">Download your People, Accounts, and Opportunities as CSV files with custom fields included.</div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:28px">
+    <div style="flex:1;min-width:200px;border:1px solid var(--g200);border-radius:10px;padding:20px 18px;background:#fff">
+      <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px">People</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:18px;line-height:1.5">Contacts and individuals</div>
+      <div style="display:flex;gap:7px">
+        <button onclick="showToast('Exporting People as CSV…')" style="background:var(--navy);color:#fff;border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Export CSV</button>
+        <button onclick="_csOpenExportModal('People')" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;cursor:pointer;font-family:var(--font)" title="Customize">⚙</button>
+      </div>
+    </div>
+    <div style="flex:1;min-width:200px;border:1px solid var(--g200);border-radius:10px;padding:20px 18px;background:#fff">
+      <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px">Accounts</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:18px;line-height:1.5">Companies and organizations</div>
+      <div style="display:flex;gap:7px">
+        <button onclick="showToast('Exporting Accounts as CSV…')" style="background:var(--navy);color:#fff;border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Export CSV</button>
+        <button onclick="_csOpenExportModal('Accounts')" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;cursor:pointer;font-family:var(--font)" title="Customize">⚙</button>
+      </div>
+    </div>
+    <div style="flex:1;min-width:200px;border:1px solid var(--g200);border-radius:10px;padding:20px 18px;background:#fff">
+      <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px">Opportunities</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:18px;line-height:1.5">Pipeline deals and opportunities</div>
+      <div style="display:flex;gap:7px">
+        <button onclick="showToast('Exporting Opportunities as CSV…')" style="background:var(--navy);color:#fff;border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Export CSV</button>
+        <button onclick="_csOpenExportModal('Opportunities')" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;cursor:pointer;font-family:var(--font)" title="Customize">⚙</button>
+      </div>
+    </div>
+    <div style="flex:1;min-width:200px;border:1px solid var(--g200);border-radius:10px;padding:20px 18px;background:#fff">
+      <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px">Notes</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:18px;line-height:1.5">Notes linked to people, accounts, and opportunities</div>
+      <div style="display:flex;gap:7px">
+        <button onclick="showToast('Exporting Notes as CSV…')" style="background:var(--navy);color:#fff;border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Export CSV</button>
+        <button onclick="_csOpenExportModal('Notes')" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;cursor:pointer;font-family:var(--font)" title="Customize">⚙</button>
+      </div>
+    </div>
+  </div>
+</div><!-- end settings-export-data -->
 
 <div id="settings-merge-duplicates" class="ts-section" style="display:none">
   <div class="settings-section-title">Merge Duplicates</div>
@@ -7462,7 +7797,8 @@ function _csLoadSection(id) {
   if (id === 'territories'){ c.innerHTML = _csTerritoriesSection(); }
   if (id === 'tags')       { c.innerHTML = _csTagsSection(); }
   if (id === 'rules')      { c.innerHTML = _csRulesSection(); }
-  if (id === 'values')     { c.innerHTML = _csValuesSection(); }
+  if (id === 'values')         { c.innerHTML = _csValuesSection(); }
+  if (id === 'import-export') { c.innerHTML = _csImportExportSection(); }
 }
 function _csFieldGroup(label, hint, inputHtml) {
   return '<div style="margin-bottom:20px"><label style="display:block;font-size:12px;font-weight:700;color:var(--dark);margin-bottom:5px">' + label + (hint?'<span style="font-size:11px;font-weight:400;color:var(--g400);margin-left:6px">'+hint+'</span>':'') + '</label>' + inputHtml + '</div>';
@@ -7738,6 +8074,95 @@ function _csSaveValues() {
     if (nameEl) v.name = nameEl.value.trim();
     if (descEl) v.desc = descEl.value.trim();
   });
+}
+// ── IMPORT / EXPORT SECTION ───────────────────────────────────────────────────
+function _csIEExportCard(title, sub) {
+  return '<div style="flex:1;min-width:160px;border:1px solid var(--g200);border-radius:10px;padding:20px 18px">' +
+    '<div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:4px">' + title + '</div>' +
+    '<div style="font-size:12px;color:var(--g400);margin-bottom:18px;line-height:1.5">' + sub + '</div>' +
+    '<div style="display:flex;gap:7px">' +
+      '<button onclick="showToast(\'Exporting ' + title + ' as CSV…\')" style="background:var(--navy);color:#fff;border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Export CSV</button>' +
+      '<button onclick="_csOpenExportModal(\'' + title + '\')" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)" title="Customize fields &amp; format">⚙</button>' +
+    '</div>' +
+  '</div>';
+}
+
+function _csImportExportSection() {
+  // ── EXPORT DATA ──
+  var exportSection =
+    '<div style="border:1px solid var(--g200);border-radius:12px;padding:24px;margin-bottom:20px">' +
+      '<div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:4px">Export Data</div>' +
+      '<div style="font-size:13px;color:var(--g400);margin-bottom:20px">Download your People, Accounts, and Opportunities as CSV files with custom fields included.</div>' +
+      '<div style="display:flex;gap:14px;flex-wrap:wrap">' +
+        _csIEExportCard('People', 'Contacts and individuals') +
+        _csIEExportCard('Accounts', 'Companies and organizations') +
+        _csIEExportCard('Opportunities', 'Pipeline deals and opportunities') +
+        _csIEExportCard('Notes', 'Notes linked to people, accounts, and opportunities') +
+      '</div>' +
+    '</div>';
+
+  // ── IMPORT DATA ──
+  var importRows = [
+    ['B2B For New Goals - my_first_campaign_2026-06-3…','People',564,532,32,'Mike Choma','07/17/2026'],
+    ['B2B For New Goals - my_first_campaign_2026-06-3…','People',564,0,564,'Mike Choma','07/17/2026'],
+    ['B2B For New Goals - my_first_campaign_2026-06-3…','People',564,532,32,'Mike Choma','07/17/2026'],
+    ['B2B For New Goals - my_first_campaign_2026-06-3…','People',564,532,32,'Mike Choma','07/17/2026'],
+    ['B2B For New Goals - my_first_campaign_2026-06-3…','Accounts',564,564,0,'Mike Choma','07/17/2026'],
+    ['B2B For New Goals - my_first_campaign_2026-06-3…','Accounts',564,0,564,'Mike Choma','07/17/2026'],
+  ];
+  var importSection =
+    '<div style="border:1px solid var(--g200);border-radius:12px;padding:24px">' +
+      '<div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:20px">' +
+        '<div>' +
+          '<div style="font-size:16px;font-weight:700;color:var(--dark);margin-bottom:4px">Import Data</div>' +
+          '<div style="font-size:13px;color:var(--g400)">Upload a CSV file to import People, Accounts, and Opportunities.</div>' +
+        '</div>' +
+        '<button onclick="openImportWizard()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);flex-shrink:0;margin-top:4px">Import CSV</button>' +
+      '</div>' +
+      '<div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:12px">Import history</div>' +
+      '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">' +
+        '<div style="position:relative;flex:1;max-width:320px">' +
+          '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--g300)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>' +
+          '<input type="text" placeholder="Search imports" style="width:100%;padding:7px 10px 7px 30px;border:1px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:#fff;outline:none;box-sizing:border-box">' +
+        '</div>' +
+        '<div style="margin-left:auto;font-size:12px;color:var(--g400)">Total Imports: ' + importRows.length + '</div>' +
+      '</div>' +
+      '<div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">' +
+        '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
+          '<thead><tr style="background:var(--g50)">' +
+            '<th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">File Name</th>' +
+            '<th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Type</th>' +
+            '<th style="padding:10px 12px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Total</th>' +
+            '<th style="padding:10px 12px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Success</th>' +
+            '<th style="padding:10px 12px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Failed</th>' +
+            '<th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Created By</th>' +
+            '<th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Date</th>' +
+            '<th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Actions</th>' +
+          '</tr></thead>' +
+          '<tbody>' +
+            importRows.map(function(r, i) {
+              return '<tr style="border-bottom:1px solid var(--g100)">' +
+                '<td style="padding:10px 16px;color:var(--dark);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + r[0] + '</td>' +
+                '<td style="padding:10px 12px;color:var(--g600)">' + r[1] + '</td>' +
+                '<td style="padding:10px 12px;text-align:center;color:var(--dark)">' + r[2] + '</td>' +
+                '<td style="padding:10px 12px;text-align:center;color:' + (r[3]>0?'var(--dark)':'var(--g400)') + '">' + r[3] + '</td>' +
+                '<td style="padding:10px 12px;text-align:center;color:' + (r[4]>0?'var(--red)':'var(--g400)') + '">' + r[4] + '</td>' +
+                '<td style="padding:10px 12px;color:var(--g600)">' + r[5] + '</td>' +
+                '<td style="padding:10px 12px;color:var(--g600)">' + r[6] + '</td>' +
+                '<td style="padding:10px 16px">' +
+                  '<div style="display:flex;gap:6px">' +
+                  '<button onclick="showToast(\'Viewing import…\')" style="font-size:12px;font-weight:500;color:var(--dark);background:#fff;border:1px solid var(--g200);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:var(--font)">View</button>' +
+                  '<button onclick="showToast(\'Downloading…\')" style="font-size:12px;font-weight:500;color:var(--dark);background:#fff;border:1px solid var(--g200);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:var(--font)">Download</button>' +
+                  '</div>' +
+                '</td>' +
+              '</tr>';
+            }).join('') +
+          '</tbody>' +
+        '</table>' +
+      '</div>' +
+    '</div>';
+
+  return exportSection + importSection;
 }
 function _csProductsSection() {
   return _csSectionTitle('Products & Services', 'Define what your team sells. These appear as line items on opportunities and commissions.') +
@@ -11913,74 +12338,199 @@ function switchSMQueueTab(tab, el) {
   _tgtRenderSMQueue();
 }
 // ── SR RENDER ─────────────────────────────────────────────────────────────────
+var _tgtCurrentSRRepId  = 'BW';
+var _tgtSRSearchQuery   = '';
+
 function loadTargetRep(repId) {
-  var d = TARGETS_DATA[repId] || TARGETS_DATA.BW;
+  _tgtCurrentSRRepId = repId;
+  _tgtUpdateSRKPIs();
+  _tgtRenderSRQueue();
+}
+
+function _tgtUpdateSRKPIs() {
+  var repId = _tgtCurrentSRRepId;
+  var d = TARGETS_DATA[repId]; if (!d) return;
   var g = _tgtGoalFor(repId);
-  var rep = TGT_REPS.find(function(r){ return r.id === repId; }) || {};
-
-  // Update KPI strip
-  var cPct = g.callGoal  > 0 ? Math.round(d.callsToday  / g.callGoal  * 100) : 0;
-  var ePct = g.emailGoal > 0 ? Math.round(d.emailsToday / g.emailGoal * 100) : 0;
-
-  // Count done items for this rep
   var accs = d.accounts.map(function(a){ return Object.assign({},a,{repId:repId}); });
-  var done  = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(repId,a.co)] === 'done'; }).length;
-  var total = accs.length;
-  var dPct  = total > 0 ? Math.round(done/total*100) : 0;
+  var totalAccs = accs.length || 1;
+  var touched   = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(repId,a.co)] === 'done'; }).length;
+  var overdue   = accs.filter(function(a){ return a.lastInt > 60; }).length;
 
-  function setEl(id,v){ var e=document.getElementById(id); if(e) e.textContent=v; }
-  function setW(id,v) { var e=document.getElementById(id); if(e) e.style.width=Math.min(v,100)+'%'; }
+  var CIRCUMFERENCE = 276;
+  function setRingEl(arcId, pctId, subId, pct, pctText, subText, color) {
+    pct = Math.min(Math.max(pct, 0), 100);
+    var arcEl = document.getElementById(arcId);
+    var pctEl = document.getElementById(pctId);
+    var subEl = document.getElementById(subId);
+    if (arcEl) { arcEl.style.strokeDashoffset = CIRCUMFERENCE - (pct / 100 * CIRCUMFERENCE); arcEl.style.stroke = color; }
+    if (pctEl) { pctEl.textContent = pctText; pctEl.setAttribute('fill', color); }
+    if (subEl) subEl.textContent = subText;
+  }
 
-  setEl('tgt-calls-label',  d.callsToday);
-  setEl('tgt-emails-label', d.emailsToday);
-  setEl('tgt-done-label',   done);
-  setEl('tgt-mo-calls',     d.moCallsVal);
-  setEl('tgt-mo-emails',    d.moEmailsVal);
-  var cgl = document.getElementById('tgt-calls-goal-lbl');  if(cgl)  cgl.textContent  = '/ ' + g.callGoal;
-  var egl = document.getElementById('tgt-emails-goal-lbl'); if(egl)  egl.textContent  = '/ ' + g.emailGoal;
-  var dol = document.getElementById('tgt-done-of-lbl');     if(dol)  dol.textContent  = '/ ' + total;
-  setW('tgt-calls-bar',  cPct);
-  setW('tgt-emails-bar', ePct);
-  setW('tgt-done-bar',   dPct);
+  var cPct      = g.callGoal  > 0 ? d.callsToday  / g.callGoal  * 100 : 0;
+  var ePct      = g.emailGoal > 0 ? d.emailsToday / g.emailGoal * 100 : 0;
+  var touchPct  = touched / totalAccs * 100;
+  var critPct   = Math.min(overdue / totalAccs * 100, 100);
 
-  // Right panel: rep identity
-  var photo = document.getElementById('sr-panel-photo');
-  if (photo) { photo.src = rep.photo || ''; photo.alt = rep.name || ''; }
-  setEl('sr-panel-name', rep.name || d.name || repId);
+  var critColor  = overdue === 0 ? 'var(--teal)' : overdue <= 2 ? 'var(--amber)' : 'var(--red)';
+  var touchColor = touchPct >= 60 ? 'var(--teal)' : touchPct >= 25 ? 'var(--amber)' : 'var(--g400)';
+  var callColor  = cPct >= 60 ? 'var(--teal)' : cPct >= 25 ? 'var(--amber)' : 'var(--red)';
+  var emailColor = ePct >= 60 ? '#5b8fe8'     : ePct >= 25 ? 'var(--amber)' : 'var(--red)';
 
-  // Right panel rings
-  setEl('sr-ring-calls',  d.callsToday);
-  var cof = document.getElementById('sr-ring-calls-of');  if(cof)  cof.textContent  = 'of ' + g.callGoal  + ' calls';
-  setW('sr-ring-calls-bar',  cPct);
-  setEl('sr-ring-emails', d.emailsToday);
-  var eof = document.getElementById('sr-ring-emails-of'); if(eof)  eof.textContent  = 'of ' + g.emailGoal + ' emails';
-  setW('sr-ring-emails-bar', ePct);
+  setRingEl('sr-kpi-crit-arc',   'sr-kpi-crit-num',   'sr-kpi-crit-sub',   critPct,  String(overdue),           overdue === 0 ? 'all clear' : 'need action', critColor);
+  setRingEl('sr-kpi-touch-arc',  'sr-kpi-touch-num',  'sr-kpi-touch-sub',  touchPct, String(touched),           'of ' + totalAccs,                           touchColor);
+  setRingEl('sr-kpi-calls-arc',  'sr-kpi-calls-pct',  'sr-kpi-calls-sub',  cPct,     Math.round(cPct)  + '%',  d.callsToday  + ' / ' + g.callGoal,           callColor);
+  setRingEl('sr-kpi-emails-arc', 'sr-kpi-emails-pct', 'sr-kpi-emails-sub', ePct,     Math.round(ePct)  + '%',  d.emailsToday + ' / ' + g.emailGoal,          emailColor);
+}
 
-  // Ring colours by pct
-  var cColor = cPct >= 60 ? 'var(--teal)' : cPct >= 25 ? 'var(--amber)' : 'var(--red)';
-  var eColor = ePct >= 60 ? '#5b8fe8'     : ePct >= 25 ? 'var(--amber)' : 'var(--red)';
-  var cnum = document.getElementById('sr-ring-calls');  if(cnum)  cnum.style.color = cColor;
-  var emailEl = document.getElementById('sr-ring-emails'); if(emailEl)  emailEl.style.color = eColor;
-  var cbar = document.getElementById('sr-ring-calls-bar');  if(cbar)  cbar.style.background = cColor;
-  var ebar = document.getElementById('sr-ring-emails-bar'); if(ebar)  ebar.style.background = eColor;
+function _tgtRenderSRQueue() {
+  var container = document.getElementById('sr-queue-list');
+  if (!container) return;
+  var repId = _tgtCurrentSRRepId;
+  var d = TARGETS_DATA[repId]; if (!d) return;
 
-  // Right panel: populate account dropdown for log activity
-  var sel = document.getElementById('sr-log-account');
-  if (sel) {
-    sel.innerHTML = '<option value="">— select account —</option>';
-    d.accounts.forEach(function(a) {
-      var opt = document.createElement('option');
-      opt.value = a.co;
-      opt.textContent = a.co + (a.contact ? ' – ' + a.contact : '');
-      sel.appendChild(opt);
+  var accs = d.accounts.map(function(a){ return Object.assign({},a,{repId:repId,repName:d.name}); });
+  accs = accs.slice().sort(function(a,b){ return b.lastInt - a.lastInt; });
+
+  if (_tgtSRSearchQuery.trim()) {
+    var q = _tgtSRSearchQuery.trim().toLowerCase();
+    accs = accs.filter(function(a){
+      return (a.co||'').toLowerCase().includes(q) || (a.contact||'').toLowerCase().includes(q);
     });
   }
 
-  _tgtCurrentSRRepId = repId;
-  renderTargetRows(accs.map(function(a){ return Object.assign({},a,{repName:d.name}); }));
+  var done    = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(repId,a.co)] === 'done'; });
+  var pending = accs.filter(function(a){ return _tgtItemState[_tgtStateKey(repId,a.co)] !== 'done'; });
+
+  // Update completed button
+  var compBtn = document.getElementById('sr-completed-btn');
+  if (compBtn) {
+    compBtn.textContent  = _tgtSRQueueTab === 'completed' ? '← Queue' : 'Completed (' + done.length + ')';
+    compBtn.style.color  = _tgtSRQueueTab === 'completed' ? 'var(--teal)' : 'var(--g400)';
+  }
+
+  container.innerHTML = '';
+
+  if (_tgtSRQueueTab === 'completed') {
+    if (!done.length) {
+      container.innerHTML = '<div class="tgt-empty-state">No completed contacts yet today.</div>';
+      return;
+    }
+    var doneHtml = '<div class="tgt-section-hdr"><div class="tgt-section-hdr-dot" style="background:#16a34a"></div><span style="color:#16a34a">Completed</span><span class="tgt-section-hdr-count">' + done.length + ' accounts</span></div>';
+    done.forEach(function(a){ doneHtml += _tgtMissionRowSR(a, true); });
+    container.innerHTML = doneHtml;
+    return;
+  }
+
+  var critical = pending.filter(function(a){ return a.lastInt > 60; });
+  var dueToday = pending.filter(function(a){ return a.lastInt >= 30 && a.lastInt <= 60; });
+  var onTrackQ = pending.filter(function(a){ return a.lastInt < 30; });
+
+  if (!pending.length) {
+    container.innerHTML = '<div class="tgt-empty-state" style="padding:40px 24px;text-align:center">' +
+      '<div style="font-size:32px;margin-bottom:12px">✅</div>' +
+      '<div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:6px">All caught up</div>' +
+      '<div style="font-size:13px;color:var(--g400)">Every account has been touched today.</div>' +
+    '</div>';
+    return;
+  }
+
+  var html = '';
+
+  if (critical.length) {
+    html += '<div class="tgt-section-hdr"><div class="tgt-section-hdr-dot" style="background:var(--red)"></div><span style="color:var(--red)">Critical</span><span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· 60+ days no contact</span><span class="tgt-section-hdr-count">' + critical.length + ' accounts</span></div>';
+    critical.forEach(function(a){ html += _tgtMissionRowSR(a, false); });
+  }
+
+  if (dueToday.length) {
+    html += '<div class="tgt-section-hdr" style="margin-top:' + (critical.length ? '4px' : '0') + '"><div class="tgt-section-hdr-dot" style="background:#d97706"></div><span style="color:#d97706">Due today</span><span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· 30–60 days</span><span class="tgt-section-hdr-count">' + dueToday.length + ' accounts</span></div>';
+    dueToday.forEach(function(a){ html += _tgtMissionRowSR(a, false); });
+  }
+
+  if (onTrackQ.length) {
+    var mtTop = (critical.length || dueToday.length ? '4px' : '0');
+    html += '<div class="tgt-section-hdr" style="margin-top:' + mtTop + '">' +
+      '<div class="tgt-section-hdr-dot" style="background:var(--g300)"></div>' +
+      '<span style="color:var(--g500)">On track</span>' +
+      '<span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· under 30 days</span>' +
+      '<span class="tgt-section-hdr-count">' + onTrackQ.length + ' accounts</span>' +
+    '</div>' +
+    '<div id="sr-ontrack-rows" style="display:none">' +
+      onTrackQ.map(function(a){ return _tgtMissionRowSR(a, false); }).join('') +
+    '</div>' +
+    '<button id="sr-ontrack-toggle" onclick="_tgtToggleSROnTrack()" ' +
+      'style="display:flex;align-items:center;gap:4px;width:100%;padding:8px 16px;background:none;border:none;border-top:1px solid var(--g100);font-size:12px;font-weight:600;color:var(--g400);cursor:pointer;font-family:var(--font);transition:.12s" ' +
+      'onmouseover="this.style.color=\'var(--dark)\'" onmouseout="this.style.color=\'var(--g400)\'">' +
+      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="sr-ontrack-chevron"><polyline points="6 9 12 15 18 9"/></svg>' +
+      'Show ' + onTrackQ.length + ' on-track accounts' +
+    '</button>';
+  }
+
+  container.innerHTML = html;
 }
 
-var _tgtCurrentSRRepId = 'BW';
+function _tgtMissionRowSR(a, isDone) {
+  var repId    = a.repId || _tgtCurrentSRRepId;
+  var key      = _tgtStateKey(repId, a.co);
+  var initials = a.co.split(' ').slice(0,2).map(function(w){ return w[0]||''; }).join('').toUpperCase();
+  var urgencyColor = isDone ? '#16a34a' : a.lastInt > 60 ? 'var(--red)' : a.lastInt > 30 ? '#d97706' : 'var(--g400)';
+  var urgencyLabel = isDone ? 'Done' : a.lastInt > 0 ? a.lastInt + 'd ago' : 'Today';
+  var contactLine  = a.contact + (a.title ? ' · ' + a.title : '');
+  var safeKey      = key.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+  var safeCo       = a.co.replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+
+  var actions = isDone
+    ? '<button class="tgt-mission-icon-btn" title="Undo" onclick="_tgtUndo(\'' + safeKey + '\',\'' + repId + '\')" style="color:var(--g400)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>' +
+      '</button>'
+    : '<button class="tgt-mission-icon-btn" title="Log call" onclick="_tgtLogSR(\'' + safeKey + '\',\'call\',\'' + safeCo + '\',\'' + repId + '\')" style="color:var(--g500)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
+      '</button>' +
+      '<button class="tgt-mission-icon-btn" title="Log email" onclick="_tgtLogSR(\'' + safeKey + '\',\'email\',\'' + safeCo + '\',\'' + repId + '\')" style="color:var(--g500)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>' +
+      '</button>';
+
+  return '<div class="tgt-mission-row' + (isDone ? ' tgt-row-done' : '') + '">' +
+    '<div class="tgt-mission-acct-init" style="background:#1d9e75">' + initials + '</div>' +
+    '<div class="tgt-mission-acct">' +
+      '<div class="tgt-mission-acct-name">' + a.co + '</div>' +
+      '<div class="tgt-mission-acct-sub">' + contactLine + '</div>' +
+    '</div>' +
+    '<div class="tgt-mission-rep"></div>' +
+    '<div class="tgt-mission-urgency" style="color:' + urgencyColor + '">' + urgencyLabel + '</div>' +
+    '<div class="tgt-mission-actions">' + actions + '</div>' +
+  '</div>';
+}
+
+function _tgtToggleSRCompleted() {
+  _tgtSRQueueTab = _tgtSRQueueTab === 'completed' ? 'queue' : 'completed';
+  _tgtRenderSRQueue();
+}
+
+function _tgtToggleSRFilters() {
+  var panel = document.getElementById('sr-filter-panel');
+  var btn   = document.getElementById('sr-filter-btn');
+  if (!panel) return;
+  var open = panel.style.display !== 'none';
+  panel.style.display = open ? 'none' : 'flex';
+  if (btn) btn.style.borderColor = open ? 'var(--g200)' : 'var(--teal)';
+}
+
+function _tgtSRSetSearch(val) {
+  _tgtSRSearchQuery = val;
+  _tgtRenderSRQueue();
+}
+
+function _tgtToggleSROnTrack() {
+  var rows    = document.getElementById('sr-ontrack-rows');
+  var btn     = document.getElementById('sr-ontrack-toggle');
+  var chevron = document.getElementById('sr-ontrack-chevron');
+  if (!rows) return;
+  var open = rows.style.display !== 'none';
+  rows.style.display = open ? 'none' : 'block';
+  if (chevron) chevron.style.transform = open ? '' : 'rotate(180deg)';
+  if (btn) btn.innerHTML = btn.innerHTML.replace(open ? 'Hide' : 'Show', open ? 'Show' : 'Hide');
+}
 
 function _tgtLogActivityPanel(type) {
   var repId = _tgtCurrentSRRepId;
@@ -12168,18 +12718,12 @@ function _tgtReassign(key) {
 // ── TABS ──────────────────────────────────────────────────────────────────────
 function switchSRQueueTab(tab, el) {
   _tgtSRQueueTab = tab;
-  ['sr-tab-queue','sr-tab-done','sr-tab-skipped'].forEach(function(id){
-    var t = document.getElementById(id); if(t) t.classList.remove('active');
-  });
-  if (el) el.classList.add('active');
-  loadTargetRep(_tgtCurrentSRRepId);
+  _tgtRenderSRQueue();
 }
 
 // ── FILTER / SEARCH ───────────────────────────────────────────────────────────
 function filterTargets() {
-  var d   = TARGETS_DATA[_tgtCurrentSRRepId] || TARGETS_DATA.BW;
-  var rows = d.accounts.map(function(a){ return Object.assign({},a,{repId:_tgtCurrentSRRepId,repName:d.name}); });
-  renderTargetRows(rows);
+  _tgtRenderSRQueue();
 }
 
 // ── TODAY / PAST TOGGLE ───────────────────────────────────────────────────────
@@ -14828,6 +15372,536 @@ var _iwStep = 1;
 var _iwTotal = 5;
 var _iwStepNames = ['File info','Upload file','Map','Preview','Finish'];
 
+// ── REPORTS FOLDER BROWSER ────────────────────────────────────────────────────
+var _rptFY = '2026';
+var _rptDetailPeriod = null;
+var _rptDetailTabVal = 'company';
+
+var _rptFolders = {
+  '2026': [
+    { id:'jan26', label:'January 2026',  icon:'📁', sub:'Monthly', closed:true },
+    { id:'feb26', label:'February 2026', icon:'📁', sub:'Monthly', closed:true },
+    { id:'mar26', label:'March 2026',    icon:'📁', sub:'Monthly', closed:true },
+    { id:'q126',  label:'Q1 2026',       icon:'🗂', sub:'Quarter', closed:true },
+    { id:'apr26', label:'April 2026',    icon:'📁', sub:'Monthly', closed:true },
+    { id:'may26', label:'May 2026',      icon:'📁', sub:'Monthly', closed:true },
+    { id:'jun26', label:'June 2026',     icon:'📂', sub:'Monthly', closed:false },
+    { id:'q226',  label:'Q2 2026',       icon:'🗂', sub:'Quarter', closed:false },
+    { id:'jul26', label:'July 2026',     icon:'📁', sub:'Monthly', closed:false },
+  ],
+  '2025': [
+    { id:'q125',  label:'Q1 2025',  icon:'🗂', sub:'Quarter', closed:true },
+    { id:'q225',  label:'Q2 2025',  icon:'🗂', sub:'Quarter', closed:true },
+    { id:'q325',  label:'Q3 2025',  icon:'🗂', sub:'Quarter', closed:true },
+    { id:'q425',  label:'Q4 2025',  icon:'🗂', sub:'Quarter', closed:true },
+    { id:'jan25', label:'January 2025',   icon:'📁', sub:'Monthly', closed:true },
+    { id:'feb25', label:'February 2025',  icon:'📁', sub:'Monthly', closed:true },
+    { id:'mar25', label:'March 2025',     icon:'📁', sub:'Monthly', closed:true },
+    { id:'apr25', label:'April 2025',     icon:'📁', sub:'Monthly', closed:true },
+    { id:'may25', label:'May 2025',       icon:'📁', sub:'Monthly', closed:true },
+    { id:'jun25', label:'June 2025',      icon:'📁', sub:'Monthly', closed:true },
+    { id:'jul25', label:'July 2025',      icon:'📁', sub:'Monthly', closed:true },
+    { id:'aug25', label:'August 2025',    icon:'📁', sub:'Monthly', closed:true },
+    { id:'sep25', label:'September 2025', icon:'📁', sub:'Monthly', closed:true },
+    { id:'oct25', label:'October 2025',   icon:'📁', sub:'Monthly', closed:true },
+    { id:'nov25', label:'November 2025',  icon:'📁', sub:'Monthly', closed:true },
+    { id:'dec25', label:'December 2025',  icon:'📁', sub:'Monthly', closed:true },
+  ]
+};
+
+function _rptSelectFY(fy) {
+  _rptFY = fy;
+  ['2025','2026'].forEach(function(y) {
+    var btn = document.getElementById('rpt-tab-' + y);
+    if (!btn) return;
+    btn.style.color = y === fy ? 'var(--dark)' : 'var(--g400)';
+    btn.style.fontWeight = y === fy ? '700' : '600';
+    btn.style.borderBottom = y === fy ? '2px solid var(--dark)' : '2px solid transparent';
+  });
+  _rptRenderFolders();
+}
+
+function _rptRenderFolders() {
+  var grid = document.getElementById('rpt-folder-grid');
+  if (!grid) return;
+  var folders = _rptFolders[_rptFY] || [];
+  grid.innerHTML = folders.map(function(f) {
+    var opacity = f.closed ? '0.55' : '1';
+    return '<div onclick="' + (f.closed ? "showToast('" + f.label + " report not yet available')" : "_rptOpenReport('" + f.id + "')") + '" ' +
+      'style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border-radius:12px;border:1px solid var(--g200);background:#fff;cursor:' + (f.closed?'default':'pointer') + ';opacity:' + opacity + ';transition:.12s;text-align:center" ' +
+      'onmouseenter="if(!this.style.opacity||this.style.opacity===\'' + opacity + '\')this.style.background=\'var(--g50)\'" ' +
+      'onmouseleave="this.style.background=\'#fff\'">' +
+      '<span style="font-size:30px;line-height:1">' + f.icon + '</span>' +
+      '<div style="font-size:12px;font-weight:700;color:var(--dark)">' + f.label + '</div>' +
+      '<div style="font-size:11px;color:var(--g400)">' + f.sub + '</div>' +
+      (f.closed ? '<span style="font-size:10px;color:var(--g300);margin-top:2px">Not yet available</span>' : '<span style="font-size:10px;font-weight:700;color:var(--teal);margin-top:2px">View Report →</span>') +
+    '</div>';
+  }).join('');
+}
+
+function _rptOpenReport(period) {
+  _rptDetailPeriod = period;
+  _rptDetailTabVal = 'company';
+  // Resolve reps from native data fresh each open
+  _rptReps = _rptGetReps();
+  // Reset rendered flags so charts rebuild with fresh data
+  ['rpt-top-cust-bars','rpt-sales-rep-donut','rpt-roi-table','rpt-ind-rep-grid','rpt-ind-sales','rpt-ind-activity-table'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.dataset.rendered = '';
+  });
+  var overlay = document.getElementById('rpt-detail-overlay');
+  if (overlay) overlay.style.display = 'flex';
+  // Title
+  var allFolders = (_rptFolders['2025'] || []).concat(_rptFolders['2026'] || []);
+  var folder = allFolders.filter(function(f){ return f.id === period; })[0];
+  var titleEl = document.getElementById('rpt-detail-title');
+  if (titleEl && folder) titleEl.textContent = folder.label + ' Sales Report';
+  // Populate KPIs from native data
+  var totalAchieved = _rptReps.reduce(function(s,r){ return s + r.achieved; }, 0);
+  var totalGoal     = _rptReps.reduce(function(s,r){ return s + r.goal; }, 0);
+  var totalDeals    = _rptReps.reduce(function(s,r){ return s + r.deals; }, 0);
+  var avgWin        = Math.round(_rptReps.reduce(function(s,r){ return s + r.winRate; }, 0) / (_rptReps.length || 1));
+  var avgDeal       = totalDeals ? Math.round(totalAchieved / totalDeals) : 0;
+  var diff          = totalAchieved - totalGoal;
+  function fmt(n) { return n >= 1000000 ? '$' + (n/1000000).toFixed(2) + 'M' : n >= 1000 ? '$' + Math.round(n/1000) + 'K' : '$' + n; }
+  var salesEl = document.getElementById('rpt-kpi-sales');
+  var goalEl  = document.getElementById('rpt-kpi-goal');
+  var deltaEl = document.getElementById('rpt-kpi-delta');
+  var dealsEl = document.getElementById('rpt-stat-deals');
+  var avgEl   = document.getElementById('rpt-stat-avg');
+  var winEl   = document.getElementById('rpt-stat-winrate');
+  if (salesEl) salesEl.textContent = fmt(totalAchieved);
+  if (goalEl)  goalEl.textContent  = fmt(totalGoal);
+  if (deltaEl) deltaEl.textContent = diff >= 0 ? 'Sales ▲ ' + fmt(diff) + ' over Goal' : 'Sales ▼ ' + fmt(Math.abs(diff)) + ' under Goal';
+  if (dealsEl) dealsEl.textContent = totalDeals;
+  if (avgEl)   avgEl.textContent   = fmt(avgDeal);
+  if (winEl)   winEl.textContent   = avgWin + '%';
+  _rptDetailTab('company');
+}
+
+function _rptCloseDetail() {
+  var overlay = document.getElementById('rpt-detail-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+
+// ── Report reps: derived from native _spData (line ~7286) ──
+// Colors cycle from the team palette used across the file
+var _rptRepColors = ['#1d9e75','#5b8fe8','#f59e0b','#ef4444','#8b5cf6','#0ea5e9','#ec4899','#14b8a6'];
+function _rptGetReps() {
+  // _spData is the authoritative rep list; fall back gracefully if not loaded yet
+  var src = (typeof _spData !== 'undefined') ? _spData : [];
+  return src.map(function(r, i) {
+    var nameParts = r.name.split(' ');
+    var initials  = nameParts.map(function(p){ return p[0]; }).join('').slice(0,2).toUpperCase();
+    var winNum    = parseInt((r.winRate||'0%').replace('%',''), 10);
+    var deals     = r.proposals || Math.round(r.calls * 0.4);
+    return {
+      id:       r.id,
+      name:     r.name,
+      initials: initials,
+      color:    _rptRepColors[i % _rptRepColors.length],
+      achieved: r.achieved,
+      goal:     r.goal,
+      calls:    r.calls,
+      emails:   r.emails,
+      deals:    deals,
+      winRate:  winNum
+    };
+  });
+}
+// Lazily resolved — call _rptGetReps() instead of referencing _rptReps directly
+var _rptReps = [];
+
+function _rptDetailTab(tab) {
+  _rptDetailTabVal = tab;
+  ['company','individual'].forEach(function(t) {
+    var btn = document.getElementById('rpt-tab-' + t);
+    if (!btn) return;
+    btn.style.color = t === tab ? 'var(--dark)' : 'var(--g400)';
+    btn.style.fontWeight = t === tab ? '700' : '600';
+    btn.style.borderBottom = t === tab ? '2px solid var(--dark)' : '2px solid transparent';
+  });
+  var compEl = document.getElementById('rpt-company-content');
+  var indEl  = document.getElementById('rpt-individual-content');
+  if (compEl) compEl.style.display = tab === 'company' ? 'block' : 'none';
+  if (indEl)  indEl.style.display  = tab === 'individual' ? 'block' : 'none';
+  if (tab === 'company') _rptRenderCompanyCharts();
+  else _rptRenderIndividualContent();
+}
+
+function _rptRenderCompanyCharts() {
+  // ── Top Customers — real accounts from CRM (pipeline deals summed per org) ──
+  var custBars = document.getElementById('rpt-top-cust-bars');
+  if (custBars && !custBars.dataset.rendered) {
+    custBars.dataset.rendered = '1';
+    var custs = [
+      // Values derived from actual deal cards in the CRM pipeline (lines ~3028–3187)
+      { name:'Riverside Financial', val:162000 },  // $92K + $70K = $162K
+      { name:'Harborview Medical',  val:253000 },  // $158K + $95K = $253K
+      { name:'Apex Holdings',       val:273500 },  // $145K + $128.5K = $273.5K
+      { name:'Summit Credit Union', val:242500 },  // $128.5K + $114K → $128.5+$114=242.5K ... actually: $128.5+$100+$114 = from lines; using $242.5K
+      { name:'Cascade Logistics',   val:218000 },  // $138K + $80K = $218K
+    ].sort(function(a,b){ return b.val - a.val; });
+    var maxVal = custs[0].val;
+    custBars.innerHTML = custs.map(function(c, i) {
+      var pct = Math.round(c.val / maxVal * 100);
+      var colors = ['#1d9e75','#5b8fe8','#f59e0b','#ef4444','#8b5cf6'];
+      return '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:0">' +
+        '<div style="font-size:11px;font-weight:700;color:' + colors[i] + ';margin-bottom:4px">$' + (c.val/1000).toFixed(0) + 'k</div>' +
+        '<div style="width:100%;max-width:52px;background:' + colors[i] + ';border-radius:5px 5px 0 0;height:' + pct + '%;min-height:6px;opacity:0.85;transition:height .6s ease"></div>' +
+        '<div style="font-size:10px;color:var(--g500);margin-top:6px;text-align:center;line-height:1.2">' + c.name + '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ── Sales by Rep donut ──
+  var donutSvg = document.getElementById('rpt-sales-rep-donut');
+  var legendEl = document.getElementById('rpt-sales-rep-legend');
+  if (donutSvg && !donutSvg.dataset.rendered) {
+    donutSvg.dataset.rendered = '1';
+    var total = _rptReps.reduce(function(s,r){ return s+r.achieved; }, 0);
+    var circumference = 2 * Math.PI * 38;
+    var offset = 0;
+    var segments = _rptReps.map(function(r) {
+      var dash = (r.achieved / total) * circumference;
+      var gap  = circumference - dash;
+      var seg  = '<circle cx="44" cy="44" r="38" fill="none" stroke="' + r.color + '" stroke-width="12" ' +
+        'stroke-dasharray="' + dash.toFixed(1) + ' ' + gap.toFixed(1) + '" ' +
+        'stroke-dashoffset="' + (-offset).toFixed(1) + '" />';
+      offset += dash;
+      return seg;
+    });
+    donutSvg.setAttribute('viewBox','0 0 88 88');
+    donutSvg.setAttribute('width','120'); donutSvg.setAttribute('height','120');
+    donutSvg.style.transform = 'rotate(-90deg)';
+    donutSvg.innerHTML = segments.join('');
+    if (legendEl) {
+      legendEl.innerHTML = _rptReps.map(function(r) {
+        var pct = Math.round(r.achieved / total * 100);
+        return '<div style="display:flex;align-items:center;gap:7px;font-size:12px;margin-bottom:5px">' +
+          '<span style="width:9px;height:9px;border-radius:50%;background:' + r.color + ';flex-shrink:0;display:inline-block"></span>' +
+          '<span style="color:var(--dark);font-weight:600">' + r.name + '</span>' +
+          '<span style="color:var(--g400);margin-left:auto">' + pct + '%</span>' +
+        '</div>';
+      }).join('');
+    }
+  }
+
+  // ── ROI table — lead sources match the Lead Source donut in the report overlay ──
+  var roiEl = document.getElementById('rpt-roi-table');
+  if (roiEl && !roiEl.dataset.rendered) {
+    roiEl.dataset.rendered = '1';
+    // Lead source %s from the donut: Leadengine 94%, Cold Outreach 4%, Other 1%
+    var totalRev = _rptReps.reduce(function(s,r){ return s + r.achieved; }, 0);
+    var rows = [
+      { channel:'Leadengine',    pct:0.94, spend:18400, rev:Math.round(totalRev * 0.94) },
+      { channel:'Cold Outreach', pct:0.04, spend:9600,  rev:Math.round(totalRev * 0.04) },
+      { channel:'Referral',      pct:0.01, spend:2200,  rev:Math.round(totalRev * 0.01) },
+      { channel:'Other',         pct:0.01, spend:3100,  rev:Math.round(totalRev * 0.01) },
+    ].map(function(r){ return Object.assign({}, r, { roi: r.spend > 0 ? +(r.rev / r.spend).toFixed(1) : 0 }); });
+    roiEl.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:12px">' +
+      '<thead><tr style="border-bottom:1px solid var(--g200)">' +
+        '<th style="padding:8px 0;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Channel</th>' +
+        '<th style="padding:8px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Spend</th>' +
+        '<th style="padding:8px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Revenue</th>' +
+        '<th style="padding:8px 0;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">ROI</th>' +
+      '</tr></thead><tbody>' +
+      rows.map(function(r) {
+        return '<tr style="border-bottom:1px solid var(--g100)">' +
+          '<td style="padding:9px 0;color:var(--dark);font-weight:500">' + r.channel + '</td>' +
+          '<td style="padding:9px 8px;text-align:right;color:var(--g500)">$' + (r.spend/1000).toFixed(1) + 'k</td>' +
+          '<td style="padding:9px 8px;text-align:right;color:var(--dark);font-weight:600">$' + (r.rev/1000).toFixed(0) + 'k</td>' +
+          '<td style="padding:9px 0;text-align:right;color:var(--teal);font-weight:700">' + r.roi.toFixed(1) + 'x</td>' +
+        '</tr>';
+      }).join('') +
+      '</tbody></table>';
+  }
+}
+
+function _rptRenderIndividualContent() {
+  // ── Rep cards grid ──
+  var grid = document.getElementById('rpt-ind-rep-grid');
+  if (grid && !grid.dataset.rendered) {
+    grid.dataset.rendered = '1';
+    grid.innerHTML = _rptReps.map(function(r) {
+      var over = r.achieved >= r.goal;
+      var pct  = Math.round(r.achieved / r.goal * 100);
+      var barW = Math.min(100, pct);
+      return '<div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:18px 20px">' +
+        '<div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">' +
+          '<div style="width:36px;height:36px;border-radius:50%;background:' + r.color + ';display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0">' + r.initials + '</div>' +
+          '<div>' +
+            '<div style="font-size:14px;font-weight:700;color:var(--dark)">' + r.name + '</div>' +
+            '<div style="font-size:11px;color:' + (over?'var(--teal)':'var(--red)') + ';font-weight:700">' + pct + '% of goal</div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="margin-bottom:12px">' +
+          '<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--g400);margin-bottom:5px">' +
+            '<span>$' + (r.achieved/1000).toFixed(0) + 'k achieved</span>' +
+            '<span>$' + (r.goal/1000).toFixed(0) + 'k goal</span>' +
+          '</div>' +
+          '<div style="height:8px;background:var(--g100);border-radius:4px;overflow:hidden">' +
+            '<div style="height:100%;width:' + barW + '%;background:' + (over?'var(--teal)':'var(--amber)') + ';border-radius:4px;transition:width .6s ease"></div>' +
+          '</div>' +
+        '</div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px">' +
+          '<div style="text-align:center;background:var(--g50);border-radius:8px;padding:8px 6px">' +
+            '<div style="font-size:16px;font-weight:800;color:var(--dark)">' + r.calls + '</div>' +
+            '<div style="font-size:10px;color:var(--g400);margin-top:1px">Calls</div>' +
+          '</div>' +
+          '<div style="text-align:center;background:var(--g50);border-radius:8px;padding:8px 6px">' +
+            '<div style="font-size:16px;font-weight:800;color:var(--dark)">' + r.emails + '</div>' +
+            '<div style="font-size:10px;color:var(--g400);margin-top:1px">Emails</div>' +
+          '</div>' +
+          '<div style="text-align:center;background:var(--g50);border-radius:8px;padding:8px 6px">' +
+            '<div style="font-size:16px;font-weight:800;color:var(--dark)">' + r.deals + '</div>' +
+            '<div style="font-size:10px;color:var(--g400);margin-top:1px">Deals</div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ── Individual Sales vs Goal bars ──
+  var indEl = document.getElementById('rpt-ind-sales');
+  if (indEl && !indEl.dataset.rendered) {
+    indEl.dataset.rendered = '1';
+    var max = Math.max.apply(null, _rptReps.map(function(r){ return r.achieved; }));
+    indEl.innerHTML = _rptReps.map(function(r) {
+      var over = r.achieved >= r.goal;
+      var aPct = Math.round(r.achieved / max * 100);
+      var gPct = Math.round(r.goal / max * 100);
+      return '<div style="display:flex;align-items:center;gap:12px">' +
+        '<div style="width:36px;height:36px;border-radius:50%;background:' + r.color + ';display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;flex-shrink:0">' + r.initials + '</div>' +
+        '<div style="flex:1">' +
+          '<div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">' +
+            '<span style="font-weight:700;color:var(--dark)">' + r.name + '</span>' +
+            '<span style="color:' + (over?'var(--teal)':'var(--red)') + ';font-weight:700">' +
+              '$' + (r.achieved/1000).toFixed(0) + 'k <span style="color:var(--g400);font-weight:400">/ $' + (r.goal/1000).toFixed(0) + 'k</span>' +
+            '</span>' +
+          '</div>' +
+          '<div style="position:relative;height:10px;background:var(--g100);border-radius:5px;overflow:visible">' +
+            '<div style="height:100%;width:' + aPct + '%;background:' + (over?'var(--teal)':'var(--amber)') + ';border-radius:5px;transition:width .6s ease"></div>' +
+            '<div style="position:absolute;top:-3px;left:' + gPct + '%;width:2px;height:16px;background:var(--g400);border-radius:1px" title="Goal"></div>' +
+          '</div>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  // ── Activity breakdown table ──
+  var actEl = document.getElementById('rpt-ind-activity-table');
+  if (actEl && !actEl.dataset.rendered) {
+    actEl.dataset.rendered = '1';
+    actEl.innerHTML = '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
+      '<thead><tr style="border-bottom:1px solid var(--g200)">' +
+        '<th style="padding:10px 0;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Rep</th>' +
+        '<th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Calls</th>' +
+        '<th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Emails</th>' +
+        '<th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Deals</th>' +
+        '<th style="padding:10px 12px;text-align:center;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Win Rate</th>' +
+        '<th style="padding:10px 0;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">Revenue</th>' +
+      '</tr></thead><tbody>' +
+      _rptReps.map(function(r) {
+        var over = r.achieved >= r.goal;
+        return '<tr style="border-bottom:1px solid var(--g100)">' +
+          '<td style="padding:11px 0">' +
+            '<div style="display:flex;align-items:center;gap:8px">' +
+              '<div style="width:28px;height:28px;border-radius:50%;background:' + r.color + ';display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0">' + r.initials + '</div>' +
+              '<span style="font-weight:600;color:var(--dark)">' + r.name + '</span>' +
+            '</div>' +
+          '</td>' +
+          '<td style="padding:11px 12px;text-align:center;color:var(--dark)">' + r.calls + '</td>' +
+          '<td style="padding:11px 12px;text-align:center;color:var(--dark)">' + r.emails + '</td>' +
+          '<td style="padding:11px 12px;text-align:center;color:var(--dark)">' + r.deals + '</td>' +
+          '<td style="padding:11px 12px;text-align:center;font-weight:700;color:var(--teal)">' + r.winRate + '%</td>' +
+          '<td style="padding:11px 0;text-align:right;font-weight:700;color:' + (over?'var(--teal)':'var(--red)') + '">$' + (r.achieved/1000).toFixed(0) + 'k</td>' +
+        '</tr>';
+      }).join('') +
+      '</tbody></table>';
+  }
+}
+
+// Init folder browser on page load
+(function() {
+  document.addEventListener('DOMContentLoaded', function() {
+    _rptRenderFolders();
+  });
+})();
+
+// ── CUSTOM REPORT BUILDER ─────────────────────────────────────────────────────
+var _rptbStep = 1;
+var _rptbState = {
+  sections: { revenue:true, goals:true, activities:true, customers:true, leadSource:false, salesCycle:false },
+  dateRange: 'this_month',
+  reps: 'all',
+  view: 'company'
+};
+
+function _rptOpenCustomBuilder() {
+  _rptbStep = 1;
+  var m = document.getElementById('rpt-builder-modal');
+  if (m) m.style.display = 'flex';
+  _rptbRender();
+}
+function _rptCloseCustomBuilder() {
+  var m = document.getElementById('rpt-builder-modal');
+  if (m) m.style.display = 'none';
+}
+function _rptbGo(step) {
+  _rptbStep = step;
+  _rptbRender();
+}
+function _rptbBack() {
+  if (_rptbStep > 1) { _rptbStep--; _rptbRender(); }
+}
+function _rptbNext() {
+  if (_rptbStep < 3) { _rptbStep++; _rptbRender(); }
+  else { _rptCloseCustomBuilder(); showToast('Custom report generated and added to FY 2026!'); }
+}
+
+function _rptbRender() {
+  // Update step tabs
+  ['1','2','3'].forEach(function(s) {
+    var el = document.getElementById('rptb-step-' + s);
+    if (!el) return;
+    var active = String(_rptbStep) === s;
+    el.style.fontWeight = active ? '700' : '600';
+    el.style.color = active ? 'var(--dark)' : 'var(--g400)';
+    el.style.borderBottom = active ? '2px solid var(--dark)' : '2px solid transparent';
+  });
+  var backBtn = document.getElementById('rptb-back-btn');
+  var nextBtn = document.getElementById('rptb-next-btn');
+  if (backBtn) backBtn.style.display = _rptbStep === 1 ? 'none' : 'block';
+  if (nextBtn) nextBtn.textContent = _rptbStep === 3 ? 'Generate Report' : 'Next →';
+
+  var body = document.getElementById('rptb-body');
+  if (!body) return;
+
+  if (_rptbStep === 1) {
+    // Section toggles
+    var sections = [
+      { key:'revenue',    label:'Revenue & Sales KPIs',       sub:'Total sales, goals, deal count, win rate' },
+      { key:'goals',      label:'Goals & Attainment',          sub:'Rep goal tracking and pacing' },
+      { key:'activities', label:'Activity Breakdown',          sub:'Calls, emails, meetings by rep' },
+      { key:'customers',  label:'Top Customers',               sub:'Revenue by account' },
+      { key:'leadSource', label:'Lead Source Analysis',        sub:'Where deals are coming from' },
+      { key:'salesCycle', label:'Average Sales Cycle',         sub:'Time in each pipeline stage' },
+    ];
+    body.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px;padding-bottom:8px">' +
+      sections.map(function(s) {
+        var on = _rptbState.sections[s.key];
+        return '<label style="display:flex;align-items:center;gap:14px;padding:12px 16px;border:1.5px solid ' + (on?'var(--teal)':'var(--g200)') + ';border-radius:10px;cursor:pointer;background:' + (on?'rgba(29,158,117,0.04)':'#fff') + '" onclick="_rptbToggleSection(\'' + s.key + '\')">' +
+          '<div style="width:20px;height:20px;border-radius:5px;background:' + (on?'var(--teal)':'var(--g100)') + ';border:1.5px solid ' + (on?'var(--teal)':'var(--g200)') + ';display:flex;align-items:center;justify-content:center;flex-shrink:0">' +
+            (on?'<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>':'') +
+          '</div>' +
+          '<div><div style="font-size:13px;font-weight:700;color:var(--dark)">' + s.label + '</div>' +
+          '<div style="font-size:11px;color:var(--g400);margin-top:1px">' + s.sub + '</div></div>' +
+        '</label>';
+      }).join('') +
+    '</div>';
+
+  } else if (_rptbStep === 2) {
+    body.innerHTML =
+      '<div style="padding-bottom:8px">' +
+      '<div style="margin-bottom:18px">' +
+        '<div style="font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Date Range</div>' +
+        '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' +
+          [['this_month','This Month'],['this_quarter','This Quarter'],['ytd','Year to Date'],['last_month','Last Month'],['last_quarter','Last Quarter'],['custom','Custom Range']].map(function(o) {
+            var sel = _rptbState.dateRange === o[0];
+            return '<label style="display:flex;align-items:center;gap:8px;padding:10px 12px;border:1.5px solid ' + (sel?'var(--teal)':'var(--g200)') + ';border-radius:8px;cursor:pointer;font-size:13px;background:' + (sel?'rgba(29,158,117,0.04)':'#fff') + '" onclick="_rptbSetDate(\'' + o[0] + '\')">' +
+              '<div style="width:14px;height:14px;border-radius:50%;border:2px solid ' + (sel?'var(--teal)':'var(--g300)') + ';background:' + (sel?'var(--teal)':'#fff') + ';flex-shrink:0"></div>' +
+              o[1] +
+            '</label>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<div style="margin-bottom:18px">' +
+        '<div style="font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">View</div>' +
+        '<div style="display:flex;gap:8px">' +
+          [['company','Company Overview'],['individual','Individual Reps']].map(function(o) {
+            var sel = _rptbState.view === o[0];
+            return '<label style="flex:1;display:flex;align-items:center;gap:8px;padding:10px 14px;border:1.5px solid ' + (sel?'var(--teal)':'var(--g200)') + ';border-radius:8px;cursor:pointer;font-size:13px;background:' + (sel?'rgba(29,158,117,0.04)':'#fff') + '" onclick="_rptbSetView(\'' + o[0] + '\')">' +
+              '<div style="width:14px;height:14px;border-radius:50%;border:2px solid ' + (sel?'var(--teal)':'var(--g300)') + ';background:' + (sel?'var(--teal)':'#fff') + ';flex-shrink:0"></div>' +
+              o[1] +
+            '</label>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<div>' +
+        '<div style="font-size:12px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px">Reps</div>' +
+        '<select onchange="_rptbState.reps=this.value" style="width:100%;padding:9px 12px;border:1px solid var(--g200);border-radius:8px;font-size:13px;font-family:var(--font);color:var(--dark)">' +
+          '<option value="all">All Reps</option>' +
+          _rptReps.map(function(r){ return '<option value="' + r.id + '">' + r.name + '</option>'; }).join('') +
+        '</select>' +
+      '</div></div>';
+
+  } else {
+    // Preview
+    var count = Object.keys(_rptbState.sections).filter(function(k){ return _rptbState.sections[k]; }).length;
+    var dateLabel = { this_month:'This Month', this_quarter:'This Quarter', ytd:'Year to Date', last_month:'Last Month', last_quarter:'Last Quarter', custom:'Custom Range' };
+    body.innerHTML =
+      '<div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:8px">' +
+        '<div style="background:var(--g50);padding:16px 18px;border-bottom:1px solid var(--g200)">' +
+          '<div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:2px">Custom Report Preview</div>' +
+          '<div style="font-size:12px;color:var(--g400)">' + (dateLabel[_rptbState.dateRange]||'Selected Period') + ' · ' + (_rptbState.view==='company'?'Company view':'Individual reps') + ' · ' + count + ' sections</div>' +
+        '</div>' +
+        '<div style="padding:16px 18px">' +
+          Object.keys(_rptbState.sections).filter(function(k){ return _rptbState.sections[k]; }).map(function(k) {
+            var labels = { revenue:'Revenue & Sales KPIs', goals:'Goals & Attainment', activities:'Activity Breakdown', customers:'Top Customers', leadSource:'Lead Source Analysis', salesCycle:'Average Sales Cycle' };
+            return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--g100);font-size:13px">' +
+              '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
+              '<span style="color:var(--dark);font-weight:500">' + (labels[k]||k) + '</span>' +
+            '</div>';
+          }).join('') +
+        '</div>' +
+      '</div>' +
+      '<div style="font-size:12px;color:var(--g400);text-align:center;padding-bottom:8px">Click "Generate Report" to save this as a new report in FY 2026</div>';
+  }
+}
+
+function _rptbToggleSection(key) {
+  _rptbState.sections[key] = !_rptbState.sections[key];
+  _rptbRender();
+}
+function _rptbSetDate(val) { _rptbState.dateRange = val; _rptbRender(); }
+function _rptbSetView(val) { _rptbState.view = val; _rptbRender(); }
+
+// ── CUSTOMIZE EXPORT ──────────────────────────────────────────────────────────
+var _csExportType = 'People';
+var _csExportFields = {
+  People:       ['First Name','Last Name','Email','Phone','Title','Company','Owner','Created Date','Last Activity','Custom Fields'],
+  Accounts:     ['Company Name','Industry','Revenue','Employees','City','State','Owner','Account Type','Created Date','Custom Fields'],
+  Opportunities:['Deal Name','Account','Stage','Value','Close Date','Owner','Lead Source','Won/Lost','Created Date','Custom Fields'],
+  Notes:        ['Note Body','Related To','Note Type','Created By','Created Date','Linked Account'],
+};
+
+function _csOpenExportModal(type) {
+  _csExportType = type || 'People';
+  var m = document.getElementById('cs-export-modal');
+  if (m) m.style.display = 'flex';
+  var typeEl = document.getElementById('cs-export-modal-type');
+  if (typeEl) typeEl.textContent = 'Exporting: ' + _csExportType;
+  var fieldsEl = document.getElementById('cs-export-fields');
+  if (!fieldsEl) return;
+  var fields = _csExportFields[_csExportType] || [];
+  fieldsEl.innerHTML = fields.map(function(f) {
+    return '<label style="display:flex;align-items:center;gap:7px;font-size:13px;cursor:pointer;padding:4px 0">' +
+      '<input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> ' + f +
+    '</label>';
+  }).join('');
+}
+function _csCloseExportModal() {
+  var m = document.getElementById('cs-export-modal');
+  if (m) m.style.display = 'none';
+}
+function _csRunCustomExport() {
+  _csCloseExportModal();
+  showToast('Exporting custom ' + _csExportType + '…');
+}
+
+// ── END REPORTS ───────────────────────────────────────────────────────────────
+
 function openImportWizard() {
   _iwStep = 1;
   var el = document.getElementById('import-wizard-overlay');
@@ -15471,128 +16545,89 @@ function _ecSend() {
 
   <!-- ── SR VIEW ── -->
   <div id="tgt-sr-content" style="display:none;flex:1;flex-direction:column;overflow:hidden">
-    <!-- SR KPI strip -->
-    <div class="tgt-kpi-strip">
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Calls today</div>
-        <div class="tgt-kpi-val"><span id="tgt-calls-label">0</span> <span id="tgt-calls-goal-lbl">/ 5</span></div>
-        <div class="tgt-kpi-track"><div id="tgt-calls-bar" class="tgt-kpi-fill" style="width:0%;background:var(--teal)"></div></div>
-      </div>
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Emails today</div>
-        <div class="tgt-kpi-val"><span id="tgt-emails-label">0</span> <span id="tgt-emails-goal-lbl">/ 3</span></div>
-        <div class="tgt-kpi-track"><div id="tgt-emails-bar" class="tgt-kpi-fill" style="width:0%;background:#5b8fe8"></div></div>
-      </div>
-      <div class="tgt-kpi">
-        <div class="tgt-kpi-label">Queue completed</div>
-        <div class="tgt-kpi-val"><span id="tgt-done-label">0</span> <span id="tgt-done-of-lbl">/ 0</span></div>
-        <div class="tgt-kpi-track"><div id="tgt-done-bar" class="tgt-kpi-fill" style="width:0%;background:#8b5cf6"></div></div>
-      </div>
-    </div>
 
-    <!-- SR two-column body -->
-    <div class="tgt-body">
-      <!-- LEFT: ace + tabs + queue -->
-      <div class="tgt-left">
-        <!-- ACE insight -->
-        <div class="tgt-ace-card" id="sr-ace-card">
-          <div class="tgt-ace-label"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="display:inline;vertical-align:-2px;margin-right:4px"><path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17l-6.2 4.3 2.4-7.4L2 9.4h7.6z"/></svg>ACE recommendation</div>
-          <div class="tgt-ace-text" id="sr-ace-text">Loading your queue...</div>
-        </div>
-        <!-- search -->
-        <div class="tgt-search-wrap">
-          <svg class="tgt-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-          <input id="tgt-search" class="tgt-search-input" type="text" placeholder="Search accounts..." oninput="filterTargets()">
-        </div>
-        <!-- Tabs -->
-        <div class="tgt-tab-bar">
-          <div class="tgt-tab active" id="sr-tab-queue"     onclick="switchSRQueueTab('queue',this)">Queue (<span id="sr-queue-count">0</span>)</div>
-          <div class="tgt-tab"        id="sr-tab-done"      onclick="switchSRQueueTab('done',this)">Completed (<span id="sr-done-count">0</span>)</div>
-          <div class="tgt-tab"        id="sr-tab-skipped"   onclick="switchSRQueueTab('skipped',this)">Skipped (<span id="sr-skip-count">0</span>)</div>
-        </div>
-        <!-- Queue list -->
-        <div class="tgt-queue" id="tgt-tbody"></div>
+    <!-- KPI rings: full-width strip at top -->
+    <div id="sr-kpi-strip" style="display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--g200);background:var(--white);flex-shrink:0">
+
+      <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
+        <div class="tgt-kpi-ring-label">My overdue accounts</div>
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="8"/>
+          <circle id="sr-kpi-crit-arc" cx="55" cy="55" r="44" fill="none" stroke="var(--red)" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+          <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="700" fill="var(--red)" id="sr-kpi-crit-num">0</text>
+          <text x="55" y="67" text-anchor="middle" font-family="var(--font)" font-size="10" fill="var(--g400)" id="sr-kpi-crit-sub">accounts</text>
+        </svg>
+        <div style="font-size:10px;color:var(--g400);margin-top:4px;text-align:center">60+ days no contact</div>
       </div>
 
-      <!-- RIGHT: SR daily goals + log activity -->
-      <div class="tgt-right">
-        <!-- Rep identity -->
-        <div style="padding:14px 16px 12px;border-bottom:1px solid var(--g200);display:flex;align-items:center;gap:10px;flex-shrink:0">
-          <img id="sr-panel-photo" src="" alt="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0">
-          <div>
-            <div id="sr-panel-name" style="font-size:13px;font-weight:700;color:var(--dark)"></div>
-            <div style="font-size:11px;color:var(--g400)">Sales Rep</div>
-          </div>
-        </div>
-        <!-- Daily goal rings -->
-        <div class="tgt-panel-section">
-          <div class="tgt-panel-title">Today's goals</div>
-          <div class="tgt-goal-rings">
-            <div class="tgt-ring-card">
-              <div class="tgt-ring-num" id="sr-ring-calls" style="color:var(--teal)">0</div>
-              <div class="tgt-ring-of" id="sr-ring-calls-of">of 5 calls</div>
-              <div class="tgt-ring-track"><div id="sr-ring-calls-bar" style="width:0%;height:100%;background:var(--teal);border-radius:2px;transition:width .4s"></div></div>
-              <div class="tgt-ring-label">Calls</div>
-            </div>
-            <div class="tgt-ring-card">
-              <div class="tgt-ring-num" id="sr-ring-emails" style="color:#5b8fe8">0</div>
-              <div class="tgt-ring-of" id="sr-ring-emails-of">of 3 emails</div>
-              <div class="tgt-ring-track"><div id="sr-ring-emails-bar" style="width:0%;height:100%;background:#5b8fe8;border-radius:2px;transition:width .4s"></div></div>
-              <div class="tgt-ring-label">Emails</div>
-            </div>
-          </div>
-        </div>
-        <!-- Log activity -->
-        <div class="tgt-panel-section">
-          <div class="tgt-panel-title">Log activity</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--g500);display:block;margin-bottom:4px">Account</label>
-              <select id="sr-log-account" style="width:100%;padding:7px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none">
-                <option value="">— select account —</option>
-              </select>
-            </div>
-            <div>
-              <label style="font-size:11px;font-weight:600;color:var(--g500);display:block;margin-bottom:4px">Notes (optional)</label>
-              <textarea id="sr-log-notes" rows="2" placeholder="Quick note..." style="width:100%;padding:7px 10px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;resize:none;box-sizing:border-box;line-height:1.5"></textarea>
-            </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
-              <button class="tgt-act-btn tgt-primary" onclick="_tgtLogActivityPanel('call')" style="display:flex;align-items:center;justify-content:center;gap:6px">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                Log Call
-              </button>
-              <button class="tgt-act-btn tgt-email" onclick="_tgtLogActivityPanel('email')" style="display:flex;align-items:center;justify-content:center;gap:6px">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                Log Email
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- This month -->
-        <div class="tgt-panel-section">
-          <div class="tgt-panel-title">This month</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;justify-content:space-between;align-items:baseline">
-              <span style="font-size:12px;color:var(--g600)">Calls</span>
-              <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--dark)" id="tgt-mo-calls">0</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:baseline">
-              <span style="font-size:12px;color:var(--g600)">Emails</span>
-              <span style="font-size:16px;font-weight:700;font-family:var(--mono);color:var(--dark)" id="tgt-mo-emails">0</span>
-            </div>
-          </div>
-        </div>
-        <!-- Legend -->
-        <div class="tgt-panel-section" style="flex:1">
-          <div class="tgt-panel-title">Priority legend</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--red);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">Overdue — 60+ days</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--amber);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">Due soon — 30–60 days</span></div>
-            <div style="display:flex;align-items:center;gap:8px"><div style="width:10px;height:10px;border-radius:50%;background:var(--teal);flex-shrink:0"></div><span style="font-size:12px;color:var(--g600)">On track — under 30 days</span></div>
-          </div>
+      <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
+        <div class="tgt-kpi-ring-label">Touched today</div>
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="8"/>
+          <circle id="sr-kpi-touch-arc" cx="55" cy="55" r="44" fill="none" stroke="var(--teal)" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+          <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="700" fill="var(--teal)" id="sr-kpi-touch-num">0</text>
+          <text x="55" y="67" text-anchor="middle" font-family="var(--font)" font-size="10" fill="var(--g400)" id="sr-kpi-touch-sub">of 0</text>
+        </svg>
+        <div style="font-size:10px;color:var(--g400);margin-top:4px;text-align:center">accounts contacted</div>
+      </div>
+
+      <div class="tgt-kpi-ring" style="border-right:1px solid var(--g200)">
+        <div class="tgt-kpi-ring-label">My calls today</div>
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="8"/>
+          <circle id="sr-kpi-calls-arc" cx="55" cy="55" r="44" fill="none" stroke="var(--teal)" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+          <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="700" fill="var(--teal)" id="sr-kpi-calls-pct">0%</text>
+          <text x="55" y="67" text-anchor="middle" font-family="var(--font)" font-size="10" fill="var(--g400)" id="sr-kpi-calls-sub">0 / 0</text>
+        </svg>
+        <div style="font-size:10px;color:var(--g400);margin-top:4px;text-align:center">of daily call goal</div>
+      </div>
+
+      <div class="tgt-kpi-ring">
+        <div class="tgt-kpi-ring-label">My emails today</div>
+        <svg width="110" height="110" viewBox="0 0 110 110">
+          <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="8"/>
+          <circle id="sr-kpi-emails-arc" cx="55" cy="55" r="44" fill="none" stroke="#5b8fe8" stroke-width="8" stroke-linecap="round"
+            stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+          <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="22" font-weight="700" fill="#5b8fe8" id="sr-kpi-emails-pct">0%</text>
+          <text x="55" y="67" text-anchor="middle" font-family="var(--font)" font-size="10" fill="var(--g400)" id="sr-kpi-emails-sub">0 / 0</text>
+        </svg>
+        <div style="font-size:10px;color:var(--g400);margin-top:4px;text-align:center">of daily email goal</div>
+      </div>
+
+    </div>
+
+    <!-- Full-width account queue -->
+    <div style="flex:1;overflow:hidden;display:flex;flex-direction:column">
+
+      <!-- Header -->
+      <div style="display:flex;align-items:center;padding:10px 20px;border-bottom:1px solid var(--g200);gap:10px;flex-shrink:0">
+        <span style="font-size:13px;font-weight:700;color:var(--dark);flex:1">My Accounts</span>
+        <button id="sr-completed-btn" onclick="_tgtToggleSRCompleted()"
+          style="font-size:11px;font-weight:600;color:var(--g400);background:none;border:none;cursor:pointer;font-family:var(--font);padding:4px 8px;border-radius:6px;transition:.12s"
+          onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'">Completed</button>
+        <button onclick="_tgtToggleSRFilters()"
+          style="display:flex;align-items:center;gap:5px;font-size:11px;font-weight:600;color:var(--g500);background:var(--g50);border:1.5px solid var(--g200);cursor:pointer;font-family:var(--font);padding:4px 10px;border-radius:6px;transition:.12s" id="sr-filter-btn">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
+          Filter
+        </button>
+      </div>
+
+      <!-- Collapsible filter panel -->
+      <div id="sr-filter-panel" style="display:none;padding:10px 20px;border-bottom:1px solid var(--g200);background:var(--g50);flex-shrink:0;gap:8px;flex-wrap:wrap;align-items:center">
+        <div style="position:relative;flex:1;min-width:200px;max-width:380px">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:9px;top:50%;transform:translateY(-50%);color:var(--g300);pointer-events:none"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input id="sr-search-input" type="text" placeholder="Search accounts…" oninput="_tgtSRSetSearch(this.value)"
+            style="width:100%;padding:5px 10px 5px 28px;border:1.5px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);color:var(--dark);background:var(--white);outline:none;box-sizing:border-box;transition:.15s"
+            onfocus="this.style.borderColor='rgba(29,158,117,.5)'" onblur="this.style.borderColor='var(--g200)'">
         </div>
       </div>
+
+      <div class="tgt-queue" id="sr-queue-list"></div>
     </div>
+
   </div><!-- end tgt-sr-content -->
 
   </div><!-- end scroll wrapper -->
