@@ -3660,7 +3660,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
 <!-- COMMISSIONS -->
 <div id="page-commissions" class="page">
-<div class="page-header"><div class="page-title">Commissions</div><div class="page-subtitle">Earned commissions and payout schedule</div><button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Exporting commission report...')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg> Export</button></div>
+<div class="page-header"><div class="page-title">Commissions</div><div class="page-subtitle">Earned commissions and payout schedule</div><div style="display:flex;gap:8px"><button class="tb-btn btn-teal" style="font-size:12px;display:flex;align-items:center;gap:6px" onclick="_aceCommOpen()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build with Ace</button><button class="tb-btn btn-ghost" style="font-size:12px" onclick="showToast('Exporting commission report...')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg> Export</button></div></div>
 <div id="comm-sm-view">
 <div class="stat-row">
   <div class="stat-card" onclick="showToast('Showing this month breakdown')" title="View details"><div class="stat-label">This Month</div><div class="stat-value teal">$18,400</div></div>
@@ -3830,6 +3830,200 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       </div>
     </div>
   </div>
+</div>
+
+<!-- COMMISSION LIBRARY -->
+<div id="comm-library" style="margin-top:28px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+    <div>
+      <div style="font-size:16px;font-weight:700;color:var(--dark)">Commission Library</div>
+      <div style="font-size:12px;color:var(--g400);margin-top:2px">Common structures used in insurance &amp; benefits sales — click any to build it with Ace</div>
+    </div>
+    <button onclick="_aceCommOpen()" style="background:var(--navy);color:#fff;border:none;border-radius:9px;padding:9px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:6px">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      Custom — Ask Ace
+    </button>
+  </div>
+
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px" id="comm-library-grid">
+
+    <!-- Tiered Commission -->
+    <div class="comm-lib-card" onclick="_aceCommLoadTemplate('tiered')" style="background:#fff;border:1.5px solid var(--g200);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden" onmouseover="this.style.borderColor='var(--teal)';this.style.boxShadow='0 4px 16px rgba(29,158,117,0.1)'" onmouseout="this.style.borderColor='var(--g200)';this.style.boxShadow='none'">
+      <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(29,158,117,0.1) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(29,158,117,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Tiered Commission</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:1px">Accelerates as reps close more</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(29,158,117,0.06);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">$0 – $50K</span>
+          <span style="font-size:13px;font-weight:800;color:var(--teal);font-family:var(--mono)">6%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(29,158,117,0.1);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">$50K – $100K</span>
+          <span style="font-size:13px;font-weight:800;color:var(--teal);font-family:var(--mono)">8%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(29,158,117,0.16);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">$100K+</span>
+          <span style="font-size:13px;font-weight:800;color:var(--teal);font-family:var(--mono)">10%</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);line-height:1.6;margin-bottom:12px">Best for motivating top performers. Higher tiers kick in once reps hit milestones, rewarding consistent closers.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;font-weight:700;color:var(--teal);background:rgba(29,158,117,0.1);border-radius:5px;padding:3px 8px">Most Popular</span>
+        <span style="font-size:11px;font-weight:600;color:var(--teal)">Build with Ace →</span>
+      </div>
+    </div>
+
+    <!-- Flat Rate -->
+    <div class="comm-lib-card" onclick="_aceCommLoadTemplate('flat')" style="background:#fff;border:1.5px solid var(--g200);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden" onmouseover="this.style.borderColor='#5b8fe8';this.style.boxShadow='0 4px 16px rgba(91,143,232,0.1)'" onmouseout="this.style.borderColor='var(--g200)';this.style.boxShadow='none'">
+      <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(91,143,232,0.1) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(91,143,232,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#5b8fe8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Flat Rate</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:1px">Simple, consistent percentage</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(91,143,232,0.08);border-radius:7px;padding:12px 10px">
+          <span style="font-size:11px;color:var(--g600)">All closed deals</span>
+          <span style="font-size:18px;font-weight:800;color:#5b8fe8;font-family:var(--mono)">7%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(99,102,241,0.06);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Manager override</span>
+          <span style="font-size:13px;font-weight:800;color:#6366f1;font-family:var(--mono)">1.5%</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);line-height:1.6;margin-bottom:12px">Easiest to explain to reps. Everyone earns the same percentage regardless of deal size. Great for newer teams.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;font-weight:700;color:#5b8fe8;background:rgba(91,143,232,0.1);border-radius:5px;padding:3px 8px">Easiest to Run</span>
+        <span style="font-size:11px;font-weight:600;color:#5b8fe8">Build with Ace →</span>
+      </div>
+    </div>
+
+    <!-- Goal-Based Bonus -->
+    <div class="comm-lib-card" onclick="_aceCommLoadTemplate('goal')" style="background:#fff;border:1.5px solid var(--g200);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden" onmouseover="this.style.borderColor='#f59e0b';this.style.boxShadow='0 4px 16px rgba(245,158,11,0.1)'" onmouseout="this.style.borderColor='var(--g200)';this.style.boxShadow='none'">
+      <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(245,158,11,0.1) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Goal-Based Bonus</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:1px">Base rate + bonus at 100% goal</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(245,158,11,0.06);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Base rate</span>
+          <span style="font-size:13px;font-weight:800;color:#f59e0b;font-family:var(--mono)">6%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(245,158,11,0.12);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">At 100% of goal</span>
+          <span style="font-size:13px;font-weight:800;color:#f59e0b;font-family:var(--mono)">+2% bonus</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(245,158,11,0.18);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">At 120%+ of goal</span>
+          <span style="font-size:13px;font-weight:800;color:#f59e0b;font-family:var(--mono)">+4% bonus</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);line-height:1.6;margin-bottom:12px">Ties commission to monthly targets. Reps earn more when they hit or exceed goal, creating a natural push at month-end.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;font-weight:700;color:#f59e0b;background:rgba(245,158,11,0.1);border-radius:5px;padding:3px 8px">High Motivator</span>
+        <span style="font-size:11px;font-weight:600;color:#f59e0b">Build with Ace →</span>
+      </div>
+    </div>
+
+    <!-- Residual / Recurring -->
+    <div class="comm-lib-card" onclick="_aceCommLoadTemplate('residual')" style="background:#fff;border:1.5px solid var(--g200);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden" onmouseover="this.style.borderColor='#8b5cf6';this.style.boxShadow='0 4px 16px rgba(139,92,246,0.1)'" onmouseout="this.style.borderColor='var(--g200)';this.style.boxShadow='none'">
+      <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(139,92,246,0.1) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(139,92,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-.49-8.49"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Residual / Recurring</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:1px">Ongoing % on renewals &amp; retained accounts</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(139,92,246,0.06);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">New sale commission</span>
+          <span style="font-size:13px;font-weight:800;color:#8b5cf6;font-family:var(--mono)">8%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(139,92,246,0.1);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Annual renewal</span>
+          <span style="font-size:13px;font-weight:800;color:#8b5cf6;font-family:var(--mono)">3%</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);line-height:1.6;margin-bottom:12px">Common in insurance and benefits. Reps earn on renewals, incentivizing long-term client relationships and account retention.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;font-weight:700;color:#8b5cf6;background:rgba(139,92,246,0.1);border-radius:5px;padding:3px 8px">Insurance Favorite</span>
+        <span style="font-size:11px;font-weight:600;color:#8b5cf6">Build with Ace →</span>
+      </div>
+    </div>
+
+    <!-- Split / Team -->
+    <div class="comm-lib-card" onclick="_aceCommLoadTemplate('split')" style="background:#fff;border:1.5px solid var(--g200);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden" onmouseover="this.style.borderColor='#ec4899';this.style.boxShadow='0 4px 16px rgba(236,72,153,0.1)'" onmouseout="this.style.borderColor='var(--g200)';this.style.boxShadow='none'">
+      <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(236,72,153,0.1) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(236,72,153,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#ec4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Split Commission</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:1px">Shared credit between two reps</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(236,72,153,0.06);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Primary rep</span>
+          <span style="font-size:13px;font-weight:800;color:#ec4899;font-family:var(--mono)">60%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(236,72,153,0.1);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Assisting rep</span>
+          <span style="font-size:13px;font-weight:800;color:#ec4899;font-family:var(--mono)">40%</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);line-height:1.6;margin-bottom:12px">For deals that require two reps to close. Manager sets the split ratio. Encourages collaboration without disputes.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;font-weight:700;color:#ec4899;background:rgba(236,72,153,0.1);border-radius:5px;padding:3px 8px">Team Selling</span>
+        <span style="font-size:11px;font-weight:600;color:#ec4899">Build with Ace →</span>
+      </div>
+    </div>
+
+    <!-- Ask Ace custom -->
+    <div onclick="_aceCommOpen()" style="background:var(--navy);border:1.5px solid var(--navy);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
+      <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%);pointer-events:none"></div>
+      <div>
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div style="font-size:13px;font-weight:700;color:#fff;margin-bottom:6px">Something Custom?</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.5);line-height:1.6;margin-bottom:16px">Describe any commission structure in plain English — draw conditions, products, territories, or anything specific to your team. Ace builds it.</div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.35);margin-bottom:6px">Example prompts:</div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.07);border-radius:6px;padding:5px 9px">"8% on group benefits, 5% on individual plans, paid quarterly"</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);background:rgba(255,255,255,0.07);border-radius:6px;padding:5px 9px">"Tiered structure with a $500 flat bonus for any deal over $200K"</div>
+        </div>
+      </div>
+      <div style="margin-top:20px;background:rgba(255,255,255,0.1);border-radius:8px;padding:10px 14px;display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:12px;font-weight:700;color:#fff">Ask Ace to build it</span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 </div>
 </div>
 
@@ -5223,6 +5417,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <div class="sc-item" onclick="openDealModal();closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span class="sc-label">Opportunity</span><span class="sc-kbd">O</span></div>
   <div class="sc-item" onclick="openModal('activity-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span><span class="sc-label">Activity</span><span class="sc-kbd">A</span></div>
   <div class="sc-item" onclick="openModal('note-modal');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg></span><span class="sc-label">Note</span><span class="sc-kbd">N</span></div>
+  <div class="sc-item" onclick="showToast('File upload coming soon');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/></svg></span><span class="sc-label">File</span><span class="sc-kbd">F</span></div>
+  <div class="sc-item" onclick="showToast('Action created');closeShortcutMenu()"><span class="sc-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></span><span class="sc-label">Action</span><span class="sc-kbd">X</span></div>
 </div>
 
 <!-- ACE DRAGGABLE DIALOG -->
@@ -9599,6 +9795,20 @@ function _resetRecurring() {
 function _oppRenderStageBar(currentIdx, stageDays) {
   var bar = document.getElementById('oppd-stage-track');
   if (!bar) return;
+
+  // Inject keyframe once
+  if (!document.getElementById('opp-stage-pulse-style')) {
+    var styleEl = document.createElement('style');
+    styleEl.id = 'opp-stage-pulse-style';
+    styleEl.textContent = [
+      '@keyframes oppStagePulse {',
+      '  0%,100% { filter: drop-shadow(0 0 0px rgba(29,158,117,0)); }',
+      '  50%      { filter: drop-shadow(0 0 7px rgba(29,158,117,0.65)); }',
+      '}'
+    ].join('');
+    document.head.appendChild(styleEl);
+  }
+
   var stages = PIPELINE_STAGES_ORDER;
   var n = stages.length;
   var aw = 12;
@@ -9615,10 +9825,13 @@ function _oppRenderStageBar(currentIdx, stageDays) {
       : isLast
         ? 'polygon('+aw+'px 0,100% 0,100% 100%,0 100%,0 50%)'
         : 'polygon('+aw+'px 0,calc(100% - '+aw+'px) 0,100% 50%,calc(100% - '+aw+'px) 100%,0 100%,0 50%)';
-    var ml = idx === 0 ? '0' : '-' + aw + 'px';
-    var zi = n - idx;
-    html += '<div onclick="_oppClickStage(' + idx + ')" style="flex:1;min-width:0;height:100%;background:' + bg + ';clip-path:' + cp + ';display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;z-index:' + zi + ';margin-left:' + ml + ';padding:0 ' + (aw + 4) + 'px;gap:1px;transition:opacity .15s" onmouseover="this.style.opacity=\'0.8\'" onmouseout="this.style.opacity=\'1\'">'
-      + '<span style="font-size:10px;font-weight:' + (isCur ? '700' : '500') + ';color:' + tc + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center">' + s + '</span>'
+    var ml  = idx === 0 ? '0' : '-' + aw + 'px';
+    var zi  = n - idx;
+    // Pulse animation + subtle brightness lift on the active stage
+    var anim = isCur ? 'animation:oppStagePulse 2.4s ease-in-out infinite;' : '';
+    html += '<div onclick="_oppClickStage(' + idx + ')" style="flex:1;min-width:0;height:100%;background:' + bg + ';clip-path:' + cp + ';display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;z-index:' + zi + ';margin-left:' + ml + ';padding:0 ' + (aw + 4) + 'px;gap:1px;transition:opacity .15s;' + anim + '" onmouseover="this.style.opacity=\'0.8\'" onmouseout="this.style.opacity=\'1\'">'
+      + '<span style="font-size:10px;font-weight:' + (isCur ? '700' : '500') + ';color:' + tc + ';white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%;text-align:center;letter-spacing:' + (isCur ? '0.2px' : '0') + '">' + s + '</span>'
+      + (isCur ? '<span style="display:block;width:16px;height:2px;border-radius:1px;background:rgba(255,255,255,0.5);margin-top:1px"></span>' : '')
       + (dl ? '<span style="font-size:10px;font-weight:600;color:' + (isCur ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.4)') + '">' + dl + '</span>' : '')
       + '</div>';
   });
@@ -9754,16 +9967,19 @@ function openOppDetail(oppId) {
   document.getElementById('oppd-header-title').textContent = opp.title;
   document.getElementById('oppd-back-label').textContent = _oppDetailSource === 'person' ? 'Contact' : _oppDetailSource === 'pipeline' ? 'Pipeline' : 'Account';
 
-  // Stage pill
-  var stageEl = document.getElementById('oppd-stage-pill');
-  stageEl.textContent = opp.stage;
+  // Stage pill (element may not exist in all layouts)
   var stageIdx = PIPELINE_STAGES_ORDER.indexOf(opp.stage);
   var stageColor = stageIdx >= 0 ? PIPELINE_STAGES_COLORS[stageIdx] : 'var(--teal)';
-  stageEl.style.background = 'rgba(29,158,117,0.1)';
-  stageEl.style.color = stageColor;
+  var stageEl = document.getElementById('oppd-stage-pill');
+  if (stageEl) {
+    stageEl.textContent = opp.stage;
+    stageEl.style.background = 'rgba(29,158,117,0.1)';
+    stageEl.style.color = stageColor;
+  }
 
   // Left sidebar
-  document.getElementById('oppd-title').textContent = opp.title;
+  var titleEl2 = document.getElementById('oppd-title');
+  if (titleEl2) titleEl2.textContent = opp.title;
   document.getElementById('oppd-sidebar-value').textContent = '$' + (opp.value||0).toLocaleString();
   document.getElementById('oppd-org').textContent = opp.org || '—';
   document.getElementById('oppd-contact').textContent = opp.contact || '—';
@@ -14609,169 +14825,7 @@ function lbSort(colIndex, th) {
   </div>
 </div>
 
-<!-- ══════════════════════════════════════════════════════════
-     OPPORTUNITY DETAIL OVERLAY
-═══════════════════════════════════════════════════════════ -->
-<div id="opp-detail-overlay" style="position:fixed;inset:0;background:var(--off);z-index:2100;display:none;flex-direction:column;overflow:hidden">
 
-  <!-- HEADER -->
-  <div style="background:var(--white);border-bottom:1px solid var(--g200);height:62px;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0">
-    <button id="oppd-back-btn" onclick="closeOppDetail()" style="display:flex;align-items:center;gap:5px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:5px 8px;border-radius:8px;font-family:var(--font);flex-shrink:0;white-space:nowrap;transition:background .12s" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-      <span id="oppd-back-label">Pipeline</span>
-    </button>
-    <div style="width:1px;height:24px;background:var(--g200);flex-shrink:0"></div>
-    <div id="oppd-header-title" style="flex:1;font-size:17px;font-weight:800;color:var(--dark);letter-spacing:-0.2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Opportunity</div>
-    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-      <div style="display:flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--g200);border-radius:20px">
-        <div id="oppd-owner-av" style="width:20px;height:20px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">BW</div>
-        <span id="oppd-owner-name" style="font-size:12px;font-weight:600;color:var(--dark)">Owner</span>
-      </div>
-      <button onclick="_oppMoveStage(1)" style="display:flex;align-items:center;gap:6px;padding:7px 16px;background:var(--g50);color:var(--dark);border:1.5px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Move Stage</button>
-      <button onclick="_oppMarkWon()" style="display:flex;align-items:center;gap:6px;padding:7px 16px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Close Won
-      </button>
-      <button onclick="_oppMarkLost()" style="padding:7px 14px;background:none;color:#ef4444;border:1.5px solid #fca5a5;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Mark Lost</button>
-    </div>
-  </div>
-
-  <!-- STAGE CHEVRON BAR -->
-  <div style="background:var(--navy);flex-shrink:0">
-    <div id="oppd-stage-track" style="display:flex;height:50px;align-items:stretch"></div>
-    <div style="padding:5px 22px 7px;display:flex;align-items:center;gap:5px">
-      <span style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:500">Sales Pipeline</span>
-      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-      <span id="oppd-stage-breadcrumb" style="font-size:11px;color:rgba(255,255,255,0.75);font-weight:600">Stage</span>
-      <span id="oppd-stage-prob-badge" style="margin-left:8px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.45)">35% probability</span>
-    </div>
-  </div>
-
-  <!-- BODY -->
-  <div style="display:flex;flex:1;overflow:hidden">
-
-    <!-- LEFT SIDEBAR -->
-    <div style="width:290px;flex-shrink:0;background:var(--white);border-right:1px solid var(--g200);overflow-y:auto">
-
-      <div style="padding:18px 20px 14px;border-bottom:1px solid var(--g100)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:5px">Opportunity Value</div>
-        <div id="oppd-sidebar-value" style="font-size:28px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">$0</div>
-      </div>
-
-      <div style="padding:14px 20px;border-bottom:1px solid var(--g100)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Summary</div>
-        <div style="display:flex;flex-direction:column;gap:9px">
-          <div style="display:flex;align-items:center;gap:9px">
-            <div style="width:26px;height:26px;border-radius:6px;background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
-            </div>
-            <div>
-              <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--g400);margin-bottom:1px">Account</div>
-              <div id="oppd-org" onclick="openOrgFromOpp()" style="font-size:13px;color:var(--teal);font-weight:600;cursor:pointer">—</div>
-            </div>
-          </div>
-          <div style="display:flex;align-items:center;gap:9px">
-            <div style="width:26px;height:26px;border-radius:6px;background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <div>
-              <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--g400);margin-bottom:1px">Contact</div>
-              <div id="oppd-contact" onclick="openPersonFromOpp()" style="font-size:13px;color:var(--teal);font-weight:600;cursor:pointer">—</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style="padding:14px 20px;border-bottom:1px solid var(--g100)">
-        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Details</div>
-        <div style="display:flex;flex-direction:column;gap:8px">
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:var(--g500)">Close Date</span><span id="oppd-close" style="font-weight:600;color:var(--dark)">—</span></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:var(--g500)">Days in Stage</span><span id="oppd-days" style="font-weight:700;color:var(--amber)">—</span></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:var(--g500)">Probability</span><span id="oppd-prob" style="font-weight:700;color:var(--teal)">—</span></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:var(--g500)">Owner</span><div style="display:flex;align-items:center;gap:5px"><div id="oppd-owner-av2" style="width:18px;height:18px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff">BW</div><span id="oppd-owner-name2" style="font-weight:600;color:var(--dark)">—</span></div></div>
-        </div>
-      </div>
-
-      <div id="oppd-proposals-section" style="padding:14px 20px;border-bottom:1px solid var(--g100)"></div>
-      <div id="oppd-invoices-section" style="padding:14px 20px;border-bottom:1px solid var(--g100)"></div>
-      <div id="oppd-sales-section" style="padding:14px 20px"></div>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div style="flex:1;overflow-y:auto;background:var(--off);display:flex;flex-direction:column">
-
-      <!-- Action tabs -->
-      <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:0 20px;display:flex;gap:0;flex-shrink:0" id="oppd-action-tabs">
-        <button onclick="_oppActionTab('activity',this)" id="oppd-atab-activity" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-1px;font-family:var(--font)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Log Activity
-        </button>
-        <button onclick="_oppActionTab('note',this)" id="oppd-atab-note" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Note
-        </button>
-        <button onclick="_oppActionTab('call',this)" id="oppd-atab-call" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/></svg>Call
-        </button>
-        <button onclick="_oppActionTab('email',this)" id="oppd-atab-email" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email
-        </button>
-        <button onclick="_oppActionTab('meeting',this)" id="oppd-atab-meeting" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Schedule
-        </button>
-      </div>
-
-      <!-- Log input -->
-      <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:12px 20px;flex-shrink:0">
-        <div style="display:flex;gap:10px;align-items:flex-start">
-          <textarea id="oppd-action-input" placeholder="Log an activity note..." style="flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:10px 14px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--g50);resize:none;height:56px;outline:none;transition:border-color .15s" onfocus="this.style.borderColor='var(--teal)';this.style.background='var(--white)'" onblur="this.style.borderColor='var(--g200)';this.style.background='var(--g50)'"></textarea>
-          <button onclick="_oppSaveAction()" style="padding:10px 18px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);flex-shrink:0">Save</button>
-        </div>
-      </div>
-
-      <!-- KPI strip -->
-      <div id="oppd-kpi-row" style="display:flex;background:var(--white);border-bottom:1px solid var(--g200)"></div>
-
-      <!-- Scrollable body -->
-      <div style="padding:22px;flex:1">
-
-        <div style="margin-bottom:26px">
-          <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:12px">Focus</div>
-          <div id="oppd-focus-items"></div>
-        </div>
-
-        <div>
-          <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:12px">History</div>
-          <div style="display:flex;gap:0;border-bottom:1px solid var(--g200);margin-bottom:16px" id="oppd-history-tabs">
-            <button onclick="_oppHistoryTab('all',this)" style="padding:7px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--dark);border-bottom:2px solid var(--navy);margin-bottom:-1px;font-family:var(--font)">All</button>
-            <button onclick="_oppHistoryTab('activities',this)" style="padding:7px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);font-family:var(--font)">Activities</button>
-            <button onclick="_oppHistoryTab('notes',this)" style="padding:7px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);font-family:var(--font)">Notes</button>
-            <button onclick="_oppHistoryTab('files',this)" style="padding:7px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);font-family:var(--font)">Files</button>
-          </div>
-          <div id="oppd-content-activity"></div>
-          <div id="oppd-content-notes" style="display:none">
-            <div style="background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:16px">
-              <textarea placeholder="Add a note..." style="width:100%;border:none;outline:none;font-family:var(--font);font-size:14px;color:var(--dark);resize:none;min-height:80px;background:transparent"></textarea>
-              <div style="display:flex;justify-content:flex-end;margin-top:8px"><button onclick="showToast('Note saved')" style="padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save Note</button></div>
-            </div>
-          </div>
-          <div id="oppd-content-files" style="display:none">
-            <div style="background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:20px">
-              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-                <div style="font-size:14px;font-weight:700;color:var(--dark)">Files</div>
-                <button onclick="showToast('File upload coming soon')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Upload</button>
-              </div>
-              <div style="border:2px dashed var(--g200);border-radius:10px;padding:32px;text-align:center;color:var(--g400)">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 10px;display:block"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-                <div style="font-size:13px;font-weight:600;margin-bottom:4px">No files attached</div>
-                <div style="font-size:12px">Proposals, invoices, enrollment documents</div>
-              </div>
-            </div>
-          </div>
-          <div id="oppd-content-history" style="display:none"></div>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
 
 <!-- SMART MERGE OVERLAY -->
 <div id="smart-merge-overlay" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2400;display:none;align-items:center;justify-content:center;padding:24px">
@@ -16249,6 +16303,190 @@ function _ecSend() {
     : 'Email sent.';
   showToast(msg);
 }
+
+// ── ACE COMMISSION BUILDER ────────────────────────────────────────────────────
+
+function _aceCommOpen() {
+  _aceCommReset();
+  document.getElementById('ace-comm-modal').style.display = 'flex';
+}
+function _aceCommClose() {
+  document.getElementById('ace-comm-modal').style.display = 'none';
+}
+function _aceCommReset() {
+  document.getElementById('ace-comm-input').value = '';
+  document.getElementById('ace-comm-step1').style.display = 'block';
+  document.getElementById('ace-comm-step2').style.display = 'none';
+  document.getElementById('ace-comm-step3').style.display = 'none';
+  _aceStepIndicator(1);
+}
+function _aceCommBack() {
+  document.getElementById('ace-comm-step2').style.display = 'none';
+  document.getElementById('ace-comm-step1').style.display = 'block';
+  _aceStepIndicator(1);
+}
+function _aceCommExample(btn) {
+  document.getElementById('ace-comm-input').value = btn.textContent;
+}
+function _aceStepIndicator(active) {
+  [1,2,3].forEach(function(n) {
+    var el = document.getElementById('ace-step-' + n);
+    var circle = el.querySelector('span');
+    if (n < active) {
+      el.style.color = 'var(--teal)';
+      circle.style.background = 'var(--teal)';
+      circle.style.color = '#fff';
+      circle.textContent = '✓';
+    } else if (n === active) {
+      el.style.color = 'var(--teal)';
+      circle.style.background = 'var(--teal)';
+      circle.style.color = '#fff';
+      circle.textContent = String(n);
+    } else {
+      el.style.color = 'var(--g400)';
+      circle.style.background = 'var(--g200)';
+      circle.style.color = 'var(--g400)';
+      circle.textContent = String(n);
+    }
+  });
+}
+
+function _aceCommGenerate() {
+  var input = document.getElementById('ace-comm-input').value.trim();
+  if (!input) { showToast('Describe your commission structure first'); return; }
+
+  // Move to step 2 — show loading
+  document.getElementById('ace-comm-step1').style.display = 'none';
+  document.getElementById('ace-comm-step2').style.display = 'block';
+  document.getElementById('ace-comm-loading').style.display = 'block';
+  document.getElementById('ace-comm-preview').style.display = 'none';
+  _aceStepIndicator(2);
+
+  // Simulate AI loading messages
+  var msgs = ['Parsing commission tiers and rates…','Validating payout logic…','Building your commission structure…','Almost ready…'];
+  var mi = 0;
+  var subEl = document.getElementById('ace-comm-loading-sub');
+  var msgInterval = setInterval(function() {
+    mi++;
+    if (mi < msgs.length) subEl.textContent = msgs[mi];
+  }, 600);
+
+  // Parse the input to generate a realistic preview
+  setTimeout(function() {
+    clearInterval(msgInterval);
+    var plan = _aceCommParse(input);
+    _aceCommRenderPreview(plan);
+    document.getElementById('ace-comm-loading').style.display = 'none';
+    document.getElementById('ace-comm-preview').style.display = 'block';
+  }, 2600);
+}
+
+function _aceCommParse(text) {
+  // Simulate what the AI JSON response would look like — in production this comes from Claude/GPT API
+  var lower = text.toLowerCase();
+  var tiers = [];
+  var override = 1.5;
+  var payout = 'Monthly';
+  var bonus = null;
+
+  // Extract payout frequency
+  if (lower.includes('quarter')) payout = 'Quarterly';
+  else if (lower.includes('annual') || lower.includes('yearly')) payout = 'Annually';
+  else if (lower.includes('bi-weekly') || lower.includes('biweekly')) payout = 'Bi-Weekly';
+
+  // Extract override
+  var overrideMatch = lower.match(/(\d+(?:\.\d+)?)\s*%\s*(?:manager\s*)?override/);
+  if (overrideMatch) override = parseFloat(overrideMatch[1]);
+
+  // Extract bonus
+  var bonusMatch = lower.match(/(\d+(?:\.\d+)?)\s*%\s*bonus\s+if\s+([^,\.]+)/i);
+  if (bonusMatch) bonus = bonusMatch[2].trim();
+
+  // Try to extract tiers
+  var tierMatches = [];
+  // pattern: X% up to $YK, then Z% from ...
+  var pct = lower.match(/(\d+(?:\.\d+)?)\s*%\s+(?:up to|to|on all)/g);
+  var thresholds = lower.match(/\$(\d+)k/gi);
+
+  if (thresholds && thresholds.length >= 2 && pct && pct.length >= 3) {
+    // 3-tier
+    var p1 = parseFloat(pct[0]), p2 = parseFloat(pct[1]), p3 = parseFloat(pct[2]);
+    var t1 = parseInt(thresholds[0].replace(/\D/g,'')), t2 = parseInt(thresholds[1].replace(/\D/g,''));
+    tiers = [
+      { label:'Tier 1', range:'$0 – $' + t1 + 'K', rate: p1 + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' },
+      { label:'Tier 2', range:'$' + t1 + 'K – $' + t2 + 'K', rate: p2 + '%', color:'rgba(91,143,232,0.08)', badge:'#5b8fe8' },
+      { label:'Tier 3', range:'$' + t2 + 'K+', rate: p3 + '%', color:'rgba(245,158,11,0.08)', badge:'#f59e0b' },
+    ];
+  } else if (thresholds && thresholds.length >= 1 && pct && pct.length >= 2) {
+    var p1 = parseFloat(pct[0]), p2 = parseFloat(pct[1]);
+    var t1 = parseInt(thresholds[0].replace(/\D/g,''));
+    tiers = [
+      { label:'Tier 1', range:'$0 – $' + t1 + 'K', rate: p1 + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' },
+      { label:'Tier 2', range:'$' + t1 + 'K+', rate: p2 + '%', color:'rgba(91,143,232,0.08)', badge:'#5b8fe8' },
+    ];
+  } else {
+    // Flat rate fallback
+    var flatMatch = lower.match(/(\d+(?:\.\d+)?)\s*%/);
+    var rate = flatMatch ? flatMatch[1] : '7';
+    tiers = [{ label:'Flat Rate', range:'All closed deals', rate: rate + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' }];
+  }
+
+  // Build explanation
+  var tierDesc = tiers.map(function(t){ return t.rate + ' on ' + t.range; }).join(', ');
+  var explanation = 'Ace interpreted your description as a ' + tiers.length + '-tier commission structure: ' + tierDesc + '. Payout is ' + payout.toLowerCase() + '. Manager override of ' + override + '% applies to the team total.' + (bonus ? ' A ' + bonus + ' bonus accelerator was also detected.' : '') + ' Review each field above before confirming — you can edit the plan name and adjust any value.';
+
+  return { tiers: tiers, payout: payout, override: override, bonus: bonus, explanation: explanation };
+}
+
+function _aceCommRenderPreview(plan) {
+  // Tiers
+  var tiersEl = document.getElementById('ace-comm-tiers');
+  tiersEl.innerHTML = plan.tiers.map(function(t, i) {
+    return '<div style="display:grid;grid-template-columns:80px 1fr 80px;align-items:center;padding:11px 16px;border-bottom:' + (i < plan.tiers.length-1 ? '1px solid var(--g100)' : 'none') + ';background:' + t.color + '">' +
+      '<span style="font-size:11px;font-weight:700;color:' + t.badge + ';background:' + t.color.replace('0.08','0.2') + ';padding:3px 8px;border-radius:20px;text-align:center">' + t.label + '</span>' +
+      '<span style="font-size:13px;color:var(--g600);padding:0 16px">' + t.range + '</span>' +
+      '<span style="font-size:16px;font-weight:800;color:' + t.badge + ';font-family:var(--mono);text-align:right">' + t.rate + '</span>' +
+    '</div>';
+  }).join('');
+
+  // Meta
+  var metaEl = document.getElementById('ace-comm-meta');
+  metaEl.innerHTML = [
+    { label:'Payout Frequency', val: plan.payout, icon:'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' },
+    { label:'Applies To', val: 'Closed-Won Deals', icon:'M22 11.08V12a10 10 0 1 1-5.93-9.14' },
+    { label:'Effective Date', val: 'Immediately', icon:'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z' },
+  ].map(function(m) {
+    return '<div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 14px">' +
+      '<div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px">' + m.label + '</div>' +
+      '<div style="font-size:13px;font-weight:700;color:var(--dark)">' + m.val + '</div>' +
+    '</div>';
+  }).join('');
+
+  // Override
+  document.getElementById('ace-comm-override-val').textContent = plan.override + '%';
+
+  // Explanation
+  document.getElementById('ace-comm-explanation').textContent = plan.explanation;
+}
+
+var _aceCommTemplates = {
+  tiered:   '6% on deals up to $50K, 8% from $50K to $100K, and 10% on anything above $100K. Paid monthly. 1.5% manager override on team total.',
+  flat:     'Flat 7% commission on all closed-won deals. Manager gets a 1.5% override. Paid monthly.',
+  goal:     '6% base commission on all deals. Reps get a 2% bonus when they hit 100% of their monthly goal, and a 4% bonus if they exceed 120%. Paid monthly.',
+  residual: '8% commission on new sales. 3% residual commission on annual renewals for accounts the rep originally closed. Paid quarterly.',
+  split:    'Split commission — primary rep earns 60% of the total commission, assisting rep earns 40%. Total commission pool is 7% of deal value. Manager allocates splits per deal.',
+};
+function _aceCommLoadTemplate(key) {
+  _aceCommOpen();
+  var t = _aceCommTemplates[key];
+  if (t) document.getElementById('ace-comm-input').value = t;
+}
+
+function _aceCommConfirm() {
+  document.getElementById('ace-comm-step2').style.display = 'none';
+  document.getElementById('ace-comm-step3').style.display = 'block';
+  _aceStepIndicator(3);
+}
 </script>
 
 
@@ -16692,6 +16930,306 @@ function _ecSend() {
     </div>
   </div><!-- end tgt-assign-modal -->
 </div><!-- end page-targets -->
+
+<!-- ══════════════════════════════════════════════════════════
+     OPPORTUNITY DETAIL OVERLAY
+═══════════════════════════════════════════════════════════ -->
+<div id="opp-detail-overlay" style="position:fixed;inset:0;background:var(--off);z-index:2100;display:none;flex-direction:column;overflow:hidden">
+
+  <!-- HEADER -->
+  <div style="background:var(--white);border-bottom:1px solid var(--g200);height:62px;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0">
+    <button id="oppd-back-btn" onclick="closeOppDetail()" style="display:flex;align-items:center;gap:5px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:5px 8px;border-radius:8px;font-family:var(--font);flex-shrink:0;white-space:nowrap;transition:background .12s" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <span id="oppd-back-label">Pipeline</span>
+    </button>
+    <div style="width:1px;height:24px;background:var(--g200);flex-shrink:0"></div>
+    <div id="oppd-header-title" style="flex:1;font-size:17px;font-weight:800;color:var(--dark);letter-spacing:-0.2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Opportunity</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <div style="display:flex;align-items:center;gap:7px;padding:5px 10px;border:1px solid var(--g200);border-radius:20px">
+        <div id="oppd-owner-av" style="width:20px;height:20px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:#fff">BW</div>
+        <span id="oppd-owner-name" style="font-size:12px;font-weight:600;color:var(--dark)">Owner</span>
+      </div>
+      <button onclick="_oppMoveStage(1)" style="display:flex;align-items:center;gap:6px;padding:7px 16px;background:var(--g50);color:var(--dark);border:1.5px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Move Stage</button>
+      <button onclick="_oppMarkWon()" style="display:flex;align-items:center;gap:6px;padding:7px 16px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Close Won
+      </button>
+      <button onclick="_oppMarkLost()" style="padding:7px 14px;background:none;color:#ef4444;border:1.5px solid #fca5a5;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Mark Lost</button>
+    </div>
+  </div>
+
+  <!-- STAGE CHEVRON BAR -->
+  <div style="background:var(--navy);flex-shrink:0">
+    <div id="oppd-stage-track" style="display:flex;height:50px;align-items:stretch"></div>
+    <div style="padding:5px 22px 7px;display:flex;align-items:center;gap:5px">
+      <span style="font-size:11px;color:rgba(255,255,255,0.35);font-weight:500">Sales Pipeline</span>
+      <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      <span id="oppd-stage-breadcrumb" style="font-size:11px;color:rgba(255,255,255,0.75);font-weight:600">Stage</span>
+      <span id="oppd-stage-prob-badge" style="margin-left:8px;font-size:10px;font-weight:700;color:rgba(255,255,255,0.45)">35% probability</span>
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div style="display:flex;flex:1;overflow:hidden">
+
+    <!-- LEFT SIDEBAR -->
+    <div style="width:290px;flex-shrink:0;background:var(--white);border-right:1px solid var(--g200);overflow-y:auto">
+
+      <div style="padding:18px 20px 14px;border-bottom:1px solid var(--g100)">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:5px">Opportunity Value</div>
+        <div id="oppd-sidebar-value" style="font-size:28px;font-weight:800;color:var(--dark);font-family:var(--mono);line-height:1">$0</div>
+      </div>
+
+      <div style="padding:14px 20px;border-bottom:1px solid var(--g100)">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Summary</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;align-items:center;gap:9px">
+            <div style="width:26px;height:26px;border-radius:6px;background:rgba(245,158,11,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+            </div>
+            <div>
+              <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--g400);margin-bottom:1px">Account</div>
+              <div id="oppd-org" onclick="openOrgFromOpp()" style="font-size:13px;color:var(--teal);font-weight:600;cursor:pointer">—</div>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:9px">
+            <div style="width:26px;height:26px;border-radius:6px;background:rgba(99,102,241,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
+            <div>
+              <div style="font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:0.4px;color:var(--g400);margin-bottom:1px">Contact</div>
+              <div id="oppd-contact" onclick="openPersonFromOpp()" style="font-size:13px;color:var(--teal);font-weight:600;cursor:pointer">—</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding:14px 20px;border-bottom:1px solid var(--g100)">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Details</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:var(--g500)">Close Date</span><span id="oppd-close" style="font-weight:600;color:var(--dark)">—</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:var(--g500)">Days in Stage</span><span id="oppd-days" style="font-weight:700;color:var(--amber)">—</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:var(--g500)">Probability</span><span id="oppd-prob" style="font-weight:700;color:var(--teal)">—</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:13px"><span style="color:var(--g500)">Owner</span><div style="display:flex;align-items:center;gap:5px"><div id="oppd-owner-av2" style="width:18px;height:18px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff">BW</div><span id="oppd-owner-name2" style="font-weight:600;color:var(--dark)">—</span></div></div>
+        </div>
+      </div>
+
+      <div id="oppd-proposals-section" style="padding:14px 20px;border-bottom:1px solid var(--g100)"></div>
+      <div id="oppd-invoices-section" style="padding:14px 20px;border-bottom:1px solid var(--g100)"></div>
+      <div id="oppd-sales-section" style="padding:14px 20px"></div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div style="flex:1;overflow-y:auto;background:var(--off);display:flex;flex-direction:column">
+
+      <!-- Action tabs -->
+      <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:0 20px;display:flex;gap:0;flex-shrink:0" id="oppd-action-tabs">
+        <button onclick="_oppActionTab('activity',this)" id="oppd-atab-activity" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-1px;font-family:var(--font)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Log Activity
+        </button>
+        <button onclick="_oppActionTab('note',this)" id="oppd-atab-note" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Note
+        </button>
+        <button onclick="_oppActionTab('call',this)" id="oppd-atab-call" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/></svg>Call
+        </button>
+        <button onclick="_oppActionTab('email',this)" id="oppd-atab-email" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Email
+        </button>
+        <button onclick="_oppActionTab('meeting',this)" id="oppd-atab-meeting" style="display:flex;align-items:center;gap:6px;padding:13px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g500);font-family:var(--font)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Schedule
+        </button>
+      </div>
+
+      <!-- Log input -->
+      <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:12px 20px;flex-shrink:0">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <textarea id="oppd-action-input" placeholder="Log an activity note..." style="flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:10px 14px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--g50);resize:none;height:56px;outline:none;transition:border-color .15s" onfocus="this.style.borderColor='var(--teal)';this.style.background='var(--white)'" onblur="this.style.borderColor='var(--g200)';this.style.background='var(--g50)'"></textarea>
+          <button onclick="_oppSaveAction()" style="padding:10px 18px;background:var(--teal);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);flex-shrink:0">Save</button>
+        </div>
+      </div>
+
+      <!-- KPI strip -->
+      <div id="oppd-kpi-row" style="display:flex;background:var(--white);border-bottom:1px solid var(--g200)"></div>
+
+      <!-- Scrollable body -->
+      <div style="padding:22px;flex:1">
+
+        <div style="margin-bottom:26px">
+          <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:12px">Focus</div>
+          <div id="oppd-focus-items"></div>
+        </div>
+
+        <div>
+          <div style="font-size:14px;font-weight:700;color:var(--dark);margin-bottom:12px">History</div>
+          <div style="display:flex;gap:0;border-bottom:1px solid var(--g200);margin-bottom:16px" id="oppd-history-tabs">
+            <button onclick="_oppHistoryTab('all',this)" style="padding:7px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--dark);border-bottom:2px solid var(--navy);margin-bottom:-1px;font-family:var(--font)">All</button>
+            <button onclick="_oppHistoryTab('activities',this)" style="padding:7px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);font-family:var(--font)">Activities</button>
+            <button onclick="_oppHistoryTab('notes',this)" style="padding:7px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);font-family:var(--font)">Notes</button>
+            <button onclick="_oppHistoryTab('files',this)" style="padding:7px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);font-family:var(--font)">Files</button>
+          </div>
+          <div id="oppd-content-activity"></div>
+          <div id="oppd-content-notes" style="display:none">
+            <div style="background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:16px">
+              <textarea placeholder="Add a note..." style="width:100%;border:none;outline:none;font-family:var(--font);font-size:14px;color:var(--dark);resize:none;min-height:80px;background:transparent"></textarea>
+              <div style="display:flex;justify-content:flex-end;margin-top:8px"><button onclick="showToast('Note saved')" style="padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save Note</button></div>
+            </div>
+          </div>
+          <div id="oppd-content-files" style="display:none">
+            <div style="background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:20px">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+                <div style="font-size:14px;font-weight:700;color:var(--dark)">Files</div>
+                <button onclick="showToast('File upload coming soon')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Upload</button>
+              </div>
+              <div style="border:2px dashed var(--g200);border-radius:10px;padding:32px;text-align:center;color:var(--g400)">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 10px;display:block"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <div style="font-size:13px;font-weight:600;margin-bottom:4px">No files attached</div>
+                <div style="font-size:12px">Proposals, invoices, enrollment documents</div>
+              </div>
+            </div>
+          </div>
+          <div id="oppd-content-history" style="display:none"></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════
+     ACE COMMISSION BUILDER MODAL
+════════════════════════════════════════════════════════ -->
+<div id="ace-comm-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_aceCommClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+
+    <!-- Header -->
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace Commission Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace builds it</div>
+        </div>
+      </div>
+      <button onclick="_aceCommClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+
+    <!-- Step indicator -->
+    <div style="display:flex;align-items:center;padding:14px 24px;border-bottom:1px solid var(--g100);gap:0" id="ace-comm-steps">
+      <div class="ace-step active" id="ace-step-1" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal)"><span style="width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">1</span> Describe</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div class="ace-step" id="ace-step-2" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">2</span> Review</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div class="ace-step" id="ace-step-3" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">3</span> Confirm</div>
+    </div>
+
+    <!-- Step 1: Describe -->
+    <div id="ace-comm-step1" style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Describe your commission structure in plain English</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">Don't worry about formatting — just say what you want and Ace will build it. You'll review everything before it goes live.</div>
+      <textarea id="ace-comm-input" placeholder="e.g. Reps get 6% on all closed deals up to $50K, then 8% from $50K to $100K, and 10% on anything above $100K. Paid monthly. Managers get a 1.5% override on their team's total." style="width:100%;height:110px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+
+      <!-- Example prompts -->
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">Flat 7% on all deals, paid monthly</button>
+          <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">3 tiers: 5% up to $30K, 8% to $80K, 11% above</button>
+          <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">6% base + 2% bonus if rep hits 100% of goal</button>
+          <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">Quarterly payout, 8% with 1.5% manager override</button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;margin-top:20px">
+        <button onclick="_aceCommGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Generate with Ace
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Processing / Review -->
+    <div id="ace-comm-step2" style="display:none;padding:24px">
+      <!-- Loading state -->
+      <div id="ace-comm-loading" style="text-align:center;padding:32px 0">
+        <div style="width:48px;height:48px;border-radius:50%;border:3px solid var(--g100);border-top-color:var(--teal);animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+        <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Ace is reading your description…</div>
+        <div style="font-size:12px;color:var(--g400)" id="ace-comm-loading-sub">Parsing commission tiers and rates</div>
+      </div>
+
+      <!-- Preview result (shown after loading) -->
+      <div id="ace-comm-preview" style="display:none">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+          <div style="font-size:13px;font-weight:600;color:var(--dark)">Ace built this structure from your description — review it before confirming</div>
+        </div>
+
+        <!-- Plan name -->
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px 18px;margin-bottom:12px">
+          <div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Plan Name</div>
+          <input id="ace-comm-plan-name" type="text" style="font-size:15px;font-weight:700;color:var(--dark);border:none;background:transparent;outline:none;width:100%;font-family:var(--font)" value="Custom Commission Plan — Jul 2026">
+        </div>
+
+        <!-- Tiers -->
+        <div style="background:#fff;border:1.5px solid var(--teal);border-radius:12px;overflow:hidden;margin-bottom:12px">
+          <div style="background:rgba(29,158,117,0.06);padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--teal);border-bottom:1px solid rgba(29,158,117,0.15)">Commission Tiers</div>
+          <div id="ace-comm-tiers" style="padding:4px 0"></div>
+        </div>
+
+        <!-- Meta row -->
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px" id="ace-comm-meta"></div>
+
+        <!-- Override -->
+        <div id="ace-comm-override-wrap" style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#6366f1">Manager Override Rate</div>
+            <div style="font-size:11px;color:var(--g400);margin-top:2px">Applied to total team commissions</div>
+          </div>
+          <div style="font-size:18px;font-weight:800;color:#6366f1;font-family:var(--mono)" id="ace-comm-override-val">1.5%</div>
+        </div>
+
+        <!-- Ace's explanation -->
+        <div style="margin-top:12px;background:rgba(29,158,117,0.04);border:1px solid rgba(29,158,117,0.15);border-radius:10px;padding:12px 14px;display:flex;gap:10px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          <div style="font-size:12px;color:var(--g600);line-height:1.6" id="ace-comm-explanation"></div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;margin-top:20px">
+          <button onclick="_aceCommBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">← Edit Description</button>
+          <button onclick="_aceCommConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+            Confirm &amp; Apply to Goals.com →
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Confirmed -->
+    <div id="ace-comm-step3" style="display:none;padding:40px 24px;text-align:center">
+      <div style="width:56px;height:56px;background:rgba(29,158,117,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">Commission Plan is Live</div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;max-width:400px;margin:0 auto 24px">Your new commission structure has been applied. Reps will see updated payouts on their next commission calculation. No developer needed.</div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">What just happened</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ace parsed your plain-English description</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Generated a structured JSON config for the commission engine</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Validated all tiers, rates, and payout rules</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Applied to your live commission system — zero developer involvement</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button onclick="_aceCommClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
+        <button onclick="_aceCommReset()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Build Another</button>
+      </div>
+    </div>
+
+  </div>
+</div>
 
 </body>
 </html>
