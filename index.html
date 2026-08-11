@@ -185,10 +185,10 @@ body.dark-mode .notif-panel .notif-item{border-bottom-color:rgba(255,255,255,0.0
 
 
 html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);background:var(--off)}
-.app{display:flex;height:100vh;width:100vw;overflow:hidden}
+.app{display:flex;height:100vh;width:100vw;overflow:hidden;box-sizing:border-box}
 
 /* SIDEBAR */
-.sidebar{width:var(--sb);flex-shrink:0;background:var(--navy);display:flex;flex-direction:column;height:100vh;overflow:hidden;border-right:1px solid rgba(255,255,255,0.04)}
+.sidebar{width:var(--sb);flex-shrink:0;background:var(--navy);display:flex;flex-direction:column;height:100%;overflow:hidden;border-right:1px solid rgba(255,255,255,0.04)}
 .sb-logo{padding:14px 0 10px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid rgba(255,255,255,0.06)}
 .sb-logo img{height:22px;width:auto}
 .sb-nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 0;scrollbar-width:none}
@@ -236,9 +236,11 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .ace-tb-btn:hover{border-color:var(--teal);box-shadow:0 0 12px rgba(29,158,117,0.2)}
 
 /* PAGE AREA */
-.page-area{flex:1;overflow-y:auto;overflow-x:hidden;padding:28px 32px;background:var(--off)}
-.page-area::-webkit-scrollbar{width:4px}
-.page-area::-webkit-scrollbar-thumb{background:var(--g300);border-radius:2px}
+.page-area{flex:1;overflow-y:auto;overflow-x:hidden;padding:28px 32px 56px;background:var(--off);scroll-behavior:smooth;overscroll-behavior:contain}
+.page-area::-webkit-scrollbar{width:9px}
+.page-area::-webkit-scrollbar-track{background:transparent}
+.page-area::-webkit-scrollbar-thumb{background:var(--g300);border-radius:6px;border:2px solid var(--off)}
+.page-area::-webkit-scrollbar-thumb:hover{background:var(--g400)}
 .page{display:none}.page.active{display:block}
 
 /* SHARED */
@@ -4031,240 +4033,141 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 <!-- MARKETING -->
 <div id="page-marketing" class="page">
 <div class="page-header">
-  <div>
-    <h1 class="page-title">Marketing</h1>
-    <p style="margin:0;font-size:13px;color:var(--g400)">Email campaigns, bulk outreach, and automation workflows</p>
-  </div>
+  <div class="page-title">Marketing</div>
+  <div class="page-subtitle">Campaigns, bulk outreach, and workflow automation</div>
   <div style="display:flex;gap:8px">
-    <button class="tb-btn btn-teal" onclick="_mktNewCampaign()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Campaign</button>
-    <button class="tb-btn btn-ghost" onclick="_mktNewAutomation()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> New Automation</button>
+    <button class="tb-btn btn-teal" style="font-size:12px" id="mkt-primary-btn" onclick="_mktPrimaryAction()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> <span id="mkt-primary-label">New Campaign</span></button>
   </div>
 </div>
 
 <!-- Sub-tabs -->
-<div style="display:flex;gap:0;border-bottom:2px solid var(--g100);margin-bottom:20px">
-  <button id="mkt-tab-email" onclick="_mktTab('email')" style="padding:10px 18px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-2px;font-family:var(--font)">Email Marketing</button>
-  <button id="mkt-tab-auto" onclick="_mktTab('auto')" style="padding:10px 18px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);border-bottom:2px solid transparent;margin-bottom:-2px;font-family:var(--font)">Automations</button>
+<div class="mkt-tabs">
+  <button id="mkt-tab-email" class="mkt-tab active" onclick="_mktTab('email')">Email Marketing</button>
+  <button id="mkt-tab-auto" class="mkt-tab" onclick="_mktTab('auto')">Automations</button>
 </div>
 
-<!-- EMAIL MARKETING TAB -->
+<!-- ══════════ EMAIL MARKETING ══════════ -->
 <div id="mkt-panel-email">
-  <div class="stats-row" style="margin-bottom:20px">
+
+  <div class="stat-row">
     <div class="stat-card"><div class="stat-label">Campaigns Sent</div><div class="stat-value">24</div><div class="stat-delta positive">+3 this month</div></div>
-    <div class="stat-card"><div class="stat-label">Avg Open Rate</div><div class="stat-value teal">38.4%</div><div class="stat-delta positive">+2.1% vs prev</div></div>
+    <div class="stat-card"><div class="stat-label">Avg Open Rate</div><div class="stat-value teal">38.4%</div><div class="stat-delta positive">+2.1 pts vs last month</div></div>
     <div class="stat-card"><div class="stat-label">Avg Click Rate</div><div class="stat-value">12.7%</div><div class="stat-delta" style="color:var(--g400)">Industry avg 9.2%</div></div>
-    <div class="stat-card"><div class="stat-label">Unsubscribes</div><div class="stat-value" style="color:var(--amber)">0.4%</div><div class="stat-delta positive">Below threshold</div></div>
+    <div class="stat-card"><div class="stat-label">Unsubscribe Rate</div><div class="stat-value" style="color:var(--amber)">0.4%</div><div class="stat-delta positive">Below 2% threshold</div></div>
   </div>
 
-  <!-- Bulk Email Sender -->
-  <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:20px;margin-bottom:20px">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
-      <div>
-        <div style="font-size:15px;font-weight:700;color:var(--dark)">Bulk Email Sender</div>
-        <div style="font-size:12px;color:var(--g400);margin-top:2px">Filter your contacts and send targeted campaigns</div>
-      </div>
-      <button class="tb-btn btn-teal" onclick="_mktSendBulk()" style="font-size:13px">Send to Filtered Contacts</button>
+  <!-- Bulk sender -->
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-title" style="margin-bottom:4px">
+      <span>Bulk Email Sender</span>
+      <button class="card-link" onclick="_mktResetFilters()">Reset filters</button>
     </div>
-    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:14px;background:var(--g50);border-radius:8px">
-      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
-        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Pipeline Stage</label>
-        <select id="mkt-filter-stage" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
-          <option value="">All Stages</option><option>Prospecting</option><option>Qualified</option><option>Proposal Sent</option><option>Negotiation</option><option>Closed Won</option><option>Closed Lost</option>
-        </select>
+    <div style="font-size:11.5px;color:var(--g400);margin-bottom:16px">Filter your book of business, then send a targeted campaign to everyone who matches.</div>
+
+    <div class="mkt-filter-grid">
+      <div class="mkt-field">
+        <label>Pipeline Stage</label>
+        <select id="mkt-f-stage" class="mkt-input" onchange="_mktRecount()"><option value="">All stages</option></select>
       </div>
-      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
-        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Opp Probability</label>
-        <select id="mkt-filter-prob" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
-          <option value="">Any Probability</option><option value="lt20">Less than 20%</option><option value="lt50">Less than 50%</option><option value="gt50">Greater than 50%</option><option value="gt80">Greater than 80%</option>
-        </select>
+      <div class="mkt-field">
+        <label>Tag</label>
+        <select id="mkt-f-tag" class="mkt-input" onchange="_mktRecount()"><option value="">Any tag</option></select>
       </div>
-      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
-        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Lead Score</label>
-        <select id="mkt-filter-score" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
-          <option value="">Any Score</option><option value="cold">Cold (0-20)</option><option value="warm">Warm (21-50)</option><option value="hot">Hot (51-80)</option><option value="priority">Priority (81+)</option>
-        </select>
+      <div class="mkt-field">
+        <label>Owner</label>
+        <select id="mkt-f-rep" class="mkt-input" onchange="_mktRecount()"><option value="">All owners</option></select>
       </div>
-      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
-        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Last Contacted</label>
-        <select id="mkt-filter-last" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
-          <option value="">Any Time</option><option value="7">More than 7 days ago</option><option value="14">More than 14 days ago</option><option value="30">More than 30 days ago</option><option value="60">More than 60 days ago</option>
-        </select>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
-        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Territory</label>
-        <select id="mkt-filter-territory" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
-          <option value="">All Territories</option><option>Northeast</option><option>Southeast</option><option>Midwest</option><option>West</option><option>International</option>
+      <div class="mkt-field">
+        <label>Last Contacted</label>
+        <select id="mkt-f-last" class="mkt-input" onchange="_mktRecount()">
+          <option value="">Any time</option>
+          <option value="7">More than 7 days ago</option>
+          <option value="14">More than 14 days ago</option>
+          <option value="30">More than 30 days ago</option>
+          <option value="60">More than 60 days ago</option>
+          <option value="90">More than 90 days ago</option>
         </select>
       </div>
     </div>
-    <div id="mkt-audience-preview" style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(29,158,117,0.07);border-radius:8px;font-size:13px;color:var(--dark)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span><strong>247 contacts</strong> match your current filters &mdash; <span style="color:var(--g400)">adjust filters to refine</span></span>
-      <button onclick="_mktPreviewAudience()" style="margin-left:auto;padding:5px 12px;border:1px solid var(--teal);border-radius:6px;background:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Preview List</button>
+
+    <div class="mkt-audience">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span><strong id="mkt-aud-count" style="font-family:var(--mono)">1,248</strong> contacts match &mdash; <span id="mkt-aud-desc" style="color:var(--g400)">no filters applied</span></span>
+      <button class="card-link" style="margin-left:auto" onclick="_mktPreviewAudience()">Preview list</button>
     </div>
-    <div style="margin-top:14px;display:flex;align-items:center;gap:10px">
-      <label style="font-size:13px;font-weight:600;color:var(--dark);white-space:nowrap">Email Template:</label>
-      <select id="mkt-bulk-template" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);flex:1;max-width:300px">
-        <option>Re-engagement Outreach</option><option>Product Update Announcement</option><option>Event Invitation</option><option>Win-back Campaign</option><option>Seasonal Promotion</option><option>Custom (compose below)</option>
-      </select>
-      <input id="mkt-bulk-subject" placeholder="Email subject line..." style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);flex:1;max-width:340px">
+
+    <div class="mkt-compose">
+      <div class="mkt-field" style="flex:1;min-width:200px">
+        <label>Template</label>
+        <select id="mkt-f-template" class="mkt-input" onchange="_mktTemplatePick()"></select>
+      </div>
+      <div class="mkt-field" style="flex:2;min-width:240px">
+        <label>Subject line</label>
+        <input id="mkt-f-subject" class="mkt-input" placeholder="Subject line...">
+      </div>
+      <button class="tb-btn btn-teal" style="font-size:12px;align-self:flex-end;height:34px" onclick="_mktSendBulk()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Campaign</button>
     </div>
   </div>
 
-  <!-- Campaigns table + Templates -->
-  <div style="display:grid;grid-template-columns:1fr 320px;gap:16px">
-    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;overflow:hidden">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:14px;font-weight:700;color:var(--dark)">Recent Campaigns</div>
-        <input placeholder="Search campaigns..." style="padding:6px 10px;border:1px solid var(--g200);border-radius:6px;font-size:12px;font-family:var(--font);width:180px">
-      </div>
-      <table style="width:100%;border-collapse:collapse">
-        <thead><tr style="background:var(--g50)">
-          <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Campaign</th>
-          <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Sent</th>
-          <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Open</th>
-          <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Click</th>
-          <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Unsub</th>
-          <th style="padding:10px 16px;text-align:center;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Status</th>
-        </tr></thead>
-        <tbody>
-          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Q3 Re-Engagement</div><div style="font-size:11px;color:var(--g400)">Prob &lt;20% &middot; Cold leads</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Jul 28</td><td style="padding:12px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal)">41.2%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">14.8%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">0.3%</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal)">Sent</span></td></tr>
-          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">New Product Launch</div><div style="font-size:11px;color:var(--g400)">All active contacts</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Jul 15</td><td style="padding:12px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal)">38.9%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">13.1%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">0.5%</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal)">Sent</span></td></tr>
-          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Mid-Year Check-In</div><div style="font-size:11px;color:var(--g400)">Warm leads &middot; Northeast</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Jun 30</td><td style="padding:12px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal)">36.1%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">11.4%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">0.2%</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal)">Sent</span></td></tr>
-          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">August Win-Back</div><div style="font-size:11px;color:var(--g400)">No contact &gt;60 days</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Scheduled</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,171,0,0.1);color:var(--amber)">Scheduled</span></td></tr>
-          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Event: Fall Summit</div><div style="font-size:11px;color:var(--g400)">Priority leads only</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Draft</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:var(--g100);color:var(--g400)">Draft</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <!-- Templates panel -->
-    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;overflow:hidden">
-      <div style="padding:16px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
-        <div style="font-size:14px;font-weight:700;color:var(--dark)">Templates</div>
-        <button onclick="_mktNewTemplate()" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">+ New</button>
-      </div>
-      <div style="padding:8px">
-        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Re-engagement Outreach</div><div style="font-size:11px;color:var(--g400);margin-top:2px">For cold or inactive contacts</div></div>
-        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Product Update Announcement</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Feature release, new catalog</div></div>
-        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Event Invitation</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Webinar, trade show, summit</div></div>
-        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Win-back Campaign</div><div style="font-size:11px;color:var(--g400);margin-top:2px">No contact 60+ days</div></div>
-        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Seasonal Promotion</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Holiday, end-of-quarter push</div></div>
-        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Post-First-Order Follow-up</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Onboarding, loyalty intro</div></div>
-        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Pipeline Stall Nudge</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Deal stuck &gt;14 days, no activity</div></div>
-      </div>
+  <!-- Campaigns as cards -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:var(--dark)">Campaigns</div>
+    <div style="display:flex;gap:6px" id="mkt-camp-filters">
+      <button class="filter-chip active" onclick="_mktCampFilter(this,'all')">All</button>
+      <button class="filter-chip" onclick="_mktCampFilter(this,'Sent')">Sent</button>
+      <button class="filter-chip" onclick="_mktCampFilter(this,'Scheduled')">Scheduled</button>
+      <button class="filter-chip" onclick="_mktCampFilter(this,'Draft')">Draft</button>
     </div>
   </div>
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
+    <div class="mkt-row mkt-row-head">
+      <div>Campaign</div><div style="text-align:right">Recipients</div>
+      <div>Open rate</div><div>Click rate</div>
+      <div style="text-align:right">Unsub</div><div style="text-align:right">Date</div><div></div>
+    </div>
+    <div id="mkt-campaign-list"></div>
+  </div>
+
+  <!-- Templates as cards -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+    <div style="font-size:13px;font-weight:600;color:var(--dark)">Email Templates</div>
+    <button class="tb-btn btn-ghost" style="font-size:11px" onclick="_mktNewTemplate()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Template</button>
+  </div>
+  <div id="mkt-template-grid" class="three-col"></div>
+
 </div><!-- end mkt-panel-email -->
 
-<!-- AUTOMATIONS TAB -->
+<!-- ══════════ AUTOMATIONS ══════════ -->
 <div id="mkt-panel-auto" style="display:none">
-  <div class="stats-row" style="margin-bottom:20px">
-    <div class="stat-card"><div class="stat-label">Active Workflows</div><div class="stat-value teal">8</div></div>
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-label">Active Workflows</div><div class="stat-value teal" id="mkt-stat-active">0</div><div class="stat-delta" style="color:var(--g400)"><span id="mkt-stat-total">0</span> total configured</div></div>
     <div class="stat-card"><div class="stat-label">Actions Triggered</div><div class="stat-value">1,284</div><div class="stat-delta positive">This month</div></div>
-    <div class="stat-card"><div class="stat-label">Emails Auto-Sent</div><div class="stat-value">943</div></div>
-    <div class="stat-card"><div class="stat-label">Tasks Auto-Created</div><div class="stat-value">341</div></div>
+    <div class="stat-card"><div class="stat-label">Emails Auto-Sent</div><div class="stat-value">943</div><div class="stat-delta" style="color:var(--g400)">41.2% open rate</div></div>
+    <div class="stat-card"><div class="stat-label">Tasks Auto-Created</div><div class="stat-value">341</div><div class="stat-delta positive">88% completed on time</div></div>
   </div>
-  <div style="background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.2);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
-    <div style="font-size:13px;color:var(--dark)"><strong>Automations run silently in the background.</strong> Set a trigger, choose your actions, and Goals handles the rest.</div>
+
+  <!-- Starter templates -->
+  <div class="card" style="margin-bottom:24px;padding:20px 24px">
+    <div class="card-title" style="margin-bottom:4px"><span>Start from a recipe</span></div>
+    <div style="font-size:11.5px;color:var(--g400);margin-bottom:14px">Pre-built workflows using your own pipeline stages, tags, and team. Click one to open it in the builder.</div>
+    <div id="mkt-recipe-row" style="display:flex;gap:10px;flex-wrap:wrap"></div>
   </div>
-  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px">
 
-    <!-- Pipeline Stage Changed -->
-    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
-        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Pipeline Stage Changed</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Send email + create task when deal advances</div></div>
-        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+  <!-- Rules -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:var(--dark)">Automation Rules</div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <div style="display:flex;gap:6px" id="mkt-auto-filters">
+        <button class="filter-chip active" onclick="_mktAutoFilterApply(this,'all')">All</button>
+        <button class="filter-chip" onclick="_mktAutoFilterApply(this,'active')">Active</button>
+        <button class="filter-chip" onclick="_mktAutoFilterApply(this,'paused')">Paused</button>
       </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">Deal moves to <strong>Proposal Sent</strong></div></div>
-      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Proposal Follow-up</em> email to contact</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12px;color:var(--dark)">Create task: <em>Schedule demo call</em> (due +2 days)</span></div>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
+      <button class="tb-btn btn-ghost" style="font-size:11px" onclick="_mktOpenBuilder(null)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Automation</button>
     </div>
-
-    <!-- Low Probability Alert -->
-    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
-        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Low Probability Alert</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Auto-outreach when deal probability drops</div></div>
-        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">Opportunity probability drops <strong>below 20%</strong></div></div>
-      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Re-Engagement Outreach</em> email</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12px;color:var(--dark)">Create task: <em>Call contact to assess interest</em> (due +1 day)</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="font-size:12px;color:var(--dark)">Flag for manager review in <em>Highlights</em></span></div>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
-    </div>
-
-    <!-- No Activity Follow-up -->
-    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
-        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">No Activity Follow-up</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Escalating outreach for stalled contacts</div></div>
-        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">
-        <div style="display:flex;align-items:center;gap:8px"><div style="padding:4px 8px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:11px;font-weight:600;color:var(--teal)">7 days</div><span style="font-size:12px;color:var(--dark)">Send <em>Check-in</em> email automatically</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><div style="padding:4px 8px;background:rgba(255,171,0,0.1);border-radius:6px;font-size:11px;font-weight:600;color:var(--amber)">14 days</div><span style="font-size:12px;color:var(--dark)">Create task: <em>Call contact, log outcome</em></span></div>
-        <div style="display:flex;align-items:center;gap:8px"><div style="padding:4px 8px;background:rgba(255,171,0,0.1);border-radius:6px;font-size:11px;font-weight:600;color:var(--amber)">21 days</div><span style="font-size:12px;color:var(--dark)">Alert manager, flag deal at risk</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><div style="padding:4px 8px;background:rgba(220,53,69,0.08);border-radius:6px;font-size:11px;font-weight:600;color:#dc3545">30 days</div><span style="font-size:12px;color:var(--dark)">Send <em>Win-back</em> email, downgrade lead score</span></div>
-      </div>
-      <div style="margin-top:4px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
-    </div>
-
-    <!-- Deal Won Onboarding -->
-    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
-        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Deal Won - Onboarding</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Kick off post-sale workflow automatically</div></div>
-        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">Opportunity marked <strong>Closed Won</strong></div></div>
-      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Welcome &amp; Onboarding</em> email to contact</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12px;color:var(--dark)">Create task: <em>Schedule onboarding call</em> (due +3 days)</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Post-First-Order Follow-up</em> after 30 days</span></div>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
-    </div>
-
-    <!-- New Lead Assigned -->
-    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
-        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">New Lead Assigned</div><div style="font-size:11px;color:var(--g400);margin-top:2px">First-touch outreach within minutes</div></div>
-        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">New lead assigned to rep</div></div>
-      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Introduction</em> email to lead (within 15 min)</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12px;color:var(--dark)">Create task: <em>Qualify new lead</em> (due today)</span></div>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
-    </div>
-
-    <!-- Deal Lost Recovery -->
-    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
-        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Deal Lost - Recovery</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Keep the door open for future opportunities</div></div>
-        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox"><span class="toggle-slider"></span></label>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">Opportunity marked <strong>Closed Lost</strong></div></div>
-      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Thank You for Considering Us</em> email</span></div>
-        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Schedule <em>60-day win-back</em> email automatically</span></div>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
-    </div>
-
-    <!-- Create new -->
-    <div onclick="_mktNewAutomation()" style="background:var(--g50);border:2px dashed var(--g200);border-radius:12px;padding:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:160px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--teal)';this.style.background='rgba(29,158,117,0.04)'" onmouseout="this.style.borderColor='var(--g200)';this.style.background='var(--g50)'">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      <div style="font-size:13px;font-weight:600;color:var(--g400)">Create Automation</div>
-      <div style="font-size:11px;color:var(--g300);text-align:center">Choose a trigger and define what happens next</div>
-    </div>
-
   </div>
+  <div id="mkt-auto-grid" class="three-col"></div>
+
 </div><!-- end mkt-panel-auto -->
 </div><!-- end page-marketing -->
 
@@ -8081,6 +7984,9 @@ function applyCompanySettings() {
   // Re-render contacts tables so tag badges update
   if (typeof renderPeopleTable === 'function') renderPeopleTable();
   if (typeof renderOrgsTable === 'function') renderOrgsTable();
+  // Marketing ripple — stage/tag/owner dropdowns and automation cards follow company settings
+  if (typeof _mktRenderFilters === 'function') _mktRenderFilters();
+  if (typeof _mktRenderAutomations === 'function') _mktRenderAutomations();
   showToast('✓ Company settings saved — changes applied');
 }
 
@@ -18137,61 +18043,832 @@ function _aceCommConfirm() {
 </div>
 
 
+
+
+<style>
+/* ── Marketing ─────────────────────────────────────── */
+.mkt-tabs{display:flex;gap:4px;border-bottom:1px solid var(--g200);margin-bottom:26px}
+.mkt-tab{padding:9px 16px;font-size:12.5px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--font);transition:all .15s}
+.mkt-tab:hover{color:var(--g600)}
+.mkt-tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+.mkt-filter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
+.mkt-field{display:flex;flex-direction:column;gap:5px}
+.mkt-field label{font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.7px}
+.mkt-input{padding:8px 10px;border:1px solid var(--g200);border-radius:8px;font-size:12.5px;font-family:var(--font);color:var(--dark);background:var(--white);width:100%;transition:border-color .15s}
+.mkt-input:focus{outline:none;border-color:var(--teal)}
+.mkt-audience{display:flex;align-items:center;gap:10px;padding:11px 14px;background:rgba(29,158,117,0.07);border:1px solid rgba(29,158,117,0.16);border-radius:9px;font-size:12.5px;color:var(--dark)}
+.mkt-compose{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px;align-items:flex-end}
+/* Campaign rows — Mailchimp / Brevo style list */
+.mkt-row{display:grid;grid-template-columns:minmax(220px,1fr) 100px 132px 132px 74px 92px 78px;gap:16px;align-items:center;padding:14px 20px}
+.mkt-row-head{background:var(--g50);border-bottom:1px solid var(--g200);font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.8px;padding:11px 20px}
+.mkt-camp-row{border-bottom:1px solid var(--g100);transition:background .13s;position:relative}
+.mkt-camp-row:last-child{border-bottom:none}
+.mkt-camp-row:hover{background:var(--g50)}
+.mkt-camp-name{font-size:13px;font-weight:650;color:var(--dark);line-height:1.35;margin-bottom:3px}
+.mkt-camp-meta{font-size:11px;color:var(--g400);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mkt-camp-ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.mkt-rate{display:flex;flex-direction:column;gap:5px}
+.mkt-rate-v{font-size:12.5px;font-weight:700;font-family:var(--mono);color:var(--dark);letter-spacing:-.2px}
+.mkt-rate-bar{height:4px;background:var(--g200);border-radius:2px;overflow:hidden}
+.mkt-rate-fill{height:100%;border-radius:2px;background:var(--teal);transition:width .5s ease}
+.mkt-num{font-size:12.5px;font-family:var(--mono);color:var(--g600);text-align:right}
+.mkt-row-acts{display:flex;gap:4px;justify-content:flex-end;opacity:0;transition:opacity .13s}
+.mkt-camp-row:hover .mkt-row-acts{opacity:1}
+.mkt-ico-btn{width:27px;height:27px;border-radius:7px;border:1px solid var(--g200);background:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--g500);transition:all .13s;padding:0}
+.mkt-ico-btn:hover{border-color:var(--teal);color:var(--teal)}
+.mkt-empty{padding:36px 20px;text-align:center;font-size:12.5px;color:var(--g400)}
+@media(max-width:1240px){.mkt-row{grid-template-columns:minmax(180px,1fr) 84px 116px 116px 0 84px 70px}
+ .mkt-row>:nth-child(5){display:none}}
+.mkt-metric-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px;padding-top:14px;border-top:1px solid var(--g100)}
+.mkt-metric{text-align:left}
+.mkt-metric-v{font-size:17px;font-weight:700;font-family:var(--mono);color:var(--dark);letter-spacing:-.3px}
+.mkt-metric-l{font-size:9.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.7px;margin-top:2px}
+.mkt-tmpl-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:16px 18px;cursor:pointer;transition:all .15s}
+.mkt-tmpl-card:hover{border-color:var(--teal);box-shadow:0 4px 16px rgba(29,158,117,0.1)}
+.mkt-auto-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:18px 20px;transition:box-shadow .15s;display:flex;flex-direction:column}
+.mkt-auto-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.06)}
+.mkt-auto-card.paused{opacity:.62}
+.mkt-trig{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px}
+.mkt-trig-tag{padding:3px 8px;border-radius:6px;font-size:9.5px;font-weight:700;letter-spacing:.6px;background:rgba(29,158,117,0.1);color:var(--teal);flex-shrink:0;margin-top:1px}
+.mkt-act-list{margin-left:8px;border-left:2px solid var(--g200);padding-left:12px;display:flex;flex-direction:column;gap:7px;flex:1}
+.mkt-act{display:flex;align-items:flex-start;gap:8px;font-size:11.5px;color:var(--g600);line-height:1.45}
+.mkt-act svg{flex-shrink:0;margin-top:2px}
+.mkt-auto-foot{display:flex;gap:6px;margin-top:14px;padding-top:12px;border-top:1px solid var(--g100)}
+.mkt-mini-btn{padding:5px 11px;border:1px solid var(--g200);border-radius:7px;background:none;font-size:11px;font-weight:600;color:var(--g600);cursor:pointer;font-family:var(--font);transition:all .15s}
+.mkt-mini-btn:hover{border-color:var(--teal);color:var(--teal)}
+.mkt-recipe{display:flex;align-items:center;gap:7px;padding:8px 13px;border:1px solid var(--g200);border-radius:9px;background:var(--white);font-size:12px;font-weight:500;color:var(--g600);cursor:pointer;font-family:var(--font);transition:all .15s}
+.mkt-recipe:hover{border-color:var(--teal);color:var(--teal);background:rgba(29,158,117,0.04)}
+.mkt-new-card{background:var(--g50);border:1.5px dashed var(--g200);border-radius:14px;padding:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:170px;transition:all .15s}
+.mkt-new-card:hover{border-color:var(--teal);background:rgba(29,158,117,0.04)}
+.mkt-builder-row{display:flex;gap:10px;align-items:flex-end;padding:12px;background:var(--g50);border-radius:10px;margin-bottom:10px;flex-wrap:wrap}
+.mkt-cfg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;width:100%}
+.mkt-sec-label{font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px}
+.mkt-sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.mkt-sec-title{font-size:13px;font-weight:700;color:var(--dark);letter-spacing:-.1px}
+.mkt-sec-sub{font-size:11.5px;color:var(--g400);font-weight:400;margin-top:2px}
+@media(max-width:1100px){.mkt-filter-grid{grid-template-columns:repeat(2,1fr)}}
+body.dark-mode .mkt-input{background:var(--white);border-color:rgba(255,255,255,0.12);color:var(--g800)}
+body.dark-mode .mkt-camp-card,body.dark-mode .mkt-auto-card,body.dark-mode .mkt-tmpl-card{background:var(--white);border-color:rgba(255,255,255,0.09)}
+body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,255,0.14)}
+</style>
+
+
+<div class="modal-overlay" id="mkt-campaign-modal" onclick="closeOnOverlay(event,'mkt-campaign-modal')">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-c-title" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="mkt-c-title">New Campaign</div>
+      <button class="modal-close" onclick="closeModal('mkt-campaign-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="mkt-field" style="margin-bottom:20px">
+        <label>Campaign name</label>
+        <input id="mkt-c-name" class="mkt-input" placeholder="e.g. August re-engagement push">
+      </div>
+
+      <div class="mkt-sec-label">Audience</div>
+      <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:20px">
+        <div class="mkt-cfg-grid" style="margin-bottom:12px">
+          <div class="mkt-field"><label>Pipeline stage</label><select id="mkt-c-stage" class="mkt-input" onchange="_mktCampRecount()"></select></div>
+          <div class="mkt-field"><label>Tag</label><select id="mkt-c-tag" class="mkt-input" onchange="_mktCampRecount()"></select></div>
+          <div class="mkt-field"><label>Owner</label><select id="mkt-c-rep" class="mkt-input" onchange="_mktCampRecount()"></select></div>
+          <div class="mkt-field"><label>Last contacted</label>
+            <select id="mkt-c-last" class="mkt-input" onchange="_mktCampRecount()">
+              <option value="">Any time</option><option value="7">7+ days ago</option>
+              <option value="14">14+ days ago</option><option value="30">30+ days ago</option>
+              <option value="60">60+ days ago</option><option value="90">90+ days ago</option>
+            </select>
+          </div>
+        </div>
+        <div class="mkt-audience" style="background:var(--white)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span><strong id="mkt-c-count" style="font-family:var(--mono)">1,248</strong> contacts &mdash; <span id="mkt-c-desc" style="color:var(--g400)">All contacts</span></span>
+        </div>
+      </div>
+
+      <div class="mkt-sec-label">Content</div>
+      <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:20px">
+        <div class="mkt-field" style="margin-bottom:12px">
+          <label>Template</label>
+          <select id="mkt-c-tmpl" class="mkt-input" onchange="_mktCampTemplatePick()"></select>
+        </div>
+        <div class="mkt-field" style="margin-bottom:12px">
+          <label>Subject line</label>
+          <input id="mkt-c-subject" class="mkt-input" placeholder="Subject line...">
+        </div>
+        <div class="mkt-cfg-grid">
+          <div class="mkt-field"><label>Preview text</label><input id="mkt-c-preview" class="mkt-input" placeholder="Shown after the subject"></div>
+          <div class="mkt-field"><label>From name</label><input id="mkt-c-from" class="mkt-input"></div>
+        </div>
+      </div>
+
+      <div class="mkt-sec-label">Delivery</div>
+      <div style="padding:14px;background:var(--g50);border-radius:10px">
+        <div class="mkt-cfg-grid">
+          <div class="mkt-field">
+            <label>When</label>
+            <select id="mkt-c-when" class="mkt-input" onchange="_mktCampWhenChange()">
+              <option value="now">Send immediately</option>
+              <option value="later">Schedule for later</option>
+            </select>
+          </div>
+          <div class="mkt-field" id="mkt-c-date-wrap" style="display:none">
+            <label>Send date</label>
+            <input id="mkt-c-date" class="mkt-input" type="date">
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note">Nothing sends until you confirm</div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="_mktCampSave(false)">Save as Draft</button>
+        <button class="modal-save" onclick="_mktCampSave(true)"><span id="mkt-c-send-label">Send Now</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal-overlay" id="mkt-builder-modal" onclick="closeOnOverlay(event,'mkt-builder-modal')">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-builder-title" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="mkt-builder-title">New Automation</div>
+      <button class="modal-close" onclick="closeModal('mkt-builder-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="mkt-field" style="margin-bottom:18px">
+        <label>Automation name</label>
+        <input id="mkt-b-name" class="mkt-input" placeholder="e.g. Proposal sent follow-up">
+      </div>
+
+      <div class="mkt-sec-label">When this happens</div>
+      <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:18px">
+        <div class="mkt-field" style="margin-bottom:10px">
+          <label>Trigger</label>
+          <select id="mkt-b-trigger" class="mkt-input" onchange="_mktBuilderTriggerChange()"></select>
+        </div>
+        <div id="mkt-b-trigger-cfg" class="mkt-cfg-grid"></div>
+      </div>
+
+      <div class="mkt-sec-label">Do this</div>
+      <div id="mkt-b-actions"></div>
+      <button class="mkt-mini-btn" style="margin-top:2px" onclick="_mktBuilderAddAction()">+ Add action</button>
+
+      <div style="margin-top:18px;padding:12px 14px;background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.16);border-radius:9px;font-size:11.5px;color:var(--g600);line-height:1.55">
+        <strong style="color:var(--dark)">Preview:</strong> <span id="mkt-b-preview">Choose a trigger to see the summary.</span>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note" id="mkt-b-note">Runs automatically once saved</div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="closeModal('mkt-builder-modal')">Cancel</button>
+        <button class="modal-save" onclick="_mktBuilderSave()">Save Automation</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
+/* ═══════════ MARKETING ENGINE ═══════════
+   Driven by _companySettings (pipelineStages, tagDefinitions,
+   repQuotas, overdueActivityDays) so everything stays in sync
+   with whatever the customer configures. */
+
+var MKT_ACTIVITY_TYPES = ['Call','Email','Meeting','Note','Demo'];
+
+var _mktTemplates = [
+  {n:'Re-engagement Outreach',      d:'Warm a cold or inactive contact back up',        s:'Checking in - anything we can help with?'},
+  {n:'Proposal Follow-up',          d:'Sent right after a proposal goes out',           s:'Your proposal - happy to walk through it'},
+  {n:'Product Update Announcement', d:'New features, catalog or service changes',       s:'What is new this quarter'},
+  {n:'Event Invitation',            d:'Webinar, trade show or customer summit',         s:'You are invited: {{event_name}}'},
+  {n:'Win-back Campaign',           d:'Contacts with no touch in 60+ days',             s:'It has been a while - here is what changed'},
+  {n:'Welcome & Onboarding',        d:'Fires when a deal closes won',                   s:'Welcome aboard, {{first_name}}'},
+  {n:'Pipeline Stall Nudge',        d:'Deal sitting in one stage too long',             s:'Where should we take this next?'},
+  {n:'Seasonal Promotion',          d:'Holiday or end-of-quarter push',                 s:'A limited-time offer for you'},
+  {n:'Renewal Reminder',            d:'Ahead of a contract or policy renewal',          s:'Your renewal is coming up'}
+];
+
+var _mktCampaigns = [
+  {n:'Q3 Re-Engagement',    aud:'No contact 30+ days',              date:'Jul 28', status:'Sent',      sent:412, open:41.2, click:14.8, unsub:0.3},
+  {n:'New Product Launch',  aud:'All active accounts',              date:'Jul 15', status:'Sent',      sent:1248, open:38.9, click:13.1, unsub:0.5},
+  {n:'Mid-Year Check-In',   aud:'Tag: Customer',                    date:'Jun 30', status:'Sent',      sent:687, open:36.1, click:11.4, unsub:0.2},
+  {n:'Stage Nudge - Docs',  aud:'Stage: Documents Collected',       date:'Jun 12', status:'Sent',      sent:184, open:44.6, click:19.2, unsub:0.1},
+  {n:'August Win-Back',     aud:'No contact 60+ days',              date:'Aug 18', status:'Scheduled', sent:0, open:0, click:0, unsub:0},
+  {n:'Fall Summit Invite',  aud:'Tag: VIP',                         date:'-',      status:'Draft',     sent:0, open:0, click:0, unsub:0}
+];
+
+/* ── Trigger + action catalog (fields resolve against company settings) ── */
+var MKT_TRIGGERS = {
+  stage_changed:   {label:'Opportunity moves to a stage',      verb:'moves to',       fields:[{k:'stage',t:'stage',l:'Stage'}]},
+  stage_stalled:   {label:'Opportunity stuck in a stage',      verb:'sits in',        fields:[{k:'stage',t:'stage',l:'Stage'},{k:'days',t:'num',l:'Days without movement',d:14}]},
+  no_activity:     {label:'No activity logged on an account',  verb:'goes quiet for', fields:[{k:'days',t:'num',l:'Days since last activity',d:7}]},
+  activity_logged: {label:'An activity is logged',             verb:'logs a',         fields:[{k:'act',t:'activity',l:'Activity type'}]},
+  deal_won:        {label:'Opportunity marked won',            verb:'is won',         fields:[]},
+  deal_lost:       {label:'Opportunity marked lost',           verb:'is lost',        fields:[]},
+  new_lead:        {label:'New lead assigned to a rep',        verb:'is assigned to', fields:[{k:'rep',t:'rep',l:'Owner'}]},
+  tag_added:       {label:'Tag added to an account',           verb:'is tagged',      fields:[{k:'tag',t:'tag',l:'Tag'}]},
+  value_above:     {label:'Opportunity value crosses a number',verb:'exceeds',        fields:[{k:'amt',t:'num',l:'Amount ($)',d:50000}]},
+  goal_pace:       {label:'Rep falls behind goal pace',        verb:'drops below',    fields:[{k:'pct',t:'num',l:'% of expected pace',d:70}]},
+  renewal_due:     {label:'Renewal date approaching',          verb:'is due in',      fields:[{k:'days',t:'num',l:'Days before renewal',d:30}]}
+};
+
+var MKT_ACTIONS = {
+  send_email:  {label:'Send email',        icon:'mail',  fields:[{k:'tmpl',t:'template',l:'Template'},{k:'delay',t:'num',l:'Delay (days)',d:0}]},
+  create_task: {label:'Create task',       icon:'check', fields:[{k:'title',t:'text',l:'Task title',d:'Follow up'},{k:'due',t:'num',l:'Due in (days)',d:2},{k:'rep',t:'rep',l:'Assign to'}]},
+  notify_mgr:  {label:'Notify manager',    icon:'bell',  fields:[]},
+  add_tag:     {label:'Add tag',           icon:'tag',   fields:[{k:'tag',t:'tag',l:'Tag'}]},
+  move_stage:  {label:'Move to stage',     icon:'arrow', fields:[{k:'stage',t:'stage',l:'Stage'}]},
+  flag_risk:   {label:'Flag as at risk',   icon:'warn',  fields:[]},
+  log_note:    {label:'Log a note',        icon:'note',  fields:[{k:'text',t:'text',l:'Note text',d:'Auto-logged by workflow'}]},
+  wait:        {label:'Wait',              icon:'clock', fields:[{k:'days',t:'num',l:'Days',d:3}]}
+};
+
+var MKT_ICONS = {
+  mail:  '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+  check: '<polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
+  bell:  '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>',
+  tag:   '<path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/>',
+  arrow: '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
+  warn:  '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+  note:  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
+};
+
+/* ── Live automation store ── */
+var _mktAutomations = [];
+var _mktAutoFilter = 'all';
+var _mktCampFilterVal = 'all';
+var _mktEditingIdx = null;
+
+function _mktStageName(i) {
+  var s = _companySettings.pipelineStages;
+  return (s && s[i]) ? s[i].name : 'a stage';
+}
+function _mktSeedAutomations() {
+  var st = _companySettings.pipelineStages || [];
+  var last = Math.max(0, st.length - 1);
+  var mid  = Math.min(2, last);
+  var early = Math.min(1, last);
+  var od = _companySettings.overdueActivityDays || 7;
+  _mktAutomations = [
+    {name:'Stage advance follow-up', active:true,
+     trigger:{type:'stage_changed', cfg:{stage:mid}},
+     actions:[{type:'send_email', cfg:{tmpl:1, delay:0}},
+              {type:'create_task', cfg:{title:'Schedule next conversation', due:2, rep:''}}]},
+    {name:'Stalled deal rescue', active:true,
+     trigger:{type:'stage_stalled', cfg:{stage:early, days:14}},
+     actions:[{type:'send_email', cfg:{tmpl:6, delay:0}},
+              {type:'create_task', cfg:{title:'Call and re-qualify', due:1, rep:''}},
+              {type:'notify_mgr', cfg:{}}]},
+    {name:'Quiet account nudge', active:true,
+     trigger:{type:'no_activity', cfg:{days:od}},
+     actions:[{type:'send_email', cfg:{tmpl:0, delay:0}},
+              {type:'wait', cfg:{days:7}},
+              {type:'create_task', cfg:{title:'Personal check-in call', due:1, rep:''}},
+              {type:'flag_risk', cfg:{}}]},
+    {name:'Closed won onboarding', active:true,
+     trigger:{type:'deal_won', cfg:{}},
+     actions:[{type:'send_email', cfg:{tmpl:5, delay:0}},
+              {type:'create_task', cfg:{title:'Kick off onboarding call', due:3, rep:''}},
+              {type:'add_tag', cfg:{tag:1}}]},
+    {name:'New lead first touch', active:true,
+     trigger:{type:'new_lead', cfg:{rep:''}},
+     actions:[{type:'send_email', cfg:{tmpl:2, delay:0}},
+              {type:'create_task', cfg:{title:'Qualify new lead', due:0, rep:''}},
+              {type:'move_stage', cfg:{stage:early}}]},
+    {name:'Lost deal recovery', active:false,
+     trigger:{type:'deal_lost', cfg:{}},
+     actions:[{type:'log_note', cfg:{text:'Logged loss reason for review'}},
+              {type:'wait', cfg:{days:60}},
+              {type:'send_email', cfg:{tmpl:4, delay:0}}]}
+  ];
+}
+
+/* ── Option builders (all read from company settings) ── */
+function _mktStageOpts(sel) {
+  return (_companySettings.pipelineStages||[]).map(function(s,i){
+    return '<option value="'+i+'"'+(String(sel)===String(i)?' selected':'')+'>'+s.name+'</option>';
+  }).join('');
+}
+function _mktTagOpts(sel) {
+  return (_companySettings.tagDefinitions||[]).map(function(t,i){
+    return '<option value="'+i+'"'+(String(sel)===String(i)?' selected':'')+'>'+t.name+'</option>';
+  }).join('');
+}
+function _mktRepOpts(sel, anyLabel) {
+  var out = '<option value="">'+(anyLabel||'Any rep')+'</option>';
+  var q = _companySettings.repQuotas||{};
+  Object.keys(q).forEach(function(k){
+    out += '<option value="'+k+'"'+(sel===k?' selected':'')+'>'+q[k].name+'</option>';
+  });
+  return out;
+}
+function _mktTmplOpts(sel) {
+  return _mktTemplates.map(function(t,i){
+    return '<option value="'+i+'"'+(String(sel)===String(i)?' selected':'')+'>'+t.n+'</option>';
+  }).join('');
+}
+function _mktActOpts(sel) {
+  return MKT_ACTIVITY_TYPES.map(function(a){
+    return '<option value="'+a+'"'+(sel===a?' selected':'')+'>'+a+'</option>';
+  }).join('');
+}
+function _mktFieldHtml(f, val, id, onchange) {
+  var v = (val === undefined || val === '') ? (f.d !== undefined ? f.d : '') : val;
+  var oc = onchange ? ' oninput="'+onchange+'" onchange="'+onchange+'"' : '';
+  var inner;
+  if (f.t === 'stage')         inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktStageOpts(v)+'</select>';
+  else if (f.t === 'tag')      inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktTagOpts(v)+'</select>';
+  else if (f.t === 'rep')      inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktRepOpts(v,'Any rep')+'</select>';
+  else if (f.t === 'template') inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktTmplOpts(v)+'</select>';
+  else if (f.t === 'activity') inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktActOpts(v)+'</select>';
+  else if (f.t === 'num')      inner = '<input id="'+id+'" class="mkt-input" type="number" value="'+v+'"'+oc+'>';
+  else                         inner = '<input id="'+id+'" class="mkt-input" value="'+String(v).replace(/"/g,'&quot;')+'"'+oc+'>';
+  return '<div class="mkt-field"><label>'+f.l+'</label>'+inner+'</div>';
+}
+
+/* ── Human-readable summaries ── */
+function _mktTriggerText(tr) {
+  var c = tr.cfg||{}, s = _companySettings.pipelineStages||[], t = _companySettings.tagDefinitions||[];
+  switch(tr.type) {
+    case 'stage_changed':   return 'Deal moves to <strong>'+_mktStageName(c.stage)+'</strong>';
+    case 'stage_stalled':   return 'Deal sits in <strong>'+_mktStageName(c.stage)+'</strong> for <strong>'+(c.days||14)+' days</strong>';
+    case 'no_activity':     return 'No activity logged for <strong>'+(c.days||7)+' days</strong>';
+    case 'activity_logged': return 'A <strong>'+(c.act||'Call')+'</strong> is logged';
+    case 'deal_won':        return 'Opportunity marked <strong>won</strong>';
+    case 'deal_lost':       return 'Opportunity marked <strong>lost</strong>';
+    case 'new_lead':        return 'New lead assigned' + (c.rep ? ' to <strong>'+((_companySettings.repQuotas[c.rep]||{}).name||c.rep)+'</strong>' : ' to any rep');
+    case 'tag_added':       return 'Tag <strong>'+((t[c.tag]||{}).name||'any')+'</strong> added to an account';
+    case 'value_above':     return 'Opportunity value exceeds <strong>$'+Number(c.amt||50000).toLocaleString()+'</strong>';
+    case 'goal_pace':       return 'Rep drops below <strong>'+(c.pct||70)+'%</strong> of goal pace';
+    case 'renewal_due':     return 'Renewal is <strong>'+(c.days||30)+' days</strong> away';
+    default: return 'Trigger';
+  }
+}
+function _mktActionText(a) {
+  var c = a.cfg||{}, t = _companySettings.tagDefinitions||[], q = _companySettings.repQuotas||{};
+  switch(a.type) {
+    case 'send_email':  return 'Send <em>'+((_mktTemplates[c.tmpl]||{}).n||'email')+'</em>' + (Number(c.delay)>0 ? ' after '+c.delay+' day'+(c.delay==1?'':'s') : '');
+    case 'create_task': return 'Create task: <em>'+(c.title||'Follow up')+'</em> (due ' + (Number(c.due)>0 ? '+'+c.due+'d' : 'today') + (c.rep ? ', '+((q[c.rep]||{}).name||c.rep) : '') + ')';
+    case 'notify_mgr':  return 'Notify the manager in Highlights';
+    case 'add_tag':     return 'Add tag <em>'+((t[c.tag]||{}).name||'tag')+'</em>';
+    case 'move_stage':  return 'Move deal to <em>'+_mktStageName(c.stage)+'</em>';
+    case 'flag_risk':   return 'Flag account as at risk';
+    case 'log_note':    return 'Log note: <em>'+(c.text||'')+'</em>';
+    case 'wait':        return 'Wait <em>'+(c.days||3)+' days</em>';
+    default: return 'Action';
+  }
+}
+
+/* ── Tab switching ── */
 function _mktTab(tab) {
   document.getElementById('mkt-panel-email').style.display = tab === 'email' ? '' : 'none';
   document.getElementById('mkt-panel-auto').style.display  = tab === 'auto'  ? '' : 'none';
-  var tE = document.getElementById('mkt-tab-email');
-  var tA = document.getElementById('mkt-tab-auto');
-  if (tab === 'email') {
-    tE.style.color = 'var(--teal)'; tE.style.borderBottom = '2px solid var(--teal)';
-    tA.style.color = 'var(--g400)'; tA.style.borderBottom = '2px solid transparent';
-  } else {
-    tA.style.color = 'var(--teal)'; tA.style.borderBottom = '2px solid var(--teal)';
-    tE.style.color = 'var(--g400)'; tE.style.borderBottom = '2px solid transparent';
+  document.getElementById('mkt-tab-email').classList.toggle('active', tab === 'email');
+  document.getElementById('mkt-tab-auto').classList.toggle('active', tab === 'auto');
+  document.getElementById('mkt-primary-label').textContent = tab === 'email' ? 'New Campaign' : 'New Automation';
+  window._mktCurTab = tab;
+}
+function _mktPrimaryAction() {
+  if (window._mktCurTab === 'auto') _mktOpenBuilder(null); else _mktNewCampaign();
+}
+
+/* ── Email tab rendering ── */
+function _mktRenderFilters() {
+  var st = document.getElementById('mkt-f-stage'); if (!st) return;
+  st.innerHTML = '<option value="">All stages</option>' + _mktStageOpts(null);
+  document.getElementById('mkt-f-tag').innerHTML = '<option value="">Any tag</option>' + _mktTagOpts(null);
+  document.getElementById('mkt-f-rep').innerHTML = _mktRepOpts('', 'All owners');
+  document.getElementById('mkt-f-template').innerHTML = _mktTmplOpts(0);
+  _mktTemplatePick();
+  _mktRecount();
+}
+function _mktRecount() {
+  var parts = [], n = 1248;
+  var st = document.getElementById('mkt-f-stage');
+  if (!st) return;
+  if (st.value !== '')  { parts.push('Stage: ' + _mktStageName(st.value)); n = Math.round(n * 0.28); }
+  var tg = document.getElementById('mkt-f-tag');
+  if (tg.value !== '')  { parts.push('Tag: ' + ((_companySettings.tagDefinitions[tg.value]||{}).name||'')); n = Math.round(n * 0.44); }
+  var rp = document.getElementById('mkt-f-rep');
+  if (rp.value !== '')  { parts.push('Owner: ' + ((_companySettings.repQuotas[rp.value]||{}).name||'')); n = Math.round(n * 0.19); }
+  var lt = document.getElementById('mkt-f-last');
+  if (lt.value !== '')  { parts.push('Quiet ' + lt.value + '+ days'); n = Math.round(n * 0.36); }
+  document.getElementById('mkt-aud-count').textContent = n.toLocaleString();
+  document.getElementById('mkt-aud-desc').textContent = parts.length ? parts.join(' · ') : 'no filters applied';
+}
+function _mktResetFilters() {
+  ['mkt-f-stage','mkt-f-tag','mkt-f-rep','mkt-f-last'].forEach(function(id){
+    var e = document.getElementById(id); if (e) e.value = '';
+  });
+  _mktRecount();
+  showToast('Filters cleared');
+}
+function _mktTemplatePick() {
+  var sel = document.getElementById('mkt-f-template');
+  var sub = document.getElementById('mkt-f-subject');
+  if (sel && sub && _mktTemplates[sel.value]) sub.value = _mktTemplates[sel.value].s;
+}
+function _mktCampFilter(btn, val) {
+  document.querySelectorAll('#mkt-camp-filters .filter-chip').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _mktCampFilterVal = val;
+  _mktRenderCampaigns();
+}
+function _mktStatusMeta(s) {
+  if (s === 'Sent')      return {pill:'<span class="status-pill sp-green"><span class="pill-dot"></span>Sent</span>',
+                                 bg:'rgba(29,158,117,0.1)', fg:'var(--teal)', ic:'mail'};
+  if (s === 'Scheduled') return {pill:'<span class="status-pill sp-amber"><span class="pill-dot"></span>Scheduled</span>',
+                                 bg:'rgba(245,158,11,0.12)', fg:'var(--amber)', ic:'clock'};
+  return {pill:'<span class="status-pill" style="background:var(--g100);color:var(--g500)">Draft</span>',
+          bg:'var(--g100)', fg:'var(--g400)', ic:'note'};
+}
+function _mktRenderCampaigns() {
+  var el = document.getElementById('mkt-campaign-list'); if (!el) return;
+  var list = [];
+  _mktCampaigns.forEach(function(c, i){
+    if (_mktCampFilterVal === 'all' || c.status === _mktCampFilterVal) list.push({c:c, i:i});
+  });
+  if (!list.length) {
+    el.innerHTML = '<div class="mkt-empty">No campaigns in this view yet.</div>';
+    return;
   }
+  el.innerHTML = list.map(function(o){
+    var c = o.c, i = o.i, live = c.status === 'Sent', m = _mktStatusMeta(c.status);
+    var rate = function(v, max, color){
+      if (!live) return '<div style="font-size:12.5px;color:var(--g300)">&mdash;</div>';
+      var w = Math.min(100, (v / max) * 100);
+      return '<div class="mkt-rate"><div class="mkt-rate-v">' + v + '%</div>'
+           + '<div class="mkt-rate-bar"><div class="mkt-rate-fill" style="width:' + w + '%'
+           + (color ? ';background:' + color : '') + '"></div></div></div>';
+    };
+    return '<div class="mkt-row mkt-camp-row">'
+      + '<div style="display:flex;align-items:center;gap:11px;min-width:0">'
+      +   '<div class="mkt-camp-ico" style="background:' + m.bg + '">'
+      +     '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="' + m.fg + '" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + MKT_ICONS[m.ic] + '</svg>'
+      +   '</div>'
+      +   '<div style="min-width:0">'
+      +     '<div class="mkt-camp-name">' + c.n + '</div>'
+      +     '<div class="mkt-camp-meta">' + m.pill + '<span>' + c.aud + '</span></div>'
+      +   '</div>'
+      + '</div>'
+      + '<div class="mkt-num">' + (live ? c.sent.toLocaleString() : '&mdash;') + '</div>'
+      + rate(c.open, 60, 'var(--teal)')
+      + rate(c.click, 25, 'var(--blue)')
+      + '<div class="mkt-num">' + (live ? c.unsub + '%' : '&mdash;') + '</div>'
+      + '<div class="mkt-num" style="color:var(--g400)">' + (c.date === '-' ? '&mdash;' : c.date) + '</div>'
+      + '<div class="mkt-row-acts">'
+      +   '<button class="mkt-ico-btn" title="' + (live ? 'View report' : 'Edit') + '" onclick="_mktEditCampaign(' + i + ')">'
+      +     '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'
+      +     (live ? '<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>'
+                  : '<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/>')
+      +     '</svg></button>'
+      +   '<button class="mkt-ico-btn" title="Duplicate" onclick="_mktDuplicateCampaign(' + i + ')">'
+      +     '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>'
+      + '</div></div>';
+  }).join('');
 }
-function _mktNewCampaign() {
-  var n = prompt('Campaign name:');
-  if (n) alert('Campaign "' + n + '" created as Draft. Open it to compose your email and set audience filters.');
+function _mktDuplicateCampaign(i) {
+  var c = JSON.parse(JSON.stringify(_mktCampaigns[i]));
+  c.n = c.n + ' (copy)'; c.status = 'Draft'; c.date = '-';
+  c.sent = 0; c.open = 0; c.click = 0; c.unsub = 0;
+  _mktCampaigns.splice(i + 1, 0, c);
+  _mktRenderCampaigns();
+  showToast('Duplicated as draft');
 }
-function _mktNewAutomation() {
-  alert('Automation builder coming soon. Pick a trigger (stage change, probability drop, inactivity, deal won/lost) and chain email and task actions.');
+function _mktRenderTemplates() {
+  var el = document.getElementById('mkt-template-grid'); if (!el) return;
+  el.innerHTML = _mktTemplates.map(function(t, i){
+    return '<div class="mkt-tmpl-card" onclick="_mktUseTemplate(' + i + ')">'
+      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
+      +   '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + MKT_ICONS.mail + '</svg>'
+      +   '<div style="font-size:12.5px;font-weight:700;color:var(--dark)">' + t.n + '</div>'
+      + '</div>'
+      + '<div style="font-size:11.5px;color:var(--g400);margin-bottom:8px">' + t.d + '</div>'
+      + '<div style="font-size:11px;color:var(--g500);font-style:italic;padding:6px 9px;background:var(--g50);border-radius:6px">&ldquo;' + t.s + '&rdquo;</div>'
+      + '</div>';
+  }).join('');
 }
-function _mktNewTemplate() {
-  var n = prompt('Template name:');
-  if (n) alert('Template "' + n + '" created. Edit it in the template editor.');
+function _mktUseTemplate(i) {
+  var sel = document.getElementById('mkt-f-template');
+  if (sel) { sel.value = i; _mktTemplatePick(); }
+  window.scrollTo({top:0, behavior:'smooth'});
+  showToast('Loaded "' + _mktTemplates[i].n + '"');
 }
-function _mktUseTemplate(el) {
-  var name = el.querySelector('div').textContent;
-  var sel = document.getElementById('mkt-bulk-template');
-  if (sel) { for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].text === name) { sel.selectedIndex = i; break; } } }
+function _mktNewTemplate() { showToast('Template editor opening...'); }
+function _mktEditCampaign(i){
+  var c = _mktCampaigns[i];
+  if (c.status === 'Sent') { showToast(c.n + ' — ' + c.open + '% open, ' + c.click + '% click'); return; }
+  _mktNewCampaign(i);
 }
-function _mktSendBulk() {
-  var stage = document.getElementById('mkt-filter-stage').value;
-  var prob  = document.getElementById('mkt-filter-prob').value;
-  var score = document.getElementById('mkt-filter-score').value;
-  var last  = document.getElementById('mkt-filter-last').value;
-  var terr  = document.getElementById('mkt-filter-territory').value;
-  var tmpl  = document.getElementById('mkt-bulk-template').value;
-  var subj  = document.getElementById('mkt-bulk-subject').value || '(no subject)';
-  var desc  = 'Ready to send "' + subj + '" via template: ' + tmpl + ' to 247 filtered contacts.' +
-    (stage ? '\nStage: ' + stage : '') + (prob ? '\nProbability: ' + prob : '') +
-    (score ? '\nLead score: ' + score : '') + (last ? '\nLast contact: >' + last + ' days' : '') +
-    (terr  ? '\nTerritory: ' + terr : '') + '\n\nConfirm send?';
-  if (confirm(desc)) alert('Campaign queued. Emails will be delivered within 30 minutes.');
+
+/* ── New / Edit Campaign modal ── */
+var _mktCampEditIdx = null;
+function _mktNewCampaign(idx) {
+  _mktCampEditIdx = (typeof idx === 'number') ? idx : null;
+  var c = _mktCampEditIdx !== null ? _mktCampaigns[_mktCampEditIdx] : null;
+
+  document.getElementById('mkt-c-title').textContent = c ? 'Edit Campaign' : 'New Campaign';
+  document.getElementById('mkt-c-name').value    = c ? c.n : '';
+  document.getElementById('mkt-c-stage').innerHTML = '<option value="">All stages</option>' + _mktStageOpts(null);
+  document.getElementById('mkt-c-tag').innerHTML   = '<option value="">Any tag</option>' + _mktTagOpts(null);
+  document.getElementById('mkt-c-rep').innerHTML   = _mktRepOpts('', 'All owners');
+  document.getElementById('mkt-c-tmpl').innerHTML  = _mktTmplOpts(0);
+  document.getElementById('mkt-c-last').value    = '';
+  document.getElementById('mkt-c-subject').value = _mktTemplates[0].s;
+  document.getElementById('mkt-c-preview').value = '';
+  document.getElementById('mkt-c-from').value    = _companySettings.companyName || 'Sales Team';
+  document.getElementById('mkt-c-when').value    = 'now';
+  document.getElementById('mkt-c-date').value    = '';
+  _mktCampWhenChange();
+  _mktCampRecount();
+  openModal('mkt-campaign-modal');
+}
+function _mktCampTemplatePick() {
+  var t = _mktTemplates[document.getElementById('mkt-c-tmpl').value];
+  if (t) document.getElementById('mkt-c-subject').value = t.s;
+}
+function _mktCampWhenChange() {
+  var v = document.getElementById('mkt-c-when').value;
+  document.getElementById('mkt-c-date-wrap').style.display = (v === 'later') ? '' : 'none';
+  document.getElementById('mkt-c-send-label').textContent  = (v === 'later') ? 'Schedule Campaign' : 'Send Now';
+}
+function _mktCampAudience() {
+  var parts = [], n = 1248;
+  var s = document.getElementById('mkt-c-stage');
+  if (s.value !== '') { parts.push('Stage: ' + _mktStageName(s.value)); n = Math.round(n * 0.28); }
+  var t = document.getElementById('mkt-c-tag');
+  if (t.value !== '') { parts.push('Tag: ' + ((_companySettings.tagDefinitions[t.value]||{}).name||'')); n = Math.round(n * 0.44); }
+  var r = document.getElementById('mkt-c-rep');
+  if (r.value !== '') { parts.push('Owner: ' + ((_companySettings.repQuotas[r.value]||{}).name||'')); n = Math.round(n * 0.19); }
+  var l = document.getElementById('mkt-c-last');
+  if (l.value !== '') { parts.push('No contact ' + l.value + '+ days'); n = Math.round(n * 0.36); }
+  return {n:n, desc: parts.length ? parts.join(' · ') : 'All contacts'};
+}
+function _mktCampRecount() {
+  var a = _mktCampAudience();
+  document.getElementById('mkt-c-count').textContent = a.n.toLocaleString();
+  document.getElementById('mkt-c-desc').textContent  = a.desc;
+}
+function _mktCampSave(send) {
+  var name = document.getElementById('mkt-c-name').value.trim();
+  if (!name) { showToast('Give the campaign a name first'); document.getElementById('mkt-c-name').focus(); return; }
+  var a = _mktCampAudience();
+  var when = document.getElementById('mkt-c-when').value;
+  var dt   = document.getElementById('mkt-c-date').value;
+  if (send && when === 'later' && !dt) { showToast('Pick a send date'); return; }
+
+  var status = !send ? 'Draft' : (when === 'later' ? 'Scheduled' : 'Sent');
+  var dateTxt = '-';
+  if (status === 'Scheduled') {
+    var d = new Date(dt);
+    dateTxt = isNaN(d) ? dt : d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  } else if (status === 'Sent') {
+    dateTxt = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  }
+  var rec = {
+    n: name, aud: a.desc, date: dateTxt, status: status,
+    sent: status === 'Sent' ? a.n : 0,
+    open: status === 'Sent' ? 0 : 0, click: 0, unsub: 0
+  };
+  if (_mktCampEditIdx !== null) _mktCampaigns[_mktCampEditIdx] = rec;
+  else _mktCampaigns.unshift(rec);
+
+  closeModal('mkt-campaign-modal');
+  _mktCampFilterVal = 'all';
+  document.querySelectorAll('#mkt-camp-filters .filter-chip').forEach(function(b, i){
+    b.classList.toggle('active', i === 0);
+  });
+  _mktRenderCampaigns();
+  showToast(status === 'Draft' ? 'Saved "' + name + '" as draft'
+          : status === 'Scheduled' ? 'Scheduled "' + name + '" for ' + dateTxt
+          : 'Sending "' + name + '" to ' + a.n.toLocaleString() + ' contacts');
 }
 function _mktPreviewAudience() {
-  alert('247 contacts match your filters.\n\nTop matches:\n- Sarah Chen: Prob 12%, Cold, last contact 45d\n- Marco Reyes: Prob 8%, Cold, last contact 67d\n- Jamie Liu: Prob 18%, Warm, last contact 22d\n\n...and 244 more.');
+  showToast(document.getElementById('mkt-aud-count').textContent + ' contacts in this list');
 }
-function _mktEditAuto(btn) {
-  alert('Automation editor coming soon. Modify triggers, actions, timing, and conditions for this workflow.');
+function _mktSendBulk() {
+  var n = document.getElementById('mkt-aud-count').textContent;
+  var s = document.getElementById('mkt-f-subject').value || '(no subject)';
+  showToast('Queued "' + s + '" to ' + n + ' contacts');
 }
-function _mktViewLog(btn) {
-  var card = btn.closest('div[style*="border-radius:12px"]');
-  var name = card ? card.querySelector('[style*="font-weight:700"]').textContent : 'this automation';
-  alert('Activity log for "' + name + '":\n\nAug 10 - 14 emails sent, 12 tasks created\nAug 9 - 8 emails sent, 8 tasks created\nAug 8 - 11 emails sent, 10 tasks created\n\nAll triggers executed successfully.');
+
+/* ── Automations tab rendering ── */
+function _mktAutoFilterSet(btn, val) { _mktAutoFilter = val; }
+function _mktAutoFilter2() {}
+function _mktAutoFilterClick(btn, val) {}
+function _mktAutoFilterApply(btn, val) {
+  document.querySelectorAll('#mkt-auto-filters .filter-chip').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _mktAutoFilter = val;
+  _mktRenderAutomations();
 }
+function _mktRenderRecipes() {
+  var el = document.getElementById('mkt-recipe-row'); if (!el) return;
+  var recipes = [
+    {k:'stage_changed',   t:'Stage advance follow-up'},
+    {k:'stage_stalled',   t:'Rescue a stalled deal'},
+    {k:'no_activity',     t:'Nudge a quiet account'},
+    {k:'deal_won',        t:'Onboard a new customer'},
+    {k:'new_lead',        t:'First touch on a new lead'},
+    {k:'renewal_due',     t:'Renewal reminder'},
+    {k:'goal_pace',       t:'Coach a rep behind pace'}
+  ];
+  el.innerHTML = recipes.map(function(r){
+    return '<button class="mkt-recipe" onclick="_mktOpenBuilderFrom(&quot;' + r.k + '&quot;)">'
+      + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>'
+      + r.t + '</button>';
+  }).join('');
+}
+function _mktRenderAutomations() {
+  var el = document.getElementById('mkt-auto-grid'); if (!el) return;
+  var act = _mktAutomations.filter(function(a){ return a.active; }).length;
+  var sa = document.getElementById('mkt-stat-active'); if (sa) sa.textContent = act;
+  var stt = document.getElementById('mkt-stat-total'); if (stt) stt.textContent = _mktAutomations.length;
+
+  var h = '';
+  _mktAutomations.forEach(function(a, i){
+    if (_mktAutoFilter === 'active' && !a.active) return;
+    if (_mktAutoFilter === 'paused' && a.active) return;
+    var acts = a.actions.map(function(ac){
+      var def = MKT_ACTIONS[ac.type] || {icon:'note'};
+      return '<div class="mkt-act"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'
+        + (MKT_ICONS[def.icon] || MKT_ICONS.note) + '</svg><span>' + _mktActionText(ac) + '</span></div>';
+    }).join('');
+    h += '<div class="mkt-auto-card' + (a.active ? '' : ' paused') + '">'
+      + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px">'
+      +   '<div style="font-size:13.5px;font-weight:700;color:var(--dark);line-height:1.3">' + a.name + '</div>'
+      +   '<label class="toggle-switch" style="margin:0"><input type="checkbox"' + (a.active ? ' checked' : '') + ' onchange="_mktToggleAuto(' + i + ',this.checked)"><span class="toggle-slider"></span></label>'
+      + '</div>'
+      + '<div class="mkt-trig"><span class="mkt-trig-tag">WHEN</span><span style="font-size:11.5px;color:var(--g600);line-height:1.45">' + _mktTriggerText(a.trigger) + '</span></div>'
+      + '<div class="mkt-act-list">' + acts + '</div>'
+      + '<div class="mkt-auto-foot">'
+      +   '<button class="mkt-mini-btn" onclick="_mktOpenBuilder(' + i + ')">Edit</button>'
+      +   '<button class="mkt-mini-btn" onclick="_mktDuplicateAuto(' + i + ')">Duplicate</button>'
+      +   '<button class="mkt-mini-btn" onclick="_mktViewLog(' + i + ')">Log</button>'
+      + '</div></div>';
+  });
+  h += '<div class="mkt-new-card" onclick="_mktOpenBuilder(null)">'
+     + '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+     + '<div style="font-size:12.5px;font-weight:600;color:var(--g500)">Create Automation</div>'
+     + '<div style="font-size:11px;color:var(--g400);text-align:center;max-width:190px">Pick a trigger, then chain the actions you want</div></div>';
+  el.innerHTML = h;
+}
+function _mktToggleAuto(i, on) {
+  _mktAutomations[i].active = on;
+  _mktRenderAutomations();
+  showToast(_mktAutomations[i].name + (on ? ' activated' : ' paused'));
+}
+function _mktDuplicateAuto(i) {
+  var c = JSON.parse(JSON.stringify(_mktAutomations[i]));
+  c.name = c.name + ' (copy)';
+  c.active = false;
+  _mktAutomations.splice(i + 1, 0, c);
+  _mktRenderAutomations();
+  showToast('Duplicated');
+}
+function _mktViewLog(i) {
+  showToast(_mktAutomations[i].name + ' — 33 runs in the last 30 days');
+}
+
+/* ── Builder ── */
+var _mktBuilderActions = [];
+function _mktOpenBuilderFrom(type) {
+  _mktOpenBuilder(null);
+  var sel = document.getElementById('mkt-b-trigger');
+  sel.value = type;
+  document.getElementById('mkt-b-name').value = (MKT_TRIGGERS[type]||{}).label || '';
+  _mktBuilderTriggerChange();
+}
+function _mktOpenBuilder(idx) {
+  _mktEditingIdx = idx;
+  var sel = document.getElementById('mkt-b-trigger');
+  sel.innerHTML = Object.keys(MKT_TRIGGERS).map(function(k){
+    return '<option value="' + k + '">' + MKT_TRIGGERS[k].label + '</option>';
+  }).join('');
+  if (idx === null || idx === undefined) {
+    document.getElementById('mkt-builder-title').textContent = 'New Automation';
+    document.getElementById('mkt-b-name').value = '';
+    sel.value = 'stage_changed';
+    _mktBuilderActions = [{type:'send_email', cfg:{}}];
+  } else {
+    var a = _mktAutomations[idx];
+    document.getElementById('mkt-builder-title').textContent = 'Edit Automation';
+    document.getElementById('mkt-b-name').value = a.name;
+    sel.value = a.trigger.type;
+    _mktBuilderActions = JSON.parse(JSON.stringify(a.actions));
+  }
+  _mktBuilderRenderTrigger(idx !== null && idx !== undefined ? _mktAutomations[idx].trigger.cfg : {});
+  _mktBuilderRenderActions();
+  _mktBuilderPreview();
+  openModal('mkt-builder-modal');
+}
+function _mktBuilderTriggerChange() { _mktBuilderRenderTrigger({}); _mktBuilderPreview(); }
+function _mktBuilderRenderTrigger(cfg) {
+  var type = document.getElementById('mkt-b-trigger').value;
+  var def = MKT_TRIGGERS[type];
+  var box = document.getElementById('mkt-b-trigger-cfg');
+  if (!def.fields.length) {
+    box.innerHTML = '<div style="font-size:11.5px;color:var(--g400);padding:2px 0">No extra settings — this trigger fires on the event itself.</div>';
+    return;
+  }
+  box.innerHTML = def.fields.map(function(f){
+    return _mktFieldHtml(f, cfg[f.k], 'mkt-b-t-' + f.k, '_mktBuilderPreview()');
+  }).join('');
+}
+function _mktBuilderRenderActions() {
+  var box = document.getElementById('mkt-b-actions');
+  box.innerHTML = _mktBuilderActions.map(function(a, i){
+    var def = MKT_ACTIONS[a.type];
+    var opts = Object.keys(MKT_ACTIONS).map(function(k){
+      return '<option value="' + k + '"' + (k === a.type ? ' selected' : '') + '>' + MKT_ACTIONS[k].label + '</option>';
+    }).join('');
+    var cfgHtml = def.fields.map(function(f){
+      return _mktFieldHtml(f, a.cfg[f.k], 'mkt-b-a' + i + '-' + f.k, '_mktBuilderPreview()');
+    }).join('');
+    return '<div class="mkt-builder-row">'
+      + '<div style="display:flex;align-items:center;gap:8px;width:100%">'
+      +   '<span style="font-size:10px;font-weight:700;color:var(--g400);background:var(--white);border:1px solid var(--g200);border-radius:5px;padding:3px 7px;flex-shrink:0">' + (i + 1) + '</span>'
+      +   '<select class="mkt-input" style="flex:1" onchange="_mktBuilderChangeAction(' + i + ',this.value)">' + opts + '</select>'
+      +   '<button class="mkt-mini-btn" style="flex-shrink:0" onclick="_mktBuilderRemoveAction(' + i + ')">Remove</button>'
+      + '</div>'
+      + (cfgHtml ? '<div class="mkt-cfg-grid">' + cfgHtml + '</div>' : '')
+      + '</div>';
+  }).join('');
+}
+function _mktBuilderChangeAction(i, type) {
+  _mktBuilderActions[i] = {type:type, cfg:{}};
+  _mktBuilderRenderActions();
+  _mktBuilderPreview();
+}
+function _mktBuilderAddAction() {
+  _mktBuilderActions.push({type:'create_task', cfg:{}});
+  _mktBuilderRenderActions();
+  _mktBuilderPreview();
+}
+function _mktBuilderRemoveAction(i) {
+  if (_mktBuilderActions.length <= 1) { showToast('Keep at least one action'); return; }
+  _mktBuilderActions.splice(i, 1);
+  _mktBuilderRenderActions();
+  _mktBuilderPreview();
+}
+function _mktBuilderSync() {
+  _mktBuilderActions.forEach(function(a, i){
+    (MKT_ACTIONS[a.type].fields || []).forEach(function(f){
+      var e = document.getElementById('mkt-b-a' + i + '-' + f.k);
+      if (e) a.cfg[f.k] = e.value;
+    });
+  });
+}
+function _mktBuilderCollect() {
+  var type = document.getElementById('mkt-b-trigger').value;
+  var cfg = {};
+  (MKT_TRIGGERS[type].fields || []).forEach(function(f){
+    var e = document.getElementById('mkt-b-t-' + f.k);
+    if (e) cfg[f.k] = e.value;
+  });
+  _mktBuilderSync();
+  return {
+    name: document.getElementById('mkt-b-name').value || MKT_TRIGGERS[type].label,
+    active: true,
+    trigger: {type:type, cfg:cfg},
+    actions: JSON.parse(JSON.stringify(_mktBuilderActions))
+  };
+}
+function _mktBuilderPreview() {
+  var a = _mktBuilderCollect();
+  var txt = _mktTriggerText(a.trigger) + ' &rarr; ' + a.actions.map(_mktActionText).join(', then ');
+  var p = document.getElementById('mkt-b-preview');
+  if (p) p.innerHTML = txt;
+}
+function _mktBuilderSave() {
+  var a = _mktBuilderCollect();
+  if (_mktEditingIdx === null || _mktEditingIdx === undefined) {
+    _mktAutomations.push(a);
+  } else {
+    a.active = _mktAutomations[_mktEditingIdx].active;
+    _mktAutomations[_mktEditingIdx] = a;
+  }
+  closeModal('mkt-builder-modal');
+  _mktRenderAutomations();
+  showToast('Saved "' + a.name + '"');
+}
+
+/* ── Boot ── */
+function _mktInit() {
+  if (typeof _companySettings === 'undefined') return;
+  _mktCampFilterVal = 'all';
+  _mktAutoFilter = 'all';
+  _mktSeedAutomations();
+  _mktRenderFilters();
+  _mktRenderCampaigns();
+  _mktRenderTemplates();
+  _mktRenderRecipes();
+  _mktRenderAutomations();
+  window._mktCurTab = 'email';
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mktInit);
+else _mktInit();
 </script>
 </body>
 </html>
