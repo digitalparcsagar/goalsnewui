@@ -4028,7 +4028,6 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 </div>
 
 </div>
-</div>
 
 <!-- MARKETING -->
 <div id="page-marketing" class="page">
@@ -18049,10 +18048,13 @@ function _aceCommConfirm() {
 
 <style>
 /* ── Marketing ─────────────────────────────────────── */
-.mkt-tabs{display:flex;gap:4px;border-bottom:1px solid var(--g200);margin-bottom:26px}
+.mkt-tabs{display:flex;gap:4px;border-bottom:1px solid var(--g200);margin-top:4px;margin-bottom:26px}
 .mkt-tab{padding:9px 16px;font-size:12.5px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--font);transition:all .15s}
 .mkt-tab:hover{color:var(--g600)}
 .mkt-tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+.mkt-tab:focus-visible{outline:none;border-radius:0;box-shadow:inset 0 -2px 0 var(--teal)}
+.mkt-recipe:focus-visible,.mkt-mini-btn:focus-visible,.mkt-ico-btn:focus-visible{outline:2px solid var(--teal);outline-offset:1px;border-radius:8px}
+#mkt-camp-filters .filter-chip:focus-visible,#mkt-auto-filters .filter-chip:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
 .mkt-filter-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:14px}
 .mkt-field{display:flex;flex-direction:column;gap:5px}
 .mkt-field label{font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.7px}
