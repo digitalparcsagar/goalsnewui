@@ -1672,8 +1672,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 <body>
 <a href="#main-content" class="skip-link">Skip to main content</a>
 
-<!-- Trial banner — full width, above everything -->
-<div id="trial-banner" style="position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#c9184a,#ff4d6d);height:32px;display:flex;align-items:center;justify-content:center;gap:16px">
+<!-- Trial banner — hidden from this mockup -->
+<div id="trial-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(90deg,#c9184a,#ff4d6d);height:32px;align-items:center;justify-content:center;gap:16px">
   <span style="font-size:12px;font-weight:600;color:#fff;letter-spacing:0.1px">
     <strong style="font-weight:800" id="trial-days-banner">6 days</strong> left on your free trial
   </span>
@@ -1681,7 +1681,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <button onclick="document.getElementById('trial-banner').style.display='none'" style="position:absolute;right:14px;background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;font-size:16px;line-height:1;padding:0" title="Dismiss">×</button>
 </div>
 
-<div class="app" style="padding-top:32px">
+<div class="app">
 
 <nav class="sidebar" role="navigation" aria-label="Main navigation">
   <div class="sb-logo" style="flex-direction:column;gap:4px;padding:14px 8px 12px"><svg width="41" height="29" viewBox="0 0 41 29" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M23.7469 5.1311C23.9948 3.4409 23.9888 2.05568 23.327 2.03134C21.2165 1.95701 17.8982 9.7314 19.9741 9.54901C22.2617 9.3474 23.7469 5.13152 23.7469 5.13152L23.7369 7.60039C23.7369 7.60039 21.9568 11.2836 18.7937 11.2268C14.3663 11.1474 16.9977 0.843034 22.6624 0.462879C25.2107 0.292023 25.186 2.45677 24.7264 4.2734C24.4589 5.33185 23.6844 5.55909 23.7469 5.1311Z" fill="white"/><path d="M38.3001 13.952C33.9325 13.3967 28.7556 13.3796 24.1151 13.503C26.1517 7.30951 26.8834 1.50039 28.6507 1.03054C28.2239 0.351385 26.7953 -0.064222 25.604 0.676012C24.0626 1.63195 23.4588 7.54272 21.4998 13.609C10.4683 14.207 0.156585 17.0295 0.00185471 23.4644C-0.146942 29.7143 8.69047 30.2709 14.5474 27.1314C18.4389 25.0457 21.0534 21.3701 22.6691 17.3341C22.938 16.663 23.3227 15.6981 23.3227 15.6981L22.1424 15.3816C22.6048 15.3474 23.4706 15.3427 23.4711 15.3389C24.4597 15.3104 25.4654 15.2962 26.4881 15.2962H26.4908C30.5567 15.3017 36.7149 15.7442 40.0012 16.2718C40.0012 16.2748 40.5526 14.2377 38.3001 13.952ZM10.4911 26.7316C4.37036 28.1698 1.34331 25.9119 1.66783 23.1748C2.25206 18.2456 10.7855 16.0531 20.8608 15.4534C18.9369 20.6316 15.924 25.4561 10.4911 26.7316Z" fill="white"/></svg></div>
@@ -4111,6 +4111,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         <button class="filter-chip" onclick="_mktAutoFilterApply(this,'active')">Active</button>
         <button class="filter-chip" onclick="_mktAutoFilterApply(this,'paused')">Paused</button>
       </div>
+      <button class="tb-btn btn-teal" style="font-size:11px;display:flex;align-items:center;gap:6px" onclick="_mktAceOpen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build with Ace</button>
       <button class="tb-btn btn-ghost" style="font-size:11px" onclick="_mktOpenBuilder(null)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Automation</button>
     </div>
   </div>
@@ -17644,6 +17645,123 @@ function _aceCommConfirm() {
   </div>
 </div>
 
+<!-- ACE AUTOMATION MODAL -->
+<div id="ace-automation-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_mktAceClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:640px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace Automation Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace builds it</div>
+        </div>
+      </div>
+      <button onclick="_mktAceClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;padding:14px 24px;border-bottom:1px solid var(--g100);gap:0">
+      <div id="ace-astep-1" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal)"><span style="width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">1</span> Describe</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-astep-2" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">2</span> Review</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-astep-3" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">3</span> Confirm</div>
+    </div>
+    <!-- Step 1 -->
+    <div id="ace-automation-step1" style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Describe the automation in plain English</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">What should trigger it, and what should happen next? Ace will wire up the trigger and every step.</div>
+      <textarea id="ace-automation-input" placeholder="e.g. When a deal moves to Proposal, send the proposal email and create a follow-up task in 2 days. Notify the manager if it sits there more than 10 days." style="width:100%;height:110px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_mktAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"When a deal is won, send the onboarding email and create a kickoff task in 3 days"</button>
+          <button onclick="_mktAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"If an account has no activity for 10 days, send a check-in email, wait 5 days, then flag it at risk"</button>
+          <button onclick="_mktAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"When a new lead is assigned to a rep, send a welcome email and create a task to qualify it same day"</button>
+          <button onclick="_mktAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"If a deal sits in a stage more than 14 days, notify the manager and add a follow-up task"</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Ace never saves anything without your confirmation.</div>
+        <button onclick="_mktAceGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Generate with Ace
+        </button>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div id="ace-automation-step2" style="display:none;padding:24px">
+      <div id="ace-automation-loading" style="text-align:center;padding:32px 0">
+        <div style="width:48px;height:48px;border-radius:50%;border:3px solid var(--g100);border-top-color:var(--teal);animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+        <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Ace is reading your description…</div>
+        <div style="font-size:12px;color:var(--g400)" id="ace-automation-loading-sub">Identifying the trigger and the steps to chain</div>
+      </div>
+      <div id="ace-automation-preview" style="display:none;overflow-y:auto;max-height:60vh">
+        <div id="ace-automation-summary-banner" style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--teal)"></div>
+
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 16px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Assumptions Ace made</div>
+          <div id="ace-automation-assumptions" style="font-size:12px;color:var(--g600);line-height:1.8"></div>
+        </div>
+
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Automation name</div>
+          <input id="ace-automation-name" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:14px;font-weight:600;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+        </div>
+
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Trigger</div>
+          <div style="padding:14px">
+            <select id="ace-automation-trigger" onchange="_mktAceTriggerChanged()" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none"></select>
+          </div>
+        </div>
+
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:16px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Actions (in order)</span>
+          </div>
+          <div id="ace-automation-actions" style="padding:12px 14px;display:flex;flex-direction:column;gap:8px"></div>
+          <div style="padding:0 14px 14px;display:flex;gap:8px;align-items:center">
+            <select id="ace-automation-add-action" style="flex:1;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--dark);font-family:var(--font);outline:none"></select>
+            <button onclick="_mktAceAddAction()" style="background:var(--g50);color:var(--navy);border:1px solid var(--g200);border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Add step</button>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;padding-top:4px">
+          <button onclick="_mktAceBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
+          <button onclick="_mktAceConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Create automation
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div id="ace-automation-step3" style="display:none;padding:40px 24px;text-align:center">
+      <div style="width:56px;height:56px;background:rgba(29,158,117,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">Automation is Live</div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;max-width:400px;margin:0 auto 24px">Your workflow has been created and activated. It'll start running the next time the trigger condition is met.</div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">What just happened</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ace parsed your plain-English automation description</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Identified the trigger and chained the action steps in order</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Validated field values against your pipeline, tags, and team</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Added to your automation rules — zero developer involvement</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button onclick="_mktAceClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
+        <button onclick="_mktAceReset()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Build Another</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ACE CONTEST MODAL -->
 <div id="ace-contest-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_aceContestClose()">
   <div style="background:#fff;border-radius:18px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
@@ -18015,6 +18133,7 @@ function _aceCommConfirm() {
 .mkt-camp-row:last-child{border-bottom:none}
 .mkt-camp-row:hover{background:var(--g50)}
 .mkt-camp-name{font-size:13px;font-weight:650;color:var(--dark);line-height:1.35;margin-bottom:3px}
+.mkt-camp-name:hover{color:var(--teal);text-decoration:underline}
 .mkt-camp-meta{font-size:11px;color:var(--g400);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .mkt-camp-ico{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .mkt-rate{display:flex;flex-direction:column;gap:5px}
@@ -18055,6 +18174,18 @@ function _aceCommConfirm() {
 /* Filter chip separator */
 .mkt-chip-sep{width:1px;background:var(--g200);margin:0 2px}
 
+/* ── Campaign report ── */
+.mkt-rp-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:2px}
+.mkt-rp-bar{width:100%;max-width:22px;border-radius:3px 3px 0 0;transition:height .4s ease}
+.mkt-rp-bar-open{background:var(--teal)}
+.mkt-rp-bar-click{background:var(--blue)}
+.mkt-rp-bar-pair{display:flex;gap:3px;align-items:flex-end;height:100%;width:100%;justify-content:center}
+.mkt-rp-dev-row{display:flex;align-items:center;gap:10px}
+.mkt-rp-dev-label{font-size:11.5px;color:var(--g600);width:64px;flex-shrink:0}
+.mkt-rp-dev-track{flex:1;height:8px;background:var(--g100);border-radius:4px;overflow:hidden}
+.mkt-rp-dev-fill{height:100%;border-radius:4px}
+.mkt-rp-dev-pct{font-size:11.5px;font-weight:700;color:var(--dark);width:38px;text-align:right;flex-shrink:0;font-family:var(--mono)}
+
 /* ── Email render frame (shared by library cards, preview modal, builder) ── */
 .mkt-email-frame{background:var(--white);border-radius:10px;overflow:hidden;font-family:var(--font)}
 .mkt-eb-header{padding:20px 22px;background:linear-gradient(135deg,var(--navy),#242d4a);text-align:center}
@@ -18081,37 +18212,51 @@ function _aceCommConfirm() {
 .mkt-tmpl-desc{font-size:11px;color:var(--g400);line-height:1.4;margin-bottom:10px}
 .mkt-tmpl-foot{display:flex;gap:6px}
 
-/* ── Template Builder layout ── */
-.mkt-tb-layout{display:grid;grid-template-columns:180px 1fr 260px;gap:14px;align-items:start}
-.mkt-tb-palette{background:var(--g50);border-radius:10px;padding:12px}
+/* ── Template Editor (full page, WYSIWYG) ── */
+.mkt-tb-title-input{border:none;background:none;font-size:15px;font-weight:800;color:var(--dark);font-family:var(--font);padding:6px 8px;border-radius:7px;width:260px;transition:background .12s}
+.mkt-tb-title-input:hover,.mkt-tb-title-input:focus{background:var(--g100);outline:none}
+.mkt-tb-inline-input{border:none;border-bottom:1.5px solid transparent;background:none;font-size:12.5px;color:var(--dark);font-family:var(--font);padding:3px 2px;flex:1;min-width:0;transition:border-color .12s}
+.mkt-tb-inline-input:hover{border-color:var(--g200)}
+.mkt-tb-inline-input:focus{outline:none;border-color:var(--teal)}
+.mkt-wys-palette{width:190px;flex-shrink:0;background:var(--white);border-right:1px solid var(--g200);padding:16px 14px;overflow-y:auto}
 .mkt-tb-block-chip{display:flex;align-items:center;gap:8px;padding:9px 10px;background:var(--white);border:1px solid var(--g200);border-radius:8px;margin-bottom:6px;cursor:grab;font-size:12px;font-weight:600;color:var(--dark);transition:all .13s;user-select:none}
 .mkt-tb-block-chip:hover{border-color:var(--teal);color:var(--teal)}
 .mkt-tb-block-chip:active{cursor:grabbing}
 .mkt-tb-block-chip svg{flex-shrink:0;color:var(--g400)}
 .mkt-tb-block-chip:hover svg{color:var(--teal)}
-.mkt-tb-canvas-wrap{min-width:0}
-.mkt-tb-canvas{background:var(--g50);border:1.5px dashed var(--g200);border-radius:10px;padding:10px;min-height:420px;max-height:420px;overflow-y:auto;transition:border-color .13s,background .13s}
-.mkt-tb-canvas.drag-over{border-color:var(--teal);background:rgba(29,158,117,0.05)}
-.mkt-tb-block{background:var(--white);border:1px solid var(--g200);border-radius:9px;padding:10px 10px 10px 6px;margin-bottom:8px;display:flex;gap:6px;align-items:flex-start;transition:box-shadow .13s,opacity .13s}
-.mkt-tb-block.dragging{opacity:0.35}
-.mkt-tb-block.drop-target-above{box-shadow:0 -3px 0 var(--teal)}
-.mkt-tb-block.drop-target-below{box-shadow:0 3px 0 var(--teal)}
-.mkt-tb-handle{cursor:grab;color:var(--g300);padding:4px 2px;flex-shrink:0;line-height:1}
-.mkt-tb-handle:active{cursor:grabbing}
-.mkt-tb-block-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
-.mkt-tb-block-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.mkt-tb-block-label{font-size:9.5px;font-weight:700;letter-spacing:.6px;color:var(--teal);text-transform:uppercase}
-.mkt-tb-remove{border:none;background:none;color:var(--g300);cursor:pointer;font-size:14px;line-height:1;padding:2px 4px;border-radius:4px}
-.mkt-tb-remove:hover{color:#dc3545;background:rgba(220,53,69,0.08)}
-.mkt-tb-block input,.mkt-tb-block textarea{width:100%;border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);resize:vertical}
-.mkt-tb-block input:focus,.mkt-tb-block textarea:focus{outline:none;border-color:var(--teal)}
-.mkt-tb-canvas-empty{padding:50px 16px;text-align:center;font-size:12px;color:var(--g400)}
-.mkt-tb-drop-line{height:3px;background:var(--teal);border-radius:2px;margin:2px 0}
-.mkt-tb-preview-wrap{min-width:0}
-.mkt-tb-preview-frame{background:var(--g50);border-radius:10px;padding:10px;max-height:420px;overflow-y:auto}
-@media(max-width:900px){.mkt-tb-layout{grid-template-columns:1fr}}
-body.dark-mode .mkt-tmpl-mini,body.dark-mode .mkt-tb-palette,body.dark-mode .mkt-tb-canvas,body.dark-mode .mkt-tb-preview-frame{background:var(--white)}
-body.dark-mode .mkt-tb-block,body.dark-mode .mkt-tb-block-chip{background:var(--white);border-color:rgba(255,255,255,0.12)}
+.mkt-wys-canvas-scroll{flex:1;overflow-y:auto;padding:32px 20px;display:flex;justify-content:center}
+.mkt-wys-canvas{width:600px;max-width:100%;background:var(--white);border-radius:12px;box-shadow:0 2px 12px rgba(0,0,0,0.06);min-height:300px;transition:box-shadow .13s;flex-shrink:0}
+.mkt-wys-canvas.drag-over{box-shadow:0 0 0 2px var(--teal),0 2px 12px rgba(0,0,0,0.06)}
+.mkt-wys-canvas-empty{padding:60px 20px;text-align:center;font-size:12.5px;color:var(--g400)}
+.mkt-wys-block{position:relative;border:1px dashed transparent;border-radius:4px;transition:border-color .12s}
+.mkt-wys-block:hover,.mkt-wys-block.dragging{border-color:rgba(29,158,117,0.35)}
+.mkt-wys-block.dragging{opacity:0.4}
+.mkt-wys-block.drop-target-above{box-shadow:0 -3px 0 var(--teal)}
+.mkt-wys-block.drop-target-below{box-shadow:0 3px 0 var(--teal)}
+.mkt-wys-rail{position:absolute;left:-24px;top:50%;transform:translateY(-50%);width:20px;height:28px;display:flex;align-items:center;justify-content:center;color:var(--g300);cursor:grab;opacity:0;transition:opacity .12s;border-radius:5px}
+.mkt-wys-block:hover .mkt-wys-rail{opacity:1}
+.mkt-wys-rail:hover{background:var(--g100);color:var(--teal)}
+.mkt-wys-rail:active{cursor:grabbing}
+.mkt-wys-toolbar{position:absolute;top:-11px;right:8px;display:flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--teal);border-radius:6px;padding:2px 6px;opacity:0;transition:opacity .12s;z-index:2}
+.mkt-wys-block:hover .mkt-wys-toolbar{opacity:1}
+.mkt-wys-label{font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--teal);text-transform:uppercase}
+.mkt-wys-remove{border:none;background:none;color:var(--g400);cursor:pointer;font-size:13px;line-height:1;padding:0}
+.mkt-wys-remove:hover{color:#dc3545}
+.mkt-wys-editable{outline:none;cursor:text}
+.mkt-wys-editable:empty:before{content:attr(data-placeholder);color:var(--g300)}
+.mkt-wys-editable:focus{background:rgba(29,158,117,0.05);border-radius:4px}
+.mkt-wys-pad{padding:10px 0}
+/* Desktop / Mobile preview */
+.mkt-pv-tabs{display:flex;gap:4px;margin-bottom:16px;justify-content:center}
+.mkt-pv-tab{display:flex;align-items:center;gap:6px;padding:7px 16px;border-radius:8px;border:1px solid var(--g200);background:var(--white);font-size:12.5px;font-weight:600;color:var(--g500);cursor:pointer;font-family:var(--font);transition:all .13s}
+.mkt-pv-tab.active{background:var(--teal);border-color:var(--teal);color:#fff}
+.mkt-pv-frame-wrap{display:flex;justify-content:center}
+.mkt-pv-desktop{width:600px;max-width:100%;background:var(--white);border-radius:10px;box-shadow:0 4px 20px rgba(0,0,0,0.08);overflow:hidden}
+.mkt-pv-mobile{width:100%}
+.mkt-pv-mobile .mkt-pv-phone{width:340px;max-width:100%;margin:0 auto;background:#111;border-radius:34px;padding:12px;box-shadow:0 8px 24px rgba(0,0,0,0.18)}
+.mkt-pv-mobile .mkt-pv-phone-screen{background:var(--white);border-radius:22px;overflow:hidden;max-height:520px;overflow-y:auto}
+body.dark-mode .mkt-wys-palette,body.dark-mode .mkt-wys-canvas{background:var(--white)}
+body.dark-mode .mkt-tb-block-chip{background:var(--white);border-color:rgba(255,255,255,0.12)}
 .mkt-builder-row{display:flex;gap:10px;align-items:flex-end;padding:12px;background:var(--g50);border-radius:10px;margin-bottom:10px;flex-wrap:wrap}
 .mkt-cfg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;width:100%}
 .mkt-sec-label{font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px}
@@ -18125,6 +18270,95 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
 </style>
 
 
+
+<!-- ══════════ CAMPAIGN REPORT (full page) ══════════ -->
+<div id="mkt-report-overlay" style="position:fixed;inset:0;background:var(--off);z-index:2200;display:none;flex-direction:column;overflow:hidden">
+
+  <!-- HEADER -->
+  <div style="background:var(--white);border-bottom:1px solid var(--g200);height:62px;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0">
+    <button onclick="_mktReportClose()" style="display:flex;align-items:center;gap:5px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:5px 8px;border-radius:8px;font-family:var(--font);flex-shrink:0;white-space:nowrap;transition:background .12s" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Marketing</span>
+    </button>
+    <div style="width:1px;height:24px;background:var(--g200);flex-shrink:0"></div>
+    <div style="flex:1;min-width:0">
+      <div id="mkt-rp-title" style="font-size:16px;font-weight:800;color:var(--dark);letter-spacing:-0.2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">Campaign</div>
+      <div id="mkt-rp-subject" style="font-size:11.5px;color:var(--g400);margin-top:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap"></div>
+    </div>
+    <div id="mkt-rp-status" style="flex-shrink:0"></div>
+    <button class="mkt-mini-btn" onclick="_mktReportDuplicate()" style="flex-shrink:0">Duplicate</button>
+  </div>
+
+  <!-- BODY -->
+  <div style="flex:1;overflow-y:auto;padding:28px 32px 60px">
+    <div style="max-width:1180px;margin:0 auto">
+
+      <!-- Stat row -->
+      <div class="stat-row" id="mkt-rp-stats"></div>
+
+      <div style="display:grid;grid-template-columns:1.4fr 1fr;gap:16px;margin-top:20px;align-items:start">
+
+        <div>
+          <!-- Opens over time -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title"><span>Opens &amp; Clicks Over Time</span></div>
+            <div id="mkt-rp-chart" style="display:flex;align-items:flex-end;gap:10px;height:140px;padding:10px 4px 0"></div>
+            <div id="mkt-rp-chart-labels" style="display:flex;gap:10px;padding:6px 4px 0"></div>
+            <div style="display:flex;gap:16px;margin-top:12px;font-size:11px;color:var(--g500)">
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:2px;background:var(--teal);display:inline-block"></span>Opens</span>
+              <span style="display:flex;align-items:center;gap:5px"><span style="width:9px;height:9px;border-radius:2px;background:var(--blue);display:inline-block"></span>Clicks</span>
+            </div>
+          </div>
+
+          <!-- Link performance -->
+          <div class="card" style="padding:0;overflow:hidden;margin-bottom:16px">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--g100);font-size:13px;font-weight:700;color:var(--dark)">Link Performance</div>
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr style="background:var(--g50)">
+                <th style="text-align:left;padding:9px 16px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Link</th>
+                <th style="text-align:right;padding:9px 16px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Clicks</th>
+                <th style="text-align:right;padding:9px 16px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Click Rate</th>
+              </tr></thead>
+              <tbody id="mkt-rp-links"></tbody>
+            </table>
+          </div>
+
+          <!-- Recipient activity -->
+          <div class="card" style="padding:0;overflow:hidden">
+            <div style="padding:16px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:13px;font-weight:700;color:var(--dark)">Recipient Activity</div>
+              <div style="font-size:11px;color:var(--g400)" id="mkt-rp-recip-count"></div>
+            </div>
+            <table style="width:100%;border-collapse:collapse">
+              <thead><tr style="background:var(--g50)">
+                <th style="text-align:left;padding:9px 16px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Recipient</th>
+                <th style="text-align:center;padding:9px 16px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Opened</th>
+                <th style="text-align:center;padding:9px 16px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Clicked</th>
+                <th style="text-align:right;padding:9px 16px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Device</th>
+              </tr></thead>
+              <tbody id="mkt-rp-recipients"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div>
+          <!-- Device breakdown -->
+          <div class="card" style="margin-bottom:16px">
+            <div class="card-title"><span>Opens by Device</span></div>
+            <div id="mkt-rp-devices" style="display:flex;flex-direction:column;gap:10px"></div>
+          </div>
+
+          <!-- Sent email preview -->
+          <div class="card" style="padding:16px">
+            <div class="card-title" style="margin-bottom:10px"><span>What Was Sent</span></div>
+            <div id="mkt-rp-email" style="background:var(--g50);border-radius:10px;padding:10px"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal-overlay" id="mkt-campaign-modal" onclick="closeOnOverlay(event,'mkt-campaign-modal')">
   <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-c-title" onclick="event.stopPropagation()">
     <div class="modal-header">
@@ -18226,50 +18460,65 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
 </div>
 
 <!-- Template Builder modal (drag-and-drop) -->
-<div class="modal-overlay" id="mkt-tmpl-builder-modal" onclick="closeOnOverlay(event,'mkt-tmpl-builder-modal')">
-  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mkt-tb-title" style="width:min(1080px,94vw)" onclick="event.stopPropagation()">
+<!-- ══════════ TEMPLATE EDITOR (full page, WYSIWYG) ══════════ -->
+<div id="mkt-tb-overlay" style="position:fixed;inset:0;background:var(--off);z-index:2200;display:none;flex-direction:column;overflow:hidden">
+
+  <!-- HEADER -->
+  <div style="background:var(--white);border-bottom:1px solid var(--g200);height:62px;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0">
+    <button onclick="_mktTbPageClose()" style="display:flex;align-items:center;gap:5px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:5px 8px;border-radius:8px;font-family:var(--font);flex-shrink:0;white-space:nowrap;transition:background .12s" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Marketing</span>
+    </button>
+    <div style="width:1px;height:24px;background:var(--g200);flex-shrink:0"></div>
+    <input id="mkt-tb-name" class="mkt-tb-title-input" placeholder="Untitled template">
+    <div style="flex:1"></div>
+    <button class="tb-btn btn-ghost" style="font-size:12px" onclick="_mktTbPreviewOpen()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg> Preview</button>
+    <button class="tb-btn btn-teal" style="font-size:12px" onclick="_mktTbSave()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg> Save Template</button>
+  </div>
+
+  <!-- PROPERTIES STRIP -->
+  <div style="background:var(--white);border-bottom:1px solid var(--g200);display:flex;gap:22px;align-items:center;padding:10px 20px;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">
+      <label style="font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap">Description</label>
+      <input id="mkt-tb-desc" class="mkt-tb-inline-input" placeholder="When this template is used">
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:0">
+      <label style="font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;white-space:nowrap">Subject</label>
+      <input id="mkt-tb-subject" class="mkt-tb-inline-input" placeholder="Subject line...">
+    </div>
+  </div>
+
+  <!-- BODY: palette + WYSIWYG canvas -->
+  <div style="flex:1;display:flex;overflow:hidden">
+    <div class="mkt-wys-palette">
+      <div class="mkt-sec-label">Drag a block in</div>
+      <div id="mkt-tb-palette-list"></div>
+    </div>
+    <div class="mkt-wys-canvas-scroll" ondragover="_mktTbCanvasDragOver(event)" ondragleave="_mktTbCanvasDragLeave(event)" ondrop="_mktTbCanvasDrop(event)">
+      <div id="mkt-tb-canvas" class="mkt-wys-canvas"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Desktop / Mobile preview modal -->
+<div class="modal-overlay" id="mkt-tb-preview-modal" onclick="closeOnOverlay(event,'mkt-tb-preview-modal')">
+  <div class="modal" role="dialog" aria-modal="true" style="width:min(760px,94vw)" onclick="event.stopPropagation()">
     <div class="modal-header">
-      <div class="modal-title" id="mkt-tb-title">New Template</div>
-      <button class="modal-close" onclick="closeModal('mkt-tmpl-builder-modal')" aria-label="Close">&times;</button>
+      <div class="modal-title">Email Preview</div>
+      <button class="modal-close" onclick="closeModal('mkt-tb-preview-modal')" aria-label="Close">&times;</button>
     </div>
-    <div class="modal-body" style="padding:16px 20px">
-
-      <div class="mkt-cfg-grid" style="margin-bottom:14px">
-        <div class="mkt-field"><label>Template name</label><input id="mkt-tb-name" class="mkt-input" placeholder="e.g. Quarterly check-in"></div>
-        <div class="mkt-field"><label>Description</label><input id="mkt-tb-desc" class="mkt-input" placeholder="When this template is used"></div>
-        <div class="mkt-field"><label>Subject line</label><input id="mkt-tb-subject" class="mkt-input" placeholder="Subject line..."></div>
+    <div class="modal-body" style="background:var(--g50)">
+      <div class="mkt-pv-tabs">
+        <button id="mkt-pv-tab-desktop" class="mkt-pv-tab active" onclick="_mktTbPreviewMode('desktop')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg> Desktop</button>
+        <button id="mkt-pv-tab-mobile" class="mkt-pv-tab" onclick="_mktTbPreviewMode('mobile')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="11" y1="18" x2="13" y2="18"/></svg> Mobile</button>
       </div>
-
-      <div class="mkt-tb-layout">
-        <!-- Palette -->
-        <div class="mkt-tb-palette">
-          <div class="mkt-sec-label">Drag a block in</div>
-          <div id="mkt-tb-palette-list"></div>
-        </div>
-
-        <!-- Canvas -->
-        <div class="mkt-tb-canvas-wrap">
-          <div class="mkt-sec-label">Email structure</div>
-          <div id="mkt-tb-canvas" class="mkt-tb-canvas" ondragover="_mktTbCanvasDragOver(event)" ondragleave="_mktTbCanvasDragLeave(event)" ondrop="_mktTbCanvasDrop(event)"></div>
-        </div>
-
-        <!-- Live preview -->
-        <div class="mkt-tb-preview-wrap">
-          <div class="mkt-sec-label">Live preview</div>
-          <div class="mkt-tb-preview-frame" id="mkt-tb-preview"></div>
-        </div>
-      </div>
-
-    </div>
-    <div class="modal-footer">
-      <div class="modal-note">Drag blocks from the left to build the email, drag inside the canvas to reorder</div>
-      <div class="modal-actions">
-        <button class="modal-cancel" onclick="closeModal('mkt-tmpl-builder-modal')">Cancel</button>
-        <button class="modal-save" onclick="_mktTbSave()">Save Template</button>
+      <div id="mkt-pv-frame-wrap" class="mkt-pv-frame-wrap">
+        <div id="mkt-pv-render" class="mkt-pv-desktop"></div>
       </div>
     </div>
   </div>
 </div>
+
 <div class="modal-overlay" id="mkt-builder-modal" onclick="closeOnOverlay(event,'mkt-builder-modal')">
   <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-builder-title" onclick="event.stopPropagation()">
     <div class="modal-header">
@@ -18413,12 +18662,12 @@ var _mktTemplates = [
 ];
 
 var _mktCampaigns = [
-  {n:'Q3 Re-Engagement',    aud:'No contact 30+ days',              date:'Jul 28', status:'Sent',      sent:412, open:41.2, click:14.8, unsub:0.3},
-  {n:'New Product Launch',  aud:'All active accounts',              date:'Jul 15', status:'Sent',      sent:1248, open:38.9, click:13.1, unsub:0.5},
-  {n:'Mid-Year Check-In',   aud:'Tag: Customer',                    date:'Jun 30', status:'Sent',      sent:687, open:36.1, click:11.4, unsub:0.2},
-  {n:'Stage Nudge - Docs',  aud:'Stage: Documents Collected',       date:'Jun 12', status:'Sent',      sent:184, open:44.6, click:19.2, unsub:0.1},
-  {n:'August Win-Back',     aud:'No contact 60+ days',              date:'Aug 18', status:'Scheduled', sent:0, open:0, click:0, unsub:0},
-  {n:'Fall Summit Invite',  aud:'Tag: VIP',                         date:'-',      status:'Draft',     sent:0, open:0, click:0, unsub:0}
+  {n:'Q3 Re-Engagement',    aud:'No contact 30+ days',              date:'Jul 28', status:'Sent',      sent:412,  open:41.2, click:14.8, unsub:0.3, bounce:0.8, tmplIdx:0},
+  {n:'New Product Launch',  aud:'All active accounts',              date:'Jul 15', status:'Sent',      sent:1248, open:38.9, click:13.1, unsub:0.5, bounce:1.1, tmplIdx:2},
+  {n:'Mid-Year Check-In',   aud:'Tag: Customer',                    date:'Jun 30', status:'Sent',      sent:687,  open:36.1, click:11.4, unsub:0.2, bounce:0.6, tmplIdx:5},
+  {n:'Stage Nudge - Docs',  aud:'Stage: Documents Collected',       date:'Jun 12', status:'Sent',      sent:184,  open:44.6, click:19.2, unsub:0.1, bounce:0.5, tmplIdx:6},
+  {n:'August Win-Back',     aud:'No contact 60+ days',              date:'Aug 18', status:'Scheduled', sent:0, open:0, click:0, unsub:0, bounce:0, tmplIdx:4},
+  {n:'Fall Summit Invite',  aud:'Tag: VIP',                         date:'-',      status:'Draft',     sent:0, open:0, click:0, unsub:0, bounce:0, tmplIdx:3}
 ];
 
 /* ── Trigger + action catalog (fields resolve against company settings) ── */
@@ -18650,7 +18899,7 @@ function _mktRenderCampaigns() {
       +     '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="' + m.fg + '" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + MKT_ICONS[m.ic] + '</svg>'
       +   '</div>'
       +   '<div style="min-width:0">'
-      +     '<div class="mkt-camp-name">' + c.n + '</div>'
+      +     '<div class="mkt-camp-name" style="cursor:pointer" onclick="_mktEditCampaign(' + i + ')">' + c.n + '</div>'
       +     '<div class="mkt-camp-meta">' + m.pill + '<span>' + c.aud + '</span></div>'
       +   '</div>'
       + '</div>'
@@ -18784,8 +19033,8 @@ function _mktTbDefaultBlock(type) {
 function _mktTbOpen(idx) {
   _mktTbEditIdx = (typeof idx === 'number') ? idx : null;
   var t = _mktTbEditIdx !== null ? _mktTemplates[_mktTbEditIdx] : null;
-  document.getElementById('mkt-tb-title').textContent = t ? 'Edit Template' : 'New Template';
   document.getElementById('mkt-tb-name').value = t ? t.n : '';
+  document.getElementById('mkt-tb-name').placeholder = t ? t.n : 'Untitled template';
   document.getElementById('mkt-tb-desc').value = t ? t.d : '';
   document.getElementById('mkt-tb-subject').value = t ? t.s : '';
   _mktTbBlocks = t ? JSON.parse(JSON.stringify(t.blocks || [])) : [
@@ -18796,8 +19045,10 @@ function _mktTbOpen(idx) {
   ];
   _mktTbRenderPalette();
   _mktTbRenderCanvas();
-  _mktTbRenderPreview();
-  openModal('mkt-tmpl-builder-modal');
+  document.getElementById('mkt-tb-overlay').style.display = 'flex';
+}
+function _mktTbPageClose() {
+  document.getElementById('mkt-tb-overlay').style.display = 'none';
 }
 function _mktTbRenderPalette() {
   var el = document.getElementById('mkt-tb-palette-list'); if (!el) return;
@@ -18808,45 +19059,65 @@ function _mktTbRenderPalette() {
       + def.label + '</div>';
   }).join('');
 }
-function _mktTbFieldHtml(f, i, value) {
-  var v = (value === undefined ? '' : value).toString().replace(/"/g,'&quot;');
-  if (f.t === 'textarea') return '<textarea rows="3" oninput="_mktTbUpdateField(' + i + ',\'' + f.k + '\',this.value)" placeholder="' + f.l + '">' + (value||'') + '</textarea>';
-  return '<input value="' + v + '" oninput="_mktTbUpdateField(' + i + ',\'' + f.k + '\',this.value)" placeholder="' + f.l + '">';
+
+/* ── WYSIWYG canvas: blocks render with the SAME .mkt-eb-* markup as the
+   real email output, with contenteditable regions layered directly on
+   top — the thing you edit is pixel-for-pixel the thing that gets sent. */
+function _mktWysEditable(key, i, value, placeholder, tag) {
+  var v = (value || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return '<' + tag + ' class="mkt-wys-editable" contenteditable="plaintext-only" data-placeholder="' + placeholder + '" '
+    + 'oninput="_mktTbUpdateField(' + i + ',\'' + key + '\',this)">' + v + '</' + tag + '>';
+}
+function _mktRenderWysBlockHTML(b, i) {
+  switch (b.type) {
+    case 'header':
+      return '<div class="mkt-eb-header">'
+        + _mktWysEditable('brand', i, b.brand, 'Brand text', 'div').replace('class="mkt-wys-editable"', 'class="mkt-wys-editable brand"')
+        + _mktWysEditable('tagline', i, b.tagline, 'Tagline (optional)', 'div').replace('class="mkt-wys-editable"', 'class="mkt-wys-editable tagline"')
+        + '</div>';
+    case 'heading':
+      return '<div class="mkt-eb-heading">' + _mktWysEditable('text', i, b.text, 'Heading text', 'div') + '</div>';
+    case 'text':
+      return '<div class="mkt-eb-text">' + _mktWysEditable('text', i, b.text, 'Write your message here.', 'div') + '</div>';
+    case 'image':
+      return '<div class="mkt-eb-image"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>'
+        + _mktWysEditable('caption', i, b.caption, 'Image caption', 'span') + '</div>';
+    case 'button':
+      return '<div class="mkt-eb-button-wrap"><span class="mkt-eb-button">' + _mktWysEditable('text', i, b.text, 'Button label', 'span') + '</span></div>';
+    case 'divider':
+      return '<div class="mkt-wys-pad"><div class="mkt-eb-divider"></div></div>';
+    case 'spacer':
+      return '<div style="height:22px;display:flex;align-items:center;justify-content:center"><span style="font-size:9px;color:var(--g300);letter-spacing:.5px">SPACER</span></div>';
+    case 'footer':
+      return '<div class="mkt-eb-footer">' + _mktWysEditable('text', i, b.text, 'Footer text', 'div') + '</div>';
+    default: return '';
+  }
 }
 function _mktTbRenderCanvas() {
   var el = document.getElementById('mkt-tb-canvas'); if (!el) return;
   if (!_mktTbBlocks.length) {
-    el.innerHTML = '<div class="mkt-tb-canvas-empty">Drag a block from the left to start building this email.</div>';
+    el.innerHTML = '<div class="mkt-wys-canvas-empty">Drag a block from the left to start building this email.</div>';
     return;
   }
   el.innerHTML = _mktTbBlocks.map(function(b, i){
     var def = MKT_BLOCK_TYPES[b.type];
-    var fieldsHtml = (def.fields || []).map(function(f){ return _mktTbFieldHtml(f, i, b[f.k]); }).join('');
-    if (!def.fields.length) fieldsHtml = '<div style="font-size:11px;color:var(--g400);font-style:italic">— ' + (b.type === 'divider' ? 'horizontal rule' : 'blank space') + ' —</div>';
-    return '<div class="mkt-tb-block" draggable="true" data-idx="' + i + '" ondragstart="_mktTbBlockDragStart(event,' + i + ')" ondragend="_mktTbDragEnd(event)">'
-      + '<div class="mkt-tb-handle" title="Drag to reorder">'
+    return '<div class="mkt-wys-block" data-idx="' + i + '">'
+      + '<div class="mkt-wys-rail" draggable="true" ondragstart="_mktTbBlockDragStart(event,' + i + ')" ondragend="_mktTbDragEnd(event)" title="Drag to reorder">'
       +   '<svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor"><circle cx="3" cy="3" r="1.4"/><circle cx="9" cy="3" r="1.4"/><circle cx="3" cy="8" r="1.4"/><circle cx="9" cy="8" r="1.4"/><circle cx="3" cy="13" r="1.4"/><circle cx="9" cy="13" r="1.4"/></svg>'
       + '</div>'
-      + '<div class="mkt-tb-block-body">'
-      +   '<div class="mkt-tb-block-top"><span class="mkt-tb-block-label">' + def.label + '</span>'
-      +     '<button class="mkt-tb-remove" onclick="_mktTbRemoveBlock(' + i + ')" aria-label="Remove block">&times;</button></div>'
-      +   fieldsHtml
-      + '</div></div>';
+      + '<div class="mkt-wys-toolbar"><span class="mkt-wys-label">' + def.label + '</span>'
+      +   '<button class="mkt-wys-remove" onclick="_mktTbRemoveBlock(' + i + ')" aria-label="Remove block">&times;</button></div>'
+      + _mktRenderWysBlockHTML(b, i)
+      + '</div>';
   }).join('');
 }
-function _mktTbRenderPreview() {
-  var el = document.getElementById('mkt-tb-preview'); if (!el) return;
-  el.innerHTML = _mktRenderEmailHTML(_mktTbBlocks);
-}
-function _mktTbUpdateField(i, key, value) {
+function _mktTbUpdateField(i, key, el) {
   if (!_mktTbBlocks[i]) return;
-  _mktTbBlocks[i][key] = value;
-  _mktTbRenderPreview();
+  _mktTbBlocks[i][key] = (el.innerText !== undefined ? el.innerText : el.textContent).replace(/\n+$/,'');
 }
 function _mktTbRemoveBlock(i) {
   _mktTbBlocks.splice(i, 1);
   _mktTbRenderCanvas();
-  _mktTbRenderPreview();
 }
 function _mktTbPaletteDragStart(e, type) {
   _mktTbDragging = {kind:'palette', blockType:type};
@@ -18855,16 +19126,17 @@ function _mktTbPaletteDragStart(e, type) {
 function _mktTbBlockDragStart(e, i) {
   _mktTbDragging = {kind:'reorder', fromIndex:i};
   if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(i)); }
-  e.currentTarget.classList.add('dragging');
+  var block = e.currentTarget.closest('.mkt-wys-block');
+  if (block) block.classList.add('dragging');
 }
 function _mktTbDragEnd(e) {
-  document.querySelectorAll('.mkt-tb-block.dragging').forEach(function(b){ b.classList.remove('dragging'); });
-  document.querySelectorAll('.mkt-tb-block.drop-target-above,.mkt-tb-block.drop-target-below').forEach(function(b){
+  document.querySelectorAll('.mkt-wys-block.dragging').forEach(function(b){ b.classList.remove('dragging'); });
+  document.querySelectorAll('.mkt-wys-block.drop-target-above,.mkt-wys-block.drop-target-below').forEach(function(b){
     b.classList.remove('drop-target-above','drop-target-below');
   });
 }
 function _mktTbCanvasMidpoints() {
-  return Array.from(document.querySelectorAll('#mkt-tb-canvas .mkt-tb-block')).map(function(b){
+  return Array.from(document.querySelectorAll('#mkt-tb-canvas .mkt-wys-block')).map(function(b){
     var r = b.getBoundingClientRect();
     return r.top + r.height / 2;
   });
@@ -18879,7 +19151,7 @@ function _mktTbCanvasDragOver(e) {
   if (e.dataTransfer) e.dataTransfer.dropEffect = _mktTbDragging && _mktTbDragging.kind === 'reorder' ? 'move' : 'copy';
   document.getElementById('mkt-tb-canvas').classList.add('drag-over');
   var idx = _mktTbComputeDropIndex(e.clientY);
-  var blocks = document.querySelectorAll('#mkt-tb-canvas .mkt-tb-block');
+  var blocks = document.querySelectorAll('#mkt-tb-canvas .mkt-wys-block');
   blocks.forEach(function(b){ b.classList.remove('drop-target-above','drop-target-below'); });
   if (idx < blocks.length) blocks[idx].classList.add('drop-target-above');
   else if (blocks.length) blocks[blocks.length - 1].classList.add('drop-target-below');
@@ -18901,7 +19173,6 @@ function _mktTbCanvasDrop(e) {
   }
   _mktTbDragging = null;
   _mktTbRenderCanvas();
-  _mktTbRenderPreview();
 }
 function _mktTbSave() {
   var name = document.getElementById('mkt-tb-name').value.trim();
@@ -18915,17 +19186,174 @@ function _mktTbSave() {
   };
   if (_mktTbEditIdx !== null) _mktTemplates[_mktTbEditIdx] = rec;
   else _mktTemplates.push(rec);
-  closeModal('mkt-tmpl-builder-modal');
+  _mktTbPageClose();
   if (_mktCampFilterVal === 'templates') _mktRenderTemplates();
   showToast('Saved "' + name + '"');
 }
 function _mktNewTemplate() { _mktTbOpen(null); }
 function _mktTemplateEdit(i) { _mktTbOpen(i); }
 
+/* ── Desktop / Mobile preview (reads live from the builder's working blocks) ── */
+function _mktTbPreviewOpen() {
+  _mktTbPreviewMode('desktop');
+  openModal('mkt-tb-preview-modal');
+}
+function _mktTbPreviewMode(mode) {
+  document.getElementById('mkt-pv-tab-desktop').classList.toggle('active', mode === 'desktop');
+  document.getElementById('mkt-pv-tab-mobile').classList.toggle('active', mode === 'mobile');
+  var wrap = document.getElementById('mkt-pv-frame-wrap');
+  var html = _mktRenderEmailHTML(_mktTbBlocks);
+  if (mode === 'mobile') {
+    wrap.innerHTML = '<div class="mkt-pv-mobile"><div class="mkt-pv-phone"><div class="mkt-pv-phone-screen">' + html + '</div></div></div>';
+  } else {
+    wrap.innerHTML = '<div class="mkt-pv-desktop">' + html + '</div>';
+  }
+}
+
 function _mktEditCampaign(i){
   var c = _mktCampaigns[i];
-  if (c.status === 'Sent') { showToast(c.n + ' — ' + c.open + '% open, ' + c.click + '% click'); return; }
+  if (c.status === 'Sent') { _mktReportOpen(i); return; }
   _mktNewCampaign(i);
+}
+
+/* ═══════════ Campaign Report (full page) ═══════════ */
+var _mktRpIdx = null;
+var MKT_SAMPLE_NAMES = [
+  'Sarah Chen','Marco Reyes','Jamie Liu','Priya Nair','Daniel Foster','Aisha Rahman',
+  'Tom Bradley','Elena Ruiz','Chris Yamamoto','Nina Kowalski','Omar Haddad','Grace Kim',
+  'Liam O\'Connor','Fatima Zahra','Ben Whitfield','Sofia Moretti'
+];
+function _mktReportStatusPill(c) {
+  if (c.status === 'Sent') return '<span class="status-pill sp-green"><span class="pill-dot"></span>Sent ' + c.date + '</span>';
+  if (c.status === 'Scheduled') return '<span class="status-pill sp-amber"><span class="pill-dot"></span>Scheduled ' + c.date + '</span>';
+  return '<span class="status-pill" style="background:var(--g100);color:var(--g500)">Draft</span>';
+}
+function _mktReportOpen(i) {
+  _mktRpIdx = i;
+  var c = _mktCampaigns[i];
+  var t = _mktTemplates[c.tmplIdx] || _mktTemplates[0];
+  var delivered = Math.round(c.sent * (1 - c.bounce / 100));
+  var uniqueOpens = Math.round(delivered * c.open / 100);
+  var uniqueClicks = Math.round(delivered * c.click / 100);
+  var bounced = c.sent - delivered;
+
+  document.getElementById('mkt-rp-title').textContent = c.n;
+  document.getElementById('mkt-rp-subject').textContent = 'Subject: ' + t.s + '  ·  ' + c.aud;
+  document.getElementById('mkt-rp-status').innerHTML = _mktReportStatusPill(c);
+
+  document.getElementById('mkt-rp-stats').innerHTML =
+      '<div class="stat-card"><div class="stat-label">Delivered</div><div class="stat-value">' + delivered.toLocaleString() + '</div><div class="stat-delta" style="color:var(--g400)">of ' + c.sent.toLocaleString() + ' sent</div></div>'
+    + '<div class="stat-card"><div class="stat-label">Opens</div><div class="stat-value teal">' + c.open + '%</div><div class="stat-delta" style="color:var(--g400)">' + uniqueOpens.toLocaleString() + ' unique</div></div>'
+    + '<div class="stat-card"><div class="stat-label">Clicks</div><div class="stat-value">' + c.click + '%</div><div class="stat-delta" style="color:var(--g400)">' + uniqueClicks.toLocaleString() + ' unique</div></div>'
+    + '<div class="stat-card"><div class="stat-label">Unsubscribes</div><div class="stat-value" style="color:var(--amber)">' + c.unsub + '%</div></div>'
+    + '<div class="stat-card"><div class="stat-label">Bounced</div><div class="stat-value" style="color:var(--g500)">' + bounced.toLocaleString() + '</div><div class="stat-delta" style="color:var(--g400)">' + c.bounce + '%</div></div>';
+
+  _mktReportRenderChart(c);
+  _mktReportRenderLinks(c, t);
+  _mktReportRenderDevices(c);
+  _mktReportRenderRecipients(c);
+  document.getElementById('mkt-rp-email').innerHTML = _mktRenderEmailHTML(t.blocks);
+
+  document.getElementById('mkt-report-overlay').style.display = 'flex';
+}
+function _mktReportClose() {
+  document.getElementById('mkt-report-overlay').style.display = 'none';
+  _mktRpIdx = null;
+}
+function _mktReportDuplicate() {
+  if (_mktRpIdx === null) return;
+  _mktDuplicateCampaign(_mktRpIdx);
+  _mktReportClose();
+  _mktCampFilterVal = 'all';
+  document.querySelectorAll('#mkt-camp-filters .filter-chip').forEach(function(b,i){ b.classList.toggle('active', i===0); });
+  document.getElementById('mkt-campaigns-view').style.display = '';
+  document.getElementById('mkt-templates-view').style.display = 'none';
+}
+function _mktReportChartDistribution(c) {
+  // Realistic decay curve across 6 windows post-send, summing to the campaign's totals
+  var openShare  = [0.34, 0.24, 0.16, 0.12, 0.09, 0.05];
+  var clickShare = [0.22, 0.22, 0.18, 0.16, 0.13, 0.09];
+  var totalOpens = c.sent * c.open / 100;
+  var totalClicks = c.sent * c.click / 100;
+  return openShare.map(function(s,i){
+    return {open: totalOpens * s, click: totalClicks * clickShare[i]};
+  });
+}
+function _mktReportRenderChart(c) {
+  var labels = ['0-1h','1-2h','2-4h','4-8h','8-24h','24-48h'];
+  var dist = c.status === 'Sent' ? _mktReportChartDistribution(c) : [];
+  var chartEl = document.getElementById('mkt-rp-chart');
+  var labelEl = document.getElementById('mkt-rp-chart-labels');
+  if (!dist.length) {
+    chartEl.innerHTML = '<div class="mkt-empty" style="width:100%">No send activity yet.</div>';
+    labelEl.innerHTML = '';
+    return;
+  }
+  var maxV = Math.max.apply(null, dist.map(function(d){ return Math.max(d.open, d.click); })) || 1;
+  chartEl.innerHTML = dist.map(function(d){
+    var oh = Math.max(4, Math.round((d.open / maxV) * 120));
+    var ch = Math.max(4, Math.round((d.click / maxV) * 120));
+    return '<div class="mkt-rp-bar-col"><div class="mkt-rp-bar-pair">'
+      + '<div class="mkt-rp-bar mkt-rp-bar-open" style="height:' + oh + 'px" title="' + Math.round(d.open) + ' opens"></div>'
+      + '<div class="mkt-rp-bar mkt-rp-bar-click" style="height:' + ch + 'px" title="' + Math.round(d.click) + ' clicks"></div>'
+      + '</div></div>';
+  }).join('');
+  labelEl.innerHTML = labels.map(function(l){ return '<div style="flex:1;text-align:center;font-size:10px;color:var(--g400)">' + l + '</div>'; }).join('');
+}
+function _mktReportRenderLinks(c, t) {
+  var el = document.getElementById('mkt-rp-links');
+  var buttons = (t.blocks || []).filter(function(b){ return b.type === 'button'; });
+  var totalClicks = Math.round(c.sent * c.click / 100);
+  if (!buttons.length || c.status !== 'Sent') {
+    el.innerHTML = '<tr><td colspan="3" style="padding:20px 16px;text-align:center;font-size:12px;color:var(--g400)">No link clicks recorded yet.</td></tr>';
+    return;
+  }
+  var shares = buttons.map(function(_,i){ return 1 / Math.pow(1.6, i); });
+  var shareSum = shares.reduce(function(a,b){return a+b;}, 0);
+  el.innerHTML = buttons.map(function(b, i){
+    var clicks = Math.round(totalClicks * (shares[i] / shareSum));
+    var rate = c.sent ? (clicks / c.sent * 100).toFixed(1) : '0.0';
+    return '<tr style="border-top:1px solid var(--g100)">'
+      + '<td style="padding:10px 16px;font-size:12.5px;color:var(--dark);font-weight:600">' + b.text + '</td>'
+      + '<td style="padding:10px 16px;text-align:right;font-size:12.5px;font-family:var(--mono)">' + clicks.toLocaleString() + '</td>'
+      + '<td style="padding:10px 16px;text-align:right;font-size:12.5px;font-family:var(--mono);color:var(--teal)">' + rate + '%</td>'
+      + '</tr>';
+  }).join('');
+}
+function _mktReportRenderDevices(c) {
+  var el = document.getElementById('mkt-rp-devices');
+  if (c.status !== 'Sent') { el.innerHTML = '<div class="mkt-empty">No opens recorded yet.</div>'; return; }
+  var devices = [
+    {l:'Mobile',  pct:54, color:'var(--teal)'},
+    {l:'Desktop', pct:33, color:'var(--blue)'},
+    {l:'Webmail', pct:13, color:'var(--amber)'}
+  ];
+  el.innerHTML = devices.map(function(d){
+    return '<div class="mkt-rp-dev-row"><div class="mkt-rp-dev-label">' + d.l + '</div>'
+      + '<div class="mkt-rp-dev-track"><div class="mkt-rp-dev-fill" style="width:' + d.pct + '%;background:' + d.color + '"></div></div>'
+      + '<div class="mkt-rp-dev-pct">' + d.pct + '%</div></div>';
+  }).join('');
+}
+function _mktReportRenderRecipients(c) {
+  var el = document.getElementById('mkt-rp-recipients');
+  var countEl = document.getElementById('mkt-rp-recip-count');
+  if (c.status !== 'Sent') { el.innerHTML = '<tr><td colspan="4" style="padding:20px 16px;text-align:center;font-size:12px;color:var(--g400)">Nothing sent yet.</td></tr>'; countEl.textContent = ''; return; }
+  var n = Math.min(MKT_SAMPLE_NAMES.length, 10);
+  var openCut = Math.round(n * c.open / 100);
+  var clickCut = Math.round(n * c.click / 100);
+  var devices = ['Mobile','Desktop','Webmail'];
+  var rows = MKT_SAMPLE_NAMES.slice(0, n).map(function(name, i){
+    var opened = i < openCut;
+    var clicked = opened && i < clickCut;
+    return '<tr style="border-top:1px solid var(--g100)">'
+      + '<td style="padding:9px 16px;font-size:12.5px;color:var(--dark)">' + name + '</td>'
+      + '<td style="padding:9px 16px;text-align:center">' + (opened ? '<span style="color:var(--teal)">&#10003;</span>' : '<span style="color:var(--g300)">&mdash;</span>') + '</td>'
+      + '<td style="padding:9px 16px;text-align:center">' + (clicked ? '<span style="color:var(--blue)">&#10003;</span>' : '<span style="color:var(--g300)">&mdash;</span>') + '</td>'
+      + '<td style="padding:9px 16px;text-align:right;font-size:11.5px;color:var(--g400)">' + (opened ? devices[i % 3] : '&mdash;') + '</td>'
+      + '</tr>';
+  });
+  el.innerHTML = rows.join('');
+  countEl.textContent = 'Showing ' + n + ' of ' + c.sent.toLocaleString();
 }
 
 /* ── New / Edit Campaign modal ── */
@@ -18992,10 +19420,15 @@ function _mktCampSave(send) {
   } else if (status === 'Sent') {
     dateTxt = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric'});
   }
+  var tmplSel = document.getElementById('mkt-c-tmpl');
   var rec = {
     n: name, aud: a.desc, date: dateTxt, status: status,
     sent: status === 'Sent' ? a.n : 0,
-    open: status === 'Sent' ? 0 : 0, click: 0, unsub: 0
+    open: status === 'Sent' ? 21.5 : 0,
+    click: status === 'Sent' ? 5.8 : 0,
+    unsub: status === 'Sent' ? 0.1 : 0,
+    bounce: status === 'Sent' ? 0.7 : 0,
+    tmplIdx: tmplSel ? Number(tmplSel.value) : 0
   };
   if (_mktCampEditIdx !== null) _mktCampaigns[_mktCampEditIdx] = rec;
   else _mktCampaigns.unshift(rec);
@@ -19086,6 +19519,228 @@ function _mktDuplicateAuto(i) {
 }
 function _mktViewLog(i) {
   showToast(_mktAutomations[i].name + ' — 33 runs in the last 30 days');
+}
+
+/* ── ACE AUTOMATION BUILDER ── — describe an automation in plain English, Ace
+   parses it into a trigger + ordered action steps using the same
+   MKT_TRIGGERS / MKT_ACTIONS catalog the manual builder uses, so anything
+   Ace produces is 100% compatible with existing automations. */
+var _mktAcePlan = null;
+function _mktAceOpen() { _mktAceReset(); document.getElementById('ace-automation-modal').style.display = 'flex'; }
+function _mktAceClose() { document.getElementById('ace-automation-modal').style.display = 'none'; }
+function _mktAceReset() {
+  document.getElementById('ace-automation-input').value = '';
+  document.getElementById('ace-automation-step1').style.display = 'block';
+  document.getElementById('ace-automation-step2').style.display = 'none';
+  document.getElementById('ace-automation-step3').style.display = 'none';
+  document.getElementById('ace-automation-loading').style.display = 'block';
+  document.getElementById('ace-automation-preview').style.display = 'none';
+  _mktAcePlan = null;
+  var s1 = document.getElementById('ace-astep-1'), s2 = document.getElementById('ace-astep-2'), s3 = document.getElementById('ace-astep-3');
+  s1.style.color = 'var(--teal)'; s1.querySelector('span').style.background = 'var(--teal)'; s1.querySelector('span').style.color = '#fff';
+  s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
+  s3.style.color = 'var(--g400)'; s3.querySelector('span').style.background = 'var(--g200)'; s3.querySelector('span').style.color = 'var(--g400)';
+  s3.querySelector('span').textContent = '3';
+}
+function _mktAceBack() {
+  document.getElementById('ace-automation-step2').style.display = 'none';
+  document.getElementById('ace-automation-step1').style.display = 'block';
+}
+function _mktAceExample(btn) { document.getElementById('ace-automation-input').value = btn.textContent.replace(/^"|"$/g, ''); }
+function _mktAceGenerate() {
+  var input = document.getElementById('ace-automation-input').value.trim();
+  if (!input) { showToast('Please describe the automation first'); return; }
+  document.getElementById('ace-automation-step1').style.display = 'none';
+  document.getElementById('ace-automation-step2').style.display = 'block';
+  document.getElementById('ace-automation-loading').style.display = 'block';
+  document.getElementById('ace-automation-preview').style.display = 'none';
+  var s2 = document.getElementById('ace-astep-2');
+  s2.style.color = 'var(--teal)'; s2.querySelector('span').style.background = 'var(--teal)'; s2.querySelector('span').style.color = '#fff';
+  var msgs = ['Identifying the trigger…', 'Chaining the action steps…', 'Matching stages, tags and reps…', 'Building the workflow…'];
+  var i = 0; var sub = document.getElementById('ace-automation-loading-sub');
+  var ticker = setInterval(function() { sub.textContent = msgs[i++ % msgs.length]; }, 600);
+  setTimeout(function() {
+    clearInterval(ticker);
+    _mktAcePlan = _mktAceParse(input);
+    _mktAceRenderPreview(_mktAcePlan);
+    document.getElementById('ace-automation-loading').style.display = 'none';
+    document.getElementById('ace-automation-preview').style.display = 'block';
+  }, 2400);
+}
+/* Pure-ish parser: text in, {triggerType, triggerCfg, actions[], assumptions[]} out.
+   Kept dependency-free (no DOM reads) so it's unit-testable like the other
+   _mkt*Pure helpers in this file. */
+function _mktAceParse(text) {
+  var lower = text.toLowerCase();
+  var assumptions = [];
+
+  // ── Trigger ──
+  var triggerType = 'stage_changed';
+  var triggerCfg = {};
+  var stages = (_companySettings.pipelineStages || []);
+  function findStageIdx(name) {
+    for (var i = 0; i < stages.length; i++) { if (name && stages[i].name.toLowerCase().indexOf(name) !== -1) return i; }
+    return null;
+  }
+  var stageMatch = null;
+  for (var si = 0; si < stages.length; si++) {
+    if (lower.indexOf(stages[si].name.toLowerCase()) !== -1) { stageMatch = si; break; }
+  }
+  if (/won/.test(lower)) { triggerType = 'deal_won'; }
+  else if (/lost/.test(lower)) { triggerType = 'deal_lost'; }
+  else if (/no activity|goes? quiet|quiet for|hasn'?t (been )?touch/.test(lower)) {
+    triggerType = 'no_activity';
+    var dm = lower.match(/(\d+)\s*day/);
+    triggerCfg.days = dm ? parseInt(dm[1]) : 7;
+  } else if (/stuck|stalled|sits? in|sitting in/.test(lower)) {
+    triggerType = 'stage_stalled';
+    triggerCfg.stage = stageMatch !== null ? stageMatch : 0;
+    var dm2 = lower.match(/(\d+)\s*day/);
+    triggerCfg.days = dm2 ? parseInt(dm2[1]) : 14;
+    if (stageMatch === null) assumptions.push('No specific stage named, so Ace defaulted the trigger to your first pipeline stage.');
+  } else if (/new lead|lead is assigned|assigned to a rep/.test(lower)) {
+    triggerType = 'new_lead';
+  } else if (/renewal/.test(lower)) {
+    triggerType = 'renewal_due';
+    var dm3 = lower.match(/(\d+)\s*day/);
+    triggerCfg.days = dm3 ? parseInt(dm3[1]) : 30;
+  } else if (/behind (goal )?pace|falls? behind/.test(lower)) {
+    triggerType = 'goal_pace';
+    var pm = lower.match(/(\d+)\s*%/);
+    triggerCfg.pct = pm ? parseInt(pm[1]) : 70;
+  } else if (/tag(ged)?/.test(lower)) {
+    triggerType = 'tag_added';
+  } else if (/exceeds|crosses|over \$/.test(lower)) {
+    triggerType = 'value_above';
+    var am = lower.match(/\$[\d,]+/);
+    triggerCfg.amt = am ? parseInt(am[0].replace(/[$,]/g,'')) : 50000;
+  } else if (/moves? to|advances? to|reaches/.test(lower) || stageMatch !== null) {
+    triggerType = 'stage_changed';
+    triggerCfg.stage = stageMatch !== null ? stageMatch : 0;
+    if (stageMatch === null) assumptions.push('No specific stage named, so Ace defaulted the trigger to your first pipeline stage.');
+  } else {
+    assumptions.push('Couldn\'t find a clear trigger phrase, so Ace defaulted to "Opportunity moves to a stage" — change it in the Trigger dropdown if that\'s not right.');
+  }
+
+  // ── Actions — scan for action phrases in the order they appear ──
+  var actions = [];
+  var actionMatches = [];
+  var reEmail = /send[^.]*?email/gi;
+  var reTask = /create[^.]*?task|add[^.]*?task/gi;
+  var reNotify = /notify[^.]*?manager|alert[^.]*?manager/gi;
+  var reTag = /add[^.]*?tag/gi;
+  var reStageMove = /move[^.]*?(to|stage)/gi;
+  var reFlag = /flag[^.]*?risk/gi;
+  var reNote = /log[^.]*?note/gi;
+  var reWait = /wait\s+(\d+)\s*day/gi;
+  [ [reEmail,'send_email'], [reTask,'create_task'], [reNotify,'notify_mgr'],
+    [reTag,'add_tag'], [reStageMove,'move_stage'], [reFlag,'flag_risk'],
+    [reNote,'log_note'], [reWait,'wait'] ].forEach(function(pair){
+    var re = pair[0], type = pair[1]; var m;
+    while ((m = re.exec(text)) !== null) actionMatches.push({idx:m.index, type:type, raw:m[0]});
+  });
+  actionMatches.sort(function(a,b){ return a.idx - b.idx; });
+
+  actionMatches.forEach(function(am, ami){
+    var windowEnd = (ami + 1 < actionMatches.length) ? actionMatches[ami+1].idx : Math.min(text.length, am.idx + 80);
+    var scope = text.substring(am.idx, windowEnd);
+    if (am.type === 'send_email') {
+      var delayM = scope.match(/in\s+(\d+)\s*day/i);
+      actions.push({type:'send_email', cfg:{tmpl:0, delay: delayM ? parseInt(delayM[1]) : 0}});
+    } else if (am.type === 'create_task') {
+      var dueM = scope.match(/in\s+(\d+)\s*day|same day/i);
+      var due = 0;
+      if (dueM) due = /same day/i.test(dueM[0]) ? 0 : parseInt(dueM[1]);
+      actions.push({type:'create_task', cfg:{title:'Follow up', due: due, rep:''}});
+    } else if (am.type === 'notify_mgr') {
+      actions.push({type:'notify_mgr', cfg:{}});
+    } else if (am.type === 'add_tag') {
+      actions.push({type:'add_tag', cfg:{tag:0}});
+    } else if (am.type === 'move_stage') {
+      actions.push({type:'move_stage', cfg:{stage:0}});
+    } else if (am.type === 'flag_risk') {
+      actions.push({type:'flag_risk', cfg:{}});
+    } else if (am.type === 'log_note') {
+      actions.push({type:'log_note', cfg:{text:'Auto-logged by workflow'}});
+    } else if (am.type === 'wait') {
+      var wm = am.raw.match(/(\d+)/);
+      actions.push({type:'wait', cfg:{days: wm ? parseInt(wm[1]) : 3}});
+    }
+  });
+  if (!actions.length) {
+    actions.push({type:'send_email', cfg:{tmpl:0, delay:0}});
+    assumptions.push('No clear action steps found, so Ace added a "Send email" step to start — add or change steps below.');
+  }
+
+  var name = (MKT_TRIGGERS[triggerType] || {}).label || 'New automation';
+  var explanation = 'Ace interpreted this as: ' + name + ', then ' + actions.map(function(a){ return (MKT_ACTIONS[a.type]||{}).label; }).join(' → ') + '.';
+
+  return { triggerType: triggerType, triggerCfg: triggerCfg, actions: actions, assumptions: assumptions, explanation: explanation, name: name };
+}
+function _mktAceRenderPreview(plan) {
+  document.getElementById('ace-automation-summary-banner').textContent = plan.explanation;
+  var assumptions = plan.assumptions.length ? plan.assumptions : ['Trigger and steps were extracted directly from your description — nothing else assumed.'];
+  document.getElementById('ace-automation-assumptions').innerHTML = assumptions.map(function(a){ return '• ' + a; }).join('<br>');
+  document.getElementById('ace-automation-name').value = plan.name;
+
+  var sel = document.getElementById('ace-automation-trigger');
+  sel.innerHTML = Object.keys(MKT_TRIGGERS).map(function(k){
+    return '<option value="' + k + '"' + (k === plan.triggerType ? ' selected' : '') + '>' + MKT_TRIGGERS[k].label + '</option>';
+  }).join('');
+
+  var addSel = document.getElementById('ace-automation-add-action');
+  addSel.innerHTML = Object.keys(MKT_ACTIONS).map(function(k){
+    return '<option value="' + k + '">' + MKT_ACTIONS[k].label + '</option>';
+  }).join('');
+
+  _mktAceRenderActions();
+}
+function _mktAceTriggerChanged() {
+  _mktAcePlan.triggerType = document.getElementById('ace-automation-trigger').value;
+  _mktAcePlan.triggerCfg = {};
+}
+function _mktAceRenderActions() {
+  var el = document.getElementById('ace-automation-actions');
+  el.innerHTML = _mktAcePlan.actions.map(function(a, i){
+    var def = MKT_ACTIONS[a.type] || {label:a.type, icon:'note'};
+    return '<div style="display:flex;align-items:center;gap:8px;background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:8px 10px">'
+      + '<span style="font-size:11px;font-weight:700;color:var(--g400);width:16px">' + (i+1) + '.</span>'
+      + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + (MKT_ICONS[def.icon] || MKT_ICONS.note) + '</svg>'
+      + '<span style="flex:1;font-size:12.5px;color:var(--dark)">' + def.label + '</span>'
+      + '<button onclick="_mktAceRemoveAction(' + i + ')" style="background:none;border:none;color:var(--g400);cursor:pointer;font-size:15px;line-height:1;padding:2px 4px" aria-label="Remove step">&times;</button>'
+      + '</div>';
+  }).join('');
+}
+function _mktAceAddAction() {
+  var type = document.getElementById('ace-automation-add-action').value;
+  if (!type) return;
+  var def = MKT_ACTIONS[type] || {fields:[]};
+  var cfg = {};
+  (def.fields || []).forEach(function(f){ cfg[f.k] = f.d !== undefined ? f.d : ''; });
+  _mktAcePlan.actions.push({type:type, cfg:cfg});
+  _mktAceRenderActions();
+}
+function _mktAceRemoveAction(i) {
+  if (_mktAcePlan.actions.length <= 1) { showToast('An automation needs at least one action'); return; }
+  _mktAcePlan.actions.splice(i, 1);
+  _mktAceRenderActions();
+}
+function _mktAceConfirm() {
+  var name = document.getElementById('ace-automation-name').value.trim() || _mktAcePlan.name;
+  var rec = {
+    name: name,
+    active: true,
+    trigger: { type: _mktAcePlan.triggerType, cfg: _mktAcePlan.triggerCfg },
+    actions: JSON.parse(JSON.stringify(_mktAcePlan.actions))
+  };
+  _mktAutomations.push(rec);
+  _mktRenderAutomations();
+  document.getElementById('ace-automation-step2').style.display = 'none';
+  document.getElementById('ace-automation-step3').style.display = 'block';
+  var s3 = document.getElementById('ace-astep-3');
+  s3.style.color = 'var(--teal)'; s3.querySelector('span').style.background = 'var(--teal)'; s3.querySelector('span').style.color = '#fff';
+  s3.querySelector('span').textContent = '✓';
+  showToast('Automation "' + name + '" is live!');
 }
 
 /* ── Builder ── */
