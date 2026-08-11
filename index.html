@@ -4057,84 +4057,31 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div class="stat-card"><div class="stat-label">Unsubscribe Rate</div><div class="stat-value" style="color:var(--amber)">0.4%</div><div class="stat-delta positive">Below 2% threshold</div></div>
   </div>
 
-  <!-- Bulk sender -->
-  <div class="card" style="margin-bottom:24px">
-    <div class="card-title" style="margin-bottom:4px">
-      <span>Bulk Email Sender</span>
-      <button class="card-link" onclick="_mktResetFilters()">Reset filters</button>
-    </div>
-    <div style="font-size:11.5px;color:var(--g400);margin-bottom:16px">Filter your book of business, then send a targeted campaign to everyone who matches.</div>
-
-    <div class="mkt-filter-grid">
-      <div class="mkt-field">
-        <label>Pipeline Stage</label>
-        <select id="mkt-f-stage" class="mkt-input" onchange="_mktRecount()"><option value="">All stages</option></select>
-      </div>
-      <div class="mkt-field">
-        <label>Tag</label>
-        <select id="mkt-f-tag" class="mkt-input" onchange="_mktRecount()"><option value="">Any tag</option></select>
-      </div>
-      <div class="mkt-field">
-        <label>Owner</label>
-        <select id="mkt-f-rep" class="mkt-input" onchange="_mktRecount()"><option value="">All owners</option></select>
-      </div>
-      <div class="mkt-field">
-        <label>Last Contacted</label>
-        <select id="mkt-f-last" class="mkt-input" onchange="_mktRecount()">
-          <option value="">Any time</option>
-          <option value="7">More than 7 days ago</option>
-          <option value="14">More than 14 days ago</option>
-          <option value="30">More than 30 days ago</option>
-          <option value="60">More than 60 days ago</option>
-          <option value="90">More than 90 days ago</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="mkt-audience">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-      <span><strong id="mkt-aud-count" style="font-family:var(--mono)">1,248</strong> contacts match &mdash; <span id="mkt-aud-desc" style="color:var(--g400)">no filters applied</span></span>
-      <button class="card-link" style="margin-left:auto" onclick="_mktPreviewAudience()">Preview list</button>
-    </div>
-
-    <div class="mkt-compose">
-      <div class="mkt-field" style="flex:1;min-width:200px">
-        <label>Template</label>
-        <select id="mkt-f-template" class="mkt-input" onchange="_mktTemplatePick()"></select>
-      </div>
-      <div class="mkt-field" style="flex:2;min-width:240px">
-        <label>Subject line</label>
-        <input id="mkt-f-subject" class="mkt-input" placeholder="Subject line...">
-      </div>
-      <button class="tb-btn btn-teal" style="font-size:12px;align-self:flex-end;height:34px" onclick="_mktSendBulk()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg> Send Campaign</button>
-    </div>
-  </div>
-
-  <!-- Campaigns as cards -->
+  <!-- Campaigns / Templates -->
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
-    <div style="font-size:13px;font-weight:600;color:var(--dark)">Campaigns</div>
+    <div style="font-size:13px;font-weight:600;color:var(--dark)" id="mkt-list-title">Campaigns</div>
     <div style="display:flex;gap:6px" id="mkt-camp-filters">
       <button class="filter-chip active" onclick="_mktCampFilter(this,'all')">All</button>
       <button class="filter-chip" onclick="_mktCampFilter(this,'Sent')">Sent</button>
       <button class="filter-chip" onclick="_mktCampFilter(this,'Scheduled')">Scheduled</button>
       <button class="filter-chip" onclick="_mktCampFilter(this,'Draft')">Draft</button>
+      <span class="mkt-chip-sep"></span>
+      <button class="filter-chip" onclick="_mktCampFilter(this,'templates')">Templates</button>
     </div>
-  </div>
-  <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
-    <div class="mkt-row mkt-row-head">
-      <div>Campaign</div><div style="text-align:right">Recipients</div>
-      <div>Open rate</div><div>Click rate</div>
-      <div style="text-align:right">Unsub</div><div style="text-align:right">Date</div><div></div>
-    </div>
-    <div id="mkt-campaign-list"></div>
   </div>
 
-  <!-- Templates as cards -->
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
-    <div style="font-size:13px;font-weight:600;color:var(--dark)">Email Templates</div>
-    <button class="tb-btn btn-ghost" style="font-size:11px" onclick="_mktNewTemplate()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Template</button>
+  <div id="mkt-campaigns-view">
+    <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
+      <div class="mkt-row mkt-row-head">
+        <div>Campaign</div><div style="text-align:right">Recipients</div>
+        <div>Open rate</div><div>Click rate</div>
+        <div style="text-align:right">Unsub</div><div style="text-align:right">Date</div><div></div>
+      </div>
+      <div id="mkt-campaign-list"></div>
+    </div>
   </div>
-  <div id="mkt-template-grid" class="three-col"></div>
+
+  <div id="mkt-templates-view" class="three-col" style="display:none;margin-bottom:28px"></div>
 
 </div><!-- end mkt-panel-email -->
 
@@ -7985,8 +7932,7 @@ function applyCompanySettings() {
   // Re-render contacts tables so tag badges update
   if (typeof renderPeopleTable === 'function') renderPeopleTable();
   if (typeof renderOrgsTable === 'function') renderOrgsTable();
-  // Marketing ripple — stage/tag/owner dropdowns and automation cards follow company settings
-  if (typeof _mktRenderFilters === 'function') _mktRenderFilters();
+  // Marketing ripple — campaign audience filters and automation cards follow company settings
   if (typeof _mktRenderAutomations === 'function') _mktRenderAutomations();
   showToast('✓ Company settings saved — changes applied');
 }
@@ -18103,7 +18049,69 @@ function _aceCommConfirm() {
 .mkt-recipe{display:flex;align-items:center;gap:7px;padding:8px 13px;border:1px solid var(--g200);border-radius:9px;background:var(--white);font-size:12px;font-weight:500;color:var(--g600);cursor:pointer;font-family:var(--font);transition:all .15s}
 .mkt-recipe:hover{border-color:var(--teal);color:var(--teal);background:rgba(29,158,117,0.04)}
 .mkt-new-card{background:var(--g50);border:1.5px dashed var(--g200);border-radius:14px;padding:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;min-height:170px;transition:all .15s}
+
 .mkt-new-card:hover{border-color:var(--teal);background:rgba(29,158,117,0.04)}
+
+/* Filter chip separator */
+.mkt-chip-sep{width:1px;background:var(--g200);margin:0 2px}
+
+/* ── Email render frame (shared by library cards, preview modal, builder) ── */
+.mkt-email-frame{background:var(--white);border-radius:10px;overflow:hidden;font-family:var(--font)}
+.mkt-eb-header{padding:20px 22px;background:linear-gradient(135deg,var(--navy),#242d4a);text-align:center}
+.mkt-eb-header .brand{font-size:15px;font-weight:800;color:#fff;letter-spacing:.2px}
+.mkt-eb-header .tagline{font-size:11px;color:rgba(255,255,255,0.55);margin-top:3px}
+.mkt-eb-heading{padding:20px 24px 4px;font-size:17px;font-weight:700;color:var(--dark);line-height:1.35}
+.mkt-eb-text{padding:8px 24px;font-size:12.5px;color:var(--g600);line-height:1.65}
+.mkt-eb-image{margin:10px 24px;border:1.5px dashed var(--g300);border-radius:8px;background:var(--g50);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:26px 12px;color:var(--g400)}
+.mkt-eb-image span{font-size:11px;font-weight:600}
+.mkt-eb-button-wrap{padding:14px 24px;text-align:center}
+.mkt-eb-button{display:inline-block;padding:10px 26px;background:var(--teal);color:#fff;border-radius:8px;font-size:12.5px;font-weight:700}
+.mkt-eb-divider{margin:10px 24px;border-top:1px solid var(--g200)}
+.mkt-eb-footer{padding:16px 24px 20px;border-top:1px solid var(--g100);margin-top:6px;text-align:center;font-size:10.5px;color:var(--g400);line-height:1.6}
+.mkt-eb-empty{padding:40px 20px;text-align:center;font-size:12px;color:var(--g400)}
+
+/* Library card — real mini render, clipped with fade */
+.mkt-tmpl-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);overflow:hidden;cursor:pointer;transition:all .15s;display:flex;flex-direction:column}
+.mkt-tmpl-card:hover{border-color:var(--teal);box-shadow:0 4px 16px rgba(29,158,117,0.1)}
+.mkt-tmpl-mini{position:relative;height:150px;overflow:hidden;background:var(--g50);border-bottom:1px solid var(--g100)}
+.mkt-tmpl-mini .mkt-email-frame{transform:scale(0.62);transform-origin:top center;width:161%;margin-left:-30.5%;pointer-events:none}
+.mkt-tmpl-mini::after{content:'';position:absolute;left:0;right:0;bottom:0;height:36px;background:linear-gradient(rgba(250,250,251,0),var(--g50))}
+.mkt-tmpl-body{padding:13px 15px}
+.mkt-tmpl-name{font-size:12.5px;font-weight:700;color:var(--dark);margin-bottom:3px}
+.mkt-tmpl-desc{font-size:11px;color:var(--g400);line-height:1.4;margin-bottom:10px}
+.mkt-tmpl-foot{display:flex;gap:6px}
+
+/* ── Template Builder layout ── */
+.mkt-tb-layout{display:grid;grid-template-columns:180px 1fr 260px;gap:14px;align-items:start}
+.mkt-tb-palette{background:var(--g50);border-radius:10px;padding:12px}
+.mkt-tb-block-chip{display:flex;align-items:center;gap:8px;padding:9px 10px;background:var(--white);border:1px solid var(--g200);border-radius:8px;margin-bottom:6px;cursor:grab;font-size:12px;font-weight:600;color:var(--dark);transition:all .13s;user-select:none}
+.mkt-tb-block-chip:hover{border-color:var(--teal);color:var(--teal)}
+.mkt-tb-block-chip:active{cursor:grabbing}
+.mkt-tb-block-chip svg{flex-shrink:0;color:var(--g400)}
+.mkt-tb-block-chip:hover svg{color:var(--teal)}
+.mkt-tb-canvas-wrap{min-width:0}
+.mkt-tb-canvas{background:var(--g50);border:1.5px dashed var(--g200);border-radius:10px;padding:10px;min-height:420px;max-height:420px;overflow-y:auto;transition:border-color .13s,background .13s}
+.mkt-tb-canvas.drag-over{border-color:var(--teal);background:rgba(29,158,117,0.05)}
+.mkt-tb-block{background:var(--white);border:1px solid var(--g200);border-radius:9px;padding:10px 10px 10px 6px;margin-bottom:8px;display:flex;gap:6px;align-items:flex-start;transition:box-shadow .13s,opacity .13s}
+.mkt-tb-block.dragging{opacity:0.35}
+.mkt-tb-block.drop-target-above{box-shadow:0 -3px 0 var(--teal)}
+.mkt-tb-block.drop-target-below{box-shadow:0 3px 0 var(--teal)}
+.mkt-tb-handle{cursor:grab;color:var(--g300);padding:4px 2px;flex-shrink:0;line-height:1}
+.mkt-tb-handle:active{cursor:grabbing}
+.mkt-tb-block-body{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.mkt-tb-block-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.mkt-tb-block-label{font-size:9.5px;font-weight:700;letter-spacing:.6px;color:var(--teal);text-transform:uppercase}
+.mkt-tb-remove{border:none;background:none;color:var(--g300);cursor:pointer;font-size:14px;line-height:1;padding:2px 4px;border-radius:4px}
+.mkt-tb-remove:hover{color:#dc3545;background:rgba(220,53,69,0.08)}
+.mkt-tb-block input,.mkt-tb-block textarea{width:100%;border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12px;font-family:var(--font);color:var(--dark);resize:vertical}
+.mkt-tb-block input:focus,.mkt-tb-block textarea:focus{outline:none;border-color:var(--teal)}
+.mkt-tb-canvas-empty{padding:50px 16px;text-align:center;font-size:12px;color:var(--g400)}
+.mkt-tb-drop-line{height:3px;background:var(--teal);border-radius:2px;margin:2px 0}
+.mkt-tb-preview-wrap{min-width:0}
+.mkt-tb-preview-frame{background:var(--g50);border-radius:10px;padding:10px;max-height:420px;overflow-y:auto}
+@media(max-width:900px){.mkt-tb-layout{grid-template-columns:1fr}}
+body.dark-mode .mkt-tmpl-mini,body.dark-mode .mkt-tb-palette,body.dark-mode .mkt-tb-canvas,body.dark-mode .mkt-tb-preview-frame{background:var(--white)}
+body.dark-mode .mkt-tb-block,body.dark-mode .mkt-tb-block-chip{background:var(--white);border-color:rgba(255,255,255,0.12)}
 .mkt-builder-row{display:flex;gap:10px;align-items:flex-end;padding:12px;background:var(--g50);border-radius:10px;margin-bottom:10px;flex-wrap:wrap}
 .mkt-cfg-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;width:100%}
 .mkt-sec-label{font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:1px;margin-bottom:9px}
@@ -18193,6 +18201,75 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
     </div>
   </div>
 </div>
+
+<!-- Template Preview modal -->
+<div class="modal-overlay" id="mkt-tmpl-preview-modal" onclick="closeOnOverlay(event,'mkt-tmpl-preview-modal')">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-tp-title" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="mkt-tp-title">Template</div>
+        <div style="font-size:11.5px;color:var(--g400);margin-top:2px" id="mkt-tp-subject"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('mkt-tmpl-preview-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body" style="background:var(--g50)">
+      <div id="mkt-tp-render"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note" id="mkt-tp-desc"></div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="_mktTemplateEditFromPreview()">Edit</button>
+        <button class="modal-save" onclick="_mktUseTemplateFromPreview()">Use in Campaign</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Template Builder modal (drag-and-drop) -->
+<div class="modal-overlay" id="mkt-tmpl-builder-modal" onclick="closeOnOverlay(event,'mkt-tmpl-builder-modal')">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mkt-tb-title" style="width:min(1080px,94vw)" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="mkt-tb-title">New Template</div>
+      <button class="modal-close" onclick="closeModal('mkt-tmpl-builder-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body" style="padding:16px 20px">
+
+      <div class="mkt-cfg-grid" style="margin-bottom:14px">
+        <div class="mkt-field"><label>Template name</label><input id="mkt-tb-name" class="mkt-input" placeholder="e.g. Quarterly check-in"></div>
+        <div class="mkt-field"><label>Description</label><input id="mkt-tb-desc" class="mkt-input" placeholder="When this template is used"></div>
+        <div class="mkt-field"><label>Subject line</label><input id="mkt-tb-subject" class="mkt-input" placeholder="Subject line..."></div>
+      </div>
+
+      <div class="mkt-tb-layout">
+        <!-- Palette -->
+        <div class="mkt-tb-palette">
+          <div class="mkt-sec-label">Drag a block in</div>
+          <div id="mkt-tb-palette-list"></div>
+        </div>
+
+        <!-- Canvas -->
+        <div class="mkt-tb-canvas-wrap">
+          <div class="mkt-sec-label">Email structure</div>
+          <div id="mkt-tb-canvas" class="mkt-tb-canvas" ondragover="_mktTbCanvasDragOver(event)" ondragleave="_mktTbCanvasDragLeave(event)" ondrop="_mktTbCanvasDrop(event)"></div>
+        </div>
+
+        <!-- Live preview -->
+        <div class="mkt-tb-preview-wrap">
+          <div class="mkt-sec-label">Live preview</div>
+          <div class="mkt-tb-preview-frame" id="mkt-tb-preview"></div>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note">Drag blocks from the left to build the email, drag inside the canvas to reorder</div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="closeModal('mkt-tmpl-builder-modal')">Cancel</button>
+        <button class="modal-save" onclick="_mktTbSave()">Save Template</button>
+      </div>
+    </div>
+  </div>
+</div>
 <div class="modal-overlay" id="mkt-builder-modal" onclick="closeOnOverlay(event,'mkt-builder-modal')">
   <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-builder-title" onclick="event.stopPropagation()">
     <div class="modal-header">
@@ -18240,16 +18317,99 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
 
 var MKT_ACTIVITY_TYPES = ['Call','Email','Meeting','Note','Demo'];
 
+/* ── Email block catalog — the vocabulary the drag-and-drop builder works with ── */
+var MKT_BLOCK_TYPES = {
+  header:  {label:'Header / Logo', icon:'layout',  fields:[{k:'brand',t:'text',l:'Brand text',d:'Your Company'},{k:'tagline',t:'text',l:'Tagline',d:''}]},
+  heading: {label:'Heading',       icon:'type',    fields:[{k:'text',t:'text',l:'Heading text',d:'Heading goes here'}]},
+  text:    {label:'Text',          icon:'align',   fields:[{k:'text',t:'textarea',l:'Body text',d:'Write your message here.'}]},
+  image:   {label:'Image',         icon:'image',   fields:[{k:'caption',t:'text',l:'Image caption / alt text',d:'Image placeholder'}]},
+  button:  {label:'Button',        icon:'mouse',   fields:[{k:'text',t:'text',l:'Button label',d:'Click here'}]},
+  divider: {label:'Divider',       icon:'minus',   fields:[]},
+  spacer:  {label:'Spacer',        icon:'space',   fields:[]},
+  footer:  {label:'Footer',        icon:'footer',  fields:[{k:'text',t:'textarea',l:'Footer text',d:'Sent by {{sender_name}} · Unsubscribe'}]}
+};
+var MKT_BLOCK_ICONS = {
+  layout: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/>',
+  type:   '<polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/>',
+  align:  '<line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/>',
+  image:  '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/>',
+  mouse:  '<rect x="5" y="2" width="14" height="20" rx="7"/><line x1="12" y1="6" x2="12" y2="10"/>',
+  minus:  '<line x1="5" y1="12" x2="19" y2="12"/>',
+  space:  '<polyline points="8 3 4 7 8 11"/><polyline points="16 3 20 7 16 11"/><line x1="4" y1="7" x2="20" y2="7"/><polyline points="8 13 4 17 8 21"/><polyline points="16 13 20 17 16 21"/><line x1="4" y1="17" x2="20" y2="17"/>',
+  footer: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="15" x2="21" y2="15"/>'
+};
+
 var _mktTemplates = [
-  {n:'Re-engagement Outreach',      d:'Warm a cold or inactive contact back up',        s:'Checking in - anything we can help with?'},
-  {n:'Proposal Follow-up',          d:'Sent right after a proposal goes out',           s:'Your proposal - happy to walk through it'},
-  {n:'Product Update Announcement', d:'New features, catalog or service changes',       s:'What is new this quarter'},
-  {n:'Event Invitation',            d:'Webinar, trade show or customer summit',         s:'You are invited: {{event_name}}'},
-  {n:'Win-back Campaign',           d:'Contacts with no touch in 60+ days',             s:'It has been a while - here is what changed'},
-  {n:'Welcome & Onboarding',        d:'Fires when a deal closes won',                   s:'Welcome aboard, {{first_name}}'},
-  {n:'Pipeline Stall Nudge',        d:'Deal sitting in one stage too long',             s:'Where should we take this next?'},
-  {n:'Seasonal Promotion',          d:'Holiday or end-of-quarter push',                 s:'A limited-time offer for you'},
-  {n:'Renewal Reminder',            d:'Ahead of a contract or policy renewal',          s:'Your renewal is coming up'}
+  {n:'Re-engagement Outreach',      d:'Warm a cold or inactive contact back up',        s:'Checking in - anything we can help with?', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'Staying in touch'},
+    {type:'heading', text:'We miss having you in the loop'},
+    {type:'text',    text:"It's been a while since we last connected. I wanted to check in and see how things are going on your end — anything we can help with?"},
+    {type:'button',  text:'Reply to this email'},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]},
+  {n:'Proposal Follow-up',          d:'Sent right after a proposal goes out',           s:'Your proposal - happy to walk through it', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'Following up'},
+    {type:'heading', text:'Your proposal is ready'},
+    {type:'text',    text:"Thanks for the conversation earlier — I've attached the proposal we discussed. Happy to walk through any of it on a quick call."},
+    {type:'image',   caption:'Proposal PDF attached'},
+    {type:'button',  text:'Schedule a walkthrough'},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]},
+  {n:'Product Update Announcement', d:'New features, catalog or service changes',       s:'What is new this quarter', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'Product update'},
+    {type:'heading', text:"Here's what's new this quarter"},
+    {type:'text',    text:"We've shipped a handful of updates based on your feedback. Here's a quick look at what's changed."},
+    {type:'image',   caption:'New feature screenshot'},
+    {type:'button',  text:'See everything that changed'},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]},
+  {n:'Event Invitation',            d:'Webinar, trade show or customer summit',         s:'You are invited: {{event_name}}', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'You are invited'},
+    {type:'heading', text:'{{event_name}}'},
+    {type:'image',   caption:'Event banner'},
+    {type:'text',    text:'Join us for an afternoon built around real conversations, not sales pitches. Seats are limited.'},
+    {type:'button',  text:'Save my seat'},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]},
+  {n:'Win-back Campaign',           d:'Contacts with no touch in 60+ days',             s:'It has been a while - here is what changed', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'Reconnecting'},
+    {type:'heading', text:"It's been a while — here's what changed"},
+    {type:'text',    text:"A lot has happened since we last talked. Here's a quick look at what's new and why now might be a good time to reconnect."},
+    {type:'button',  text:"Let's catch up"},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]},
+  {n:'Welcome & Onboarding',        d:'Fires when a deal closes won',                   s:'Welcome aboard, {{first_name}}', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'Welcome'},
+    {type:'heading', text:'Welcome aboard, {{first_name}}'},
+    {type:'text',    text:"We're thrilled to have you. Here's what happens next and who to reach out to along the way."},
+    {type:'divider'},
+    {type:'text',    text:'Step 1 — your onboarding call. Step 2 — account setup. Step 3 — go live.'},
+    {type:'button',  text:'Get started'},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]},
+  {n:'Pipeline Stall Nudge',        d:'Deal sitting in one stage too long',             s:'Where should we take this next?', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'Checking in'},
+    {type:'heading', text:'Where should we take this next?'},
+    {type:'text',    text:'Wanted to check in — is there anything blocking you from moving forward, or questions I can answer?'},
+    {type:'button',  text:'Reply with an update'},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]},
+  {n:'Seasonal Promotion',          d:'Holiday or end-of-quarter push',                 s:'A limited-time offer for you', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'Limited time'},
+    {type:'heading', text:'A limited-time offer for you'},
+    {type:'image',   caption:'Promo graphic'},
+    {type:'text',    text:'For a limited time, take advantage of this offer before it wraps up at the end of the quarter.'},
+    {type:'button',  text:'Claim the offer'},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]},
+  {n:'Renewal Reminder',            d:'Ahead of a contract or policy renewal',          s:'Your renewal is coming up', blocks:[
+    {type:'header',  brand:'Your Company', tagline:'Renewal reminder'},
+    {type:'heading', text:'Your renewal is coming up'},
+    {type:'text',    text:'Your plan renews on {{renewal_date}}. Here is a quick summary of your account and what to expect.'},
+    {type:'divider'},
+    {type:'button',  text:'Review my plan'},
+    {type:'footer',  text:'Sent by {{sender_name}} · Unsubscribe'}
+  ]}
 ];
 
 var _mktCampaigns = [
@@ -18430,54 +18590,32 @@ function _mktTab(tab) {
   document.getElementById('mkt-panel-auto').style.display  = tab === 'auto'  ? '' : 'none';
   document.getElementById('mkt-tab-email').classList.toggle('active', tab === 'email');
   document.getElementById('mkt-tab-auto').classList.toggle('active', tab === 'auto');
-  document.getElementById('mkt-primary-label').textContent = tab === 'email' ? 'New Campaign' : 'New Automation';
   window._mktCurTab = tab;
+  _mktSyncPrimaryLabel();
+}
+function _mktSyncPrimaryLabel() {
+  var label = window._mktCurTab === 'auto' ? 'New Automation'
+            : _mktCampFilterVal === 'templates' ? 'New Template'
+            : 'New Campaign';
+  document.getElementById('mkt-primary-label').textContent = label;
 }
 function _mktPrimaryAction() {
-  if (window._mktCurTab === 'auto') _mktOpenBuilder(null); else _mktNewCampaign();
+  if (window._mktCurTab === 'auto') _mktOpenBuilder(null);
+  else if (_mktCampFilterVal === 'templates') _mktNewTemplate();
+  else _mktNewCampaign();
 }
 
-/* ── Email tab rendering ── */
-function _mktRenderFilters() {
-  var st = document.getElementById('mkt-f-stage'); if (!st) return;
-  st.innerHTML = '<option value="">All stages</option>' + _mktStageOpts(null);
-  document.getElementById('mkt-f-tag').innerHTML = '<option value="">Any tag</option>' + _mktTagOpts(null);
-  document.getElementById('mkt-f-rep').innerHTML = _mktRepOpts('', 'All owners');
-  document.getElementById('mkt-f-template').innerHTML = _mktTmplOpts(0);
-  _mktTemplatePick();
-  _mktRecount();
-}
-function _mktRecount() {
-  var parts = [], n = 1248;
-  var st = document.getElementById('mkt-f-stage');
-  if (!st) return;
-  if (st.value !== '')  { parts.push('Stage: ' + _mktStageName(st.value)); n = Math.round(n * 0.28); }
-  var tg = document.getElementById('mkt-f-tag');
-  if (tg.value !== '')  { parts.push('Tag: ' + ((_companySettings.tagDefinitions[tg.value]||{}).name||'')); n = Math.round(n * 0.44); }
-  var rp = document.getElementById('mkt-f-rep');
-  if (rp.value !== '')  { parts.push('Owner: ' + ((_companySettings.repQuotas[rp.value]||{}).name||'')); n = Math.round(n * 0.19); }
-  var lt = document.getElementById('mkt-f-last');
-  if (lt.value !== '')  { parts.push('Quiet ' + lt.value + '+ days'); n = Math.round(n * 0.36); }
-  document.getElementById('mkt-aud-count').textContent = n.toLocaleString();
-  document.getElementById('mkt-aud-desc').textContent = parts.length ? parts.join(' · ') : 'no filters applied';
-}
-function _mktResetFilters() {
-  ['mkt-f-stage','mkt-f-tag','mkt-f-rep','mkt-f-last'].forEach(function(id){
-    var e = document.getElementById(id); if (e) e.value = '';
-  });
-  _mktRecount();
-  showToast('Filters cleared');
-}
-function _mktTemplatePick() {
-  var sel = document.getElementById('mkt-f-template');
-  var sub = document.getElementById('mkt-f-subject');
-  if (sel && sub && _mktTemplates[sel.value]) sub.value = _mktTemplates[sel.value].s;
-}
+/* ── Campaigns / Templates toggle ── */
 function _mktCampFilter(btn, val) {
   document.querySelectorAll('#mkt-camp-filters .filter-chip').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
   _mktCampFilterVal = val;
-  _mktRenderCampaigns();
+  var isTemplates = val === 'templates';
+  document.getElementById('mkt-list-title').textContent = isTemplates ? 'Email Templates' : 'Campaigns';
+  document.getElementById('mkt-campaigns-view').style.display = isTemplates ? 'none' : '';
+  document.getElementById('mkt-templates-view').style.display = isTemplates ? 'grid' : 'none';
+  if (isTemplates) _mktRenderTemplates(); else _mktRenderCampaigns();
+  _mktSyncPrimaryLabel();
 }
 function _mktStatusMeta(s) {
   if (s === 'Sent')      return {pill:'<span class="status-pill sp-green"><span class="pill-dot"></span>Sent</span>',
@@ -18540,26 +18678,250 @@ function _mktDuplicateCampaign(i) {
   _mktRenderCampaigns();
   showToast('Duplicated as draft');
 }
+/* ── Email block renderer — shared by library cards, preview modal, builder ── */
+function _mktRenderEmailBlockHTML(b) {
+  switch(b.type) {
+    case 'header':  return '<div class="mkt-eb-header"><div class="brand">' + (b.brand||'Your Company') + '</div>'
+                          + (b.tagline ? '<div class="tagline">' + b.tagline + '</div>' : '') + '</div>';
+    case 'heading': return '<div class="mkt-eb-heading">' + (b.text||'') + '</div>';
+    case 'text':    return '<div class="mkt-eb-text">' + (b.text||'').replace(/\n/g,'<br>') + '</div>';
+    case 'image':   return '<div class="mkt-eb-image"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg><span>' + (b.caption||'Image') + '</span></div>';
+    case 'button':  return '<div class="mkt-eb-button-wrap"><span class="mkt-eb-button">' + (b.text||'Click here') + '</span></div>';
+    case 'divider': return '<div class="mkt-eb-divider"></div>';
+    case 'spacer':  return '<div style="height:22px"></div>';
+    case 'footer':  return '<div class="mkt-eb-footer">' + (b.text||'').replace(/\n/g,'<br>') + '</div>';
+    default: return '';
+  }
+}
+function _mktRenderEmailHTML(blocks) {
+  if (!blocks || !blocks.length) return '<div class="mkt-email-frame"><div class="mkt-eb-empty">This email is empty — drag a block in to get started.</div></div>';
+  return '<div class="mkt-email-frame">' + blocks.map(_mktRenderEmailBlockHTML).join('') + '</div>';
+}
+
 function _mktRenderTemplates() {
-  var el = document.getElementById('mkt-template-grid'); if (!el) return;
-  el.innerHTML = _mktTemplates.map(function(t, i){
-    return '<div class="mkt-tmpl-card" onclick="_mktUseTemplate(' + i + ')">'
-      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">'
-      +   '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + MKT_ICONS.mail + '</svg>'
-      +   '<div style="font-size:12.5px;font-weight:700;color:var(--dark)">' + t.n + '</div>'
-      + '</div>'
-      + '<div style="font-size:11.5px;color:var(--g400);margin-bottom:8px">' + t.d + '</div>'
-      + '<div style="font-size:11px;color:var(--g500);font-style:italic;padding:6px 9px;background:var(--g50);border-radius:6px">&ldquo;' + t.s + '&rdquo;</div>'
-      + '</div>';
+  var el = document.getElementById('mkt-templates-view'); if (!el) return;
+  var cards = _mktTemplates.map(function(t, i){
+    return '<div class="mkt-tmpl-card">'
+      + '<div class="mkt-tmpl-mini" onclick="_mktTemplatePreviewOpen(' + i + ')">' + _mktRenderEmailHTML(t.blocks) + '</div>'
+      + '<div class="mkt-tmpl-body">'
+      +   '<div class="mkt-tmpl-name">' + t.n + '</div>'
+      +   '<div class="mkt-tmpl-desc">' + t.d + '</div>'
+      +   '<div class="mkt-tmpl-foot">'
+      +     '<button class="mkt-mini-btn" onclick="_mktTemplatePreviewOpen(' + i + ')">Preview</button>'
+      +     '<button class="mkt-mini-btn" onclick="_mktTemplateEdit(' + i + ')">Edit</button>'
+      +     '<button class="mkt-mini-btn" onclick="_mktDuplicateTemplate(' + i + ')">Duplicate</button>'
+      +   '</div>'
+      + '</div></div>';
+  }).join('');
+  cards += '<div class="mkt-new-card" style="min-height:auto" onclick="_mktNewTemplate()">'
+    + '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+    + '<div style="font-size:12.5px;font-weight:600;color:var(--g500)">New Template</div>'
+    + '<div style="font-size:11px;color:var(--g400);text-align:center;max-width:180px">Drag and drop your own blocks</div></div>';
+  el.innerHTML = cards;
+}
+
+var _mktTpIdx = null;
+function _mktTemplatePreviewOpen(i) {
+  _mktTpIdx = i;
+  var t = _mktTemplates[i];
+  document.getElementById('mkt-tp-title').textContent = t.n;
+  document.getElementById('mkt-tp-subject').textContent = 'Subject: ' + t.s;
+  document.getElementById('mkt-tp-desc').textContent = t.d;
+  document.getElementById('mkt-tp-render').innerHTML = _mktRenderEmailHTML(t.blocks);
+  openModal('mkt-tmpl-preview-modal');
+}
+function _mktTemplateEditFromPreview() {
+  closeModal('mkt-tmpl-preview-modal');
+  _mktTemplateEdit(_mktTpIdx);
+}
+function _mktUseTemplateFromPreview() {
+  closeModal('mkt-tmpl-preview-modal');
+  _mktNewCampaign();
+  var sel = document.getElementById('mkt-c-tmpl');
+  if (sel) { sel.value = _mktTpIdx; _mktCampTemplatePick(); }
+}
+function _mktUseTemplate(i) { _mktTemplatePreviewOpen(i); }
+function _mktDuplicateTemplate(i) {
+  var t = JSON.parse(JSON.stringify(_mktTemplates[i]));
+  t.n = t.n + ' (copy)';
+  _mktTemplates.splice(i + 1, 0, t);
+  _mktRenderTemplates();
+  showToast('Duplicated');
+}
+
+/* ═══════════ Drag-and-drop Email Template Builder ═══════════
+   Pure data helpers (_mktTb*Pure) are kept free of DOM access so
+   they can be unit tested directly; the DOM-facing wrappers call them. */
+var _mktTbBlocks = [];
+var _mktTbEditIdx = null;
+var _mktTbDragging = null;   // {kind:'palette', blockType} | {kind:'reorder', fromIndex}
+
+function _mktTbDropIndexPure(midpoints, clientY, skipIndex) {
+  for (var i = 0; i < midpoints.length; i++) {
+    if (i === skipIndex) continue;
+    if (clientY < midpoints[i]) return skipIndex !== undefined && i > skipIndex ? i - 1 : i;
+  }
+  return skipIndex !== undefined ? midpoints.length - 1 : midpoints.length;
+}
+function _mktTbInsertBlockPure(blocks, block, atIndex) {
+  var copy = blocks.slice();
+  copy.splice(atIndex, 0, block);
+  return copy;
+}
+function _mktTbReorderBlockPure(blocks, fromIndex, toIndex) {
+  var copy = blocks.slice();
+  var moved = copy.splice(fromIndex, 1)[0];
+  copy.splice(toIndex, 0, moved);
+  return copy;
+}
+function _mktTbDefaultBlock(type) {
+  var def = MKT_BLOCK_TYPES[type];
+  var b = {type: type};
+  (def.fields || []).forEach(function(f){ b[f.k] = f.d || ''; });
+  return b;
+}
+
+function _mktTbOpen(idx) {
+  _mktTbEditIdx = (typeof idx === 'number') ? idx : null;
+  var t = _mktTbEditIdx !== null ? _mktTemplates[_mktTbEditIdx] : null;
+  document.getElementById('mkt-tb-title').textContent = t ? 'Edit Template' : 'New Template';
+  document.getElementById('mkt-tb-name').value = t ? t.n : '';
+  document.getElementById('mkt-tb-desc').value = t ? t.d : '';
+  document.getElementById('mkt-tb-subject').value = t ? t.s : '';
+  _mktTbBlocks = t ? JSON.parse(JSON.stringify(t.blocks || [])) : [
+    {type:'header', brand:_companySettings.companyName || 'Your Company', tagline:''},
+    {type:'heading', text:'Heading goes here'},
+    {type:'text', text:'Write your message here.'},
+    {type:'footer', text:'Sent by {{sender_name}} · Unsubscribe'}
+  ];
+  _mktTbRenderPalette();
+  _mktTbRenderCanvas();
+  _mktTbRenderPreview();
+  openModal('mkt-tmpl-builder-modal');
+}
+function _mktTbRenderPalette() {
+  var el = document.getElementById('mkt-tb-palette-list'); if (!el) return;
+  el.innerHTML = Object.keys(MKT_BLOCK_TYPES).map(function(type){
+    var def = MKT_BLOCK_TYPES[type];
+    return '<div class="mkt-tb-block-chip" draggable="true" ondragstart="_mktTbPaletteDragStart(event,\'' + type + '\')" ondragend="_mktTbDragEnd(event)">'
+      + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + (MKT_BLOCK_ICONS[def.icon] || '') + '</svg>'
+      + def.label + '</div>';
   }).join('');
 }
-function _mktUseTemplate(i) {
-  var sel = document.getElementById('mkt-f-template');
-  if (sel) { sel.value = i; _mktTemplatePick(); }
-  window.scrollTo({top:0, behavior:'smooth'});
-  showToast('Loaded "' + _mktTemplates[i].n + '"');
+function _mktTbFieldHtml(f, i, value) {
+  var v = (value === undefined ? '' : value).toString().replace(/"/g,'&quot;');
+  if (f.t === 'textarea') return '<textarea rows="3" oninput="_mktTbUpdateField(' + i + ',\'' + f.k + '\',this.value)" placeholder="' + f.l + '">' + (value||'') + '</textarea>';
+  return '<input value="' + v + '" oninput="_mktTbUpdateField(' + i + ',\'' + f.k + '\',this.value)" placeholder="' + f.l + '">';
 }
-function _mktNewTemplate() { showToast('Template editor opening...'); }
+function _mktTbRenderCanvas() {
+  var el = document.getElementById('mkt-tb-canvas'); if (!el) return;
+  if (!_mktTbBlocks.length) {
+    el.innerHTML = '<div class="mkt-tb-canvas-empty">Drag a block from the left to start building this email.</div>';
+    return;
+  }
+  el.innerHTML = _mktTbBlocks.map(function(b, i){
+    var def = MKT_BLOCK_TYPES[b.type];
+    var fieldsHtml = (def.fields || []).map(function(f){ return _mktTbFieldHtml(f, i, b[f.k]); }).join('');
+    if (!def.fields.length) fieldsHtml = '<div style="font-size:11px;color:var(--g400);font-style:italic">— ' + (b.type === 'divider' ? 'horizontal rule' : 'blank space') + ' —</div>';
+    return '<div class="mkt-tb-block" draggable="true" data-idx="' + i + '" ondragstart="_mktTbBlockDragStart(event,' + i + ')" ondragend="_mktTbDragEnd(event)">'
+      + '<div class="mkt-tb-handle" title="Drag to reorder">'
+      +   '<svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor"><circle cx="3" cy="3" r="1.4"/><circle cx="9" cy="3" r="1.4"/><circle cx="3" cy="8" r="1.4"/><circle cx="9" cy="8" r="1.4"/><circle cx="3" cy="13" r="1.4"/><circle cx="9" cy="13" r="1.4"/></svg>'
+      + '</div>'
+      + '<div class="mkt-tb-block-body">'
+      +   '<div class="mkt-tb-block-top"><span class="mkt-tb-block-label">' + def.label + '</span>'
+      +     '<button class="mkt-tb-remove" onclick="_mktTbRemoveBlock(' + i + ')" aria-label="Remove block">&times;</button></div>'
+      +   fieldsHtml
+      + '</div></div>';
+  }).join('');
+}
+function _mktTbRenderPreview() {
+  var el = document.getElementById('mkt-tb-preview'); if (!el) return;
+  el.innerHTML = _mktRenderEmailHTML(_mktTbBlocks);
+}
+function _mktTbUpdateField(i, key, value) {
+  if (!_mktTbBlocks[i]) return;
+  _mktTbBlocks[i][key] = value;
+  _mktTbRenderPreview();
+}
+function _mktTbRemoveBlock(i) {
+  _mktTbBlocks.splice(i, 1);
+  _mktTbRenderCanvas();
+  _mktTbRenderPreview();
+}
+function _mktTbPaletteDragStart(e, type) {
+  _mktTbDragging = {kind:'palette', blockType:type};
+  if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'copy'; e.dataTransfer.setData('text/plain', type); }
+}
+function _mktTbBlockDragStart(e, i) {
+  _mktTbDragging = {kind:'reorder', fromIndex:i};
+  if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(i)); }
+  e.currentTarget.classList.add('dragging');
+}
+function _mktTbDragEnd(e) {
+  document.querySelectorAll('.mkt-tb-block.dragging').forEach(function(b){ b.classList.remove('dragging'); });
+  document.querySelectorAll('.mkt-tb-block.drop-target-above,.mkt-tb-block.drop-target-below').forEach(function(b){
+    b.classList.remove('drop-target-above','drop-target-below');
+  });
+}
+function _mktTbCanvasMidpoints() {
+  return Array.from(document.querySelectorAll('#mkt-tb-canvas .mkt-tb-block')).map(function(b){
+    var r = b.getBoundingClientRect();
+    return r.top + r.height / 2;
+  });
+}
+function _mktTbComputeDropIndex(clientY) {
+  var mids = _mktTbCanvasMidpoints();
+  var skip = (_mktTbDragging && _mktTbDragging.kind === 'reorder') ? _mktTbDragging.fromIndex : undefined;
+  return _mktTbDropIndexPure(mids, clientY, skip);
+}
+function _mktTbCanvasDragOver(e) {
+  e.preventDefault();
+  if (e.dataTransfer) e.dataTransfer.dropEffect = _mktTbDragging && _mktTbDragging.kind === 'reorder' ? 'move' : 'copy';
+  document.getElementById('mkt-tb-canvas').classList.add('drag-over');
+  var idx = _mktTbComputeDropIndex(e.clientY);
+  var blocks = document.querySelectorAll('#mkt-tb-canvas .mkt-tb-block');
+  blocks.forEach(function(b){ b.classList.remove('drop-target-above','drop-target-below'); });
+  if (idx < blocks.length) blocks[idx].classList.add('drop-target-above');
+  else if (blocks.length) blocks[blocks.length - 1].classList.add('drop-target-below');
+}
+function _mktTbCanvasDragLeave(e) {
+  var canvas = document.getElementById('mkt-tb-canvas');
+  if (e.relatedTarget && canvas.contains(e.relatedTarget)) return;
+  canvas.classList.remove('drag-over');
+}
+function _mktTbCanvasDrop(e) {
+  e.preventDefault();
+  var canvas = document.getElementById('mkt-tb-canvas');
+  canvas.classList.remove('drag-over');
+  var idx = _mktTbComputeDropIndex(e.clientY);
+  if (_mktTbDragging && _mktTbDragging.kind === 'palette') {
+    _mktTbBlocks = _mktTbInsertBlockPure(_mktTbBlocks, _mktTbDefaultBlock(_mktTbDragging.blockType), idx);
+  } else if (_mktTbDragging && _mktTbDragging.kind === 'reorder') {
+    _mktTbBlocks = _mktTbReorderBlockPure(_mktTbBlocks, _mktTbDragging.fromIndex, idx);
+  }
+  _mktTbDragging = null;
+  _mktTbRenderCanvas();
+  _mktTbRenderPreview();
+}
+function _mktTbSave() {
+  var name = document.getElementById('mkt-tb-name').value.trim();
+  if (!name) { showToast('Give the template a name first'); document.getElementById('mkt-tb-name').focus(); return; }
+  if (!_mktTbBlocks.length) { showToast('Add at least one block to the email'); return; }
+  var rec = {
+    n: name,
+    d: document.getElementById('mkt-tb-desc').value.trim() || 'Custom template',
+    s: document.getElementById('mkt-tb-subject').value.trim() || name,
+    blocks: JSON.parse(JSON.stringify(_mktTbBlocks))
+  };
+  if (_mktTbEditIdx !== null) _mktTemplates[_mktTbEditIdx] = rec;
+  else _mktTemplates.push(rec);
+  closeModal('mkt-tmpl-builder-modal');
+  if (_mktCampFilterVal === 'templates') _mktRenderTemplates();
+  showToast('Saved "' + name + '"');
+}
+function _mktNewTemplate() { _mktTbOpen(null); }
+function _mktTemplateEdit(i) { _mktTbOpen(i); }
+
 function _mktEditCampaign(i){
   var c = _mktCampaigns[i];
   if (c.status === 'Sent') { showToast(c.n + ' — ' + c.open + '% open, ' + c.click + '% click'); return; }
@@ -18648,15 +19010,6 @@ function _mktCampSave(send) {
           : status === 'Scheduled' ? 'Scheduled "' + name + '" for ' + dateTxt
           : 'Sending "' + name + '" to ' + a.n.toLocaleString() + ' contacts');
 }
-function _mktPreviewAudience() {
-  showToast(document.getElementById('mkt-aud-count').textContent + ' contacts in this list');
-}
-function _mktSendBulk() {
-  var n = document.getElementById('mkt-aud-count').textContent;
-  var s = document.getElementById('mkt-f-subject').value || '(no subject)';
-  showToast('Queued "' + s + '" to ' + n + ' contacts');
-}
-
 /* ── Automations tab rendering ── */
 function _mktAutoFilterSet(btn, val) { _mktAutoFilter = val; }
 function _mktAutoFilter2() {}
@@ -18864,12 +19217,12 @@ function _mktInit() {
   _mktCampFilterVal = 'all';
   _mktAutoFilter = 'all';
   _mktSeedAutomations();
-  _mktRenderFilters();
   _mktRenderCampaigns();
   _mktRenderTemplates();
   _mktRenderRecipes();
   _mktRenderAutomations();
   window._mktCurTab = 'email';
+  _mktSyncPrimaryLabel();
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mktInit);
 else _mktInit();
