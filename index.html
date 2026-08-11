@@ -1697,6 +1697,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div class="sb-divider"></div>
     <button class="sb-item" onclick="showPage('commissions',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="sb-label">Commissions</span></button>
     <div class="sb-divider"></div>
+    <button class="sb-item" onclick="showPage('marketing',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span class="sb-label">Marketing</span></button>
     <button class="sb-item" onclick="showPage('reports',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="sb-label">Reports</span></button>
     <button class="sb-item" onclick="showPage('forecasting',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg><span class="sb-label">Forecast</span></button>
     <button class="sb-item" onclick="showPage('marketplace',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 2 2 2 2 0 0 0 2-2"/><path d="M5 11v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/><line x1="9" y1="21" x2="9" y2="15"/><line x1="15" y1="21" x2="15" y2="15"/><line x1="9" y1="15" x2="15" y2="15"/></svg><span class="sb-label">Marketplace</span></button>
@@ -4026,6 +4027,246 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
 </div>
 </div>
+
+<!-- MARKETING -->
+<div id="page-marketing" class="page">
+<div class="page-header">
+  <div>
+    <h1 class="page-title">Marketing</h1>
+    <p style="margin:0;font-size:13px;color:var(--g400)">Email campaigns, bulk outreach, and automation workflows</p>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button class="tb-btn btn-teal" onclick="_mktNewCampaign()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Campaign</button>
+    <button class="tb-btn btn-ghost" onclick="_mktNewAutomation()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> New Automation</button>
+  </div>
+</div>
+
+<!-- Sub-tabs -->
+<div style="display:flex;gap:0;border-bottom:2px solid var(--g100);margin-bottom:20px">
+  <button id="mkt-tab-email" onclick="_mktTab('email')" style="padding:10px 18px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--teal);border-bottom:2px solid var(--teal);margin-bottom:-2px;font-family:var(--font)">Email Marketing</button>
+  <button id="mkt-tab-auto" onclick="_mktTab('auto')" style="padding:10px 18px;font-size:13px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--g400);border-bottom:2px solid transparent;margin-bottom:-2px;font-family:var(--font)">Automations</button>
+</div>
+
+<!-- EMAIL MARKETING TAB -->
+<div id="mkt-panel-email">
+  <div class="stats-row" style="margin-bottom:20px">
+    <div class="stat-card"><div class="stat-label">Campaigns Sent</div><div class="stat-value">24</div><div class="stat-delta positive">+3 this month</div></div>
+    <div class="stat-card"><div class="stat-label">Avg Open Rate</div><div class="stat-value teal">38.4%</div><div class="stat-delta positive">+2.1% vs prev</div></div>
+    <div class="stat-card"><div class="stat-label">Avg Click Rate</div><div class="stat-value">12.7%</div><div class="stat-delta" style="color:var(--g400)">Industry avg 9.2%</div></div>
+    <div class="stat-card"><div class="stat-label">Unsubscribes</div><div class="stat-value" style="color:var(--amber)">0.4%</div><div class="stat-delta positive">Below threshold</div></div>
+  </div>
+
+  <!-- Bulk Email Sender -->
+  <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:20px;margin-bottom:20px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div>
+        <div style="font-size:15px;font-weight:700;color:var(--dark)">Bulk Email Sender</div>
+        <div style="font-size:12px;color:var(--g400);margin-top:2px">Filter your contacts and send targeted campaigns</div>
+      </div>
+      <button class="tb-btn btn-teal" onclick="_mktSendBulk()" style="font-size:13px">Send to Filtered Contacts</button>
+    </div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;padding:14px;background:var(--g50);border-radius:8px">
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
+        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Pipeline Stage</label>
+        <select id="mkt-filter-stage" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
+          <option value="">All Stages</option><option>Prospecting</option><option>Qualified</option><option>Proposal Sent</option><option>Negotiation</option><option>Closed Won</option><option>Closed Lost</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
+        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Opp Probability</label>
+        <select id="mkt-filter-prob" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
+          <option value="">Any Probability</option><option value="lt20">Less than 20%</option><option value="lt50">Less than 50%</option><option value="gt50">Greater than 50%</option><option value="gt80">Greater than 80%</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
+        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Lead Score</label>
+        <select id="mkt-filter-score" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
+          <option value="">Any Score</option><option value="cold">Cold (0-20)</option><option value="warm">Warm (21-50)</option><option value="hot">Hot (51-80)</option><option value="priority">Priority (81+)</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
+        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Last Contacted</label>
+        <select id="mkt-filter-last" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
+          <option value="">Any Time</option><option value="7">More than 7 days ago</option><option value="14">More than 14 days ago</option><option value="30">More than 30 days ago</option><option value="60">More than 60 days ago</option>
+        </select>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:4px;min-width:160px">
+        <label style="font-size:11px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Territory</label>
+        <select id="mkt-filter-territory" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white)">
+          <option value="">All Territories</option><option>Northeast</option><option>Southeast</option><option>Midwest</option><option>West</option><option>International</option>
+        </select>
+      </div>
+    </div>
+    <div id="mkt-audience-preview" style="display:flex;align-items:center;gap:12px;padding:10px 14px;background:rgba(29,158,117,0.07);border-radius:8px;font-size:13px;color:var(--dark)">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      <span><strong>247 contacts</strong> match your current filters &mdash; <span style="color:var(--g400)">adjust filters to refine</span></span>
+      <button onclick="_mktPreviewAudience()" style="margin-left:auto;padding:5px 12px;border:1px solid var(--teal);border-radius:6px;background:none;color:var(--teal);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Preview List</button>
+    </div>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:10px">
+      <label style="font-size:13px;font-weight:600;color:var(--dark);white-space:nowrap">Email Template:</label>
+      <select id="mkt-bulk-template" style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);background:var(--white);flex:1;max-width:300px">
+        <option>Re-engagement Outreach</option><option>Product Update Announcement</option><option>Event Invitation</option><option>Win-back Campaign</option><option>Seasonal Promotion</option><option>Custom (compose below)</option>
+      </select>
+      <input id="mkt-bulk-subject" placeholder="Email subject line..." style="padding:7px 10px;border:1px solid var(--g200);border-radius:6px;font-size:13px;font-family:var(--font);color:var(--dark);flex:1;max-width:340px">
+    </div>
+  </div>
+
+  <!-- Campaigns table + Templates -->
+  <div style="display:grid;grid-template-columns:1fr 320px;gap:16px">
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:14px;font-weight:700;color:var(--dark)">Recent Campaigns</div>
+        <input placeholder="Search campaigns..." style="padding:6px 10px;border:1px solid var(--g200);border-radius:6px;font-size:12px;font-family:var(--font);width:180px">
+      </div>
+      <table style="width:100%;border-collapse:collapse">
+        <thead><tr style="background:var(--g50)">
+          <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Campaign</th>
+          <th style="padding:10px 16px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Sent</th>
+          <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Open</th>
+          <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Click</th>
+          <th style="padding:10px 16px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Unsub</th>
+          <th style="padding:10px 16px;text-align:center;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Status</th>
+        </tr></thead>
+        <tbody>
+          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Q3 Re-Engagement</div><div style="font-size:11px;color:var(--g400)">Prob &lt;20% &middot; Cold leads</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Jul 28</td><td style="padding:12px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal)">41.2%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">14.8%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">0.3%</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal)">Sent</span></td></tr>
+          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">New Product Launch</div><div style="font-size:11px;color:var(--g400)">All active contacts</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Jul 15</td><td style="padding:12px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal)">38.9%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">13.1%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">0.5%</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal)">Sent</span></td></tr>
+          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Mid-Year Check-In</div><div style="font-size:11px;color:var(--g400)">Warm leads &middot; Northeast</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Jun 30</td><td style="padding:12px 16px;text-align:right;font-size:13px;font-weight:600;color:var(--teal)">36.1%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">11.4%</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--dark)">0.2%</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal)">Sent</span></td></tr>
+          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">August Win-Back</div><div style="font-size:11px;color:var(--g400)">No contact &gt;60 days</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Scheduled</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,171,0,0.1);color:var(--amber)">Scheduled</span></td></tr>
+          <tr style="border-top:1px solid var(--g100)"><td style="padding:12px 16px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Event: Fall Summit</div><div style="font-size:11px;color:var(--g400)">Priority leads only</div></td><td style="padding:12px 16px;font-size:13px;color:var(--g400)">Draft</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:right;font-size:13px;color:var(--g300)">-</td><td style="padding:12px 16px;text-align:center"><span style="padding:3px 8px;border-radius:20px;font-size:11px;font-weight:600;background:var(--g100);color:var(--g400)">Draft</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Templates panel -->
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;overflow:hidden">
+      <div style="padding:16px 20px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
+        <div style="font-size:14px;font-weight:700;color:var(--dark)">Templates</div>
+        <button onclick="_mktNewTemplate()" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:12px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">+ New</button>
+      </div>
+      <div style="padding:8px">
+        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Re-engagement Outreach</div><div style="font-size:11px;color:var(--g400);margin-top:2px">For cold or inactive contacts</div></div>
+        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Product Update Announcement</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Feature release, new catalog</div></div>
+        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Event Invitation</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Webinar, trade show, summit</div></div>
+        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Win-back Campaign</div><div style="font-size:11px;color:var(--g400);margin-top:2px">No contact 60+ days</div></div>
+        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Seasonal Promotion</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Holiday, end-of-quarter push</div></div>
+        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Post-First-Order Follow-up</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Onboarding, loyalty intro</div></div>
+        <div onclick="_mktUseTemplate(this)" style="padding:12px;border-radius:8px;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='var(--g50)'" onmouseout="this.style.background='none'"><div style="font-size:13px;font-weight:600;color:var(--dark)">Pipeline Stall Nudge</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Deal stuck &gt;14 days, no activity</div></div>
+      </div>
+    </div>
+  </div>
+</div><!-- end mkt-panel-email -->
+
+<!-- AUTOMATIONS TAB -->
+<div id="mkt-panel-auto" style="display:none">
+  <div class="stats-row" style="margin-bottom:20px">
+    <div class="stat-card"><div class="stat-label">Active Workflows</div><div class="stat-value teal">8</div></div>
+    <div class="stat-card"><div class="stat-label">Actions Triggered</div><div class="stat-value">1,284</div><div class="stat-delta positive">This month</div></div>
+    <div class="stat-card"><div class="stat-label">Emails Auto-Sent</div><div class="stat-value">943</div></div>
+    <div class="stat-card"><div class="stat-label">Tasks Auto-Created</div><div class="stat-value">341</div></div>
+  </div>
+  <div style="background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.2);border-radius:10px;padding:14px 18px;margin-bottom:20px;display:flex;align-items:center;gap:12px">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+    <div style="font-size:13px;color:var(--dark)"><strong>Automations run silently in the background.</strong> Set a trigger, choose your actions, and Goals handles the rest.</div>
+  </div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px">
+
+    <!-- Pipeline Stage Changed -->
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Pipeline Stage Changed</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Send email + create task when deal advances</div></div>
+        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">Deal moves to <strong>Proposal Sent</strong></div></div>
+      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Proposal Follow-up</em> email to contact</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12px;color:var(--dark)">Create task: <em>Schedule demo call</em> (due +2 days)</span></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
+    </div>
+
+    <!-- Low Probability Alert -->
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Low Probability Alert</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Auto-outreach when deal probability drops</div></div>
+        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">Opportunity probability drops <strong>below 20%</strong></div></div>
+      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Re-Engagement Outreach</em> email</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12px;color:var(--dark)">Create task: <em>Call contact to assess interest</em> (due +1 day)</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg><span style="font-size:12px;color:var(--dark)">Flag for manager review in <em>Highlights</em></span></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
+    </div>
+
+    <!-- No Activity Follow-up -->
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">No Activity Follow-up</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Escalating outreach for stalled contacts</div></div>
+        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:8px">
+        <div style="display:flex;align-items:center;gap:8px"><div style="padding:4px 8px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:11px;font-weight:600;color:var(--teal)">7 days</div><span style="font-size:12px;color:var(--dark)">Send <em>Check-in</em> email automatically</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><div style="padding:4px 8px;background:rgba(255,171,0,0.1);border-radius:6px;font-size:11px;font-weight:600;color:var(--amber)">14 days</div><span style="font-size:12px;color:var(--dark)">Create task: <em>Call contact, log outcome</em></span></div>
+        <div style="display:flex;align-items:center;gap:8px"><div style="padding:4px 8px;background:rgba(255,171,0,0.1);border-radius:6px;font-size:11px;font-weight:600;color:var(--amber)">21 days</div><span style="font-size:12px;color:var(--dark)">Alert manager, flag deal at risk</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><div style="padding:4px 8px;background:rgba(220,53,69,0.08);border-radius:6px;font-size:11px;font-weight:600;color:#dc3545">30 days</div><span style="font-size:12px;color:var(--dark)">Send <em>Win-back</em> email, downgrade lead score</span></div>
+      </div>
+      <div style="margin-top:4px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
+    </div>
+
+    <!-- Deal Won Onboarding -->
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Deal Won - Onboarding</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Kick off post-sale workflow automatically</div></div>
+        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">Opportunity marked <strong>Closed Won</strong></div></div>
+      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Welcome &amp; Onboarding</em> email to contact</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12px;color:var(--dark)">Create task: <em>Schedule onboarding call</em> (due +3 days)</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Post-First-Order Follow-up</em> after 30 days</span></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
+    </div>
+
+    <!-- New Lead Assigned -->
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">New Lead Assigned</div><div style="font-size:11px;color:var(--g400);margin-top:2px">First-touch outreach within minutes</div></div>
+        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">New lead assigned to rep</div></div>
+      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Introduction</em> email to lead (within 15 min)</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span style="font-size:12px;color:var(--dark)">Create task: <em>Qualify new lead</em> (due today)</span></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
+    </div>
+
+    <!-- Deal Lost Recovery -->
+    <div style="background:var(--white);border:1px solid var(--g100);border-radius:12px;padding:18px">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:14px">
+        <div><div style="font-size:13px;font-weight:700;color:var(--dark)">Deal Lost - Recovery</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Keep the door open for future opportunities</div></div>
+        <label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox"><span class="toggle-slider"></span></label>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px"><div style="padding:6px 10px;background:rgba(29,158,117,0.08);border-radius:6px;font-size:12px;font-weight:600;color:var(--teal)">TRIGGER</div><div style="font-size:12px;color:var(--dark)">Opportunity marked <strong>Closed Lost</strong></div></div>
+      <div style="margin-left:16px;border-left:2px solid var(--g100);padding-left:12px;display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Send <em>Thank You for Considering Us</em> email</span></div>
+        <div style="display:flex;align-items:center;gap:8px"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span style="font-size:12px;color:var(--dark)">Schedule <em>60-day win-back</em> email automatically</span></div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:6px"><button onclick="_mktEditAuto(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">Edit</button><button onclick="_mktViewLog(this)" style="padding:5px 10px;border:1px solid var(--g200);border-radius:6px;background:none;font-size:11px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font)">View Log</button></div>
+    </div>
+
+    <!-- Create new -->
+    <div onclick="_mktNewAutomation()" style="background:var(--g50);border:2px dashed var(--g200);border-radius:12px;padding:18px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;min-height:160px;transition:all 0.15s" onmouseover="this.style.borderColor='var(--teal)';this.style.background='rgba(29,158,117,0.04)'" onmouseout="this.style.borderColor='var(--g200)';this.style.background='var(--g50)'">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      <div style="font-size:13px;font-weight:600;color:var(--g400)">Create Automation</div>
+      <div style="font-size:11px;color:var(--g300);text-align:center">Choose a trigger and define what happens next</div>
+    </div>
+
+  </div>
+</div><!-- end mkt-panel-auto -->
+</div><!-- end page-marketing -->
 
 <!-- REPORTS -->
 <div id="page-reports" class="page">
@@ -10127,6 +10368,7 @@ var _tbOptions = [
   { label:'Goals',       page:'goals',       icon:'<circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/>' },
   { label:'Accounts',    page:'contacts',    icon:'<rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>' },
   { label:'Team',        page:'team',        icon:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>' },
+  { label:'Marketing',   page:'marketing',   icon:'<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>' },
   { label:'Reports',     page:'reports',     icon:'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>' },
   { label:'Forecast',    page:'forecasting', icon:'<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/>' },
   { label:'Highlights',  page:'highlights',  icon:'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>' },
@@ -10941,6 +11183,7 @@ function buildSearchIndex() {
     { label:'Bonuses', page:'bonuses', type:'Page' },
     { label:'Contests', page:'contests', type:'Page' },
     { label:'Commissions', page:'commissions', type:'Page' },
+    { label:'Marketing', page:'marketing', type:'Page' },
     { label:'Reports', page:'reports', type:'Page' },
     { label:'Forecasting', page:'forecasting', type:'Page' },
     { label:'Ask Ace', page:'askace', type:'Page' },
@@ -13042,7 +13285,7 @@ const ROLES = {
     id:'sm', label:'SM', name:'Patricia Moore', initials:'PM',
     photo:'https://randomuser.me/api/portraits/women/65.jpg',
     title:'Sales Manager', company:'Midwest Benefits Group',
-    canSee: ['contacts','team','highlights','chat','bonuses','contests','commissions','reports','forecasting','askace','marketplace','settings','pipeline','goals','dashboard','targets','company-settings'],
+    canSee: ['contacts','team','highlights','chat','bonuses','contests','commissions','marketing','reports','forecasting','askace','marketplace','settings','pipeline','goals','dashboard','targets','company-settings'],
     canCreate: ['contests','bonuses'],
     greeting:'Good morning, Patricia'
   },
@@ -13050,7 +13293,7 @@ const ROLES = {
     id:'sr', label:'SR', name:'Brock Wilson', initials:'BW',
     photo:'https://randomuser.me/api/portraits/men/54.jpg',
     title:'Senior Financial Advisor', company:'Midwest Benefits Group',
-    canSee: ['contacts','team','highlights','chat','commissions','reports','forecasting','askace','settings','pipeline','goals','dashboard','targets'],
+    canSee: ['contacts','team','highlights','chat','commissions','marketing','reports','forecasting','askace','settings','pipeline','goals','dashboard','targets'],
     canCreate: [],
     greeting:'Good morning, Brock'
   }
@@ -17893,5 +18136,62 @@ function _aceCommConfirm() {
   </div>
 </div>
 
+
+<script>
+function _mktTab(tab) {
+  document.getElementById('mkt-panel-email').style.display = tab === 'email' ? '' : 'none';
+  document.getElementById('mkt-panel-auto').style.display  = tab === 'auto'  ? '' : 'none';
+  var tE = document.getElementById('mkt-tab-email');
+  var tA = document.getElementById('mkt-tab-auto');
+  if (tab === 'email') {
+    tE.style.color = 'var(--teal)'; tE.style.borderBottom = '2px solid var(--teal)';
+    tA.style.color = 'var(--g400)'; tA.style.borderBottom = '2px solid transparent';
+  } else {
+    tA.style.color = 'var(--teal)'; tA.style.borderBottom = '2px solid var(--teal)';
+    tE.style.color = 'var(--g400)'; tE.style.borderBottom = '2px solid transparent';
+  }
+}
+function _mktNewCampaign() {
+  var n = prompt('Campaign name:');
+  if (n) alert('Campaign "' + n + '" created as Draft. Open it to compose your email and set audience filters.');
+}
+function _mktNewAutomation() {
+  alert('Automation builder coming soon. Pick a trigger (stage change, probability drop, inactivity, deal won/lost) and chain email and task actions.');
+}
+function _mktNewTemplate() {
+  var n = prompt('Template name:');
+  if (n) alert('Template "' + n + '" created. Edit it in the template editor.');
+}
+function _mktUseTemplate(el) {
+  var name = el.querySelector('div').textContent;
+  var sel = document.getElementById('mkt-bulk-template');
+  if (sel) { for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].text === name) { sel.selectedIndex = i; break; } } }
+}
+function _mktSendBulk() {
+  var stage = document.getElementById('mkt-filter-stage').value;
+  var prob  = document.getElementById('mkt-filter-prob').value;
+  var score = document.getElementById('mkt-filter-score').value;
+  var last  = document.getElementById('mkt-filter-last').value;
+  var terr  = document.getElementById('mkt-filter-territory').value;
+  var tmpl  = document.getElementById('mkt-bulk-template').value;
+  var subj  = document.getElementById('mkt-bulk-subject').value || '(no subject)';
+  var desc  = 'Ready to send "' + subj + '" via template: ' + tmpl + ' to 247 filtered contacts.' +
+    (stage ? '\nStage: ' + stage : '') + (prob ? '\nProbability: ' + prob : '') +
+    (score ? '\nLead score: ' + score : '') + (last ? '\nLast contact: >' + last + ' days' : '') +
+    (terr  ? '\nTerritory: ' + terr : '') + '\n\nConfirm send?';
+  if (confirm(desc)) alert('Campaign queued. Emails will be delivered within 30 minutes.');
+}
+function _mktPreviewAudience() {
+  alert('247 contacts match your filters.\n\nTop matches:\n- Sarah Chen: Prob 12%, Cold, last contact 45d\n- Marco Reyes: Prob 8%, Cold, last contact 67d\n- Jamie Liu: Prob 18%, Warm, last contact 22d\n\n...and 244 more.');
+}
+function _mktEditAuto(btn) {
+  alert('Automation editor coming soon. Modify triggers, actions, timing, and conditions for this workflow.');
+}
+function _mktViewLog(btn) {
+  var card = btn.closest('div[style*="border-radius:12px"]');
+  var name = card ? card.querySelector('[style*="font-weight:700"]').textContent : 'this automation';
+  alert('Activity log for "' + name + '":\n\nAug 10 - 14 emails sent, 12 tasks created\nAug 9 - 8 emails sent, 8 tasks created\nAug 8 - 11 emails sent, 10 tasks created\n\nAll triggers executed successfully.');
+}
+</script>
 </body>
 </html>
