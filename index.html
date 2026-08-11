@@ -3586,7 +3586,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
 <!-- BONUSES -->
 <div id="page-bonuses" class="page">
-<div class="page-header"><div class="page-title">Bonuses</div><div class="page-subtitle">Bonus tiers and payout tracking</div><button class="tb-btn btn-teal" style="font-size:12px" onclick="openModal('quickadd-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Bonus</button></div>
+<div class="page-header"><div class="page-title">Bonuses</div><div class="page-subtitle">Bonus tiers and payout tracking</div><div style="display:flex;gap:8px"><button class="tb-btn btn-teal" style="font-size:12px;display:flex;align-items:center;gap:6px" onclick="_aceBonusOpen()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build with Ace</button><button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('quickadd-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Bonus</button></div></div>
 <div class="stat-row">
   <div class="stat-card"><div class="stat-label">Total Awarded YTD</div><div class="stat-value teal">$14,200</div></div>
   <div class="stat-card"><div class="stat-label">Active Bonuses</div><div class="stat-value">3</div></div>
@@ -3625,7 +3625,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
 <!-- CONTESTS -->
 <div id="page-contests" class="page">
-<div class="page-header"><div class="page-title">Contests</div><div class="page-subtitle">Active competitions and leaderboards</div><button class="tb-btn btn-teal" style="font-size:12px" onclick="openModal('quickadd-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Contest</button></div>
+<div class="page-header"><div class="page-title">Contests</div><div class="page-subtitle">Active competitions and leaderboards</div><div style="display:flex;gap:8px"><button class="tb-btn btn-teal" style="font-size:12px;display:flex;align-items:center;gap:6px" onclick="_aceContestOpen()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build with Ace</button><button class="tb-btn btn-ghost" style="font-size:12px" onclick="openModal('quickadd-modal')"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Contest</button></div></div>
 <div class="stat-row">
   <div class="stat-card"><div class="stat-label">Active Contests</div><div class="stat-value teal">2</div></div>
   <div class="stat-card"><div class="stat-label">Total Prize Pool</div><div class="stat-value teal">$3,500</div></div>
@@ -16306,6 +16306,265 @@ function _ecSend() {
 
 // ── ACE COMMISSION BUILDER ────────────────────────────────────────────────────
 
+// ── ACE BONUS BUILDER ────────────────────────────────────────────────────────
+function _aceBonusOpen() { _aceBonusReset(); document.getElementById('ace-bonus-modal').style.display = 'flex'; }
+function _aceBonusClose() { document.getElementById('ace-bonus-modal').style.display = 'none'; }
+function _aceBonusReset() {
+  document.getElementById('ace-bonus-input').value = '';
+  document.getElementById('ace-bonus-step1').style.display = 'block';
+  document.getElementById('ace-bonus-step2').style.display = 'none';
+  document.getElementById('ace-bonus-step3').style.display = 'none';
+  document.getElementById('ace-bonus-loading').style.display = 'block';
+  document.getElementById('ace-bonus-preview').style.display = 'none';
+  var s1 = document.getElementById('ace-bstep-1'), s2 = document.getElementById('ace-bstep-2'), s3 = document.getElementById('ace-bstep-3');
+  s1.style.color = 'var(--teal)'; s1.querySelector('span').style.background = 'var(--teal)'; s1.querySelector('span').style.color = '#fff';
+  s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
+  s3.style.color = 'var(--g400)'; s3.querySelector('span').style.background = 'var(--g200)'; s3.querySelector('span').style.color = 'var(--g400)';
+}
+function _aceBonusBack() {
+  document.getElementById('ace-bonus-step2').style.display = 'none';
+  document.getElementById('ace-bonus-step1').style.display = 'block';
+}
+function _aceBonusExample(btn) { document.getElementById('ace-bonus-input').value = btn.textContent.replace(/^"|"$/g, ''); }
+function _aceBonusGenerate() {
+  var input = document.getElementById('ace-bonus-input').value.trim();
+  if (!input) { showToast('Please describe your bonus first'); return; }
+  document.getElementById('ace-bonus-step1').style.display = 'none';
+  document.getElementById('ace-bonus-step2').style.display = 'block';
+  document.getElementById('ace-bonus-loading').style.display = 'block';
+  document.getElementById('ace-bonus-preview').style.display = 'none';
+  var s2 = document.getElementById('ace-bstep-2');
+  s2.style.color = 'var(--teal)'; s2.querySelector('span').style.background = 'var(--teal)'; s2.querySelector('span').style.color = '#fff';
+  var msgs = ['Identifying trigger conditions…', 'Calculating award amounts…', 'Checking eligibility rules…', 'Building bonus structure…'];
+  var i = 0; var sub = document.getElementById('ace-bonus-loading-sub');
+  var ticker = setInterval(function() { sub.textContent = msgs[i++ % msgs.length]; }, 600);
+  setTimeout(function() {
+    clearInterval(ticker);
+    var plan = _aceBonusParse(input);
+    _aceBonusRenderPreview(plan);
+    document.getElementById('ace-bonus-loading').style.display = 'none';
+    document.getElementById('ace-bonus-preview').style.display = 'block';
+  }, 2600);
+}
+function _aceBonusParse(text) {
+  var lower = text.toLowerCase();
+  // Extract dollar amounts
+  var amounts = []; var re = /\$[\d,]+(?:k)?/gi; var m;
+  while ((m = re.exec(text)) !== null) {
+    var val = m[0].replace(/[$,]/g, ''); if (val.toLowerCase().endsWith('k')) val = parseFloat(val) * 1000; amounts.push(parseInt(val));
+  }
+  // Determine type
+  var type = 'Performance Bonus';
+  if (/retention/i.test(lower)) type = 'Retention Bonus';
+  else if (/new account|new client/i.test(lower)) type = 'New Business Bonus';
+  else if (/year.?end|annual/i.test(lower)) type = 'Year-End Bonus';
+  else if (/quarter/i.test(lower)) type = 'Quarterly Bonus';
+  else if (/team/i.test(lower)) type = 'Team Bonus';
+  // Trigger
+  var trigger = 'Hits monthly quota';
+  if (/100%/.test(lower)) trigger = 'Hits 100% of monthly goal';
+  else if (/120%/.test(lower)) trigger = 'Exceeds 120% of monthly goal';
+  else if (/110%/.test(lower)) trigger = 'Hits 110% of monthly goal';
+  else if (/90%/.test(lower)) trigger = 'Retains 90%+ of book of business';
+  else if (/new account/i.test(lower)) trigger = 'Per new account closed';
+  else if (/revenue/i.test(lower) || /target/i.test(lower)) trigger = 'Hits annual revenue target';
+  // Period
+  var period = 'Monthly';
+  if (/quarter/i.test(lower)) period = 'Quarterly';
+  else if (/year.?end|annual/i.test(lower)) period = 'Annual';
+  else if (/week/i.test(lower)) period = 'Weekly';
+  // Applies
+  var applies = 'Individual';
+  if (/team/i.test(lower) && !/individual/i.test(lower)) applies = 'Team';
+  // Max
+  var maxNote = null;
+  var maxM = lower.match(/max\s+(\d+)\s+per/i);
+  if (maxM) maxNote = 'Max ' + maxM[1] + ' per rep per period';
+  // Primary award
+  var primary = amounts.length ? '$' + amounts[0].toLocaleString() : '$1,000';
+  // Build rows
+  var rows = [{ label: 'Award Amount', val: primary, highlight: true }];
+  if (amounts.length > 1) {
+    var place = ['1st Place', '2nd Place', '3rd Place'];
+    for (var i = 0; i < Math.min(amounts.length, 3); i++) {
+      rows[i] = { label: place[i], val: '$' + amounts[i].toLocaleString(), highlight: i === 0 };
+    }
+  }
+  if (maxNote) rows.push({ label: 'Cap', val: maxNote, highlight: false });
+  var explanation = 'Ace interpreted this as a ' + type.toLowerCase() + '. Trigger: ' + trigger + '. Applies to: ' + applies + '. Payout period: ' + period + '. Review all fields before confirming.';
+  return { type: type, rows: rows, trigger: trigger, period: period, applies: applies, explanation: explanation };
+}
+function _aceBonusRenderPreview(plan) {
+  var now = new Date();
+  // Summary banner
+  document.getElementById('ace-bonus-summary-banner').textContent = plan.type + ' — Trigger: ' + plan.trigger + ', Award: ' + (plan.rows[0] ? plan.rows[0].val : 'TBD');
+  // Assumptions
+  var assumptions = [
+    'Assigned to all sales reps as no specific names were mentioned.',
+    'Used default start date of ' + now.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) + ' as none was specified.',
+    'Period set to ' + plan.period + ' based on your description.'
+  ];
+  document.getElementById('ace-bonus-assumptions').innerHTML = assumptions.map(function(a) { return '• ' + a; }).join('<br>');
+  // Bonus name
+  document.getElementById('ace-bonus-plan-name').value = plan.type + ' — ' + now.toLocaleString('default', {month:'short'}) + ' ' + now.getFullYear();
+  // Trigger field
+  document.getElementById('ace-bonus-trigger').value = plan.trigger;
+  // Amount
+  document.getElementById('ace-bonus-amount').value = plan.rows[0] ? plan.rows[0].val : '';
+  // Period dropdown
+  var periodSel = document.getElementById('ace-bonus-period');
+  for (var i = 0; i < periodSel.options.length; i++) {
+    if (periodSel.options[i].text.toLowerCase() === plan.period.toLowerCase()) { periodSel.selectedIndex = i; break; }
+  }
+  // Dates
+  var y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
+  document.getElementById('ace-bonus-start-date').value = y + '-' + m + '-' + d;
+  var end = new Date(now); end.setMonth(end.getMonth()+1);
+  document.getElementById('ace-bonus-end-date').value = end.getFullYear() + '-' + String(end.getMonth()+1).padStart(2,'0') + '-' + String(end.getDate()).padStart(2,'0');
+}
+function _aceBonusConfirm() {
+  document.getElementById('ace-bonus-step2').style.display = 'none';
+  document.getElementById('ace-bonus-step3').style.display = 'block';
+  var s3 = document.getElementById('ace-bstep-3');
+  s3.style.color = 'var(--teal)'; s3.querySelector('span').style.background = 'var(--teal)'; s3.querySelector('span').style.color = '#fff';
+  s3.querySelector('span').textContent = '✓';
+  showToast('Bonus plan applied successfully!');
+}
+
+// ── ACE CONTEST BUILDER ────────────────────────────────────────────────────────
+function _aceContestOpen() { _aceContestReset(); document.getElementById('ace-contest-modal').style.display = 'flex'; }
+function _aceContestClose() { document.getElementById('ace-contest-modal').style.display = 'none'; }
+function _aceContestReset() {
+  document.getElementById('ace-contest-input').value = '';
+  document.getElementById('ace-contest-step1').style.display = 'block';
+  document.getElementById('ace-contest-step2').style.display = 'none';
+  document.getElementById('ace-contest-step3').style.display = 'none';
+  document.getElementById('ace-contest-loading').style.display = 'block';
+  document.getElementById('ace-contest-preview').style.display = 'none';
+  var s1 = document.getElementById('ace-cstep-1'), s2 = document.getElementById('ace-cstep-2'), s3 = document.getElementById('ace-cstep-3');
+  s1.style.color = 'var(--teal)'; s1.querySelector('span').style.background = 'var(--teal)'; s1.querySelector('span').style.color = '#fff';
+  s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
+  s3.style.color = 'var(--g400)'; s3.querySelector('span').style.background = 'var(--g200)'; s3.querySelector('span').style.color = 'var(--g400)';
+}
+function _aceContestBack() {
+  document.getElementById('ace-contest-step2').style.display = 'none';
+  document.getElementById('ace-contest-step1').style.display = 'block';
+}
+function _aceContestExample(btn) { document.getElementById('ace-contest-input').value = btn.textContent.replace(/^"|"$/g, ''); }
+function _aceContestGenerate() {
+  var input = document.getElementById('ace-contest-input').value.trim();
+  if (!input) { showToast('Please describe your contest first'); return; }
+  document.getElementById('ace-contest-step1').style.display = 'none';
+  document.getElementById('ace-contest-step2').style.display = 'block';
+  document.getElementById('ace-contest-loading').style.display = 'block';
+  document.getElementById('ace-contest-preview').style.display = 'none';
+  var s2 = document.getElementById('ace-cstep-2');
+  s2.style.color = 'var(--teal)'; s2.querySelector('span').style.background = 'var(--teal)'; s2.querySelector('span').style.color = '#fff';
+  var msgs = ['Identifying contest metric…', 'Calculating prize structure…', 'Setting duration…', 'Building leaderboard…'];
+  var i = 0; var sub = document.getElementById('ace-contest-loading-sub');
+  var ticker = setInterval(function() { sub.textContent = msgs[i++ % msgs.length]; }, 600);
+  setTimeout(function() {
+    clearInterval(ticker);
+    var plan = _aceContestParse(input);
+    _aceContestRenderPreview(plan);
+    document.getElementById('ace-contest-loading').style.display = 'none';
+    document.getElementById('ace-contest-preview').style.display = 'block';
+  }, 2600);
+}
+function _aceContestParse(text) {
+  var lower = text.toLowerCase();
+  // Extract amounts
+  var amounts = []; var re = /\$[\d,]+(?:k)?/gi; var m;
+  while ((m = re.exec(text)) !== null) {
+    var val = m[0].replace(/[$,]/g, ''); if (val.toLowerCase().endsWith('k')) val = parseFloat(val) * 1000; amounts.push(parseInt(val));
+  }
+  // Metric
+  var metric = 'Total Revenue';
+  if (/new account/i.test(lower)) metric = 'New Accounts Closed';
+  else if (/call/i.test(lower)) metric = 'Calls Made';
+  else if (/deal/i.test(lower)) metric = 'Deals Closed';
+  else if (/retention/i.test(lower)) metric = 'Client Retention Rate';
+  // Duration
+  var duration = '30 days';
+  if (/friday|today/i.test(lower)) duration = '1 day';
+  else if (/week/i.test(lower)) duration = '7 days';
+  else if (/quarter|q[1-4]/i.test(lower)) duration = '90 days (Q2)';
+  else if (/month|may|june|july|august/i.test(lower)) { var mo = lower.match(/(january|february|march|april|may|june|july|august|september|october|november|december)/i); duration = mo ? mo[1].charAt(0).toUpperCase()+mo[1].slice(1) + ' (30 days)' : '30 days'; }
+  // Eligibility
+  var eligibility = 'All Reps';
+  if (/team/i.test(lower) && !/all/i.test(lower)) eligibility = 'All Teams';
+  // Prize structure
+  var prizes = [];
+  if (amounts.length === 0) {
+    prizes.push({ place: '1st Place', prize: 'Dinner (company-paid)', medal: '🥇' });
+  } else if (amounts.length === 1) {
+    prizes.push({ place: '1st Place', prize: '$' + amounts[0].toLocaleString() + ' — Winner takes all', medal: '🥇' });
+  } else {
+    var medals = ['🥇', '🥈', '🥉'];
+    var labels = ['1st Place', '2nd Place', '3rd Place'];
+    for (var i = 0; i < Math.min(amounts.length, 3); i++) {
+      prizes.push({ place: labels[i], prize: '$' + amounts[i].toLocaleString(), medal: medals[i] });
+    }
+  }
+  var totalPool = amounts.reduce(function(a, b) { return a + b; }, 0);
+  var explanation = 'Ace interpreted this as a ' + metric.toLowerCase() + ' contest running for ' + duration + '. ' + prizes.length + ' prize tier' + (prizes.length > 1 ? 's' : '') + (totalPool ? ' — total prize pool: $' + totalPool.toLocaleString() : '') + '. Eligible: ' + eligibility + '. Review before confirming.';
+  return { metric: metric, prizes: prizes, duration: duration, eligibility: eligibility, totalPool: totalPool, explanation: explanation };
+}
+function _aceContestRenderPreview(plan) {
+  var now = new Date();
+  var month = now.toLocaleString('default', {month:'short'});
+  // Summary banner
+  var poolStr = plan.totalPool ? ' — $' + plan.totalPool.toLocaleString() + ' prize pool' : '';
+  document.getElementById('ace-contest-summary-banner').textContent = plan.metric + ' contest, ' + plan.duration + poolStr;
+  // Assumptions
+  var assumptions = [
+    'Assigned to all sales reps as no specific names were mentioned.',
+    'Used default start date of ' + now.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'}) + ' as none was specified.',
+    'Leaderboard will rank by ' + plan.metric.toLowerCase() + ' in real time.'
+  ];
+  document.getElementById('ace-contest-assumptions').innerHTML = assumptions.map(function(a) { return '• ' + a; }).join('<br>');
+  // Contest name
+  document.getElementById('ace-contest-plan-name').value = plan.metric + ' Challenge — ' + month + ' ' + now.getFullYear();
+  // Metric dropdown
+  var metricSel = document.getElementById('ace-contest-metric');
+  for (var i = 0; i < metricSel.options.length; i++) {
+    if (metricSel.options[i].text.toLowerCase() === plan.metric.toLowerCase()) { metricSel.selectedIndex = i; break; }
+  }
+  // Dates
+  var y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
+  document.getElementById('ace-contest-start-date').value = y + '-' + m + '-' + d;
+  var end = new Date(now); end.setMonth(end.getMonth()+1);
+  document.getElementById('ace-contest-end-date').value = end.getFullYear() + '-' + String(end.getMonth()+1).padStart(2,'0') + '-' + String(end.getDate()).padStart(2,'0');
+  // Pre-fill prize inputs from parsed plan
+  if (plan.prizes[0] && document.getElementById('ace-contest-prize-1')) {
+    document.getElementById('ace-contest-prize-1').value = plan.prizes[0].prize;
+  }
+  if (plan.prizes[1] && document.getElementById('ace-contest-prize-2')) {
+    document.getElementById('ace-contest-prize-2').value = plan.prizes[1].prize;
+  }
+}
+function _aceContestAddPrize() {
+  var medals = ['🥇','🥈','🥉','4th','5th'];
+  var container = document.getElementById('ace-contest-prizes');
+  var idx = container.querySelectorAll('div[style]').length;
+  var div = document.createElement('div');
+  div.style.cssText = 'display:grid;grid-template-columns:80px 1fr 1fr 28px;gap:8px;align-items:center';
+  div.innerHTML = '<span style="font-size:13px">' + (medals[idx] || (idx+1)+'th') + '</span>' +
+    '<select style="border:1px solid var(--g200);border-radius:7px;padding:7px 8px;font-size:12px;color:var(--dark);font-family:var(--font);outline:none"><option>Cash</option><option>Gift card</option><option>Experience</option></select>' +
+    '<input type="text" placeholder="e.g. $250" style="border:1px solid var(--g200);border-radius:7px;padding:7px 8px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">' +
+    '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:16px;line-height:1">×</button>';
+  container.appendChild(div);
+}
+function _aceContestConfirm() {
+  document.getElementById('ace-contest-step2').style.display = 'none';
+  document.getElementById('ace-contest-step3').style.display = 'block';
+  var s3 = document.getElementById('ace-cstep-3');
+  s3.style.color = 'var(--teal)'; s3.querySelector('span').style.background = 'var(--teal)'; s3.querySelector('span').style.color = '#fff';
+  s3.querySelector('span').textContent = '✓';
+  showToast('Contest created and live!');
+}
+
+// ── ACE COMMISSION BUILDER ────────────────────────────────────────────────────
 function _aceCommOpen() {
   _aceCommReset();
   document.getElementById('ace-comm-modal').style.display = 'flex';
@@ -16439,34 +16698,66 @@ function _aceCommParse(text) {
 }
 
 function _aceCommRenderPreview(plan) {
-  // Tiers
-  var tiersEl = document.getElementById('ace-comm-tiers');
-  tiersEl.innerHTML = plan.tiers.map(function(t, i) {
-    return '<div style="display:grid;grid-template-columns:80px 1fr 80px;align-items:center;padding:11px 16px;border-bottom:' + (i < plan.tiers.length-1 ? '1px solid var(--g100)' : 'none') + ';background:' + t.color + '">' +
-      '<span style="font-size:11px;font-weight:700;color:' + t.badge + ';background:' + t.color.replace('0.08','0.2') + ';padding:3px 8px;border-radius:20px;text-align:center">' + t.label + '</span>' +
-      '<span style="font-size:13px;color:var(--g600);padding:0 16px">' + t.range + '</span>' +
-      '<span style="font-size:16px;font-weight:800;color:' + t.badge + ';font-family:var(--mono);text-align:right">' + t.rate + '</span>' +
-    '</div>';
-  }).join('');
-
-  // Meta
-  var metaEl = document.getElementById('ace-comm-meta');
-  metaEl.innerHTML = [
-    { label:'Payout Frequency', val: plan.payout, icon:'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01' },
-    { label:'Applies To', val: 'Closed-Won Deals', icon:'M22 11.08V12a10 10 0 1 1-5.93-9.14' },
-    { label:'Effective Date', val: 'Immediately', icon:'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z' },
-  ].map(function(m) {
-    return '<div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 14px">' +
-      '<div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px">' + m.label + '</div>' +
-      '<div style="font-size:13px;font-weight:700;color:var(--dark)">' + m.val + '</div>' +
-    '</div>';
-  }).join('');
-
-  // Override
-  document.getElementById('ace-comm-override-val').textContent = plan.override + '%';
-
-  // Explanation
-  document.getElementById('ace-comm-explanation').textContent = plan.explanation;
+  var now = new Date();
+  // Summary banner — mimic the dev team's format
+  var tierDesc = plan.tiers.map(function(t) { return t.rate + ' ' + t.range; }).join(', ');
+  document.getElementById('ace-comm-summary-banner').textContent = tierDesc;
+  // Assumptions
+  var assumptions = [
+    'Assigned to all sales reps as no specific names were mentioned.',
+    'Used default start and end dates as none were specified.'
+  ];
+  if (plan.override && parseFloat(plan.override) > 0) assumptions.push('Manager override of ' + plan.override + '% detected and applied.');
+  document.getElementById('ace-comm-assumptions').innerHTML = assumptions.map(function(a) { return '• ' + a; }).join('<br>');
+  // Plan name
+  document.getElementById('ace-comm-plan-name').value = plan.tiers.length + '-Tier Commission Plan';
+  // Payout dropdown
+  var payoutSel = document.getElementById('ace-comm-payout');
+  for (var i = 0; i < payoutSel.options.length; i++) {
+    if (payoutSel.options[i].text.toLowerCase() === plan.payout.toLowerCase()) { payoutSel.selectedIndex = i; break; }
+  }
+  // Dates
+  var y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
+  document.getElementById('ace-comm-start-date').value = y + '-' + m + '-01';
+  document.getElementById('ace-comm-end-date').value = y + '-12-31';
+  // Render editable tier rows
+  var rowsEl = document.getElementById('ace-comm-tier-rows');
+  rowsEl.innerHTML = '';
+  plan.tiers.forEach(function(t, i) {
+    var fromVal = i === 0 ? '0' : plan.tiers[i-1].cap || '';
+    var uptoVal = t.cap || '';
+    var rateVal = parseFloat(t.rate) || '';
+    var row = document.createElement('div');
+    row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;align-items:center';
+    row.innerHTML =
+      '<input type="text" value="$' + Number(fromVal).toLocaleString() + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+      '<input type="text" value="' + (uptoVal ? '$' + Number(uptoVal).toLocaleString() : '') + '" placeholder="and above" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+      '<input type="text" value="' + rateVal + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+      '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:18px;line-height:1;padding:0">×</button>';
+    rowsEl.appendChild(row);
+  });
+}
+function _aceCommToggle(type) {
+  var flatBtn = document.getElementById('ace-comm-toggle-flat');
+  var tieredBtn = document.getElementById('ace-comm-toggle-tiered');
+  if (type === 'flat') {
+    flatBtn.style.cssText = 'padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1.5px solid var(--teal);background:rgba(29,158,117,0.08);color:var(--teal);cursor:pointer;font-family:var(--font)';
+    tieredBtn.style.cssText = 'padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g500);cursor:pointer;font-family:var(--font)';
+  } else {
+    tieredBtn.style.cssText = 'padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1.5px solid var(--teal);background:rgba(29,158,117,0.08);color:var(--teal);cursor:pointer;font-family:var(--font)';
+    flatBtn.style.cssText = 'padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g500);cursor:pointer;font-family:var(--font)';
+  }
+}
+function _aceCommAddTier() {
+  var rowsEl = document.getElementById('ace-comm-tier-rows');
+  var row = document.createElement('div');
+  row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;align-items:center';
+  row.innerHTML =
+    '<input type="text" placeholder="$0" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+    '<input type="text" placeholder="and above" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+    '<input type="text" placeholder="%" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+    '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:18px;line-height:1;padding:0">×</button>';
+  rowsEl.appendChild(row);
 }
 
 var _aceCommTemplates = {
@@ -17098,6 +17389,321 @@ function _aceCommConfirm() {
 <!-- ═══════════════════════════════════════════════════════
      ACE COMMISSION BUILDER MODAL
 ════════════════════════════════════════════════════════ -->
+<!-- ACE BONUS MODAL -->
+<div id="ace-bonus-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_aceBonusClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5" rx="1"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace Bonus Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace builds it</div>
+        </div>
+      </div>
+      <button onclick="_aceBonusClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;padding:14px 24px;border-bottom:1px solid var(--g100);gap:0" id="ace-bonus-steps">
+      <div id="ace-bstep-1" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal)"><span style="width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">1</span> Describe</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-bstep-2" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">2</span> Review</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-bstep-3" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">3</span> Confirm</div>
+    </div>
+    <!-- Step 1 -->
+    <div id="ace-bonus-step1" style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Describe your bonus in plain English</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">What triggers it, how much is it worth, and who qualifies? Ace will handle the rest.</div>
+      <textarea id="ace-bonus-input" placeholder="e.g. $1,500 cash bonus for any rep who hits 100% of their monthly goal. If the team collectively exceeds 110%, everyone gets an additional $500." style="width:100%;height:110px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"$500 for each new account opened, max 3 per rep per month"</button>
+          <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"$2,000 retention bonus for reps who keep 90%+ of their book"</button>
+          <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Quarterly bonus: $3,000 for top rep, $1,500 second, $500 third"</button>
+          <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Year-end $5,000 bonus for hitting 120% of annual target"</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Ace never saves anything without your confirmation.</div>
+        <button onclick="_aceBonusGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Generate with Ace
+        </button>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div id="ace-bonus-step2" style="display:none;padding:24px">
+      <div id="ace-bonus-loading" style="text-align:center;padding:32px 0">
+        <div style="width:48px;height:48px;border-radius:50%;border:3px solid var(--g100);border-top-color:var(--teal);animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+        <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Ace is reading your description…</div>
+        <div style="font-size:12px;color:var(--g400)" id="ace-bonus-loading-sub">Identifying trigger conditions and award amounts</div>
+      </div>
+      <div id="ace-bonus-preview" style="display:none;overflow-y:auto;max-height:60vh">
+        <!-- Summary banner -->
+        <div id="ace-bonus-summary-banner" style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--teal)"></div>
+
+        <!-- Assumptions -->
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 16px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Assumptions Ace made</div>
+          <div id="ace-bonus-assumptions" style="font-size:12px;color:var(--g600);line-height:1.8"></div>
+        </div>
+
+        <!-- Bonus name -->
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Bonus name</div>
+          <input id="ace-bonus-plan-name" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:14px;font-weight:600;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'" value="Bonus Plan">
+        </div>
+
+        <!-- Trigger & Award -->
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Trigger &amp; Award</div>
+          <div style="padding:14px;display:flex;flex-direction:column;gap:10px">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Trigger condition</div>
+              <input id="ace-bonus-trigger" type="text" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Award type</div>
+                <select id="ace-bonus-award-type" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">
+                  <option>Cash</option><option>Gift card</option><option>Percentage of sales</option><option>Experience / Non-cash</option>
+                </select>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Award amount</div>
+                <input id="ace-bonus-amount" type="text" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Period & Eligibility -->
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Period &amp; Eligibility</div>
+          <div style="padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Period</div>
+              <select id="ace-bonus-period" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">
+                <option>Monthly</option><option>Quarterly</option><option>Annual</option><option>One-time</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Start date</div>
+              <input type="date" id="ace-bonus-start-date" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">End date</div>
+              <input type="date" id="ace-bonus-end-date" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+          </div>
+        </div>
+
+        <!-- Applies To -->
+        
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:16px">
+        <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Applies to 5 of 5 people</div>
+        <div style="padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Brock Wilson</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Russ Holt</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Jules Richards</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Doug Silverness</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Mike Barnes</label>
+        </div>
+      </div>
+
+        <div style="display:flex;justify-content:space-between;padding-top:4px">
+          <button onclick="_aceBonusBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
+          <button onclick="_aceBonusConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Create &amp; calculate
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div id="ace-bonus-step3" style="display:none;padding:40px 24px;text-align:center">
+      <div style="width:56px;height:56px;background:rgba(29,158,117,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">Bonus is Live</div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;max-width:400px;margin:0 auto 24px">Your bonus structure has been applied. Reps will see it active in their dashboard. No developer needed.</div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">What just happened</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ace parsed your plain-English bonus description</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Extracted triggers, award amounts, eligibility, and period</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Validated against your team structure and payout rules</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Applied to the live bonus system — zero developer involvement</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button onclick="_aceBonusClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
+        <button onclick="_aceBonusReset()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Build Another</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACE CONTEST MODAL -->
+<div id="ace-contest-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_aceContestClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace Contest Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace builds it</div>
+        </div>
+      </div>
+      <button onclick="_aceContestClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;padding:14px 24px;border-bottom:1px solid var(--g100);gap:0">
+      <div id="ace-cstep-1" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal)"><span style="width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">1</span> Describe</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-cstep-2" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">2</span> Review</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-cstep-3" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">3</span> Confirm</div>
+    </div>
+    <!-- Step 1 -->
+    <div id="ace-contest-step1" style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Describe your contest in plain English</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">What are you measuring, what's the prize, and how long does it run? Ace will set everything up.</div>
+      <textarea id="ace-contest-input" placeholder="e.g. Most new accounts closed in May. First place wins $1,000, second wins $500. All reps eligible. Contest runs May 1–31." style="width:100%;height:110px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_aceContestExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Highest revenue in Q2. Top 3 prizes: $2,500 / $1,000 / $500"</button>
+          <button onclick="_aceContestExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Friday blitz — most calls made wins a $250 gift card"</button>
+          <button onclick="_aceContestExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Team contest — first team to $500K in revenue wins dinner"</button>
+          <button onclick="_aceContestExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Most deals closed this month. Winner takes $1,500. 30 days."</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Ace never saves anything without your confirmation.</div>
+        <button onclick="_aceContestGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Generate with Ace
+        </button>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div id="ace-contest-step2" style="display:none;padding:24px">
+      <div id="ace-contest-loading" style="text-align:center;padding:32px 0">
+        <div style="width:48px;height:48px;border-radius:50%;border:3px solid var(--g100);border-top-color:var(--teal);animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+        <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Ace is reading your description…</div>
+        <div style="font-size:12px;color:var(--g400)" id="ace-contest-loading-sub">Identifying metric, duration, and prize structure</div>
+      </div>
+      <div id="ace-contest-preview" style="display:none;overflow-y:auto;max-height:60vh">
+        <!-- Summary banner -->
+        <div id="ace-contest-summary-banner" style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--teal)"></div>
+
+        <!-- Assumptions -->
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 16px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Assumptions Ace made</div>
+          <div id="ace-contest-assumptions" style="font-size:12px;color:var(--g600);line-height:1.8"></div>
+        </div>
+
+        <!-- Contest name -->
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Contest name</div>
+          <input id="ace-contest-plan-name" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:14px;font-weight:600;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'" value="Contest">
+        </div>
+
+        <!-- Metric & Duration -->
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Metric &amp; Duration</div>
+          <div style="padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Metric</div>
+              <select id="ace-contest-metric" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">
+                <option>Total Revenue</option><option>New Accounts Closed</option><option>Deals Closed</option><option>Calls Made</option><option>Client Retention Rate</option><option>Policies Written</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Start date</div>
+              <input type="date" id="ace-contest-start-date" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">End date</div>
+              <input type="date" id="ace-contest-end-date" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+          </div>
+        </div>
+
+        <!-- Prize Breakdown -->
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Prize Breakdown</div>
+          <div style="padding:14px;display:flex;flex-direction:column;gap:8px" id="ace-contest-prizes">
+            <div style="display:grid;grid-template-columns:80px 1fr 1fr 28px;gap:8px;align-items:center">
+              <span style="font-size:13px">🥇 1st</span>
+              <select style="border:1px solid var(--g200);border-radius:7px;padding:7px 8px;font-size:12px;color:var(--dark);font-family:var(--font);outline:none"><option>Cash</option><option>Gift card</option><option>Experience</option></select>
+              <input type="text" placeholder="e.g. $1,000" style="border:1px solid var(--g200);border-radius:7px;padding:7px 8px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none" id="ace-contest-prize-1">
+              <button onclick="this.closest('div').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:16px;line-height:1">×</button>
+            </div>
+            <div style="display:grid;grid-template-columns:80px 1fr 1fr 28px;gap:8px;align-items:center">
+              <span style="font-size:13px">🥈 2nd</span>
+              <select style="border:1px solid var(--g200);border-radius:7px;padding:7px 8px;font-size:12px;color:var(--dark);font-family:var(--font);outline:none"><option>Cash</option><option>Gift card</option><option>Experience</option></select>
+              <input type="text" placeholder="e.g. $500" style="border:1px solid var(--g200);border-radius:7px;padding:7px 8px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none" id="ace-contest-prize-2">
+              <button onclick="this.closest('div').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:16px;line-height:1">×</button>
+            </div>
+          </div>
+          <div style="padding:0 14px 12px"><button onclick="_aceContestAddPrize()" style="font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:var(--font);font-weight:600;padding:0">+ Add prize tier</button></div>
+        </div>
+
+        <!-- Applies To -->
+        
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:16px">
+        <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Applies to 5 of 5 people</div>
+        <div style="padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Brock Wilson</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Russ Holt</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Jules Richards</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Doug Silverness</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Mike Barnes</label>
+        </div>
+      </div>
+
+        <div style="display:flex;justify-content:space-between;padding-top:4px">
+          <button onclick="_aceContestBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
+          <button onclick="_aceContestConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Create &amp; launch contest
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div id="ace-contest-step3" style="display:none;padding:40px 24px;text-align:center">
+      <div style="width:56px;height:56px;background:rgba(29,158,117,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">Contest is Live</div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;max-width:400px;margin:0 auto 24px">Your contest has been created and is now visible to all eligible reps. The leaderboard will update in real time. No developer needed.</div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">What just happened</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ace parsed your contest description</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Extracted metric, duration, prizes, and eligibility rules</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Live leaderboard created and linked to your data</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Reps notified — zero developer involvement</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button onclick="_aceContestClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
+        <button onclick="_aceContestReset()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Build Another</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div id="ace-comm-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_aceCommClose()">
   <div style="background:#fff;border-radius:18px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
 
@@ -17143,7 +17749,8 @@ function _aceCommConfirm() {
         </div>
       </div>
 
-      <div style="display:flex;justify-content:flex-end;margin-top:20px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Ace never saves anything without your confirmation.</div>
         <button onclick="_aceCommGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
           Generate with Ace
@@ -17161,46 +17768,101 @@ function _aceCommConfirm() {
       </div>
 
       <!-- Preview result (shown after loading) -->
-      <div id="ace-comm-preview" style="display:none">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
-          <div style="font-size:13px;font-weight:600;color:var(--dark)">Ace built this structure from your description — review it before confirming</div>
+      <div id="ace-comm-preview" style="display:none;overflow-y:auto;max-height:60vh">
+        <!-- Summary banner -->
+        <div id="ace-comm-summary-banner" style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--teal)"></div>
+
+        <!-- Assumptions -->
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 16px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Assumptions Ace made</div>
+          <div id="ace-comm-assumptions" style="font-size:12px;color:var(--g600);line-height:1.8"></div>
         </div>
 
         <!-- Plan name -->
-        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px 18px;margin-bottom:12px">
-          <div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px">Plan Name</div>
-          <input id="ace-comm-plan-name" type="text" style="font-size:15px;font-weight:700;color:var(--dark);border:none;background:transparent;outline:none;width:100%;font-family:var(--font)" value="Custom Commission Plan — Jul 2026">
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Plan name</div>
+          <input id="ace-comm-plan-name" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:14px;font-weight:600;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'" value="Commission Plan">
         </div>
 
-        <!-- Tiers -->
-        <div style="background:#fff;border:1.5px solid var(--teal);border-radius:12px;overflow:hidden;margin-bottom:12px">
-          <div style="background:rgba(29,158,117,0.06);padding:10px 16px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--teal);border-bottom:1px solid rgba(29,158,117,0.15)">Commission Tiers</div>
-          <div id="ace-comm-tiers" style="padding:4px 0"></div>
-        </div>
-
-        <!-- Meta row -->
-        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:12px" id="ace-comm-meta"></div>
-
-        <!-- Override -->
-        <div id="ace-comm-override-wrap" style="background:rgba(99,102,241,0.06);border:1px solid rgba(99,102,241,0.2);border-radius:10px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
-          <div>
-            <div style="font-size:12px;font-weight:700;color:#6366f1">Manager Override Rate</div>
-            <div style="font-size:11px;color:var(--g400);margin-top:2px">Applied to total team commissions</div>
+        <!-- Structure -->
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Structure</div>
+          <div style="padding:14px">
+            <div style="display:flex;gap:6px;margin-bottom:14px">
+              <button id="ace-comm-toggle-flat" onclick="_aceCommToggle('flat')" style="padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g500);cursor:pointer;font-family:var(--font)">Flat rate</button>
+              <button id="ace-comm-toggle-tiered" onclick="_aceCommToggle('tiered')" style="padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1.5px solid var(--teal);background:rgba(29,158,117,0.08);color:var(--teal);cursor:pointer;font-family:var(--font)">Tiered</button>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;margin-bottom:6px">
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">From</div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Up To</div>
+              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Rate (%)</div>
+              <div></div>
+            </div>
+            <div id="ace-comm-tier-rows" style="display:flex;flex-direction:column;gap:6px"></div>
+            <button onclick="_aceCommAddTier()" style="margin-top:8px;font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:var(--font);font-weight:600;padding:0">+ Add tier</button>
+            <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+                <input type="radio" name="ace-comm-rate-type" value="progressive" checked style="margin-top:2px;accent-color:var(--teal)">
+                <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Progressive</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Each rate applies only to the sales inside its own band.</div></div>
+              </label>
+              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+                <input type="radio" name="ace-comm-rate-type" value="retroactive" style="margin-top:2px;accent-color:var(--teal)">
+                <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Retroactive</div><div style="font-size:11px;color:var(--g400);margin-top:2px">The reached tier's rate applies to all sales in the period.</div></div>
+              </label>
+            </div>
           </div>
-          <div style="font-size:18px;font-weight:800;color:#6366f1;font-family:var(--mono)" id="ace-comm-override-val">1.5%</div>
         </div>
 
-        <!-- Ace's explanation -->
-        <div style="margin-top:12px;background:rgba(29,158,117,0.04);border:1px solid rgba(29,158,117,0.15);border-radius:10px;padding:12px 14px;display:flex;gap:10px">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          <div style="font-size:12px;color:var(--g600);line-height:1.6" id="ace-comm-explanation"></div>
+        <!-- Payout & Period -->
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Payout &amp; Period</div>
+          <div style="padding:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Payout frequency</div>
+              <select id="ace-comm-payout" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">
+                <option>Monthly</option><option>Quarterly</option><option>Bi-weekly</option><option>Weekly</option><option>Annual</option>
+              </select>
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Start date</div>
+              <input type="date" id="ace-comm-start-date" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">End date</div>
+              <input type="date" id="ace-comm-end-date" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+          </div>
         </div>
 
-        <div style="display:flex;justify-content:space-between;margin-top:20px">
-          <button onclick="_aceCommBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">← Edit Description</button>
+        <!-- Goal Bonus -->
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Goal Bonus</div>
+          <div style="padding:14px">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+              <input type="checkbox" id="ace-comm-goal-bonus" style="accent-color:var(--teal);width:15px;height:15px">
+              <span style="font-size:13px;color:var(--dark)">Add a bonus rate when a rep reaches their goal</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Applies To -->
+        
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:16px">
+        <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Applies to 5 of 5 people</div>
+        <div style="padding:12px 14px;display:grid;grid-template-columns:1fr 1fr;gap:8px">
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Brock Wilson</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Russ Holt</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Jules Richards</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Doug Silverness</label>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--dark)"><input type="checkbox" checked style="accent-color:var(--teal);width:15px;height:15px"> Mike Barnes</label>
+        </div>
+      </div>
+
+        <div style="display:flex;justify-content:space-between;padding-top:4px">
+          <button onclick="_aceCommBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
           <button onclick="_aceCommConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
-            Confirm &amp; Apply to Goals.com →
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Create &amp; calculate
           </button>
         </div>
       </div>
