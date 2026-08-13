@@ -4045,6 +4045,9 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 <div class="mkt-tabs">
   <button id="mkt-tab-email" class="mkt-tab active" onclick="_mktTab('email')">Email Marketing</button>
   <button id="mkt-tab-auto" class="mkt-tab" onclick="_mktTab('auto')">Automations</button>
+  <button id="mkt-tab-contracts" class="mkt-tab" onclick="_mktTab('contracts')">Contracts</button>
+  <button id="mkt-tab-invoices" class="mkt-tab" onclick="_mktTab('invoices')">Invoices</button>
+  <button id="mkt-tab-payments" class="mkt-tab" onclick="_mktTab('payments')">Payments</button>
 </div>
 
 <!-- ══════════ EMAIL MARKETING ══════════ -->
@@ -4118,6 +4121,112 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <div id="mkt-auto-grid" class="three-col"></div>
 
 </div><!-- end mkt-panel-auto -->
+
+<!-- ══════════ CONTRACTS ══════════ -->
+<div id="mkt-panel-contracts" style="display:none">
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-label">Active Contracts</div><div class="stat-value" id="mkt-ct-stat-active">0</div><div class="stat-delta" style="color:var(--g400)">Sent + Signed</div></div>
+    <div class="stat-card"><div class="stat-label">Awaiting Signature</div><div class="stat-value" style="color:var(--amber)" id="mkt-ct-stat-awaiting">0</div><div class="stat-delta" style="color:var(--g400)">Sent, not yet signed</div></div>
+    <div class="stat-card"><div class="stat-label">Signed This Month</div><div class="stat-value teal" id="mkt-ct-stat-signed">0</div><div class="stat-delta positive" id="mkt-ct-stat-value">$0 in value</div></div>
+    <div class="stat-card"><div class="stat-label">Avg Time to Sign</div><div class="stat-value" id="mkt-ct-stat-avgtime">&mdash;</div><div class="stat-delta" style="color:var(--g400)">From sent to signed</div></div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:var(--dark)" id="mkt-ct-list-title">Contracts</div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <div style="display:flex;gap:6px" id="mkt-ct-filters">
+        <button class="filter-chip active" onclick="_mktCtFilter(this,'all')">All</button>
+        <button class="filter-chip" onclick="_mktCtFilter(this,'Sent')">Sent</button>
+        <button class="filter-chip" onclick="_mktCtFilter(this,'Signed')">Signed</button>
+        <button class="filter-chip" onclick="_mktCtFilter(this,'Draft')">Draft</button>
+        <span class="mkt-chip-sep"></span>
+        <button class="filter-chip" onclick="_mktCtFilter(this,'templates')">Templates</button>
+      </div>
+      <button class="tb-btn btn-teal" style="font-size:11px;display:flex;align-items:center;gap:6px" onclick="_mktCtAceOpen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build with Ace</button>
+    </div>
+  </div>
+
+  <div id="mkt-ct-contracts-view">
+    <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
+      <div class="mkt-ct-row mkt-row-head">
+        <div>Contract</div><div>Client</div><div style="text-align:right">Value</div><div>Status</div><div style="text-align:right">Date</div><div></div>
+      </div>
+      <div id="mkt-ct-list"></div>
+    </div>
+  </div>
+
+  <div id="mkt-ct-templates-view" class="three-col" style="display:none;margin-bottom:28px"></div>
+
+</div><!-- end mkt-panel-contracts -->
+
+<!-- ══════════ INVOICES ══════════ -->
+<div id="mkt-panel-invoices" style="display:none">
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-label">Outstanding</div><div class="stat-value" style="color:var(--amber)" id="mkt-inv-stat-outstanding">$0</div><div class="stat-delta" style="color:var(--g400)" id="mkt-inv-stat-outstanding-n">0 invoices</div></div>
+    <div class="stat-card"><div class="stat-label">Paid This Month</div><div class="stat-value teal" id="mkt-inv-stat-paid">$0</div><div class="stat-delta positive" id="mkt-inv-stat-paid-n">0 invoices</div></div>
+    <div class="stat-card"><div class="stat-label">Overdue</div><div class="stat-value" style="color:var(--red)" id="mkt-inv-stat-overdue">$0</div><div class="stat-delta" style="color:var(--g400)" id="mkt-inv-stat-overdue-n">0 invoices</div></div>
+    <div class="stat-card"><div class="stat-label">Avg Days to Pay</div><div class="stat-value" id="mkt-inv-stat-avgdays">&mdash;</div><div class="stat-delta" style="color:var(--g400)">Sent to paid</div></div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:var(--dark)">Invoices</div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <div style="display:flex;gap:6px" id="mkt-inv-filters">
+        <button class="filter-chip active" onclick="_mktInvFilter(this,'all')">All</button>
+        <button class="filter-chip" onclick="_mktInvFilter(this,'Sent')">Sent</button>
+        <button class="filter-chip" onclick="_mktInvFilter(this,'Paid')">Paid</button>
+        <button class="filter-chip" onclick="_mktInvFilter(this,'Overdue')">Overdue</button>
+        <button class="filter-chip" onclick="_mktInvFilter(this,'Draft')">Draft</button>
+      </div>
+      <button class="tb-btn btn-teal" style="font-size:11px;display:flex;align-items:center;gap:6px" onclick="_mktInvAceOpen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build with Ace</button>
+      <button class="tb-btn btn-ghost" style="font-size:11px" onclick="_mktInvOpen(null)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> New Invoice</button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
+    <div class="mkt-inv-row mkt-row-head">
+      <div>Invoice</div><div>Client</div><div style="text-align:right">Amount</div><div>Status</div><div style="text-align:right">Due</div><div></div>
+    </div>
+    <div id="mkt-inv-list"></div>
+  </div>
+
+</div><!-- end mkt-panel-invoices -->
+
+<!-- ══════════ PAYMENTS ══════════ -->
+<div id="mkt-panel-payments" style="display:none">
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-label">Collected This Month</div><div class="stat-value teal" id="mkt-pay-stat-collected">$0</div><div class="stat-delta positive" id="mkt-pay-stat-collected-n">0 payments</div></div>
+    <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value" style="color:var(--amber)" id="mkt-pay-stat-pending">$0</div><div class="stat-delta" style="color:var(--g400)" id="mkt-pay-stat-pending-n">0 payments</div></div>
+    <div class="stat-card"><div class="stat-label">Failed / Refunded</div><div class="stat-value" style="color:var(--red)" id="mkt-pay-stat-failed">$0</div><div class="stat-delta" style="color:var(--g400)" id="mkt-pay-stat-failed-n">0 payments</div></div>
+    <div class="stat-card"><div class="stat-label">Success Rate</div><div class="stat-value" id="mkt-pay-stat-rate">&mdash;</div><div class="stat-delta" style="color:var(--g400)">Last 30 days</div></div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:var(--dark)">Payments</div>
+    <div style="display:flex;gap:6px;align-items:center">
+      <div style="display:flex;gap:6px" id="mkt-pay-filters">
+        <button class="filter-chip active" onclick="_mktPayFilter(this,'all')">All</button>
+        <button class="filter-chip" onclick="_mktPayFilter(this,'Succeeded')">Succeeded</button>
+        <button class="filter-chip" onclick="_mktPayFilter(this,'Pending')">Pending</button>
+        <button class="filter-chip" onclick="_mktPayFilter(this,'Failed')">Failed</button>
+        <button class="filter-chip" onclick="_mktPayFilter(this,'Refunded')">Refunded</button>
+      </div>
+      <button class="tb-btn btn-teal" style="font-size:11px;display:flex;align-items:center;gap:6px" onclick="_mktPlanAceOpen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build Payment Plan with Ace</button>
+      <button class="tb-btn btn-ghost" style="font-size:11px" onclick="_mktPayOpen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Record Payment</button>
+    </div>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
+    <div class="mkt-pay-row mkt-row-head">
+      <div>Date</div><div>Invoice</div><div>Client</div><div>Method</div><div style="text-align:right">Amount</div><div>Status</div>
+    </div>
+    <div id="mkt-pay-list"></div>
+  </div>
+
+</div><!-- end mkt-panel-payments -->
 </div><!-- end page-marketing -->
 
 <!-- REPORTS -->
@@ -17762,6 +17871,238 @@ function _aceCommConfirm() {
   </div>
 </div>
 
+<!-- ACE CONTRACT MODAL -->
+<div id="ace-contract-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_mktCtAceClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:640px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace Contract Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace drafts it</div>
+        </div>
+      </div>
+      <button onclick="_mktCtAceClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;padding:14px 24px;border-bottom:1px solid var(--g100);gap:0">
+      <div id="ace-ctstep-1" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal)"><span style="width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">1</span> Describe</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-ctstep-2" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">2</span> Review</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-ctstep-3" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">3</span> Confirm</div>
+    </div>
+    <!-- Step 1 -->
+    <div id="ace-contract-step1" style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Describe the contract in plain English</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">What kind of agreement, who's it with, what's it worth, and what are the key terms? Ace will draft the whole document.</div>
+      <textarea id="ace-contract-input" placeholder="e.g. Consulting agreement with Horizon Retail Group for $48,000, net 30 payment terms, 12-month term, includes confidentiality and exclusivity clauses." style="width:100%;height:110px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_mktCtAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Service agreement with Lakeview Dental for $18,500, net 30, 6-month term"</button>
+          <button onclick="_mktCtAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"NDA with Brightline Manufacturing before we share pricing details"</button>
+          <button onclick="_mktCtAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"12-month retainer with Union Steel Partners, $6,000 monthly, upfront billing"</button>
+          <button onclick="_mktCtAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Sales agreement with Cascade Outdoor for $92,000, net 15, includes warranty terms"</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Ace never saves anything without your confirmation.</div>
+        <button onclick="_mktCtAceGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Draft with Ace
+        </button>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div id="ace-contract-step2" style="display:none;padding:24px">
+      <div id="ace-contract-loading" style="text-align:center;padding:32px 0">
+        <div style="width:48px;height:48px;border-radius:50%;border:3px solid var(--g100);border-top-color:var(--teal);animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+        <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Ace is drafting your contract…</div>
+        <div style="font-size:12px;color:var(--g400)" id="ace-contract-loading-sub">Identifying agreement type and key terms</div>
+      </div>
+      <div id="ace-contract-preview" style="display:none;overflow-y:auto;max-height:60vh">
+        <div id="ace-contract-summary-banner" style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--teal)"></div>
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 16px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Assumptions Ace made</div>
+          <div id="ace-contract-assumptions" style="font-size:12px;color:var(--g600);line-height:1.8"></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
+          <div>
+            <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Contract name</div>
+            <input id="ace-contract-name" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-weight:600;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Client</div>
+            <input id="ace-contract-client" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+          </div>
+        </div>
+        <div style="margin-bottom:16px">
+          <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Contract value ($)</div>
+          <input id="ace-contract-value" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+        </div>
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:16px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Clauses (in order)</span>
+          </div>
+          <div id="ace-contract-clauses" style="padding:12px 14px;display:flex;flex-direction:column;gap:8px"></div>
+          <div style="padding:0 14px 14px;display:flex;gap:8px;align-items:center">
+            <select id="ace-contract-add-clause" style="flex:1;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;color:var(--dark);font-family:var(--font);outline:none"></select>
+            <button onclick="_mktCtAceAddClause()" style="background:var(--g50);color:var(--navy);border:1px solid var(--g200);border-radius:7px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Add clause</button>
+          </div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:4px">
+          <button onclick="_mktCtAceBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
+          <button onclick="_mktCtAceConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Create contract
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div id="ace-contract-step3" style="display:none;padding:40px 24px;text-align:center">
+      <div style="width:56px;height:56px;background:rgba(29,158,117,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">Contract Drafted</div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;max-width:400px;margin:0 auto 24px">Saved as a draft in your Contracts list. Open it in the builder to fine-tune the language before sending it out for signature.</div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button onclick="_mktCtAceOpenInBuilder()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Open in Builder</button>
+        <button onclick="_mktCtAceClose()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACE INVOICE MODAL -->
+<div id="ace-invoice-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_mktInvAceClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:640px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace Invoice Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace itemizes it</div>
+        </div>
+      </div>
+      <button onclick="_mktInvAceClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Describe the invoice in plain English</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">Who's it for, what are you billing for, and what are the payment terms? Ace will build the line items and hand you an editable invoice.</div>
+      <textarea id="ace-invoice-input" placeholder="e.g. Invoice Horizon Retail Group for 20 hours of consulting at $175/hr and a $500 setup fee, due in 30 days." style="width:100%;height:110px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_mktInvAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Bill Lakeview Dental $1,500/month retainer for March, due net 15"</button>
+          <button onclick="_mktInvAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Invoice Union Steel Partners for 3 units of onboarding at $2,200 each, due upon receipt"</button>
+          <button onclick="_mktInvAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Cascade Outdoor — 40 hours dev work at $150/hr plus $300 hosting fee, net 30"</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Opens a fully editable invoice — nothing sends until you do.</div>
+        <button onclick="_mktInvAceGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Generate with Ace
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACE PAYMENT PLAN MODAL -->
+<div id="ace-planpay-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_mktPlanAceClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:640px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace Payment Plan Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace schedules it</div>
+        </div>
+      </div>
+      <button onclick="_mktPlanAceClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;padding:14px 24px;border-bottom:1px solid var(--g100);gap:0">
+      <div id="ace-ppstep-1" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal)"><span style="width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">1</span> Describe</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-ppstep-2" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">2</span> Review</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-ppstep-3" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">3</span> Confirm</div>
+    </div>
+    <!-- Step 1 -->
+    <div id="ace-planpay-step1" style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Which invoice, and how should it be split?</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">Pick the invoice this plan is for, then describe the schedule in plain English.</div>
+      <div style="margin-bottom:12px">
+        <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Invoice</div>
+        <select id="ace-planpay-invoice" style="width:100%;border:1.5px solid var(--g200);border-radius:8px;padding:9px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none"></select>
+      </div>
+      <textarea id="ace-planpay-input" placeholder="e.g. Split into 3 equal monthly payments starting next month" style="width:100%;height:80px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_mktPlanAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Split into 3 equal monthly payments starting next month"</button>
+          <button onclick="_mktPlanAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"50% now, 50% in 30 days"</button>
+          <button onclick="_mktPlanAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Split into 6 equal biweekly payments"</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Ace never saves anything without your confirmation.</div>
+        <button onclick="_mktPlanAceGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Build schedule
+        </button>
+      </div>
+    </div>
+    <!-- Step 2 -->
+    <div id="ace-planpay-step2" style="display:none;padding:24px">
+      <div id="ace-planpay-loading" style="text-align:center;padding:32px 0">
+        <div style="width:48px;height:48px;border-radius:50%;border:3px solid var(--g100);border-top-color:var(--teal);animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+        <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Ace is building the schedule…</div>
+        <div style="font-size:12px;color:var(--g400)">Splitting the balance and spacing out due dates</div>
+      </div>
+      <div id="ace-planpay-preview" style="display:none">
+        <div id="ace-planpay-summary-banner" style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--teal)"></div>
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:16px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Installments</div>
+          <div id="ace-planpay-installments" style="padding:12px 14px;display:flex;flex-direction:column;gap:8px"></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;padding-top:4px">
+          <button onclick="_mktPlanAceBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
+          <button onclick="_mktPlanAceConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Schedule payments
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- Step 3 -->
+    <div id="ace-planpay-step3" style="display:none;padding:40px 24px;text-align:center">
+      <div style="width:56px;height:56px;background:rgba(29,158,117,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">Payment Plan Scheduled</div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;max-width:400px;margin:0 auto 24px">The installments have been added to your Payments ledger as Pending, each with its own due date.</div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button onclick="_mktPlanAceClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ACE CONTEST MODAL -->
 <div id="ace-contest-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_aceContestClose()">
   <div style="background:#fff;border-radius:18px;width:100%;max-width:620px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
@@ -18212,6 +18553,36 @@ function _aceCommConfirm() {
 .mkt-tmpl-desc{font-size:11px;color:var(--g400);line-height:1.4;margin-bottom:10px}
 .mkt-tmpl-foot{display:flex;gap:6px}
 
+/* ── Contracts / Invoices / Payments row grids ── */
+.mkt-ct-row{display:grid;grid-template-columns:minmax(220px,1.6fr) 1fr 110px 120px 92px 78px;gap:16px;align-items:center;padding:14px 20px}
+.mkt-inv-row{display:grid;grid-template-columns:minmax(140px,1fr) 1.3fr 110px 110px 92px 78px;gap:16px;align-items:center;padding:14px 20px}
+.mkt-pay-row{display:grid;grid-template-columns:90px 1fr 1.2fr 100px 100px 110px;gap:16px;align-items:center;padding:14px 20px}
+@media(max-width:1240px){
+  .mkt-ct-row{grid-template-columns:minmax(180px,1.6fr) 1fr 0 110px 0 70px}
+  .mkt-ct-row>:nth-child(3),.mkt-ct-row>:nth-child(5){display:none}
+  .mkt-inv-row{grid-template-columns:minmax(110px,1fr) 1.3fr 0 100px 0 70px}
+  .mkt-inv-row>:nth-child(3),.mkt-inv-row>:nth-child(5){display:none}
+}
+.mkt-doc-name{font-size:13px;font-weight:650;color:var(--dark);line-height:1.35;margin-bottom:3px;cursor:pointer}
+.mkt-doc-name:hover{color:var(--teal);text-decoration:underline}
+.mkt-doc-meta{font-size:11px;color:var(--g400)}
+
+/* ── Contract clause block preview (mirrors .mkt-eb-* email blocks) ── */
+.mkt-cb-frame{background:#fff;border-radius:6px;padding:18px 20px;font-family:var(--font);font-size:12px;color:var(--dark);line-height:1.6}
+.mkt-cb-title{font-size:16px;font-weight:800;color:var(--dark);margin-bottom:10px;letter-spacing:-0.2px}
+.mkt-cb-parties{background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:11.5px;color:var(--g600)}
+.mkt-cb-parties b{color:var(--dark)}
+.mkt-cb-section{margin-bottom:14px}
+.mkt-cb-section-h{font-size:12.5px;font-weight:700;color:var(--dark);margin-bottom:4px;text-transform:uppercase;letter-spacing:.3px}
+.mkt-cb-section-body{font-size:12px;color:var(--g600);line-height:1.65}
+.mkt-cb-terms{background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.2);border-radius:8px;padding:10px 12px;margin-bottom:14px;font-size:12px;color:var(--dark)}
+.mkt-cb-sig{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;padding-top:14px;border-top:1px dashed var(--g200)}
+.mkt-cb-sig-line{border-bottom:1.5px solid var(--g300);height:30px;margin-bottom:5px}
+.mkt-cb-sig-label{font-size:10.5px;color:var(--g400)}
+.mkt-cb-divider{height:1px;background:var(--g200);margin:14px 0}
+.mkt-cb-empty{padding:24px;text-align:center;font-size:12px;color:var(--g400)}
+.mkt-tmpl-mini .mkt-cb-frame{transform:scale(0.62);transform-origin:top center;width:161%;margin-left:-30.5%;pointer-events:none}
+
 /* ── Template Editor (full page, WYSIWYG) ── */
 .mkt-tb-title-input{border:none;background:none;font-size:15px;font-weight:800;color:var(--dark);font-family:var(--font);padding:6px 8px;border-radius:7px;width:260px;transition:background .12s}
 .mkt-tb-title-input:hover,.mkt-tb-title-input:focus{background:var(--g100);outline:none}
@@ -18490,6 +18861,169 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
   </div>
 </div>
 
+<!-- Contract Preview modal -->
+<div class="modal-overlay" id="mkt-ct-preview-modal" onclick="closeOnOverlay(event,'mkt-ct-preview-modal')">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-ctp-title" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="mkt-ctp-title">Contract</div>
+        <div style="font-size:11.5px;color:var(--g400);margin-top:2px" id="mkt-ctp-sub"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal('mkt-ct-preview-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body" style="background:var(--g50)">
+      <div id="mkt-ctp-render"></div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note" id="mkt-ctp-desc"></div>
+      <div class="modal-actions">
+        <button class="modal-cancel" id="mkt-ctp-edit-btn" onclick="_mktCtEditFromPreview()">Edit</button>
+        <button class="modal-cancel" id="mkt-ctp-send-btn" style="display:none" onclick="_mktCtSendFromPreview()">Send for Signature</button>
+        <button class="modal-cancel" id="mkt-ctp-sign-btn" style="display:none" onclick="_mktCtSignFromPreview()">Mark Signed</button>
+        <button class="modal-save" onclick="closeModal('mkt-ct-preview-modal')">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════ CONTRACT BUILDER (full page, WYSIWYG) ══════════ -->
+<div id="mkt-ctb-overlay" style="position:fixed;inset:0;background:var(--off);z-index:2200;display:none;flex-direction:column;overflow:hidden">
+
+  <!-- HEADER -->
+  <div style="background:var(--white);border-bottom:1px solid var(--g200);height:62px;display:flex;align-items:center;padding:0 20px;gap:12px;flex-shrink:0">
+    <button onclick="_mktCtbPageClose()" style="background:none;border:none;display:flex;align-items:center;gap:6px;cursor:pointer;color:var(--g500);font-size:13px;font-weight:600;font-family:var(--font);padding:6px 8px;border-radius:7px;flex-shrink:0" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Marketing</span>
+    </button>
+    <div style="width:1px;height:24px;background:var(--g200);flex-shrink:0"></div>
+    <input id="mkt-ctb-name" class="mkt-tb-title-input" placeholder="Untitled contract">
+    <div style="flex:1"></div>
+    <button class="tb-btn btn-ghost" style="font-size:12px" onclick="_mktCtbPreviewOpen()">Preview</button>
+    <button class="tb-btn btn-teal" style="font-size:12px" onclick="_mktCtbSave()">Save Contract</button>
+  </div>
+
+  <!-- PROPERTIES STRIP -->
+  <div id="mkt-ctb-meta-row" style="background:var(--white);border-bottom:1px solid var(--g200);padding:10px 20px;display:flex;gap:20px;flex-shrink:0;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:200px">
+      <span style="font-size:11px;font-weight:600;color:var(--g400);flex-shrink:0">Client</span>
+      <input id="mkt-ctb-client" class="mkt-tb-inline-input" placeholder="Client name">
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex:1;min-width:160px">
+      <span style="font-size:11px;font-weight:600;color:var(--g400);flex-shrink:0">Value ($)</span>
+      <input id="mkt-ctb-value" class="mkt-tb-inline-input" placeholder="0">
+    </div>
+  </div>
+  <div id="mkt-ctb-desc-row" style="display:none;background:var(--white);border-bottom:1px solid var(--g200);padding:10px 20px;flex-shrink:0">
+    <div style="display:flex;align-items:center;gap:8px">
+      <span style="font-size:11px;font-weight:600;color:var(--g400);flex-shrink:0">Description</span>
+      <input id="mkt-ctb-desc" class="mkt-tb-inline-input" placeholder="Shown on the template card">
+    </div>
+  </div>
+
+  <!-- BODY -->
+  <div style="flex:1;display:flex;overflow:hidden">
+    <div class="mkt-wys-palette">
+      <div style="font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;padding:14px 14px 8px">Clause blocks</div>
+      <div id="mkt-ctb-palette-list" style="padding:0 10px 14px;display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+    <div class="mkt-wys-canvas-scroll" ondragover="_mktCtbCanvasDragOver(event)" ondragleave="_mktCtbCanvasDragLeave(event)" ondrop="_mktCtbCanvasDrop(event)">
+      <div id="mkt-ctb-canvas" class="mkt-wys-canvas"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Contract Builder Preview modal -->
+<div class="modal-overlay" id="mkt-ctb-preview-modal" onclick="closeOnOverlay(event,'mkt-ctb-preview-modal')">
+  <div class="modal" role="dialog" aria-modal="true" style="width:min(680px,94vw)" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">Contract Preview</div>
+      <button class="modal-close" onclick="closeModal('mkt-ctb-preview-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body" style="background:var(--g50)">
+      <div id="mkt-ctb-pv-render"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Invoice edit modal -->
+<div class="modal-overlay" id="mkt-inv-modal" onclick="closeOnOverlay(event,'mkt-inv-modal')">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-inv-title" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="mkt-inv-title">New Invoice</div>
+      <button class="modal-close" onclick="closeModal('mkt-inv-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="mkt-cfg-grid" style="margin-bottom:20px">
+        <div class="mkt-field"><label>Client</label><input id="mkt-inv-client" class="mkt-input" placeholder="Client name"></div>
+        <div class="mkt-field"><label>Due date</label><input id="mkt-inv-due" class="mkt-input" type="date"></div>
+      </div>
+
+      <div class="mkt-sec-label">Line items</div>
+      <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:1fr 70px 90px 90px 34px;gap:8px;padding:9px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">
+          <div>Description</div><div style="text-align:right">Qty</div><div style="text-align:right">Rate ($)</div><div style="text-align:right">Amount</div><div></div>
+        </div>
+        <div id="mkt-inv-items"></div>
+        <div style="padding:10px 14px">
+          <button class="mkt-mini-btn" onclick="_mktInvAddItem()">+ Add line item</button>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end">
+        <div style="width:240px;display:flex;flex-direction:column;gap:6px">
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;color:var(--g600)"><span>Subtotal</span><span id="mkt-inv-subtotal" style="font-family:var(--mono)">$0.00</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;font-size:12.5px;color:var(--g600)">
+            <span>Tax (%)</span>
+            <input id="mkt-inv-taxrate" value="0" oninput="_mktInvRecalc()" style="width:56px;text-align:right;border:1px solid var(--g200);border-radius:6px;padding:3px 6px;font-size:12px;font-family:var(--mono)">
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:800;color:var(--dark);padding-top:6px;border-top:1px solid var(--g200)"><span>Total</span><span id="mkt-inv-total" style="font-family:var(--mono)">$0.00</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note">Nothing sends until you confirm</div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="_mktInvSave(false)">Save as Draft</button>
+        <button class="modal-save" onclick="_mktInvSave(true)">Send Invoice</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Record Payment modal -->
+<div class="modal-overlay" id="mkt-pay-modal" onclick="closeOnOverlay(event,'mkt-pay-modal')">
+  <div class="modal" role="dialog" aria-modal="true" style="width:min(480px,94vw)" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">Record Payment</div>
+      <button class="modal-close" onclick="closeModal('mkt-pay-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="mkt-field" style="margin-bottom:16px">
+        <label>Invoice</label>
+        <select id="mkt-pay-invoice" class="mkt-input" onchange="_mktPayInvoiceChange()"></select>
+      </div>
+      <div class="mkt-cfg-grid" style="margin-bottom:16px">
+        <div class="mkt-field"><label>Amount ($)</label><input id="mkt-pay-amount" class="mkt-input" placeholder="0.00"></div>
+        <div class="mkt-field"><label>Method</label>
+          <select id="mkt-pay-method" class="mkt-input">
+            <option>Card</option><option>ACH</option><option>Check</option><option>Wire</option>
+          </select>
+        </div>
+      </div>
+      <div class="mkt-field">
+        <label>Date</label>
+        <input id="mkt-pay-date" class="mkt-input" type="date">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note">This marks the invoice as paid if the amount covers the balance</div>
+      <div class="modal-actions">
+        <button class="modal-save" onclick="_mktPaySave()">Record Payment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Template Builder modal (drag-and-drop) -->
 <!-- ══════════ TEMPLATE EDITOR (full page, WYSIWYG) ══════════ -->
 <div id="mkt-tb-overlay" style="position:fixed;inset:0;background:var(--off);z-index:2200;display:none;flex-direction:column;overflow:hidden">
@@ -18735,7 +19269,12 @@ var MKT_ICONS = {
   arrow: '<line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>',
   warn:  '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
   note:  '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
-  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>'
+  clock: '<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  doc:   '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+  users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  pen:   '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
+  dollar:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
+  minus: '<line x1="5" y1="12" x2="19" y2="12"/>'
 };
 
 /* ── Live automation store ── */
@@ -18865,22 +19404,34 @@ function _mktActionText(a) {
 }
 
 /* ── Tab switching ── */
+var MKT_TABS = ['email', 'auto', 'contracts', 'invoices', 'payments'];
 function _mktTab(tab) {
-  document.getElementById('mkt-panel-email').style.display = tab === 'email' ? '' : 'none';
-  document.getElementById('mkt-panel-auto').style.display  = tab === 'auto'  ? '' : 'none';
-  document.getElementById('mkt-tab-email').classList.toggle('active', tab === 'email');
-  document.getElementById('mkt-tab-auto').classList.toggle('active', tab === 'auto');
+  MKT_TABS.forEach(function(t){
+    var panel = document.getElementById('mkt-panel-' + t);
+    var btn = document.getElementById('mkt-tab-' + t);
+    if (panel) panel.style.display = (t === tab) ? '' : 'none';
+    if (btn) btn.classList.toggle('active', t === tab);
+  });
   window._mktCurTab = tab;
   _mktSyncPrimaryLabel();
+  if (tab === 'contracts' && typeof _mktRenderContracts === 'function') _mktRenderContracts();
+  if (tab === 'invoices' && typeof _mktRenderInvoices === 'function') _mktRenderInvoices();
+  if (tab === 'payments' && typeof _mktRenderPayments === 'function') _mktRenderPayments();
 }
 function _mktSyncPrimaryLabel() {
   var label = window._mktCurTab === 'auto' ? 'New Automation'
+            : window._mktCurTab === 'contracts' ? (_mktCtFilterVal === 'templates' ? 'New Contract Template' : 'New Contract')
+            : window._mktCurTab === 'invoices' ? 'New Invoice'
+            : window._mktCurTab === 'payments' ? 'Record Payment'
             : _mktCampFilterVal === 'templates' ? 'New Template'
             : 'New Campaign';
   document.getElementById('mkt-primary-label').textContent = label;
 }
 function _mktPrimaryAction() {
   if (window._mktCurTab === 'auto') _mktOpenBuilder(null);
+  else if (window._mktCurTab === 'contracts') { if (_mktCtFilterVal === 'templates') _mktCtbOpen(null, true); else _mktCtbOpen(null, false); }
+  else if (window._mktCurTab === 'invoices') _mktInvOpen(null);
+  else if (window._mktCurTab === 'payments') _mktPayOpen();
   else if (_mktCampFilterVal === 'templates') _mktNewTemplate();
   else _mktNewCampaign();
 }
@@ -19965,12 +20516,952 @@ function _mktBuilderSave() {
   showToast('Saved "' + a.name + '"');
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   CONTRACTS · INVOICES · PAYMENTS
+   Same conventions as Email Marketing / Automations above: a shared
+   client-name pool, Ace-powered "describe it, we build it" generators,
+   and — for Contracts — a WYSIWYG drag-and-drop builder that reuses the
+   generic pure helpers (_mktTbDropIndexPure / _mktTbInsertBlockPure /
+   _mktTbReorderBlockPure) already proven out by the Template Editor.
+   ══════════════════════════════════════════════════════════════════════ */
+var MKT_CLIENT_NAMES = ['Horizon Retail Group','Lakeview Dental','Union Steel Partners','Cascade Outdoor Co.','Brightline Manufacturing','Union Square Media','Alder & Finch LLP','Riverside Logistics','Sable Point Capital','Norwood Family Clinic'];
+
+/* ── Contracts data ── */
+var _mktContracts = [];
+var _mktContractTemplates = [];
+var _mktCtFilterVal = 'all';
+var _mktCtEditIdx = null;
+var _mktCtPvIdx = null;
+
+var MKT_CT_CLAUSE_LIBRARY = {
+  'Scope of Work': 'The Company shall provide the services described herein, including all deliverables, timelines, and specifications as mutually agreed upon by both parties in writing.',
+  'Payment Terms': 'Client agrees to pay the Company according to the payment schedule outlined in this Agreement. Late payments may be subject to a 1.5% monthly finance charge.',
+  'Term & Termination': 'This Agreement shall remain in effect for the term specified above and may be terminated by either party with 30 days written notice.',
+  'Confidentiality': 'Both parties agree to keep confidential all proprietary information disclosed during the course of this Agreement and not to disclose it to any third party without prior written consent.',
+  'Limitation of Liability': 'Neither party shall be liable for any indirect, incidental, or consequential damages arising out of this Agreement, and total liability shall not exceed the fees paid under this Agreement.',
+  'Governing Law': 'This Agreement shall be governed by and construed in accordance with the laws of the state in which the Company is headquartered, without regard to conflict of law principles.',
+  'Exclusivity': 'During the term of this Agreement, Client agrees to engage the Company on an exclusive basis for the services described herein.',
+  'Definition of Confidential Information': '"Confidential Information" means any non-public information disclosed by either party, whether written, oral, or electronic, that is designated as confidential or would reasonably be understood to be confidential.',
+  'Obligations of Receiving Party': 'The receiving party shall use the Confidential Information solely for the purposes of this Agreement and shall protect it using the same degree of care it uses for its own confidential information.',
+  'Remedies': 'The parties acknowledge that a breach of this Agreement may cause irreparable harm, entitling the non-breaching party to seek injunctive relief in addition to any other remedies available at law.',
+  'Description of Goods/Services': 'The Company shall deliver the goods and/or services described in this Agreement in accordance with the specifications, quantities, and delivery schedule set forth herein.',
+  'Delivery': 'Delivery shall occur at the location and by the date specified in this Agreement. Risk of loss transfers to Client upon delivery.',
+  'Warranties': 'The Company warrants that all goods and services provided under this Agreement will be free from material defects for a period of 90 days from delivery.',
+  'Premises': 'Landlord agrees to lease to Tenant the premises described in this Agreement for use solely as specified herein.',
+  'Rent': 'Tenant agrees to pay rent in the amount and on the schedule specified in this Agreement, with late payments subject to applicable fees.',
+  'Maintenance': 'Landlord shall be responsible for maintaining the structural elements of the premises, while Tenant is responsible for day-to-day upkeep.'
+};
+var MKT_CT_BLOCK_TYPES = {
+  title:         {label:'Title',            icon:'doc',   fields:[{k:'text',t:'text',l:'Title',d:'Service Agreement'}]},
+  parties:       {label:'Parties',          icon:'users', fields:[{k:'partyA',t:'text',l:'Party A',d:''},{k:'partyB',t:'text',l:'Party B',d:''}]},
+  section:       {label:'Clause / Section', icon:'note',  fields:[{k:'heading',t:'text',l:'Heading',d:'New Clause'},{k:'body',t:'textarea',l:'Body',d:''}]},
+  payment_terms: {label:'Payment Terms',    icon:'dollar',fields:[{k:'text',t:'text',l:'Terms',d:'Net 30 from invoice date'}]},
+  divider:       {label:'Divider',          icon:'minus', fields:[]},
+  signature:     {label:'Signature Block',  icon:'pen',   fields:[]}
+};
+function _mktCtDemoBlocks(title, client, clauses, paymentTerms) {
+  var blocks = [{type:'title', text:title}, {type:'parties', partyA:(_companySettings.companyName || 'Company'), partyB:client}];
+  clauses.forEach(function(c){ blocks.push({type:'section', heading:c, body: MKT_CT_CLAUSE_LIBRARY[c] || 'Details for this clause go here.'}); });
+  if (paymentTerms) blocks.push({type:'payment_terms', text:paymentTerms});
+  blocks.push({type:'signature'});
+  return blocks;
+}
+function _mktSeedContracts() {
+  _mktContracts = [
+    {n:'Consulting Agreement — Horizon Retail Group', client:'Horizon Retail Group', value:48000, status:'Signed', date:'Jul 2', signedDate:'Jul 9',
+     blocks:_mktCtDemoBlocks('Consulting Agreement','Horizon Retail Group', ['Scope of Work','Payment Terms','Term & Termination','Confidentiality','Limitation of Liability','Governing Law'], 'Net 30 from invoice date')},
+    {n:'Service Agreement — Lakeview Dental', client:'Lakeview Dental', value:18500, status:'Sent', date:'Aug 6', signedDate:null,
+     blocks:_mktCtDemoBlocks('Service Agreement','Lakeview Dental', ['Scope of Work','Payment Terms','Term & Termination','Confidentiality','Governing Law'], 'Net 30 from invoice date')},
+    {n:'Retainer Agreement — Union Steel Partners', client:'Union Steel Partners', value:72000, status:'Signed', date:'Jun 14', signedDate:'Jun 19',
+     blocks:_mktCtDemoBlocks('Retainer Agreement','Union Steel Partners', ['Scope of Work','Payment Terms','Term & Termination','Exclusivity','Governing Law'], 'Monthly installments, due on the 1st')},
+    {n:'Sales Agreement — Cascade Outdoor Co.', client:'Cascade Outdoor Co.', value:92000, status:'Draft', date:'-', signedDate:null,
+     blocks:_mktCtDemoBlocks('Sales Agreement','Cascade Outdoor Co.', ['Description of Goods/Services','Payment Terms','Delivery','Warranties','Governing Law'], 'Net 15 from invoice date')},
+    {n:'NDA — Brightline Manufacturing', client:'Brightline Manufacturing', value:0, status:'Signed', date:'Jul 28', signedDate:'Jul 28',
+     blocks:_mktCtDemoBlocks('Mutual Non-Disclosure Agreement','Brightline Manufacturing', ['Definition of Confidential Information','Obligations of Receiving Party','Term & Termination','Remedies','Governing Law'], null)}
+  ];
+}
+function _mktSeedContractTemplates() {
+  _mktContractTemplates = [
+    {n:'Standard Service Agreement', d:'General-purpose services contract with scope, payment, and liability clauses.',
+     blocks:_mktCtDemoBlocks('Service Agreement','[Client Name]', ['Scope of Work','Payment Terms','Term & Termination','Confidentiality','Limitation of Liability','Governing Law'], 'Net 30 from invoice date')},
+    {n:'Consulting Agreement', d:'For ongoing consulting engagements with defined deliverables.',
+     blocks:_mktCtDemoBlocks('Consulting Agreement','[Client Name]', ['Scope of Work','Payment Terms','Term & Termination','Confidentiality','Governing Law'], 'Net 30 from invoice date')},
+    {n:'Mutual NDA', d:'Two-way confidentiality agreement before sharing sensitive information.',
+     blocks:_mktCtDemoBlocks('Mutual Non-Disclosure Agreement','[Client Name]', ['Definition of Confidential Information','Obligations of Receiving Party','Term & Termination','Remedies','Governing Law'], null)},
+    {n:'Sales Agreement', d:'For one-time or recurring product/goods sales.',
+     blocks:_mktCtDemoBlocks('Sales Agreement','[Client Name]', ['Description of Goods/Services','Payment Terms','Delivery','Warranties','Governing Law'], 'Net 15 from invoice date')}
+  ];
+}
+
+function _mktCtStatusMeta(s) {
+  if (s === 'Signed') return '<span class="status-pill sp-green"><span class="pill-dot"></span>Signed</span>';
+  if (s === 'Sent')   return '<span class="status-pill sp-amber"><span class="pill-dot"></span>Awaiting Signature</span>';
+  return '<span class="status-pill" style="background:var(--g100);color:var(--g500)">Draft</span>';
+}
+function _mktCtFilter(btn, val) {
+  document.querySelectorAll('#mkt-ct-filters .filter-chip').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _mktCtFilterVal = val;
+  var isTemplates = val === 'templates';
+  document.getElementById('mkt-ct-list-title').textContent = isTemplates ? 'Contract Templates' : 'Contracts';
+  document.getElementById('mkt-ct-contracts-view').style.display = isTemplates ? 'none' : '';
+  document.getElementById('mkt-ct-templates-view').style.display = isTemplates ? 'grid' : 'none';
+  if (isTemplates) _mktRenderContractTemplates(); else _mktRenderContracts();
+  _mktSyncPrimaryLabel();
+}
+function _mktRenderContracts() {
+  var el = document.getElementById('mkt-ct-list'); if (!el) return;
+  var list = [];
+  _mktContracts.forEach(function(c, i){ if (_mktCtFilterVal === 'all' || c.status === _mktCtFilterVal) list.push({c:c, i:i}); });
+
+  var active = _mktContracts.filter(function(c){ return c.status === 'Sent' || c.status === 'Signed'; }).length;
+  var awaiting = _mktContracts.filter(function(c){ return c.status === 'Sent'; }).length;
+  var signed = _mktContracts.filter(function(c){ return c.status === 'Signed'; });
+  var signedValue = signed.reduce(function(s,c){ return s + (c.value||0); }, 0);
+  var setTxt = function(id, txt){ var el2 = document.getElementById(id); if (el2) el2.textContent = txt; };
+  setTxt('mkt-ct-stat-active', active);
+  setTxt('mkt-ct-stat-awaiting', awaiting);
+  setTxt('mkt-ct-stat-signed', signed.length);
+  setTxt('mkt-ct-stat-value', '$' + signedValue.toLocaleString() + ' in value');
+  setTxt('mkt-ct-stat-avgtime', signed.length ? '4.2 days' : '—');
+
+  if (!list.length) { el.innerHTML = '<div class="mkt-empty">No contracts in this view yet.</div>'; return; }
+  el.innerHTML = list.map(function(o){
+    var c = o.c, i = o.i, actions;
+    var eyeIco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';
+    var editIco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>';
+    var sendIco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>';
+    var checkIco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    var dupIco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    if (c.status === 'Draft') {
+      actions = '<button class="mkt-ico-btn" title="Edit" onclick="_mktCtEdit(' + i + ')">' + editIco + '</button>'
+              + '<button class="mkt-ico-btn" title="Send for signature" onclick="_mktCtSend(' + i + ')">' + sendIco + '</button>';
+    } else if (c.status === 'Sent') {
+      actions = '<button class="mkt-ico-btn" title="View" onclick="_mktCtPreview(' + i + ')">' + eyeIco + '</button>'
+              + '<button class="mkt-ico-btn" title="Mark signed" onclick="_mktCtMarkSigned(' + i + ')">' + checkIco + '</button>';
+    } else {
+      actions = '<button class="mkt-ico-btn" title="View" onclick="_mktCtPreview(' + i + ')">' + eyeIco + '</button>';
+    }
+    actions += '<button class="mkt-ico-btn" title="Duplicate" onclick="_mktCtDuplicate(' + i + ')">' + dupIco + '</button>';
+    return '<div class="mkt-ct-row" style="border-bottom:1px solid var(--g100)">'
+      + '<div class="mkt-doc-name" onclick="_mktCtPreview(' + i + ')">' + c.n + '</div>'
+      + '<div class="mkt-doc-meta">' + c.client + '</div>'
+      + '<div class="mkt-num">' + (c.value ? '$' + c.value.toLocaleString() : '&mdash;') + '</div>'
+      + '<div>' + _mktCtStatusMeta(c.status) + '</div>'
+      + '<div class="mkt-num" style="color:var(--g400)">' + (c.date === '-' ? '&mdash;' : c.date) + '</div>'
+      + '<div class="mkt-row-acts" style="opacity:1">' + actions + '</div>'
+      + '</div>';
+  }).join('');
+}
+function _mktCtDuplicate(i) {
+  var c = JSON.parse(JSON.stringify(_mktContracts[i]));
+  c.n = c.n + ' (copy)'; c.status = 'Draft'; c.date = '-'; c.signedDate = null;
+  _mktContracts.splice(i + 1, 0, c);
+  _mktRenderContracts();
+  showToast('Duplicated as draft');
+}
+function _mktCtSend(i) {
+  _mktContracts[i].status = 'Sent';
+  _mktContracts[i].date = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  _mktRenderContracts();
+  showToast('Sent "' + _mktContracts[i].n + '" for signature');
+}
+function _mktCtMarkSigned(i) {
+  _mktContracts[i].status = 'Signed';
+  _mktContracts[i].signedDate = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  _mktRenderContracts();
+  showToast('"' + _mktContracts[i].n + '" marked as signed');
+}
+function _mktCtPreview(i) {
+  _mktCtPvIdx = i;
+  var c = _mktContracts[i];
+  document.getElementById('mkt-ctp-title').textContent = c.n;
+  document.getElementById('mkt-ctp-sub').textContent = c.client + (c.value ? ' · $' + c.value.toLocaleString() : '');
+  document.getElementById('mkt-ctp-desc').innerHTML = _mktCtStatusMeta(c.status);
+  document.getElementById('mkt-ctp-render').innerHTML = _mktRenderContractHTML(c.blocks);
+  document.getElementById('mkt-ctp-edit-btn').style.display = c.status === 'Draft' ? '' : 'none';
+  document.getElementById('mkt-ctp-edit-btn').onclick = function(){ _mktCtEditFromPreview(); };
+  document.getElementById('mkt-ctp-send-btn').style.display = c.status === 'Draft' ? '' : 'none';
+  document.getElementById('mkt-ctp-sign-btn').style.display = c.status === 'Sent' ? '' : 'none';
+  openModal('mkt-ct-preview-modal');
+}
+function _mktCtEditFromPreview() { closeModal('mkt-ct-preview-modal'); _mktCtEdit(_mktCtPvIdx); }
+function _mktCtSendFromPreview() { closeModal('mkt-ct-preview-modal'); _mktCtSend(_mktCtPvIdx); }
+function _mktCtSignFromPreview() { closeModal('mkt-ct-preview-modal'); _mktCtMarkSigned(_mktCtPvIdx); }
+function _mktCtEdit(i) { _mktCtbOpen('contract', i); }
+function _mktCtTemplateEdit(i) { _mktCtbOpen('template', i); }
+function _mktCtTemplatePreview(i) {
+  var t = _mktContractTemplates[i];
+  document.getElementById('mkt-ctp-title').textContent = t.n;
+  document.getElementById('mkt-ctp-sub').textContent = t.d;
+  document.getElementById('mkt-ctp-desc').textContent = '';
+  document.getElementById('mkt-ctp-render').innerHTML = _mktRenderContractHTML(t.blocks);
+  document.getElementById('mkt-ctp-edit-btn').style.display = '';
+  document.getElementById('mkt-ctp-edit-btn').onclick = function(){ closeModal('mkt-ct-preview-modal'); _mktCtTemplateEdit(i); };
+  document.getElementById('mkt-ctp-send-btn').style.display = 'none';
+  document.getElementById('mkt-ctp-sign-btn').style.display = 'none';
+  openModal('mkt-ct-preview-modal');
+}
+function _mktCtDuplicateTemplate(i) {
+  var t = JSON.parse(JSON.stringify(_mktContractTemplates[i]));
+  t.n = t.n + ' (copy)';
+  _mktContractTemplates.splice(i + 1, 0, t);
+  _mktRenderContractTemplates();
+  showToast('Duplicated');
+}
+/* ── Contract block renderer (display / read-only, shared by preview + templates) ── */
+function _mktRenderContractBlockHTML(b) {
+  switch (b.type) {
+    case 'title':    return '<div class="mkt-cb-title">' + (b.text||'') + '</div>';
+    case 'parties':  return '<div class="mkt-cb-parties">This Agreement is entered into between <b>' + (b.partyA||'Company') + '</b> ("Company") and <b>' + (b.partyB||'Client') + '</b> ("Client").</div>';
+    case 'section':  return '<div class="mkt-cb-section"><div class="mkt-cb-section-h">' + (b.heading||'') + '</div><div class="mkt-cb-section-body">' + (b.body||'').replace(/\n/g,'<br>') + '</div></div>';
+    case 'payment_terms': return '<div class="mkt-cb-terms"><strong>Payment Terms:</strong> ' + (b.text||'') + '</div>';
+    case 'divider':  return '<div class="mkt-cb-divider"></div>';
+    case 'signature':return '<div class="mkt-cb-sig"><div><div class="mkt-cb-sig-line"></div><div class="mkt-cb-sig-label">Authorized Signature — Company</div></div><div><div class="mkt-cb-sig-line"></div><div class="mkt-cb-sig-label">Authorized Signature — Client</div></div></div>';
+    default: return '';
+  }
+}
+function _mktRenderContractHTML(blocks) {
+  if (!blocks || !blocks.length) return '<div class="mkt-cb-frame"><div class="mkt-cb-empty">This contract is empty — drag a clause block in to get started.</div></div>';
+  return '<div class="mkt-cb-frame">' + blocks.map(_mktRenderContractBlockHTML).join('') + '</div>';
+}
+function _mktRenderContractTemplates() {
+  var el = document.getElementById('mkt-ct-templates-view'); if (!el) return;
+  var cards = _mktContractTemplates.map(function(t, i){
+    return '<div class="mkt-tmpl-card">'
+      + '<div class="mkt-tmpl-mini" onclick="_mktCtTemplatePreview(' + i + ')">' + _mktRenderContractHTML(t.blocks) + '</div>'
+      + '<div class="mkt-tmpl-body">'
+      +   '<div class="mkt-tmpl-name">' + t.n + '</div>'
+      +   '<div class="mkt-tmpl-desc">' + t.d + '</div>'
+      +   '<div class="mkt-tmpl-foot">'
+      +     '<button class="mkt-mini-btn" onclick="_mktCtTemplatePreview(' + i + ')">Preview</button>'
+      +     '<button class="mkt-mini-btn" onclick="_mktCtTemplateEdit(' + i + ')">Edit</button>'
+      +     '<button class="mkt-mini-btn" onclick="_mktCtDuplicateTemplate(' + i + ')">Duplicate</button>'
+      +   '</div>'
+      + '</div></div>';
+  }).join('');
+  cards += '<div class="mkt-new-card" style="min-height:auto" onclick="_mktCtbOpen(\'template\',null)">'
+    + '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+    + '<div style="font-size:12.5px;font-weight:600;color:var(--g500)">New Contract Template</div>'
+    + '<div style="font-size:11px;color:var(--g400);text-align:center;max-width:180px">Drag and drop your own clause blocks</div></div>';
+  el.innerHTML = cards;
+}
+
+/* ── Contract Builder — full page, WYSIWYG (mirrors the Template Editor pattern) ── */
+var _mktCtbBlocks = [];
+var _mktCtbDragging = null;
+var _mktCtbKind = 'contract';
+var _mktCtbEditIdx = null;
+function _mktCtbStarterBlocks() {
+  return [
+    {type:'title', text:'Service Agreement'},
+    {type:'parties', partyA:(_companySettings.companyName || 'Your Company'), partyB:''},
+    {type:'section', heading:'Scope of Work', body:''},
+    {type:'payment_terms', text:'Net 30 from invoice date'},
+    {type:'signature'}
+  ];
+}
+function _mktCtbOpen(kind, idx) {
+  _mktCtbKind = kind;
+  _mktCtbEditIdx = (typeof idx === 'number') ? idx : null;
+  var rec = null;
+  if (kind === 'template') rec = _mktCtbEditIdx !== null ? _mktContractTemplates[_mktCtbEditIdx] : null;
+  else rec = _mktCtbEditIdx !== null ? _mktContracts[_mktCtbEditIdx] : null;
+
+  document.getElementById('mkt-ctb-name').value = rec ? rec.n : '';
+  document.getElementById('mkt-ctb-name').placeholder = kind === 'template' ? 'Untitled contract template' : 'Untitled contract';
+  document.getElementById('mkt-ctb-meta-row').style.display = kind === 'template' ? 'none' : 'flex';
+  document.getElementById('mkt-ctb-desc-row').style.display = kind === 'template' ? '' : 'none';
+  document.getElementById('mkt-ctb-client').value = (kind === 'contract' && rec) ? rec.client : '';
+  document.getElementById('mkt-ctb-value').value = (kind === 'contract' && rec && rec.value) ? rec.value : '';
+  document.getElementById('mkt-ctb-desc').value = (kind === 'template' && rec) ? rec.d : '';
+
+  _mktCtbBlocks = rec ? JSON.parse(JSON.stringify(rec.blocks || [])) : _mktCtbStarterBlocks();
+  _mktCtbRenderPalette();
+  _mktCtbRenderCanvas();
+  document.getElementById('mkt-ctb-overlay').style.display = 'flex';
+}
+function _mktCtbPageClose() { document.getElementById('mkt-ctb-overlay').style.display = 'none'; }
+function _mktCtbRenderPalette() {
+  var el = document.getElementById('mkt-ctb-palette-list'); if (!el) return;
+  el.innerHTML = Object.keys(MKT_CT_BLOCK_TYPES).map(function(type){
+    var def = MKT_CT_BLOCK_TYPES[type];
+    return '<div class="mkt-tb-block-chip" draggable="true" ondragstart="_mktCtbPaletteDragStart(event,\'' + type + '\')" ondragend="_mktCtbDragEnd(event)">'
+      + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + (MKT_ICONS[def.icon] || '') + '</svg>'
+      + def.label + '</div>';
+  }).join('');
+}
+function _mktCtbEditable(key, i, value, placeholder, tag) {
+  var v = (value || '').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  return '<' + tag + ' class="mkt-wys-editable" contenteditable="plaintext-only" data-placeholder="' + placeholder + '" oninput="_mktCtbUpdateField(' + i + ',\'' + key + '\',this)">' + v + '</' + tag + '>';
+}
+function _mktRenderCtbBlockHTML(b, i) {
+  switch (b.type) {
+    case 'title': return '<div class="mkt-cb-title">' + _mktCtbEditable('text', i, b.text, 'Contract title', 'div') + '</div>';
+    case 'parties': return '<div class="mkt-cb-parties">This Agreement is entered into between <b>' + _mktCtbEditable('partyA', i, b.partyA, 'Party A', 'span') + '</b> ("Company") and <b>' + _mktCtbEditable('partyB', i, b.partyB, 'Party B', 'span') + '</b> ("Client").</div>';
+    case 'section': return '<div class="mkt-cb-section"><div class="mkt-cb-section-h">' + _mktCtbEditable('heading', i, b.heading, 'Section heading', 'div') + '</div><div class="mkt-cb-section-body">' + _mktCtbEditable('body', i, b.body, 'Section text…', 'div') + '</div></div>';
+    case 'payment_terms': return '<div class="mkt-cb-terms"><strong>Payment Terms:</strong> ' + _mktCtbEditable('text', i, b.text, 'e.g. Net 30 from invoice date', 'span') + '</div>';
+    case 'divider': return '<div class="mkt-wys-pad"><div class="mkt-cb-divider"></div></div>';
+    case 'signature': return '<div class="mkt-cb-sig"><div><div class="mkt-cb-sig-line"></div><div class="mkt-cb-sig-label">Authorized Signature — Company</div></div><div><div class="mkt-cb-sig-line"></div><div class="mkt-cb-sig-label">Authorized Signature — Client</div></div></div>';
+    default: return '';
+  }
+}
+function _mktCtbRenderCanvas() {
+  var el = document.getElementById('mkt-ctb-canvas'); if (!el) return;
+  if (!_mktCtbBlocks.length) { el.innerHTML = '<div class="mkt-wys-canvas-empty">Drag a clause block in to start drafting.</div>'; return; }
+  el.innerHTML = _mktCtbBlocks.map(function(b, i){
+    var def = MKT_CT_BLOCK_TYPES[b.type];
+    return '<div class="mkt-wys-block" data-idx="' + i + '">'
+      + '<div class="mkt-wys-rail" draggable="true" ondragstart="_mktCtbBlockDragStart(event,' + i + ')" ondragend="_mktCtbDragEnd(event)" title="Drag to reorder">'
+      +   '<svg width="12" height="16" viewBox="0 0 12 16" fill="currentColor"><circle cx="3" cy="3" r="1.4"/><circle cx="9" cy="3" r="1.4"/><circle cx="3" cy="8" r="1.4"/><circle cx="9" cy="8" r="1.4"/><circle cx="3" cy="13" r="1.4"/><circle cx="9" cy="13" r="1.4"/></svg>'
+      + '</div>'
+      + '<div class="mkt-wys-toolbar"><span class="mkt-wys-label">' + def.label + '</span>'
+      +   '<button class="mkt-wys-remove" onclick="_mktCtbRemoveBlock(' + i + ')" aria-label="Remove block">&times;</button></div>'
+      + _mktRenderCtbBlockHTML(b, i)
+      + '</div>';
+  }).join('');
+}
+function _mktCtbUpdateField(i, key, el) {
+  if (!_mktCtbBlocks[i]) return;
+  _mktCtbBlocks[i][key] = (el.innerText !== undefined ? el.innerText : el.textContent).replace(/\n+$/,'');
+}
+function _mktCtbRemoveBlock(i) { _mktCtbBlocks.splice(i, 1); _mktCtbRenderCanvas(); }
+function _mktCtbDefaultBlock(type) {
+  var def = MKT_CT_BLOCK_TYPES[type] || {fields:[]};
+  var b = {type:type};
+  (def.fields || []).forEach(function(f){ b[f.k] = f.d || ''; });
+  return b;
+}
+function _mktCtbPaletteDragStart(e, type) {
+  _mktCtbDragging = {kind:'palette', blockType:type};
+  if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'copy'; e.dataTransfer.setData('text/plain', type); }
+}
+function _mktCtbBlockDragStart(e, i) {
+  _mktCtbDragging = {kind:'reorder', fromIndex:i};
+  if (e.dataTransfer) { e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', String(i)); }
+  var block = e.currentTarget.closest('.mkt-wys-block');
+  if (block) block.classList.add('dragging');
+}
+function _mktCtbDragEnd(e) {
+  document.querySelectorAll('#mkt-ctb-canvas .mkt-wys-block.dragging').forEach(function(b){ b.classList.remove('dragging'); });
+  document.querySelectorAll('#mkt-ctb-canvas .mkt-wys-block.drop-target-above,#mkt-ctb-canvas .mkt-wys-block.drop-target-below').forEach(function(b){
+    b.classList.remove('drop-target-above','drop-target-below');
+  });
+}
+function _mktCtbCanvasMidpoints() {
+  return Array.from(document.querySelectorAll('#mkt-ctb-canvas .mkt-wys-block')).map(function(b){
+    var r = b.getBoundingClientRect();
+    return r.top + r.height / 2;
+  });
+}
+function _mktCtbComputeDropIndex(clientY) {
+  var mids = _mktCtbCanvasMidpoints();
+  var skip = (_mktCtbDragging && _mktCtbDragging.kind === 'reorder') ? _mktCtbDragging.fromIndex : undefined;
+  return _mktTbDropIndexPure(mids, clientY, skip);
+}
+function _mktCtbCanvasDragOver(e) {
+  e.preventDefault();
+  if (e.dataTransfer) e.dataTransfer.dropEffect = _mktCtbDragging && _mktCtbDragging.kind === 'reorder' ? 'move' : 'copy';
+  document.getElementById('mkt-ctb-canvas').classList.add('drag-over');
+  var idx = _mktCtbComputeDropIndex(e.clientY);
+  var blocks = document.querySelectorAll('#mkt-ctb-canvas .mkt-wys-block');
+  blocks.forEach(function(b){ b.classList.remove('drop-target-above','drop-target-below'); });
+  if (idx < blocks.length) blocks[idx].classList.add('drop-target-above');
+  else if (blocks.length) blocks[blocks.length - 1].classList.add('drop-target-below');
+}
+function _mktCtbCanvasDragLeave(e) {
+  var canvas = document.getElementById('mkt-ctb-canvas');
+  if (e.relatedTarget && canvas.contains(e.relatedTarget)) return;
+  canvas.classList.remove('drag-over');
+}
+function _mktCtbCanvasDrop(e) {
+  e.preventDefault();
+  var canvas = document.getElementById('mkt-ctb-canvas');
+  canvas.classList.remove('drag-over');
+  var idx = _mktCtbComputeDropIndex(e.clientY);
+  if (_mktCtbDragging && _mktCtbDragging.kind === 'palette') {
+    _mktCtbBlocks = _mktTbInsertBlockPure(_mktCtbBlocks, _mktCtbDefaultBlock(_mktCtbDragging.blockType), idx);
+  } else if (_mktCtbDragging && _mktCtbDragging.kind === 'reorder') {
+    _mktCtbBlocks = _mktTbReorderBlockPure(_mktCtbBlocks, _mktCtbDragging.fromIndex, idx);
+  }
+  _mktCtbDragging = null;
+  _mktCtbRenderCanvas();
+}
+function _mktCtbSave() {
+  var name = document.getElementById('mkt-ctb-name').value.trim();
+  if (!name) { showToast('Give it a name first'); document.getElementById('mkt-ctb-name').focus(); return; }
+  if (!_mktCtbBlocks.length) { showToast('Add at least one clause block'); return; }
+  if (_mktCtbKind === 'template') {
+    var rec = { n:name, d: document.getElementById('mkt-ctb-desc').value.trim() || 'Custom contract template', blocks: JSON.parse(JSON.stringify(_mktCtbBlocks)) };
+    if (_mktCtbEditIdx !== null) _mktContractTemplates[_mktCtbEditIdx] = rec; else _mktContractTemplates.push(rec);
+    _mktCtbPageClose();
+    if (_mktCtFilterVal === 'templates') _mktRenderContractTemplates();
+    showToast('Saved template "' + name + '"');
+  } else {
+    var client = document.getElementById('mkt-ctb-client').value.trim() || 'Unnamed Client';
+    var value = parseFloat(document.getElementById('mkt-ctb-value').value) || 0;
+    var existing = _mktCtbEditIdx !== null ? _mktContracts[_mktCtbEditIdx] : null;
+    var crec = {
+      n:name, client:client, value:value,
+      status: existing ? existing.status : 'Draft',
+      date: existing ? existing.date : '-',
+      signedDate: existing ? existing.signedDate : null,
+      blocks: JSON.parse(JSON.stringify(_mktCtbBlocks))
+    };
+    if (_mktCtbEditIdx !== null) _mktContracts[_mktCtbEditIdx] = crec; else _mktContracts.unshift(crec);
+    _mktCtbPageClose();
+    if (_mktCtFilterVal !== 'templates') _mktRenderContracts();
+    showToast('Saved "' + name + '"');
+  }
+}
+function _mktCtbPreviewOpen() {
+  document.getElementById('mkt-ctb-pv-render').innerHTML = _mktRenderContractHTML(_mktCtbBlocks);
+  openModal('mkt-ctb-preview-modal');
+}
+
+/* ── Ace Contract Builder ── */
+var _mktCtAcePlan = null;
+var _mktCtAceLastIdx = null;
+function _mktCtAceOpen() { _mktCtAceReset(); document.getElementById('ace-contract-modal').style.display = 'flex'; }
+function _mktCtAceClose() { document.getElementById('ace-contract-modal').style.display = 'none'; }
+function _mktCtAceReset() {
+  document.getElementById('ace-contract-input').value = '';
+  document.getElementById('ace-contract-step1').style.display = 'block';
+  document.getElementById('ace-contract-step2').style.display = 'none';
+  document.getElementById('ace-contract-step3').style.display = 'none';
+  document.getElementById('ace-contract-loading').style.display = 'block';
+  document.getElementById('ace-contract-preview').style.display = 'none';
+  _mktCtAcePlan = null;
+  var s1 = document.getElementById('ace-ctstep-1'), s2 = document.getElementById('ace-ctstep-2'), s3 = document.getElementById('ace-ctstep-3');
+  s1.style.color = 'var(--teal)'; s1.querySelector('span').style.background = 'var(--teal)'; s1.querySelector('span').style.color = '#fff';
+  s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
+  s3.style.color = 'var(--g400)'; s3.querySelector('span').style.background = 'var(--g200)'; s3.querySelector('span').style.color = 'var(--g400)'; s3.querySelector('span').textContent = '3';
+}
+function _mktCtAceBack() {
+  document.getElementById('ace-contract-step2').style.display = 'none';
+  document.getElementById('ace-contract-step1').style.display = 'block';
+}
+function _mktCtAceExample(btn) { document.getElementById('ace-contract-input').value = btn.textContent.replace(/^"|"$/g, ''); }
+function _mktCtAceGenerate() {
+  var input = document.getElementById('ace-contract-input').value.trim();
+  if (!input) { showToast('Please describe the contract first'); return; }
+  document.getElementById('ace-contract-step1').style.display = 'none';
+  document.getElementById('ace-contract-step2').style.display = 'block';
+  document.getElementById('ace-contract-loading').style.display = 'block';
+  document.getElementById('ace-contract-preview').style.display = 'none';
+  var s2 = document.getElementById('ace-ctstep-2');
+  s2.style.color = 'var(--teal)'; s2.querySelector('span').style.background = 'var(--teal)'; s2.querySelector('span').style.color = '#fff';
+  var msgs = ['Identifying agreement type…', 'Extracting client and value…', 'Drafting the clauses…', 'Formatting the contract…'];
+  var i = 0; var sub = document.getElementById('ace-contract-loading-sub');
+  var ticker = setInterval(function(){ sub.textContent = msgs[i++ % msgs.length]; }, 600);
+  setTimeout(function(){
+    clearInterval(ticker);
+    _mktCtAcePlan = _mktCtAceParse(input);
+    _mktCtAceRenderPreview(_mktCtAcePlan);
+    document.getElementById('ace-contract-loading').style.display = 'none';
+    document.getElementById('ace-contract-preview').style.display = 'block';
+  }, 2400);
+}
+function _mktCtAceParse(text) {
+  var lower = text.toLowerCase();
+  var assumptions = [];
+  var type = 'Service Agreement';
+  if (/\bnda\b|non-disclosure/.test(lower)) type = 'Non-Disclosure Agreement';
+  else if (/consult/.test(lower)) type = 'Consulting Agreement';
+  else if (/retainer/.test(lower)) type = 'Retainer Agreement';
+  else if (/\bsale|purchase|sell\b/.test(lower)) type = 'Sales Agreement';
+  else if (/lease|rent/.test(lower)) type = 'Lease Agreement';
+
+  var amounts = []; var re = /\$[\d,]+(?:\.\d+)?(?:k)?/gi; var m;
+  while ((m = re.exec(text)) !== null) {
+    var val = m[0].replace(/[$,]/g,''); if (/k$/i.test(val)) val = parseFloat(val) * 1000; amounts.push(parseFloat(val));
+  }
+  var value = amounts.length ? amounts[0] : 10000;
+  if (!amounts.length) assumptions.push('No dollar amount found, so Ace defaulted the contract value to $10,000 — update it below.');
+
+  var clientM = text.match(/(?:with|for)\s+([A-Z][A-Za-z0-9&.,'\- ]{2,45}?)(?:\s+(?:for|before|starting|beginning|at)\b|[,.]|$)/);
+  var client = clientM ? clientM[1].trim() : null;
+  if (!client) { client = 'New Client'; assumptions.push('Couldn\'t find a client name, so Ace used a placeholder — update it below.'); }
+
+  var paymentTerms = 'Net 30 from invoice date';
+  if (/net\s*15/.test(lower)) paymentTerms = 'Net 15 from invoice date';
+  else if (/net\s*60/.test(lower)) paymentTerms = 'Net 60 from invoice date';
+  else if (/upfront|in advance|due upon signing/.test(lower)) paymentTerms = 'Due in full upon signing';
+  else if (/monthly/.test(lower)) paymentTerms = 'Monthly installments, due on the 1st';
+
+  var clauses;
+  if (type === 'Non-Disclosure Agreement') clauses = ['Definition of Confidential Information', 'Obligations of Receiving Party', 'Term & Termination', 'Remedies', 'Governing Law'];
+  else if (type === 'Sales Agreement') clauses = ['Description of Goods/Services', 'Payment Terms', 'Delivery', 'Warranties', 'Governing Law'];
+  else if (type === 'Lease Agreement') clauses = ['Premises', 'Payment Terms', 'Term & Termination', 'Maintenance', 'Governing Law'];
+  else clauses = ['Scope of Work', 'Payment Terms', 'Term & Termination', 'Confidentiality', 'Limitation of Liability', 'Governing Law'];
+
+  if (/exclusiv/.test(lower) && clauses.indexOf('Exclusivity') === -1) clauses.push('Exclusivity');
+  if (/confidential/.test(lower) && type !== 'Non-Disclosure Agreement' && clauses.indexOf('Confidentiality') === -1) clauses.splice(Math.max(0, clauses.length - 1), 0, 'Confidentiality');
+
+  var name = type + ' — ' + client;
+  var explanation = 'Ace drafted this as a ' + type + ' with ' + client + (type !== 'Non-Disclosure Agreement' ? (', valued at $' + value.toLocaleString() + '. Payment terms: ' + paymentTerms + '.') : '.');
+  return { type:type, name:name, client:client, value: type === 'Non-Disclosure Agreement' ? 0 : value, paymentTerms:paymentTerms, clauses:clauses, assumptions:assumptions, explanation:explanation };
+}
+function _mktCtAceRenderPreview(plan) {
+  document.getElementById('ace-contract-summary-banner').textContent = plan.explanation;
+  var assumptions = plan.assumptions.length ? plan.assumptions : ['Extracted directly from your description — nothing else assumed.'];
+  document.getElementById('ace-contract-assumptions').innerHTML = assumptions.map(function(a){ return '• ' + a; }).join('<br>');
+  document.getElementById('ace-contract-name').value = plan.name;
+  document.getElementById('ace-contract-client').value = plan.client;
+  document.getElementById('ace-contract-value').value = plan.value;
+  var addSel = document.getElementById('ace-contract-add-clause');
+  addSel.innerHTML = Object.keys(MKT_CT_CLAUSE_LIBRARY).map(function(k){ return '<option value="' + k + '">' + k + '</option>'; }).join('');
+  _mktCtAceRenderClauses();
+}
+function _mktCtAceRenderClauses() {
+  var el = document.getElementById('ace-contract-clauses');
+  el.innerHTML = _mktCtAcePlan.clauses.map(function(name, i){
+    return '<div style="display:flex;align-items:center;gap:8px;background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:8px 10px">'
+      + '<span style="font-size:11px;font-weight:700;color:var(--g400);width:16px">' + (i+1) + '.</span>'
+      + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">' + MKT_ICONS.doc + '</svg>'
+      + '<span style="flex:1;font-size:12.5px;color:var(--dark)">' + name + '</span>'
+      + '<button onclick="_mktCtAceRemoveClause(' + i + ')" style="background:none;border:none;color:var(--g400);cursor:pointer;font-size:15px;line-height:1;padding:2px 4px" aria-label="Remove clause">&times;</button>'
+      + '</div>';
+  }).join('');
+}
+function _mktCtAceAddClause() {
+  var name = document.getElementById('ace-contract-add-clause').value;
+  if (!name || _mktCtAcePlan.clauses.indexOf(name) !== -1) return;
+  _mktCtAcePlan.clauses.push(name);
+  _mktCtAceRenderClauses();
+}
+function _mktCtAceRemoveClause(i) {
+  if (_mktCtAcePlan.clauses.length <= 1) { showToast('A contract needs at least one clause'); return; }
+  _mktCtAcePlan.clauses.splice(i, 1);
+  _mktCtAceRenderClauses();
+}
+function _mktCtAceConfirm() {
+  var name = document.getElementById('ace-contract-name').value.trim() || _mktCtAcePlan.name;
+  var client = document.getElementById('ace-contract-client').value.trim() || _mktCtAcePlan.client;
+  var value = parseFloat(document.getElementById('ace-contract-value').value) || _mktCtAcePlan.value;
+  var blocks = [{type:'title', text:name}, {type:'parties', partyA:(_companySettings.companyName || 'Company'), partyB:client}];
+  _mktCtAcePlan.clauses.forEach(function(cname){
+    blocks.push({type:'section', heading:cname, body: MKT_CT_CLAUSE_LIBRARY[cname] || 'Details for this clause go here.'});
+  });
+  if (_mktCtAcePlan.paymentTerms && _mktCtAcePlan.type !== 'Non-Disclosure Agreement') blocks.push({type:'payment_terms', text:_mktCtAcePlan.paymentTerms});
+  blocks.push({type:'signature'});
+  var rec = { n:name, client:client, value:value, status:'Draft', date:'-', signedDate:null, blocks:blocks };
+  _mktContracts.unshift(rec);
+  _mktCtAceLastIdx = 0;
+  if (typeof _mktRenderContracts === 'function' && _mktCtFilterVal !== 'templates') _mktRenderContracts();
+  document.getElementById('ace-contract-step2').style.display = 'none';
+  document.getElementById('ace-contract-step3').style.display = 'block';
+  var s3 = document.getElementById('ace-ctstep-3');
+  s3.style.color = 'var(--teal)'; s3.querySelector('span').style.background = 'var(--teal)'; s3.querySelector('span').style.color = '#fff'; s3.querySelector('span').textContent = '✓';
+  showToast('Drafted "' + name + '"');
+}
+function _mktCtAceOpenInBuilder() {
+  _mktCtAceClose();
+  if (_mktCtAceLastIdx !== null) _mktCtbOpen('contract', _mktCtAceLastIdx);
+}
+
+/* ══════════════════════════ INVOICES ══════════════════════════ */
+var _mktInvoices = [];
+var _mktInvFilterVal = 'all';
+var _mktInvEditIdx = null;
+var _mktInvItems = [];
+var _mktInvCounter = 1046;
+function _mktSeedInvoices() {
+  _mktInvoices = [
+    {n:'INV-1041', client:'Horizon Retail Group', items:[{desc:'Consulting — August retainer', qty:1, rate:6000}], taxRate:0, status:'Paid', issueDate:'Aug 1', dueDate:'Aug 15', paidDate:'Aug 10'},
+    {n:'INV-1042', client:'Lakeview Dental', items:[{desc:'Website design services', qty:20, rate:175}], taxRate:0, status:'Sent', issueDate:'Aug 5', dueDate:'Sep 4', paidDate:null},
+    {n:'INV-1043', client:'Union Steel Partners', items:[{desc:'Onboarding — Phase 1', qty:1, rate:12000},{desc:'Training sessions', qty:4, rate:500}], taxRate:0, status:'Overdue', issueDate:'Jul 1', dueDate:'Jul 31', paidDate:null},
+    {n:'INV-1044', client:'Cascade Outdoor Co.', items:[{desc:'Product development sprint', qty:1, rate:24000}], taxRate:0, status:'Draft', issueDate:'-', dueDate:'-', paidDate:null},
+    {n:'INV-1045', client:'Brightline Manufacturing', items:[{desc:'Quarterly audit', qty:1, rate:8500}], taxRate:0, status:'Paid', issueDate:'Jul 12', dueDate:'Aug 11', paidDate:'Jul 30'},
+    {n:'INV-1046', client:'Union Square Media', items:[{desc:'Ad campaign management', qty:1, rate:5400}], taxRate:0, status:'Sent', issueDate:'Aug 9', dueDate:'Sep 8', paidDate:null}
+  ];
+}
+function _mktInvItemsTotal(items) { return (items || []).reduce(function(s, it){ return s + (it.qty * it.rate); }, 0); }
+function _mktInvTotal(inv) { var sub = _mktInvItemsTotal(inv.items); return sub + sub * ((inv.taxRate || 0) / 100); }
+function _mktInvStatusMeta(s) {
+  if (s === 'Paid')    return '<span class="status-pill sp-green"><span class="pill-dot"></span>Paid</span>';
+  if (s === 'Sent')    return '<span class="status-pill sp-amber"><span class="pill-dot"></span>Sent</span>';
+  if (s === 'Overdue') return '<span class="status-pill sp-red"><span class="pill-dot"></span>Overdue</span>';
+  return '<span class="status-pill" style="background:var(--g100);color:var(--g500)">Draft</span>';
+}
+function _mktInvFilter(btn, val) {
+  document.querySelectorAll('#mkt-inv-filters .filter-chip').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _mktInvFilterVal = val;
+  _mktRenderInvoices();
+}
+function _mktRenderInvoices() {
+  var el = document.getElementById('mkt-inv-list'); if (!el) return;
+  var list = [];
+  _mktInvoices.forEach(function(inv, i){ if (_mktInvFilterVal === 'all' || inv.status === _mktInvFilterVal) list.push({inv:inv, i:i}); });
+
+  var outstanding = _mktInvoices.filter(function(v){ return v.status === 'Sent'; });
+  var overdue = _mktInvoices.filter(function(v){ return v.status === 'Overdue'; });
+  var paid = _mktInvoices.filter(function(v){ return v.status === 'Paid'; });
+  var outstandingSum = outstanding.concat(overdue).reduce(function(s,v){ return s + _mktInvTotal(v); }, 0);
+  var overdueSum = overdue.reduce(function(s,v){ return s + _mktInvTotal(v); }, 0);
+  var paidSum = paid.reduce(function(s,v){ return s + _mktInvTotal(v); }, 0);
+  var setTxt = function(id, txt){ var el2 = document.getElementById(id); if (el2) el2.textContent = txt; };
+  setTxt('mkt-inv-stat-outstanding', '$' + Math.round(outstandingSum).toLocaleString());
+  setTxt('mkt-inv-stat-outstanding-n', (outstanding.length + overdue.length) + ' invoices');
+  setTxt('mkt-inv-stat-paid', '$' + Math.round(paidSum).toLocaleString());
+  setTxt('mkt-inv-stat-paid-n', paid.length + ' invoices');
+  setTxt('mkt-inv-stat-overdue', '$' + Math.round(overdueSum).toLocaleString());
+  setTxt('mkt-inv-stat-overdue-n', overdue.length + ' invoices');
+  setTxt('mkt-inv-stat-avgdays', paid.length ? '11 days' : '—');
+
+  if (!list.length) { el.innerHTML = '<div class="mkt-empty">No invoices in this view yet.</div>'; return; }
+  el.innerHTML = list.map(function(o){
+    var inv = o.inv, i = o.i, total = _mktInvTotal(inv);
+    var editIco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/></svg>';
+    var checkIco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>';
+    var dupIco = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    var actions = '<button class="mkt-ico-btn" title="View / Edit" onclick="_mktInvOpen(' + i + ')">' + editIco + '</button>';
+    if (inv.status === 'Sent' || inv.status === 'Overdue') actions += '<button class="mkt-ico-btn" title="Mark paid" onclick="_mktInvMarkPaid(' + i + ')">' + checkIco + '</button>';
+    actions += '<button class="mkt-ico-btn" title="Duplicate" onclick="_mktInvDuplicate(' + i + ')">' + dupIco + '</button>';
+    return '<div class="mkt-inv-row" style="border-bottom:1px solid var(--g100)">'
+      + '<div class="mkt-doc-name" onclick="_mktInvOpen(' + i + ')">' + inv.n + '</div>'
+      + '<div class="mkt-doc-meta">' + inv.client + '</div>'
+      + '<div class="mkt-num">$' + total.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div>'
+      + '<div>' + _mktInvStatusMeta(inv.status) + '</div>'
+      + '<div class="mkt-num" style="color:var(--g400)">' + (inv.dueDate === '-' ? '&mdash;' : inv.dueDate) + '</div>'
+      + '<div class="mkt-row-acts" style="opacity:1">' + actions + '</div>'
+      + '</div>';
+  }).join('');
+}
+function _mktInvDuplicate(i) {
+  var inv = JSON.parse(JSON.stringify(_mktInvoices[i]));
+  _mktInvCounter++;
+  inv.n = 'INV-' + _mktInvCounter;
+  inv.status = 'Draft'; inv.issueDate = '-'; inv.dueDate = '-'; inv.paidDate = null;
+  _mktInvoices.splice(i + 1, 0, inv);
+  _mktRenderInvoices();
+  showToast('Duplicated as ' + inv.n);
+}
+function _mktInvMarkPaid(i) {
+  var inv = _mktInvoices[i];
+  var dateTxt = new Date().toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  inv.status = 'Paid';
+  inv.paidDate = dateTxt;
+  _mktRenderInvoices();
+  _mktPayments.unshift({date:dateTxt, invoiceIdx:i, invoiceNo:inv.n, client:inv.client, method:'Manual', amount:_mktInvTotal(inv), status:'Succeeded'});
+  if (typeof _mktRenderPayments === 'function') _mktRenderPayments();
+  showToast(inv.n + ' marked as paid');
+}
+function _mktInvOpen(idx) {
+  _mktInvEditIdx = (typeof idx === 'number') ? idx : null;
+  var inv = _mktInvEditIdx !== null ? _mktInvoices[_mktInvEditIdx] : null;
+  document.getElementById('mkt-inv-title').textContent = inv ? ('Edit ' + inv.n) : 'New Invoice';
+  document.getElementById('mkt-inv-client').value = inv ? inv.client : '';
+  document.getElementById('mkt-inv-due').value = '';
+  document.getElementById('mkt-inv-taxrate').value = inv ? (inv.taxRate || 0) : 0;
+  _mktInvItems = inv ? JSON.parse(JSON.stringify(inv.items || [])) : [{desc:'', qty:1, rate:0}];
+  _mktInvRenderItems();
+  openModal('mkt-inv-modal');
+}
+function _mktInvRenderItems() {
+  var el = document.getElementById('mkt-inv-items'); if (!el) return;
+  el.innerHTML = _mktInvItems.map(function(it, i){
+    var descEsc = (it.desc || '').replace(/&/g,'&amp;').replace(/"/g,'&quot;');
+    return '<div style="display:grid;grid-template-columns:1fr 70px 90px 90px 34px;gap:8px;padding:8px 14px;border-top:1px solid var(--g100);align-items:center">'
+      + '<input value="' + descEsc + '" oninput="_mktInvUpdateItem(' + i + ',\'desc\',this.value)" placeholder="Description" style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12.5px;font-family:var(--font)">'
+      + '<input value="' + (it.qty || 0) + '" oninput="_mktInvUpdateItem(' + i + ',\'qty\',this.value)" style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12.5px;text-align:right;font-family:var(--mono)">'
+      + '<input value="' + (it.rate || 0) + '" oninput="_mktInvUpdateItem(' + i + ',\'rate\',this.value)" style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:12.5px;text-align:right;font-family:var(--mono)">'
+      + '<div style="text-align:right;font-size:12.5px;font-family:var(--mono);color:var(--g600)">$' + ((it.qty||0) * (it.rate||0)).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div>'
+      + '<button onclick="_mktInvRemoveItem(' + i + ')" style="background:none;border:none;color:var(--g400);cursor:pointer;font-size:16px" aria-label="Remove item">&times;</button>'
+      + '</div>';
+  }).join('');
+  _mktInvRecalc();
+}
+function _mktInvUpdateItem(i, key, value) {
+  if (!_mktInvItems[i]) return;
+  _mktInvItems[i][key] = (key === 'desc') ? value : (parseFloat(value) || 0);
+  _mktInvRenderItems();
+}
+function _mktInvAddItem() { _mktInvItems.push({desc:'', qty:1, rate:0}); _mktInvRenderItems(); }
+function _mktInvRemoveItem(i) {
+  if (_mktInvItems.length <= 1) { showToast('An invoice needs at least one line item'); return; }
+  _mktInvItems.splice(i, 1); _mktInvRenderItems();
+}
+function _mktInvRecalc() {
+  var subtotal = _mktInvItemsTotal(_mktInvItems);
+  var taxRate = parseFloat(document.getElementById('mkt-inv-taxrate').value) || 0;
+  var total = subtotal + subtotal * (taxRate / 100);
+  document.getElementById('mkt-inv-subtotal').textContent = '$' + subtotal.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+  document.getElementById('mkt-inv-total').textContent = '$' + total.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2});
+}
+function _mktInvSave(send) {
+  var client = document.getElementById('mkt-inv-client').value.trim();
+  if (!client) { showToast('Add a client first'); document.getElementById('mkt-inv-client').focus(); return; }
+  if (!_mktInvItems.length || !_mktInvItems.some(function(it){ return (it.desc||'').trim(); })) { showToast('Add at least one line item'); return; }
+  var dueVal = document.getElementById('mkt-inv-due').value;
+  var dueTxt = '-';
+  if (dueVal) { var d = new Date(dueVal); dueTxt = isNaN(d) ? dueVal : d.toLocaleDateString('en-US', {month:'short', day:'numeric'}); }
+  var taxRate = parseFloat(document.getElementById('mkt-inv-taxrate').value) || 0;
+  var existing = _mktInvEditIdx !== null ? _mktInvoices[_mktInvEditIdx] : null;
+  var num = existing ? existing.n : ('INV-' + (++_mktInvCounter));
+  var rec = {
+    n:num, client:client, items:JSON.parse(JSON.stringify(_mktInvItems)), taxRate:taxRate,
+    status: send ? ((existing && existing.status === 'Overdue') ? 'Overdue' : 'Sent') : 'Draft',
+    issueDate: send ? new Date().toLocaleDateString('en-US', {month:'short', day:'numeric'}) : (existing ? existing.issueDate : '-'),
+    dueDate: (dueTxt === '-' && existing) ? existing.dueDate : dueTxt,
+    paidDate: existing ? existing.paidDate : null
+  };
+  if (_mktInvEditIdx !== null) _mktInvoices[_mktInvEditIdx] = rec; else _mktInvoices.unshift(rec);
+  closeModal('mkt-inv-modal');
+  _mktRenderInvoices();
+  showToast(send ? ('Sent ' + num + ' to ' + client) : ('Saved ' + num + ' as draft'));
+}
+
+/* ── Ace Invoice Builder — parses straight into the regular invoice editor, which IS the review step ── */
+var _mktInvAcePlan = null;
+function _mktInvAceOpen() { document.getElementById('ace-invoice-input').value = ''; document.getElementById('ace-invoice-modal').style.display = 'flex'; }
+function _mktInvAceClose() { document.getElementById('ace-invoice-modal').style.display = 'none'; }
+function _mktInvAceExample(btn) { document.getElementById('ace-invoice-input').value = btn.textContent.replace(/^"|"$/g, ''); }
+function _mktInvAceParse(text) {
+  var lower = text.toLowerCase();
+  var clientM = text.match(/(?:bill|invoice)\s+([A-Z][A-Za-z0-9&.,'\- ]{2,45}?)(?:\s+(?:for|\$)|,|$)/i);
+  var client = clientM ? clientM[1].trim() : 'New Client';
+
+  var items = [];
+  var hrRe = /(\d+(?:\.\d+)?)\s*hours?[^.]*?\$([\d,]+(?:\.\d+)?)\s*(?:\/|per)\s*h(?:ou)?r/gi;
+  var m;
+  while ((m = hrRe.exec(text)) !== null) items.push({desc:'Hourly services', qty: parseFloat(m[1]), rate: parseFloat(m[2].replace(/,/g,''))});
+  var unitRe = /(\d+)\s*(?:units?|sessions?)\s*(?:of\s*)?([a-z0-9 \-]{3,40}?)\s*at\s*\$([\d,]+(?:\.\d+)?)\s*each/gi;
+  while ((m = unitRe.exec(text)) !== null) items.push({desc: m[2].trim().replace(/^\w/, function(c){ return c.toUpperCase(); }), qty: parseInt(m[1]), rate: parseFloat(m[3].replace(/,/g,''))});
+  var feeRe = /\$([\d,]+(?:\.\d+)?)\s*(setup|hosting|onboarding|flat|one-?time)?\s*fee/gi;
+  while ((m = feeRe.exec(text)) !== null) items.push({desc: (m[2] ? (m[2][0].toUpperCase() + m[2].slice(1)) : 'Flat') + ' fee', qty:1, rate: parseFloat(m[1].replace(/,/g,''))});
+  if (/retainer/.test(lower) && !items.length) {
+    var rm = lower.match(/\$([\d,]+(?:\.\d+)?)/);
+    if (rm) items.push({desc:'Monthly retainer', qty:1, rate: parseFloat(rm[1].replace(/,/g,''))});
+  }
+  var assumptions = [];
+  if (!items.length) {
+    var anyAmt = text.match(/\$([\d,]+(?:\.\d+)?)/);
+    items.push({desc:'Services rendered', qty:1, rate: anyAmt ? parseFloat(anyAmt[1].replace(/,/g,'')) : 1000});
+    assumptions.push('Couldn\'t break this into separate line items, so Ace added one line for the total — split it up below if needed.');
+  }
+  if (client === 'New Client') assumptions.push('Couldn\'t find a client name, so Ace used a placeholder — update it below.');
+
+  var dueDays = 30;
+  if (/due upon receipt|immediately/.test(lower)) dueDays = 0;
+  else if (/net\s*15/.test(lower)) dueDays = 15;
+  else if (/net\s*30/.test(lower)) dueDays = 30;
+  else if (/net\s*60/.test(lower)) dueDays = 60;
+  else { var dm = lower.match(/due in (\d+) days?/); if (dm) dueDays = parseInt(dm[1]); }
+
+  var due = new Date(); due.setDate(due.getDate() + dueDays);
+  return { client:client, items:items, dueDays:dueDays, dueDate:due, assumptions:assumptions };
+}
+function _mktInvAceGenerate() {
+  var input = document.getElementById('ace-invoice-input').value.trim();
+  if (!input) { showToast('Please describe the invoice first'); return; }
+  _mktInvAcePlan = _mktInvAceParse(input);
+  _mktInvAceClose();
+  _mktInvEditIdx = null;
+  document.getElementById('mkt-inv-title').textContent = 'New Invoice (from Ace)';
+  document.getElementById('mkt-inv-client').value = _mktInvAcePlan.client;
+  document.getElementById('mkt-inv-due').value = _mktInvAcePlan.dueDate.toISOString().slice(0,10);
+  document.getElementById('mkt-inv-taxrate').value = 0;
+  _mktInvItems = _mktInvAcePlan.items;
+  _mktInvRenderItems();
+  openModal('mkt-inv-modal');
+  showToast('Ace drafted this invoice — review and send');
+}
+
+/* ══════════════════════════ PAYMENTS ══════════════════════════ */
+var _mktPayments = [];
+var _mktPayFilterVal = 'all';
+function _mktSeedPayments() {
+  _mktPayments = [
+    {date:'Aug 10', invoiceIdx:0, invoiceNo:'INV-1041', client:'Horizon Retail Group', method:'ACH',  amount:6000,  status:'Succeeded'},
+    {date:'Jul 30', invoiceIdx:4, invoiceNo:'INV-1045', client:'Brightline Manufacturing', method:'Card', amount:8500, status:'Succeeded'},
+    {date:'Aug 3',  invoiceIdx:2, invoiceNo:'INV-1043', client:'Union Steel Partners', method:'Wire', amount:14000, status:'Failed'},
+    {date:'Aug 12', invoiceIdx:1, invoiceNo:'INV-1042', client:'Lakeview Dental', method:'Card', amount:3500, status:'Pending'},
+    {date:'Jul 5',  invoiceIdx:0, invoiceNo:'INV-1041', client:'Horizon Retail Group', method:'ACH', amount:250, status:'Refunded'}
+  ];
+}
+function _mktPayStatusMeta(s) {
+  if (s === 'Succeeded') return '<span class="status-pill sp-green"><span class="pill-dot"></span>Succeeded</span>';
+  if (s === 'Pending')   return '<span class="status-pill sp-amber"><span class="pill-dot"></span>Pending</span>';
+  if (s === 'Failed')    return '<span class="status-pill sp-red"><span class="pill-dot"></span>Failed</span>';
+  return '<span class="status-pill" style="background:var(--g100);color:var(--g500)">Refunded</span>';
+}
+function _mktPayFilter(btn, val) {
+  document.querySelectorAll('#mkt-pay-filters .filter-chip').forEach(function(b){ b.classList.remove('active'); });
+  btn.classList.add('active');
+  _mktPayFilterVal = val;
+  _mktRenderPayments();
+}
+function _mktRenderPayments() {
+  var el = document.getElementById('mkt-pay-list'); if (!el) return;
+  var list = [];
+  _mktPayments.forEach(function(p, i){ if (_mktPayFilterVal === 'all' || p.status === _mktPayFilterVal) list.push({p:p, i:i}); });
+
+  var succeeded = _mktPayments.filter(function(p){ return p.status === 'Succeeded'; });
+  var pending = _mktPayments.filter(function(p){ return p.status === 'Pending'; });
+  var failed = _mktPayments.filter(function(p){ return p.status === 'Failed' || p.status === 'Refunded'; });
+  var collected = succeeded.reduce(function(s,p){ return s + p.amount; }, 0);
+  var pendingSum = pending.reduce(function(s,p){ return s + p.amount; }, 0);
+  var failedSum = failed.reduce(function(s,p){ return s + p.amount; }, 0);
+  var rate = _mktPayments.length ? Math.round(succeeded.length / _mktPayments.length * 100) : 0;
+  var setTxt = function(id, txt){ var el2 = document.getElementById(id); if (el2) el2.textContent = txt; };
+  setTxt('mkt-pay-stat-collected', '$' + collected.toLocaleString());
+  setTxt('mkt-pay-stat-collected-n', succeeded.length + ' payments');
+  setTxt('mkt-pay-stat-pending', '$' + pendingSum.toLocaleString());
+  setTxt('mkt-pay-stat-pending-n', pending.length + ' payments');
+  setTxt('mkt-pay-stat-failed', '$' + failedSum.toLocaleString());
+  setTxt('mkt-pay-stat-failed-n', failed.length + ' payments');
+  setTxt('mkt-pay-stat-rate', _mktPayments.length ? (rate + '%') : '—');
+
+  if (!list.length) { el.innerHTML = '<div class="mkt-empty">No payments in this view yet.</div>'; return; }
+  el.innerHTML = list.map(function(o){
+    var p = o.p;
+    return '<div class="mkt-pay-row" style="border-bottom:1px solid var(--g100)">'
+      + '<div class="mkt-doc-meta">' + p.date + '</div>'
+      + '<div class="mkt-doc-meta">' + p.invoiceNo + '</div>'
+      + '<div style="font-size:12.5px;color:var(--dark)">' + p.client + '</div>'
+      + '<div class="mkt-doc-meta">' + p.method + '</div>'
+      + '<div class="mkt-num">$' + p.amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + '</div>'
+      + '<div>' + _mktPayStatusMeta(p.status) + '</div>'
+      + '</div>';
+  }).join('');
+}
+function _mktPayOpen() {
+  var sel = document.getElementById('mkt-pay-invoice');
+  sel.innerHTML = _mktInvoices.map(function(inv, i){ return '<option value="' + i + '">' + inv.n + ' — ' + inv.client + '</option>'; }).join('');
+  document.getElementById('mkt-pay-method').value = 'Card';
+  document.getElementById('mkt-pay-date').value = new Date().toISOString().slice(0,10);
+  _mktPayInvoiceChange();
+  openModal('mkt-pay-modal');
+}
+function _mktPayInvoiceChange() {
+  var idx = parseInt(document.getElementById('mkt-pay-invoice').value);
+  var inv = _mktInvoices[idx];
+  if (inv) document.getElementById('mkt-pay-amount').value = _mktInvTotal(inv).toFixed(2);
+}
+function _mktPaySave() {
+  var idx = parseInt(document.getElementById('mkt-pay-invoice').value);
+  var inv = _mktInvoices[idx];
+  if (!inv) { showToast('Pick an invoice first'); return; }
+  var amount = parseFloat(document.getElementById('mkt-pay-amount').value);
+  if (!amount || amount <= 0) { showToast('Enter a valid amount'); return; }
+  var dateVal = document.getElementById('mkt-pay-date').value;
+  var d = dateVal ? new Date(dateVal) : new Date();
+  var dateTxt = isNaN(d) ? dateVal : d.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+  _mktPayments.unshift({date:dateTxt, invoiceIdx:idx, invoiceNo:inv.n, client:inv.client, method:document.getElementById('mkt-pay-method').value, amount:amount, status:'Succeeded'});
+  if (amount >= _mktInvTotal(inv) && inv.status !== 'Paid') { inv.status = 'Paid'; inv.paidDate = dateTxt; _mktRenderInvoices(); }
+  closeModal('mkt-pay-modal');
+  _mktRenderPayments();
+  showToast('Recorded $' + amount.toLocaleString() + ' payment for ' + inv.n);
+}
+
+/* ── Ace Payment Plan Builder ── */
+var _mktPlanAcePlan = null;
+function _mktPlanAceOpen() {
+  var sel = document.getElementById('ace-planpay-invoice');
+  sel.innerHTML = _mktInvoices.map(function(inv, i){ return '<option value="' + i + '">' + inv.n + ' — ' + inv.client + ' ($' + _mktInvTotal(inv).toLocaleString() + ')</option>'; }).join('');
+  document.getElementById('ace-planpay-input').value = '';
+  document.getElementById('ace-planpay-step1').style.display = 'block';
+  document.getElementById('ace-planpay-step2').style.display = 'none';
+  document.getElementById('ace-planpay-step3').style.display = 'none';
+  document.getElementById('ace-planpay-loading').style.display = 'block';
+  document.getElementById('ace-planpay-preview').style.display = 'none';
+  var s1 = document.getElementById('ace-ppstep-1'), s2 = document.getElementById('ace-ppstep-2'), s3 = document.getElementById('ace-ppstep-3');
+  s1.style.color = 'var(--teal)'; s1.querySelector('span').style.background = 'var(--teal)'; s1.querySelector('span').style.color = '#fff';
+  s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
+  s3.style.color = 'var(--g400)'; s3.querySelector('span').style.background = 'var(--g200)'; s3.querySelector('span').style.color = 'var(--g400)'; s3.querySelector('span').textContent = '3';
+  document.getElementById('ace-planpay-modal').style.display = 'flex';
+}
+function _mktPlanAceClose() { document.getElementById('ace-planpay-modal').style.display = 'none'; }
+function _mktPlanAceBack() {
+  document.getElementById('ace-planpay-step2').style.display = 'none';
+  document.getElementById('ace-planpay-step1').style.display = 'block';
+}
+function _mktPlanAceExample(btn) { document.getElementById('ace-planpay-input').value = btn.textContent.replace(/^"|"$/g, ''); }
+function _mktPlanAceParse(text, total) {
+  var lower = text.toLowerCase();
+  var n = 2;
+  var nm = lower.match(/(\d+)\s*(?:equal\s*)?(?:monthly|biweekly|weekly)?\s*payments?/);
+  if (nm) n = parseInt(nm[1]);
+  var cadenceDays = 30;
+  if (/biweekly/.test(lower)) cadenceDays = 14;
+  else if (/weekly/.test(lower)) cadenceDays = 7;
+
+  var installments = [];
+  var pctMatches = lower.match(/(\d+)%/g);
+  if (pctMatches && pctMatches.length >= 2) {
+    var pcts = pctMatches.map(function(p){ return parseInt(p); });
+    var startsNow = /now|today|upon signing/.test(lower);
+    pcts.forEach(function(pct, i){
+      installments.push({ amount: Math.round(total * pct / 100 * 100) / 100, daysFromNow: (i === 0 && startsNow) ? 0 : (i * 30) });
+    });
+  } else {
+    var base = /next month/.test(lower) ? cadenceDays : 0;
+    var amountEach = Math.round((total / n) * 100) / 100;
+    for (var i = 0; i < n; i++) installments.push({ amount: amountEach, daysFromNow: base + i * cadenceDays });
+    var sum = installments.reduce(function(s,x){ return s + x.amount; }, 0);
+    var diff = Math.round((total - sum) * 100) / 100;
+    if (diff !== 0) installments[installments.length-1].amount = Math.round((installments[installments.length-1].amount + diff) * 100) / 100;
+  }
+  return installments;
+}
+function _mktPlanAceGenerate() {
+  var idx = parseInt(document.getElementById('ace-planpay-invoice').value);
+  var inv = _mktInvoices[idx];
+  var input = document.getElementById('ace-planpay-input').value.trim();
+  if (!inv) { showToast('Pick an invoice first'); return; }
+  if (!input) { showToast('Describe how to split it'); return; }
+  document.getElementById('ace-planpay-step1').style.display = 'none';
+  document.getElementById('ace-planpay-step2').style.display = 'block';
+  document.getElementById('ace-planpay-loading').style.display = 'block';
+  document.getElementById('ace-planpay-preview').style.display = 'none';
+  var s2 = document.getElementById('ace-ppstep-2');
+  s2.style.color = 'var(--teal)'; s2.querySelector('span').style.background = 'var(--teal)'; s2.querySelector('span').style.color = '#fff';
+  setTimeout(function(){
+    var total = _mktInvTotal(inv);
+    var installments = _mktPlanAceParse(input, total);
+    _mktPlanAcePlan = { invoiceIdx: idx, installments: installments };
+    document.getElementById('ace-planpay-summary-banner').textContent = 'Splitting $' + total.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + ' for ' + inv.n + ' into ' + installments.length + ' installments.';
+    document.getElementById('ace-planpay-installments').innerHTML = installments.map(function(it, i){
+      var d = new Date(); d.setDate(d.getDate() + it.daysFromNow);
+      return '<div style="display:flex;align-items:center;gap:10px;background:var(--g50);border:1px solid var(--g200);border-radius:8px;padding:8px 10px">'
+        + '<span style="font-size:11px;font-weight:700;color:var(--g400);width:16px">' + (i+1) + '.</span>'
+        + '<span style="flex:1;font-size:12.5px;color:var(--dark)">$' + it.amount.toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2}) + '</span>'
+        + '<span style="font-size:11.5px;color:var(--g400)">Due ' + d.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + '</span>'
+        + '</div>';
+    }).join('');
+    document.getElementById('ace-planpay-loading').style.display = 'none';
+    document.getElementById('ace-planpay-preview').style.display = 'block';
+  }, 1400);
+}
+function _mktPlanAceConfirm() {
+  var inv = _mktInvoices[_mktPlanAcePlan.invoiceIdx];
+  _mktPlanAcePlan.installments.forEach(function(it){
+    var d = new Date(); d.setDate(d.getDate() + it.daysFromNow);
+    _mktPayments.push({date:d.toLocaleDateString('en-US',{month:'short',day:'numeric'}), invoiceIdx:_mktPlanAcePlan.invoiceIdx, invoiceNo:inv.n, client:inv.client, method:'Scheduled', amount:it.amount, status:'Pending'});
+  });
+  _mktRenderPayments();
+  document.getElementById('ace-planpay-step2').style.display = 'none';
+  document.getElementById('ace-planpay-step3').style.display = 'block';
+  var s3 = document.getElementById('ace-ppstep-3');
+  s3.style.color = 'var(--teal)'; s3.querySelector('span').style.background = 'var(--teal)'; s3.querySelector('span').style.color = '#fff'; s3.querySelector('span').textContent = '✓';
+  showToast('Scheduled ' + _mktPlanAcePlan.installments.length + ' payments for ' + inv.n);
+}
+
 /* ── Boot ── */
 function _mktInit() {
   if (typeof _companySettings === 'undefined') return;
   _mktCampFilterVal = 'all';
   _mktAutoFilter = 'all';
+  _mktCtFilterVal = 'all';
+  _mktInvFilterVal = 'all';
+  _mktPayFilterVal = 'all';
   _mktSeedAutomations();
+  _mktSeedContracts();
+  _mktSeedContractTemplates();
+  _mktSeedInvoices();
+  _mktSeedPayments();
   _mktRenderCampaigns();
   _mktRenderTemplates();
   _mktRenderRecipes();
