@@ -16613,6 +16613,29 @@ function _aceBonusReset() {
   s1.style.color = 'var(--teal)'; s1.querySelector('span').style.background = 'var(--teal)'; s1.querySelector('span').style.color = '#fff';
   s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
   s3.style.color = 'var(--g400)'; s3.querySelector('span').style.background = 'var(--g200)'; s3.querySelector('span').style.color = 'var(--g400)';
+  _aceBonusToggle('threshold');
+  var mrows = document.getElementById('ace-bonus-milestone-rows'); if (mrows) mrows.innerHTML = '';
+}
+var ACE_BONUS_STRUCTURE_TYPES = ['threshold','milestone','team'];
+function _aceBonusToggle(type) {
+  ACE_BONUS_STRUCTURE_TYPES.forEach(function(t) {
+    var btn = document.getElementById('ace-bonus-toggle-' + t);
+    var fields = document.getElementById('ace-bonus-fields-' + t);
+    if (btn) btn.classList.toggle('active', t === type);
+    if (fields) fields.style.display = (t === type) ? 'flex' : 'none';
+  });
+  var th = document.getElementById('ace-bonus-fields-threshold');
+  if (th) th.style.display = (type === 'threshold') ? 'grid' : 'none';
+}
+function _aceBonusAddMilestone(attainVal, awardVal) {
+  var rowsEl = document.getElementById('ace-bonus-milestone-rows');
+  var row = document.createElement('div');
+  row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 28px;gap:8px;align-items:center';
+  row.innerHTML =
+    '<input type="text" placeholder="e.g. 100% of goal" value="' + (attainVal || '') + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box">' +
+    '<input type="text" placeholder="e.g. $500" value="' + (awardVal || '') + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box">' +
+    '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:18px;line-height:1;padding:0">×</button>';
+  rowsEl.appendChild(row);
 }
 function _aceBonusBack() {
   document.getElementById('ace-bonus-step2').style.display = 'none';
@@ -16673,19 +16696,35 @@ function _aceBonusParse(text) {
   var maxNote = null;
   var maxM = lower.match(/max\s+(\d+)\s+per/i);
   if (maxM) maxNote = 'Max ' + maxM[1] + ' per rep per period';
+  // Structure type detection
+  var structureType = 'threshold';
+  var milestones = [];
+  if (/milestone|tier|escalat/i.test(lower) && amounts.length > 1) {
+    structureType = 'milestone';
+    var pctRe = /(\d{2,3})\s*%/g; var pctMatches = []; var pm;
+    while ((pm = pctRe.exec(lower)) !== null) pctMatches.push(pm[1] + '%');
+    for (var mi = 0; mi < amounts.length; mi++) {
+      milestones.push({ attain: pctMatches[mi] ? pctMatches[mi] + ' of goal' : (mi+1) + (mi===0?'st':mi===1?'nd':'th') + ' milestone', award: '$' + amounts[mi].toLocaleString() });
+    }
+  } else if (applies === 'Team' || /whole team|entire team|team collectively|team hits/i.test(lower)) {
+    structureType = 'team';
+  }
+  // Distribution
+  var distribution = 'Equal split among team';
+  if (/pro.?rata|by contribution|proportional/i.test(lower)) distribution = 'Pro-rata by contribution';
   // Primary award
   var primary = amounts.length ? '$' + amounts[0].toLocaleString() : '$1,000';
   // Build rows
   var rows = [{ label: 'Award Amount', val: primary, highlight: true }];
-  if (amounts.length > 1) {
+  if (amounts.length > 1 && structureType !== 'milestone') {
     var place = ['1st Place', '2nd Place', '3rd Place'];
     for (var i = 0; i < Math.min(amounts.length, 3); i++) {
       rows[i] = { label: place[i], val: '$' + amounts[i].toLocaleString(), highlight: i === 0 };
     }
   }
   if (maxNote) rows.push({ label: 'Cap', val: maxNote, highlight: false });
-  var explanation = 'Ace interpreted this as a ' + type.toLowerCase() + '. Trigger: ' + trigger + '. Applies to: ' + applies + '. Payout period: ' + period + '. Review all fields before confirming.';
-  return { type: type, rows: rows, trigger: trigger, period: period, applies: applies, explanation: explanation };
+  var explanation = 'Ace interpreted this as a ' + type.toLowerCase() + ' using a ' + (structureType === 'milestone' ? 'tiered/milestone' : structureType === 'team' ? 'team' : 'individual threshold') + ' structure. Trigger: ' + trigger + '. Applies to: ' + applies + '. Payout period: ' + period + '. Review all fields before confirming.';
+  return { type: type, rows: rows, trigger: trigger, period: period, applies: applies, explanation: explanation, structureType: structureType, milestones: milestones, distribution: distribution };
 }
 function _aceBonusRenderPreview(plan) {
   var now = new Date();
@@ -16714,6 +16753,23 @@ function _aceBonusRenderPreview(plan) {
   document.getElementById('ace-bonus-start-date').value = y + '-' + m + '-' + d;
   var end = new Date(now); end.setMonth(end.getMonth()+1);
   document.getElementById('ace-bonus-end-date').value = end.getFullYear() + '-' + String(end.getMonth()+1).padStart(2,'0') + '-' + String(end.getDate()).padStart(2,'0');
+  // Structure type toggle + fields
+  _aceBonusToggle(plan.structureType || 'threshold');
+  var mrows = document.getElementById('ace-bonus-milestone-rows');
+  if (mrows) {
+    mrows.innerHTML = '';
+    if (plan.milestones && plan.milestones.length) {
+      plan.milestones.forEach(function(ms) { _aceBonusAddMilestone(ms.attain, ms.award); });
+    } else {
+      _aceBonusAddMilestone('50% of goal', '$250'); _aceBonusAddMilestone('100% of goal', '$500');
+    }
+  }
+  var teamAmt = document.getElementById('ace-bonus-team-amount');
+  if (teamAmt) teamAmt.value = plan.rows[0] ? plan.rows[0].val : '';
+  var distSel = document.getElementById('ace-bonus-distribution');
+  if (distSel && plan.distribution) {
+    for (var di = 0; di < distSel.options.length; di++) { if (distSel.options[di].text === plan.distribution) { distSel.selectedIndex = di; break; } }
+  }
 }
 function _aceBonusConfirm() {
   document.getElementById('ace-bonus-step2').style.display = 'none';
@@ -16738,6 +16794,16 @@ function _aceContestReset() {
   s1.style.color = 'var(--teal)'; s1.querySelector('span').style.background = 'var(--teal)'; s1.querySelector('span').style.color = '#fff';
   s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
   s3.style.color = 'var(--g400)'; s3.querySelector('span').style.background = 'var(--g200)'; s3.querySelector('span').style.color = 'var(--g400)';
+  _aceContestToggle('leaderboard');
+}
+var ACE_CONTEST_STRUCTURE_TYPES = ['leaderboard','threshold','team'];
+function _aceContestToggle(type) {
+  ACE_CONTEST_STRUCTURE_TYPES.forEach(function(t) {
+    var btn = document.getElementById('ace-contest-toggle-' + t);
+    var fields = document.getElementById('ace-contest-fields-' + t);
+    if (btn) btn.classList.toggle('active', t === type);
+    if (fields) fields.style.display = (t === type) ? 'block' : 'none';
+  });
 }
 function _aceContestBack() {
   document.getElementById('ace-contest-step2').style.display = 'none';
@@ -16800,8 +16866,19 @@ function _aceContestParse(text) {
     }
   }
   var totalPool = amounts.reduce(function(a, b) { return a + b; }, 0);
-  var explanation = 'Ace interpreted this as a ' + metric.toLowerCase() + ' contest running for ' + duration + '. ' + prizes.length + ' prize tier' + (prizes.length > 1 ? 's' : '') + (totalPool ? ' — total prize pool: $' + totalPool.toLocaleString() : '') + '. Eligible: ' + eligibility + '. Review before confirming.';
-  return { metric: metric, prizes: prizes, duration: duration, eligibility: eligibility, totalPool: totalPool, explanation: explanation };
+  // Structure type detection
+  var structureType = 'leaderboard';
+  var thresholdM = text.match(/(?:reach(?:es)?|hit|hits|cross(?:es)?|over)\s+(\$[\d,]+(?:k)?)/i);
+  if (/threshold|anyone who|everyone who|no ranking/i.test(lower) || (thresholdM && !/top \d|first place|1st place|winner|leaderboard/i.test(lower))) {
+    structureType = 'threshold';
+  } else if (/team vs team|team.?on.?team|teams compete|region vs|department vs|group vs|first team to|team.*wins|teams? compet/i.test(lower) || (eligibility === 'All Teams' && /vs\.?|versus|against/i.test(lower))) {
+    structureType = 'team';
+  }
+  var thresholdValue = thresholdM ? thresholdM[1] : null;
+  var thresholdPrizeM = text.match(/wins?\s+(\$[\d,]+(?:k)?)|get\s+(\$[\d,]+(?:k)?)/i);
+  var thresholdPrize = thresholdPrizeM ? (thresholdPrizeM[1] || thresholdPrizeM[2]) : null;
+  var explanation = 'Ace interpreted this as a ' + (structureType === 'threshold' ? 'threshold' : structureType === 'team' ? 'team' : 'leaderboard') + '-style ' + metric.toLowerCase() + ' contest running for ' + duration + '. ' + prizes.length + ' prize tier' + (prizes.length > 1 ? 's' : '') + (totalPool ? ' — total prize pool: $' + totalPool.toLocaleString() : '') + '. Eligible: ' + eligibility + '. Review before confirming.';
+  return { metric: metric, prizes: prizes, duration: duration, eligibility: eligibility, totalPool: totalPool, explanation: explanation, structureType: structureType, thresholdValue: thresholdValue, thresholdPrize: thresholdPrize };
 }
 function _aceContestRenderPreview(plan) {
   var now = new Date();
@@ -16835,6 +16912,12 @@ function _aceContestRenderPreview(plan) {
   if (plan.prizes[1] && document.getElementById('ace-contest-prize-2')) {
     document.getElementById('ace-contest-prize-2').value = plan.prizes[1].prize;
   }
+  // Structure type toggle + fields
+  _aceContestToggle(plan.structureType || 'leaderboard');
+  var thVal = document.getElementById('ace-contest-threshold-value');
+  if (thVal) thVal.value = plan.thresholdValue ? plan.thresholdValue + ' in ' + plan.metric.toLowerCase() : '$25,000 in ' + plan.metric.toLowerCase();
+  var thPrize = document.getElementById('ace-contest-threshold-prize');
+  if (thPrize) thPrize.value = plan.thresholdPrize || '$250';
 }
 function _aceContestAddPrize() {
   var medals = ['🥇','🥈','🥉','4th','5th'];
@@ -17862,6 +17945,8 @@ function _aceCommConfirm() {
           <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"$2,000 retention bonus for reps who keep 90%+ of their book"</button>
           <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Quarterly bonus: $3,000 for top rep, $1,500 second, $500 third"</button>
           <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Year-end $5,000 bonus for hitting 120% of annual target"</button>
+          <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Milestone bonus: $250 at 50% of goal, $500 at 100% of goal"</button>
+          <button onclick="_aceBonusExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"$500 per person when the whole team hits its monthly goal, split equally"</button>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
@@ -17895,6 +17980,16 @@ function _aceCommConfirm() {
           <input id="ace-bonus-plan-name" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:14px;font-weight:600;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'" value="Bonus Plan">
         </div>
 
+        <!-- Structure type -->
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:6px">Bonus structure</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button id="ace-bonus-toggle-threshold" onclick="_aceBonusToggle('threshold')" class="ace-comm-toggle-btn">Individual Threshold</button>
+            <button id="ace-bonus-toggle-milestone" onclick="_aceBonusToggle('milestone')" class="ace-comm-toggle-btn">Tiered / Milestone</button>
+            <button id="ace-bonus-toggle-team" onclick="_aceBonusToggle('team')" class="ace-comm-toggle-btn">Team Bonus</button>
+          </div>
+        </div>
+
         <!-- Trigger & Award -->
         <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
           <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Trigger &amp; Award</div>
@@ -17903,7 +17998,7 @@ function _aceCommConfirm() {
               <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Trigger condition</div>
               <input id="ace-bonus-trigger" type="text" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" id="ace-bonus-fields-threshold">
               <div>
                 <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Award type</div>
                 <select id="ace-bonus-award-type" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">
@@ -17913,6 +18008,25 @@ function _aceCommConfirm() {
               <div>
                 <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Award amount</div>
                 <input id="ace-bonus-amount" type="text" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+              </div>
+            </div>
+            <div id="ace-bonus-fields-milestone" style="display:none;flex-direction:column;gap:8px">
+              <div style="font-size:11px;font-weight:600;color:var(--g500)">Milestones (attainment → award)</div>
+              <div id="ace-bonus-milestone-rows" style="display:flex;flex-direction:column;gap:8px"></div>
+              <button onclick="_aceBonusAddMilestone()" style="font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:var(--font);font-weight:600;padding:0;text-align:left">+ Add milestone</button>
+            </div>
+            <div id="ace-bonus-fields-team" style="display:none;flex-direction:column;gap:10px">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Per-person award</div>
+                  <input id="ace-bonus-team-amount" type="text" placeholder="$500" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                </div>
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Distribution method</div>
+                  <select id="ace-bonus-distribution" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">
+                    <option>Equal split among team</option><option>Pro-rata by contribution</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>
@@ -18370,6 +18484,7 @@ function _aceCommConfirm() {
           <button onclick="_aceContestExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Friday blitz — most calls made wins a $250 gift card"</button>
           <button onclick="_aceContestExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Team contest — first team to $500K in revenue wins dinner"</button>
           <button onclick="_aceContestExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Most deals closed this month. Winner takes $1,500. 30 days."</button>
+          <button onclick="_aceContestExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Anyone who crosses $25,000 in revenue this month wins $250 — no ranking"</button>
         </div>
       </div>
       <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
@@ -18403,6 +18518,16 @@ function _aceCommConfirm() {
           <input id="ace-contest-plan-name" type="text" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:14px;font-weight:600;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'" value="Contest">
         </div>
 
+        <!-- Structure type -->
+        <div style="margin-bottom:12px">
+          <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:6px">Contest structure</div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button id="ace-contest-toggle-leaderboard" onclick="_aceContestToggle('leaderboard')" class="ace-comm-toggle-btn">Leaderboard</button>
+            <button id="ace-contest-toggle-threshold" onclick="_aceContestToggle('threshold')" class="ace-comm-toggle-btn">Threshold</button>
+            <button id="ace-contest-toggle-team" onclick="_aceContestToggle('team')" class="ace-comm-toggle-btn">Team</button>
+          </div>
+        </div>
+
         <!-- Metric & Duration -->
         <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
           <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Metric &amp; Duration</div>
@@ -18424,8 +18549,42 @@ function _aceCommConfirm() {
           </div>
         </div>
 
+        <!-- Threshold fields -->
+        <div id="ace-contest-fields-threshold" style="display:none;border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Threshold to Win</div>
+          <div style="padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Bar to clear</div>
+              <input id="ace-contest-threshold-value" type="text" placeholder="e.g. $50,000 in revenue" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Prize per winner</div>
+              <input id="ace-contest-threshold-prize" type="text" placeholder="e.g. $250" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+          </div>
+          <div style="padding:0 14px 12px;font-size:11px;color:var(--g400)">Everyone who crosses the bar wins — no ranking, no runner-up.</div>
+        </div>
+
+        <!-- Team fields -->
+        <div id="ace-contest-fields-team" style="display:none;border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Team Scoring</div>
+          <div style="padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Teams competing</div>
+              <input id="ace-contest-team-groups" type="text" placeholder="e.g. East vs West region" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+            </div>
+            <div>
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Scoring method</div>
+              <select id="ace-contest-team-scoring" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">
+                <option>Sum of all team members' results</option><option>Average per team member</option>
+              </select>
+            </div>
+          </div>
+          <div style="padding:0 14px 12px;font-size:11px;color:var(--g400)">Reps are grouped into teams; teams rank against each other, not individuals.</div>
+        </div>
+
         <!-- Prize Breakdown -->
-        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+        <div id="ace-contest-fields-leaderboard" style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
           <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Prize Breakdown</div>
           <div style="padding:14px;display:flex;flex-direction:column;gap:8px" id="ace-contest-prizes">
             <div style="display:grid;grid-template-columns:80px 1fr 1fr 28px;gap:8px;align-items:center">
