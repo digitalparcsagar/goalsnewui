@@ -4003,6 +4003,93 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       </div>
     </div>
 
+    <!-- Accelerator -->
+    <div class="comm-lib-card" onclick="_aceCommLoadTemplate('accelerator')" style="background:#fff;border:1.5px solid var(--g200);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden" onmouseover="this.style.borderColor='#0ea5e9';this.style.boxShadow='0 4px 16px rgba(14,165,233,0.1)'" onmouseout="this.style.borderColor='var(--g200)';this.style.boxShadow='none'">
+      <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(14,165,233,0.1) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(14,165,233,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#0ea5e9" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Accelerator</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:1px">Rate climbs as quota attainment climbs</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(14,165,233,0.06);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Up to 100% of quota</span>
+          <span style="font-size:13px;font-weight:800;color:#0ea5e9;font-family:var(--mono)">5%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(14,165,233,0.1);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Beyond 150% of quota</span>
+          <span style="font-size:13px;font-weight:800;color:#0ea5e9;font-family:var(--mono)">12%</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);line-height:1.6;margin-bottom:12px">Rewards overachievement. Rate bands are based on % of quota attained rather than deal size, so it scales with each rep's target.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;font-weight:700;color:#0ea5e9;background:rgba(14,165,233,0.1);border-radius:5px;padding:3px 8px">Overachiever Favorite</span>
+        <span style="font-size:11px;font-weight:600;color:#0ea5e9">Build with Ace →</span>
+      </div>
+    </div>
+
+    <!-- Draw Against Commission -->
+    <div class="comm-lib-card" onclick="_aceCommLoadTemplate('draw')" style="background:#fff;border:1.5px solid var(--g200);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden" onmouseover="this.style.borderColor='#dc2626';this.style.boxShadow='0 4px 16px rgba(220,38,38,0.1)'" onmouseout="this.style.borderColor='var(--g200)';this.style.boxShadow='none'">
+      <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(220,38,38,0.1) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(220,38,38,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Draw Against Commission</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:1px">Guaranteed floor while ramping</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(220,38,38,0.06);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Monthly draw</span>
+          <span style="font-size:13px;font-weight:800;color:#dc2626;font-family:var(--mono)">$3,000</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(220,38,38,0.1);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Underlying rate</span>
+          <span style="font-size:13px;font-weight:800;color:#dc2626;font-family:var(--mono)">7%</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);line-height:1.6;margin-bottom:12px">Common for new hires ramping up. A guaranteed advance is paid each period, which earned commissions pay back first.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;font-weight:700;color:#dc2626;background:rgba(220,38,38,0.1);border-radius:5px;padding:3px 8px">New Hire Ramp</span>
+        <span style="font-size:11px;font-weight:600;color:#dc2626">Build with Ace →</span>
+      </div>
+    </div>
+
+    <!-- Product / SKU-Based -->
+    <div class="comm-lib-card" onclick="_aceCommLoadTemplate('product')" style="background:#fff;border:1.5px solid var(--g200);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden" onmouseover="this.style.borderColor='#65a30d';this.style.boxShadow='0 4px 16px rgba(101,163,13,0.1)'" onmouseout="this.style.borderColor='var(--g200)';this.style.boxShadow='none'">
+      <div style="position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:radial-gradient(circle,rgba(101,163,13,0.1) 0%,transparent 70%);pointer-events:none"></div>
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:36px;height:36px;border-radius:9px;background:rgba(101,163,13,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#65a30d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+        </div>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Product-Based</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:1px">Different rates per product line</div>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:14px">
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(101,163,13,0.06);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">New licenses</span>
+          <span style="font-size:13px;font-weight:800;color:#65a30d;font-family:var(--mono)">10%</span>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:center;background:rgba(101,163,13,0.1);border-radius:7px;padding:7px 10px">
+          <span style="font-size:11px;color:var(--g600)">Renewals</span>
+          <span style="font-size:13px;font-weight:800;color:#65a30d;font-family:var(--mono)">3%</span>
+        </div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);line-height:1.6;margin-bottom:12px">Weights payout by what's sold. Lets you push new logos harder than renewals, or reward high-margin add-ons.</div>
+      <div style="display:flex;align-items:center;justify-content:space-between">
+        <span style="font-size:10px;font-weight:700;color:#65a30d;background:rgba(101,163,13,0.1);border-radius:5px;padding:3px 8px">Product-Led</span>
+        <span style="font-size:11px;font-weight:600;color:#65a30d">Build with Ace →</span>
+      </div>
+    </div>
+
     <!-- Ask Ace custom -->
     <div onclick="_aceCommOpen()" style="background:var(--navy);border:1.5px solid var(--navy);border-radius:14px;padding:20px;cursor:pointer;transition:.15s;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between" onmouseover="this.style.opacity='0.9'" onmouseout="this.style.opacity='1'">
       <div style="position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(255,255,255,0.06) 0%,transparent 70%);pointer-events:none"></div>
@@ -16784,6 +16871,11 @@ function _aceCommReset() {
   document.getElementById('ace-comm-step2').style.display = 'none';
   document.getElementById('ace-comm-step3').style.display = 'none';
   _aceStepIndicator(1);
+  _aceCommToggle('flat');
+  ['ace-comm-cliff','ace-comm-spiff','ace-comm-clawback'].forEach(function(id){
+    var box = document.getElementById(id); if (box) box.checked = false;
+    var wrap = document.getElementById(id + '-wrap'); if (wrap) wrap.style.display = 'none';
+  });
 }
 function _aceCommBack() {
   document.getElementById('ace-comm-step2').style.display = 'none';
@@ -16853,6 +16945,7 @@ function _aceCommParse(text) {
   var override = 1.5;
   var payout = 'Monthly';
   var bonus = null;
+  var structureType = 'flat';
 
   // Extract payout frequency
   if (lower.includes('quarter')) payout = 'Quarterly';
@@ -16867,92 +16960,206 @@ function _aceCommParse(text) {
   var bonusMatch = lower.match(/(\d+(?:\.\d+)?)\s*%\s*bonus\s+if\s+([^,\.]+)/i);
   if (bonusMatch) bonus = bonusMatch[2].trim();
 
-  // Try to extract tiers
-  var tierMatches = [];
-  // pattern: X% up to $YK, then Z% from ...
-  var pct = lower.match(/(\d+(?:\.\d+)?)\s*%\s+(?:up to|to|on all)/g);
-  var thresholds = lower.match(/\$(\d+)k/gi);
+  // ── Detect structure type from keywords, most specific first ──
+  var draw = null, residual = null, split = null, products = null, accel = null;
 
-  if (thresholds && thresholds.length >= 2 && pct && pct.length >= 3) {
-    // 3-tier
-    var p1 = parseFloat(pct[0]), p2 = parseFloat(pct[1]), p3 = parseFloat(pct[2]);
-    var t1 = parseInt(thresholds[0].replace(/\D/g,'')), t2 = parseInt(thresholds[1].replace(/\D/g,''));
-    tiers = [
-      { label:'Tier 1', range:'$0 – $' + t1 + 'K', rate: p1 + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' },
-      { label:'Tier 2', range:'$' + t1 + 'K – $' + t2 + 'K', rate: p2 + '%', color:'rgba(91,143,232,0.08)', badge:'#5b8fe8' },
-      { label:'Tier 3', range:'$' + t2 + 'K+', rate: p3 + '%', color:'rgba(245,158,11,0.08)', badge:'#f59e0b' },
-    ];
-  } else if (thresholds && thresholds.length >= 1 && pct && pct.length >= 2) {
-    var p1 = parseFloat(pct[0]), p2 = parseFloat(pct[1]);
-    var t1 = parseInt(thresholds[0].replace(/\D/g,''));
-    tiers = [
-      { label:'Tier 1', range:'$0 – $' + t1 + 'K', rate: p1 + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' },
-      { label:'Tier 2', range:'$' + t1 + 'K+', rate: p2 + '%', color:'rgba(91,143,232,0.08)', badge:'#5b8fe8' },
-    ];
+  if (/\bdraw\b/.test(lower)) {
+    structureType = 'draw';
+    var drawAmtM = lower.match(/\$([\d,]+)\s*(?:draw|per|\/)/);
+    var drawRateM = lower.match(/(\d+(?:\.\d+)?)\s*%/);
+    draw = {
+      amount: drawAmtM ? parseInt(drawAmtM[1].replace(/,/g,'')) : 3000,
+      rate: drawRateM ? parseFloat(drawRateM[1]) : 7,
+      recoverable: !/non-?recoverable/.test(lower)
+    };
+  } else if (/residual|renewal commission|recurring commission/.test(lower)) {
+    structureType = 'residual';
+    var resMatches = lower.match(/(\d+(?:\.\d+)?)\s*%/g) || [];
+    residual = {
+      newRate: resMatches[0] ? parseFloat(resMatches[0]) : 8,
+      residualRate: resMatches[1] ? parseFloat(resMatches[1]) : 3,
+      duration: /life of (the )?customer|as long as/i.test(lower) ? 'Life of customer'
+               : (function(){ var dm = lower.match(/(\d+)\s*month/); return dm ? (dm[1] + ' months') : 'Life of customer'; })()
+    };
+  } else if (/split commission|assisting rep|primary rep/.test(lower)) {
+    structureType = 'split';
+    var splitPoolM = lower.match(/pool is (\d+(?:\.\d+)?)\s*%|(\d+(?:\.\d+)?)\s*%\s*of deal value/);
+    var primaryM = lower.match(/primary[^%]*?(\d+(?:\.\d+)?)\s*%/);
+    var assistM = lower.match(/assist[^%]*?(\d+(?:\.\d+)?)\s*%/);
+    split = {
+      pool: splitPoolM ? parseFloat(splitPoolM[1] || splitPoolM[2]) : 7,
+      primary: primaryM ? parseFloat(primaryM[1]) : 60,
+      assist: assistM ? parseFloat(assistM[1]) : 40
+    };
+  } else if (/per product|by product|\bsku\b|product line|revenue type|new (business|licenses?)[^.]*renewals?/.test(lower)) {
+    structureType = 'product';
+    products = [];
+    var prodRe = /(\d+(?:\.\d+)?)\s*%\s*(?:on|for)\s+([a-z0-9 \-\/]{3,30}?)(?:,|\.|and|$)/gi;
+    var pm;
+    while ((pm = prodRe.exec(text)) !== null) products.push({ name: pm[2].trim().replace(/^\w/, function(c){return c.toUpperCase();}), rate: parseFloat(pm[1]) });
+    if (!products.length) products = [{name:'New Business', rate:10}, {name:'Renewals', rate:3}];
+  } else if (/accelerat|% of quota|quota attainment|beyond quota|above quota|over(?:achiev| \d+%)/.test(lower)) {
+    structureType = 'accelerator';
+    var pctBands = lower.match(/(\d+(?:\.\d+)?)\s*%/g) || [];
+    var quotaCuts = lower.match(/(\d+)\s*%\s*of quota|(\d+)\s*%\s*attainment/g) || [];
+    accel = {
+      base: pctBands[0] ? parseFloat(pctBands[0]) : 5,
+      bands: [
+        { from:100, to:150, rate: pctBands[1] ? parseFloat(pctBands[1]) : 8 },
+        { from:150, to:null, rate: pctBands[2] ? parseFloat(pctBands[2]) : 12 }
+      ]
+    };
   } else {
-    // Flat rate fallback
-    var flatMatch = lower.match(/(\d+(?:\.\d+)?)\s*%/);
-    var rate = flatMatch ? flatMatch[1] : '7';
-    tiers = [{ label:'Flat Rate', range:'All closed deals', rate: rate + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' }];
+    // Flat vs tiered — original detection logic
+    var pct = lower.match(/(\d+(?:\.\d+)?)\s*%(?:\s+\w+){0,2}?\s+(?:up to|to|on all|above|over|from)/g);
+    var thresholds = lower.match(/\$(\d+)k/gi);
+    if (thresholds && thresholds.length >= 2 && pct && pct.length >= 3) {
+      structureType = 'tiered';
+      var p1 = parseFloat(pct[0]), p2 = parseFloat(pct[1]), p3 = parseFloat(pct[2]);
+      var t1 = parseInt(thresholds[0].replace(/\D/g,'')), t2 = parseInt(thresholds[1].replace(/\D/g,''));
+      tiers = [
+        { label:'Tier 1', range:'$0 – $' + t1 + 'K', rate: p1 + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' },
+        { label:'Tier 2', range:'$' + t1 + 'K – $' + t2 + 'K', rate: p2 + '%', color:'rgba(91,143,232,0.08)', badge:'#5b8fe8' },
+        { label:'Tier 3', range:'$' + t2 + 'K+', rate: p3 + '%', color:'rgba(245,158,11,0.08)', badge:'#f59e0b' },
+      ];
+    } else if (thresholds && thresholds.length >= 1 && pct && pct.length >= 2) {
+      structureType = 'tiered';
+      var p1b = parseFloat(pct[0]), p2b = parseFloat(pct[1]);
+      var t1b = parseInt(thresholds[0].replace(/\D/g,''));
+      tiers = [
+        { label:'Tier 1', range:'$0 – $' + t1b + 'K', rate: p1b + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' },
+        { label:'Tier 2', range:'$' + t1b + 'K+', rate: p2b + '%', color:'rgba(91,143,232,0.08)', badge:'#5b8fe8' },
+      ];
+    } else {
+      structureType = 'flat';
+      var flatMatch = lower.match(/(\d+(?:\.\d+)?)\s*%/);
+      var rate = flatMatch ? flatMatch[1] : '7';
+      tiers = [{ label:'Flat Rate', range:'All closed deals', rate: rate + '%', color:'rgba(29,158,117,0.08)', badge:'#1d9e75' }];
+    }
   }
 
-  // Build explanation
-  var tierDesc = tiers.map(function(t){ return t.rate + ' on ' + t.range; }).join(', ');
-  var explanation = 'Ace interpreted your description as a ' + tiers.length + '-tier commission structure: ' + tierDesc + '. Payout is ' + payout.toLowerCase() + '. Manager override of ' + override + '% applies to the team total.' + (bonus ? ' A ' + bonus + ' bonus accelerator was also detected.' : '') + ' Review each field above before confirming — you can edit the plan name and adjust any value.';
+  // Cliff detection (only meaningful for tiered)
+  var cliff = null;
+  if (/cliff|no commission until|minimum before/.test(lower)) {
+    var cliffM = lower.match(/\$([\d,]+)/);
+    cliff = cliffM ? parseInt(cliffM[1].replace(/,/g,'')) : 25000;
+  }
 
-  return { tiers: tiers, payout: payout, override: override, bonus: bonus, explanation: explanation };
+  // SPIFF / clawback modifiers (can stack on any structure)
+  var spiff = null, clawback = null;
+  if (/spiff|time-?boxed bonus|bonus fund/.test(lower)) {
+    var spiffAmtM = lower.match(/\$([\d,]+)\s*(?:spiff|per deal|extra)/) || lower.match(/spiff[^$]*\$([\d,]+)/);
+    spiff = { amount: spiffAmtM ? parseInt(spiffAmtM[1].replace(/,/g,'')) : 200, desc:'Qualifying deals during the SPIFF window' };
+  }
+  if (/clawback|vest(ing)?|chargeback window/.test(lower)) {
+    var claw = lower.match(/(\d+)\s*day/);
+    clawback = { days: claw ? parseInt(claw[1]) : 90 };
+  }
+
+  // Build explanation per structure type
+  var explanation;
+  if (structureType === 'draw') explanation = 'Ace detected a draw against commission: a $' + draw.amount.toLocaleString() + ' ' + (draw.recoverable ? 'recoverable' : 'non-recoverable') + ' draw per period, with a ' + draw.rate + '% underlying commission rate.';
+  else if (structureType === 'residual') explanation = 'Ace detected a residual structure: ' + residual.newRate + '% on new sales, ' + residual.residualRate + '% ongoing for ' + residual.duration.toLowerCase() + '.';
+  else if (structureType === 'split') explanation = 'Ace detected a split commission: a ' + split.pool + '% pool split ' + split.primary + '/' + split.assist + ' between primary and assisting reps.';
+  else if (structureType === 'product') explanation = 'Ace detected product-based rates: ' + products.map(function(p){return p.rate+'% on '+p.name;}).join(', ') + '.';
+  else if (structureType === 'accelerator') explanation = 'Ace detected an accelerator: ' + accel.base + '% base rate up to 100% of quota, then ' + accel.bands.map(function(b){return b.rate+'% from '+b.from+(b.to?('–'+b.to):'+')+'% of quota';}).join(', ') + '.';
+  else {
+    var tierDesc = tiers.map(function(t){ return t.rate + ' on ' + t.range; }).join(', ');
+    explanation = 'Ace interpreted your description as a ' + (structureType === 'tiered' ? (tiers.length + '-tier') : 'flat-rate') + ' commission structure: ' + tierDesc + '.';
+  }
+  explanation += ' Payout is ' + payout.toLowerCase() + '. Manager override of ' + override + '% applies to the team total.' + (bonus ? ' A ' + bonus + ' bonus accelerator was also detected.' : '') + (cliff ? ' A cliff of $' + cliff.toLocaleString() + ' was detected.' : '') + (spiff ? ' A SPIFF of $' + spiff.amount + ' per deal was detected.' : '') + (clawback ? ' A ' + clawback.days + '-day clawback window was detected.' : '') + ' Review each field above before confirming.';
+
+  return { structureType:structureType, tiers:tiers, draw:draw, residual:residual, split:split, products:products, accel:accel, cliff:cliff, spiff:spiff, clawback:clawback, payout:payout, override:override, bonus:bonus, explanation:explanation };
 }
 
 function _aceCommRenderPreview(plan) {
   var now = new Date();
-  // Summary banner — mimic the dev team's format
-  var tierDesc = plan.tiers.map(function(t) { return t.rate + ' ' + t.range; }).join(', ');
-  document.getElementById('ace-comm-summary-banner').textContent = tierDesc;
-  // Assumptions
+  document.getElementById('ace-comm-summary-banner').textContent = plan.explanation.split('. Review')[0] + '.';
   var assumptions = [
     'Assigned to all sales reps as no specific names were mentioned.',
     'Used default start and end dates as none were specified.'
   ];
   if (plan.override && parseFloat(plan.override) > 0) assumptions.push('Manager override of ' + plan.override + '% detected and applied.');
   document.getElementById('ace-comm-assumptions').innerHTML = assumptions.map(function(a) { return '• ' + a; }).join('<br>');
-  // Plan name
-  document.getElementById('ace-comm-plan-name').value = plan.tiers.length + '-Tier Commission Plan';
-  // Payout dropdown
+
+  var nameByType = {
+    flat: 'Flat Rate Commission Plan', tiered: plan.tiers.length + '-Tier Commission Plan',
+    accelerator: 'Accelerator Commission Plan', draw: 'Draw Against Commission Plan',
+    residual: 'Residual Commission Plan', split: 'Split Commission Plan', product: 'Product-Based Commission Plan'
+  };
+  document.getElementById('ace-comm-plan-name').value = nameByType[plan.structureType] || 'Commission Plan';
+
   var payoutSel = document.getElementById('ace-comm-payout');
   for (var i = 0; i < payoutSel.options.length; i++) {
     if (payoutSel.options[i].text.toLowerCase() === plan.payout.toLowerCase()) { payoutSel.selectedIndex = i; break; }
   }
-  // Dates
-  var y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0'), d = String(now.getDate()).padStart(2,'0');
+  var y = now.getFullYear(), m = String(now.getMonth()+1).padStart(2,'0');
   document.getElementById('ace-comm-start-date').value = y + '-' + m + '-01';
   document.getElementById('ace-comm-end-date').value = y + '-12-31';
-  // Render editable tier rows
-  var rowsEl = document.getElementById('ace-comm-tier-rows');
-  rowsEl.innerHTML = '';
-  plan.tiers.forEach(function(t, i) {
-    var fromVal = i === 0 ? '0' : plan.tiers[i-1].cap || '';
-    var uptoVal = t.cap || '';
-    var rateVal = parseFloat(t.rate) || '';
-    var row = document.createElement('div');
-    row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;align-items:center';
-    row.innerHTML =
-      '<input type="text" value="$' + Number(fromVal).toLocaleString() + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
-      '<input type="text" value="' + (uptoVal ? '$' + Number(uptoVal).toLocaleString() : '') + '" placeholder="and above" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
-      '<input type="text" value="' + rateVal + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
-      '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:18px;line-height:1;padding:0">×</button>';
-    rowsEl.appendChild(row);
-  });
-}
-function _aceCommToggle(type) {
-  var flatBtn = document.getElementById('ace-comm-toggle-flat');
-  var tieredBtn = document.getElementById('ace-comm-toggle-tiered');
-  if (type === 'flat') {
-    flatBtn.style.cssText = 'padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1.5px solid var(--teal);background:rgba(29,158,117,0.08);color:var(--teal);cursor:pointer;font-family:var(--font)';
-    tieredBtn.style.cssText = 'padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g500);cursor:pointer;font-family:var(--font)';
-  } else {
-    tieredBtn.style.cssText = 'padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1.5px solid var(--teal);background:rgba(29,158,117,0.08);color:var(--teal);cursor:pointer;font-family:var(--font)';
-    flatBtn.style.cssText = 'padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g500);cursor:pointer;font-family:var(--font)';
+
+  _aceCommToggle(plan.structureType);
+
+  if (plan.structureType === 'flat') {
+    document.getElementById('ace-comm-flat-rate').value = plan.tiers[0] ? parseFloat(plan.tiers[0].rate) : 7;
+  } else if (plan.structureType === 'tiered') {
+    var rowsEl = document.getElementById('ace-comm-tier-rows');
+    rowsEl.innerHTML = '';
+    plan.tiers.forEach(function(t, i) {
+      var fromVal = i === 0 ? '0' : plan.tiers[i-1].cap || '';
+      var uptoVal = t.cap || '';
+      var rateVal = parseFloat(t.rate) || '';
+      var row = document.createElement('div');
+      row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;align-items:center';
+      row.innerHTML =
+        '<input type="text" value="$' + Number(fromVal).toLocaleString() + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+        '<input type="text" value="' + (uptoVal ? '$' + Number(uptoVal).toLocaleString() : '') + '" placeholder="and above" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+        '<input type="text" value="' + rateVal + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+        '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:18px;line-height:1;padding:0">×</button>';
+      rowsEl.appendChild(row);
+    });
+    var cliffBox = document.getElementById('ace-comm-cliff');
+    cliffBox.checked = !!plan.cliff;
+    document.getElementById('ace-comm-cliff-wrap').style.display = plan.cliff ? 'block' : 'none';
+    if (plan.cliff) document.getElementById('ace-comm-cliff-amount').value = plan.cliff;
+  } else if (plan.structureType === 'accelerator' && plan.accel) {
+    document.getElementById('ace-comm-accel-base').value = plan.accel.base;
+    var accelRows = document.getElementById('ace-comm-accel-rows');
+    accelRows.innerHTML = '';
+    plan.accel.bands.forEach(function(b) { _aceCommAddAccelTier(b.from, b.to, b.rate); });
+  } else if (plan.structureType === 'draw' && plan.draw) {
+    document.getElementById('ace-comm-draw-amount').value = plan.draw.amount;
+    document.getElementById('ace-comm-draw-rate').value = plan.draw.rate;
+    document.querySelector('input[name="ace-comm-draw-type"][value="' + (plan.draw.recoverable ? 'recoverable' : 'non-recoverable') + '"]').checked = true;
+  } else if (plan.structureType === 'residual' && plan.residual) {
+    document.getElementById('ace-comm-residual-new').value = plan.residual.newRate;
+    document.getElementById('ace-comm-residual-rate').value = plan.residual.residualRate;
+    var durSel = document.getElementById('ace-comm-residual-duration');
+    for (var di = 0; di < durSel.options.length; di++) { if (durSel.options[di].text === plan.residual.duration) { durSel.selectedIndex = di; break; } }
+  } else if (plan.structureType === 'split' && plan.split) {
+    document.getElementById('ace-comm-split-pool').value = plan.split.pool;
+    document.getElementById('ace-comm-split-primary').value = plan.split.primary;
+    document.getElementById('ace-comm-split-assist').value = plan.split.assist;
+  } else if (plan.structureType === 'product' && plan.products) {
+    var prodRows = document.getElementById('ace-comm-product-rows');
+    prodRows.innerHTML = '';
+    plan.products.forEach(function(p) { _aceCommAddProductRow(p.name, p.rate); });
   }
+
+  document.getElementById('ace-comm-spiff').checked = !!plan.spiff;
+  document.getElementById('ace-comm-spiff-wrap').style.display = plan.spiff ? 'block' : 'none';
+  if (plan.spiff) { document.getElementById('ace-comm-spiff-amount').value = plan.spiff.amount; document.getElementById('ace-comm-spiff-desc').value = plan.spiff.desc; }
+  document.getElementById('ace-comm-clawback').checked = !!plan.clawback;
+  document.getElementById('ace-comm-clawback-wrap').style.display = plan.clawback ? 'block' : 'none';
+  if (plan.clawback) document.getElementById('ace-comm-clawback-days').value = plan.clawback.days;
+}
+var ACE_COMM_STRUCTURE_TYPES = ['flat','tiered','accelerator','draw','residual','split','product'];
+function _aceCommToggle(type) {
+  ACE_COMM_STRUCTURE_TYPES.forEach(function(t) {
+    var btn = document.getElementById('ace-comm-toggle-' + t);
+    var fields = document.getElementById('ace-comm-fields-' + t);
+    if (btn) btn.classList.toggle('active', t === type);
+    if (fields) fields.style.display = (t === type) ? 'block' : 'none';
+  });
 }
 function _aceCommAddTier() {
   var rowsEl = document.getElementById('ace-comm-tier-rows');
@@ -16965,13 +17172,37 @@ function _aceCommAddTier() {
     '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:18px;line-height:1;padding:0">×</button>';
   rowsEl.appendChild(row);
 }
+function _aceCommAddAccelTier(fromVal, toVal, rateVal) {
+  var rowsEl = document.getElementById('ace-comm-accel-rows');
+  var row = document.createElement('div');
+  row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;align-items:center';
+  row.innerHTML =
+    '<input type="text" value="' + (fromVal !== undefined ? fromVal : '') + '" placeholder="100" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+    '<input type="text" value="' + (toVal !== undefined && toVal !== null ? toVal : '') + '" placeholder="and above" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+    '<input type="text" value="' + (rateVal !== undefined ? rateVal : '') + '" placeholder="%" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+    '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:18px;line-height:1;padding:0">×</button>';
+  rowsEl.appendChild(row);
+}
+function _aceCommAddProductRow(nameVal, rateVal) {
+  var rowsEl = document.getElementById('ace-comm-product-rows');
+  var row = document.createElement('div');
+  row.style.cssText = 'display:grid;grid-template-columns:1fr 1fr 28px;gap:8px;align-items:center';
+  row.innerHTML =
+    '<input type="text" value="' + (nameVal !== undefined ? nameVal : '') + '" placeholder="e.g. New Licenses" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+    '<input type="text" value="' + (rateVal !== undefined ? rateVal : '') + '" placeholder="%" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;width:100%;box-sizing:border-box" >' +
+    '<button onclick="this.closest(\'div\').remove()" style="background:none;border:none;cursor:pointer;color:var(--g400);font-size:18px;line-height:1;padding:0">×</button>';
+  rowsEl.appendChild(row);
+}
 
 var _aceCommTemplates = {
-  tiered:   '6% on deals up to $50K, 8% from $50K to $100K, and 10% on anything above $100K. Paid monthly. 1.5% manager override on team total.',
-  flat:     'Flat 7% commission on all closed-won deals. Manager gets a 1.5% override. Paid monthly.',
-  goal:     '6% base commission on all deals. Reps get a 2% bonus when they hit 100% of their monthly goal, and a 4% bonus if they exceed 120%. Paid monthly.',
-  residual: '8% commission on new sales. 3% residual commission on annual renewals for accounts the rep originally closed. Paid quarterly.',
-  split:    'Split commission — primary rep earns 60% of the total commission, assisting rep earns 40%. Total commission pool is 7% of deal value. Manager allocates splits per deal.',
+  tiered:      '6% on deals up to $50K, 8% from $50K to $100K, and 10% on anything above $100K. Paid monthly. 1.5% manager override on team total.',
+  flat:        'Flat 7% commission on all closed-won deals. Manager gets a 1.5% override. Paid monthly.',
+  goal:        '6% base commission on all deals. Reps get a 2% bonus when they hit 100% of their monthly goal, and a 4% bonus if they exceed 120%. Paid monthly.',
+  residual:    '8% commission on new sales. 3% residual commission on annual renewals for accounts the rep originally closed. Paid quarterly.',
+  split:       'Split commission — primary rep earns 60% of the total commission, assisting rep earns 40%. Total commission pool is 7% of deal value. Manager allocates splits per deal.',
+  accelerator: '5% base rate up to 100% of quota, 8% from 100% to 150% of quota, and 12% beyond 150% of quota. Paid monthly.',
+  draw:        '$3,000 recoverable draw per month against a 7% commission rate. Paid monthly.',
+  product:     '10% on new licenses, 3% on renewals, and 15% on add-on modules. Paid monthly.'
 };
 function _aceCommLoadTemplate(key) {
   _aceCommOpen();
@@ -18301,6 +18532,9 @@ function _aceCommConfirm() {
           <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">3 tiers: 5% up to $30K, 8% to $80K, 11% above</button>
           <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">6% base + 2% bonus if rep hits 100% of goal</button>
           <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">Quarterly payout, 8% with 1.5% manager override</button>
+          <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">5% base rate up to 100% of quota, 8% from 100% to 150%, 12% beyond</button>
+          <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">$3,000 recoverable draw per month against a 7% commission rate</button>
+          <button onclick="_aceCommExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">10% on new licenses, 3% on renewals, 15% on add-on modules</button>
         </div>
       </div>
 
@@ -18343,27 +18577,186 @@ function _aceCommConfirm() {
         <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
           <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Structure</div>
           <div style="padding:14px">
-            <div style="display:flex;gap:6px;margin-bottom:14px">
-              <button id="ace-comm-toggle-flat" onclick="_aceCommToggle('flat')" style="padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g500);cursor:pointer;font-family:var(--font)">Flat rate</button>
-              <button id="ace-comm-toggle-tiered" onclick="_aceCommToggle('tiered')" style="padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1.5px solid var(--teal);background:rgba(29,158,117,0.08);color:var(--teal);cursor:pointer;font-family:var(--font)">Tiered</button>
+            <div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap">
+              <button id="ace-comm-toggle-flat" onclick="_aceCommToggle('flat')" class="ace-comm-toggle-btn">Flat rate</button>
+              <button id="ace-comm-toggle-tiered" onclick="_aceCommToggle('tiered')" class="ace-comm-toggle-btn">Tiered</button>
+              <button id="ace-comm-toggle-accelerator" onclick="_aceCommToggle('accelerator')" class="ace-comm-toggle-btn">Accelerator</button>
+              <button id="ace-comm-toggle-draw" onclick="_aceCommToggle('draw')" class="ace-comm-toggle-btn">Draw</button>
+              <button id="ace-comm-toggle-residual" onclick="_aceCommToggle('residual')" class="ace-comm-toggle-btn">Residual</button>
+              <button id="ace-comm-toggle-split" onclick="_aceCommToggle('split')" class="ace-comm-toggle-btn">Split</button>
+              <button id="ace-comm-toggle-product" onclick="_aceCommToggle('product')" class="ace-comm-toggle-btn">Product-based</button>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;margin-bottom:6px">
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">From</div>
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Up To</div>
-              <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Rate (%)</div>
-              <div></div>
+
+            <!-- Flat rate -->
+            <div id="ace-comm-fields-flat" style="display:none">
+              <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Commission rate (%)</div>
+              <input id="ace-comm-flat-rate" type="text" placeholder="e.g. 6" style="width:100%;max-width:200px;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
             </div>
-            <div id="ace-comm-tier-rows" style="display:flex;flex-direction:column;gap:6px"></div>
-            <button onclick="_aceCommAddTier()" style="margin-top:8px;font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:var(--font);font-weight:600;padding:0">+ Add tier</button>
-            <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
-              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
-                <input type="radio" name="ace-comm-rate-type" value="progressive" checked style="margin-top:2px;accent-color:var(--teal)">
-                <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Progressive</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Each rate applies only to the sales inside its own band.</div></div>
+
+            <!-- Tiered -->
+            <div id="ace-comm-fields-tiered" style="display:none">
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;margin-bottom:6px">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">From</div>
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Up To</div>
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Rate (%)</div>
+                <div></div>
+              </div>
+              <div id="ace-comm-tier-rows" style="display:flex;flex-direction:column;gap:6px"></div>
+              <button onclick="_aceCommAddTier()" style="margin-top:8px;font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:var(--font);font-weight:600;padding:0">+ Add tier</button>
+              <div style="margin-top:14px;display:flex;flex-direction:column;gap:10px">
+                <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+                  <input type="radio" name="ace-comm-rate-type" value="progressive" checked style="margin-top:2px;accent-color:var(--teal)">
+                  <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Progressive</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Each rate applies only to the sales inside its own band.</div></div>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+                  <input type="radio" name="ace-comm-rate-type" value="retroactive" style="margin-top:2px;accent-color:var(--teal)">
+                  <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Retroactive</div><div style="font-size:11px;color:var(--g400);margin-top:2px">The reached tier's rate applies to all sales in the period.</div></div>
+                </label>
+              </div>
+              <div style="margin-top:14px;padding-top:14px;border-top:1px solid var(--g200)">
+                <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+                  <input type="checkbox" id="ace-comm-cliff" onchange="document.getElementById('ace-comm-cliff-wrap').style.display=this.checked?'block':'none'" style="accent-color:var(--teal);width:15px;height:15px">
+                  <span style="font-size:13px;color:var(--dark)">Cliff — no commission is earned until the first tier threshold is reached</span>
+                </label>
+                <div id="ace-comm-cliff-wrap" style="display:none;margin-top:10px;padding-left:25px">
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Minimum before commission starts ($)</div>
+                  <input id="ace-comm-cliff-amount" type="text" placeholder="e.g. 25000" style="width:100%;max-width:200px;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                </div>
+              </div>
+            </div>
+
+            <!-- Accelerator -->
+            <div id="ace-comm-fields-accelerator" style="display:none">
+              <div style="font-size:12px;color:var(--g400);margin-bottom:10px;line-height:1.5">Rate increases automatically as a rep's quota attainment crosses each band — same base rate up to 100%, then higher rates beyond.</div>
+              <div style="margin-bottom:12px">
+                <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Base rate, up to 100% of quota (%)</div>
+                <input id="ace-comm-accel-base" type="text" placeholder="e.g. 5" style="width:100%;max-width:200px;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 1fr 28px;gap:8px;margin-bottom:6px">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">From % of Quota</div>
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">To % of Quota</div>
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Rate (%)</div>
+                <div></div>
+              </div>
+              <div id="ace-comm-accel-rows" style="display:flex;flex-direction:column;gap:6px"></div>
+              <button onclick="_aceCommAddAccelTier()" style="margin-top:8px;font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:var(--font);font-weight:600;padding:0">+ Add band</button>
+            </div>
+
+            <!-- Draw against commission -->
+            <div id="ace-comm-fields-draw" style="display:none">
+              <div style="font-size:12px;color:var(--g400);margin-bottom:10px;line-height:1.5">Rep gets a guaranteed draw each period; commissions earned pay that draw back first.</div>
+              <div class="ace-comm-2col" style="margin-bottom:12px">
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Draw amount per period ($)</div>
+                  <input id="ace-comm-draw-amount" type="text" placeholder="e.g. 3000" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                </div>
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Underlying commission rate (%)</div>
+                  <input id="ace-comm-draw-rate" type="text" placeholder="e.g. 7" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px">
+                <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+                  <input type="radio" name="ace-comm-draw-type" value="recoverable" checked style="margin-top:2px;accent-color:var(--teal)">
+                  <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Recoverable</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Unearned draw carries forward as a debt against future commissions.</div></div>
+                </label>
+                <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+                  <input type="radio" name="ace-comm-draw-type" value="non-recoverable" style="margin-top:2px;accent-color:var(--teal)">
+                  <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Non-recoverable</div><div style="font-size:11px;color:var(--g400);margin-top:2px">Unearned draw is forgiven — functions like a subsidized floor.</div></div>
+                </label>
+              </div>
+            </div>
+
+            <!-- Residual -->
+            <div id="ace-comm-fields-residual" style="display:none">
+              <div style="font-size:12px;color:var(--g400);margin-bottom:10px;line-height:1.5">Rep earns one rate on the initial sale and a smaller ongoing rate for as long as the customer stays active.</div>
+              <div class="ace-comm-2col" style="margin-bottom:12px">
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">New sale rate (%)</div>
+                  <input id="ace-comm-residual-new" type="text" placeholder="e.g. 8" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                </div>
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Residual / renewal rate (%)</div>
+                  <input id="ace-comm-residual-rate" type="text" placeholder="e.g. 3" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                </div>
+              </div>
+              <div>
+                <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Residual duration</div>
+                <select id="ace-comm-residual-duration" style="width:100%;max-width:240px;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none">
+                  <option>Life of customer</option><option>12 months</option><option>24 months</option><option>36 months</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Split -->
+            <div id="ace-comm-fields-split" style="display:none">
+              <div style="font-size:12px;color:var(--g400);margin-bottom:10px;line-height:1.5">The commission pool for a deal is divided between two roles — useful for AE/SDR pairs or handoffs.</div>
+              <div style="margin-bottom:12px">
+                <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Total commission pool (%)</div>
+                <input id="ace-comm-split-pool" type="text" placeholder="e.g. 7" style="width:100%;max-width:200px;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+              </div>
+              <div class="ace-comm-2col">
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Primary rep share (%)</div>
+                  <input id="ace-comm-split-primary" type="text" placeholder="e.g. 60" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                </div>
+                <div>
+                  <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Assisting rep share (%)</div>
+                  <input id="ace-comm-split-assist" type="text" placeholder="e.g. 40" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                </div>
+              </div>
+            </div>
+
+            <!-- Product-based -->
+            <div id="ace-comm-fields-product" style="display:none">
+              <div style="font-size:12px;color:var(--g400);margin-bottom:10px;line-height:1.5">Different rates for different products or revenue types — e.g. reward new business over renewals.</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr 28px;gap:8px;margin-bottom:6px">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Product / Revenue Type</div>
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400)">Rate (%)</div>
+                <div></div>
+              </div>
+              <div id="ace-comm-product-rows" style="display:flex;flex-direction:column;gap:6px"></div>
+              <button onclick="_aceCommAddProductRow()" style="margin-top:8px;font-size:12px;color:var(--teal);background:none;border:none;cursor:pointer;font-family:var(--font);font-weight:600;padding:0">+ Add product</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Modifiers -->
+        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
+          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Modifiers</div>
+          <div style="padding:14px;display:flex;flex-direction:column;gap:14px">
+            <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+              <input type="checkbox" id="ace-comm-goal-bonus" style="accent-color:var(--teal);width:15px;height:15px">
+              <span style="font-size:13px;color:var(--dark)">Add a bonus rate when a rep reaches their goal</span>
+            </label>
+            <div>
+              <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+                <input type="checkbox" id="ace-comm-spiff" onchange="document.getElementById('ace-comm-spiff-wrap').style.display=this.checked?'block':'none'" style="accent-color:var(--teal);width:15px;height:15px">
+                <span style="font-size:13px;color:var(--dark)">Add a SPIFF — a time-boxed bonus on top of this plan</span>
               </label>
-              <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
-                <input type="radio" name="ace-comm-rate-type" value="retroactive" style="margin-top:2px;accent-color:var(--teal)">
-                <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Retroactive</div><div style="font-size:11px;color:var(--g400);margin-top:2px">The reached tier's rate applies to all sales in the period.</div></div>
+              <div id="ace-comm-spiff-wrap" style="display:none;margin-top:10px;padding-left:25px">
+                <div class="ace-comm-2col">
+                  <div>
+                    <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">SPIFF amount ($ per deal)</div>
+                    <input id="ace-comm-spiff-amount" type="text" placeholder="e.g. 200" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                  </div>
+                  <div>
+                    <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">What qualifies</div>
+                    <input id="ace-comm-spiff-desc" type="text" placeholder="e.g. Product X closed this week" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
+                <input type="checkbox" id="ace-comm-clawback" onchange="document.getElementById('ace-comm-clawback-wrap').style.display=this.checked?'block':'none'" style="accent-color:var(--teal);width:15px;height:15px">
+                <span style="font-size:13px;color:var(--dark)">Add a clawback / vesting window before commission is fully paid out</span>
               </label>
+              <div id="ace-comm-clawback-wrap" style="display:none;margin-top:10px;padding-left:25px">
+                <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">Vesting window (days after close)</div>
+                <input id="ace-comm-clawback-days" type="text" placeholder="e.g. 90" style="width:100%;max-width:200px;border:1px solid var(--g200);border-radius:7px;padding:8px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
+                <div style="font-size:11px;color:var(--g400);margin-top:6px">If the customer cancels or charges back within this window, the commission is reversed.</div>
+              </div>
             </div>
           </div>
         </div>
@@ -18386,17 +18779,6 @@ function _aceCommConfirm() {
               <div style="font-size:11px;font-weight:600;color:var(--g500);margin-bottom:5px">End date</div>
               <input type="date" id="ace-comm-end-date" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:13px;color:var(--dark);font-family:var(--font);outline:none;box-sizing:border-box">
             </div>
-          </div>
-        </div>
-
-        <!-- Goal Bonus -->
-        <div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden;margin-bottom:12px">
-          <div style="padding:10px 14px;background:var(--g50);border-bottom:1px solid var(--g200);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g500)">Goal Bonus</div>
-          <div style="padding:14px">
-            <label style="display:flex;align-items:center;gap:10px;cursor:pointer">
-              <input type="checkbox" id="ace-comm-goal-bonus" style="accent-color:var(--teal);width:15px;height:15px">
-              <span style="font-size:13px;color:var(--dark)">Add a bonus rate when a rep reaches their goal</span>
-            </label>
           </div>
         </div>
 
@@ -18514,6 +18896,11 @@ function _aceCommConfirm() {
 
 /* Filter chip separator */
 .mkt-chip-sep{width:1px;background:var(--g200);margin:0 2px}
+
+/* ── Ace Commission Builder — structure toggle + shared field layout ── */
+.ace-comm-toggle-btn{padding:6px 14px;font-size:12px;font-weight:600;border-radius:6px;border:1px solid var(--g200);background:#fff;color:var(--g500);cursor:pointer;font-family:var(--font);transition:all .12s}
+.ace-comm-toggle-btn.active{border:1.5px solid var(--teal);background:rgba(29,158,117,0.08);color:var(--teal)}
+.ace-comm-2col{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 
 /* ── Campaign report ── */
 .mkt-rp-bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:2px}
