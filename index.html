@@ -10228,6 +10228,188 @@ function _oppHistoryTab(tab, btn) {
   ['activity', 'notes', 'files', 'history'].forEach(function(t) { var e = document.getElementById('oppd-content-' + t); if (e) e.style.display = 'none'; });
   var show = document.getElementById('oppd-content-' + (map[tab] || 'activity'));
   if (show) show.style.display = 'block';
+  if (tab === 'notes') _oppRenderNotes();
+  var wtPop = document.getElementById('opp-wt-popover'); if (wtPop) wtPop.style.display = 'none';
+}
+
+/* ═══════════ Opportunity Notes: rich text + persisted list + writing tools ═══════════ */
+var _oppNotesStore = {};
+var _oppNoteCounter = 1;
+function _oppSeedNotes() {
+  var now = Date.now();
+  _oppNotesStore['deal-1'] = [
+    {
+      id: _oppNoteCounter++,
+      html: '<p>Talked to Sarah Chen about the Q3 renewal. She confirmed the HR team wants to move forward but is comparing our group benefits pricing against one other vendor. Budget ceiling is around <b>$95K</b>.</p>',
+      text: 'Talked to Sarah Chen about the Q3 renewal. She confirmed the HR team wants to move forward but is comparing our group benefits pricing against one other vendor. Budget ceiling is around $95K.',
+      author: 'Brock Wilson', ts: new Date(now - 6*86400000)
+    },
+    {
+      id: _oppNoteCounter++,
+      html: '<p>Sent over the updated proposal with the multi-year discount applied. Asked for a decision by end of month so the enrollment window lines up with their open enrollment period.</p>',
+      text: 'Sent over the updated proposal with the multi-year discount applied. Asked for a decision by end of month so the enrollment window lines up with their open enrollment period.',
+      author: 'Brock Wilson', ts: new Date(now - 3*86400000)
+    },
+    {
+      id: _oppNoteCounter++,
+      html: '<ul><li>Objection: price is close, but they liked our claims turnaround time</li><li>Decision maker is the VP of Operations, not Sarah</li><li>Next step: schedule a group presentation for the HR team on Jul 2</li></ul>',
+      text: 'Objection: price is close, but they liked our claims turnaround time. Decision maker is the VP of Operations, not Sarah. Next step: schedule a group presentation for the HR team on Jul 2.',
+      author: 'Brock Wilson', ts: new Date(now - 86400000)
+    }
+  ];
+}
+function _oppNoteFormatBlock(tag) { document.execCommand('formatBlock', false, tag); document.getElementById('opp-note-editor').focus(); }
+function _oppNoteCmd(cmd) { document.execCommand(cmd, false, null); document.getElementById('opp-note-editor').focus(); }
+function _oppNoteLink() {
+  var url = prompt('Link URL (e.g. https://example.com)');
+  if (url) document.execCommand('createLink', false, url);
+  document.getElementById('opp-note-editor').focus();
+}
+function _oppNoteSave() {
+  var editor = document.getElementById('opp-note-editor');
+  var text = (editor.innerText || '').trim();
+  if (!text) { showToast('Write something before saving'); return; }
+  if (!_currentOppId) return;
+  if (!_oppNotesStore[_currentOppId]) _oppNotesStore[_currentOppId] = [];
+  _oppNotesStore[_currentOppId].unshift({
+    id: _oppNoteCounter++,
+    html: editor.innerHTML,
+    text: text,
+    author: (typeof _companySettings !== 'undefined' && _companySettings.currentUserName) || 'You',
+    ts: new Date()
+  });
+  editor.innerHTML = '';
+  document.getElementById('opp-note-summary').style.display = 'none';
+  _oppRenderNotes();
+  showToast('Note saved');
+}
+function _oppNoteDelete(id) {
+  if (!_currentOppId || !_oppNotesStore[_currentOppId]) return;
+  _oppNotesStore[_currentOppId] = _oppNotesStore[_currentOppId].filter(function(n){ return n.id !== id; });
+  _oppRenderNotes();
+}
+function _oppNoteRelTime(ts) {
+  var mins = Math.round((Date.now() - ts.getTime()) / 60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return mins + 'm ago';
+  var hrs = Math.round(mins / 60);
+  if (hrs < 24) return hrs + 'h ago';
+  return ts.toLocaleDateString('en-US', {month:'short', day:'numeric'});
+}
+function _oppRenderNotes() {
+  var list = document.getElementById('opp-note-list'); if (!list) return;
+  var notes = (_currentOppId && _oppNotesStore[_currentOppId]) || [];
+  document.getElementById('opp-note-count').textContent = notes.length;
+  if (!notes.length) { list.innerHTML = '<div style="font-size:12px;color:var(--g400);padding:10px 2px">No notes yet — the first one you save will show up here.</div>'; return; }
+  list.innerHTML = notes.map(function(n){
+    var initials = n.author.split(' ').map(function(w){return w[0]||'';}).join('').substring(0,2).toUpperCase();
+    return '<div class="opp-note-card">'
+      + '<div class="opp-note-card-head"><div class="opp-note-card-author">'
+      +   '<div style="width:20px;height:20px;border-radius:50%;background:var(--navy);color:#fff;font-size:9px;font-weight:700;display:flex;align-items:center;justify-content:center">' + initials + '</div>'
+      +   n.author + '<span class="opp-note-card-time">&middot; ' + _oppNoteRelTime(n.ts) + '</span></div>'
+      +   '<button class="opp-note-del" onclick="_oppNoteDelete(' + n.id + ')" aria-label="Delete note">&times;</button></div>'
+      + '<div class="opp-note-card-body">' + n.html + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+/* ── Ace Writing Tools popover — inspired by Apple's, restyled to feel native to this app ── */
+function _oppWtToggle(e) {
+  e.stopPropagation();
+  var pop = document.getElementById('opp-wt-popover');
+  if (pop.style.display === 'block') { pop.style.display = 'none'; return; }
+  pop.innerHTML = _oppWtPopoverHTML();
+  pop.style.display = 'block';
+}
+document.addEventListener('click', function(e) {
+  var pop = document.getElementById('opp-wt-popover');
+  if (pop && pop.style.display === 'block' && !pop.contains(e.target) && !e.target.closest('#opp-note-wt-btn')) pop.style.display = 'none';
+});
+function _oppWtIcon(path) { return '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + path + '</svg>'; }
+function _oppWtPopoverHTML() {
+  return '<div class="opp-wt-pop-header">' + _oppWtIcon('<path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/><path d="M19 15l.8 2.1L22 18l-2.2.9L19 21l-.8-2.1L16 18l2.2-.9z"/>') + 'Ace Writing Tools</div>'
+    + '<input class="opp-wt-input" placeholder="Describe your change" onkeydown="if(event.key===\'Enter\')_oppWtCustom(this.value)">'
+    + '<div class="opp-wt-row">'
+    +   '<button class="opp-wt-pill" onclick="_oppWtApply(\'proofread\')">Grammar</button>'
+    +   '<button class="opp-wt-pill" onclick="_oppWtApply(\'rewrite\')">Reword</button>'
+    + '</div>'
+    + '<div class="opp-wt-group-label">Tone</div>'
+    + '<div class="opp-wt-opt" onclick="_oppWtApply(\'friendly\')">' + _oppWtIcon('<circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/>') + '<span>Casual</span></div>'
+    + '<div class="opp-wt-opt" onclick="_oppWtApply(\'professional\')">' + _oppWtIcon('<rect x="4" y="7" width="16" height="13" rx="1"/><path d="M9 7V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/>') + '<span>Formal</span></div>'
+    + '<div class="opp-wt-opt" onclick="_oppWtApply(\'concise\')">' + _oppWtIcon('<line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="17" x2="10" y2="17"/>') + '<span>Shorten</span></div>'
+    + '<div class="opp-wt-divider"></div>'
+    + '<div class="opp-wt-group-label">Restructure</div>'
+    + '<div class="opp-wt-opt" onclick="_oppWtApply(\'summary\')">' + _oppWtIcon('<line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="15" y2="18"/>') + '<span>Summary</span></div>'
+    + '<div class="opp-wt-opt" onclick="_oppWtApply(\'keypoints\')">' + _oppWtIcon('<circle cx="5" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="5" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="5" cy="18" r="1.4" fill="currentColor" stroke="none"/><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/>') + '<span>Key Points</span></div>'
+    + '<div class="opp-wt-opt" onclick="_oppWtApply(\'list\')">' + _oppWtIcon('<line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.4" fill="currentColor" stroke="none"/>') + '<span>List</span></div>'
+    + '<div class="opp-wt-opt" onclick="_oppWtApply(\'table\')">' + _oppWtIcon('<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="12" y1="3" x2="12" y2="21"/>') + '<span>Table</span></div>'
+    + '<div class="opp-wt-divider"></div>'
+    + '<div class="opp-wt-opt" onclick="_oppWtApply(\'compose\')">' + _oppWtIcon('<path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.12 2.12 0 0 1 3 3L12 15l-4 1 1-4z"/>') + '<span>Compose&hellip;</span></div>';
+}
+function _oppWtSentences(text) { return text.split(/(?<=[.!?])\s+/).filter(function(s){ return s.trim().length; }); }
+function _oppWtApply(kind) {
+  var editor = document.getElementById('opp-note-editor');
+  var text = (editor.innerText || '').trim();
+  document.getElementById('opp-wt-popover').style.display = 'none';
+  if (!text && kind !== 'compose') { showToast('Write a note first, then apply a writing tool to it'); return; }
+  var toneLabels = {proofread:'Grammar', rewrite:'Reword', friendly:'Casual', professional:'Formal', concise:'Shorten'};
+  if (toneLabels[kind]) {
+    var cleaned = text.replace(/\s+/g,' ').trim().replace(/(^\s*\w|[.!?]\s+\w)/g, function(m){ return m.toUpperCase(); });
+    editor.innerText = cleaned;
+    showToast('Applied a lightweight ' + toneLabels[kind] + ' pass. Full AI rewriting needs a real language model wired up on the backend — this is a mockup placeholder for that flow.');
+    return;
+  }
+  if (kind === 'summary') {
+    var sents = _oppWtSentences(text);
+    editor.innerText = sents.slice(0, Math.max(1, Math.ceil(sents.length * 0.4))).join(' ');
+    showToast('Condensed to a short summary');
+    return;
+  }
+  if (kind === 'keypoints' || kind === 'list') {
+    var lines = _oppWtSentences(text);
+    editor.innerHTML = '<ul>' + lines.map(function(s){ return '<li>' + s.trim() + '</li>'; }).join('') + '</ul>';
+    showToast(kind === 'keypoints' ? 'Broken out into key points' : 'Converted to a list');
+    return;
+  }
+  if (kind === 'table') {
+    var rows = text.split(/\n|(?<=[.!?])\s+/).filter(function(s){ return s.trim(); });
+    var hasPairs = rows.some(function(r){ return r.indexOf(':') > -1; });
+    if (hasPairs) {
+      var trs = rows.map(function(r){ var parts = r.split(':'); return '<tr><td style="border:1px solid var(--g200);padding:4px 8px;font-weight:600">' + (parts[0]||'').trim() + '</td><td style="border:1px solid var(--g200);padding:4px 8px">' + parts.slice(1).join(':').trim() + '</td></tr>'; }).join('');
+      editor.innerHTML = '<table style="border-collapse:collapse;font-size:13px">' + trs + '</table>';
+    } else {
+      var trs2 = rows.map(function(r,i){ return '<tr><td style="border:1px solid var(--g200);padding:4px 8px;font-weight:600">' + (i+1) + '</td><td style="border:1px solid var(--g200);padding:4px 8px">' + r.trim() + '</td></tr>'; }).join('');
+      editor.innerHTML = '<table style="border-collapse:collapse;font-size:13px">' + trs2 + '</table>';
+    }
+    showToast('Converted to a table');
+    return;
+  }
+  if (kind === 'compose') {
+    editor.innerHTML = '<p>Discussed [topic] with [contact]. Next step: [action] by [date].</p>';
+    showToast('Drafted a starting point — fill in the brackets');
+  }
+}
+function _oppWtCustom(instruction) {
+  if (!instruction || !instruction.trim()) return;
+  document.getElementById('opp-wt-popover').style.display = 'none';
+  showToast('"' + instruction + '" — custom instructions need a real AI model behind this field. Placeholder in the mockup.');
+}
+
+/* ── Summarize all notes for this opportunity ── */
+function _oppSummarizeNotes() {
+  var notes = (_currentOppId && _oppNotesStore[_currentOppId]) || [];
+  var box = document.getElementById('opp-note-summary');
+  if (!notes.length) { showToast('No notes to summarize yet'); return; }
+  var keyLines = notes.slice(0, 6).map(function(n){ var s = _oppWtSentences(n.text); return s[0] || n.text; });
+  var authors = Array.from(new Set(notes.map(function(n){ return n.author; })));
+  var oldest = notes[notes.length - 1].ts, newest = notes[0].ts;
+  box.innerHTML = '<div class="opp-note-summary-card">'
+    + '<div class="lbl">' + _oppWtIcon('<path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/>') + "Ace's summary of " + notes.length + ' note' + (notes.length>1?'s':'') + '</div>'
+    + '<ul style="margin:0 0 10px 18px;padding:0;font-size:13px;color:var(--dark);line-height:1.7">' + keyLines.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>'
+    + '<div style="font-size:11px;color:var(--g500)">From ' + authors.join(', ') + ' &middot; ' + oldest.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' &ndash; ' + newest.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + '</div>'
+    + '<div style="font-size:10.5px;color:var(--g400);margin-top:8px;line-height:1.5">This is a lightweight extractive summary generated in the mockup (first key line from each note). A production build would run a real summarization model over the full note history.</div>'
+    + '</div>';
+  box.style.display = 'block';
 }
 
 function openOppDetail(oppId) {
@@ -10332,6 +10514,16 @@ function openOppDetail(oppId) {
   _oppRenderFocus((detail && detail.focusItems) ? detail.focusItems : []);
   _oppRenderHistory((detail && detail.history) ? detail.history : (detail && detail.activity) ? detail.activity : []);
   _oppActionTab('activity', document.getElementById('oppd-atab-activity'));
+
+  var noteEditor = document.getElementById('opp-note-editor');
+  if (noteEditor) {
+    noteEditor.innerHTML = (oppId === 'deal-1')
+      ? 'Price is close, but they liked our claims turnaround time better than the other vendor. Decision maker is the VP of Operations, not Sarah. Budget ceiling is around $95K. Next step is to schedule a group presentation for the HR team on Jul 2.'
+      : '';
+  }
+  var noteSummary = document.getElementById('opp-note-summary'); if (noteSummary) noteSummary.style.display = 'none';
+  var wtPop = document.getElementById('opp-wt-popover'); if (wtPop) wtPop.style.display = 'none';
+  _oppRenderNotes();
 
   document.getElementById('opp-detail-overlay').style.display = 'flex';
 }
@@ -17880,10 +18072,40 @@ function _aceCommConfirm() {
           </div>
           <div id="oppd-content-activity"></div>
           <div id="oppd-content-notes" style="display:none">
-            <div style="background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:16px">
-              <textarea placeholder="Add a note..." style="width:100%;border:none;outline:none;font-family:var(--font);font-size:14px;color:var(--dark);resize:none;min-height:80px;background:transparent"></textarea>
-              <div style="display:flex;justify-content:flex-end;margin-top:8px"><button onclick="showToast('Note saved')" style="padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save Note</button></div>
+            <div style="background:var(--white);border:1px solid var(--g200);border-radius:12px;overflow:visible;position:relative;margin-bottom:14px">
+              <div class="opp-note-toolbar">
+                <select class="opp-note-tbtn" style="width:78px;font-weight:600" onchange="_oppNoteFormatBlock(this.value)">
+                  <option value="p">Normal</option><option value="h2">Heading</option><option value="h3">Subheading</option>
+                </select>
+                <div class="opp-note-tb-sep"></div>
+                <button class="opp-note-tbtn" onclick="_oppNoteCmd('bold')" title="Bold"><b>B</b></button>
+                <button class="opp-note-tbtn" style="font-style:italic" onclick="_oppNoteCmd('italic')" title="Italic">I</button>
+                <button class="opp-note-tbtn" style="text-decoration:underline" onclick="_oppNoteCmd('underline')" title="Underline">U</button>
+                <button class="opp-note-tbtn" style="text-decoration:line-through" onclick="_oppNoteCmd('strikeThrough')" title="Strikethrough">S</button>
+                <div class="opp-note-tb-sep"></div>
+                <button class="opp-note-tbtn" onclick="_oppNoteCmd('insertOrderedList')" title="Numbered list"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></button>
+                <button class="opp-note-tbtn" onclick="_oppNoteCmd('insertUnorderedList')" title="Bulleted list"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg></button>
+                <button class="opp-note-tbtn" onclick="_oppNoteCmd('justifyLeft')" title="Align"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg></button>
+                <button class="opp-note-tbtn" onclick="_oppNoteLink()" title="Add link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+                <button class="opp-note-tbtn" onclick="_oppNoteCmd('removeFormat')" title="Clear formatting"><i style="font-style:italic;font-size:12px">T<sub style="font-size:8px">x</sub></i></button>
+                <div class="opp-note-tb-sep"></div>
+                <div style="position:relative;display:inline-block">
+                  <button class="opp-note-tbtn opp-wt-trigger" id="opp-note-wt-btn" onclick="_oppWtToggle(event)" title="Ace Writing Tools" style="color:#8b5cf6"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/><path d="M19 15l.8 2.1L22 18l-2.2.9L19 21l-.8-2.1L16 18l2.2-.9z"/><path d="M5 15l.6 1.6L7 17l-1.4.6L5 19l-.6-1.4L3 17l1.4-.4z"/></svg><span>Ace Writing Tools</span></button>
+                  <div id="opp-wt-popover" class="opp-wt-popover" style="display:none"></div>
+                </div>
+              </div>
+              <div id="opp-note-editor" class="opp-note-editor" contenteditable="true" data-placeholder="Add a note..."></div>
+              <div style="display:flex;justify-content:flex-end;padding:0 14px 12px"><button onclick="_oppNoteSave()" style="padding:7px 18px;background:var(--navy);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Save Note</button></div>
             </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+              <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400)">All Notes <span id="opp-note-count" style="background:var(--g100);color:var(--g500);border-radius:20px;padding:1px 7px;font-size:11px">0</span></div>
+              <button onclick="_oppSummarizeNotes()" style="display:flex;align-items:center;gap:6px;padding:6px 12px;background:rgba(139,92,246,0.08);color:#8b5cf6;border:1px solid rgba(139,92,246,0.25);border-radius:8px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:var(--font)">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/></svg>
+                Summarize with Ace
+              </button>
+            </div>
+            <div id="opp-note-summary" style="display:none;margin-bottom:12px"></div>
+            <div id="opp-note-list"></div>
           </div>
           <div id="oppd-content-files" style="display:none">
             <div style="background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:20px">
@@ -19113,6 +19335,44 @@ function _aceCommConfirm() {
 .mkt-invb-style-strip{background:var(--white);border-bottom:1px solid var(--g200);display:flex;gap:22px;align-items:center;padding:10px 20px;flex-shrink:0;flex-wrap:wrap}
 .mkt-invb-swatch{width:22px;height:22px;border-radius:50%;cursor:pointer;border:2px solid transparent;transition:transform .12s}
 .mkt-invb-swatch.active{border-color:var(--dark);transform:scale(1.12)}
+
+/* ── Opportunity Notes: rich-text composer + writing tools ── */
+.opp-note-toolbar{display:flex;align-items:center;gap:2px;padding:8px 10px;border-bottom:1px solid var(--g200);flex-wrap:wrap}
+.opp-note-tbtn{width:26px;height:26px;display:flex;align-items:center;justify-content:center;border:none;background:none;border-radius:6px;cursor:pointer;color:var(--g500);font-size:13px;font-family:var(--font);transition:background .12s}
+.opp-note-tbtn:hover{background:var(--g100);color:var(--dark)}
+select.opp-note-tbtn{width:auto;padding:0 6px;font-size:12px}
+.opp-note-tb-sep{width:1px;height:18px;background:var(--g200);margin:0 4px}
+.opp-wt-trigger{width:auto;height:auto;gap:6px;padding:5px 10px;border-radius:7px;background:rgba(139,92,246,0.08)}
+.opp-wt-trigger span{font-size:11.5px;font-weight:700;white-space:nowrap}
+.opp-wt-trigger:hover{background:rgba(139,92,246,0.16)}
+.opp-note-editor{min-height:90px;padding:12px 14px;font-size:14px;color:var(--dark);line-height:1.6;outline:none}
+.opp-note-editor:empty:before{content:attr(data-placeholder);color:var(--g300)}
+.opp-note-editor ul,.opp-note-editor ol{margin:4px 0 4px 20px}
+.opp-note-editor h2{font-size:17px;font-weight:700;margin:4px 0}
+.opp-note-editor h3{font-size:14.5px;font-weight:700;margin:4px 0}
+.opp-note-card{background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:14px 16px;margin-bottom:10px}
+.opp-note-card-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.opp-note-card-author{display:flex;align-items:center;gap:8px;font-size:12px;font-weight:700;color:var(--dark)}
+.opp-note-card-time{font-size:11px;color:var(--g400);font-weight:500}
+.opp-note-card-body{font-size:13px;color:var(--g600);line-height:1.6}
+.opp-note-card-body ul,.opp-note-card-body ol{margin:4px 0 4px 20px}
+.opp-note-del{background:none;border:none;color:var(--g300);cursor:pointer;font-size:14px;padding:2px}
+.opp-note-del:hover{color:#ef4444}
+.opp-wt-popover{position:absolute;top:34px;left:0;width:250px;background:var(--white);border:1px solid rgba(139,92,246,0.25);border-radius:14px;box-shadow:0 14px 34px rgba(31,20,60,0.18);padding:12px;z-index:50}
+.opp-wt-pop-header{display:flex;align-items:center;gap:7px;font-size:11.5px;font-weight:800;color:#8b5cf6;text-transform:uppercase;letter-spacing:.4px;margin-bottom:10px;padding-bottom:9px;border-bottom:1px solid rgba(139,92,246,0.15)}
+.opp-wt-input{width:100%;box-sizing:border-box;background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.18);border-radius:9px;padding:8px 10px;color:var(--dark);font-size:12px;font-family:var(--font);outline:none;margin-bottom:9px}
+.opp-wt-input::placeholder{color:var(--g400)}
+.opp-wt-input:focus{border-color:#8b5cf6;background:var(--white)}
+.opp-wt-row{display:flex;gap:6px;margin-bottom:9px}
+.opp-wt-pill{flex:1;background:#8b5cf6;border:none;border-radius:8px;padding:8px 0;color:#fff;font-size:11.5px;font-weight:700;cursor:pointer;font-family:var(--font);text-align:center;transition:opacity .12s}
+.opp-wt-pill:hover{opacity:.85}
+.opp-wt-divider{height:1px;background:rgba(139,92,246,0.14);margin:7px 0}
+.opp-wt-group-label{font-size:9.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;margin:2px 0 4px 4px}
+.opp-wt-opt{display:flex;align-items:center;gap:9px;padding:7px 8px;border-radius:8px;cursor:pointer;font-size:12.5px;font-weight:600;color:var(--dark)}
+.opp-wt-opt:hover{background:rgba(139,92,246,0.09)}
+.opp-wt-opt svg{flex-shrink:0;color:#8b5cf6}
+.opp-note-summary-card{background:linear-gradient(135deg,rgba(139,92,246,0.08),rgba(139,92,246,0.03));border:1px solid rgba(139,92,246,0.25);border-radius:12px;padding:14px 16px}
+.opp-note-summary-card .lbl{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:#8b5cf6;text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
 
 /* Library card — real mini render, clipped with fade */
 .mkt-tmpl-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);overflow:hidden;cursor:pointer;transition:all .15s;display:flex;flex-direction:column}
@@ -22459,6 +22719,7 @@ function _mktInit() {
   _mktSeedContractTemplates();
   _mktSeedInvoices();
   _mktSeedPayments();
+  _oppSeedNotes();
   _mktRenderCampaigns();
   _mktRenderTemplates();
   _mktRenderRecipes();
