@@ -5695,6 +5695,190 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
 
 </div><!-- end page-area -->
+<!-- ══════════ REP PROFILE (full page) ══════════ -->
+<div id="page-rep-profile" class="page">
+
+  <!-- HEADER -->
+  <div style="background:var(--white);border:1px solid var(--g200);border-radius:14px;height:62px;display:flex;align-items:center;padding:0 20px;gap:14px;margin-bottom:18px">
+    <button onclick="closeRepFullPage()" style="display:flex;align-items:center;gap:5px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:5px 8px;border-radius:8px;font-family:var(--font);flex-shrink:0;white-space:nowrap;transition:background .12s" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      <span>Back</span>
+    </button>
+    <div style="width:1px;height:24px;background:var(--g200);flex-shrink:0"></div>
+    <img id="rfp-avatar" src="" style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex-shrink:0" alt="">
+    <div style="flex:1;min-width:0">
+      <div id="rfp-name" style="font-size:15px;font-weight:800;color:var(--dark);letter-spacing:-0.2px;line-height:1.2">Rep name</div>
+      <div id="rfp-role" style="font-size:11px;color:var(--g400)">Role</div>
+    </div>
+    <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+      <button onclick="showToast('Message sent')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:#fff;color:var(--g600);border:1.5px solid var(--g200);border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-9 8.4 8.5 8.5 0 0 1-4-1L3 20l1.1-4A8.38 8.38 0 0 1 3 11.5a8.5 8.5 0 0 1 8.5-8.5h.5a8.38 8.38 0 0 1 8.4 9z"/></svg>
+        Message
+      </button>
+      <button onclick="showToast('Added to Highlights')" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Highlight
+      </button>
+    </div>
+  </div>
+
+  <!-- Top row: (KPI cards + Pipeline/Activity) left column + Ace Insights & Chat right column -->
+  <div style="display:flex;gap:18px;align-items:stretch;margin-bottom:18px;flex-wrap:wrap">
+
+    <!-- Left column: KPI cards + Pipeline/Activity -->
+    <div style="flex:2;min-width:340px;display:flex;flex-direction:column;gap:14px">
+
+      <!-- KPI cards (incl. Calls/Emails Today rings) -->
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;align-content:start">
+        <div class="stat-card"><div class="stat-label">Sales YTD</div><div class="stat-value teal" id="rfp-kpi-sales">$0</div><div class="stat-delta positive" id="rfp-kpi-pace">&nbsp;</div></div>
+        <div class="stat-card"><div class="stat-label">This Month</div><div class="stat-value" id="rfp-kpi-month">$0</div><div class="stat-delta" style="color:transparent">&nbsp;</div></div>
+        <div class="stat-card"><div class="stat-label">ROI YTD</div><div class="stat-value" id="rfp-kpi-roi">&mdash;</div><div class="stat-delta" style="color:transparent">&nbsp;</div></div>
+        <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value" id="rfp-kpi-winrate">&mdash;</div><div class="stat-delta" style="color:transparent">&nbsp;</div></div>
+        <div class="stat-card"><div class="stat-label">Commissions YTD</div><div class="stat-value" id="rfp-kpi-commytd">$0</div><div class="stat-delta" style="color:var(--g400)" id="rfp-kpi-commmonth">&nbsp;</div></div>
+
+        <div class="stat-card" style="position:relative;padding:14px 10px 10px;display:flex;flex-direction:column;align-items:center">
+          <button onclick="_rfpEditActivityRing('calls')" title="Edit calls today" style="position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:50%;border:none;background:var(--g100);color:var(--g500);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+          </button>
+          <div class="stat-label" style="margin-bottom:2px">Calls Today</div>
+          <svg width="72" height="72" viewBox="0 0 110 110">
+            <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="9"/>
+            <circle id="rfp-kpi-calls-arc" cx="55" cy="55" r="44" fill="none" stroke="var(--teal)" stroke-width="9" stroke-linecap="round"
+              stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+            <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="24" font-weight="700" fill="var(--teal)" id="rfp-kpi-calls-pct">0%</text>
+            <text x="55" y="68" text-anchor="middle" font-family="var(--font)" font-size="11" fill="var(--g400)" id="rfp-kpi-calls-sub">0 / 0</text>
+          </svg>
+        </div>
+
+        <div class="stat-card" style="position:relative;padding:14px 10px 10px;display:flex;flex-direction:column;align-items:center">
+          <button onclick="_rfpEditActivityRing('emails')" title="Edit emails today" style="position:absolute;top:8px;right:8px;width:20px;height:20px;border-radius:50%;border:none;background:var(--g100);color:var(--g500);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/></svg>
+          </button>
+          <div class="stat-label" style="margin-bottom:2px">Emails Today</div>
+          <svg width="72" height="72" viewBox="0 0 110 110">
+            <circle cx="55" cy="55" r="44" fill="none" stroke="var(--g100)" stroke-width="9"/>
+            <circle id="rfp-kpi-emails-arc" cx="55" cy="55" r="44" fill="none" stroke="#5b8fe8" stroke-width="9" stroke-linecap="round"
+              stroke-dasharray="276" stroke-dashoffset="276" transform="rotate(-90 55 55)" style="transition:stroke-dashoffset .6s ease"/>
+            <text x="55" y="50" text-anchor="middle" font-family="var(--mono)" font-size="24" font-weight="700" fill="#5b8fe8" id="rfp-kpi-emails-pct">0%</text>
+            <text x="55" y="68" text-anchor="middle" font-family="var(--font)" font-size="11" fill="var(--g400)" id="rfp-kpi-emails-sub">0 / 0</text>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Pipeline + Activity -->
+      <div style="display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap">
+
+        <div style="flex:1;min-width:260px;background:#fff;border:1px solid var(--g200);border-radius:12px;overflow:hidden">
+          <div style="padding:12px 16px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
+            <span style="font-size:12px;font-weight:700;color:var(--dark)">Open Pipeline</span>
+            <span id="rfp-pipeline-count" style="background:var(--g100);color:var(--g500);border-radius:20px;padding:1px 8px;font-size:11px">0</span>
+          </div>
+          <div id="rfp-pipeline-list"></div>
+        </div>
+
+        <div style="flex:1;min-width:260px;background:#fff;border:1px solid var(--g200);border-radius:12px;overflow:hidden">
+          <div style="padding:12px 16px;border-bottom:1px solid var(--g100)">
+            <span style="font-size:12px;font-weight:700;color:var(--dark)">Recent Activity</span>
+          </div>
+          <div id="rfp-activity-list"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Ace Insights + Chat (combined) -->
+    <div style="flex:1;min-width:320px;max-width:420px;background:#fff;border:1px solid var(--g200);border-radius:14px;display:flex;flex-direction:column;overflow:hidden;position:relative">
+      <div style="position:absolute;top:-30px;right:-30px;width:110px;height:110px;background:radial-gradient(circle,rgba(139,92,246,0.15) 0%,transparent 70%);pointer-events:none"></div>
+
+      <div style="padding:14px 16px 10px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
+          <div style="width:30px;height:30px;background:#8b5cf6;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg>
+          </div>
+          <div>
+            <div style="font-size:13px;font-weight:700;color:var(--dark)">Ace Insights &amp; Coach</div>
+            <div style="font-size:10px;color:var(--g400)">AI Sales Coach · Updated just now</div>
+          </div>
+        </div>
+        <div style="background:rgba(139,92,246,0.06);border:1px solid rgba(139,92,246,0.15);border-radius:8px;padding:9px 11px">
+          <div id="rfp-insight-headline" style="font-size:11.5px;color:var(--g600);line-height:1.5">&nbsp;</div>
+        </div>
+      </div>
+
+      <div id="rfp-insight-cards" style="flex-shrink:0;max-height:150px;overflow-y:auto;border-top:1px solid var(--g100)"></div>
+
+      <!-- Chat thread -->
+      <div id="rfp-ace-messages" style="flex:1;min-height:120px;max-height:220px;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--g100);background:var(--g50)">
+        <div style="display:flex;gap:8px;align-items:flex-start">
+          <div style="width:22px;height:22px;border-radius:6px;background:#8b5cf6;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div>
+          <div id="rfp-ace-welcome" style="background:#fff;border:1px solid var(--g200);border-radius:12px 12px 12px 3px;padding:9px 12px;font-size:12px;color:var(--dark);line-height:1.6;max-width:100%">Ask me anything about this rep, or tell me what to adjust — for example, their goals, commissions, or assigned targets.</div>
+        </div>
+      </div>
+
+      <!-- Suggestion chips -->
+      <div style="display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px 4px;flex-shrink:0">
+        <button class="ace-suggest-chip" onclick="_rfpAceAsk('Why is this rep falling behind on goals?')" style="border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.06);color:#8b5cf6;border-radius:20px;padding:5px 10px;font-size:10.5px;font-weight:600;cursor:pointer;font-family:var(--font)">Why behind on goals?</button>
+        <button class="ace-suggest-chip" onclick="_rfpAceAsk('Adjust remaining monthly goals')" style="border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.06);color:#8b5cf6;border-radius:20px;padding:5px 10px;font-size:10.5px;font-weight:600;cursor:pointer;font-family:var(--font)">Adjust remaining goals</button>
+        <button class="ace-suggest-chip" onclick="_rfpAceAsk('Should we adjust their commissions?')" style="border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.06);color:#8b5cf6;border-radius:20px;padding:5px 10px;font-size:10.5px;font-weight:600;cursor:pointer;font-family:var(--font)">Adjust commissions</button>
+        <button class="ace-suggest-chip" onclick="_rfpAceAsk('Should we reassign their targets?')" style="border:1px solid rgba(139,92,246,0.3);background:rgba(139,92,246,0.06);color:#8b5cf6;border-radius:20px;padding:5px 10px;font-size:10.5px;font-weight:600;cursor:pointer;font-family:var(--font)">Reassign targets</button>
+      </div>
+
+      <!-- Input row -->
+      <div style="display:flex;gap:8px;padding:8px 14px 14px;flex-shrink:0">
+        <input id="rfp-ace-input" type="text" placeholder="Ask Ace, or tell it what to adjust…" style="flex:1;border:1.5px solid var(--g200);border-radius:20px;padding:9px 14px;font-size:12px;font-family:var(--font);color:var(--dark);outline:none" onkeydown="if(event.key==='Enter'){_rfpAceAsk(document.getElementById('rfp-ace-input').value.trim());}">
+        <button onclick="_rfpAceAsk(document.getElementById('rfp-ace-input').value.trim())" style="width:34px;height:34px;border-radius:50%;background:#8b5cf6;border:none;color:#fff;cursor:pointer;flex-shrink:0;display:flex;align-items:center;justify-content:center">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        </button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- Annual goal card -->
+  <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:22px 24px;margin-bottom:8px;position:relative;overflow:hidden">
+    <div style="position:absolute;top:-50px;right:-50px;width:200px;height:200px;background:radial-gradient(circle,rgba(29,158,117,0.12) 0%,transparent 70%);pointer-events:none"></div>
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-size:11px;font-weight:700;color:var(--g500);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:5px">Annual Sales Goal — <span id="rfp-goal-year">2026</span></div>
+        <div id="rfp-goal-amount" style="font-size:32px;font-weight:700;color:var(--dark);font-family:var(--mono);line-height:1;margin-bottom:8px">$0</div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span id="rfp-goal-achieved-pill" style="background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.3);color:var(--teal);border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">$0 Achieved</span>
+          <span id="rfp-goal-remaining-pill" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.25);color:#ef4444;border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">$0 Remaining</span>
+          <span id="rfp-goal-status-pill" style="border-radius:6px;padding:3px 10px;font-size:11px;font-weight:700">&nbsp;</span>
+        </div>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <div style="font-size:11px;color:var(--g400);margin-bottom:2px">Pace</div>
+        <div id="rfp-goal-pct" style="font-size:38px;font-weight:700;color:var(--teal);font-family:var(--mono);line-height:1">0%</div>
+        <div style="font-size:10px;color:var(--g400);margin-top:2px">of Annual Goal</div>
+      </div>
+    </div>
+    <div style="margin-top:18px">
+      <div style="background:var(--g100);border-radius:8px;height:8px;overflow:visible;position:relative">
+        <div id="rfp-goal-bar" style="width:0%;height:100%;background:linear-gradient(90deg,var(--teal),#34d399);border-radius:8px;position:relative">
+          <div style="position:absolute;right:-6px;top:-4px;width:16px;height:16px;background:#fff;border-radius:50%;border:2.5px solid var(--teal);box-shadow:0 0 10px rgba(29,158,117,0.5)"></div>
+        </div>
+      </div>
+      <div style="display:flex;justify-content:space-between;margin-top:5px">
+        <span style="font-size:10px;color:var(--g400)">Jan</span>
+        <span id="rfp-goal-today-marker" style="font-size:10px;color:var(--g500);font-weight:600">Today</span>
+        <span style="font-size:10px;color:var(--g400)">Dec</span>
+      </div>
+    </div>
+    <div style="margin-top:18px;overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:11.5px">
+        <thead><tr id="rfp-month-head" style="background:var(--navy);color:#fff"></tr></thead>
+        <tbody id="rfp-month-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+
+
 </div><!-- end .main -->
 <!-- END PAGE AREA / MAIN -->
 
@@ -12052,32 +12236,469 @@ const PIPELINE_ACCOUNTS = [
   {co:'Nimbus Energy',         days:105, last:null},
 ];
 
-function openRepProfile(name) {
-  const d = REP_DATA[name];
-  if (!d) return;
-  const p = document.getElementById('rep-profile-panel');
-  document.getElementById('rpp-avatar').src = d.img;
-  document.getElementById('rpp-name').textContent = name;
-  document.getElementById('rpp-role').textContent = d.role;
-  document.getElementById('rpp-sales').textContent = d.sales;
-  document.getElementById('rpp-month').textContent = d.month;
-  document.getElementById('rpp-goal').textContent = d.goal;
-  document.getElementById('rpp-roi').textContent = d.roi + ' YTD';
-  document.getElementById('rpp-comm-ytd').textContent = d.commYTD;
-  document.getElementById('rpp-comm-month').textContent = d.commMonth;
-  document.getElementById('rpp-chart-name').textContent = name.split(' ')[0] + "'s Sales";
-  document.getElementById('rpp-chart-total').textContent = d.sales;
-  // Build pipeline table
-  const tbody = document.getElementById('rpp-pipeline-tbody');
-  tbody.innerHTML = PIPELINE_ACCOUNTS.map(a => {
-    const badge = a.days > 300 ? 'red' : a.days > 200 ? 'amber' : 'green';
-    const last = a.last ? '<span class="days-badge red">'+a.last+'</span>' : '–';
-    return '<tr><td style="color:var(--blue);font-weight:500">'+a.co+'</td><td>–</td><td><span class="days-badge '+badge+'">'+a.days+'</span></td><td>'+last+'</td></tr>';
+function openRepProfile(name) { openRepFullPage(name); }
+
+/* ══════════ REP PROFILE — full page ══════════ */
+function _repParseCurrency(str) { return parseInt(String(str||'0').replace(/[^0-9.-]/g,'')) || 0; }
+function _repFindGoalsRec(name) { return (typeof GOALS_REPS !== 'undefined' ? GOALS_REPS : []).find(function(r){ return r.name === name; }); }
+const MONTH_LABELS = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+var _repGoalOverrides = {};
+function _repMonthlySeries(name, achieved, goal) {
+  // Deterministic seasonal weights so numbers stay stable across opens for the same rep
+  var seed = name.split('').reduce(function(s,c){ return s + c.charCodeAt(0); }, 0);
+  var weights = [0.06,0.07,0.08,0.09,0.08,0.09,0.09,0.10,0.09,0.09,0.08,0.08];
+  // Nudge weights slightly per-rep using the seed, then renormalize
+  weights = weights.map(function(w,i){ return Math.max(0.03, w + (((seed + i*7) % 5) - 2) * 0.006); });
+  var wSum = weights.reduce(function(a,b){return a+b;},0);
+  weights = weights.map(function(w){ return w / wSum; });
+  var now = new Date();
+  var elapsedMonths = now.getMonth() + 1; // 1-12, Aug 19 -> 8
+  var goalMonthly = weights.map(function(w){ return Math.round(goal * w); });
+  var elapsedWeightSum = weights.slice(0, elapsedMonths).reduce(function(a,b){return a+b;},0);
+  var actualMonthly = weights.map(function(w,i){
+    if (i >= elapsedMonths) return 0;
+    return Math.round(achieved * (w / elapsedWeightSum));
+  });
+  var lastYearMonthly = weights.map(function(w,i){
+    if (i >= elapsedMonths) return 0;
+    return Math.round(actualMonthly[i] * (0.8 + ((seed + i) % 4) * 0.05));
+  });
+  if (_repGoalOverrides[name]) { goalMonthly = _repGoalOverrides[name]; }
+  return { goalMonthly: goalMonthly, actualMonthly: actualMonthly, lastYearMonthly: lastYearMonthly, elapsedMonths: elapsedMonths };
+}
+function _repRenderMonthTable(series, name) {
+  var head = document.getElementById('rfp-month-head');
+  head.innerHTML = '<th style="padding:8px 12px;text-align:left;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px">Metric</th>' +
+    MONTH_LABELS.map(function(m){ return '<th style="padding:8px 10px;text-align:right;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px">' + m.substring(0,3) + '</th>'; }).join('') +
+    '<th style="padding:8px 12px;text-align:right;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;background:rgba(255,255,255,0.08)">Totals</th>';
+  var fmt = function(n){ return '$' + Math.round(n).toLocaleString(); };
+  var rows = [
+    { label:'This Year\'s Goals', vals: series.goalMonthly, total: series.goalMonthly.reduce(function(a,b){return a+b;},0), style:'font-weight:700;color:var(--dark)', editable:true },
+    { label:'This Year\'s Sales', vals: series.actualMonthly, total: series.actualMonthly.reduce(function(a,b){return a+b;},0), style:'color:var(--g600)' },
+    { label:'Performance', vals: null, total:null, style:'' },
+    { label:'Last Year\'s Sales', vals: series.lastYearMonthly, total: series.lastYearMonthly.reduce(function(a,b){return a+b;},0), style:'color:var(--g400)' }
+  ];
+  var body = document.getElementById('rfp-month-body');
+  body.innerHTML = rows.map(function(r, ri){
+    var cells;
+    if (r.label === 'Performance') {
+      cells = series.goalMonthly.map(function(g,i){
+        if (i >= series.elapsedMonths || !g) return '<td style="padding:7px 10px;text-align:right;color:var(--g300)">&mdash;</td>';
+        var pct = Math.round((series.actualMonthly[i]/g - 1) * 100);
+        var color = pct >= 0 ? 'var(--teal)' : '#ef4444';
+        return '<td style="padding:7px 10px;text-align:right;font-weight:700;color:' + color + '">' + (pct>=0?'+':'') + pct + '%</td>';
+      }).join('');
+      var totalGoal = series.goalMonthly.slice(0, series.elapsedMonths).reduce(function(a,b){return a+b;},0);
+      var totalActual = series.actualMonthly.reduce(function(a,b){return a+b;},0);
+      var totalPct = totalGoal ? Math.round((totalActual/totalGoal - 1)*100) : 0;
+      var totalColor = totalPct >= 0 ? 'var(--teal)' : '#ef4444';
+      return '<tr style="border-bottom:1px solid var(--g100)"><td style="padding:7px 12px;font-weight:600;color:var(--dark)">Performance</td>' + cells +
+        '<td style="padding:7px 12px;text-align:right;font-weight:800;background:var(--g50);color:' + totalColor + '">' + (totalPct>=0?'+':'') + totalPct + '%</td></tr>';
+    }
+    if (r.editable && name) {
+      cells = r.vals.map(function(v, i){
+        return '<td style="padding:0;text-align:right;font-family:var(--mono);' + r.style + '">' +
+          '<span class="rfp-goal-cell" contenteditable="true" data-month="' + i + '" data-rep="' + name.replace(/"/g,'&quot;') + '" ' +
+          'onfocus="_rfpGoalCellFocus(this)" onblur="_rfpGoalCellCommit(this)" onkeydown="if(event.key===\'Enter\'){event.preventDefault();this.blur();}" ' +
+          'style="display:block;padding:7px 10px;outline:none;border-radius:4px;cursor:text" ' +
+          'onmouseover="this.style.background=\'var(--g50)\'" onmouseout="if(document.activeElement!==this)this.style.background=\'\'" ' +
+          'title="Click to edit this month\'s goal">' + fmt(v) + '</span></td>';
+      }).join('');
+    } else {
+      cells = r.vals.map(function(v){ return '<td style="padding:7px 10px;text-align:right;font-family:var(--mono);' + r.style + '">' + fmt(v) + '</td>'; }).join('');
+    }
+    return '<tr style="border-bottom:1px solid var(--g100)"><td style="padding:7px 12px;' + r.style + '">' + r.label + '</td>' + cells +
+      '<td style="padding:7px 12px;text-align:right;font-weight:800;background:var(--g50);font-family:var(--mono)" id="' + (r.editable ? 'rfp-goal-total' : '') + '">' + fmt(r.total) + '</td></tr>';
   }).join('');
-  // draw mini chart
-  setTimeout(() => drawRepChart(name), 50);
-  p.classList.add('open');
-  document.getElementById('rep-overlay').style.display = 'block';
+}
+function _rfpGoalCellFocus(el) {
+  el.style.background = '#fff';
+  el.style.boxShadow = '0 0 0 2px var(--teal)';
+  // select raw number for easy overwrite
+  var raw = _repParseCurrency(el.textContent);
+  el.textContent = raw;
+  document.execCommand && setTimeout(function(){
+    var range = document.createRange();
+    range.selectNodeContents(el);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }, 0);
+}
+function _rfpGoalCellCommit(el) {
+  el.style.boxShadow = 'none';
+  el.style.background = '';
+  var name = el.getAttribute('data-rep');
+  var month = parseInt(el.getAttribute('data-month'), 10);
+  var newVal = Math.max(0, _repParseCurrency(el.textContent));
+
+  var d = REP_DATA[name];
+  var g = _repFindGoalsRec(name);
+  var salesNum = g ? g.achieved : _repParseCurrency(d.sales);
+  var goalNum = g ? g.goal : _repParseCurrency(d.goal);
+  var series = _repMonthlySeries(name, salesNum, goalNum);
+  var goals = series.goalMonthly.slice();
+  goals[month] = newVal;
+  _repGoalOverrides[name] = goals;
+
+  _rfpRefreshAfterAdjust(name);
+  showToast(MONTH_LABELS[month].charAt(0) + MONTH_LABELS[month].slice(1).toLowerCase() + ' goal updated to $' + newVal.toLocaleString());
+}
+function _repOpenOpps(name) {
+  var out = [];
+  Object.keys(CRM_PIPELINES).forEach(function(k){
+    CRM_PIPELINES[k].opps.forEach(function(o){ if (o.owner === name) out.push(o); });
+  });
+  return out;
+}
+var REP_RING_CIRC = 276;
+function _repSetRing(arcId, pctId, subId, pct, pctText, subText, color) {
+  pct = Math.min(Math.max(pct, 0), 100);
+  var arcEl = document.getElementById(arcId);
+  var pctEl = document.getElementById(pctId);
+  var subEl = document.getElementById(subId);
+  if (arcEl) { arcEl.style.strokeDashoffset = REP_RING_CIRC - (pct / 100 * REP_RING_CIRC); arcEl.style.stroke = color; }
+  if (pctEl) { pctEl.textContent = pctText; pctEl.setAttribute('fill', color); }
+  if (subEl) subEl.textContent = subText;
+}
+var _repActivityOverrides = {};
+function _repRenderActivityRings(gRec) {
+  var name = _rfpCurrentRep;
+  var ov = (name && _repActivityOverrides[name]) || {};
+  var calls = ov.calls !== undefined ? ov.calls : ((gRec && gRec.calls) || 0);
+  var callGoal = ov.callGoal !== undefined ? ov.callGoal : ((gRec && gRec.callGoal) || 0);
+  var emails = ov.emails !== undefined ? ov.emails : ((gRec && gRec.emails) || 0);
+  var emailGoal = ov.emailGoal !== undefined ? ov.emailGoal : ((gRec && gRec.emailGoal) || 0);
+  var cPct = callGoal > 0 ? calls / callGoal * 100 : 0;
+  var ePct = emailGoal > 0 ? emails / emailGoal * 100 : 0;
+  var callColor = cPct >= 60 ? 'var(--teal)' : cPct >= 25 ? 'var(--amber)' : '#ef4444';
+  var emailColor = ePct >= 60 ? '#5b8fe8' : ePct >= 25 ? 'var(--amber)' : '#ef4444';
+  _repSetRing('rfp-kpi-calls-arc', 'rfp-kpi-calls-pct', 'rfp-kpi-calls-sub', cPct, Math.round(cPct) + '%', calls + ' / ' + callGoal, callColor);
+  _repSetRing('rfp-kpi-emails-arc', 'rfp-kpi-emails-pct', 'rfp-kpi-emails-sub', ePct, Math.round(ePct) + '%', emails + ' / ' + emailGoal, emailColor);
+}
+function _rfpEditActivityRing(kind) {
+  var name = _rfpCurrentRep;
+  if (!name) return;
+  var subEl = document.getElementById('rfp-kpi-' + kind + '-sub');
+  if (!subEl) return;
+  var g = _repFindGoalsRec(name);
+  var ov = _repActivityOverrides[name] || {};
+  var actual = ov[kind] !== undefined ? ov[kind] : ((g && g[kind]) || 0);
+  var goalKey = kind === 'calls' ? 'callGoal' : 'emailGoal';
+  var goal = ov[goalKey] !== undefined ? ov[goalKey] : ((g && g[goalKey]) || 0);
+
+  subEl.contentEditable = 'true';
+  subEl.textContent = actual + ' / ' + goal;
+  subEl.style.outline = 'none';
+  subEl.focus();
+  document.execCommand && setTimeout(function(){
+    var range = document.createRange();
+    range.selectNodeContents(subEl);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+  }, 0);
+
+  var commit = function() {
+    subEl.contentEditable = 'false';
+    subEl.removeEventListener('blur', commit);
+    subEl.removeEventListener('keydown', onKey);
+    var parts = subEl.textContent.split('/').map(function(s){ return parseInt(s.replace(/[^0-9]/g,''), 10); });
+    var newActual = isNaN(parts[0]) ? actual : Math.max(0, parts[0]);
+    var newGoal = isNaN(parts[1]) ? goal : Math.max(0, parts[1]);
+    if (!_repActivityOverrides[name]) _repActivityOverrides[name] = {};
+    _repActivityOverrides[name][kind] = newActual;
+    _repActivityOverrides[name][goalKey] = newGoal;
+    _repRenderActivityRings(g);
+    showToast((kind === 'calls' ? 'Calls' : 'Emails') + ' today updated to ' + newActual + ' / ' + newGoal);
+  };
+  var onKey = function(e) { if (e.key === 'Enter') { e.preventDefault(); subEl.blur(); } };
+  subEl.addEventListener('blur', commit);
+  subEl.addEventListener('keydown', onKey);
+}
+function _repRenderPipeline(name) {
+  var opps = _repOpenOpps(name);
+  document.getElementById('rfp-pipeline-count').textContent = opps.length;
+  var list = document.getElementById('rfp-pipeline-list');
+  if (!opps.length) { list.innerHTML = '<div style="padding:16px;font-size:12px;color:var(--g400)">No open opportunities assigned right now.</div>'; return; }
+  list.innerHTML = opps.map(function(o){
+    return '<div onclick="openOppDetail(\'' + o.id + '\')" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 16px;border-top:1px solid var(--g100);cursor:pointer;transition:background .12s" onmouseover="this.style.background=\'var(--g50)\'" onmouseout="this.style.background=\'\'">' +
+      '<div style="min-width:0"><div style="font-size:12.5px;font-weight:600;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + o.title + '</div><div style="font-size:11px;color:var(--g400);margin-top:1px">' + o.stage + ' &middot; closes ' + o.close + '</div></div>' +
+      '<div style="text-align:right;flex-shrink:0"><div style="font-size:13px;font-weight:700;color:var(--dark);font-family:var(--mono)">$' + o.value.toLocaleString() + '</div><div style="font-size:10.5px;color:var(--g400)">' + o.prob + ' prob</div></div>' +
+      '</div>';
+  }).join('');
+}
+function _repActivityFeed(name) {
+  var items = [];
+  Object.keys(OPP_DETAIL_DATA).forEach(function(k){
+    (OPP_DETAIL_DATA[k].history || []).forEach(function(h){ if (h.rep === name) items.push(h); });
+  });
+  return items.slice(0, 8);
+}
+var REP_ACTIVITY_ICONS = {
+  call: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>',
+  email: '<rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 6l-10 7L2 6"/>',
+  meeting: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  stage: '<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>',
+  note: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/>',
+  created: '<circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>'
+};
+function _repRenderActivity(name) {
+  var items = _repActivityFeed(name);
+  var list = document.getElementById('rfp-activity-list');
+  if (!items.length) { list.innerHTML = '<div style="padding:16px;font-size:12px;color:var(--g400)">No recent activity logged.</div>'; return; }
+  list.innerHTML = items.map(function(h){
+    var txt = h.text || (h.type === 'stage' ? ('Moved to ' + h.to) : 'Activity');
+    return '<div style="display:flex;gap:10px;align-items:flex-start;padding:11px 16px;border-top:1px solid var(--g100)">' +
+      '<div style="width:26px;height:26px;background:var(--g100);border-radius:7px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g500)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (REP_ACTIVITY_ICONS[h.type] || REP_ACTIVITY_ICONS.note) + '</svg></div>' +
+      '<div style="flex:1;min-width:0"><div style="font-size:12px;color:var(--dark);line-height:1.5">' + txt + '</div><div style="font-size:10.5px;color:var(--g400);margin-top:2px">' + (h.date || '') + '</div></div>' +
+      '</div>';
+  }).join('');
+}
+function _repInsights(name, gRec, dRec) {
+  var cards = [];
+  var pct = gRec ? gRec.pct : Math.round(_repParseCurrency(dRec.sales) / _repParseCurrency(dRec.goal) * 100);
+  var now = new Date();
+  var expectedPace = Math.round(((now.getMonth() + 1) / 12) * 100);
+  var gapPct = expectedPace - pct;
+  var goalNum = gRec ? gRec.goal : _repParseCurrency(dRec.goal);
+  var achievedNum = gRec ? gRec.achieved : _repParseCurrency(dRec.sales);
+  var remainingMonths = Math.max(1, 12 - (now.getMonth() + 1));
+  var neededPerMonth = Math.max(0, Math.round((goalNum - achievedNum) / remainingMonths));
+
+  var headline;
+  if (gapPct > 15) {
+    headline = name.split(' ')[0] + ' is significantly behind pace, ' + gapPct + ' points below where they should be at this point in the year. Needs about $' + neededPerMonth.toLocaleString() + '/month for the rest of the year to hit goal.';
+  } else if (gapPct > 5) {
+    headline = name.split(' ')[0] + ' is trailing pace by ' + gapPct + ' points. Still recoverable, but worth a check-in on what is slowing deals down.';
+  } else if (gapPct < -5) {
+    headline = name.split(' ')[0] + ' is running ' + Math.abs(gapPct) + ' points ahead of pace, on track to beat the annual goal at the current rate.';
+  } else {
+    headline = name.split(' ')[0] + ' is tracking right on pace for the annual goal. No immediate action needed.';
+  }
+  document.getElementById('rfp-insight-headline').textContent = headline;
+
+  if (gapPct > 15) {
+    cards.push({ color:'#ef4444', bg:'rgba(239,68,68,0.1)', label:'Risk · Behind Pace', icon:'circle', text: pct + '% of annual goal reached vs an expected ' + expectedPace + '%. At this rate, they will land short unless activity increases. Recommend a 1:1 to rebuild the plan for the rest of the year.' });
+  } else if (gapPct > 5) {
+    cards.push({ color:'#f59e0b', bg:'rgba(245,158,11,0.1)', label:'Coaching · Pacing', icon:'warn', text: 'Currently ' + gapPct + ' points behind expected pace (' + pct + '% vs ' + expectedPace + '%). Needs roughly $' + neededPerMonth.toLocaleString() + '/month to close the gap by year end.' });
+  } else {
+    cards.push({ color:'#1d9e75', bg:'rgba(29,158,117,0.1)', label:'On Track', icon:'check', text: pct + '% of annual goal reached, tracking at or ahead of the ' + expectedPace + '% expected pace for this point in the year.' });
+  }
+
+  if (gRec) {
+    var callPct = gRec.callGoal ? Math.round((gRec.calls / gRec.callGoal) * 100) : null;
+    if (callPct !== null && callPct < 70) {
+      cards.push({ color:'#f59e0b', bg:'rgba(245,158,11,0.1)', label:'Coaching · Activity', icon:'warn', text: 'Only at ' + callPct + '% of monthly call goal (' + gRec.calls + ' of ' + gRec.callGoal + '). Low outbound activity now tends to show up as a pipeline gap in 4-6 weeks.' });
+    }
+    var winRateNum = parseInt(gRec.winRate) || 0;
+    if (winRateNum >= 65) {
+      cards.push({ color:'#1d9e75', bg:'rgba(29,158,117,0.1)', label:'Strength · Win Rate', icon:'check', text: 'Win rate of ' + gRec.winRate + ' is strong. Worth having them share what is working in their close process with the rest of the team.' });
+    } else if (winRateNum && winRateNum < 55) {
+      cards.push({ color:'#ef4444', bg:'rgba(239,68,68,0.1)', label:'Risk · Win Rate', icon:'circle', text: 'Win rate of ' + gRec.winRate + ' is below team average. Consider reviewing recent lost deals together to spot a pattern.' });
+    }
+    if (gRec.ace) {
+      cards.push({ color:'#8b5cf6', bg:'rgba(139,92,246,0.1)', label:'Ace Alert', icon:'spark', text: gRec.ace });
+    }
+  }
+
+  var opps = _repOpenOpps(name);
+  var overdue = opps.filter(function(o){ return o.activity === 'overdue'; });
+  if (overdue.length) {
+    cards.push({ color:'#ef4444', bg:'rgba(239,68,68,0.1)', label:'Action · Follow-up Overdue', icon:'circle', text: overdue.length + ' opportunit' + (overdue.length>1?'ies are':'y is') + ' overdue for follow-up, including "' + overdue[0].title + '." Recommend reaching out today.' });
+  }
+
+  return cards;
+}
+var REP_INSIGHT_ICONS = {
+  circle: '<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
+  warn: '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/>',
+  check: '<polyline points="20 6 9 17 4 12"/>',
+  spark: '<path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/>'
+};
+function _repRenderInsights(cards) {
+  var el = document.getElementById('rfp-insight-cards');
+  el.innerHTML = cards.map(function(c){
+    return '<div style="padding:12px 16px;border-top:1px solid var(--g50)"><div style="display:flex;gap:10px;align-items:flex-start">' +
+      '<div style="width:28px;height:28px;background:' + c.bg + ';border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="' + c.color + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">' + (REP_INSIGHT_ICONS[c.icon] || REP_INSIGHT_ICONS.circle) + '</svg></div>' +
+      '<div style="flex:1"><div style="font-size:10px;font-weight:700;color:' + c.color + ';text-transform:uppercase;letter-spacing:0.4px;margin-bottom:3px">' + c.label + '</div><div style="font-size:12px;color:var(--dark);line-height:1.5">' + c.text + '</div></div>' +
+      '</div></div>';
+  }).join('');
+}
+
+// ── Ace Rep Profile Chat (Insights + actionable commands) ──────────
+function _rfpAdjustRemainingGoals(name) {
+  var d = REP_DATA[name];
+  var g = _repFindGoalsRec(name);
+  var salesNum = g ? g.achieved : _repParseCurrency(d.sales);
+  var goalNum = g ? g.goal : _repParseCurrency(d.goal);
+  var series = _repMonthlySeries(name, salesNum, goalNum);
+  var elapsed = series.elapsedMonths;
+  var remainingMonths = 12 - elapsed;
+  if (remainingMonths <= 0) return null;
+  var remainingTarget = Math.max(0, goalNum - salesNum);
+  var perMonth = Math.round(remainingTarget / remainingMonths);
+  var newGoals = series.goalMonthly.slice();
+  for (var i = elapsed; i < 12; i++) newGoals[i] = perMonth;
+  _repGoalOverrides[name] = newGoals;
+  return { perMonth: perMonth, remainingMonths: remainingMonths, remainingTarget: remainingTarget };
+}
+function _rfpRefreshAfterAdjust(name) {
+  var d = REP_DATA[name];
+  var g = _repFindGoalsRec(name);
+  var salesNum = g ? g.achieved : _repParseCurrency(d.sales);
+  var origGoalNum = g ? g.goal : _repParseCurrency(d.goal);
+  var series = _repMonthlySeries(name, salesNum, origGoalNum);
+  _repRenderMonthTable(series, name);
+  var cards = _repInsights(name, g, d || {sales:'$'+salesNum, goal:'$'+origGoalNum});
+  _repRenderInsights(cards);
+
+  // if the monthly goals were hand-edited, the annual goal total may have changed —
+  // reflect that in the KPI/pace header so everything stays consistent
+  var effectiveGoal = series.goalMonthly.reduce(function(a,b){return a+b;},0);
+  var pct = effectiveGoal ? Math.round(salesNum/effectiveGoal*100) : 0;
+  var goalAmountEl = document.getElementById('rfp-goal-amount');
+  if (goalAmountEl) {
+    goalAmountEl.textContent = '$' + effectiveGoal.toLocaleString();
+    document.getElementById('rfp-goal-pct').textContent = pct + '%';
+    document.getElementById('rfp-goal-bar').style.width = Math.min(100, pct) + '%';
+    document.getElementById('rfp-goal-remaining-pill').textContent = '$' + Math.max(0, effectiveGoal - salesNum).toLocaleString() + ' Remaining';
+    var now = new Date();
+    var expectedPace = Math.round(((now.getMonth() + 1) / 12) * 100);
+    var paceEl = document.getElementById('rfp-kpi-pace');
+    if (paceEl) {
+      paceEl.textContent = (pct >= expectedPace ? '▲ ' : '▼ ') + pct + '% vs ' + expectedPace + '% expected';
+      paceEl.style.color = pct >= expectedPace ? '' : '#ef4444';
+    }
+  }
+}
+function _rfpAceAppend(role, html) {
+  var msgs = document.getElementById('rfp-ace-messages');
+  if (!msgs) return null;
+  var el = document.createElement('div');
+  if (role === 'user') {
+    el.style.cssText = 'display:flex;justify-content:flex-end';
+    el.innerHTML = '<div style="background:#8b5cf6;color:#fff;border-radius:12px 12px 3px 12px;padding:8px 12px;font-size:12px;line-height:1.5;max-width:85%">' + html + '</div>';
+  } else {
+    el.style.cssText = 'display:flex;gap:8px;align-items:flex-start';
+    el.innerHTML = '<div style="width:22px;height:22px;border-radius:6px;background:#8b5cf6;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div><div style="background:#fff;border:1px solid var(--g200);border-radius:12px 12px 12px 3px;padding:9px 12px;font-size:12px;color:var(--dark);line-height:1.6;max-width:100%">' + html + '</div>';
+  }
+  msgs.appendChild(el);
+  msgs.scrollTop = msgs.scrollHeight;
+  return el;
+}
+function _rfpAceAsk(query) {
+  if (!query) return;
+  var name = _rfpCurrentRep;
+  if (!name) return;
+  var first = name.split(' ')[0];
+  var input = document.getElementById('rfp-ace-input');
+  if (input) input.value = '';
+  _rfpAceAppend('user', query.replace(/</g,'&lt;'));
+
+  var typing = _rfpAceAppend('ace', '<span style="color:var(--g400)">Thinking…</span>');
+
+  setTimeout(function() {
+    var msgs = document.getElementById('rfp-ace-messages');
+    if (typing && msgs) msgs.removeChild(typing);
+    var ql = query.toLowerCase();
+    var resp;
+
+    if (ql.includes('adjust') && ql.includes('goal') && (ql.includes('remaining') || ql.includes('rest') || ql.includes('all'))) {
+      var result = _rfpAdjustRemainingGoals(name);
+      if (result) {
+        _rfpRefreshAfterAdjust(name);
+        resp = 'Done. I redistributed ' + first + '\'s remaining ' + result.remainingMonths + ' month' + (result.remainingMonths>1?'s':'') + ' of 2026 goals evenly, about <strong>$' + result.perMonth.toLocaleString() + '/month</strong>, so the annual goal stays reachable. The monthly table above is updated. Elapsed months are untouched — this only changes what has not happened yet.';
+      } else {
+        resp = 'There are no remaining months left in the year to adjust for ' + first + '.';
+      }
+    } else if (ql.includes('commission')) {
+      resp = 'Based on ' + first + '\'s current pace, I would hold commission tiers as-is for now, they are not the blocker. The gap is activity, not the incentive structure. If you want, I can flag a temporary accelerator on the next 2 months to help pull them back on pace, just say "add a commission accelerator."';
+    } else if (ql.includes('target') || ql.includes('reassign')) {
+      resp = 'Reassigning targets usually only helps if the current book is genuinely oversized. ' + first + '\'s open pipeline looks reasonable in volume, the issue is follow-up cadence on existing deals. I would hold off on reassigning and instead tighten follow-up SLAs before shifting accounts to someone else.';
+    } else if (ql.includes('behind') || ql.includes('why') || ql.includes('falling')) {
+      var g = _repFindGoalsRec(name);
+      var extra = (g && g.ace) ? (' ' + g.ace) : '';
+      resp = first + ' is behind primarily due to slower follow-up on open opportunities and call activity trailing the monthly goal.' + extra + ' I can adjust their remaining monthly goals to a more realistic pace if you want, just ask.';
+    } else {
+      resp = 'I can help with ' + first + '\'s goals, commissions, or targets. Try asking me to adjust their remaining 2026 monthly goals, or ask why they are behind pace.';
+    }
+    _rfpAceAppend('ace', resp);
+  }, 850);
+}
+var _rfpCurrentRep = null;
+var _rfpPriorPage = null;
+function openRepFullPage(name) {
+  _rfpCurrentRep = name;
+  var priorActive = document.querySelector('.page.active');
+  if (priorActive && priorActive.id !== 'page-rep-profile') _rfpPriorPage = priorActive.id.replace('page-', '');
+  var d = REP_DATA[name];
+  var g = _repFindGoalsRec(name);
+  if (!d && !g) return;
+  document.getElementById('rfp-avatar').src = (d && d.img) || (g && g.photo) || '';
+  document.getElementById('rfp-name').textContent = name;
+  document.getElementById('rfp-role').textContent = (g && g.title) || (d && d.role) || '';
+
+  var salesNum = g ? g.achieved : _repParseCurrency(d.sales);
+  var goalNum = g ? g.goal : _repParseCurrency(d.goal);
+  var pct = g ? g.pct : (goalNum ? Math.round(salesNum/goalNum*100) : 0);
+
+  document.getElementById('rfp-kpi-sales').textContent = '$' + salesNum.toLocaleString();
+  document.getElementById('rfp-kpi-month').textContent = (d && d.month) || '&mdash;';
+  document.getElementById('rfp-kpi-roi').textContent = (d && d.roi) ? (d.roi + ' YTD') : '&mdash;';
+  document.getElementById('rfp-kpi-winrate').textContent = (g && g.winRate) || '&mdash;';
+  document.getElementById('rfp-kpi-commytd').textContent = (d && d.commYTD) || '$0';
+  document.getElementById('rfp-kpi-commmonth').textContent = (d && d.commMonth) ? (d.commMonth + ' this month') : '';
+
+  var now = new Date();
+  var expectedPace = Math.round(((now.getMonth() + 1) / 12) * 100);
+  document.getElementById('rfp-kpi-pace').textContent = (pct >= expectedPace ? '▲ ' : '▼ ') + pct + '% vs ' + expectedPace + '% expected';
+  document.getElementById('rfp-kpi-pace').className = 'stat-delta ' + (pct >= expectedPace ? 'positive' : '');
+  document.getElementById('rfp-kpi-pace').style.color = pct >= expectedPace ? '' : '#ef4444';
+
+  document.getElementById('rfp-goal-amount').textContent = '$' + goalNum.toLocaleString();
+  document.getElementById('rfp-goal-pct').textContent = pct + '%';
+  document.getElementById('rfp-goal-bar').style.width = Math.min(100, pct) + '%';
+  document.getElementById('rfp-goal-achieved-pill').textContent = '$' + salesNum.toLocaleString() + ' Achieved';
+  document.getElementById('rfp-goal-remaining-pill').textContent = '$' + Math.max(0, goalNum - salesNum).toLocaleString() + ' Remaining';
+  var statusPill = document.getElementById('rfp-goal-status-pill');
+  var statusLabel = (g && g.statusLabel) || (pct >= expectedPace ? 'On Track' : 'At Risk');
+  var statusColor = statusLabel === 'On Track' ? '#1d9e75' : (statusLabel === 'Behind' ? '#ef4444' : '#f59e0b');
+  statusPill.textContent = statusLabel;
+  statusPill.style.background = statusColor + '1a'; statusPill.style.border = '1px solid ' + statusColor + '55'; statusPill.style.color = statusColor;
+  document.getElementById('rfp-goal-today-marker').textContent = now.toLocaleString('default',{month:'short'}) + ' (today)';
+
+  var series = _repMonthlySeries(name, salesNum, goalNum);
+  _repRenderMonthTable(series, name);
+  _repRenderPipeline(name);
+  _repRenderActivity(name);
+  _repRenderActivityRings(g);
+  var cards = _repInsights(name, g, d || {sales:'$'+salesNum, goal:'$'+goalNum});
+  _repRenderInsights(cards);
+
+  var msgs = document.getElementById('rfp-ace-messages');
+  if (msgs) {
+    msgs.innerHTML = '';
+    var welcome = document.createElement('div');
+    welcome.style.cssText = 'display:flex;gap:8px;align-items:flex-start';
+    welcome.innerHTML = '<div style="width:22px;height:22px;border-radius:6px;background:#8b5cf6;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div><div style="background:#fff;border:1px solid var(--g200);border-radius:12px 12px 12px 3px;padding:9px 12px;font-size:12px;color:var(--dark);line-height:1.6;max-width:100%">Ask me anything about ' + name.split(' ')[0] + ', or tell me what to adjust — for example, their goals, commissions, or assigned targets.</div>';
+    msgs.appendChild(welcome);
+  }
+
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  document.getElementById('page-rep-profile').classList.add('active');
+  document.getElementById('main-content').scrollTop = 0;
+}
+function closeRepFullPage() {
+  document.querySelectorAll('.page').forEach(function(p){ p.classList.remove('active'); });
+  var target = _rfpPriorPage || 'dashboard';
+  var page = document.getElementById('page-' + target);
+  if (page) page.classList.add('active'); else document.getElementById('page-dashboard').classList.add('active');
+  document.querySelectorAll('.sb-item').forEach(function(b){
+    b.classList.remove('active');
+    if ((b.getAttribute('onclick')||'').includes("'"+target+"'")) b.classList.add('active');
+  });
+  if (target === 'dashboard') { setTimeout(drawSalesChart, 60); }
 }
 
 function closeRepProfile() {
@@ -17937,6 +18558,7 @@ function _aceCommConfirm() {
 <!-- ══════════════════════════════════════════════════════════
      OPPORTUNITY DETAIL OVERLAY
 ═══════════════════════════════════════════════════════════ -->
+
 <div id="opp-detail-overlay" style="position:fixed;inset:0;background:var(--off);z-index:2100;display:none;flex-direction:column;overflow:hidden">
 
   <!-- HEADER -->
