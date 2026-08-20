@@ -1112,6 +1112,18 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 .oppd-maintab-active{color:var(--teal)!important;border-bottom:2px solid var(--teal)!important}
 .oppd-qbtn{display:flex;align-items:center;gap:7px;padding:9px 16px;background:var(--white);border:1.5px solid var(--g200);border-radius:9px;font-size:12.5px;font-weight:600;color:var(--dark);cursor:pointer;font-family:var(--font);transition:background .12s}
 .oppd-qbtn:hover{background:var(--g50)}
+.oppd-field-row{display:flex;align-items:center;gap:7px;padding:6px 4px;border-radius:7px;cursor:grab;font-size:13px}
+.oppd-field-row:hover{background:var(--g50)}
+.oppd-field-row.dragging{opacity:0.4}
+.oppd-field-row-label{color:var(--g500);flex-shrink:0;display:flex;align-items:center;gap:5px}
+.oppd-field-row-value{margin-left:auto;text-align:right}
+.oppd-field-src-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;background:var(--g100);color:var(--g400);padding:1px 6px;border-radius:8px;letter-spacing:0.3px}
+.oppd-field-remove{display:none;border:none;background:none;color:var(--g400);cursor:pointer;padding:0 2px;flex-shrink:0}
+.oppd-field-row:hover .oppd-field-remove{display:inline-flex}
+.oppd-add-field-chip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:4px 10px;border-radius:20px;background:var(--white);border:1.5px solid var(--g200);color:var(--dark);cursor:pointer;font-family:var(--font)}
+.oppd-add-field-chip:hover{background:var(--g50);border-color:var(--teal);color:var(--teal)}
+.oppd-cz-row{display:flex;align-items:center;gap:8px;padding:5px 4px;font-size:12.5px;cursor:pointer;border-radius:6px}
+.oppd-cz-row:hover{background:var(--g50)}
 
 .hl-type-chip{padding:5px 12px;border-radius:20px;border:1.5px solid var(--g200);background:#fff;font-size:12px;font-weight:500;color:var(--g600);cursor:pointer;transition:all 0.15s;font-family:var(--font)}
 .hl-type-chip:hover{border-color:var(--teal);color:var(--teal)}
@@ -6001,20 +6013,18 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         <span id="oppd-back-label">Pipeline</span>
       </button>
 
-      <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:12px">Details</div>
-      <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:22px">
-        <div class="oppd-detail-row"><span>Contact</span><span id="oppd-contact" onclick="openPersonFromOpp()" style="color:var(--teal);font-weight:600;cursor:pointer">&mdash;</span></div>
-        <div class="oppd-detail-row"><span>Account</span><span id="oppd-org" onclick="openOrgFromOpp()" style="color:var(--teal);font-weight:600;cursor:pointer">&mdash;</span></div>
-        <div class="oppd-detail-row"><span>Pipeline</span><span id="oppd-detail-pipeline" style="font-weight:600;color:var(--dark)">Sales Pipeline</span></div>
-        <div class="oppd-detail-row"><span>Stage</span><span id="oppd-detail-stage" style="font-weight:600;color:var(--dark)">&mdash;</span></div>
-        <div class="oppd-detail-row"><span>Opportunity Status</span><span id="oppd-detail-status" style="background:rgba(29,158,117,0.1);color:var(--teal);border-radius:6px;padding:2px 9px;font-weight:700;font-size:11.5px">Open</span></div>
-        <div class="oppd-detail-row"><span>Value</span><span id="oppd-detail-value" style="font-weight:700;color:var(--dark);font-family:var(--mono)">$0</span></div>
-        <div class="oppd-detail-row"><span>Expected Close Date</span><span id="oppd-close" style="font-weight:600;color:var(--dark)">&mdash;</span></div>
-        <div class="oppd-detail-row"><span>Probability</span><span id="oppd-prob" style="font-weight:600;color:var(--dark)">&mdash;</span></div>
-        <div class="oppd-detail-row"><span>Deal Source</span><span id="oppd-detail-source" style="font-weight:600;color:var(--dark)">&mdash;</span></div>
-        <div class="oppd-detail-row"><span>Recurring</span><span id="oppd-detail-recurring" style="font-weight:600;color:var(--dark)">Off</span></div>
-        <div class="oppd-detail-row"><span>Days in Stage</span><span id="oppd-days" style="font-weight:700;color:var(--amber)">&mdash;</span></div>
-        <div class="oppd-detail-row"><span>Status Updated By</span><div style="display:flex;align-items:center;gap:5px"><div id="oppd-owner-av2" style="width:18px;height:18px;border-radius:50%;background:var(--teal);display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff">BW</div><span id="oppd-owner-name2" style="font-weight:600;color:var(--dark)">&mdash;</span></div></div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;position:relative">
+        <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400)">Details</div>
+        <button onclick="_oppToggleCustomize(event)" title="Customize fields" style="border:none;background:var(--g50);color:var(--teal);width:22px;height:22px;border-radius:6px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="21" x2="4" y2="14"/><line x1="4" y1="10" x2="4" y2="3"/><line x1="12" y1="21" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="3"/><line x1="20" y1="21" x2="20" y2="16"/><line x1="20" y1="12" x2="20" y2="3"/><line x1="1" y1="14" x2="7" y2="14"/><line x1="9" y1="8" x2="15" y2="8"/><line x1="17" y1="16" x2="23" y2="16"/></svg>
+        </button>
+        <div id="oppd-customize-popover" style="display:none;position:absolute;top:26px;right:0;background:#fff;border:1px solid var(--g200);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.12);padding:10px;width:220px;z-index:50;max-height:320px;overflow-y:auto"></div>
+      </div>
+      <div style="font-size:11px;color:var(--g400);margin-bottom:10px">Drag to reorder</div>
+      <div id="oppd-details-list" style="display:flex;flex-direction:column;gap:2px;margin-bottom:14px"></div>
+      <div style="margin-bottom:22px">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px">Add from contact or account</div>
+        <div id="oppd-add-field-chips" style="display:flex;flex-wrap:wrap;gap:6px"></div>
       </div>
 
       <div style="font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:10px">Tags</div>
@@ -10601,10 +10611,12 @@ function _oppRenderStageBar(currentIdx, stageDays) {
 function _oppClickStage(idx) {
   var bc = document.getElementById('oppd-stage-breadcrumb');
   if (bc) bc.textContent = PIPELINE_STAGES_ORDER[idx];
-  var ds = document.getElementById('oppd-detail-stage'); if (ds) ds.textContent = PIPELINE_STAGES_ORDER[idx];
   var bs = document.getElementById('oppd-breadcrumb-stage'); if (bs) bs.textContent = PIPELINE_STAGES_ORDER[idx];
   document.getElementById('opp-detail-overlay').dataset.status = 'open';
+  if (_oppCurrentCtx) _oppCurrentCtx.opp.stage = PIPELINE_STAGES_ORDER[idx];
   _oppRenderStageBar(idx, []);
+  _oppSetStatusButtons('open');
+  _oppRenderDetails();
   showToast('Moved to ' + PIPELINE_STAGES_ORDER[idx]);
 }
 function _oppMoveStage(dir) {
@@ -10619,6 +10631,7 @@ function _oppMarkWon() {
   var idx = PIPELINE_STAGES_ORDER.indexOf(document.getElementById('oppd-stage-breadcrumb').textContent);
   _oppRenderStageBar(idx, []);
   _oppSetStatusButtons('won');
+  _oppRenderDetails();
   showToast('Opportunity marked as Closed Won');
 }
 function _oppMarkLost() {
@@ -10626,6 +10639,7 @@ function _oppMarkLost() {
   var idx = PIPELINE_STAGES_ORDER.indexOf(document.getElementById('oppd-stage-breadcrumb').textContent);
   _oppRenderStageBar(idx, []);
   _oppSetStatusButtons('lost');
+  _oppRenderDetails();
   showToast('Opportunity marked as Lost');
 }
 function _oppReopen() {
@@ -10633,6 +10647,7 @@ function _oppReopen() {
   var idx = PIPELINE_STAGES_ORDER.indexOf(document.getElementById('oppd-stage-breadcrumb').textContent);
   _oppRenderStageBar(idx, []);
   _oppSetStatusButtons('open');
+  _oppRenderDetails();
   showToast('Opportunity reopened');
 }
 function _oppSetStatusButtons(status) {
@@ -10696,6 +10711,214 @@ function _oppMainTab(tab, btn) {
     if (tabBtn) tabBtn.classList.toggle('oppd-maintab-active', t === tab);
   });
   if (tab === 'notes') _oppRenderNotes();
+}
+
+// ── Opportunity Details: customizable, reorderable, cross-record fields ──────
+// Global (per-user) preferences — shared across every opportunity, not saved per-deal.
+var _oppFieldOrder = ['contact','account','pipeline','stage','status','value','close','prob','source','recurring','days','statusUpdatedBy'];
+var _oppFieldHidden = {};
+var _oppFieldAdded = []; // {key, source:'contact'|'account', field, label, icon}
+var _oppCurrentCtx = null; // {opp, pipelineName, detail}
+
+var _OPP_CONTACT_FIELD_DEFS = [
+  {field:'title', label:'Title', icon:'ti-id-badge-2'},
+  {field:'email', label:'Email', icon:'ti-mail'},
+  {field:'phone', label:'Phone', icon:'ti-phone'},
+  {field:'linkedin', label:'LinkedIn', icon:'ti-brand-linkedin'},
+  {field:'city', label:'City', icon:'ti-map-pin'}
+];
+var _OPP_ACCOUNT_FIELD_DEFS = [
+  {field:'industry', label:'Industry', icon:'ti-building'},
+  {field:'website', label:'Website', icon:'ti-world'},
+  {field:'address', label:'Address', icon:'ti-map-pin'},
+  {field:'employees', label:'Employees', icon:'ti-users'},
+  {field:'revenue', label:'Revenue', icon:'ti-report-money'}
+];
+var _OPP_ICON_SVG = {
+  'ti-id-badge-2':'<path d="M3 4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><circle cx="12" cy="10" r="2"/><path d="M8 16c0-2 1.8-3 4-3s4 1 4 3"/>',
+  'ti-mail':'<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
+  'ti-phone':'<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/>',
+  'ti-brand-linkedin':'<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M8 11v5"/><path d="M8 8v.01"/><path d="M12 16v-5"/><path d="M16 16v-3a2 2 0 0 0-4 0"/>',
+  'ti-map-pin':'<path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/>',
+  'ti-building':'<rect x="4" y="2" width="16" height="20" rx="1"/><line x1="9" y1="7" x2="9" y2="7.01"/><line x1="15" y1="7" x2="15" y2="7.01"/><line x1="9" y1="11" x2="9" y2="11.01"/><line x1="15" y1="11" x2="15" y2="11.01"/><line x1="9" y1="15" x2="9" y2="15.01"/><line x1="15" y1="15" x2="15" y2="15.01"/>',
+  'ti-world':'<circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>',
+  'ti-users':'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  'ti-report-money':'<rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="12" cy="12" r="3"/><line x1="7" y1="8" x2="7" y2="8.01"/><line x1="17" y1="16" x2="17" y2="16.01"/>'
+};
+function _oppIconSvg(name, size) {
+  return '<svg width="' + size + '" height="' + size + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' + (_OPP_ICON_SVG[name] || '') + '</svg>';
+}
+
+function _oppBuiltInFieldDefs() {
+  var opp = _oppCurrentCtx.opp;
+  var pipelineName = _oppCurrentCtx.pipelineName;
+  var isLost = document.getElementById('opp-detail-overlay').dataset.status === 'lost';
+  var isWon = document.getElementById('opp-detail-overlay').dataset.status === 'won';
+  var statusLabel = isLost ? 'Lost' : isWon ? 'Won' : 'Open';
+  var statusColor = isLost ? '#ef4444' : 'var(--teal)';
+  var statusBg = isLost ? 'rgba(239,68,68,0.1)' : 'rgba(29,158,117,0.1)';
+  return [
+    {key:'contact', label:'Contact', html:'<span id="oppd-contact" onclick="openPersonFromOpp()" style="color:var(--teal);font-weight:600;cursor:pointer">' + (opp.contact||'&mdash;') + '</span>'},
+    {key:'account', label:'Account', html:'<span id="oppd-org" onclick="openOrgFromOpp()" style="color:var(--teal);font-weight:600;cursor:pointer">' + (opp.org||'&mdash;') + '</span>'},
+    {key:'pipeline', label:'Pipeline', html:'<span style="font-weight:600;color:var(--dark)">' + pipelineName + '</span>'},
+    {key:'stage', label:'Stage', html:'<span id="oppd-detail-stage" style="font-weight:600;color:var(--dark)">' + (opp.stage||'&mdash;') + '</span>'},
+    {key:'status', label:'Opportunity Status', html:'<span id="oppd-detail-status" style="background:' + statusBg + ';color:' + statusColor + ';border-radius:6px;padding:2px 9px;font-weight:700;font-size:11.5px">' + statusLabel + '</span>'},
+    {key:'value', label:'Value', html:'<span id="oppd-detail-value" style="font-weight:700;color:var(--dark);font-family:var(--mono)">$' + (opp.value||0).toLocaleString() + '</span>'},
+    {key:'close', label:'Expected Close Date', html:'<span id="oppd-close" style="font-weight:600;color:var(--dark)">' + (opp.close||'&mdash;') + '</span>'},
+    {key:'prob', label:'Probability', html:'<span id="oppd-prob" style="font-weight:600;color:var(--dark)">' + (opp.prob||'&mdash;') + '</span>'},
+    {key:'source', label:'Deal Source', html:'<span style="font-weight:600;color:var(--dark)">' + (opp.dealSource||opp.source||'&mdash;') + '</span>'},
+    {key:'recurring', label:'Recurring', html:'<span style="font-weight:600;color:var(--dark)">' + (opp.recurring ? ('On' + (opp.recurFreq?' ('+opp.recurFreq+')':'')) : 'Off') + '</span>'},
+    {key:'days', label:'Days in Stage', html:'<span id="oppd-days" style="font-weight:700;color:var(--amber)">' + (opp.days||'&mdash;') + '</span>'},
+    {key:'statusUpdatedBy', label:'Status Updated By', html:'<div style="display:flex;align-items:center;gap:5px"><div style="width:18px;height:18px;border-radius:50%;background:' + (opp.ownerColor||'var(--teal)') + ';display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;color:#fff;flex-shrink:0">' + (opp.ownerInit||'') + '</div><span style="font-weight:600;color:var(--dark)">' + (opp.owner||'&mdash;') + '</span></div>'}
+  ];
+}
+
+function _oppAvailableCrossFields() {
+  var opp = _oppCurrentCtx.opp;
+  var person = opp.contact && PEOPLE_DATA[opp.contact];
+  var org = opp.org && ORGS_DATA[opp.org];
+  var out = [];
+  if (person) {
+    _OPP_CONTACT_FIELD_DEFS.forEach(function(f) {
+      if (person[f.field] === undefined || person[f.field] === null || person[f.field] === '') return;
+      var already = _oppFieldAdded.some(function(a){ return a.source==='contact' && a.field===f.field; });
+      if (!already) out.push({source:'contact', field:f.field, label:f.label, icon:f.icon});
+    });
+  }
+  if (org) {
+    _OPP_ACCOUNT_FIELD_DEFS.forEach(function(f) {
+      if (org[f.field] === undefined || org[f.field] === null || org[f.field] === '') return;
+      var already = _oppFieldAdded.some(function(a){ return a.source==='account' && a.field===f.field; });
+      if (!already) out.push({source:'account', field:f.field, label:f.label, icon:f.icon});
+    });
+  }
+  return out;
+}
+
+function _oppAddedFieldDefs() {
+  var opp = _oppCurrentCtx.opp;
+  var person = opp.contact && PEOPLE_DATA[opp.contact];
+  var org = opp.org && ORGS_DATA[opp.org];
+  return _oppFieldAdded.map(function(a) {
+    var record = a.source === 'contact' ? person : org;
+    var value = (record && record[a.field]) || '&mdash;';
+    var srcTag = a.source === 'contact' ? 'Contact' : 'Account';
+    return {
+      key: 'added:' + a.source + ':' + a.field,
+      label: a.label,
+      isAdded: true,
+      html: '<span class="oppd-field-row-label">' + _oppIconSvg(a.icon, 12) + a.label + ' <span class="oppd-field-src-tag">' + srcTag + '</span></span><span class="oppd-field-row-value" style="font-weight:500;color:var(--dark)">' + value + '</span>' +
+        '<button class="oppd-field-remove" title="Remove" onclick="event.stopPropagation();_oppRemoveAddedField(\'' + a.source + '\',\'' + a.field + '\')"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>'
+    };
+  });
+}
+
+function _oppRenderDetails() {
+  var list = document.getElementById('oppd-details-list');
+  if (!list || !_oppCurrentCtx) return;
+  var builtIns = _oppBuiltInFieldDefs();
+  var addedDefs = _oppAddedFieldDefs();
+  var byKey = {};
+  builtIns.forEach(function(f){ byKey[f.key] = f; });
+  addedDefs.forEach(function(f){ byKey[f.key] = f; });
+
+  // Ensure any newly-added field keys exist in the order (append to end)
+  addedDefs.forEach(function(f) { if (_oppFieldOrder.indexOf(f.key) === -1) _oppFieldOrder.push(f.key); });
+  // Drop order entries for fields that no longer exist (e.g. removed added-field)
+  _oppFieldOrder = _oppFieldOrder.filter(function(k){ return !!byKey[k]; });
+
+  list.innerHTML = _oppFieldOrder.map(function(key) {
+    var f = byKey[key];
+    if (!f || _oppFieldHidden[key]) return '';
+    var inner = f.isAdded ? f.html : ('<span class="oppd-field-row-label">' + f.label + '</span><span class="oppd-field-row-value">' + f.html + '</span>');
+    return '<div class="oppd-field-row" draggable="true" data-key="' + key + '">' +
+      '<svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" style="color:var(--g300);flex-shrink:0"><circle cx="8" cy="5" r="1.4"/><circle cx="8" cy="12" r="1.4"/><circle cx="8" cy="19" r="1.4"/><circle cx="15" cy="5" r="1.4"/><circle cx="15" cy="12" r="1.4"/><circle cx="15" cy="19" r="1.4"/></svg>' +
+      inner + '</div>';
+  }).join('');
+
+  _oppRenderAddFieldChips();
+  _oppInitDetailsDnD();
+}
+
+function _oppRenderAddFieldChips() {
+  var wrap = document.getElementById('oppd-add-field-chips');
+  if (!wrap) return;
+  var avail = _oppAvailableCrossFields();
+  if (!avail.length) { wrap.innerHTML = '<div style="font-size:12px;color:var(--g400)">No more fields available from the linked contact or account.</div>'; return; }
+  wrap.innerHTML = avail.map(function(f) {
+    return '<button class="oppd-add-field-chip" onclick="_oppAddField(\'' + f.source + '\',\'' + f.field + '\',\'' + f.label + '\',\'' + f.icon + '\')">' + _oppIconSvg(f.icon, 11) + f.label + '</button>';
+  }).join('');
+}
+
+function _oppAddField(source, field, label, icon) {
+  _oppFieldAdded.push({source:source, field:field, label:label, icon:icon});
+  _oppRenderDetails();
+}
+function _oppRemoveAddedField(source, field) {
+  _oppFieldAdded = _oppFieldAdded.filter(function(a){ return !(a.source===source && a.field===field); });
+  var key = 'added:' + source + ':' + field;
+  _oppFieldOrder = _oppFieldOrder.filter(function(k){ return k !== key; });
+  _oppRenderDetails();
+}
+
+function _oppToggleCustomize(e) {
+  if (e) e.stopPropagation();
+  var pop = document.getElementById('oppd-customize-popover');
+  if (!pop) return;
+  if (pop.style.display === 'block') { pop.style.display = 'none'; return; }
+  var builtIns = _oppBuiltInFieldDefs();
+  pop.innerHTML = '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);padding:2px 4px 6px">Show / hide fields</div>' +
+    builtIns.map(function(f) {
+      var checked = !_oppFieldHidden[f.key];
+      return '<label class="oppd-cz-row"><input type="checkbox" ' + (checked?'checked':'') + ' onchange="_oppFieldToggleVisibility(\'' + f.key + '\')">' + f.label + '</label>';
+    }).join('') +
+    (_oppFieldAdded.length ? '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--g400);padding:8px 4px 6px;border-top:1px solid var(--g100);margin-top:6px">Added fields</div>' +
+      _oppFieldAdded.map(function(a) {
+        var key = 'added:' + a.source + ':' + a.field;
+        var checked = !_oppFieldHidden[key];
+        return '<label class="oppd-cz-row"><input type="checkbox" ' + (checked?'checked':'') + ' onchange="_oppFieldToggleVisibility(\'' + key + '\')">' + a.label + ' <span class="oppd-field-src-tag">' + (a.source==='contact'?'Contact':'Account') + '</span></label>';
+      }).join('') : '');
+  pop.style.display = 'block';
+}
+document.addEventListener('click', function(e) {
+  var pop = document.getElementById('oppd-customize-popover');
+  if (pop && pop.style.display === 'block' && !pop.contains(e.target) && e.target.closest('button[onclick^="_oppToggleCustomize"]') === null) {
+    pop.style.display = 'none';
+  }
+});
+function _oppFieldToggleVisibility(key) {
+  _oppFieldHidden[key] = !_oppFieldHidden[key];
+  _oppRenderDetails();
+}
+
+function _oppInitDetailsDnD() {
+  var list = document.getElementById('oppd-details-list');
+  if (!list || list.dataset.dndInit) return;
+  list.dataset.dndInit = '1';
+  var dragEl = null;
+  list.addEventListener('dragstart', function(e) {
+    var row = e.target.closest('.oppd-field-row');
+    if (!row) return;
+    dragEl = row;
+    row.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  list.addEventListener('dragend', function() {
+    if (dragEl) dragEl.classList.remove('dragging');
+    dragEl = null;
+    // Persist final DOM order into the config array
+    _oppFieldOrder = Array.from(list.querySelectorAll('.oppd-field-row')).map(function(r){ return r.dataset.key; })
+      .concat(_oppFieldOrder.filter(function(k){ return _oppFieldHidden[k]; })); // keep hidden fields in the saved order too
+  });
+  list.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    if (!dragEl) return;
+    var after = Array.from(list.querySelectorAll('.oppd-field-row:not(.dragging)')).find(function(row) {
+      var r = row.getBoundingClientRect();
+      return e.clientY < r.top + r.height / 2;
+    });
+    if (after) list.insertBefore(dragEl, after); else list.appendChild(dragEl);
+  });
 }
 
 function _oppRenderFocus(items) {
@@ -10990,6 +11213,8 @@ function openOppDetail(oppId) {
   if (actionsList) actionsList.innerHTML = 'No actions yet. Use Call, Task, or Meeting above.';
   var actionsCount = document.getElementById('oppd-actions-count');
   if (actionsCount) actionsCount.textContent = '(0)';
+  var czPop = document.getElementById('oppd-customize-popover');
+  if (czPop) czPop.style.display = 'none';
 
   // Header
   document.getElementById('oppd-header-title').textContent = opp.title;
@@ -10999,19 +11224,11 @@ function openOppDetail(oppId) {
   document.getElementById('oppd-owner-av').textContent = opp.ownerInit || '—';
   document.getElementById('oppd-owner-av').style.background = opp.ownerColor || 'var(--teal)';
   document.getElementById('oppd-owner-name').textContent = opp.owner || '—';
-  _oppSetStatusButtons('open');
 
-  // Sidebar Details list
-  document.getElementById('oppd-org').textContent = opp.org || '—';
-  document.getElementById('oppd-contact').textContent = opp.contact || '—';
-  document.getElementById('oppd-detail-pipeline').textContent = pipelineName;
-  document.getElementById('oppd-detail-stage').textContent = opp.stage || '—';
-  document.getElementById('oppd-detail-value').textContent = '$' + (opp.value||0).toLocaleString();
-  document.getElementById('oppd-close').textContent = opp.close || '—';
-  document.getElementById('oppd-prob').textContent = opp.prob || '—';
-  document.getElementById('oppd-detail-source').textContent = opp.dealSource || opp.source || '—';
-  document.getElementById('oppd-detail-recurring').textContent = opp.recurring ? ('On' + (opp.recurFreq ? ' (' + opp.recurFreq + ')' : '')) : 'Off';
-  document.getElementById('oppd-days').textContent = opp.days || '—';
+  // Sidebar Details list — customizable, reorderable, cross-record fields
+  _oppCurrentCtx = { opp: opp, pipelineName: pipelineName, detail: detail };
+  _oppSetStatusButtons('open');
+  _oppRenderDetails();
 
   // KPI cards
   document.getElementById('oppd-kpi-value').textContent = '$' + (opp.value||0).toLocaleString();
@@ -11066,12 +11283,6 @@ function openOppDetail(oppId) {
   // KPI row
   renderKpiRow('oppd', detail.pendingSale || opp.value || 0, detail.salesYTD || 0, detail.salesLifetime || 0);
 
-  // Owner in sidebar
-  var av2 = document.getElementById('oppd-owner-av2');
-  var nm2 = document.getElementById('oppd-owner-name2');
-  if (av2) av2.textContent = (opp.owner||'').split(' ').map(function(w){return w[0]||'';}).join('').substring(0,2).toUpperCase();
-  if (nm2) nm2.textContent = opp.owner || '—';
-
   _oppRenderFocus((detail && detail.focusItems) ? detail.focusItems : []);
   _oppRenderHistory((detail && detail.history) ? detail.history : (detail && detail.activity) ? detail.activity : []);
   _oppActionTab('activity', document.getElementById('oppd-atab-activity'));
@@ -11095,14 +11306,18 @@ function closeOppDetail() {
 }
 
 function openOrgFromOpp() {
-  var orgName = document.getElementById('oppd-org').textContent;
+  var orgEl = document.getElementById('oppd-org');
+  var orgName = (_oppCurrentCtx && _oppCurrentCtx.opp.org) || (orgEl && orgEl.textContent);
+  if (!orgName) return;
   closeOppDetail();
   _orgDetailFromPerson = false;
   openOrgDetail(orgName);
 }
 
 function openPersonFromOpp() {
-  var contactName = document.getElementById('oppd-contact').textContent;
+  var contactEl = document.getElementById('oppd-contact');
+  var contactName = (_oppCurrentCtx && _oppCurrentCtx.opp.contact) || (contactEl && contactEl.textContent);
+  if (!contactName) return;
   closeOppDetail();
   openPersonDetail(contactName);
 }
