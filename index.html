@@ -4155,6 +4155,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 <!-- Sub-tabs -->
 <div class="mkt-tabs">
   <button id="mkt-tab-email" class="mkt-tab active" onclick="_mktTab('email')">Email Marketing</button>
+  <button id="mkt-tab-lists" class="mkt-tab" onclick="_mktTab('lists')">Lists</button>
   <button id="mkt-tab-auto" class="mkt-tab" onclick="_mktTab('auto')">Automations</button>
   <button id="mkt-tab-contracts" class="mkt-tab" onclick="_mktTab('contracts')">Contracts</button>
   <button id="mkt-tab-invoices" class="mkt-tab" onclick="_mktTab('invoices')">Invoices</button>
@@ -4185,6 +4186,10 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   </div>
 
   <div id="mkt-campaigns-view">
+    <div style="position:relative;margin-bottom:14px;max-width:320px">
+      <input type="text" id="mkt-camp-search" placeholder="Search campaigns…" oninput="_mktCampSearch(this.value)" style="width:100%;box-sizing:border-box;border:1.5px solid var(--g200);border-radius:8px;padding:7px 12px 7px 32px;font-size:12.5px;font-family:var(--font);outline:none;color:var(--dark)" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:11px;top:50%;transform:translateY(-50%)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
     <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
       <div class="mkt-row mkt-row-head">
         <div>Campaign</div><div style="text-align:right">Recipients</div>
@@ -4198,6 +4203,35 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <div id="mkt-templates-view" class="three-col" style="display:none;margin-bottom:28px"></div>
 
 </div><!-- end mkt-panel-email -->
+
+<!-- ══════════ LISTS ══════════ -->
+<div id="mkt-panel-lists" style="display:none">
+
+  <div class="stat-row">
+    <div class="stat-card"><div class="stat-label">Total Lists</div><div class="stat-value" id="mkt-l-stat-total">0</div><div class="stat-delta" style="color:var(--g400)"><span id="mkt-l-stat-dynamic">0</span> dynamic · <span id="mkt-l-stat-static">0</span> static</div></div>
+    <div class="stat-card"><div class="stat-label">Contacts Reached</div><div class="stat-value teal" id="mkt-l-stat-contacts">0</div><div class="stat-delta" style="color:var(--g400)">Across all lists</div></div>
+    <div class="stat-card"><div class="stat-label">Used in Campaigns</div><div class="stat-value" id="mkt-l-stat-used">0</div><div class="stat-delta" style="color:var(--g400)">Campaigns built from a saved list</div></div>
+    <div class="stat-card"><div class="stat-label">Most Used List</div><div class="stat-value" style="font-size:15px" id="mkt-l-stat-top">&mdash;</div><div class="stat-delta" style="color:var(--g400)" id="mkt-l-stat-top-n">&nbsp;</div></div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+    <div style="font-size:13px;font-weight:600;color:var(--dark)">Email Lists</div>
+    <div style="font-size:11.5px;color:var(--g400);max-width:420px;text-align:right">Save a filter combination once, reuse it every time you build a campaign — no rebuilding audiences from scratch.</div>
+  </div>
+
+  <div style="position:relative;margin-bottom:14px;max-width:320px">
+    <input type="text" id="mkt-list-search" placeholder="Search lists…" oninput="_mktListSearch(this.value)" style="width:100%;box-sizing:border-box;border:1.5px solid var(--g200);border-radius:8px;padding:7px 12px 7px 32px;font-size:12.5px;font-family:var(--font);outline:none;color:var(--dark)" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:11px;top:50%;transform:translateY(-50%)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
+    <div class="mkt-list-row mkt-row-head">
+      <div>List</div><div style="text-align:right">Contacts</div><div>Type</div><div>Filters</div><div style="text-align:right">Used in</div><div></div>
+    </div>
+    <div id="mkt-list-list"></div>
+  </div>
+
+</div><!-- end mkt-panel-lists -->
 
 <!-- ══════════ AUTOMATIONS ══════════ -->
 <div id="mkt-panel-auto" style="display:none">
@@ -20876,11 +20910,14 @@ select.opp-note-tbtn{width:auto;padding:0 6px;font-size:12px}
 .mkt-ct-row{display:grid;grid-template-columns:minmax(220px,1.6fr) 1fr 110px 120px 92px 78px;gap:16px;align-items:center;padding:14px 20px}
 .mkt-inv-row{display:grid;grid-template-columns:minmax(140px,1fr) 1.3fr 110px 110px 92px 78px;gap:16px;align-items:center;padding:14px 20px}
 .mkt-pay-row{display:grid;grid-template-columns:90px 1fr 1.2fr 100px 100px 110px;gap:16px;align-items:center;padding:14px 20px}
+.mkt-list-row{display:grid;grid-template-columns:minmax(200px,1.6fr) 110px 110px 130px 110px 78px;gap:16px;align-items:center;padding:14px 20px}
 @media(max-width:1240px){
   .mkt-ct-row{grid-template-columns:minmax(180px,1.6fr) 1fr 0 110px 0 70px}
   .mkt-ct-row>:nth-child(3),.mkt-ct-row>:nth-child(5){display:none}
   .mkt-inv-row{grid-template-columns:minmax(110px,1fr) 1.3fr 0 100px 0 70px}
   .mkt-inv-row>:nth-child(3),.mkt-inv-row>:nth-child(5){display:none}
+  .mkt-list-row{grid-template-columns:minmax(160px,1.6fr) 100px 0 120px 0 70px}
+  .mkt-list-row>:nth-child(3),.mkt-list-row>:nth-child(5){display:none}
 }
 .mkt-doc-name{font-size:13px;font-weight:650;color:var(--dark);line-height:1.35;margin-bottom:3px;cursor:pointer}
 .mkt-doc-name:hover{color:var(--teal);text-decoration:underline}
@@ -21077,16 +21114,22 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
 
       <div class="mkt-sec-label">Audience</div>
       <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:20px">
-        <div class="mkt-cfg-grid" style="margin-bottom:12px">
-          <div class="mkt-field"><label>Pipeline stage</label><select id="mkt-c-stage" class="mkt-input" onchange="_mktCampRecount()"></select></div>
-          <div class="mkt-field"><label>Tag</label><select id="mkt-c-tag" class="mkt-input" onchange="_mktCampRecount()"></select></div>
-          <div class="mkt-field"><label>Owner</label><select id="mkt-c-rep" class="mkt-input" onchange="_mktCampRecount()"></select></div>
-          <div class="mkt-field"><label>Last contacted</label>
-            <select id="mkt-c-last" class="mkt-input" onchange="_mktCampRecount()">
-              <option value="">Any time</option><option value="7">7+ days ago</option>
-              <option value="14">14+ days ago</option><option value="30">30+ days ago</option>
-              <option value="60">60+ days ago</option><option value="90">90+ days ago</option>
-            </select>
+        <div class="mkt-field" style="margin-bottom:12px">
+          <label>Audience source</label>
+          <select id="mkt-c-list" class="mkt-input" onchange="_mktCampListChange()"></select>
+        </div>
+        <div id="mkt-c-custom-filters">
+          <div class="mkt-cfg-grid" style="margin-bottom:12px">
+            <div class="mkt-field"><label>Pipeline stage</label><select id="mkt-c-stage" class="mkt-input" onchange="_mktCampRecount()"></select></div>
+            <div class="mkt-field"><label>Tag</label><select id="mkt-c-tag" class="mkt-input" onchange="_mktCampRecount()"></select></div>
+            <div class="mkt-field"><label>Owner</label><select id="mkt-c-rep" class="mkt-input" onchange="_mktCampRecount()"></select></div>
+            <div class="mkt-field"><label>Last contacted</label>
+              <select id="mkt-c-last" class="mkt-input" onchange="_mktCampRecount()">
+                <option value="">Any time</option><option value="7">7+ days ago</option>
+                <option value="14">14+ days ago</option><option value="30">30+ days ago</option>
+                <option value="60">60+ days ago</option><option value="90">90+ days ago</option>
+              </select>
+            </div>
           </div>
         </div>
         <div class="mkt-audience" style="background:var(--white)">
@@ -21152,6 +21195,67 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
       <div class="modal-actions">
         <button class="modal-cancel" onclick="_mktCampSave(false)">Save as Draft</button>
         <button class="modal-save" onclick="_mktCampSave(true)"><span id="mkt-c-send-label">Send Now</span></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- New / Edit List modal -->
+<div class="modal-overlay" id="mkt-list-modal" onclick="closeOnOverlay(event,'mkt-list-modal')">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mkt-l-title" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title" id="mkt-l-title">New List</div>
+      <button class="modal-close" onclick="closeModal('mkt-list-modal')" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+
+      <div class="mkt-field" style="margin-bottom:14px">
+        <label>List name</label>
+        <input id="mkt-l-name" class="mkt-input" placeholder="e.g. VIP renewals, 90-day cold accounts">
+      </div>
+      <div class="mkt-field" style="margin-bottom:20px">
+        <label>Description <span style="color:var(--g400);font-weight:400">(optional)</span></label>
+        <input id="mkt-l-desc" class="mkt-input" placeholder="What is this list for?">
+      </div>
+
+      <div class="mkt-sec-label">Type</div>
+      <div style="display:flex;gap:10px;margin-bottom:20px">
+        <label style="flex:1;display:flex;align-items:flex-start;gap:9px;cursor:pointer;padding:12px 14px;background:var(--g50);border-radius:10px;border:1.5px solid var(--teal)" id="mkt-l-type-dynamic-wrap">
+          <input type="radio" name="mkt-l-type" value="dynamic" checked style="accent-color:var(--teal);margin-top:2px" onchange="_mktListTypeChange()">
+          <span><span style="font-size:13px;font-weight:700;color:var(--dark);display:block">Dynamic</span><span style="font-size:11px;color:var(--g400);line-height:1.4;display:block;margin-top:2px">Re-evaluates live every time it's used — new matching contacts are picked up automatically.</span></span>
+        </label>
+        <label style="flex:1;display:flex;align-items:flex-start;gap:9px;cursor:pointer;padding:12px 14px;background:var(--g50);border-radius:10px;border:1.5px solid transparent" id="mkt-l-type-static-wrap">
+          <input type="radio" name="mkt-l-type" value="static" style="accent-color:var(--teal);margin-top:2px" onchange="_mktListTypeChange()">
+          <span><span style="font-size:13px;font-weight:700;color:var(--dark);display:block">Static</span><span style="font-size:11px;color:var(--g400);line-height:1.4;display:block;margin-top:2px">Frozen snapshot of contacts at the moment you save — the set never changes after that.</span></span>
+        </label>
+      </div>
+
+      <div class="mkt-sec-label">Filters</div>
+      <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:14px">
+        <div class="mkt-cfg-grid" style="margin-bottom:12px">
+          <div class="mkt-field"><label>Pipeline stage</label><select id="mkt-l-stage" class="mkt-input" onchange="_mktListRecount()"></select></div>
+          <div class="mkt-field"><label>Tag</label><select id="mkt-l-tag" class="mkt-input" onchange="_mktListRecount()"></select></div>
+          <div class="mkt-field"><label>Owner</label><select id="mkt-l-rep" class="mkt-input" onchange="_mktListRecount()"></select></div>
+          <div class="mkt-field"><label>Last contacted</label>
+            <select id="mkt-l-last" class="mkt-input" onchange="_mktListRecount()">
+              <option value="">Any time</option><option value="7">7+ days ago</option>
+              <option value="14">14+ days ago</option><option value="30">30+ days ago</option>
+              <option value="60">60+ days ago</option><option value="90">90+ days ago</option>
+            </select>
+          </div>
+        </div>
+        <div class="mkt-audience" style="background:var(--white)">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span><strong id="mkt-l-count" style="font-family:var(--mono)">1,248</strong> contacts &mdash; <span id="mkt-l-desc-preview" style="color:var(--g400)">All contacts</span></span>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note" id="mkt-l-footer-note">Dynamic lists stay live and update automatically</div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="closeModal('mkt-list-modal')">Cancel</button>
+        <button class="modal-save" onclick="_mktListSave()">Save List</button>
       </div>
     </div>
   </div>
@@ -21687,6 +21791,11 @@ var MKT_ICONS = {
 var _mktAutomations = [];
 var _mktAutoFilter = 'all';
 var _mktCampFilterVal = 'all';
+var _mktCampSearchVal = '';
+function _mktCampSearch(v) {
+  _mktCampSearchVal = (v||'').trim().toLowerCase();
+  _mktRenderCampaigns();
+}
 var _mktEditingIdx = null;
 
 function _mktStageName(i) {
@@ -21752,6 +21861,178 @@ function _mktRepOpts(sel, anyLabel) {
   });
   return out;
 }
+/* ── Email Lists ── */
+var _mktLists = [
+  {id:'l1', name:'VIP renewals',        desc:'Top-tier accounts due for renewal outreach', type:'dynamic', stage:'', tag:'0', rep:'', last:'', usedIn:4, frozenN:null, frozenDesc:null},
+  {id:'l2', name:'90-day cold accounts', desc:'No contact in 3+ months — re-engagement targets', type:'dynamic', stage:'', tag:'', rep:'', last:'90', usedIn:2, frozenN:null, frozenDesc:null},
+  {id:'l3', name:'Q2 healthcare push',   desc:'Snapshot used for the Q2 healthcare campaign', type:'static', stage:'2', tag:'', rep:'', last:'', usedIn:1, frozenN:186, frozenDesc:'Stage: ' + (( _companySettings.pipelineStages||[])[2]||{}).name}
+];
+function _mktListAudience(stageSel, tagSel, repSel, lastSel) {
+  var parts = [], n = 1248;
+  if (stageSel.value !== '') { parts.push('Stage: ' + _mktStageName(stageSel.value)); n = Math.round(n * 0.28); }
+  if (tagSel.value !== '')   { parts.push('Tag: ' + ((_companySettings.tagDefinitions[tagSel.value]||{}).name||'')); n = Math.round(n * 0.44); }
+  if (repSel.value !== '')   { parts.push('Owner: ' + ((_companySettings.repQuotas[repSel.value]||{}).name||'')); n = Math.round(n * 0.19); }
+  if (lastSel.value !== '')  { parts.push('No contact ' + lastSel.value + '+ days'); n = Math.round(n * 0.36); }
+  return {n:n, desc: parts.length ? parts.join(' · ') : 'All contacts'};
+}
+function _mktListLiveCount(l) {
+  if (l.type === 'static' && l.frozenN != null) return {n:l.frozenN, desc:l.frozenDesc};
+  var parts = [], n = 1248;
+  if (l.stage !== '') { parts.push('Stage: ' + _mktStageName(l.stage)); n = Math.round(n * 0.28); }
+  if (l.tag !== '')   { parts.push('Tag: ' + ((_companySettings.tagDefinitions[l.tag]||{}).name||'')); n = Math.round(n * 0.44); }
+  if (l.rep !== '')   { parts.push('Owner: ' + ((_companySettings.repQuotas[l.rep]||{}).name||'')); n = Math.round(n * 0.19); }
+  if (l.last !== '')  { parts.push('No contact ' + l.last + '+ days'); n = Math.round(n * 0.36); }
+  return {n:n, desc: parts.length ? parts.join(' · ') : 'All contacts'};
+}
+var _mktListSearchVal = '';
+function _mktListSearch(v) {
+  _mktListSearchVal = (v||'').trim().toLowerCase();
+  _mktRenderLists();
+}
+function _mktRenderLists() {
+  var el = document.getElementById('mkt-list-list');
+  if (!el) return;
+  var totalContacts = 0, dynCount = 0, statCount = 0, usedTotal = 0, top = null;
+  var visibleLists = _mktLists.filter(function(l){
+    return !_mktListSearchVal || l.name.toLowerCase().indexOf(_mktListSearchVal) !== -1 || (l.desc||'').toLowerCase().indexOf(_mktListSearchVal) !== -1;
+  });
+  // Stats always reflect all lists, not just the filtered/search view
+  _mktLists.forEach(function(l){
+    var live = _mktListLiveCount(l);
+    totalContacts += live.n;
+    usedTotal += (l.usedIn || 0);
+    if (l.type === 'dynamic') dynCount++; else statCount++;
+    if (!top || (l.usedIn||0) > (top.usedIn||0)) top = l;
+  });
+  var rows = visibleLists.map(function(l) {
+    var i = _mktLists.indexOf(l);
+    var live = _mktListLiveCount(l);
+    return '<div class="mkt-list-row">' +
+      '<div><div class="mkt-doc-name" onclick="_mktListOpen(' + i + ')">' + l.name + '</div>' +
+        (l.desc ? '<div style="font-size:11px;color:var(--g400);margin-top:2px">' + l.desc + '</div>' : '') + '</div>' +
+      '<div style="text-align:right;font-family:var(--mono);font-weight:700;color:var(--dark)">' + live.n.toLocaleString() + '</div>' +
+      '<div>' + (l.type === 'dynamic'
+        ? '<span class="status-pill sp-green"><span class="pill-dot"></span>Dynamic</span>'
+        : '<span class="status-pill" style="background:var(--g100);color:var(--g500)">Static</span>') + '</div>' +
+      '<div style="font-size:11.5px;color:var(--g400)">' + live.desc + '</div>' +
+      '<div style="text-align:right;color:var(--g400);font-size:12.5px">' + (l.usedIn||0) + ' camp' + ((l.usedIn||0)===1?'':'s') + '</div>' +
+      '<div class="mkt-row-acts" style="opacity:1">' +
+        '<button class="mkt-ico-btn" title="Duplicate" onclick="_mktListDuplicate(' + i + ')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></button>' +
+        '<button class="mkt-ico-btn" title="Delete" onclick="_mktListDelete(' + i + ')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg></button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  el.innerHTML = rows || ('<div style="padding:32px;text-align:center;color:var(--g400);font-size:13px">' + (_mktListSearchVal ? 'No lists match your search.' : 'No lists yet — build one to save an audience for reuse.') + '</div>');
+  var elTotal = document.getElementById('mkt-l-stat-total'); if (elTotal) elTotal.textContent = _mktLists.length;
+  var elDyn = document.getElementById('mkt-l-stat-dynamic'); if (elDyn) elDyn.textContent = dynCount;
+  var elStat = document.getElementById('mkt-l-stat-static'); if (elStat) elStat.textContent = statCount;
+  var elContacts = document.getElementById('mkt-l-stat-contacts'); if (elContacts) elContacts.textContent = totalContacts.toLocaleString();
+  var elUsed = document.getElementById('mkt-l-stat-used'); if (elUsed) elUsed.textContent = usedTotal;
+  var elTop = document.getElementById('mkt-l-stat-top'); if (elTop) elTop.textContent = top ? top.name : '—';
+  var elTopN = document.getElementById('mkt-l-stat-top-n'); if (elTopN) elTopN.textContent = top ? ((top.usedIn||0) + ' campaign' + ((top.usedIn||0)===1?'':'s')) : ' ';
+}
+var _mktListEditIdx = null;
+function _mktListOpen(idx) {
+  _mktListEditIdx = (typeof idx === 'number') ? idx : null;
+  var l = _mktListEditIdx !== null ? _mktLists[_mktListEditIdx] : null;
+  document.getElementById('mkt-l-title').textContent = l ? 'Edit List' : 'New List';
+  document.getElementById('mkt-l-name').value = l ? l.name : '';
+  document.getElementById('mkt-l-desc').value = l ? (l.desc||'') : '';
+  document.getElementById('mkt-l-stage').innerHTML = '<option value="">All stages</option>' + _mktStageOpts(l ? l.stage : null);
+  document.getElementById('mkt-l-tag').innerHTML   = '<option value="">Any tag</option>' + _mktTagOpts(l ? l.tag : null);
+  document.getElementById('mkt-l-rep').innerHTML   = _mktRepOpts(l ? l.rep : '', 'All owners');
+  document.getElementById('mkt-l-last').value = l ? (l.last||'') : '';
+  var type = l ? l.type : 'dynamic';
+  document.querySelector('input[name="mkt-l-type"][value="' + type + '"]').checked = true;
+  _mktListTypeChange();
+  _mktListRecount();
+  openModal('mkt-list-modal');
+}
+function _mktListTypeChange() {
+  var type = document.querySelector('input[name="mkt-l-type"]:checked').value;
+  document.getElementById('mkt-l-type-dynamic-wrap').style.borderColor = type === 'dynamic' ? 'var(--teal)' : 'transparent';
+  document.getElementById('mkt-l-type-static-wrap').style.borderColor  = type === 'static'  ? 'var(--teal)' : 'transparent';
+  var note = document.getElementById('mkt-l-footer-note');
+  if (note) note.textContent = type === 'dynamic' ? 'Dynamic lists stay live and update automatically' : 'Static lists freeze the current contacts and never change';
+}
+function _mktListRecount() {
+  var a = _mktListAudience(
+    document.getElementById('mkt-l-stage'),
+    document.getElementById('mkt-l-tag'),
+    document.getElementById('mkt-l-rep'),
+    document.getElementById('mkt-l-last')
+  );
+  document.getElementById('mkt-l-count').textContent = a.n.toLocaleString();
+  document.getElementById('mkt-l-desc-preview').textContent = a.desc;
+}
+function _mktListSave() {
+  var name = document.getElementById('mkt-l-name').value.trim();
+  if (!name) { showToast('Give the list a name first'); document.getElementById('mkt-l-name').focus(); return; }
+  var type = document.querySelector('input[name="mkt-l-type"]:checked').value;
+  var stage = document.getElementById('mkt-l-stage').value;
+  var tag   = document.getElementById('mkt-l-tag').value;
+  var rep   = document.getElementById('mkt-l-rep').value;
+  var last  = document.getElementById('mkt-l-last').value;
+  var a = _mktListAudience(document.getElementById('mkt-l-stage'), document.getElementById('mkt-l-tag'), document.getElementById('mkt-l-rep'), document.getElementById('mkt-l-last'));
+  var rec = {
+    id: (_mktListEditIdx !== null) ? _mktLists[_mktListEditIdx].id : ('l' + Date.now()),
+    name: name,
+    desc: document.getElementById('mkt-l-desc').value.trim(),
+    type: type, stage: stage, tag: tag, rep: rep, last: last,
+    usedIn: (_mktListEditIdx !== null) ? (_mktLists[_mktListEditIdx].usedIn || 0) : 0,
+    frozenN: type === 'static' ? a.n : null,
+    frozenDesc: type === 'static' ? a.desc : null
+  };
+  if (_mktListEditIdx !== null) _mktLists[_mktListEditIdx] = rec; else _mktLists.push(rec);
+  closeModal('mkt-list-modal');
+  _mktRenderLists();
+  if (typeof _mktRefreshCampListOpts === 'function') _mktRefreshCampListOpts();
+  showToast('✓ List saved');
+}
+function _mktListDuplicate(idx) {
+  var l = _mktLists[idx];
+  var copy = Object.assign({}, l, {id:'l' + Date.now(), name: l.name + ' (copy)', usedIn: 0});
+  _mktLists.splice(idx + 1, 0, copy);
+  _mktRenderLists();
+  showToast('List duplicated');
+}
+function _mktListDelete(idx) {
+  _mktLists.splice(idx, 1);
+  _mktRenderLists();
+  if (typeof _mktRefreshCampListOpts === 'function') _mktRefreshCampListOpts();
+  showToast('List deleted');
+}
+
+/* ── Wire lists into the campaign audience picker ── */
+function _mktRefreshCampListOpts() {
+  var sel = document.getElementById('mkt-c-list');
+  if (!sel) return;
+  var cur = sel.value;
+  sel.innerHTML = '<option value="">Custom filter (build below)</option>' +
+    _mktLists.map(function(l, i){ return '<option value="' + i + '">' + l.name + '</option>'; }).join('');
+  sel.value = (cur && _mktLists[cur]) ? cur : '';
+}
+function _mktCampListChange() {
+  var sel = document.getElementById('mkt-c-list');
+  var wrap = document.getElementById('mkt-c-custom-filters');
+  var idx = sel.value;
+  var disable = idx !== '';
+  ['mkt-c-stage','mkt-c-tag','mkt-c-rep','mkt-c-last'].forEach(function(id){ document.getElementById(id).disabled = disable; });
+  wrap.style.opacity = disable ? '0.55' : '1';
+  if (disable) {
+    var l = _mktLists[idx];
+    document.getElementById('mkt-c-stage').value = l.stage || '';
+    document.getElementById('mkt-c-tag').value   = l.tag || '';
+    document.getElementById('mkt-c-rep').value   = l.rep || '';
+    document.getElementById('mkt-c-last').value  = l.last || '';
+    if (l.type === 'static') {
+      document.getElementById('mkt-c-count').textContent = l.frozenN.toLocaleString();
+      document.getElementById('mkt-c-desc').textContent  = l.frozenDesc;
+      return;
+    }
+  }
+  _mktCampRecount();
+}
 function _mktTmplOpts(sel) {
   return _mktTemplates.map(function(t,i){
     return '<option value="'+i+'"'+(String(sel)===String(i)?' selected':'')+'>'+t.n+'</option>';
@@ -21810,7 +22091,7 @@ function _mktActionText(a) {
 }
 
 /* ── Tab switching ── */
-var MKT_TABS = ['email', 'auto', 'contracts', 'invoices', 'payments'];
+var MKT_TABS = ['email', 'lists', 'auto', 'contracts', 'invoices', 'payments'];
 function _mktTab(tab) {
   MKT_TABS.forEach(function(t){
     var panel = document.getElementById('mkt-panel-' + t);
@@ -21820,12 +22101,14 @@ function _mktTab(tab) {
   });
   window._mktCurTab = tab;
   _mktSyncPrimaryLabel();
+  if (tab === 'lists' && typeof _mktRenderLists === 'function') _mktRenderLists();
   if (tab === 'contracts' && typeof _mktRenderContracts === 'function') _mktRenderContracts();
   if (tab === 'invoices' && typeof _mktRenderInvoices === 'function') _mktRenderInvoices();
   if (tab === 'payments' && typeof _mktRenderPayments === 'function') _mktRenderPayments();
 }
 function _mktSyncPrimaryLabel() {
-  var label = window._mktCurTab === 'auto' ? 'New Automation'
+  var label = window._mktCurTab === 'lists' ? 'New List'
+            : window._mktCurTab === 'auto' ? 'New Automation'
             : window._mktCurTab === 'contracts' ? (_mktCtFilterVal === 'templates' ? 'New Contract Template' : 'New Contract')
             : window._mktCurTab === 'invoices' ? 'New Invoice'
             : window._mktCurTab === 'payments' ? 'Record Payment'
@@ -21834,7 +22117,8 @@ function _mktSyncPrimaryLabel() {
   document.getElementById('mkt-primary-label').textContent = label;
 }
 function _mktPrimaryAction() {
-  if (window._mktCurTab === 'auto') _mktOpenBuilder(null);
+  if (window._mktCurTab === 'lists') _mktListOpen(null);
+  else if (window._mktCurTab === 'auto') _mktOpenBuilder(null);
   else if (window._mktCurTab === 'contracts') { if (_mktCtFilterVal === 'templates') _mktCtbOpen(null, true); else _mktCtbOpen(null, false); }
   else if (window._mktCurTab === 'invoices') _mktInvOpen(null);
   else if (window._mktCurTab === 'payments') _mktPayOpen();
@@ -21866,10 +22150,12 @@ function _mktRenderCampaigns() {
   var el = document.getElementById('mkt-campaign-list'); if (!el) return;
   var list = [];
   _mktCampaigns.forEach(function(c, i){
-    if (_mktCampFilterVal === 'all' || c.status === _mktCampFilterVal) list.push({c:c, i:i});
+    if (_mktCampFilterVal !== 'all' && c.status !== _mktCampFilterVal) return;
+    if (_mktCampSearchVal && c.n.toLowerCase().indexOf(_mktCampSearchVal) === -1) return;
+    list.push({c:c, i:i});
   });
   if (!list.length) {
-    el.innerHTML = '<div class="mkt-empty">No campaigns in this view yet.</div>';
+    el.innerHTML = '<div class="mkt-empty">' + (_mktCampSearchVal ? 'No campaigns match your search.' : 'No campaigns in this view yet.') + '</div>';
     return;
   }
   el.innerHTML = list.map(function(o){
@@ -22406,6 +22692,10 @@ function _mktNewCampaign(idx) {
   document.getElementById('mkt-c-rep').innerHTML   = _mktRepOpts('', 'All owners');
   document.getElementById('mkt-c-tmpl').innerHTML  = _mktTmplOpts(0);
   document.getElementById('mkt-c-last').value    = '';
+  ['mkt-c-stage','mkt-c-tag','mkt-c-rep','mkt-c-last'].forEach(function(id){ document.getElementById(id).disabled = false; });
+  document.getElementById('mkt-c-custom-filters').style.opacity = '1';
+  _mktRefreshCampListOpts();
+  document.getElementById('mkt-c-list').value = '';
   document.getElementById('mkt-c-subject').value = _mktTemplates[0].s;
   document.getElementById('mkt-c-preview').value = '';
   document.getElementById('mkt-c-from').value    = _companySettings.companyName || 'Sales Team';
