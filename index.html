@@ -4212,13 +4212,16 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <!-- Campaigns / Templates -->
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
     <div style="font-size:13px;font-weight:600;color:var(--dark)" id="mkt-list-title">Campaigns</div>
-    <div style="display:flex;gap:6px" id="mkt-camp-filters">
-      <button class="filter-chip active" onclick="_mktCampFilter(this,'all')">All</button>
-      <button class="filter-chip" onclick="_mktCampFilter(this,'Sent')">Sent</button>
-      <button class="filter-chip" onclick="_mktCampFilter(this,'Scheduled')">Scheduled</button>
-      <button class="filter-chip" onclick="_mktCampFilter(this,'Draft')">Draft</button>
-      <span class="mkt-chip-sep"></span>
-      <button class="filter-chip" onclick="_mktCampFilter(this,'templates')">Templates</button>
+    <div style="display:flex;gap:6px;align-items:center">
+      <div style="display:flex;gap:6px" id="mkt-camp-filters">
+        <button class="filter-chip active" onclick="_mktCampFilter(this,'all')">All</button>
+        <button class="filter-chip" onclick="_mktCampFilter(this,'Sent')">Sent</button>
+        <button class="filter-chip" onclick="_mktCampFilter(this,'Scheduled')">Scheduled</button>
+        <button class="filter-chip" onclick="_mktCampFilter(this,'Draft')">Draft</button>
+        <span class="mkt-chip-sep"></span>
+        <button class="filter-chip" onclick="_mktCampFilter(this,'templates')">Templates</button>
+      </div>
+      <button class="tb-btn btn-teal" style="font-size:11px;display:flex;align-items:center;gap:6px" onclick="_mktCampAceOpen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build with Ace</button>
     </div>
   </div>
 
@@ -20239,6 +20242,163 @@ function _aceCommConfirm() {
   </div>
 </div>
 
+<!-- ACE EMAIL CAMPAIGN MODAL -->
+<div id="ace-campaign-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_mktCampAceClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:640px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace Campaign Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace builds it</div>
+        </div>
+      </div>
+      <button onclick="_mktCampAceClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;padding:14px 24px;border-bottom:1px solid var(--g100);gap:0">
+      <div id="ace-cstep-1" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal)"><span style="width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">1</span> Describe</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-cstep-2" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">2</span> Review</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-cstep-3" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">3</span> Confirm</div>
+    </div>
+
+    <!-- Step 1 -->
+    <div id="ace-campaign-step1" style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Describe the campaign in plain English</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">Who should get it, roughly what it should say, and when. Ace will pick the audience, template, and send time.</div>
+      <textarea id="ace-campaign-input" placeholder="e.g. Send a re-engagement email to contacts we haven't talked to in 30+ days, subject about checking in." style="width:100%;height:110px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_mktCampAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Send a re-engagement email to contacts we haven't talked to in 30+ days"</button>
+          <button onclick="_mktCampAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Email everyone in the Contact Made stage a proposal follow-up"</button>
+          <button onclick="_mktCampAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Send our VIP renewals list a product update announcement next Monday"</button>
+          <button onclick="_mktCampAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Invite everyone owned by Brock Wilson to our event next month"</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Ace always saves campaigns as a Draft — nothing sends without your confirmation.</div>
+        <button onclick="_mktCampAceGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Generate with Ace
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="ace-campaign-step2" style="display:none;padding:24px">
+      <div id="ace-campaign-loading" style="text-align:center;padding:32px 0">
+        <div style="width:48px;height:48px;border-radius:50%;border:3px solid var(--g100);border-top-color:var(--teal);animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+        <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Ace is reading your description…</div>
+        <div style="font-size:12px;color:var(--g400)" id="ace-campaign-loading-sub">Matching your audience and picking a template</div>
+      </div>
+      <div id="ace-campaign-preview" style="display:none;overflow-y:auto;max-height:64vh">
+        <div id="ace-campaign-summary-banner" style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--teal)"></div>
+
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 16px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Assumptions Ace made</div>
+          <div id="ace-campaign-assumptions" style="font-size:12px;color:var(--g600);line-height:1.8"></div>
+        </div>
+
+        <div class="mkt-field" style="margin-bottom:14px">
+          <label>Campaign name</label>
+          <input id="ace-camp-name" class="mkt-input">
+        </div>
+
+        <div class="mkt-sec-label">Audience</div>
+        <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:14px">
+          <div class="mkt-field" style="margin-bottom:12px">
+            <label>Audience source</label>
+            <select id="ace-camp-list" class="mkt-input" onchange="_mktCampAceAudSrcChange()"></select>
+          </div>
+          <div id="ace-camp-custom-filters">
+            <div class="mkt-cfg-grid" style="margin-bottom:12px">
+              <div class="mkt-field"><label>Pipeline stage</label><select id="ace-camp-stage" class="mkt-input" onchange="_mktCampAceRecount()"></select></div>
+              <div class="mkt-field"><label>Tag</label><select id="ace-camp-tag" class="mkt-input" onchange="_mktCampAceRecount()"></select></div>
+              <div class="mkt-field"><label>Owner</label><select id="ace-camp-rep" class="mkt-input" onchange="_mktCampAceRecount()"></select></div>
+              <div class="mkt-field"><label>Last contacted</label>
+                <select id="ace-camp-last" class="mkt-input" onchange="_mktCampAceRecount()">
+                  <option value="">Any time</option><option value="7">7+ days ago</option>
+                  <option value="14">14+ days ago</option><option value="30">30+ days ago</option>
+                  <option value="60">60+ days ago</option><option value="90">90+ days ago</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="mkt-audience" style="background:var(--white)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span><strong id="ace-camp-count" style="font-family:var(--mono)">0</strong> contacts &mdash; <span id="ace-camp-desc" style="color:var(--g400)">All contacts</span></span>
+          </div>
+        </div>
+
+        <div class="mkt-sec-label">Content</div>
+        <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:14px">
+          <div class="mkt-field" style="margin-bottom:12px">
+            <label>Template</label>
+            <select id="ace-camp-tmpl" class="mkt-input" onchange="_mktCampAceTemplatePick()"></select>
+          </div>
+          <div class="mkt-field">
+            <label>Subject line</label>
+            <input id="ace-camp-subject" class="mkt-input">
+          </div>
+        </div>
+
+        <div class="mkt-sec-label">Delivery</div>
+        <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:16px">
+          <div class="mkt-cfg-grid">
+            <div class="mkt-field">
+              <label>When</label>
+              <select id="ace-camp-when" class="mkt-input" onchange="_mktCampAceWhenChange()">
+                <option value="now">Send immediately</option>
+                <option value="later">Schedule for later</option>
+              </select>
+            </div>
+            <div class="mkt-field" id="ace-camp-date-wrap" style="display:none">
+              <label>Send date</label>
+              <input id="ace-camp-date" class="mkt-input" type="date">
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;padding-top:4px">
+          <button onclick="_mktCampAceBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
+          <button onclick="_mktCampAceConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Save as Draft
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="ace-campaign-step3" style="display:none;padding:40px 24px;text-align:center">
+      <div style="width:56px;height:56px;background:rgba(29,158,117,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">Campaign Drafted</div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;max-width:400px;margin:0 auto 24px">Your campaign was built and saved as a draft. Review it any time from the Campaigns list, and send or schedule it when you're ready.</div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">What just happened</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ace parsed your plain-English campaign description</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Matched an audience filter and picked the closest-fit template</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Drafted a subject line and delivery timing</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Saved as a Draft — nothing was sent</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button onclick="_mktCampAceClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
+        <button onclick="_mktCampAceReset()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Build Another</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ACE CONTRACT MODAL -->
 <div id="ace-contract-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_mktCtAceClose()">
   <div style="background:#fff;border-radius:18px;width:100%;max-width:640px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
@@ -23069,6 +23229,231 @@ function _mktCampSave(send) {
     });
   }
 }
+/* ── Ace Email Campaign Builder ── */
+function _mktCampAceOpen() { _mktCampAceReset(); document.getElementById('ace-campaign-modal').style.display = 'flex'; }
+function _mktCampAceClose() { document.getElementById('ace-campaign-modal').style.display = 'none'; }
+function _mktCampAceReset() {
+  document.getElementById('ace-campaign-input').value = '';
+  document.getElementById('ace-campaign-step1').style.display = 'block';
+  document.getElementById('ace-campaign-step2').style.display = 'none';
+  document.getElementById('ace-campaign-step3').style.display = 'none';
+  ['ace-cstep-1','ace-cstep-2','ace-cstep-3'].forEach(function(id, idx) {
+    var el = document.getElementById(id);
+    var active = idx === 0;
+    el.style.color = active ? 'var(--teal)' : 'var(--g400)';
+    el.querySelector('span').style.background = active ? 'var(--teal)' : 'var(--g200)';
+    el.querySelector('span').style.color = active ? '#fff' : 'var(--g400)';
+  });
+}
+function _mktCampAceExample(btn) { document.getElementById('ace-campaign-input').value = btn.textContent.replace(/^"|"$/g, ''); }
+
+/* Pure-ish parser: text in, {plan, assumptions} out. No DOM reads, mirrors _mktAceParse. */
+function _mktAceCampaignParse(text) {
+  var lower = text.toLowerCase();
+  var assumptions = [];
+  var plan = { listIdx: -1, stage:'', tag:'', rep:'', last:'', tmplIdx:0, subject:'', name:'', when:'now', dateOffsetDays:null };
+
+  // ── Audience: saved list name match first, else stage/tag/owner/recency ──
+  var matchedList = -1;
+  for (var li = 0; li < _mktLists.length; li++) {
+    if (lower.indexOf(_mktLists[li].name.toLowerCase()) !== -1) { matchedList = li; break; }
+  }
+  if (matchedList !== -1) {
+    plan.listIdx = matchedList;
+    assumptions.push('Matched the saved list "' + _mktLists[matchedList].name + '" from your description.');
+  } else {
+    var stages = _companySettings.pipelineStages || [];
+    for (var s = 0; s < stages.length; s++) { if (lower.indexOf(stages[s].name.toLowerCase()) !== -1) { plan.stage = String(s); break; } }
+    var tags = _companySettings.tagDefinitions || [];
+    for (var t = 0; t < tags.length; t++) { if (lower.indexOf(tags[t].name.toLowerCase()) !== -1) { plan.tag = String(t); break; } }
+    var reps = _companySettings.repQuotas || {};
+    Object.keys(reps).forEach(function(k){ if (!plan.rep && lower.indexOf(reps[k].name.toLowerCase()) !== -1) plan.rep = k; });
+    var dm = lower.match(/(\d+)\+?\s*days?/);
+    if (/haven'?t (talked|contacted|touched|reached)|no (recent )?contact|gone? quiet|quiet for|\bcold\b|inactive|re-?engag/.test(lower)) {
+      plan.last = dm ? dm[1] : '30';
+    } else if (dm && /contact|touch|activity/.test(lower)) {
+      plan.last = dm[1];
+    }
+    if (!plan.stage && !plan.tag && !plan.rep && !plan.last) {
+      assumptions.push('No specific audience filter detected in your description, so Ace defaulted to All Contacts — narrow it below if needed.');
+    }
+  }
+
+  // ── Template: best keyword overlap against name + description ──
+  var bestIdx = 0, bestScore = 0;
+  _mktTemplates.forEach(function(tpl, idx) {
+    var words = (tpl.n + ' ' + tpl.d).toLowerCase().split(/[^a-z]+/).filter(function(w){ return w.length > 3; });
+    var score = 0;
+    words.forEach(function(w){ if (lower.indexOf(w) !== -1) score++; });
+    if (score > bestScore) { bestScore = score; bestIdx = idx; }
+  });
+  plan.tmplIdx = bestIdx;
+  if (bestScore === 0) assumptions.push('No clear template match, so Ace started from "' + _mktTemplates[0].n + '" — swap it below if another fits better.');
+
+  // ── Subject line ──
+  var subjMatch = text.match(/subject(?:\s*line)?\s*(?:about|:|is)?\s*["']?([^."'\n]{3,60})["']?/i);
+  if (subjMatch) {
+    plan.subject = subjMatch[1].trim();
+  } else {
+    plan.subject = _mktTemplates[plan.tmplIdx].s;
+    assumptions.push('No explicit subject line given, so Ace used the subject from the matched template.');
+  }
+
+  // ── Name ──
+  plan.name = text.length > 48 ? (text.slice(0, 45) + '…') : text;
+  plan.name = plan.name.charAt(0).toUpperCase() + plan.name.slice(1);
+
+  // ── Timing ──
+  var inDaysMatch = lower.match(/\bin (\d+) days?\b/);
+  if (/next monday/.test(lower)) {
+    var today = new Date().getDay(); // 0=Sun..6=Sat
+    var offset = ((1 - today) + 7) % 7; offset = offset === 0 ? 7 : offset;
+    plan.when = 'later'; plan.dateOffsetDays = offset;
+    assumptions.push('Scheduled for next Monday based on your description.');
+  } else if (/next week/.test(lower)) {
+    plan.when = 'later'; plan.dateOffsetDays = 7;
+    assumptions.push('Scheduled 7 days out for "next week."');
+  } else if (inDaysMatch) {
+    plan.when = 'later'; plan.dateOffsetDays = parseInt(inDaysMatch[1], 10);
+  } else if (/next month/.test(lower)) {
+    plan.when = 'later'; plan.dateOffsetDays = 30;
+    assumptions.push('Scheduled 30 days out for "next month."');
+  } else {
+    plan.when = 'now';
+  }
+
+  return { plan: plan, assumptions: assumptions };
+}
+
+function _mktCampAceGenerate() {
+  var input = document.getElementById('ace-campaign-input').value.trim();
+  if (!input) { showToast('Please describe the campaign first'); return; }
+  document.getElementById('ace-campaign-step1').style.display = 'none';
+  document.getElementById('ace-campaign-step2').style.display = 'block';
+  document.getElementById('ace-campaign-loading').style.display = 'block';
+  document.getElementById('ace-campaign-preview').style.display = 'none';
+  var s2 = document.getElementById('ace-cstep-2');
+  s2.style.color = 'var(--teal)'; s2.querySelector('span').style.background = 'var(--teal)'; s2.querySelector('span').style.color = '#fff';
+  var msgs = ['Matching your audience…', 'Scanning your template library…', 'Drafting a subject line…', 'Working out the send time…'];
+  var i = 0; var sub = document.getElementById('ace-campaign-loading-sub');
+  var ticker = setInterval(function(){ sub.textContent = msgs[i++ % msgs.length]; }, 600);
+  setTimeout(function() {
+    clearInterval(ticker);
+    var result = _mktAceCampaignParse(input);
+    _mktCampAceRenderPreview(result);
+    document.getElementById('ace-campaign-loading').style.display = 'none';
+    document.getElementById('ace-campaign-preview').style.display = 'block';
+  }, 2400);
+}
+
+function _mktCampAceRenderPreview(result) {
+  var plan = result.plan, assumptions = result.assumptions;
+  document.getElementById('ace-campaign-summary-banner').textContent = 'Ace built a draft campaign from your description — review and adjust anything below before saving.';
+  document.getElementById('ace-campaign-assumptions').innerHTML = assumptions.length
+    ? assumptions.map(function(a){ return '• ' + a; }).join('<br>')
+    : 'No major assumptions — your description was specific enough to match directly.';
+  document.getElementById('ace-camp-name').value = plan.name;
+
+  var listSel = document.getElementById('ace-camp-list');
+  listSel.innerHTML = '<option value="">Custom filter (build below)</option>' + _mktLists.map(function(l, i){ return '<option value="' + i + '">' + l.name + '</option>'; }).join('');
+  document.getElementById('ace-camp-stage').innerHTML = '<option value="">All stages</option>' + _mktStageOpts(plan.stage);
+  document.getElementById('ace-camp-tag').innerHTML   = '<option value="">Any tag</option>' + _mktTagOpts(plan.tag);
+  document.getElementById('ace-camp-rep').innerHTML   = _mktRepOpts(plan.rep, 'All owners');
+  document.getElementById('ace-camp-last').value = plan.last || '';
+  listSel.value = plan.listIdx >= 0 ? String(plan.listIdx) : '';
+  _mktCampAceAudSrcChange();
+
+  document.getElementById('ace-camp-tmpl').innerHTML = _mktTmplOpts(plan.tmplIdx);
+  document.getElementById('ace-camp-subject').value = plan.subject;
+
+  document.getElementById('ace-camp-when').value = plan.when;
+  if (plan.when === 'later' && plan.dateOffsetDays != null) {
+    var d = new Date(); d.setDate(d.getDate() + plan.dateOffsetDays);
+    document.getElementById('ace-camp-date').value = d.toISOString().slice(0, 10);
+  } else {
+    document.getElementById('ace-camp-date').value = '';
+  }
+  _mktCampAceWhenChange();
+}
+
+function _mktCampAceTemplatePick() {
+  var t = _mktTemplates[document.getElementById('ace-camp-tmpl').value];
+  if (t) document.getElementById('ace-camp-subject').value = t.s;
+}
+function _mktCampAceWhenChange() {
+  var v = document.getElementById('ace-camp-when').value;
+  document.getElementById('ace-camp-date-wrap').style.display = (v === 'later') ? '' : 'none';
+}
+function _mktCampAceAudSrcChange() {
+  var sel = document.getElementById('ace-camp-list');
+  var wrap = document.getElementById('ace-camp-custom-filters');
+  var idx = sel.value;
+  var disable = idx !== '';
+  ['ace-camp-stage','ace-camp-tag','ace-camp-rep','ace-camp-last'].forEach(function(id){ document.getElementById(id).disabled = disable; });
+  wrap.style.opacity = disable ? '0.55' : '1';
+  if (disable) {
+    var l = _mktLists[idx];
+    document.getElementById('ace-camp-stage').value = l.stage || '';
+    document.getElementById('ace-camp-tag').value   = l.tag || '';
+    document.getElementById('ace-camp-rep').value   = l.rep || '';
+    document.getElementById('ace-camp-last').value  = l.last || '';
+    if (l.type === 'static') {
+      document.getElementById('ace-camp-count').textContent = l.frozenN.toLocaleString();
+      document.getElementById('ace-camp-desc').textContent  = l.frozenDesc;
+      return;
+    }
+  }
+  _mktCampAceRecount();
+}
+function _mktCampAceRecount() {
+  var a = _mktListAudience(
+    document.getElementById('ace-camp-stage'),
+    document.getElementById('ace-camp-tag'),
+    document.getElementById('ace-camp-rep'),
+    document.getElementById('ace-camp-last')
+  );
+  document.getElementById('ace-camp-count').textContent = a.n.toLocaleString();
+  document.getElementById('ace-camp-desc').textContent  = a.desc;
+}
+function _mktCampAceBack() {
+  document.getElementById('ace-campaign-step2').style.display = 'none';
+  document.getElementById('ace-campaign-step1').style.display = 'block';
+  var s2 = document.getElementById('ace-cstep-2');
+  s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
+}
+function _mktCampAceConfirm() {
+  var name = document.getElementById('ace-camp-name').value.trim() || 'Untitled Campaign';
+  var listSel = document.getElementById('ace-camp-list');
+  var a;
+  if (listSel.value !== '' && _mktLists[listSel.value] && _mktLists[listSel.value].type === 'static') {
+    var l = _mktLists[listSel.value];
+    a = { n: l.frozenN, desc: l.frozenDesc };
+  } else {
+    a = _mktListAudience(
+      document.getElementById('ace-camp-stage'),
+      document.getElementById('ace-camp-tag'),
+      document.getElementById('ace-camp-rep'),
+      document.getElementById('ace-camp-last')
+    );
+  }
+  var tmplIdx = Number(document.getElementById('ace-camp-tmpl').value) || 0;
+  var rec = {
+    n: name, aud: a.desc, date: '-', status: 'Draft',
+    sent: 0, open: 0, click: 0, unsub: 0, bounce: 0,
+    tmplIdx: tmplIdx, trackOpens: true, notifyOpens: true
+  };
+  _mktCampaigns.unshift(rec);
+  _mktCampFilterVal = 'all';
+  document.querySelectorAll('#mkt-camp-filters .filter-chip').forEach(function(b, i){ b.classList.toggle('active', i === 0); });
+  if (typeof _mktRenderCampaigns === 'function') _mktRenderCampaigns();
+
+  document.getElementById('ace-campaign-step2').style.display = 'none';
+  document.getElementById('ace-campaign-step3').style.display = 'block';
+  var s3 = document.getElementById('ace-cstep-3');
+  s3.style.color = 'var(--teal)'; s3.querySelector('span').style.background = 'var(--teal)'; s3.querySelector('span').style.color = '#fff';
+  showToast('Saved "' + name + '" as draft');
+}
+
 /* ── Automations tab rendering ── */
 function _mktAutoFilterSet(btn, val) { _mktAutoFilter = val; }
 function _mktAutoFilter2() {}
