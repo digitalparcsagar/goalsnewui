@@ -2969,7 +2969,11 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
     <div style="width:1px;height:18px;background:var(--g200)"></div>
     <div style="position:relative">
-      <button class="tb-btn btn-ghost" style="font-size:12px" onclick="toggleCRMFilter()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filter</button>
+      <button class="tb-btn btn-ghost" id="crm-filter-btn" style="font-size:12px" onclick="_crmOpenFilterModal()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg> Filter<span id="crm-filter-badge" style="display:none;background:var(--teal);color:#fff;border-radius:9px;font-size:10px;font-weight:700;padding:1px 6px;margin-left:2px">0</span></button>
+    </div>
+    <div style="position:relative">
+      <button class="tb-btn btn-ghost" style="font-size:12px;padding:7px 9px" title="Customize columns" onclick="_crmToggleColsPopover(event)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg></button>
+      <div id="crm-cols-popover" style="display:none;position:absolute;top:calc(100% + 6px);right:0;background:#fff;border:1.5px solid var(--g200);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,0.1);z-index:300;width:220px;padding:10px 0"></div>
     </div>
     <button class="tb-btn btn-teal" style="font-size:12px" onclick="openDealForm()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Opportunity</button>
   </div>
@@ -3037,6 +3041,57 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <select style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;font-family:var(--font);background:#fff;outline:none;color:var(--dark)" onchange="applyCRMFilter('activity',this.value)">
         <option>All</option><option>Overdue</option><option>Due today</option><option>No activity</option>
       </select></div>
+  </div>
+</div>
+
+<!-- ── Filter Opportunities modal ── -->
+<div class="modal-overlay" id="crm-filter-modal" onclick="closeOnOverlay(event,'crm-filter-modal')">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="crm-filter-title" onclick="event.stopPropagation()" style="max-width:420px">
+    <div class="modal-header">
+      <div class="modal-title" id="crm-filter-title">Filter Opportunities</div>
+      <div style="font-size:12px;color:var(--g400);font-weight:600" id="crm-filter-total">80 total</div>
+    </div>
+    <div class="modal-body">
+
+      <div class="mkt-field" style="margin-bottom:16px">
+        <label>Opportunity</label>
+        <input id="crm-f-text" class="mkt-input" placeholder="Filter by opportunity…" oninput="_crmFilterPreviewCount()">
+      </div>
+      <div class="mkt-field" style="margin-bottom:16px">
+        <label>Organization</label>
+        <select id="crm-f-org" class="mkt-input" onchange="_crmFilterPreviewCount()"></select>
+      </div>
+      <div class="mkt-field" style="margin-bottom:16px">
+        <label>Contact</label>
+        <select id="crm-f-contact" class="mkt-input" onchange="_crmFilterPreviewCount()"></select>
+      </div>
+      <div class="mkt-field" style="margin-bottom:16px">
+        <label>Stage</label>
+        <select id="crm-f-stage" class="mkt-input" onchange="_crmFilterPreviewCount()"></select>
+      </div>
+      <div class="mkt-field" style="margin-bottom:6px">
+        <label>Opportunity Status</label>
+        <select id="crm-f-status" class="mkt-input" onchange="_crmFilterPreviewCount()">
+          <option value="">All Statuses</option>
+          <option value="open">Open</option>
+          <option value="won">Won</option>
+        </select>
+      </div>
+
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px;margin-bottom:4px">
+        <div class="mkt-sec-label" style="margin-bottom:0">Custom Filters</div>
+        <button onclick="_crmAddAdvFilterRow()" style="border:none;background:none;color:var(--teal);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">+ Add Filter</button>
+      </div>
+      <div style="font-size:11px;color:var(--g400);margin-bottom:10px">Filter by any field — text, first name, notes, or other custom fields.</div>
+      <div id="crm-f-adv-rows" style="display:flex;flex-direction:column;gap:8px"></div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="modal-cancel" style="color:var(--red)" onclick="_crmClearFilters()">Clear All</button>
+      <div class="modal-actions">
+        <button class="modal-save" onclick="_crmApplyFilterModal()">Done</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -3279,26 +3334,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 <div id="crm-list-view" style="display:none">
   <div style="overflow-x:auto;border:1px solid var(--g200);border-radius:12px;background:#fff">
     <table style="width:100%;border-collapse:collapse;min-width:800px">
-      <thead>
-        <tr style="border-bottom:1.5px solid var(--g200)">
-          <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap">Opportunity</th>
-          <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap">Organization</th>
-          <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap">Contact</th>
-          <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap">Stage</th>
-          <th style="padding:10px 14px;text-align:right;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap">Value</th>
-          <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap">Close Date</th>
-          <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap">Owner</th>
-          <th style="padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap">Activity</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr class="crm-list-row" onclick="openDealDetail('deal-1')"><td style="padding:11px 14px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Riverside Financial — Group Benefits</div></td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Riverside Financial Group</td><td style="padding:11px 14px"><div style="display:flex;align-items:center;gap:6px"><div class="crm-contact-chip" style="width:22px;height:22px;font-size:9px">ML</div><span style="font-size:12px;color:var(--g600)">Marcus Lee</span></div></td><td style="padding:11px 14px"><span class="stage-badge" style="background:rgba(99,102,241,0.1);color:#6366f1;font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600">Prospect</span></td><td style="padding:11px 14px;text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$92,000</td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Jun 30, 2026</td><td style="padding:11px 14px"><div class="crm-rep-avatar" style="background:#1d9e75">BW</div></td><td style="padding:11px 14px"><span style="font-size:11px;color:var(--teal)">●  Due tomorrow</span></td></tr>
-        <tr class="crm-list-row" onclick="openDealDetail('deal-2')"><td style="padding:11px 14px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Clearview Dental — Employee Plan</div></td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Clearview Dental Associates</td><td style="padding:11px 14px"><div style="display:flex;align-items:center;gap:6px"><div class="crm-contact-chip" style="width:22px;height:22px;font-size:9px">SK</div><span style="font-size:12px;color:var(--g600)">Sara Kim</span></div></td><td style="padding:11px 14px"><span class="stage-badge" style="background:rgba(99,102,241,0.1);color:#6366f1;font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600">Prospect</span></td><td style="padding:11px 14px;text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$70,000</td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Jul 15, 2026</td><td style="padding:11px 14px"><div class="crm-rep-avatar" style="background:#8b5cf6">RH</div></td><td style="padding:11px 14px;font-size:11px;color:var(--g400)">No activity</td></tr>
-        <tr class="crm-list-row" onclick="openDealDetail('deal-3')"><td style="padding:11px 14px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Apex Holdings — Life &amp; Disability</div></td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Apex Holdings LLC</td><td style="padding:11px 14px"><div style="display:flex;align-items:center;gap:6px"><div class="crm-contact-chip" style="width:22px;height:22px;font-size:9px">TN</div><span style="font-size:12px;color:var(--g600)">Tara Nguyen</span></div></td><td style="padding:11px 14px"><span class="stage-badge" style="background:rgba(234,179,8,0.1);color:#ca8a04;font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600">Contact Made</span></td><td style="padding:11px 14px;text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$145,000</td><td style="padding:11px 14px;font-size:12px;color:var(--red)">Jun 20, 2026 ⚠</td><td style="padding:11px 14px"><div class="crm-rep-avatar" style="background:#f59e0b">JR</div></td><td style="padding:11px 14px"><span style="font-size:11px;color:var(--red)">●  Overdue 8d</span></td></tr>
-        <tr class="crm-list-row" onclick="openDealDetail('deal-4')"><td style="padding:11px 14px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Summit Credit Union — Annuity</div></td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Summit Credit Union</td><td style="padding:11px 14px"><div style="display:flex;align-items:center;gap:6px"><div class="crm-contact-chip" style="width:22px;height:22px;font-size:9px">DP</div><span style="font-size:12px;color:var(--g600)">David Park</span></div></td><td style="padding:11px 14px"><span class="stage-badge" style="background:rgba(234,179,8,0.1);color:#ca8a04;font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600">Contact Made</span></td><td style="padding:11px 14px;text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$128,500</td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Jul 31, 2026</td><td style="padding:11px 14px"><div class="crm-rep-avatar" style="background:#1d9e75">BW</div></td><td style="padding:11px 14px"><span style="font-size:11px;color:var(--teal)">●  Call tomorrow</span></td></tr>
-        <tr class="crm-list-row" onclick="openDealDetail('deal-6')"><td style="padding:11px 14px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Harborview Medical — Group Health</div></td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Harborview Medical Center</td><td style="padding:11px 14px"><div style="display:flex;align-items:center;gap:6px"><div class="crm-contact-chip" style="width:22px;height:22px;font-size:9px">AR</div><span style="font-size:12px;color:var(--g600)">Angela Ross</span></div></td><td style="padding:11px 14px"><span class="stage-badge" style="background:rgba(59,130,246,0.1);color:#3b82f6;font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600">Docs Collected</span></td><td style="padding:11px 14px;text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$158,000</td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Jul 1, 2026</td><td style="padding:11px 14px"><div class="crm-rep-avatar" style="background:#8b5cf6">RH</div></td><td style="padding:11px 14px"><span style="font-size:11px;color:var(--teal)">●  Meeting Friday</span></td></tr>
-        <tr class="crm-list-row" onclick="openDealDetail('deal-8')"><td style="padding:11px 14px"><div style="font-size:13px;font-weight:600;color:var(--dark)">Lakewood Builders — Workers Comp</div></td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Lakewood Builders Inc.</td><td style="padding:11px 14px"><div style="display:flex;align-items:center;gap:6px"><div class="crm-contact-chip" style="width:22px;height:22px;font-size:9px">CB</div><span style="font-size:12px;color:var(--g600)">Chris Brown</span></div></td><td style="padding:11px 14px"><span class="stage-badge" style="background:rgba(29,158,117,0.1);color:var(--teal);font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600">Payment Confirmed</span></td><td style="padding:11px 14px;text-align:right;font-size:13px;font-weight:600;color:var(--dark)">$174,000</td><td style="padding:11px 14px;font-size:12px;color:var(--g600)">Jun 28, 2026</td><td style="padding:11px 14px"><div class="crm-rep-avatar" style="background:#3b82f6">DS</div></td><td style="padding:11px 14px"><span style="font-size:11px;color:var(--teal)">●  Follow-up sent</span></td></tr>
-      </tbody>
+      <thead id="crm-list-thead"></thead>
+      <tbody id="crm-list-tbody"></tbody>
     </table>
   </div>
 </div>
@@ -8123,7 +8160,71 @@ const CRM_PIPELINES = {
 
 let activePipelineKey = 'sales';
 let activeViewMode = 'kanban';
-let crmFilters = { owner: 'all', closeDate: 'all', value: 'all', activity: 'all' };
+let crmFilters = { owner: 'all', closeDate: 'all', value: 'all', activity: 'all',
+  text: '', org: '', contact: '', stage: '', status: '', adv: [] };
+
+/* ── Derived "created date" (no real field on seed opps — deterministic from id+close) ── */
+function _crmCreatedDate(o) {
+  var seed = o.id.split('').reduce(function(s,c){ return s + c.charCodeAt(0); }, 0);
+  var closeMs = Date.parse(o.close);
+  if (isNaN(closeMs)) return '—';
+  var backDays = 30 + (seed % 90);
+  var d = new Date(closeMs - backDays * 86400000);
+  return d.toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'});
+}
+function _crmStatus(o) {
+  var pipe = CRM_PIPELINES[activePipelineKey];
+  return o.stage === pipe.stages[pipe.stages.length - 1] ? 'won' : 'open';
+}
+
+/* ── Advanced ("custom") filter fields ── */
+var _crmAdvFieldDefs = [
+  {key:'title', label:'Opportunity Name'},
+  {key:'org', label:'Organization'},
+  {key:'contactFirst', label:'Contact First Name'},
+  {key:'contactLast', label:'Contact Last Name'},
+  {key:'owner', label:'Owner'},
+  {key:'value', label:'Deal Value'},
+  {key:'stage', label:'Stage'},
+  {key:'close', label:'Close Date'},
+  {key:'recurring', label:'Recurring'},
+  {key:'contactEmail', label:'Contact Email'},
+  {key:'contactPhone', label:'Contact Phone'},
+  {key:'contactTitle', label:'Contact Title'},
+  {key:'contactCity', label:'Contact City'},
+  {key:'acctIndustry', label:'Account Industry'},
+  {key:'acctWebsite', label:'Account Website'},
+  {key:'acctEmployees', label:'Account Employees'},
+  {key:'acctRevenue', label:'Account Revenue'},
+  {key:'notesField', label:'Notes Field (custom)'}
+];
+function _crmAdvFieldValue(o, key) {
+  var person = o.contact && (typeof PEOPLE_DATA !== 'undefined') && PEOPLE_DATA[o.contact];
+  var org = o.org && (typeof ORGS_DATA !== 'undefined') && ORGS_DATA[o.org];
+  if (key === 'title') return o.title || '';
+  if (key === 'org') return o.org || '';
+  if (key === 'contactFirst') return (o.contact || '').split(' ')[0] || '';
+  if (key === 'contactLast') return (o.contact || '').split(' ').slice(1).join(' ') || '';
+  if (key === 'owner') return o.owner || '';
+  if (key === 'value') return o.value != null ? String(o.value) : '';
+  if (key === 'stage') return o.stage || '';
+  if (key === 'close') return o.close || '';
+  if (key === 'recurring') return o.recurring ? 'Yes' : 'No';
+  if (key === 'contactEmail') return (person && person.email) || '';
+  if (key === 'contactPhone') return (person && person.phone) || '';
+  if (key === 'contactTitle') return (person && person.title) || '';
+  if (key === 'contactCity') return (person && person.city) || '';
+  if (key === 'acctIndustry') return (org && org.industry) || '';
+  if (key === 'acctWebsite') return (org && org.website) || '';
+  if (key === 'acctEmployees') return org && org.employees != null ? String(org.employees) : '';
+  if (key === 'acctRevenue') return org && org.revenue != null ? String(org.revenue) : '';
+  if (key === 'notesField') return o.notesField || '';
+  return '';
+}
+function _crmMatchAdv(o, rule) {
+  if (!rule.value) return true;
+  return _crmAdvFieldValue(o, rule.field).toLowerCase().indexOf(rule.value.toLowerCase()) !== -1;
+}
 
 function getActiveOpps() {
   const pipe = CRM_PIPELINES[activePipelineKey];
@@ -8138,6 +8239,14 @@ function getActiveOpps() {
     if (crmFilters.value === '50-100' && (o.value < 50000 || o.value > 100000)) return false;
     if (crmFilters.value === '100-250' && (o.value < 100000 || o.value > 250000)) return false;
     if (crmFilters.value === 'over250' && o.value <= 250000) return false;
+    if (crmFilters.text && o.title.toLowerCase().indexOf(crmFilters.text.toLowerCase()) === -1) return false;
+    if (crmFilters.org && o.org !== crmFilters.org) return false;
+    if (crmFilters.contact && o.contact !== crmFilters.contact) return false;
+    if (crmFilters.stage && o.stage !== crmFilters.stage) return false;
+    if (crmFilters.status && _crmStatus(o) !== crmFilters.status) return false;
+    if (crmFilters.adv && crmFilters.adv.length) {
+      for (var i = 0; i < crmFilters.adv.length; i++) { if (!_crmMatchAdv(o, crmFilters.adv[i])) return false; }
+    }
     return true;
   });
 }
@@ -8221,39 +8330,210 @@ function renderBoard(pipe, opps) {
   initDragDrop();
 }
 
+const _crmStageBadgeColor = {
+  'Prospect Registered':'rgba(99,102,241,0.1);color:#6366f1',
+  'Contact Made':'rgba(234,179,8,0.1);color:#ca8a04',
+  'Documents Collected':'rgba(59,130,246,0.1);color:#3b82f6',
+  'Payment Confirmed':'rgba(29,158,117,0.1);color:var(--teal)',
+  'Enrolled':'rgba(16,185,129,0.1);color:#10b981',
+  'Contract Signed':'rgba(29,158,117,0.15);color:var(--teal)',
+  'Up for Renewal':'rgba(99,102,241,0.1);color:#6366f1',
+  'Review Sent':'rgba(234,179,8,0.1);color:#ca8a04',
+  'Meeting Scheduled':'rgba(59,130,246,0.1);color:#3b82f6',
+  'Terms Agreed':'rgba(29,158,117,0.1);color:var(--teal)',
+  'Renewed':'rgba(16,185,129,0.15);color:#10b981',
+  'Identified':'rgba(99,102,241,0.1);color:#6366f1',
+  'Executive Meeting':'rgba(234,179,8,0.1);color:#ca8a04',
+  'RFP Submitted':'rgba(59,130,246,0.1);color:#3b82f6',
+  'Negotiation':'rgba(245,158,11,0.1);color:#f59e0b',
+  'Closing':'rgba(29,158,117,0.15);color:var(--teal)',
+};
+const _crmActLabel = {overdue:'<span style="font-size:11px;color:var(--red)">● Overdue</span>',upcoming:'<span style="font-size:11px;color:var(--teal)">● Due soon</span>',none:'<span style="font-size:11px;color:var(--g400)">No activity</span>'};
+
+/* ── Customizable columns ── */
+var _crmColDefs = [
+  {key:'org', label:'Organization', align:'left'},
+  {key:'contact', label:'Contact', align:'left'},
+  {key:'stage', label:'Stage', align:'left'},
+  {key:'status', label:'Status', align:'left'},
+  {key:'statusUpdated', label:'Status Updated Date', align:'left'},
+  {key:'value', label:'Value', align:'right'},
+  {key:'close', label:'Close Date', align:'left'},
+  {key:'created', label:'Created Date', align:'left'}
+];
+var _crmVisibleCols = {org:false, contact:false, stage:false, status:false, statusUpdated:false, value:true, close:false, created:true};
+
+function _crmColCellHTML(key, o) {
+  if (key === 'org') return '<td style="padding:11px 14px;font-size:12px;color:var(--g600)">' + o.org + '</td>';
+  if (key === 'contact') return '<td style="padding:11px 14px"><div style="display:flex;align-items:center;gap:6px"><div class="crm-contact-chip" style="width:22px;height:22px;font-size:9px">' + o.contact.split(' ').map(w=>w[0]).join('').slice(0,2) + '</div><span style="font-size:12px;color:var(--g600)">' + o.contact + '</span></div></td>';
+  if (key === 'stage') return '<td style="padding:11px 14px"><span class="stage-badge" style="background:' + (_crmStageBadgeColor[o.stage]||'rgba(107,114,128,0.1);color:var(--g500)') + ';font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600">' + o.stage + '</span></td>';
+  if (key === 'status') { var s = _crmStatus(o); return '<td style="padding:11px 14px"><span style="font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600;' + (s==='won' ? 'background:rgba(29,158,117,0.12);color:var(--teal)' : 'background:var(--g100);color:var(--g500)') + '">' + (s==='won'?'Won':'Open') + '</span></td>'; }
+  if (key === 'statusUpdated') return '<td style="padding:11px 14px;font-size:12px;color:var(--g600)">' + _crmCreatedDate(o) + '</td>';
+  if (key === 'value') return '<td style="padding:11px 14px;text-align:right;font-size:13px;font-weight:600;color:var(--dark)">' + fmt(o.value) + '</td>';
+  if (key === 'close') return '<td style="padding:11px 14px;font-size:12px;color:var(--g600)">' + o.close + '</td>';
+  if (key === 'created') return '<td style="padding:11px 14px;font-size:12px;color:var(--g600)">' + _crmCreatedDate(o) + '</td>';
+  return '<td></td>';
+}
+function _crmRenderListHead() {
+  var thead = document.getElementById('crm-list-thead');
+  if (!thead) return;
+  var thStyle = 'padding:10px 14px;text-align:left;font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap';
+  var cols = '<th style="' + thStyle + ';width:34px"><input type="checkbox" onclick="event.stopPropagation()" style="accent-color:var(--teal)"></th>' +
+    '<th style="' + thStyle + ';width:30px">#</th>' +
+    '<th style="' + thStyle + '">Opportunity</th>';
+  _crmColDefs.forEach(function(c){
+    if (!_crmVisibleCols[c.key]) return;
+    cols += '<th style="' + thStyle + (c.align==='right' ? ';text-align:right' : '') + '">' + c.label + '</th>';
+  });
+  cols += '<th style="' + thStyle + '">Owner</th><th style="' + thStyle + '">Activity</th>';
+  thead.innerHTML = '<tr style="border-bottom:1.5px solid var(--g200)">' + cols + '</tr>';
+}
 function renderList(opps, pipe) {
-  const tbody = document.querySelector('#crm-list-view tbody');
+  _crmRenderListHead();
+  const tbody = document.getElementById('crm-list-tbody');
   if (!tbody) return;
-  const stageBadgeColor = {
-    'Prospect Registered':'rgba(99,102,241,0.1);color:#6366f1',
-    'Contact Made':'rgba(234,179,8,0.1);color:#ca8a04',
-    'Documents Collected':'rgba(59,130,246,0.1);color:#3b82f6',
-    'Payment Confirmed':'rgba(29,158,117,0.1);color:var(--teal)',
-    'Enrolled':'rgba(16,185,129,0.1);color:#10b981',
-    'Contract Signed':'rgba(29,158,117,0.15);color:var(--teal)',
-    'Up for Renewal':'rgba(99,102,241,0.1);color:#6366f1',
-    'Review Sent':'rgba(234,179,8,0.1);color:#ca8a04',
-    'Meeting Scheduled':'rgba(59,130,246,0.1);color:#3b82f6',
-    'Terms Agreed':'rgba(29,158,117,0.1);color:var(--teal)',
-    'Renewed':'rgba(16,185,129,0.15);color:#10b981',
-    'Identified':'rgba(99,102,241,0.1);color:#6366f1',
-    'Executive Meeting':'rgba(234,179,8,0.1);color:#ca8a04',
-    'RFP Submitted':'rgba(59,130,246,0.1);color:#3b82f6',
-    'Negotiation':'rgba(245,158,11,0.1);color:#f59e0b',
-    'Closing':'rgba(29,158,117,0.15);color:var(--teal)',
+  tbody.innerHTML = opps.map((o,idx)=>{
+    var cells = '<td style="padding:11px 14px" onclick="event.stopPropagation()"><input type="checkbox" style="accent-color:var(--teal)"></td>' +
+      '<td style="padding:11px 14px;font-size:12px;color:var(--g400)">' + (idx+1) + '</td>' +
+      '<td style="padding:11px 14px"><div style="font-size:13px;font-weight:600;color:var(--dark)">' + o.title + '</div></td>';
+    _crmColDefs.forEach(function(c){ if (_crmVisibleCols[c.key]) cells += _crmColCellHTML(c.key, o); });
+    cells += '<td style="padding:11px 14px"><div class="crm-rep-avatar" style="background:' + o.ownerColor + '" title="' + o.owner + '">' + o.ownerInit + '</div></td>' +
+      '<td style="padding:11px 14px">' + (_crmActLabel[o.activity]||'') + '</td>';
+    return '<tr class="crm-list-row" onclick="openDealDetail(\'' + o.id + '\')">' + cells + '</tr>';
+  }).join('');
+}
+
+/* ── Customize Columns popover ── */
+function _crmToggleColsPopover(e) {
+  if (e) e.stopPropagation();
+  var pop = document.getElementById('crm-cols-popover');
+  if (!pop) return;
+  var willOpen = pop.style.display === 'none';
+  pop.style.display = willOpen ? 'block' : 'none';
+  if (!willOpen) return;
+  var rowStyle = 'display:flex;align-items:center;gap:9px;padding:7px 14px;cursor:pointer;font-size:13px;color:var(--dark)';
+  var html = '<div style="padding:2px 14px 8px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px">Customize Columns</div>' +
+    '<div style="' + rowStyle + ';opacity:0.6"><input type="checkbox" checked disabled style="accent-color:var(--teal)"> Opportunity</div>';
+  html += _crmColDefs.map(function(c){
+    return '<label style="' + rowStyle + '" onmouseover="this.style.background=\'var(--g50)\'" onmouseout="this.style.background=\'none\'">' +
+      '<input type="checkbox" ' + (_crmVisibleCols[c.key] ? 'checked' : '') + ' onchange="_crmToggleCol(\'' + c.key + '\')" style="accent-color:var(--teal)"> ' + c.label +
+    '</label>';
+  }).join('');
+  html += '<div style="border-top:1px solid var(--g100);margin-top:6px;padding:8px 14px 0"><button onclick="_crmToggleColsPopover()" style="width:100%;background:none;border:none;font-size:12.5px;font-weight:700;color:var(--dark);cursor:pointer;font-family:var(--font)">Done</button></div>';
+  pop.innerHTML = html;
+}
+function _crmToggleCol(key) {
+  _crmVisibleCols[key] = !_crmVisibleCols[key];
+  renderPipeline();
+  _crmToggleColsPopover({stopPropagation:function(){}}); // re-render popover content in place
+  document.getElementById('crm-cols-popover').style.display = 'block';
+}
+document.addEventListener('click', function(e){
+  var pop = document.getElementById('crm-cols-popover');
+  if (pop && pop.style.display !== 'none' && !pop.contains(e.target) && e.target.id !== 'crm-cols-popover') {
+    if (!e.target.closest || !e.target.closest('#crm-cols-popover')) pop.style.display = 'none';
+  }
+});
+
+/* ── Filter Opportunities modal ── */
+function _crmUniqueOrgs() {
+  var pipe = CRM_PIPELINES[activePipelineKey];
+  var seen = {}, out = [];
+  pipe.opps.forEach(function(o){ if (!seen[o.org]) { seen[o.org]=1; out.push(o.org); } });
+  return out.sort();
+}
+function _crmUniqueContacts() {
+  var pipe = CRM_PIPELINES[activePipelineKey];
+  var seen = {}, out = [];
+  pipe.opps.forEach(function(o){ if (!seen[o.contact]) { seen[o.contact]=1; out.push(o.contact); } });
+  return out.sort();
+}
+function _crmOpenFilterModal() {
+  var pipe = CRM_PIPELINES[activePipelineKey];
+  document.getElementById('crm-f-text').value = crmFilters.text || '';
+  document.getElementById('crm-f-org').innerHTML = '<option value="">All Organizations</option>' + _crmUniqueOrgs().map(function(o){ return '<option value="'+o+'"'+(crmFilters.org===o?' selected':'')+'>'+o+'</option>'; }).join('');
+  document.getElementById('crm-f-contact').innerHTML = '<option value="">All Contacts</option>' + _crmUniqueContacts().map(function(c){ return '<option value="'+c+'"'+(crmFilters.contact===c?' selected':'')+'>'+c+'</option>'; }).join('');
+  document.getElementById('crm-f-stage').innerHTML = '<option value="">All Stages</option>' + pipe.stages.map(function(s){ return '<option value="'+s+'"'+(crmFilters.stage===s?' selected':'')+'>'+s+'</option>'; }).join('');
+  document.getElementById('crm-f-status').value = crmFilters.status || '';
+  _crmAdvRowsDraft = (crmFilters.adv || []).map(function(r){ return {field:r.field, value:r.value}; });
+  _crmRenderAdvRows();
+  _crmFilterPreviewCount();
+  openModal('crm-filter-modal');
+}
+var _crmAdvRowsDraft = [];
+function _crmRenderAdvRows() {
+  var el = document.getElementById('crm-f-adv-rows');
+  if (!el) return;
+  if (!_crmAdvRowsDraft.length) { el.innerHTML = ''; return; }
+  el.innerHTML = _crmAdvRowsDraft.map(function(r, i){
+    return '<div style="display:flex;gap:6px;align-items:center">' +
+      '<select class="mkt-input" style="flex:1" onchange="_crmAdvRowsDraft[' + i + '].field=this.value">' +
+        _crmAdvFieldDefs.map(function(f){ return '<option value="'+f.key+'"'+(r.field===f.key?' selected':'')+'>'+f.label+'</option>'; }).join('') +
+      '</select>' +
+      '<input class="mkt-input" style="flex:1" placeholder="Contains…" value="' + (r.value||'').replace(/"/g,'&quot;') + '" oninput="_crmAdvRowsDraft[' + i + '].value=this.value;_crmFilterPreviewCount()">' +
+      '<button onclick="_crmAdvRowsDraft.splice(' + i + ',1);_crmRenderAdvRows();_crmFilterPreviewCount()" style="background:none;border:none;color:var(--g400);cursor:pointer;font-size:16px;line-height:1;padding:0 4px" title="Remove">&times;</button>' +
+    '</div>';
+  }).join('');
+}
+function _crmAddAdvFilterRow() {
+  _crmAdvRowsDraft.push({field:'title', value:''});
+  _crmRenderAdvRows();
+}
+function _crmFilterPreviewCount() {
+  var draft = {
+    text: document.getElementById('crm-f-text').value.trim(),
+    org: document.getElementById('crm-f-org').value,
+    contact: document.getElementById('crm-f-contact').value,
+    stage: document.getElementById('crm-f-stage').value,
+    status: document.getElementById('crm-f-status').value,
+    adv: _crmAdvRowsDraft.filter(function(r){ return r.value; })
   };
-  const actLabel = {overdue:'<span style="font-size:11px;color:var(--red)">● Overdue</span>',upcoming:'<span style="font-size:11px;color:var(--teal)">● Due soon</span>',none:'<span style="font-size:11px;color:var(--g400)">No activity</span>'};
-  tbody.innerHTML = opps.map(o=>`
-    <tr class="crm-list-row" onclick="openDealDetail('${o.id}')">
-      <td style="padding:11px 14px"><div style="font-size:13px;font-weight:600;color:var(--dark)">${o.title}</div></td>
-      <td style="padding:11px 14px;font-size:12px;color:var(--g600)">${o.org}</td>
-      <td style="padding:11px 14px"><div style="display:flex;align-items:center;gap:6px"><div class="crm-contact-chip" style="width:22px;height:22px;font-size:9px">${o.contact.split(' ').map(w=>w[0]).join('').slice(0,2)}</div><span style="font-size:12px;color:var(--g600)">${o.contact}</span></div></td>
-      <td style="padding:11px 14px"><span class="stage-badge" style="background:${stageBadgeColor[o.stage]||'rgba(107,114,128,0.1);color:var(--g500)'};font-size:11px;padding:2px 8px;border-radius:5px;font-weight:600">${o.stage}</span></td>
-      <td style="padding:11px 14px;text-align:right;font-size:13px;font-weight:600;color:var(--dark)">${fmt(o.value)}</td>
-      <td style="padding:11px 14px;font-size:12px;color:var(--g600)">${o.close}</td>
-      <td style="padding:11px 14px"><div class="crm-rep-avatar" style="background:${o.ownerColor}" title="${o.owner}">${o.ownerInit}</div></td>
-      <td style="padding:11px 14px">${actLabel[o.activity]||''}</td>
-    </tr>`).join('');
+  var pipe = CRM_PIPELINES[activePipelineKey];
+  var n = pipe.opps.filter(function(o){
+    if (draft.text && o.title.toLowerCase().indexOf(draft.text.toLowerCase()) === -1) return false;
+    if (draft.org && o.org !== draft.org) return false;
+    if (draft.contact && o.contact !== draft.contact) return false;
+    if (draft.stage && o.stage !== draft.stage) return false;
+    if (draft.status && _crmStatus(o) !== draft.status) return false;
+    for (var i = 0; i < draft.adv.length; i++) { if (!_crmMatchAdv(o, draft.adv[i])) return false; }
+    return true;
+  }).length;
+  var totalEl = document.getElementById('crm-filter-total');
+  if (totalEl) totalEl.textContent = n + ' total';
+}
+function _crmApplyFilterModal() {
+  crmFilters.text = document.getElementById('crm-f-text').value.trim();
+  crmFilters.org = document.getElementById('crm-f-org').value;
+  crmFilters.contact = document.getElementById('crm-f-contact').value;
+  crmFilters.stage = document.getElementById('crm-f-stage').value;
+  crmFilters.status = document.getElementById('crm-f-status').value;
+  crmFilters.adv = _crmAdvRowsDraft.filter(function(r){ return r.value; }).map(function(r){ return {field:r.field, value:r.value}; });
+  closeModal('crm-filter-modal');
+  _crmUpdateFilterBadge();
+  renderPipeline();
+}
+function _crmClearFilters() {
+  crmFilters.text = ''; crmFilters.org = ''; crmFilters.contact = ''; crmFilters.stage = ''; crmFilters.status = ''; crmFilters.adv = [];
+  crmFilters.owner = 'all'; crmFilters.activity = 'all'; crmFilters.value = 'all';
+  _crmAdvRowsDraft = [];
+  document.getElementById('crm-f-text').value = '';
+  document.getElementById('crm-f-org').value = '';
+  document.getElementById('crm-f-contact').value = '';
+  document.getElementById('crm-f-stage').value = '';
+  document.getElementById('crm-f-status').value = '';
+  _crmRenderAdvRows();
+  _crmFilterPreviewCount();
+  _crmUpdateFilterBadge();
+  renderPipeline();
+}
+function _crmUpdateFilterBadge() {
+  var n = 0;
+  ['text','org','contact','stage','status'].forEach(function(k){ if (crmFilters[k]) n++; });
+  if (crmFilters.adv && crmFilters.adv.length) n += crmFilters.adv.length;
+  var badge = document.getElementById('crm-filter-badge');
+  if (!badge) return;
+  badge.textContent = n;
+  badge.style.display = n > 0 ? 'inline-block' : 'none';
 }
 
 // Drag-drop for board cards
