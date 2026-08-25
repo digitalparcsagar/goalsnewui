@@ -4255,8 +4255,11 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   </div>
 
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
-    <div style="font-size:13px;font-weight:600;color:var(--dark)">Email Lists</div>
-    <div style="font-size:11.5px;color:var(--g400);max-width:420px;text-align:right">Save a filter combination once, reuse it every time you build a campaign — no rebuilding audiences from scratch.</div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark)">Email Lists</div>
+      <button class="tb-btn btn-teal" style="font-size:11px;display:flex;align-items:center;gap:6px" onclick="_mktListAceOpen()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Build with Ace</button>
+    </div>
+    <div style="font-size:11.5px;color:var(--g400);max-width:360px;text-align:right">Save a filter combination once, reuse it every time you build a campaign — no rebuilding audiences from scratch.</div>
   </div>
 
   <div style="position:relative;margin-bottom:14px;max-width:320px">
@@ -4475,6 +4478,25 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div id="rptb-footer" style="padding:18px 28px;border-top:1px solid var(--g200);display:flex;justify-content:space-between;align-items:center;margin-top:8px">
       <button id="rptb-back-btn" onclick="_rptbBack()" style="background:none;border:1px solid var(--g200);border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--g500)">Back</button>
       <button id="rptb-next-btn" onclick="_rptbNext()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Next →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── GOALS.COM IMPACT REPORT — COMING SOON GATE ── -->
+<div id="rpt-impact-soon-modal" style="display:none;position:fixed;inset:0;z-index:4100;background:rgba(0,0,0,0.45);align-items:center;justify-content:center">
+  <div style="background:#fff;border-radius:16px;width:440px;max-width:95vw;box-shadow:0 24px 60px rgba(0,0,0,0.18)">
+    <div style="padding:26px 28px 22px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <div style="width:34px;height:34px;border-radius:9px;background:var(--g50);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        </div>
+        <div style="font-size:17px;font-weight:800;color:var(--dark)">This feature is coming soon</div>
+      </div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;margin-bottom:22px">Goals.com Impact Report is currently under development. You can preview the layout, but saving settings and usage reports are not available yet.</div>
+      <div style="display:flex;justify-content:flex-end;gap:10px">
+        <button onclick="_rptCloseImpactSoonModal()" style="background:none;border:1px solid var(--g200);border-radius:8px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--g500)">Cancel</button>
+        <button onclick="_rptCloseImpactSoonModal(); _rptOpenImpactReport()" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Preview Layout</button>
+      </div>
     </div>
   </div>
 </div>
@@ -4731,12 +4753,24 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px">
       <div>
         <div style="font-size:24px;font-weight:800;color:var(--dark);letter-spacing:-0.4px">Goals.com Impact</div>
-        <div style="font-size:12.5px;color:var(--g400);margin-top:4px">How the platform is moving revenue and replacing manual work — trailing 90 days</div>
+        <div style="font-size:12.5px;color:var(--g400);margin-top:4px">How the platform is moving revenue and replacing manual work, trailing 90 days</div>
       </div>
       <button onclick="showToast('Downloading report…')" style="display:flex;align-items:center;gap:7px;background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
         Download Report
       </button>
+    </div>
+
+    <!-- Ace summary -->
+    <div style="background:var(--navy);border-radius:14px;padding:18px 22px;margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px">
+        <div style="width:24px;height:24px;background:rgba(255,255,255,0.12);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#fff">Ace Summary</div>
+      </div>
+      <div id="rpt-impact-ace-p" style="font-size:12.5px;color:rgba(255,255,255,0.75);line-height:1.6;margin-bottom:12px"></div>
+      <div id="rpt-impact-ace-bullets" style="display:flex;flex-direction:column;gap:7px"></div>
     </div>
 
     <!-- Hero row -->
@@ -4747,7 +4781,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px">Revenue &amp; pace, before vs. after adoption</div>
       <div style="font-size:11.5px;color:var(--g400);margin-bottom:14px">Trailing 90-day windows, per rep</div>
       <div id="rpt-impact-table"></div>
-      <div style="font-size:10.5px;color:var(--g400);margin-top:12px;line-height:1.5">Directional comparison, not a controlled study — other factors (season, territory, tenure) also move these numbers.</div>
+      <div style="font-size:10.5px;color:var(--g400);margin-top:12px;line-height:1.5">Directional comparison, not a controlled study; other factors (season, territory, tenure) also move these numbers.</div>
     </div>
 
     <!-- Automation replacing manual work -->
@@ -17852,7 +17886,7 @@ function _rptRenderFolders() {
   var folders = _rptFolders[_rptFY] || [];
   grid.innerHTML = folders.map(function(f) {
     var opacity = f.closed ? '0.55' : '1';
-    var openFn = f.special ? "_rptOpenImpactReport()" : "_rptOpenReport('" + f.id + "')";
+    var openFn = f.special ? "_rptOpenImpactSoonModal()" : "_rptOpenReport('" + f.id + "')";
     return '<div onclick="' + (f.closed ? "showToast('" + f.label + " report not yet available')" : openFn) + '" ' +
       'style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border-radius:12px;border:1px solid var(--g200);background:#fff;cursor:' + (f.closed?'default':'pointer') + ';opacity:' + opacity + ';transition:.12s;text-align:center" ' +
       'onmouseenter="if(!this.style.opacity||this.style.opacity===\'' + opacity + '\')this.style.background=\'var(--g50)\'" ' +
@@ -17917,6 +17951,14 @@ function _rptSeed(str) {
 function _rptCloseImpact() {
   var overlay = document.getElementById('rpt-impact-overlay');
   if (overlay) overlay.style.display = 'none';
+}
+function _rptOpenImpactSoonModal() {
+  var m = document.getElementById('rpt-impact-soon-modal');
+  if (m) m.style.display = 'flex';
+}
+function _rptCloseImpactSoonModal() {
+  var m = document.getElementById('rpt-impact-soon-modal');
+  if (m) m.style.display = 'none';
 }
 function _rptOpenImpactReport() {
   var overlay = document.getElementById('rpt-impact-overlay');
@@ -17987,12 +18029,17 @@ function _rptOpenImpactReport() {
     var icoInvoice   = svgWrap('<path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/><line x1="9" y1="8" x2="11" y2="8"/>');
     var icoNotes     = svgWrap('<path d="M4 3h16v18l-4-3-4 3-4-3-4 3V3z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/>');
     var icoGoal      = svgWrap('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="var(--teal)"/>');
+    var commissionCount = 58 + (seed2 % 10);
+    var invoiceCount    = 205 + (seed2 % 20);
+    var invoiceValue    = Math.round(totalAchieved * 0.10);
+    var notesCount      = 1180 + (seed2 % 150);
+    var goalAdjCount    = 88 + (seed2 % 20);
     var items = [
-      { icon:icoCommission, label:'Commission & bonus structures built with Ace', value: (58 + (seed2 % 10)) + ' structures' },
+      { icon:icoCommission, label:'Commission & bonus structures built with Ace', value: commissionCount + ' structures' },
       { icon:icoContract, label:'Contracts generated from templates', value: contractCount + ' contracts · ' + fmtM(contractValue) },
-      { icon:icoInvoice, label:'Invoices generated & sent', value: (205 + (seed2 % 20)) + ' invoices · ' + fmtM(Math.round(totalAchieved * 0.10)) },
-      { icon:icoNotes, label:'Notes drafted or summarized with Ace', value: (1180 + (seed2 % 150)) + ' notes' },
-      { icon:icoGoal, label:'Rep goals auto-adjusted via Ace', value: (88 + (seed2 % 20)) + ' adjustments' }
+      { icon:icoInvoice, label:'Invoices generated & sent', value: invoiceCount + ' invoices · ' + fmtM(invoiceValue) },
+      { icon:icoNotes, label:'Notes drafted or summarized with Ace', value: notesCount + ' notes' },
+      { icon:icoGoal, label:'Rep goals auto-adjusted via Ace', value: goalAdjCount + ' adjustments' }
     ];
     autoEl.innerHTML = items.map(function(it) {
       return '<div style="display:flex;align-items:center;gap:12px;padding:12px 4px;border-bottom:1px solid var(--g100)">' +
@@ -18016,6 +18063,26 @@ function _rptOpenImpactReport() {
     supportEl.innerHTML =
       tile('Forecast accuracy', '92%', '↑ 11pt vs. pre-adoption') +
       tile('Est. hours returned to selling', '412 hrs', 'this quarter, supporting estimate only');
+  }
+
+  // ── Ace summary (paragraph + bullets, generated from the real figures above) ──
+  var acePEl = document.getElementById('rpt-impact-ace-p');
+  var aceBEl = document.getElementById('rpt-impact-ace-bullets');
+  if (acePEl && aceBEl) {
+    acePEl.textContent = 'Over the trailing 90 days, Goals.com has been a measurable driver of revenue and operational efficiency for this organization. Reps using the platform closed ' + fmtM(totalAchieved) + ' in revenue, and ' + pctAtPace + '% of the team is now pacing at or above goal, up from 54% last quarter. Alongside that revenue impact, the platform absorbed a meaningful amount of manual admin work that would otherwise fall on reps and managers.';
+    var aceBullets = [
+      fmtM(totalAchieved) + ' in revenue closed by active platform users, representing 80% of total team revenue year to date.',
+      pctAtPace + '% of reps are pacing at or above their goal, compared to 54% last quarter.',
+      contractCount + ' contracts worth ' + fmtM(contractValue) + ' generated directly in-platform, replacing manual drafting.',
+      invoiceCount + ' invoices and ' + commissionCount + ' commission or bonus structures built with Ace, cutting down manual admin work.',
+      '412 hours returned to selling this quarter as manual tasks shifted to automation.'
+    ];
+    aceBEl.innerHTML = aceBullets.map(function(b) {
+      return '<div style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(255,255,255,0.9);line-height:1.5">' +
+        '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><polyline points="20 6 9 17 4 12"/></svg>' +
+        '<span>' + b + '</span>' +
+      '</div>';
+    }).join('');
   }
 }
 
@@ -20394,6 +20461,144 @@ function _aceCommConfirm() {
       <div style="display:flex;gap:10px;justify-content:center">
         <button onclick="_mktCampAceClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
         <button onclick="_mktCampAceReset()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Build Another</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ACE EMAIL LIST MODAL -->
+<div id="ace-list-modal" style="display:none;position:fixed;inset:0;z-index:3000;background:rgba(0,0,0,0.45);align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_mktListAceClose()">
+  <div style="background:#fff;border-radius:18px;width:100%;max-width:640px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow:hidden;font-family:var(--font)">
+    <div style="background:var(--navy);padding:20px 24px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;background:rgba(255,255,255,0.12);border-radius:8px;display:flex;align-items:center;justify-content:center">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        </div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:#fff">Ace List Builder</div>
+          <div style="font-size:11px;color:rgba(255,255,255,0.5);margin-top:1px">Describe it — Ace builds it</div>
+        </div>
+      </div>
+      <button onclick="_mktListAceClose()" style="background:rgba(255,255,255,0.1);border:none;border-radius:7px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:#fff">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div style="display:flex;align-items:center;padding:14px 24px;border-bottom:1px solid var(--g100);gap:0">
+      <div id="ace-lstep-1" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--teal)"><span style="width:20px;height:20px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">1</span> Describe</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-lstep-2" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">2</span> Review</div>
+      <div style="flex:1;height:1px;background:var(--g200);margin:0 10px"></div>
+      <div id="ace-lstep-3" style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--g400)"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);color:var(--g400);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700">3</span> Confirm</div>
+    </div>
+
+    <!-- Step 1 -->
+    <div id="ace-list-step1" style="padding:24px">
+      <div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px">Describe the list in plain English</div>
+      <div style="font-size:12px;color:var(--g400);margin-bottom:14px;line-height:1.6">Who belongs on it. Ace will pick the filters and decide if it should stay live or be a one-time snapshot.</div>
+      <textarea id="ace-list-input" placeholder="e.g. Everyone in the Contact Made stage owned by Aya Pedrad who we haven't talked to in 14+ days" style="width:100%;height:110px;border:1.5px solid var(--g200);border-radius:10px;padding:12px 14px;font-size:13px;font-family:var(--font);color:var(--dark);resize:none;outline:none;box-sizing:border-box;line-height:1.6" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'"></textarea>
+      <div style="margin-top:10px">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Try an example</div>
+        <div style="display:flex;flex-wrap:wrap;gap:6px">
+          <button onclick="_mktListAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Everyone we haven't talked to in 60+ days"</button>
+          <button onclick="_mktListAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"All contacts owned by Brock Wilson in Contract Signed"</button>
+          <button onclick="_mktListAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"A snapshot of this month's Healthcare tagged accounts for our promo"</button>
+          <button onclick="_mktListAceExample(this)" style="font-size:11px;color:var(--navy);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);transition:.12s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="this.style.borderColor='var(--g200)'">"Everyone in Documents Collected, always keep it current"</button>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-top:20px">
+        <div style="font-size:11px;color:var(--g400);margin-top:16px">Ace never saves anything without your confirmation.</div>
+        <button onclick="_mktListAceGenerate()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Generate with Ace
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2 -->
+    <div id="ace-list-step2" style="display:none;padding:24px">
+      <div id="ace-list-loading" style="text-align:center;padding:32px 0">
+        <div style="width:48px;height:48px;border-radius:50%;border:3px solid var(--g100);border-top-color:var(--teal);animation:spin 0.8s linear infinite;margin:0 auto 16px"></div>
+        <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Ace is reading your description…</div>
+        <div style="font-size:12px;color:var(--g400)" id="ace-list-loading-sub">Matching stages, tags, owners and recency</div>
+      </div>
+      <div id="ace-list-preview" style="display:none;overflow-y:auto;max-height:64vh">
+        <div id="ace-list-summary-banner" style="background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:10px;padding:12px 16px;margin-bottom:12px;font-size:13px;font-weight:600;color:var(--teal)"></div>
+
+        <div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;padding:12px 16px;margin-bottom:12px">
+          <div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Assumptions Ace made</div>
+          <div id="ace-list-assumptions" style="font-size:12px;color:var(--g600);line-height:1.8"></div>
+        </div>
+
+        <div class="mkt-field" style="margin-bottom:14px">
+          <label>List name</label>
+          <input id="ace-l-name" class="mkt-input">
+        </div>
+        <div class="mkt-field" style="margin-bottom:14px">
+          <label>Description <span style="color:var(--g400);font-weight:400">(optional)</span></label>
+          <input id="ace-l-desc" class="mkt-input">
+        </div>
+
+        <div class="mkt-sec-label">Type</div>
+        <div style="display:flex;gap:10px;margin-bottom:14px">
+          <label style="flex:1;display:flex;align-items:flex-start;gap:9px;cursor:pointer;padding:12px 14px;background:var(--g50);border-radius:10px;border:1.5px solid transparent" id="ace-l-type-dynamic-wrap">
+            <input type="radio" name="ace-l-type" value="dynamic" style="accent-color:var(--teal);margin-top:2px" onchange="_mktListAceTypeChange()">
+            <span><span style="font-size:13px;font-weight:700;color:var(--dark);display:block">Dynamic</span><span style="font-size:11px;color:var(--g400);line-height:1.4;display:block;margin-top:2px">Re-evaluates live every time it's used.</span></span>
+          </label>
+          <label style="flex:1;display:flex;align-items:flex-start;gap:9px;cursor:pointer;padding:12px 14px;background:var(--g50);border-radius:10px;border:1.5px solid transparent" id="ace-l-type-static-wrap">
+            <input type="radio" name="ace-l-type" value="static" style="accent-color:var(--teal);margin-top:2px" onchange="_mktListAceTypeChange()">
+            <span><span style="font-size:13px;font-weight:700;color:var(--dark);display:block">Static</span><span style="font-size:11px;color:var(--g400);line-height:1.4;display:block;margin-top:2px">Frozen snapshot — never changes after saving.</span></span>
+          </label>
+        </div>
+
+        <div class="mkt-sec-label">Filters</div>
+        <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:14px">
+          <div class="mkt-cfg-grid" style="margin-bottom:12px">
+            <div class="mkt-field"><label>Pipeline stage</label><select id="ace-l-stage" class="mkt-input" onchange="_mktListAceRecount()"></select></div>
+            <div class="mkt-field"><label>Tag</label><select id="ace-l-tag" class="mkt-input" onchange="_mktListAceRecount()"></select></div>
+            <div class="mkt-field"><label>Owner</label><select id="ace-l-rep" class="mkt-input" onchange="_mktListAceRecount()"></select></div>
+            <div class="mkt-field"><label>Last contacted</label>
+              <select id="ace-l-last" class="mkt-input" onchange="_mktListAceRecount()">
+                <option value="">Any time</option><option value="7">7+ days ago</option>
+                <option value="14">14+ days ago</option><option value="30">30+ days ago</option>
+                <option value="60">60+ days ago</option><option value="90">90+ days ago</option>
+              </select>
+            </div>
+          </div>
+          <div class="mkt-audience" style="background:var(--white)">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <span><strong id="ace-l-count" style="font-family:var(--mono)">0</strong> contacts &mdash; <span id="ace-l-desc-preview" style="color:var(--g400)">All contacts</span></span>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;padding-top:4px">
+          <button onclick="_mktListAceBack()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
+          <button onclick="_mktListAceConfirm()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+            Save List
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3 -->
+    <div id="ace-list-step3" style="display:none;padding:40px 24px;text-align:center">
+      <div style="width:56px;height:56px;background:rgba(29,158,117,0.1);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <div style="font-size:18px;font-weight:800;color:var(--dark);margin-bottom:8px">List Saved</div>
+      <div style="font-size:13px;color:var(--g500);line-height:1.6;max-width:400px;margin:0 auto 24px">Your list was built and saved. It's ready to use as the audience source the next time you build a campaign.</div>
+      <div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:16px;margin-bottom:24px;text-align:left">
+        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">What just happened</div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Ace parsed your plain-English description</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Matched it against your pipeline stages, tags and team</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Decided whether it should stay live or be a snapshot</div>
+          <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--dark)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>Saved to your Lists — zero manual filter-building</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center">
+        <button onclick="_mktListAceClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
+        <button onclick="_mktListAceReset()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Build Another</button>
       </div>
     </div>
   </div>
@@ -23452,6 +23657,151 @@ function _mktCampAceConfirm() {
   var s3 = document.getElementById('ace-cstep-3');
   s3.style.color = 'var(--teal)'; s3.querySelector('span').style.background = 'var(--teal)'; s3.querySelector('span').style.color = '#fff';
   showToast('Saved "' + name + '" as draft');
+}
+
+/* ── Ace Email List Builder ── */
+function _mktListAceOpen() { _mktListAceReset(); document.getElementById('ace-list-modal').style.display = 'flex'; }
+function _mktListAceClose() { document.getElementById('ace-list-modal').style.display = 'none'; }
+function _mktListAceReset() {
+  document.getElementById('ace-list-input').value = '';
+  document.getElementById('ace-list-step1').style.display = 'block';
+  document.getElementById('ace-list-step2').style.display = 'none';
+  document.getElementById('ace-list-step3').style.display = 'none';
+  ['ace-lstep-1','ace-lstep-2','ace-lstep-3'].forEach(function(id, idx) {
+    var el = document.getElementById(id);
+    var active = idx === 0;
+    el.style.color = active ? 'var(--teal)' : 'var(--g400)';
+    el.querySelector('span').style.background = active ? 'var(--teal)' : 'var(--g200)';
+    el.querySelector('span').style.color = active ? '#fff' : 'var(--g400)';
+  });
+}
+function _mktListAceExample(btn) { document.getElementById('ace-list-input').value = btn.textContent.replace(/^"|"$/g, ''); }
+
+/* Pure-ish parser: text in, {plan, assumptions} out. No DOM reads, mirrors _mktAceCampaignParse. */
+function _mktAceListParse(text) {
+  var lower = text.toLowerCase();
+  var assumptions = [];
+  var plan = { stage:'', tag:'', rep:'', last:'', name:'', desc:'', type:'dynamic' };
+
+  var stages = _companySettings.pipelineStages || [];
+  for (var s = 0; s < stages.length; s++) { if (lower.indexOf(stages[s].name.toLowerCase()) !== -1) { plan.stage = String(s); break; } }
+  var tags = _companySettings.tagDefinitions || [];
+  for (var t = 0; t < tags.length; t++) { if (lower.indexOf(tags[t].name.toLowerCase()) !== -1) { plan.tag = String(t); break; } }
+  var reps = _companySettings.repQuotas || {};
+  Object.keys(reps).forEach(function(k){ if (!plan.rep && lower.indexOf(reps[k].name.toLowerCase()) !== -1) plan.rep = k; });
+  var dm = lower.match(/(\d+)\+?\s*days?/);
+  if (/haven'?t (talked|contacted|touched|reached)|no (recent )?contact|gone? quiet|quiet for|\bcold\b|inactive|re-?engag/.test(lower)) {
+    plan.last = dm ? dm[1] : '30';
+  } else if (dm && /contact|touch|activity/.test(lower)) {
+    plan.last = dm[1];
+  }
+  if (!plan.stage && !plan.tag && !plan.rep && !plan.last) {
+    assumptions.push('No specific filter detected in your description, so Ace defaulted to All Contacts — narrow it below if needed.');
+  }
+
+  if (/snapshot|as of (today|now)|one-?time|this month'?s|this week'?s|for (this|the) (promo|campaign|event)/.test(lower)) {
+    plan.type = 'static';
+    assumptions.push('Your description implied a one-time snapshot, so Ace set this list to Static.');
+  } else {
+    plan.type = 'dynamic';
+    assumptions.push('No snapshot language detected, so Ace kept this list Dynamic — it will stay live and pick up new matches automatically.');
+  }
+
+  plan.name = text.length > 48 ? (text.slice(0, 45) + '…') : text;
+  plan.name = plan.name.charAt(0).toUpperCase() + plan.name.slice(1);
+  plan.desc = text;
+
+  return { plan: plan, assumptions: assumptions };
+}
+
+function _mktListAceGenerate() {
+  var input = document.getElementById('ace-list-input').value.trim();
+  if (!input) { showToast('Please describe the list first'); return; }
+  document.getElementById('ace-list-step1').style.display = 'none';
+  document.getElementById('ace-list-step2').style.display = 'block';
+  document.getElementById('ace-list-loading').style.display = 'block';
+  document.getElementById('ace-list-preview').style.display = 'none';
+  var s2 = document.getElementById('ace-lstep-2');
+  s2.style.color = 'var(--teal)'; s2.querySelector('span').style.background = 'var(--teal)'; s2.querySelector('span').style.color = '#fff';
+  var msgs = ['Matching stages and tags…', 'Checking owners and recency…', 'Deciding dynamic vs. static…', 'Building the filter…'];
+  var i = 0; var sub = document.getElementById('ace-list-loading-sub');
+  var ticker = setInterval(function(){ sub.textContent = msgs[i++ % msgs.length]; }, 600);
+  setTimeout(function() {
+    clearInterval(ticker);
+    var result = _mktAceListParse(input);
+    _mktListAceRenderPreview(result);
+    document.getElementById('ace-list-loading').style.display = 'none';
+    document.getElementById('ace-list-preview').style.display = 'block';
+  }, 2400);
+}
+
+function _mktListAceRenderPreview(result) {
+  var plan = result.plan, assumptions = result.assumptions;
+  document.getElementById('ace-list-summary-banner').textContent = 'Ace built a list from your description — review and adjust anything below before saving.';
+  document.getElementById('ace-list-assumptions').innerHTML = assumptions.length
+    ? assumptions.map(function(a){ return '• ' + a; }).join('<br>')
+    : 'No major assumptions — your description was specific enough to match directly.';
+  document.getElementById('ace-l-name').value = plan.name;
+  document.getElementById('ace-l-desc').value = plan.desc;
+
+  document.querySelector('input[name="ace-l-type"][value="' + plan.type + '"]').checked = true;
+  _mktListAceTypeChange();
+
+  document.getElementById('ace-l-stage').innerHTML = '<option value="">All stages</option>' + _mktStageOpts(plan.stage);
+  document.getElementById('ace-l-tag').innerHTML   = '<option value="">Any tag</option>' + _mktTagOpts(plan.tag);
+  document.getElementById('ace-l-rep').innerHTML   = _mktRepOpts(plan.rep, 'All owners');
+  document.getElementById('ace-l-last').value = plan.last || '';
+
+  _mktListAceRecount();
+}
+function _mktListAceTypeChange() {
+  var type = document.querySelector('input[name="ace-l-type"]:checked').value;
+  document.getElementById('ace-l-type-dynamic-wrap').style.borderColor = type === 'dynamic' ? 'var(--teal)' : 'transparent';
+  document.getElementById('ace-l-type-static-wrap').style.borderColor  = type === 'static'  ? 'var(--teal)' : 'transparent';
+}
+function _mktListAceRecount() {
+  var a = _mktListAudience(
+    document.getElementById('ace-l-stage'),
+    document.getElementById('ace-l-tag'),
+    document.getElementById('ace-l-rep'),
+    document.getElementById('ace-l-last')
+  );
+  document.getElementById('ace-l-count').textContent = a.n.toLocaleString();
+  document.getElementById('ace-l-desc-preview').textContent = a.desc;
+}
+function _mktListAceBack() {
+  document.getElementById('ace-list-step2').style.display = 'none';
+  document.getElementById('ace-list-step1').style.display = 'block';
+  var s2 = document.getElementById('ace-lstep-2');
+  s2.style.color = 'var(--g400)'; s2.querySelector('span').style.background = 'var(--g200)'; s2.querySelector('span').style.color = 'var(--g400)';
+}
+function _mktListAceConfirm() {
+  var name = document.getElementById('ace-l-name').value.trim();
+  if (!name) { showToast('Give the list a name first'); document.getElementById('ace-l-name').focus(); return; }
+  var type = document.querySelector('input[name="ace-l-type"]:checked').value;
+  var stage = document.getElementById('ace-l-stage').value;
+  var tag   = document.getElementById('ace-l-tag').value;
+  var rep   = document.getElementById('ace-l-rep').value;
+  var last  = document.getElementById('ace-l-last').value;
+  var a = _mktListAudience(document.getElementById('ace-l-stage'), document.getElementById('ace-l-tag'), document.getElementById('ace-l-rep'), document.getElementById('ace-l-last'));
+  var rec = {
+    id: 'l' + Date.now(),
+    name: name,
+    desc: document.getElementById('ace-l-desc').value.trim(),
+    type: type, stage: stage, tag: tag, rep: rep, last: last,
+    usedIn: 0,
+    frozenN: type === 'static' ? a.n : null,
+    frozenDesc: type === 'static' ? a.desc : null
+  };
+  _mktLists.push(rec);
+  if (typeof _mktRenderLists === 'function') _mktRenderLists();
+  if (typeof _mktRefreshCampListOpts === 'function') _mktRefreshCampListOpts();
+
+  document.getElementById('ace-list-step2').style.display = 'none';
+  document.getElementById('ace-list-step3').style.display = 'block';
+  var s3 = document.getElementById('ace-lstep-3');
+  s3.style.color = 'var(--teal)'; s3.querySelector('span').style.background = 'var(--teal)'; s3.querySelector('span').style.color = '#fff';
+  showToast('Saved "' + name + '"');
 }
 
 /* ── Automations tab rendering ── */
