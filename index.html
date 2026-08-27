@@ -1067,8 +1067,8 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 #page-askace{display:none}
 #page-askace.ace-modal-open{display:flex;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,0.55);align-items:center;justify-content:center;padding:0}
 .ace-modal-box{position:relative;width:66vw;height:66vh;min-width:760px;min-height:480px;border-radius:18px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.06);animation:pageFadeIn 0.18s ease}
-.ace-modal-close{position:absolute;top:14px;right:14px;z-index:5;width:30px;height:30px;border-radius:9px;border:none;background:rgba(255,255,255,0.14);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.12s}
-.ace-modal-close:hover{background:rgba(255,255,255,0.24)}
+.ace-modal-close{position:absolute;top:14px;right:14px;z-index:10;width:30px;height:30px;border-radius:9px;border:1px solid var(--g200);background:#fff;color:var(--g500);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.12s,color 0.12s;box-shadow:0 2px 8px rgba(16,24,40,0.1)}
+.ace-modal-close:hover{background:var(--g100);color:var(--dark)}
 .ace-page-layout{display:grid;grid-template-columns:250px 1fr;height:100%;overflow:hidden;border-radius:18px;border:1px solid var(--g200);background:#fff}
 .ace-page-sidebar{border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;overflow:hidden;background:var(--navy)}
 .ace-page-sidebar-top{padding:18px 16px;border-bottom:1px solid rgba(255,255,255,0.08)}
