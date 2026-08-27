@@ -1063,27 +1063,38 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 .col-toggle input{accent-color:var(--teal);cursor:pointer}
 .col-toggle.active{border-color:var(--teal);color:var(--teal);background:var(--teal-bg)}
 
-/* ── Ask Ace Page Layout ── */
-.ace-page-layout{display:grid;grid-template-columns:240px 1fr;height:calc(100vh - var(--topbar) - 52px);overflow:hidden;border-radius:12px;border:1px solid var(--g200);background:#fff}
+/* ── Ask Ace — standalone centered 2/3-screen pop-up (independent of page nav) ── */
+#page-askace{display:none}
+#page-askace.ace-modal-open{display:flex;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,0.55);align-items:center;justify-content:center;padding:0}
+.ace-modal-box{position:relative;width:66vw;height:66vh;min-width:760px;min-height:480px;border-radius:18px;overflow:hidden;box-shadow:0 30px 90px rgba(0,0,0,0.4),0 0 0 1px rgba(255,255,255,0.06);animation:pageFadeIn 0.18s ease}
+.ace-modal-close{position:absolute;top:14px;right:14px;z-index:5;width:30px;height:30px;border-radius:9px;border:none;background:rgba(255,255,255,0.14);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background 0.12s}
+.ace-modal-close:hover{background:rgba(255,255,255,0.24)}
+.ace-page-layout{display:grid;grid-template-columns:250px 1fr;height:100%;overflow:hidden;border-radius:18px;border:1px solid var(--g200);background:#fff}
 .ace-page-sidebar{border-right:1px solid rgba(255,255,255,0.06);display:flex;flex-direction:column;overflow:hidden;background:var(--navy)}
-.ace-page-sidebar-top{padding:16px;border-bottom:1px solid rgba(255,255,255,0.08)}
-.ace-hist-item{padding:9px 12px;border-radius:8px;cursor:pointer;transition:background 0.12s;margin:2px 8px;position:relative}
-.ace-hist-item:hover{background:rgba(255,255,255,0.07)}
-.ace-hist-item.active{background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.25)}
-.ace-hist-title{font-size:12px;font-weight:500;color:var(--g400);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.ace-hist-time{font-size:10px;color:var(--g400);margin-top:2px}
-.ace-hist-section{font-size:10px;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.6px;margin:12px 0 4px;padding:0 12px}
-.ace-page-sidebar>div:not(.ace-page-sidebar-top){overflow-y:auto;flex:1;padding:8px 0}
-.ace-page-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
-.ace-page-messages{flex:1;overflow-y:auto;padding:24px;display:flex;flex-direction:column;gap:20px}
-.ace-page-msg{display:flex;gap:12px;align-items:flex-start}
+.ace-page-sidebar-top{padding:18px 16px;border-bottom:1px solid rgba(255,255,255,0.08)}
+.ace-hist-item{padding:10px 12px;border-radius:9px;cursor:pointer;transition:background 0.12s;margin:2px 8px;position:relative;border:1px solid transparent}
+.ace-hist-item:hover{background:rgba(255,255,255,0.06)}
+.ace-hist-item.active{background:rgba(29,158,117,0.16);border-color:rgba(29,158,117,0.3);box-shadow:inset 2px 0 0 var(--teal)}
+.ace-hist-title{font-size:12px;font-weight:500;color:rgba(255,255,255,0.85);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ace-hist-item.active .ace-hist-title{color:#fff;font-weight:600}
+.ace-hist-time{font-size:10px;color:rgba(255,255,255,0.35);margin-top:3px}
+.ace-hist-section{font-size:10px;font-weight:700;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:0.7px;margin:14px 0 5px;padding:0 12px}
+.ace-page-sidebar>div:not(.ace-page-sidebar-top){overflow-y:auto;flex:1;padding:10px 0}
+.ace-page-main{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0;background:#fff}
+.ace-page-messages{flex:1;overflow-y:auto;padding:26px 28px;display:flex;flex-direction:column;gap:22px}
+.ace-page-msg{display:flex;gap:10px;align-items:flex-start}
 .ace-page-msg.user{flex-direction:row-reverse}
-.ace-page-bubble{padding:12px 16px;border-radius:12px;font-size:13px;line-height:1.6;max-width:82%}
-.ace-page-bubble.user{background:var(--navy);color:rgba(255,255,255,0.9);border-radius:12px 12px 4px 12px}
-.ace-page-bubble.ace{background:var(--g50);border:1px solid var(--g200);border-radius:12px 12px 12px 4px;color:var(--dark);max-width:90%}
-.ace-page-meta{font-size:10px;color:var(--g400);margin-top:4px;text-align:right}
-.ace-page-msg.ace .ace-page-meta{text-align:left}
-.ace-page-av{width:28px;height:28px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#1d9e75}
+.ace-page-msg-body{display:flex;flex-direction:column;min-width:0}
+.ace-page-msg.user .ace-page-msg-body{align-items:flex-end}
+.ace-page-msg.ace .ace-page-msg-body{align-items:flex-start;flex:1}
+.ace-page-bubble{padding:12px 16px;border-radius:14px;font-size:13px;line-height:1.6;max-width:100%}
+.ace-page-bubble.user{background:var(--teal);color:#fff;border-radius:14px 14px 3px 14px;box-shadow:0 3px 10px rgba(29,158,117,0.28)}
+.ace-page-bubble.ace{background:var(--g50);border:1px solid var(--g200);border-radius:14px 14px 14px 3px;color:var(--dark);box-shadow:0 1px 2px rgba(16,24,40,0.03)}
+.ace-page-meta{font-size:10px;color:var(--g400);margin-top:6px;display:flex;align-items:center;gap:5px}
+.ace-page-meta svg{opacity:0.6;cursor:pointer;transition:opacity 0.12s}
+.ace-page-meta svg:hover{opacity:1}
+.ace-page-av{width:28px;height:28px;border-radius:50%;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#1d9e75;box-shadow:0 1px 3px rgba(16,24,40,0.12)}
+.ace-page-av.user{background:#4f7ef7;color:#fff;font-size:11px;font-weight:700}
 .ace-response-section{margin-bottom:14px}
 .ace-response-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);margin-bottom:8px}
 .ace-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:0}
@@ -1092,13 +1103,17 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 .ace-table tbody tr:last-child td{border-bottom:none}
 .ace-list{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px}
 .ace-list li{font-size:13px;color:var(--g700);line-height:1.5}
-.ace-page-input-wrap{padding:16px 24px;border-top:1px solid var(--g200);background:#fff}
-.ace-page-input-row{display:flex;gap:10px}
-.ace-page-input{flex:1;border:1.5px solid var(--g200);border-radius:10px;padding:11px 15px;font-size:13px;font-family:var(--font);outline:none;transition:border-color 0.15s}
-.ace-page-input:focus{border-color:var(--teal)}
-.ace-page-send{background:var(--teal);color:#fff;border:none;border-radius:10px;padding:11px 20px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font);display:flex;align-items:center;gap:7px;transition:opacity 0.15s;white-space:nowrap}
-.ace-page-send:hover{opacity:0.9}
-.ace-suggest-chip{background:var(--g50);border:1px solid var(--g200);border-radius:20px;padding:5px 12px;font-size:11px;color:var(--g600);cursor:pointer;font-family:var(--font);transition:all 0.15s;white-space:nowrap}
+.ace-page-input-wrap{padding:16px 26px 18px;border-top:1px solid var(--g200);background:#fff}
+.ace-page-input-row{display:flex;gap:8px;align-items:stretch}
+.ace-page-input{flex:1;border:1.5px solid var(--g200);border-radius:11px;padding:10px 15px;font-size:13px;font-family:var(--font);outline:none;transition:border-color 0.15s,box-shadow 0.15s;background:#fff;color:var(--dark);min-height:40px;box-sizing:border-box}
+.ace-page-input::placeholder{color:var(--g400)}
+.ace-page-input:focus{border-color:var(--teal);box-shadow:0 0 0 3px rgba(29,158,117,0.1)}
+.ace-page-mic{width:40px;height:40px;border-radius:11px;border:1.5px solid var(--g200);background:var(--g50);color:var(--g500);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background 0.12s,color 0.12s}
+.ace-page-mic:hover{background:var(--g100);color:var(--dark)}
+.ace-page-send{background:var(--teal);color:#fff;border:none;border-radius:11px;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:opacity 0.15s,transform 0.12s;flex-shrink:0;box-shadow:0 3px 10px rgba(29,158,117,0.3)}
+.ace-page-send:hover{opacity:0.92;transform:translateY(-1px)}
+.ace-page-disclaimer{font-size:11px;color:var(--g400);text-align:center;margin-top:10px}
+.ace-suggest-chip{background:var(--g50);border:1px solid var(--g200);border-radius:20px;padding:6px 13px;font-size:11px;color:var(--g600);cursor:pointer;font-family:var(--font);transition:all 0.15s;white-space:nowrap}
 .ace-suggest-chip:hover{background:rgba(29,158,117,0.07);border-color:rgba(29,158,117,0.3);color:var(--teal)}
 .fc-rep-row{transition:background .12s}
 .fc-rep-row:hover{background:rgba(29,158,117,.05)}
@@ -1751,7 +1766,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
   </div>
   <div class="tb-right">
-    <button class="ace-tb-btn" onclick="toggleAce()" aria-label="Open Ask Ace AI Coach" aria-haspopup="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg> Ask Ace</button>
+    <button class="ace-tb-btn" onclick="openAskAce()" aria-label="Open Ask Ace AI Coach" aria-haspopup="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg> Ask Ace</button>
     <div class="tb-icon-btn" onclick="togglePanel('cal-panel')" title="Calendar" role="button" aria-label="Open calendar" aria-haspopup="true" tabindex="0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
     <div class="tb-icon-btn" onclick="togglePanel('notif-panel')" title="Notifications" role="button" aria-label="Open notifications" aria-haspopup="true" tabindex="0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div class="notif-dot" aria-hidden="true"></div></div>
     <!-- User switcher -->
@@ -5158,8 +5173,10 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
 </div>
 
-<!-- ASK ACE PAGE -->
-<div id="page-askace" class="page" style="padding:0">
+<!-- ASK ACE — standalone modal, independent of page navigation -->
+<div id="page-askace" style="padding:0" onmousedown="if(event.target===this)closeAskAce()">
+<div class="ace-modal-box">
+<button class="ace-modal-close" onclick="closeAskAce()" aria-label="Close"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
 <div class="ace-page-layout">
   <!-- Left sidebar: history -->
   <div class="ace-page-sidebar">
@@ -5235,14 +5252,17 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
       <!-- User question -->
       <div class="ace-page-msg user">
-        <div class="ace-page-bubble user">How is our Q2 performance tracking compared to last year?</div>
-        <div class="ace-page-meta">You · 2h ago</div>
+        <div class="ace-page-av user">AR</div>
+        <div class="ace-page-msg-body">
+          <div class="ace-page-bubble user">How is our Q2 performance tracking compared to last year?</div>
+          <div class="ace-page-meta"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>2h ago</div>
+        </div>
       </div>
 
       <!-- Ace response -->
       <div class="ace-page-msg ace">
         <div class="ace-page-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div>
-        <div style="flex:1">
+        <div class="ace-page-msg-body">
           <div class="ace-page-bubble ace">
             <div class="ace-response-section">
               <div class="ace-response-label">Performance Comparison</div>
@@ -5259,52 +5279,55 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
             <div class="ace-response-section">
               <div class="ace-response-label">Key Takeaways</div>
               <ul class="ace-list">
-                <li>Sales are tracking <strong>18.3% ahead</strong> of Q2 2025 — the team is accelerating.</li>
+                <li>Sales are tracking <strong>18.3% ahead</strong> of Q2 2025, the team is accelerating.</li>
                 <li>Win rate improved from 52% to 58%, indicating stronger proposal quality and follow-up cadence.</li>
-                <li>Average deal size grew by $4K — likely driven by Brock Wilson's enterprise focus in March–May.</li>
+                <li>Average deal size grew by $4K, likely driven by Brock Wilson's enterprise focus in March–May.</li>
               </ul>
             </div>
             <div class="ace-response-section">
               <div class="ace-response-label">Recommendations</div>
               <ul class="ace-list">
-                <li>Maintain current call volume — the team is 8% above Q2 2025 call count.</li>
-                <li>Coach Jules Richards on deal velocity — her avg close time is 22 days vs team avg of 14.</li>
+                <li>Maintain current call volume, the team is 8% above Q2 2025 call count.</li>
+                <li>Coach Jules Richards on deal velocity, her avg close time is 22 days vs team avg of 14.</li>
                 <li>Replicate Brock's discovery call framework across the team to sustain deal size growth.</li>
               </ul>
             </div>
             <div class="ace-response-section" style="margin-bottom:0">
               <div class="ace-response-label">Conclusion</div>
-              <p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">Q2 2026 is your strongest quarter on record. Sustaining current momentum puts you on pace for <strong>$16.2M EOY</strong> — 84% of annual goal. Three focused advisors can close the remaining gap with a strong H2 push.</p>
+              <p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">Q2 2026 is your strongest quarter on record. Sustaining current momentum puts you on pace for <strong>$16.2M EOY</strong>, 84% of annual goal. Three focused advisors can close the remaining gap with a strong H2 push.</p>
             </div>
           </div>
-          <div class="ace-page-meta">Ace · 2h ago</div>
+          <div class="ace-page-meta"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>2h ago</div>
         </div>
       </div>
 
       <!-- Follow-up -->
       <div class="ace-page-msg user">
-        <div class="ace-page-bubble user">Which advisor should I focus on coaching first?</div>
-        <div class="ace-page-meta">You · 2h ago</div>
+        <div class="ace-page-av user">AR</div>
+        <div class="ace-page-msg-body">
+          <div class="ace-page-bubble user">Which advisor should I focus on coaching first?</div>
+          <div class="ace-page-meta"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>2h ago</div>
+        </div>
       </div>
 
       <div class="ace-page-msg ace">
         <div class="ace-page-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div>
-        <div style="flex:1">
+        <div class="ace-page-msg-body">
           <div class="ace-page-bubble ace">
             <div style="display:flex;align-items:center;gap:10px;padding:12px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:8px;margin-bottom:10px">
               <div class="rep-avatar" style="background:#f59e0b;width:32px;height:32px;font-size:11px;flex-shrink:0">JR</div>
-              <div><div style="font-weight:700;font-size:13px">Jules Richards — Priority #1</div><div style="font-size:12px;color:var(--g500);margin-top:2px">51% to annual goal · 22-day avg close time · 3 stalled proposals</div></div>
+              <div><div style="font-weight:700;font-size:13px;color:var(--dark)">Jules Richards — Priority #1</div><div style="font-size:12px;color:var(--g500);margin-top:2px">51% to annual goal · 22-day avg close time · 3 stalled proposals</div></div>
             </div>
             <p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">Jules has the highest deal count but the longest close cycle. A 30-minute coaching session focused on objection handling and follow-up timing could unlock $200–300K in stalled proposals.</p>
           </div>
-          <div class="ace-page-meta">Ace · 2h ago</div>
+          <div class="ace-page-meta"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>2h ago</div>
         </div>
       </div>
     </div>
 
     <!-- Suggested prompts (shown when no active conversation) -->
-    <div id="ace-suggested-wrap" style="padding:0 24px 16px;border-top:1px solid var(--g100);background:#fff">
-      <div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;padding-top:14px">Suggested</div>
+    <div id="ace-suggested-wrap" style="padding:0 26px 16px;border-top:1px solid var(--g100);background:#fff">
+      <div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:9px;padding-top:14px">Suggested</div>
       <div style="display:flex;flex-wrap:wrap;gap:7px">
         <button onclick="injectAcePrompt(this)" class="ace-suggest-chip">Who is most at risk of missing their annual goal?</button>
         <button onclick="injectAcePrompt(this)" class="ace-suggest-chip">What's our forecast gap to $19.35M?</button>
@@ -5318,14 +5341,18 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <!-- Input bar -->
     <div class="ace-page-input-wrap">
       <div class="ace-page-input-row">
-        <textarea id="ace-page-input" class="ace-page-input" placeholder="Ask Ace anything about your team, pipeline, or goals…" rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAcePage(this)}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'" style="resize:none;overflow:hidden;line-height:1.5;padding-top:10px;padding-bottom:10px"></textarea>
+        <textarea id="ace-page-input" class="ace-page-input" placeholder="Ask Ace anything..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();sendAcePage(this)}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'" style="resize:none;overflow:hidden;line-height:1.5;padding-top:10px;padding-bottom:10px"></textarea>
+        <button class="ace-page-mic" title="Voice input" onclick="showToast('Voice input coming soon')">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
         <button class="ace-page-send" onclick="sendAcePage(document.getElementById('ace-page-input'))">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
         </button>
       </div>
-      <div style="font-size:11px;color:var(--g400);text-align:center;margin-top:7px">Ace has access to your live pipeline, goals, commissions, and call data. Press <kbd style="background:var(--g100);border-radius:4px;padding:1px 5px;font-size:10px;font-family:var(--mono)">Enter</kbd> to send, <kbd style="background:var(--g100);border-radius:4px;padding:1px 5px;font-size:10px;font-family:var(--mono)">Shift+Enter</kbd> for a new line.</div>
+      <div class="ace-page-disclaimer">Ask ACE can make mistakes. Double-verify your data.</div>
     </div>
   </div>
+</div>
 </div>
 </div>
 
@@ -7878,6 +7905,9 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 <script>
 // ── PAGE NAVIGATION ──────────────────────────────────────────────────────────
 function showPage(id, btn) {
+  // Ask Ace is a standalone pop-up, independent of page navigation — never swaps
+  // out the underlying page or sidebar highlight, regardless of what module you're on.
+  if (id === 'askace') { openAskAce(); return; }
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   const page = document.getElementById('page-' + id);
   if (page) page.classList.add('active');
@@ -7907,6 +7937,15 @@ function showPage(id, btn) {
       item.classList.toggle('active', i === 0);
     });
   }
+}
+
+function openAskAce() {
+  var el = document.getElementById('page-askace');
+  if (el) el.classList.add('ace-modal-open');
+}
+function closeAskAce() {
+  var el = document.getElementById('page-askace');
+  if (el) el.classList.remove('ace-modal-open');
 }
 
 // ── MODALS ───────────────────────────────────────────────────────────────────
@@ -12840,10 +12879,10 @@ function injectAcePrompt(btn) {
 }
 
 var ACE_RESPONSES = {
-  'who is most at risk': '<div class="ace-response-section"><div class="ace-response-label">⚠ At-Risk Advisors</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0 0 10px">Based on current YTD pace and projected trajectory, <strong>Doug Silverness</strong> is the highest-risk advisor — 57% behind annual pace with the lowest win rate on the team (42%). <strong>Jules Richards</strong> is secondary risk at 49% behind pace with 3 stalled proposals averaging 22 days in the pipeline.</p></div><div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Recommended Actions</div><ul class="ace-list"><li><strong>Doug:</strong> Schedule a 1:1 before end of week. Review his last 5 lost deals for pattern.</li><li><strong>Jules:</strong> Proposal follow-up coaching session — her deals stall after the proposal stage.</li></ul></div>',
+  'who is most at risk': '<div class="ace-response-section"><div class="ace-response-label">⚠ At-Risk Advisors</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0 0 10px">Based on current YTD pace and projected trajectory, <strong>Doug Silverness</strong> is the highest-risk advisor, 57% behind annual pace with the lowest win rate on the team (42%). <strong>Jules Richards</strong> is secondary risk at 49% behind pace with 3 stalled proposals averaging 22 days in the pipeline.</p></div><div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Recommended Actions</div><ul class="ace-list"><li><strong>Doug:</strong> Schedule a 1:1 before end of week. Review his last 5 lost deals for pattern.</li><li><strong>Jules:</strong> Proposal follow-up coaching session, her deals stall after the proposal stage.</li></ul></div>',
   'forecast gap': '<div class="ace-response-section"><div class="ace-response-label">Forecast Analysis</div><table class="ace-table"><thead><tr><th>Scenario</th><th>EOY Revenue</th><th>vs Goal</th></tr></thead><tbody><tr><td>Current pace</td><td>$16.2M</td><td style="color:var(--red)">-$3.15M</td></tr><tr><td>With coaching</td><td>$17.8M</td><td style="color:var(--amber)">-$1.55M</td></tr><tr><td>Best case</td><td>$19.1M</td><td style="color:var(--teal)">-$0.25M</td></tr></tbody></table></div><div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Path to Close the Gap</div><ul class="ace-list"><li>Bring Jules and Doug to team-average win rate (58%): +$1.1M</li><li>Reduce avg close time from 22 to 14 days on stalled deals: +$400K</li><li>Brock\'s 4 warm enterprise leads closing in H2: +$320K</li></ul></div>',
-  'stalled': '<div class="ace-response-section"><div class="ace-response-label">Stalled Deals — 90+ Day Review</div><table class="ace-table"><thead><tr><th>Deal</th><th>Value</th><th>Days Stalled</th><th>Owner</th></tr></thead><tbody><tr><td>AR Solutions</td><td>$87K</td><td style="color:var(--red);font-weight:600">42 days</td><td>Brock W.</td></tr><tr><td>Maple Street Dental</td><td>$55K</td><td style="color:var(--amber);font-weight:600">28 days</td><td>Jules R.</td></tr><tr><td>Summit Insurance Group</td><td>$120K</td><td style="color:var(--amber);font-weight:600">22 days</td><td>Jules R.</td></tr><tr><td>North Park Capital</td><td>$44K</td><td style="color:var(--g400)">14 days</td><td>Doug S.</td></tr></tbody></table></div><div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Immediate Actions</div><ul class="ace-list"><li>Brock → call Jake Miller at AR Solutions today. 2 days overdue on follow-up.</li><li>Jules → send revised proposal to Summit Insurance Group — they requested a pricing update 3 weeks ago.</li></ul></div>',
-  'default': '<p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0 0 12px">Based on your current Goals.com data, here is what I can see:</p><ul class="ace-list"><li>Team is at <strong>41% of annual goal</strong> at the midpoint of the year — you need to accelerate H2 to close the $3.15M gap.</li><li>Win rate improved to <strong>58%</strong> — up 6 percentage points year over year.</li><li>Two advisors need immediate attention: <strong>Doug Silverness</strong> (43% to goal) and <strong>Jules Richards</strong> (51% to goal).</li><li>AR Solutions follow-up is <strong>2 days overdue</strong> — Brock Wilson needs a nudge.</li></ul><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:12px 0 0">Want me to dig deeper into any of these areas?</p>'
+  'stalled': '<div class="ace-response-section"><div class="ace-response-label">Stalled Deals — 90+ Day Review</div><table class="ace-table"><thead><tr><th>Deal</th><th>Value</th><th>Days Stalled</th><th>Owner</th></tr></thead><tbody><tr><td>AR Solutions</td><td>$87K</td><td style="color:var(--red);font-weight:600">42 days</td><td>Brock W.</td></tr><tr><td>Maple Street Dental</td><td>$55K</td><td style="color:var(--amber);font-weight:600">28 days</td><td>Jules R.</td></tr><tr><td>Summit Insurance Group</td><td>$120K</td><td style="color:var(--amber);font-weight:600">22 days</td><td>Jules R.</td></tr><tr><td>North Park Capital</td><td>$44K</td><td style="color:var(--g400)">14 days</td><td>Doug S.</td></tr></tbody></table></div><div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Immediate Actions</div><ul class="ace-list"><li>Brock: call Jake Miller at AR Solutions today, 2 days overdue on follow-up.</li><li>Jules: send revised proposal to Summit Insurance Group, they requested a pricing update 3 weeks ago.</li></ul></div>',
+  'default': '<p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0 0 12px">Based on your current Goals.com data, here is what I can see:</p><ul class="ace-list"><li>Team is at <strong>41% of annual goal</strong> at the midpoint of the year, you need to accelerate H2 to close the $3.15M gap.</li><li>Win rate improved to <strong>58%</strong>, up 6 percentage points year over year.</li><li>Two advisors need immediate attention: <strong>Doug Silverness</strong> (43% to goal) and <strong>Jules Richards</strong> (51% to goal).</li><li>AR Solutions follow-up is <strong>2 days overdue</strong>, Brock Wilson needs a nudge.</li></ul><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:12px 0 0">Want me to dig deeper into any of these areas?</p>'
 };
 
 function sendAcePage(input) {
@@ -12856,10 +12895,12 @@ function sendAcePage(input) {
   const emptyState = msgs.querySelector('[style*="text-align:center"]');
   if (emptyState) emptyState.remove();
 
+  var speakerIcon = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+
   // Add user message
   const userDiv = document.createElement('div');
   userDiv.className = 'ace-page-msg user';
-  userDiv.innerHTML = '<div class="ace-page-bubble user">' + q.replace(/</g,'&lt;') + '</div><div class="ace-page-meta">You · just now</div>';
+  userDiv.innerHTML = '<div class="ace-page-av user">AR</div><div class="ace-page-msg-body"><div class="ace-page-bubble user">' + q.replace(/</g,'&lt;') + '</div><div class="ace-page-meta">' + speakerIcon + 'just now</div></div>';
   msgs.appendChild(userDiv);
   input.value = '';
   input.style.height = 'auto';
@@ -12871,7 +12912,7 @@ function sendAcePage(input) {
   const typingDiv = document.createElement('div');
   typingDiv.className = 'ace-page-msg ace';
   typingDiv.id = 'ace-typing';
-  typingDiv.innerHTML = '<div class="ace-page-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div><div style="flex:1"><div class="ace-page-bubble ace" style="padding:12px 16px"><div style="display:flex;gap:5px;align-items:center"><span style="width:7px;height:7px;background:var(--g400);border-radius:50%;animation:pulse 1.2s ease-in-out infinite"></span><span style="width:7px;height:7px;background:var(--g400);border-radius:50%;animation:pulse 1.2s ease-in-out 0.2s infinite"></span><span style="width:7px;height:7px;background:var(--g400);border-radius:50%;animation:pulse 1.2s ease-in-out 0.4s infinite"></span></div></div></div>';
+  typingDiv.innerHTML = '<div class="ace-page-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div><div class="ace-page-msg-body" style="flex:1"><div class="ace-page-bubble ace" style="padding:12px 16px"><div style="display:flex;gap:5px;align-items:center"><span style="width:7px;height:7px;background:var(--g300);border-radius:50%;animation:pulse 1.2s ease-in-out infinite"></span><span style="width:7px;height:7px;background:var(--g300);border-radius:50%;animation:pulse 1.2s ease-in-out 0.2s infinite"></span><span style="width:7px;height:7px;background:var(--g300);border-radius:50%;animation:pulse 1.2s ease-in-out 0.4s infinite"></span></div></div></div>';
   msgs.appendChild(typingDiv);
   msgs.scrollTop = msgs.scrollHeight;
 
@@ -12887,7 +12928,7 @@ function sendAcePage(input) {
     if (t) t.remove();
     const aceDiv = document.createElement('div');
     aceDiv.className = 'ace-page-msg ace';
-    aceDiv.innerHTML = '<div class="ace-page-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div><div style="flex:1"><div class="ace-page-bubble ace">' + responseHTML + '</div><div class="ace-page-meta">Ace · just now</div></div>';
+    aceDiv.innerHTML = '<div class="ace-page-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div><div class="ace-page-msg-body"><div class="ace-page-bubble ace">' + responseHTML + '</div><div class="ace-page-meta">' + speakerIcon + 'just now</div></div>';
     msgs.appendChild(aceDiv);
     msgs.scrollTop = msgs.scrollHeight;
   }, 900 + Math.random() * 600);
