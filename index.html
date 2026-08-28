@@ -1392,6 +1392,12 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .tgt-section-hdr-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
 .tgt-section-hdr-count{margin-left:auto;font-size:11px;font-weight:500;color:var(--g400);text-transform:none;letter-spacing:0}
 .tgt-section-hdr-toggle{background:none;border:none;cursor:pointer;color:var(--g300);padding:0 2px;display:flex;align-items:center;font-size:11px;gap:4px;font-family:var(--font)}
+.tgt-section-block.dragging{opacity:.4}
+.tgt-section-grip{display:flex;align-items:center;justify-content:center;color:var(--g300);cursor:grab;flex-shrink:0;padding:2px;border-radius:4px;transition:.12s}
+.tgt-section-grip:hover{color:var(--g500);background:var(--g100)}
+.tgt-section-grip:active{cursor:grabbing}
+.tgt-mission-action-check{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;background:rgba(29,158,117,.08);border:1.5px solid rgba(29,158,117,.3);color:var(--teal);cursor:pointer;transition:.12s;flex-shrink:0}
+.tgt-mission-action-check:hover{background:var(--teal);border-color:var(--teal);color:#fff}
 /* ── Mission rows (flexbox, no table) ─────── */
 .tgt-mission-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--g100);transition:background .12s}
 .tgt-mission-row:hover{background:var(--g50)}
@@ -1751,7 +1757,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 <header class="topbar" role="banner" aria-label="Application toolbar">
   <div class="tb-left">
     <button class="tb-btn btn-teal" onclick="openShortcutMenu(event)" aria-haspopup="true" aria-label="Quick add new item"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Quick Add</button>
-    <button class="tb-btn btn-dark" onclick="openTargetsModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="3"/><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="11"/></svg> Today's Targets</button>
+    <button class="tb-btn btn-dark" onclick="openTargetsModal()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> Today's Outreach</button>
     <!-- Custom shortcut slot -->
     <div style="display:flex;align-items:center;gap:2px" id="tb-custom-slot">
       <button id="tb-custom-btn" class="tb-btn btn-ghost" onclick="showPage('pipeline',null)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg> Pipeline</button>
@@ -2201,7 +2207,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         <div style="font-size:10px;color:var(--g400)">Goal: 40</div>
       </div>
     </div>
-    <button onclick="openTargetsModal()" style="width:100%;margin-top:14px;padding:9px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">View Today's Targets →</button>
+    <button onclick="openTargetsModal()" style="width:100%;margin-top:14px;padding:9px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer">View Today's Outreach →</button>
   </div>
 
   </div><!-- end row 1 -->
@@ -5228,7 +5234,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         <div class="ace-hist-time">a month ago</div>
       </div>
       <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Add Akron to Today's Targets. Tha...</div>
+        <div class="ace-hist-title">Add Akron to Today's Outreach. Tha...</div>
         <div class="ace-hist-time">a month ago</div>
       </div>
       <div class="ace-hist-item" onclick="loadAceChat(this)">
@@ -5410,7 +5416,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <div><div style="font-size:14px;font-weight:700;color:var(--dark)">Google Calendar</div><div style="font-size:11px;color:var(--g400)">Productivity</div></div>
       <div style="margin-left:auto"><span style="background:#dcfce7;color:#15803d;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px">Active</span></div>
     </div>
-    <div style="font-size:12px;color:var(--g500);line-height:1.5;margin-bottom:14px">Sync your Today's Targets and follow-up tasks with Google Calendar. Never miss a follow-up.</div>
+    <div style="font-size:12px;color:var(--g500);line-height:1.5;margin-bottom:14px">Sync your Today's Outreach and follow-up tasks with Google Calendar. Never miss a follow-up.</div>
     <div style="display:flex;gap:8px">
       <button onclick="showToast('Google Calendar settings opened')" style="flex:1;background:var(--g50);border:1px solid var(--g200);border-radius:7px;padding:7px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);color:var(--g700)">Configure</button>
       <button onclick="showToast('Google Calendar disconnected')" style="background:var(--g50);border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;cursor:pointer;font-family:var(--font);color:var(--red)">Disconnect</button>
@@ -7554,7 +7560,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <!-- Footer -->
     <div style="padding:14px 24px 20px;display:flex;gap:8px">
       <button onclick="closeModal('morning-brief-modal')" style="flex:1;padding:10px;background:var(--g100);border:none;border-radius:8px;font-size:13px;font-weight:600;color:var(--g500);cursor:pointer;font-family:var(--font)">Dismiss</button>
-      <button onclick="closeModal('morning-brief-modal');showPage('targets',null)" style="flex:2;padding:10px;background:var(--teal);border:none;border-radius:8px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:var(--font)">Open Today's Targets →</button>
+      <button onclick="closeModal('morning-brief-modal');showPage('targets',null)" style="flex:2;padding:10px;background:var(--teal);border:none;border-radius:8px;font-size:13px;font-weight:600;color:#fff;cursor:pointer;font-family:var(--font)">Open Today's Outreach →</button>
     </div>
 
   </div>
@@ -14189,6 +14195,7 @@ var _tgtSMQueueTab    = 'queue';
 var _tgtRepFilter     = 'all';   // rep filter dropdown
 var _tgtStatusFilter  = 'all';   // status filter dropdown
 var _tgtSearchQuery   = '';      // text search
+var _tgtSectionOrder  = ['critical','dueToday','onTrack'];  // reorderable queue section order
 var _tgtSRQueueTab    = 'queue';
 // Per-account completion state: { 'repId:coName': 'done'|'skipped' }
 var _tgtItemState     = {};
@@ -14473,36 +14480,84 @@ function _tgtRenderSMQueue() {
 
   var html = '';
 
-  if (critical.length) {
-    html += '<div class="tgt-section-hdr"><div class="tgt-section-hdr-dot" style="background:var(--red)"></div><span style="color:var(--red)">Critical</span><span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· 60+ days no contact</span><span class="tgt-section-hdr-count">' + critical.length + ' accounts</span></div>';
-    critical.forEach(function(a){ html += _tgtMissionRow(a, false); });
-  }
+  // Section registry, keyed the same as _tgtSectionOrder, so the render order
+  // is fully driven by the reorderable array rather than a fixed sequence.
+  var sectionDefs = {
+    critical: { label:'Critical',  dotColor:'var(--red)',    labelColor:'var(--red)',   sub:'· 60+ days no contact', list:critical },
+    dueToday: { label:'Due today', dotColor:'#d97706',       labelColor:'#d97706',      sub:'· 30–60 days',          list:dueToday },
+    onTrack:  { label:'On track',  dotColor:'var(--g300)',   labelColor:'var(--g500)',  sub:'· under 30 days',       list:onTrackQ, collapsible:true }
+  };
 
-  if (dueToday.length) {
-    html += '<div class="tgt-section-hdr" style="margin-top:' + (critical.length ? '4px' : '0') + '"><div class="tgt-section-hdr-dot" style="background:#d97706"></div><span style="color:#d97706">Due today</span><span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· 30–60 days</span><span class="tgt-section-hdr-count">' + dueToday.length + ' accounts</span></div>';
-    dueToday.forEach(function(a){ html += _tgtMissionRow(a, false); });
-  }
+  var renderedAny = false;
+  _tgtSectionOrder.forEach(function(key) {
+    var def = sectionDefs[key];
+    if (!def || !def.list.length) return;
 
-  if (onTrackQ.length) {
-    var mtTop = (critical.length||dueToday.length ? '4px' : '0');
-    html += '<div class="tgt-section-hdr" style="margin-top:' + mtTop + '">' +
-      '<div class="tgt-section-hdr-dot" style="background:var(--g300)"></div>' +
-      '<span style="color:var(--g500)">On track</span>' +
-      '<span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">· under 30 days</span>' +
-      '<span class="tgt-section-hdr-count">' + onTrackQ.length + ' accounts</span>' +
-    '</div>' +
-    '<div id="sm-ontrack-rows" style="display:none">' +
-      onTrackQ.map(function(a){ return _tgtMissionRow(a, false); }).join('') +
-    '</div>' +
-    '<button id="sm-ontrack-toggle" onclick="_tgtToggleOnTrack()" ' +
-      'style="display:flex;align-items:center;gap:4px;width:100%;padding:8px 16px;background:none;border:none;border-top:1px solid var(--g100);font-size:12px;font-weight:600;color:var(--g400);cursor:pointer;font-family:var(--font);transition:.12s" ' +
-      'onmouseover="this.style.color=\'var(--dark)\'" onmouseout="this.style.color=\'var(--g400)\'">' +
-      '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="sm-ontrack-chevron"><polyline points="6 9 12 15 18 9"/></svg>' +
-      'Show ' + onTrackQ.length + ' on-track accounts' +
-    '</button>';
-  }
+    var gripIco = '<span class="tgt-section-grip" draggable="true" title="Drag to reorder">' +
+      '<svg width="10" height="16" viewBox="0 0 10 16" fill="currentColor"><circle cx="2" cy="2" r="1.4"/><circle cx="8" cy="2" r="1.4"/><circle cx="2" cy="8" r="1.4"/><circle cx="8" cy="8" r="1.4"/><circle cx="2" cy="14" r="1.4"/><circle cx="8" cy="14" r="1.4"/></svg>' +
+    '</span>';
+
+    var sectionHtml = '<div class="tgt-section-hdr" style="margin-top:' + (renderedAny ? '4px' : '0') + '">' +
+      gripIco +
+      '<div class="tgt-section-hdr-dot" style="background:' + def.dotColor + '"></div>' +
+      '<span style="color:' + def.labelColor + '">' + def.label + '</span>' +
+      '<span style="font-size:11px;color:var(--g400);font-weight:400;margin-left:4px">' + def.sub + '</span>' +
+      '<span class="tgt-section-hdr-count">' + def.list.length + ' accounts</span>' +
+    '</div>';
+
+    if (def.collapsible) {
+      sectionHtml += '<div id="sm-ontrack-rows" style="display:none">' +
+        def.list.map(function(a){ return _tgtMissionRow(a, false); }).join('') +
+      '</div>' +
+      '<button id="sm-ontrack-toggle" onclick="_tgtToggleOnTrack()" ' +
+        'style="display:flex;align-items:center;gap:4px;width:100%;padding:8px 16px;background:none;border:none;border-top:1px solid var(--g100);font-size:12px;font-weight:600;color:var(--g400);cursor:pointer;font-family:var(--font);transition:.12s" ' +
+        'onmouseover="this.style.color=\'var(--dark)\'" onmouseout="this.style.color=\'var(--g400)\'">' +
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" id="sm-ontrack-chevron"><polyline points="6 9 12 15 18 9"/></svg>' +
+        'Show ' + def.list.length + ' on-track accounts' +
+      '</button>';
+    } else {
+      def.list.forEach(function(a){ sectionHtml += _tgtMissionRow(a, false); });
+    }
+
+    html += '<div class="tgt-section-block" data-key="' + key + '">' + sectionHtml + '</div>';
+    renderedAny = true;
+  });
 
   container.innerHTML = html;
+  _tgtInitSectionDnD();
+}
+
+function _tgtInitSectionDnD() {
+  var list = document.getElementById('sm-queue-list');
+  if (!list || list.dataset.dndInit) return;
+  list.dataset.dndInit = '1';
+  var dragEl = null;
+  list.addEventListener('dragstart', function(e) {
+    var grip = e.target.closest('.tgt-section-grip');
+    if (!grip) { e.preventDefault(); return; }
+    var block = grip.closest('.tgt-section-block');
+    if (!block) return;
+    dragEl = block;
+    block.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  list.addEventListener('dragend', function() {
+    if (dragEl) dragEl.classList.remove('dragging');
+    dragEl = null;
+    // Persist final DOM order into the reorderable section array
+    _tgtSectionOrder = Array.from(list.querySelectorAll('.tgt-section-block')).map(function(b){ return b.dataset.key; })
+      .concat(_tgtSectionOrder.filter(function(k){ return !list.querySelector('.tgt-section-block[data-key="' + k + '"]'); }));
+    _tgtRenderSMQueue();
+  });
+  list.addEventListener('dragover', function(e) {
+    e.preventDefault();
+    if (!dragEl) return;
+    var after = Array.from(list.querySelectorAll('.tgt-section-block:not(.dragging)')).find(function(block) {
+      var r = block.getBoundingClientRect();
+      return e.clientY < r.top + r.height / 2;
+    });
+    if (after) list.insertBefore(dragEl, after); else list.appendChild(dragEl);
+  });
 }
 
 function _tgtMissionRow(a, isDone) {
@@ -14521,11 +14576,20 @@ function _tgtMissionRow(a, isDone) {
     ? '<button class="tgt-mission-icon-btn" title="Mark as reviewed" onclick="_tgtUndo(\'' + key + '\')" style="color:var(--g400)">' +
         '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>' +
       '</button>'
-    : '<button class="tgt-mission-icon-btn" title="Notify rep" onclick="_tgtNotifyRep(\'' + key + '\')" style="color:var(--g500)">' +
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>' +
+    : '<button class="tgt-mission-icon-btn" title="Log a call" onclick="_tgtLogAction(\'' + key + '\',\'call\')" style="color:var(--g500)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>' +
       '</button>' +
-      '<button class="tgt-mission-icon-btn" title="Reassign account" onclick="_tgtReassign(\'' + key + '\')" style="color:var(--g500)">' +
-        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/></svg>' +
+      '<button class="tgt-mission-icon-btn" title="Log a meeting" onclick="_tgtLogAction(\'' + key + '\',\'meeting\')" style="color:var(--g500)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>' +
+      '</button>' +
+      '<button class="tgt-mission-icon-btn" title="Log a task" onclick="_tgtLogAction(\'' + key + '\',\'task\')" style="color:var(--g500)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><polyline points="8 12 11 15 16 9"/></svg>' +
+      '</button>' +
+      '<button class="tgt-mission-icon-btn" title="Log a note" onclick="_tgtLogAction(\'' + key + '\',\'note\')" style="color:var(--g500)">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+      '</button>' +
+      '<button class="tgt-mission-action-check" title="Mark as done" onclick="_tgtLogAction(\'' + key + '\',\'done\')">' +
+        '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
       '</button>';
 
   return '<div class="tgt-mission-row' + (isDone ? ' tgt-row-done' : '') + '">' +
@@ -15237,9 +15301,10 @@ function renderTargetRows(rows) {
 }
 
 // ── ACTIONS ───────────────────────────────────────────────────────────────────
+var TGT_ACTION_LABELS = { call:'Call logged', email:'Email logged', task:'Task logged', meeting:'Meeting logged', note:'Note logged', done:'Marked as done' };
 function _tgtLogAction(key, type) {  // SM version
   _tgtItemState[key] = 'done';
-  showToast((type==='call' ? 'Call logged' : 'Email logged'));
+  showToast(TGT_ACTION_LABELS[type] || 'Logged');
   _tgtRenderSMQueue();
   _tgtUpdateSMKPIs();
 }
@@ -19733,7 +19798,7 @@ function _aceCommConfirm() {
 
   <!-- PAGE HEADER — matches platform standard -->
   <div class="page-header" style="flex-shrink:0">
-    <div class="page-title">Today's Targets</div>
+    <div class="page-title">Today's Outreach</div>
     <div class="page-subtitle" id="targets-date"></div>
     <div class="page-actions">
       <!-- Period filter -->
