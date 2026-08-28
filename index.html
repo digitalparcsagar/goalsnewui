@@ -1398,6 +1398,11 @@ body.dark-mode .cm-res-item:hover{background:rgba(29,158,117,0.15)!important}
 .tgt-section-grip:active{cursor:grabbing}
 .tgt-mission-action-check{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:7px;background:rgba(29,158,117,.08);border:1.5px solid rgba(29,158,117,.3);color:var(--teal);cursor:pointer;transition:.12s;flex-shrink:0}
 .tgt-mission-action-check:hover{background:var(--teal);border-color:var(--teal);color:#fff}
+.tgt-mission-check{width:15px;height:15px;accent-color:var(--teal);cursor:pointer;flex-shrink:0}
+.tgt-bulk-btn{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:7px;font-size:12px;font-weight:600;font-family:var(--font);cursor:pointer;background:#fff;border:1.5px solid var(--g200);color:var(--g600);transition:.12s;white-space:nowrap}
+.tgt-bulk-btn:hover{background:var(--g50);border-color:var(--g300)}
+.tgt-bulk-btn-primary{background:var(--teal);border-color:var(--teal);color:#fff}
+.tgt-bulk-btn-primary:hover{background:var(--teal2)}
 /* ── Mission rows (flexbox, no table) ─────── */
 .tgt-mission-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--g100);transition:background .12s}
 .tgt-mission-row:hover{background:var(--g50)}
@@ -14196,6 +14201,7 @@ var _tgtRepFilter     = 'all';   // rep filter dropdown
 var _tgtStatusFilter  = 'all';   // status filter dropdown
 var _tgtSearchQuery   = '';      // text search
 var _tgtSectionOrder  = ['critical','dueToday','onTrack'];  // reorderable queue section order
+var _tgtSelectedKeys  = {};      // bulk-select state, keyed by _tgtStateKey(repId, co)
 var _tgtSRQueueTab    = 'queue';
 // Per-account completion state: { 'repId:coName': 'done'|'skipped' }
 var _tgtItemState     = {};
@@ -14453,6 +14459,7 @@ function _tgtRenderSMQueue() {
   if (_tgtSMQueueTab === 'completed') {
     if (!done.length) {
       container.innerHTML = '<div class="tgt-empty-state">No completed contacts yet today.</div>';
+      _tgtClearSelection();
       return;
     }
     var doneHtml = '<div class="tgt-section-hdr"><div class="tgt-section-hdr-dot" style="background:#16a34a"></div><span style="color:#16a34a">Completed</span><span class="tgt-section-hdr-count">' + done.length + ' accounts</span></div>';
@@ -14460,6 +14467,7 @@ function _tgtRenderSMQueue() {
       doneHtml += _tgtMissionRow(a, true);
     });
     container.innerHTML = doneHtml;
+    _tgtClearSelection();
     return;
   }
 
@@ -14475,6 +14483,7 @@ function _tgtRenderSMQueue() {
       '<div style="font-size:15px;font-weight:700;color:var(--dark);margin-bottom:6px">All caught up</div>' +
       '<div style="font-size:13px;color:var(--g400)">Every account has been touched today.</div>' +
     '</div>';
+    _tgtClearSelection();
     return;
   }
 
@@ -14525,6 +14534,7 @@ function _tgtRenderSMQueue() {
 
   container.innerHTML = html;
   _tgtInitSectionDnD();
+  _tgtUpdateBulkBar();
 }
 
 function _tgtInitSectionDnD() {
@@ -14592,7 +14602,10 @@ function _tgtMissionRow(a, isDone) {
         '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
       '</button>';
 
-  return '<div class="tgt-mission-row' + (isDone ? ' tgt-row-done' : '') + '">' +
+  var checkbox = isDone ? '' : '<input type="checkbox" class="tgt-mission-check" onclick="event.stopPropagation()" onchange="_tgtToggleRowSelect(\'' + key + '\',this.checked)"' + (_tgtSelectedKeys[key] ? ' checked' : '') + '>';
+
+  return '<div class="tgt-mission-row' + (isDone ? ' tgt-row-done' : '') + '" data-key="' + key + '">' +
+    checkbox +
     '<div class="tgt-mission-acct-init" style="background:' + avatarBg + '">' + initials + '</div>' +
     '<div class="tgt-mission-acct">' +
       '<div class="tgt-mission-acct-name">' + a.co + '</div>' +
@@ -15305,6 +15318,54 @@ var TGT_ACTION_LABELS = { call:'Call logged', email:'Email logged', task:'Task l
 function _tgtLogAction(key, type) {  // SM version
   _tgtItemState[key] = 'done';
   showToast(TGT_ACTION_LABELS[type] || 'Logged');
+  _tgtRenderSMQueue();
+  _tgtUpdateSMKPIs();
+}
+
+// ── BULK ACTIONS ─────────────────────────────────────────────────────────────
+function _tgtToggleRowSelect(key, checked) {
+  if (checked) _tgtSelectedKeys[key] = true; else delete _tgtSelectedKeys[key];
+  _tgtUpdateBulkBar();
+}
+
+function _tgtToggleSelectAll(checked) {
+  document.querySelectorAll('#sm-queue-list .tgt-mission-check').forEach(function(cb) {
+    cb.checked = checked;
+    var key = cb.closest('.tgt-mission-row').dataset.key;
+    if (checked) _tgtSelectedKeys[key] = true; else delete _tgtSelectedKeys[key];
+  });
+  _tgtUpdateBulkBar();
+}
+
+function _tgtClearSelection() {
+  _tgtSelectedKeys = {};
+  document.querySelectorAll('#sm-queue-list .tgt-mission-check').forEach(function(cb){ cb.checked = false; });
+  _tgtUpdateBulkBar();
+}
+
+function _tgtUpdateBulkBar() {
+  var keys = Object.keys(_tgtSelectedKeys);
+  var bar = document.getElementById('tgt-bulk-bar');
+  var countEl = document.getElementById('tgt-bulk-count');
+  if (bar) bar.style.display = keys.length ? 'flex' : 'none';
+  if (countEl) countEl.textContent = keys.length + ' selected';
+
+  var selectAll = document.getElementById('tgt-select-all');
+  if (selectAll) {
+    var boxes = document.querySelectorAll('#sm-queue-list .tgt-mission-check');
+    selectAll.checked = boxes.length > 0 && keys.length >= boxes.length;
+    selectAll.indeterminate = keys.length > 0 && keys.length < boxes.length;
+  }
+}
+
+function _tgtBulkAction(type) {
+  var keys = Object.keys(_tgtSelectedKeys);
+  if (!keys.length) return;
+  keys.forEach(function(key) { _tgtItemState[key] = 'done'; });
+  var n = keys.length;
+  var verb = { call:'Call', meeting:'Meeting', task:'Task', note:'Note', done:'Mark as done' }[type] || 'Action';
+  showToast(verb + ' logged for ' + n + ' account' + (n === 1 ? '' : 's'));
+  _tgtSelectedKeys = {};
   _tgtRenderSMQueue();
   _tgtUpdateSMKPIs();
 }
@@ -19907,6 +19968,7 @@ function _aceCommConfirm() {
 
       <!-- Header -->
       <div style="display:flex;align-items:center;padding:10px 20px;border-bottom:1px solid var(--g200);gap:10px;flex-shrink:0">
+        <input type="checkbox" id="tgt-select-all" onchange="_tgtToggleSelectAll(this.checked)" title="Select all" style="width:15px;height:15px;accent-color:var(--teal);cursor:pointer;flex-shrink:0">
         <span style="font-size:13px;font-weight:700;color:var(--dark);flex:1" id="sm-queue-header-label">Accounts</span>
         <button id="sm-completed-btn" onclick="switchSMQueueTab('completed',null)"
           style="font-size:11px;font-weight:600;color:var(--g400);background:none;border:none;cursor:pointer;font-family:var(--font);padding:4px 8px;border-radius:6px;transition:.12s"
@@ -19945,6 +20007,18 @@ function _aceCommConfirm() {
           <option value="due_soon">Due soon</option>
           <option value="on_track">On track</option>
         </select>
+      </div>
+
+      <!-- Bulk action bar — appears when 1+ rows are selected -->
+      <div id="tgt-bulk-bar" style="display:none;align-items:center;gap:10px;padding:9px 20px;border-bottom:1px solid rgba(29,158,117,.25);background:rgba(29,158,117,.06);flex-shrink:0">
+        <span id="tgt-bulk-count" style="font-size:12px;font-weight:700;color:var(--dark)">0 selected</span>
+        <div style="width:1px;height:16px;background:var(--g200)"></div>
+        <button class="tgt-bulk-btn" onclick="_tgtBulkAction('call')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>Log call</button>
+        <button class="tgt-bulk-btn" onclick="_tgtBulkAction('meeting')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Log meeting</button>
+        <button class="tgt-bulk-btn" onclick="_tgtBulkAction('task')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="3"/><polyline points="8 12 11 15 16 9"/></svg>Log task</button>
+        <button class="tgt-bulk-btn" onclick="_tgtBulkAction('note')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Log note</button>
+        <button class="tgt-bulk-btn tgt-bulk-btn-primary" onclick="_tgtBulkAction('done')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>Mark done</button>
+        <button onclick="_tgtClearSelection()" style="margin-left:auto;background:none;border:none;color:var(--g400);font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)">Clear</button>
       </div>
 
       <!-- Hidden team list kept for JS compatibility -->
