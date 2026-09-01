@@ -500,9 +500,33 @@ html,body{height:100%;overflow:hidden;font-family:var(--font);color:var(--dark);
 .sc-label{flex:1;margin-left:8px}
 .sc-kbd{font-size:10.5px;font-weight:600;color:var(--g400);background:var(--g100);border:1px solid var(--g200);padding:2px 6px;border-radius:5px;font-family:var(--mono)}
 
+/* ACE INSIGHTS — floating pill button */
+.ace-insights-fab{position:relative;display:flex;align-items:center;gap:7px;padding:11px 20px 11px 15px;border-radius:999px;background:linear-gradient(135deg,#22c55e 0%,#1d9e75 50%,#0d9e8a 100%);border:none;box-shadow:0 8px 24px rgba(29,158,117,0.4);cursor:pointer;font-family:var(--font);font-size:13px;font-weight:700;color:#fff;transition:transform 0.15s,box-shadow 0.15s}
+.ace-insights-fab-wrap{position:fixed;bottom:24px;right:24px;z-index:1490}
+.ace-insights-fab:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(29,158,117,0.5)}
+.ace-insights-fab svg{flex-shrink:0}
+.ace-insights-fab-wrap.hidden{display:none}
+.ace-insights-pulse{position:absolute;inset:0;border-radius:999px;background:linear-gradient(135deg,#22c55e,#1d9e75);opacity:0.55;animation:aceInsightsPulse 2.2s ease-out infinite;pointer-events:none;z-index:-1}
+@keyframes aceInsightsPulse{0%{transform:scale(1);opacity:0.5}70%{transform:scale(1.35);opacity:0}100%{transform:scale(1.35);opacity:0}}
+
+/* ACE INSIGHTS OVERLAY — 2/3-screen panel with insight + follow-up chat */
+#ace-insights-overlay{display:none}
+#ace-insights-overlay.open{display:flex;position:fixed;inset:0;z-index:2000;background:rgba(15,23,42,0.55);align-items:center;justify-content:center;padding:0}
+.ace-insights-panel{display:flex;flex-direction:column;height:100%;width:100%;background:#fff;border-radius:18px;overflow:hidden;border:1px solid var(--g200)}
+.ace-insights-panel-header{background:var(--navy);padding:18px 24px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.ace-insights-panel-header-icon{width:34px;height:34px;border-radius:10px;background:linear-gradient(135deg,#22c55e 0%,#1d9e75 50%,#0d9e8a 100%);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ace-insights-panel-title{font-size:15px;font-weight:700;color:#fff;line-height:1.3}
+.ace-insights-panel-sub{font-size:11.5px;color:rgba(255,255,255,0.55);margin-top:2px}
+.ace-insights-panel .ace-page-messages{background:#fff}
+.ace-response-label{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:5px}
+
 /* ACE DIALOG */
-.ace-dialog{position:fixed;bottom:80px;right:24px;width:340px;background:var(--navy);border-radius:16px;box-shadow:0 12px 48px rgba(0,0,0,0.3);display:none;flex-direction:column;overflow:hidden;z-index:1500;border:1px solid rgba(29,158,117,0.25);resize:both;overflow:hidden;min-width:300px;min-height:240px;max-width:640px;max-height:82vh}
-.ace-dialog.open{display:flex;animation:slideUp 0.2s ease}
+.ace-insights-backdrop{display:none;position:fixed;inset:0;z-index:1499;background:rgba(15,23,42,0.45)}
+.ace-insights-backdrop.open{display:block}
+.ace-dialog{position:fixed;bottom:78px;right:24px;width:340px;background:var(--navy);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.4);display:none;flex-direction:column;overflow:hidden;z-index:1500;border:1px solid rgba(29,158,117,0.25);resize:both;overflow:hidden;min-width:300px;min-height:180px;max-width:640px;max-height:82vh}
+.ace-dialog.open{display:flex;animation:pageFadeIn 0.18s ease}
+.ace-insight-cta{display:inline-flex;align-items:center;gap:5px;margin-top:8px;background:none;border:none;padding:0;color:var(--teal);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.ace-insight-cta:hover{text-decoration:underline}
 .ace-dialog-header{padding:13px 16px;display:flex;align-items:center;gap:10px;cursor:move;border-bottom:1px solid rgba(255,255,255,0.08);user-select:none}
 .ace-dialog-title{font-size:14px;font-weight:700;color:#fff;flex:1}
 .ace-dialog-title span{color:var(--teal)}
@@ -5689,6 +5713,10 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
     </div>
     <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
+      <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Ace Insights floating button</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Shows a floating button on every screen with a contextual insight about what you're looking at</div></div>
+      <label class="toggle-switch"><input type="checkbox" checked onchange="_aceInsightsToggle(this.checked)"><span class="toggle-slider"></span></label>
+    </div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:14px 0;border-bottom:1px solid var(--g100)">
       <div><div style="font-size:13px;font-weight:600;color:var(--dark)">Weekly digest email</div><div style="font-size:12px;color:var(--g400);margin-top:2px">Summary of team activity sent every Monday morning</div></div>
       <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
     </div>
@@ -6395,21 +6423,52 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 </div>
 
 <!-- ACE DRAGGABLE DIALOG -->
-<div class="ace-dialog" id="ace-dialog" role="dialog" aria-modal="false" aria-label="Ask Ace AI Coach">
+<!-- ACE INSIGHTS — floating button, present on every module -->
+<div class="ace-insights-fab-wrap" id="ace-insights-fab-wrap">
+  <span class="ace-insights-pulse"></span>
+  <button class="ace-insights-fab" id="ace-insights-fab" onclick="openAceInsights()" aria-label="Ace Insights" title="Ace Insights">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg>
+    <span>Ace Insights</span>
+  </button>
+</div>
+
+<!-- ACE INSIGHTS OVERLAY — expands to 2/3 of the screen with the module insight + follow-up chat -->
+<div id="ace-insights-overlay" onmousedown="if(event.target===this)closeAceInsights()">
+  <div class="ace-modal-box">
+    <button class="ace-modal-close" onclick="closeAceInsights()" aria-label="Close"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="ace-insights-panel">
+      <div class="ace-insights-panel-header">
+        <div class="ace-insights-panel-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div>
+        <div>
+          <div class="ace-insights-panel-title">Ace Insights</div>
+          <div class="ace-insights-panel-sub" id="ace-insights-module-label">Dashboard</div>
+        </div>
+      </div>
+      <div class="ace-page-messages" id="ace-insights-messages"></div>
+      <div class="ace-page-input-wrap">
+        <div class="ace-page-input-row">
+          <textarea id="ace-insights-input" class="ace-page-input" placeholder="Ask a follow-up about this screen..." rows="1" onkeydown="if(event.key==='Enter'&&!event.shiftKey){event.preventDefault();_aceInsightsSend(this)}" oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,120)+'px'" style="resize:none;overflow:hidden;line-height:1.5;padding-top:10px;padding-bottom:10px"></textarea>
+          <button class="ace-page-mic" title="Voice input" onclick="showToast('Voice input coming soon')">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+          </button>
+          <button class="ace-page-send" onclick="_aceInsightsSend(document.getElementById('ace-insights-input'))">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+        <div class="ace-page-disclaimer">Ask ACE can make mistakes. Double-verify your data.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ace-dialog" id="ace-dialog" role="dialog" aria-modal="false" aria-label="Ace Insights">
   <div class="ace-dialog-header" id="ace-drag-handle">
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx=12 cy=8 r=5/><path d=M20 21a8 8 0 1 0-16 0/><line x1=12 y1=3 x2=12 y2=1/><line x1=8 y1=2 x2=8 y2=4/><line x1=16 y1=2 x2=16 y2=4/></svg>
-    <div class="ace-dialog-title">Ask <span>Ace</span></div>
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg>
+    <div class="ace-dialog-title">Ace <span>Insights</span></div>
     <button class="ace-dialog-close" onclick="toggleAce()" aria-label="Close"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><line x1=18 y1=6 x2=6 y2=18/><line x1=6 y1=6 x2=18 y2=18/></svg></button>
   </div>
-  <div class="ace-dialog-body">
-    <div class="ace-msg">Based on today's data, here are your coaching insights:</div>
-    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg> Action</div><div class="ace-insight-text">Follow up on AR Solutions — proposal idle for 2 days. Call Jake Miller before EOD.</div></div>
-    <div class="ace-insight risk"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg> Risk Alert</div><div class="ace-insight-text">Jules Richards is 31% behind monthly call goal. Coaching conversation recommended this week.</div></div>
-    <div class="ace-insight"><div class="ace-insight-type"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 1 7 7c0 2.38-1.19 4.47-3 5.74V17a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2.26A7 7 0 0 1 12 2z"/></svg> Insight</div><div class="ace-insight-text">Brock's close rate increases 40% when follow-up happens within 24 hours of initial contact.</div></div>
-  </div>
-  <div class="ace-dialog-input">
-    <input class="ace-input" type="text" placeholder="Ask Ace anything...">
-    <button class="ace-send" onclick="askAceDialog(this)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg> Ask</button>
+  <div class="ace-dialog-body" id="ace-insights-body">
+    <div class="ace-msg">Loading insight...</div>
   </div>
 </div>
 
@@ -8064,7 +8123,183 @@ function closeAllPanels() {
 
 // ── ACE DIALOG ───────────────────────────────────────────────────────────────
 function toggleAce() {
-  document.getElementById('ace-dialog').classList.toggle('open');
+  var dlg = document.getElementById('ace-dialog');
+  var backdrop = document.getElementById('ace-insights-backdrop');
+  var willOpen = !dlg.classList.contains('open');
+  dlg.classList.toggle('open');
+  if (backdrop) backdrop.classList.toggle('open', willOpen);
+  if (willOpen) {
+    _aceInsightsRefresh();
+    // Center the card on screen each time it's opened
+    var w = dlg.offsetWidth || 340, h = dlg.offsetHeight || 220;
+    dlg.style.bottom = 'auto';
+    dlg.style.right = 'auto';
+    dlg.style.left = Math.max(12, (window.innerWidth - w) / 2) + 'px';
+    dlg.style.top = Math.max(12, (window.innerHeight - h) / 2) + 'px';
+  }
+}
+
+// ── ACE INSIGHTS — per-module contextual insight, shown via the floating button ──
+var _aceInsightsEnabled = true;
+
+var _aceInsightsData = {
+  dashboard:   { type:'Insight',    text:'Team is pacing at 84% of annual goal — accelerate H2 to close the remaining $3.15M gap.', cta:'Open Forecasting', ctaFn:"showPage('forecasting',null)" },
+  pipeline:    { type:'Action',     text:'AR Solutions has been idle for 2 days at Proposal stage — the highest-value stalled deal in the pipeline. Follow up with Jake Miller today.', cta:'Open AR Solutions', ctaFn:"openDrawer('AR Solutions')" },
+  contacts:    { type:'Action',     text:"Sara Kim (Clearview Dental) hasn't been contacted in 34 days despite an active $68K opportunity. Reconnect this week.", cta:null, ctaFn:null },
+  team:        { type:'Risk Alert', text:'Jules Richards is 31% behind monthly call goal. A coaching conversation this week is recommended.', cta:null, ctaFn:null },
+  forecasting: { type:'Risk Alert', text:"You're projected to land at $16.2M — a $3.15M gap to the $19.35M annual goal. Doug Silverness and Jules Richards need the most support.", cta:'Open Forecast Analysis', ctaFn:"showPage('forecasting',null)" },
+  targets:     { type:'Action',     text:'3 accounts are Critical — 60+ days without contact. Clear those first before working the Due Today queue.', cta:null, ctaFn:null },
+  goals:       { type:'Insight',    text:'4 of 6 reps are On Track for their monthly goal — Doug and Jules are the two to watch.', cta:null, ctaFn:null },
+  marketing:   { type:'Insight',    text:'Your last email campaign is outperforming benchmark with a 38% open rate — consider replicating the subject line format.', cta:null, ctaFn:null },
+  commissions: { type:'Insight',    text:'2 commission payouts are scheduled in the next 3 days — worth a quick review before they process.', cta:null, ctaFn:null },
+  contests:    { type:'Insight',    text:'The Q3 sales contest is 60% through its timeline with Brock Wilson currently leading.', cta:null, ctaFn:null },
+  bonuses:     { type:'Insight',    text:'2 reps are within reach of a bonus tier this month with a modest push in the final week.', cta:null, ctaFn:null },
+  reports:     { type:'Insight',    text:"Revenue closed this month is tracking 18.3% ahead of the same period last year.", cta:null, ctaFn:null },
+  chat:        { type:'Insight',    text:'No urgent conversations flagged — team messaging activity is normal for this time of week.', cta:null, ctaFn:null },
+  highlights:  { type:'Insight',    text:'Jules Richards was recognized twice this week — the most of any rep on the team.', cta:null, ctaFn:null },
+  settings:    { type:'Insight',    text:'You can turn Ace Insights off anytime from Settings → Notifications.', cta:null, ctaFn:null },
+  'company-settings': { type:'Insight', text:'You can turn Ace Insights off anytime from Settings → Notifications.', cta:null, ctaFn:null },
+  default:     { type:'Insight',    text:"Ace hasn't spotted anything urgent on this screen right now — check back after your next sync." , cta:null, ctaFn:null }
+};
+
+function _aceCurrentPageId() {
+  var targets = document.getElementById('page-targets');
+  if (targets && getComputedStyle(targets).display !== 'none') return 'targets';
+  var active = document.querySelector('.page.active');
+  return active ? active.id.replace('page-', '') : 'dashboard';
+}
+
+function _aceInsightsRefresh() {
+  var body = document.getElementById('ace-insights-body');
+  if (!body) return;
+  var pageId = _aceCurrentPageId();
+  var d = _aceInsightsData[pageId] || _aceInsightsData.default;
+  var typeClass = d.type === 'Risk Alert' ? ' risk' : '';
+  var cta = d.cta ? '<button class="ace-insight-cta" onclick="' + d.ctaFn + '">' + d.cta + ' →</button>' : '';
+  body.innerHTML =
+    '<div class="ace-msg">Here\'s what Ace is seeing on this screen right now:</div>' +
+    '<div class="ace-insight' + typeClass + '">' +
+      '<div class="ace-insight-type">' + d.type + '</div>' +
+      '<div class="ace-insight-text">' + d.text + cta + '</div>' +
+    '</div>';
+}
+
+var _aceModuleLabels = {
+  dashboard:'Dashboard', pipeline:'Pipeline', contacts:'Accounts', team:'Team', forecasting:'Forecasting',
+  targets:"Today's Outreach", goals:'Goals', marketing:'Marketing', commissions:'Commissions', contests:'Contests',
+  bonuses:'Bonuses', reports:'Reports', chat:'Chat', highlights:'Highlights', settings:'Settings',
+  'company-settings':'Company Settings', default:'This screen'
+};
+function _aceModuleLabel(pageId) { return _aceModuleLabels[pageId] || _aceModuleLabels.default; }
+
+var ACE_SPARK_ICON_SM = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg>';
+
+function openAceInsights() {
+  if (!_aceInsightsEnabled) return;
+  var overlay = document.getElementById('ace-insights-overlay');
+  if (!overlay) return;
+  overlay.classList.add('open');
+  _aceInsightsRenderInitial();
+}
+function closeAceInsights() {
+  var overlay = document.getElementById('ace-insights-overlay');
+  if (overlay) overlay.classList.remove('open');
+}
+
+function _aceInsightsRenderInitial() {
+  var msgs = document.getElementById('ace-insights-messages');
+  var subEl = document.getElementById('ace-insights-module-label');
+  if (!msgs) return;
+  var pageId = _aceCurrentPageId();
+  var d = _aceInsightsData[pageId] || _aceInsightsData.default;
+  if (subEl) subEl.textContent = _aceModuleLabel(pageId);
+  var typeColor = d.type === 'Risk Alert' ? 'var(--red)' : (d.type === 'Action' ? 'var(--amber)' : 'var(--teal)');
+  var cta = d.cta ? '<div><button class="ace-insight-cta" onclick="' + d.ctaFn + '">' + d.cta + ' →</button></div>' : '';
+  msgs.innerHTML =
+    '<div class="ace-page-msg ace">' +
+      '<div class="ace-page-av">' + ACE_SPARK_ICON_SM + '</div>' +
+      '<div class="ace-page-msg-body">' +
+        '<div class="ace-page-bubble ace">' +
+          '<div class="ace-response-label" style="color:' + typeColor + '">' + d.type + '</div>' +
+          '<div style="font-size:13px;color:var(--dark);line-height:1.6">' + d.text + '</div>' +
+          cta +
+        '</div>' +
+        '<div class="ace-page-meta">Ace · just now</div>' +
+      '</div>' +
+    '</div>';
+}
+
+function _aceInsightsSend(input) {
+  var q = (input.value || '').trim();
+  if (!q) return;
+  var msgs = document.getElementById('ace-insights-messages');
+  if (!msgs) return;
+  var esc = q.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+  var userDiv = document.createElement('div');
+  userDiv.className = 'ace-page-msg user';
+  userDiv.innerHTML =
+    '<div class="ace-page-av user">AR</div>' +
+    '<div class="ace-page-msg-body">' +
+      '<div class="ace-page-bubble user">' + esc + '</div>' +
+      '<div class="ace-page-meta">just now</div>' +
+    '</div>';
+  msgs.appendChild(userDiv);
+  input.value = '';
+  input.style.height = 'auto';
+  msgs.scrollTop = msgs.scrollHeight;
+
+  var typingDiv = document.createElement('div');
+  typingDiv.className = 'ace-page-msg ace';
+  typingDiv.id = 'ace-insights-typing';
+  typingDiv.innerHTML =
+    '<div class="ace-page-av">' + ACE_SPARK_ICON_SM + '</div>' +
+    '<div class="ace-page-msg-body">' +
+      '<div class="ace-page-bubble ace" style="padding:12px 16px">' +
+        '<div style="display:flex;gap:5px;align-items:center">' +
+          '<span style="width:7px;height:7px;background:var(--g300);border-radius:50%;animation:pulse 1.2s ease-in-out infinite"></span>' +
+          '<span style="width:7px;height:7px;background:var(--g300);border-radius:50%;animation:pulse 1.2s ease-in-out 0.2s infinite"></span>' +
+          '<span style="width:7px;height:7px;background:var(--g300);border-radius:50%;animation:pulse 1.2s ease-in-out 0.4s infinite"></span>' +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  msgs.appendChild(typingDiv);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  var ql = q.toLowerCase();
+  var responseHTML = ACE_RESPONSES['default'] || 'Ace is still learning how to answer that — try asking about risk, forecast, or stalled deals.';
+  if (ql.indexOf('risk') > -1 || ql.indexOf('behind') > -1 || ql.indexOf('missing') > -1) responseHTML = ACE_RESPONSES['who is most at risk'] || responseHTML;
+  else if (ql.indexOf('forecast') > -1 || ql.indexOf('gap') > -1 || ql.indexOf('eoy') > -1) responseHTML = ACE_RESPONSES['forecast gap'] || responseHTML;
+  else if (ql.indexOf('stall') > -1 || ql.indexOf('pipeline') > -1 || ql.indexOf('deal') > -1) responseHTML = ACE_RESPONSES['stalled'] || responseHTML;
+
+  setTimeout(function() {
+    var t = document.getElementById('ace-insights-typing');
+    if (t) t.remove();
+    var aceDiv = document.createElement('div');
+    aceDiv.className = 'ace-page-msg ace';
+    aceDiv.innerHTML =
+      '<div class="ace-page-av">' + ACE_SPARK_ICON_SM + '</div>' +
+      '<div class="ace-page-msg-body">' +
+        '<div class="ace-page-bubble ace">' + responseHTML + '</div>' +
+        '<div class="ace-page-meta">Ace · just now</div>' +
+      '</div>';
+    msgs.appendChild(aceDiv);
+    msgs.scrollTop = msgs.scrollHeight;
+  }, 900 + Math.random() * 600);
+}
+
+function _aceInsightsToggle(enabled) {
+  _aceInsightsEnabled = enabled;
+  var fabWrap = document.getElementById('ace-insights-fab-wrap');
+  if (fabWrap) fabWrap.classList.toggle('hidden', !enabled);
+  if (!enabled) {
+    closeAceInsights();
+    var dlg = document.getElementById('ace-dialog');
+    if (dlg) dlg.classList.remove('open');
+    var backdrop = document.getElementById('ace-insights-backdrop');
+    if (backdrop) backdrop.classList.remove('open');
+  }
+  showToast(enabled ? 'Ace Insights turned on' : 'Ace Insights turned off');
 }
 function askAceDialog(btn) {
   const input = btn.previousElementSibling;
@@ -8145,6 +8380,8 @@ document.addEventListener('keydown', function(e) {
     document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
     closeShortcutMenu();
     document.getElementById('ace-dialog').classList.remove('open');
+    var aceBackdrop = document.getElementById('ace-insights-backdrop');
+    if (aceBackdrop) aceBackdrop.classList.remove('open');
     closeAllPanels();
     closeDrawer();
   }
