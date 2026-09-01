@@ -4373,14 +4373,14 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
   <div class="stat-row">
     <div class="stat-card"><div class="stat-label">Active Workflows</div><div class="stat-value teal" id="mkt-stat-active">0</div><div class="stat-delta" style="color:var(--g400)"><span id="mkt-stat-total">0</span> total configured</div></div>
-    <div class="stat-card"><div class="stat-label">Actions Triggered</div><div class="stat-value">1,284</div><div class="stat-delta positive">This month</div></div>
-    <div class="stat-card"><div class="stat-label">Emails Auto-Sent</div><div class="stat-value">943</div><div class="stat-delta" style="color:var(--g400)">41.2% open rate</div></div>
-    <div class="stat-card"><div class="stat-label">Tasks Auto-Created</div><div class="stat-value">341</div><div class="stat-delta positive">88% completed on time</div></div>
+    <div class="stat-card"><div class="stat-label">Workflows Triggered</div><div class="stat-value" id="mkt-stat-runs">4</div><div class="stat-delta positive">Workflow runs this month</div></div>
+    <div class="stat-card"><div class="stat-label">Emails Auto-Sent</div><div class="stat-value" style="color:var(--g300)">&mdash;</div><div class="stat-delta" style="color:var(--g400)">Coming soon</div></div>
+    <div class="stat-card"><div class="stat-label">Tasks Auto-Created</div><div class="stat-value" style="color:var(--g300)">&mdash;</div><div class="stat-delta" style="color:var(--g400)">Coming soon</div></div>
   </div>
 
   <!-- Starter templates -->
   <div class="card" style="margin-bottom:24px;padding:20px 24px">
-    <div class="card-title" style="margin-bottom:4px"><span>Start from a recipe</span></div>
+    <div class="card-title" style="margin-bottom:4px"><span>Start from a Recipe</span></div>
     <div style="font-size:11.5px;color:var(--g400);margin-bottom:14px">Pre-built workflows using your own pipeline stages, tags, and team. Click one to open it in the builder.</div>
     <div id="mkt-recipe-row" style="display:flex;gap:10px;flex-wrap:wrap"></div>
   </div>
@@ -22775,37 +22775,60 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
 <div class="modal-overlay" id="mkt-builder-modal" onclick="closeOnOverlay(event,'mkt-builder-modal')">
   <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="mkt-builder-title" onclick="event.stopPropagation()">
     <div class="modal-header">
-      <div class="modal-title" id="mkt-builder-title">New Automation</div>
+      <div>
+        <div class="modal-title" id="mkt-builder-title">What is this automation for?</div>
+        <div style="display:flex;gap:14px;margin-top:6px" id="mkt-b-stepper"></div>
+      </div>
       <button class="modal-close" onclick="closeModal('mkt-builder-modal')" aria-label="Close">&times;</button>
     </div>
     <div class="modal-body">
-      <div class="mkt-field" style="margin-bottom:18px">
-        <label>Automation name</label>
-        <input id="mkt-b-name" class="mkt-input" placeholder="e.g. Proposal sent follow-up">
+
+      <!-- STEP 1: record type -->
+      <div id="mkt-b-step1">
+        <div class="mkt-sec-label">Choose a record type</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;padding:14px;background:var(--g50);border-radius:10px" id="mkt-b-type-cards"></div>
       </div>
 
-      <div class="mkt-sec-label">When this happens</div>
-      <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:18px">
-        <div class="mkt-field" style="margin-bottom:10px">
-          <label>Trigger</label>
-          <select id="mkt-b-trigger" class="mkt-input" onchange="_mktBuilderTriggerChange()"></select>
+      <!-- STEP 2: trigger + conditions -->
+      <div id="mkt-b-step2" style="display:none">
+        <div class="mkt-field" style="margin-bottom:18px">
+          <label>Automation name</label>
+          <input id="mkt-b-name" class="mkt-input" placeholder="e.g. Proposal sent follow-up">
         </div>
-        <div id="mkt-b-trigger-cfg" class="mkt-cfg-grid"></div>
+
+        <div class="mkt-sec-label">When this happens</div>
+        <div style="padding:14px;background:var(--g50);border-radius:10px;margin-bottom:18px">
+          <div class="mkt-field" style="margin-bottom:10px">
+            <label>Trigger</label>
+            <select id="mkt-b-trigger" class="mkt-input" onchange="_mktBuilderTriggerChange()"></select>
+          </div>
+          <div id="mkt-b-trigger-cfg" class="mkt-cfg-grid"></div>
+        </div>
+
+        <div class="mkt-sec-label">And, optionally, only if <span style="font-weight:400;color:var(--g400);text-transform:none;letter-spacing:0">(any field on the record)</span></div>
+        <div style="padding:14px;background:var(--g50);border-radius:10px">
+          <div id="mkt-b-conditions"></div>
+          <button class="mkt-mini-btn" style="margin-top:2px" onclick="_mktBuilderAddCondition()">+ Add condition</button>
+        </div>
       </div>
 
-      <div class="mkt-sec-label">Do this</div>
-      <div id="mkt-b-actions"></div>
-      <button class="mkt-mini-btn" style="margin-top:2px" onclick="_mktBuilderAddAction()">+ Add action</button>
+      <!-- STEP 3: actions -->
+      <div id="mkt-b-step3" style="display:none">
+        <div class="mkt-sec-label">Do this</div>
+        <div id="mkt-b-actions"></div>
+        <button class="mkt-mini-btn" style="margin-top:2px" onclick="_mktBuilderAddAction()">+ Add action</button>
 
-      <div style="margin-top:18px;padding:12px 14px;background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.16);border-radius:9px;font-size:11.5px;color:var(--g600);line-height:1.55">
-        <strong style="color:var(--dark)">Preview:</strong> <span id="mkt-b-preview">Choose a trigger to see the summary.</span>
+        <div style="margin-top:18px;padding:12px 14px;background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.16);border-radius:9px;font-size:11.5px;color:var(--g600);line-height:1.55">
+          <strong style="color:var(--dark)">Preview:</strong> <span id="mkt-b-preview">Choose a trigger to see the summary.</span>
+        </div>
       </div>
+
     </div>
     <div class="modal-footer">
-      <div class="modal-note" id="mkt-b-note">Runs automatically once saved</div>
+      <div class="modal-note" id="mkt-b-note">Pick a record type to continue</div>
       <div class="modal-actions">
-        <button class="modal-cancel" onclick="closeModal('mkt-builder-modal')">Cancel</button>
-        <button class="modal-save" onclick="_mktBuilderSave()">Save Automation</button>
+        <button class="modal-cancel" id="mkt-b-back-btn" onclick="_mktBuilderBack()">Cancel</button>
+        <button class="modal-save" id="mkt-b-next-btn" onclick="_mktBuilderNext()">Continue</button>
       </div>
     </div>
   </div>
@@ -22924,30 +22947,162 @@ var _mktCampaigns = [
 ];
 
 /* ── Trigger + action catalog (fields resolve against company settings) ── */
-var MKT_TRIGGERS = {
-  stage_changed:   {label:'Opportunity moves to a stage',      verb:'moves to',       fields:[{k:'stage',t:'stage',l:'Stage'}]},
-  stage_stalled:   {label:'Opportunity stuck in a stage',      verb:'sits in',        fields:[{k:'stage',t:'stage',l:'Stage'},{k:'days',t:'num',l:'Days without movement',d:14}]},
-  no_activity:     {label:'No activity logged on an account',  verb:'goes quiet for', fields:[{k:'days',t:'num',l:'Days since last activity',d:7}]},
-  activity_logged: {label:'An activity is logged',             verb:'logs a',         fields:[{k:'act',t:'activity',l:'Activity type'}]},
-  deal_won:        {label:'Opportunity marked won',            verb:'is won',         fields:[]},
-  deal_lost:       {label:'Opportunity marked lost',           verb:'is lost',        fields:[]},
-  new_lead:        {label:'New lead assigned to a rep',        verb:'is assigned to', fields:[{k:'rep',t:'rep',l:'Owner'}]},
-  tag_added:       {label:'Tag added to an account',           verb:'is tagged',      fields:[{k:'tag',t:'tag',l:'Tag'}]},
-  value_above:     {label:'Opportunity value crosses a number',verb:'exceeds',        fields:[{k:'amt',t:'num',l:'Amount ($)',d:50000}]},
-  goal_pace:       {label:'Rep falls behind goal pace',        verb:'drops below',    fields:[{k:'pct',t:'num',l:'% of expected pace',d:70}]},
-  renewal_due:     {label:'Renewal date approaching',          verb:'is due in',      fields:[{k:'days',t:'num',l:'Days before renewal',d:30}]}
+/* Record-type-scoped trigger catalog — matches the live platform's automation
+   builder: pick a record type (Opportunity / People / Account) first, then a
+   trigger scoped to that type. Kept as a flat lookup (MKT_TRIGGERS[key]) so
+   every existing helper (_mktTriggerText, the builder, Ace parser) still
+   works — each entry just carries a recordType tag. */
+var MKT_RECORD_TYPES = {
+  opportunity: {label:'Opportunity', desc:'Stage, value, win/loss, and assignment events'},
+  people:      {label:'People',      desc:'Contact and person-based events'},
+  account:     {label:'Account',     desc:'Organization and account-based events'}
 };
+var MKT_TRIGGERS = {
+  /* Opportunity — order matches the live platform's dropdown exactly */
+  opp_stage_changed:     {recordType:'opportunity', label:'Opportunity moves to a stage',     fields:[{k:'pipeline',t:'pipeline',l:'Pipeline'},{k:'stage',t:'stage',l:'Stage'}]},
+  opp_stage_left:        {recordType:'opportunity', label:'Opportunity leaves a stage',       fields:[{k:'pipeline',t:'pipeline',l:'Pipeline'},{k:'stage',t:'stage',l:'Stage'}]},
+  opp_stage_stalled:     {recordType:'opportunity', label:'Opportunity stuck in a stage',     fields:[{k:'pipeline',t:'pipeline',l:'Pipeline'},{k:'stage',t:'stage',l:'Stage'},{k:'days',t:'num',l:'Days without movement',d:14}]},
+  opp_won:               {recordType:'opportunity', label:'Opportunity marked won',           fields:[]},
+  opp_lost:              {recordType:'opportunity', label:'Opportunity marked lost',          fields:[]},
+  opp_value_above:       {recordType:'opportunity', label:'Opportunity value crosses a number', fields:[{k:'amt',t:'num',l:'Amount ($)',d:50000}]},
+  opp_owner_assigned:    {recordType:'opportunity', label:'New opportunity assigned to a rep', fields:[]},
+  opp_owner_unassigned:  {recordType:'opportunity', label:'Opportunity owner unassigned',      fields:[]},
+  opp_created:           {recordType:'opportunity', label:'Opportunity created',               fields:[]},
+  opp_tag_added:         {recordType:'opportunity', label:'Tag added to an opportunity',       fields:[{k:'tag',t:'tag',l:'Tag'}]},
+  opp_tag_removed:       {recordType:'opportunity', label:'Tag removed from an opportunity',   fields:[]},
+  opp_note_added:        {recordType:'opportunity', label:'Note added',                        fields:[]},
+  opp_task_completed:    {recordType:'opportunity', label:'Task completed',                    fields:[]},
+  opp_call_completed:    {recordType:'opportunity', label:'Call completed',                    fields:[]},
+  opp_meeting_completed: {recordType:'opportunity', label:'Meeting completed',                 fields:[]},
+  /* Not confirmed in the live product — kept as our own additions */
+  opp_field_match:       {recordType:'opportunity', label:'A record matches your conditions',  fields:[], custom:true},
+  opp_renewal_due:       {recordType:'opportunity', label:'Renewal date approaching',           fields:[{k:'days',t:'num',l:'Days before renewal',d:30}], custom:true},
+
+  /* People — order matches the live platform's dropdown exactly */
+  person_created:          {recordType:'people', label:'Person created',                fields:[]},
+  person_tag_added:        {recordType:'people', label:'Tag added to a person',          fields:[{k:'tag',t:'tag',l:'Tag'}]},
+  person_tag_removed:      {recordType:'people', label:'Tag removed from a person',      fields:[]},
+  person_owner_assigned:   {recordType:'people', label:'Person assigned to an owner',    fields:[]},
+  person_owner_unassigned: {recordType:'people', label:'Person owner unassigned',        fields:[]},
+  person_note_added:       {recordType:'people', label:'Note added',                     fields:[]},
+  person_task_completed:   {recordType:'people', label:'Task completed',                 fields:[]},
+  person_call_completed:   {recordType:'people', label:'Call completed',                 fields:[]},
+  person_meeting_completed:{recordType:'people', label:'Meeting completed',              fields:[]},
+  person_field_match:      {recordType:'people', label:'A record matches your conditions', fields:[], custom:true},
+
+  /* Account — order matches the live platform's dropdown exactly */
+  acct_tag_added:        {recordType:'account', label:'Tag added to an account',        fields:[{k:'tag',t:'tag',l:'Tag'}]},
+  acct_tag_removed:      {recordType:'account', label:'Tag removed from an account',    fields:[]},
+  acct_created:          {recordType:'account', label:'Account created',                fields:[]},
+  acct_owner_assigned:   {recordType:'account', label:'Account assigned to an owner',   fields:[]},
+  acct_owner_unassigned: {recordType:'account', label:'Account owner unassigned',       fields:[]},
+  acct_note_added:       {recordType:'account', label:'Note added',                     fields:[]},
+  acct_task_completed:   {recordType:'account', label:'Task completed',                 fields:[]},
+  acct_call_completed:   {recordType:'account', label:'Call completed',                 fields:[]},
+  acct_meeting_completed:{recordType:'account', label:'Meeting completed',              fields:[]},
+  /* Not confirmed in the live product — kept as our own additions */
+  acct_field_match:      {recordType:'account', label:'A record matches your conditions', fields:[], custom:true},
+  acct_no_activity:      {recordType:'account', label:'No activity logged on an account', fields:[{k:'days',t:'num',l:'Days since last activity',d:7}], custom:true}
+};
+function _mktTriggerOptionLabel(k) {
+  var def = MKT_TRIGGERS[k];
+  return def.label + (def.custom ? ' (custom)' : '');
+}
+function _mktTriggersForType(rt) {
+  var out = {};
+  Object.keys(MKT_TRIGGERS).forEach(function(k){ if (MKT_TRIGGERS[k].recordType === rt) out[k] = MKT_TRIGGERS[k]; });
+  return out;
+}
+function _mktPipelineOpts(sel) {
+  var pls = _companySettings.pipelines || [];
+  return pls.map(function(p,i){ return '<option value="'+i+'"'+(String(sel)===String(i)?' selected':'')+'>'+p.name+'</option>'; }).join('');
+}
+function _mktPipelineStageOpts(pipelineIdx, sel) {
+  var pls = _companySettings.pipelines || [];
+  var pl = pls[pipelineIdx] || pls[0];
+  var stages = pl ? pl.stages : (_companySettings.pipelineStages || []);
+  return (stages||[]).map(function(s,i){ return '<option value="'+i+'"'+(String(sel)===String(i)?' selected':'')+'>'+s.name+'</option>'; }).join('');
+}
 
 var MKT_ACTIONS = {
-  send_email:  {label:'Send email',        icon:'mail',  fields:[{k:'tmpl',t:'template',l:'Template'},{k:'delay',t:'num',l:'Delay (days)',d:0}]},
-  create_task: {label:'Create task',       icon:'check', fields:[{k:'title',t:'text',l:'Task title',d:'Follow up'},{k:'due',t:'num',l:'Due in (days)',d:2},{k:'rep',t:'rep',l:'Assign to'}]},
-  notify_mgr:  {label:'Notify manager',    icon:'bell',  fields:[]},
-  add_tag:     {label:'Add tag',           icon:'tag',   fields:[{k:'tag',t:'tag',l:'Tag'}]},
-  move_stage:  {label:'Move to stage',     icon:'arrow', fields:[{k:'stage',t:'stage',l:'Stage'}]},
-  flag_risk:   {label:'Flag as at risk',   icon:'warn',  fields:[]},
-  log_note:    {label:'Log a note',        icon:'note',  fields:[{k:'text',t:'text',l:'Note text',d:'Auto-logged by workflow'}]},
-  wait:        {label:'Wait',              icon:'clock', fields:[{k:'days',t:'num',l:'Days',d:3}]}
+  send_email:   {label:'Send email',        icon:'mail',  fields:[{k:'tmpl',t:'template',l:'Template'},{k:'delay',t:'num',l:'Delay (days)',d:0}]},
+  create_task:  {label:'Create task',       icon:'check', fields:[{k:'title',t:'text',l:'Task title',d:'Follow up'},{k:'due',t:'num',l:'Due in (days)',d:2},{k:'rep',t:'rep',l:'Assign to'}]},
+  assign_owner: {label:'Assign to rep',     icon:'users', fields:[{k:'rep',t:'rep',l:'Assign to'}]},
+  notify_mgr:   {label:'Notify manager',    icon:'bell',  fields:[]},
+  add_tag:      {label:'Add tag',           icon:'tag',   fields:[{k:'tag',t:'tag',l:'Tag'}]},
+  move_stage:   {label:'Move to stage',     icon:'arrow', fields:[{k:'stage',t:'stage',l:'Stage'}]},
+  flag_risk:    {label:'Flag as at risk',   icon:'warn',  fields:[]},
+  log_note:     {label:'Log a note',        icon:'note',  fields:[{k:'text',t:'text',l:'Note text',d:'Auto-logged by workflow'}]},
+  wait:         {label:'Wait',              icon:'clock', fields:[{k:'days',t:'num',l:'Days',d:3}]}
 };
+
+/* ── Condition builder — lets a user filter a trigger by any CRM field,
+   the same way "if State contains Florida" or "if Close Date is within
+   30 days" would work. Field list mirrors real record data (opportunity +
+   contact) so anything on a record can be a condition. ── */
+var MKT_CONDITION_FIELDS = [
+  {k:'stage',        l:'Pipeline Stage',            t:'stage'},
+  {k:'daysInStage',  l:'Days in Current Stage',      t:'number'},
+  {k:'dealValue',    l:'Deal Value ($)',             t:'number'},
+  {k:'closeDate',    l:'Close Date',                 t:'date'},
+  {k:'daysSinceActivity', l:'Days Since Last Activity', t:'number'},
+  {k:'owner',        l:'Owner / Rep',                t:'rep'},
+  {k:'tag',          l:'Tag',                        t:'tag'},
+  {k:'source',       l:'Lead Source',                t:'text'},
+  {k:'companyName',  l:'Company Name',               t:'text'},
+  {k:'contactName',  l:'Contact Name',                t:'text'},
+  {k:'email',        l:'Email Address',               t:'text'},
+  {k:'city',         l:'City',                        t:'text'},
+  {k:'state',        l:'State',                       t:'text'},
+  {k:'country',      l:'Country',                     t:'text'}
+];
+var MKT_OPERATORS = {
+  text:   [{k:'equals',l:'equals'},{k:'not_equals',l:'does not equal'},{k:'contains',l:'contains'},{k:'not_contains',l:'does not contain'},{k:'starts_with',l:'starts with'},{k:'is_empty',l:'is empty'},{k:'is_not_empty',l:'is not empty'}],
+  number: [{k:'equals',l:'equals'},{k:'greater_than',l:'is greater than'},{k:'less_than',l:'is less than'},{k:'greater_or_equal',l:'is greater than or equal to'},{k:'less_or_equal',l:'is less than or equal to'}],
+  date:   [{k:'is',l:'is on'},{k:'before',l:'is before'},{k:'after',l:'is after'},{k:'within_next_days',l:'is within the next (days)'},{k:'more_than_days_ago',l:'is more than (days) ago'}],
+  stage:  [{k:'equals',l:'is'},{k:'not_equals',l:'is not'}],
+  tag:    [{k:'equals',l:'is'},{k:'not_equals',l:'is not'}],
+  rep:    [{k:'equals',l:'is'},{k:'not_equals',l:'is not'}]
+};
+function _mktConditionField(k) { return MKT_CONDITION_FIELDS.filter(function(f){ return f.k===k; })[0] || MKT_CONDITION_FIELDS[0]; }
+function _mktOperatorsFor(fieldKey) { return MKT_OPERATORS[_mktConditionField(fieldKey).t] || MKT_OPERATORS.text; }
+function _mktOperatorLabel(fieldKey, opKey) {
+  var ops = _mktOperatorsFor(fieldKey);
+  var o = ops.filter(function(x){ return x.k===opKey; })[0];
+  return o ? o.l : 'equals';
+}
+function _mktConditionValueHtml(field, cond, id, onchange) {
+  var oc = onchange ? ' oninput="'+onchange+'" onchange="'+onchange+'"' : '';
+  if (cond.operator === 'is_empty' || cond.operator === 'is_not_empty') return '';
+  if (field.t === 'stage') return '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktStageOpts(cond.value)+'</select>';
+  if (field.t === 'tag')   return '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktTagOpts(cond.value)+'</select>';
+  if (field.t === 'rep')   return '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktRepOpts(cond.value,'Any rep')+'</select>';
+  if (field.t === 'number') return '<input id="'+id+'" class="mkt-input" type="number" value="'+(cond.value||'')+'"'+oc+'>';
+  if (field.t === 'date') {
+    if (cond.operator === 'within_next_days' || cond.operator === 'more_than_days_ago') return '<input id="'+id+'" class="mkt-input" type="number" placeholder="e.g. 30" value="'+(cond.value||'')+'"'+oc+'>';
+    return '<input id="'+id+'" class="mkt-input" type="date" value="'+(cond.value||'')+'"'+oc+'>';
+  }
+  return '<input id="'+id+'" class="mkt-input" placeholder="Value" value="'+String(cond.value||'').replace(/"/g,'&quot;')+'"'+oc+'>';
+}
+function _mktConditionText(cond) {
+  var field = _mktConditionField(cond.field);
+  var opLabel = _mktOperatorLabel(cond.field, cond.operator);
+  var valTxt = '';
+  if (cond.operator !== 'is_empty' && cond.operator !== 'is_not_empty') {
+    if (field.t === 'stage') valTxt = _mktStageName(cond.value);
+    else if (field.t === 'tag') valTxt = ((_companySettings.tagDefinitions[cond.value]||{}).name)||'any tag';
+    else if (field.t === 'rep') valTxt = ((_companySettings.repQuotas[cond.value]||{}).name)||'any rep';
+    else if (field.t === 'date' && (cond.operator === 'within_next_days' || cond.operator === 'more_than_days_ago')) valTxt = (cond.value||0) + ' days';
+    else valTxt = '"' + (cond.value||'') + '"';
+  }
+  return '<strong>' + field.l + '</strong> ' + opLabel + (valTxt ? ' ' + valTxt : '');
+}
+function _mktConditionsText(conditions) {
+  if (!conditions || !conditions.length) return '';
+  return conditions.map(function(c, i){
+    return (i > 0 ? ' <em style="color:var(--g400);font-style:normal;font-weight:700">' + (c.connector||'AND') + '</em> ' : '') + _mktConditionText(c);
+  }).join('');
+}
 
 var MKT_ICONS = {
   mail:  '<path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>',
@@ -22985,38 +23140,74 @@ function _mktSeedAutomations() {
   var last = Math.max(0, st.length - 1);
   var mid  = Math.min(2, last);
   var early = Math.min(1, last);
-  var od = _companySettings.overdueActivityDays || 7;
+  var repKeys = Object.keys(_companySettings.repQuotas || {});
+  var repA = repKeys[0] || '';       // stand-in for "Kelsey Armstrong" in the live examples
+  var repB = repKeys[1] || repKeys[0] || ''; // stand-in for "Casey Morales"
   _mktAutomations = [
-    {name:'Stage advance follow-up', active:true,
-     trigger:{type:'stage_changed', cfg:{stage:mid}},
-     actions:[{type:'send_email', cfg:{tmpl:1, delay:0}},
-              {type:'create_task', cfg:{title:'Schedule next conversation', due:2, rep:''}}]},
+    /* Mirrors the automations already configured on the live platform,
+       renamed to our own rep/tag/template data. */
+    {name:'Assign all new accounts to ' + ((_companySettings.repQuotas[repA]||{}).name || 'rep'), active:true,
+     recordType:'account', trigger:{type:'acct_created', cfg:{}}, conditions:[],
+     actions:[{type:'assign_owner', cfg:{rep:repA}}]},
+    {name:'Person unassigned_notify manager', active:true,
+     recordType:'people', trigger:{type:'person_owner_unassigned', cfg:{}}, conditions:[],
+     actions:[{type:'notify_mgr', cfg:{}}]},
+    {name:'Won_Sales Agreement (product)', active:true,
+     recordType:'opportunity', trigger:{type:'opp_won', cfg:{}}, conditions:[],
+     actions:[{type:'send_email', cfg:{tmpl:1, delay:0}}]},
+    {name:'Tag removed_notify manager', active:true,
+     recordType:'account', trigger:{type:'acct_tag_removed', cfg:{}}, conditions:[],
+     actions:[{type:'notify_mgr', cfg:{}}]},
+    {name:'Person_Customer tag added_assign to ' + ((_companySettings.repQuotas[repB]||{}).name || 'rep'), active:true,
+     recordType:'people', trigger:{type:'person_tag_added', cfg:{tag:1}}, conditions:[],
+     actions:[{type:'assign_owner', cfg:{rep:repB}}]},
+    {name:'Won_send welcome packet & onboarding docs', active:true,
+     recordType:'opportunity', trigger:{type:'opp_won', cfg:{}}, conditions:[],
+     actions:[{type:'send_email', cfg:{tmpl:5, delay:0}},
+              {type:'create_task', cfg:{title:'Kick off onboarding call', due:3, rep:''}}]},
+
+    /* Ours, layered on top: same idea, extended with if/then conditions
+       and the fuller action/trigger set built out this session. */
     {name:'Stalled deal rescue', active:true,
-     trigger:{type:'stage_stalled', cfg:{stage:early, days:14}},
+     recordType:'opportunity', trigger:{type:'opp_stage_stalled', cfg:{pipeline:0, stage:early, days:14}},
+     conditions:[{connector:'AND', field:'dealValue', operator:'greater_than', value:25000}],
      actions:[{type:'send_email', cfg:{tmpl:6, delay:0}},
               {type:'create_task', cfg:{title:'Call and re-qualify', due:1, rep:''}},
               {type:'notify_mgr', cfg:{}}]},
     {name:'Quiet account nudge', active:true,
-     trigger:{type:'no_activity', cfg:{days:od}},
+     recordType:'account', trigger:{type:'acct_no_activity', cfg:{days:_companySettings.overdueActivityDays||7}}, conditions:[],
      actions:[{type:'send_email', cfg:{tmpl:0, delay:0}},
               {type:'wait', cfg:{days:7}},
               {type:'create_task', cfg:{title:'Personal check-in call', due:1, rep:''}},
               {type:'flag_risk', cfg:{}}]},
-    {name:'Closed won onboarding', active:true,
-     trigger:{type:'deal_won', cfg:{}},
-     actions:[{type:'send_email', cfg:{tmpl:5, delay:0}},
-              {type:'create_task', cfg:{title:'Kick off onboarding call', due:3, rep:''}},
-              {type:'add_tag', cfg:{tag:1}}]},
-    {name:'New lead first touch', active:true,
-     trigger:{type:'new_lead', cfg:{rep:''}},
-     actions:[{type:'send_email', cfg:{tmpl:2, delay:0}},
-              {type:'create_task', cfg:{title:'Qualify new lead', due:0, rep:''}},
-              {type:'move_stage', cfg:{stage:early}}]},
     {name:'Lost deal recovery', active:false,
-     trigger:{type:'deal_lost', cfg:{}},
+     recordType:'opportunity', trigger:{type:'opp_lost', cfg:{}}, conditions:[],
      actions:[{type:'log_note', cfg:{text:'Logged loss reason for review'}},
               {type:'wait', cfg:{days:60}},
-              {type:'send_email', cfg:{tmpl:4, delay:0}}]}
+              {type:'send_email', cfg:{tmpl:4, delay:0}}]},
+    {name:'Florida leads → regional specialist', active:true,
+     recordType:'opportunity', trigger:{type:'opp_field_match', cfg:{}},
+     conditions:[{connector:'AND', field:'state', operator:'contains', value:'Florida'}],
+     actions:[{type:'assign_owner', cfg:{rep:repA}},
+              {type:'add_tag', cfg:{tag:0}},
+              {type:'create_task', cfg:{title:'Welcome call — regional territory', due:1, rep:repA}}]},
+    {name:'Named account concierge routing', active:true,
+     recordType:'opportunity', trigger:{type:'opp_field_match', cfg:{}},
+     conditions:[{connector:'AND', field:'companyName', operator:'contains', value:'Enterprise'}],
+     actions:[{type:'assign_owner', cfg:{rep:repB}},
+              {type:'notify_mgr', cfg:{}}]},
+    {name:'Deal sitting too long, high value', active:true,
+     recordType:'opportunity', trigger:{type:'opp_field_match', cfg:{}},
+     conditions:[{connector:'AND', field:'daysInStage', operator:'greater_than', value:5},
+                 {connector:'AND', field:'dealValue', operator:'greater_or_equal', value:50000}],
+     actions:[{type:'flag_risk', cfg:{}},
+              {type:'notify_mgr', cfg:{}},
+              {type:'create_task', cfg:{title:'Check in before it stalls further', due:0, rep:''}}]},
+    {name:'Close date approaching this month', active:true,
+     recordType:'opportunity', trigger:{type:'opp_field_match', cfg:{}},
+     conditions:[{connector:'AND', field:'closeDate', operator:'within_next_days', value:30}],
+     actions:[{type:'create_task', cfg:{title:'Confirm close-date timeline with buyer', due:0, rep:''}},
+              {type:'send_email', cfg:{tmpl:1, delay:0}}]}
   ];
 }
 
@@ -23286,11 +23477,12 @@ function _mktActOpts(sel) {
     return '<option value="'+a+'"'+(sel===a?' selected':'')+'>'+a+'</option>';
   }).join('');
 }
-function _mktFieldHtml(f, val, id, onchange) {
+function _mktFieldHtml(f, val, id, onchange, pipelineIdx) {
   var v = (val === undefined || val === '') ? (f.d !== undefined ? f.d : '') : val;
   var oc = onchange ? ' oninput="'+onchange+'" onchange="'+onchange+'"' : '';
   var inner;
-  if (f.t === 'stage')         inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktStageOpts(v)+'</select>';
+  if (f.t === 'pipeline')      inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktPipelineOpts(v)+'</select>';
+  else if (f.t === 'stage')    inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+(pipelineIdx !== undefined ? _mktPipelineStageOpts(pipelineIdx, v) : _mktStageOpts(v))+'</select>';
   else if (f.t === 'tag')      inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktTagOpts(v)+'</select>';
   else if (f.t === 'rep')      inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktRepOpts(v,'Any rep')+'</select>';
   else if (f.t === 'template') inner = '<select id="'+id+'" class="mkt-input"'+oc+'>'+_mktTmplOpts(v)+'</select>';
@@ -23301,28 +23493,57 @@ function _mktFieldHtml(f, val, id, onchange) {
 }
 
 /* ── Human-readable summaries ── */
+function _mktTriggerStageText(c) {
+  var pls = _companySettings.pipelines || [];
+  var pl = pls[Number(c.pipeline||0)] || pls[0];
+  return (pl && pl.stages && pl.stages[c.stage]) ? pl.stages[c.stage].name : _mktStageName(c.stage);
+}
 function _mktTriggerText(tr) {
-  var c = tr.cfg||{}, s = _companySettings.pipelineStages||[], t = _companySettings.tagDefinitions||[];
+  var c = tr.cfg||{}, t = _companySettings.tagDefinitions||[];
   switch(tr.type) {
-    case 'stage_changed':   return 'Deal moves to <strong>'+_mktStageName(c.stage)+'</strong>';
-    case 'stage_stalled':   return 'Deal sits in <strong>'+_mktStageName(c.stage)+'</strong> for <strong>'+(c.days||14)+' days</strong>';
-    case 'no_activity':     return 'No activity logged for <strong>'+(c.days||7)+' days</strong>';
-    case 'activity_logged': return 'A <strong>'+(c.act||'Call')+'</strong> is logged';
-    case 'deal_won':        return 'Opportunity marked <strong>won</strong>';
-    case 'deal_lost':       return 'Opportunity marked <strong>lost</strong>';
-    case 'new_lead':        return 'New lead assigned' + (c.rep ? ' to <strong>'+((_companySettings.repQuotas[c.rep]||{}).name||c.rep)+'</strong>' : ' to any rep');
-    case 'tag_added':       return 'Tag <strong>'+((t[c.tag]||{}).name||'any')+'</strong> added to an account';
-    case 'value_above':     return 'Opportunity value exceeds <strong>$'+Number(c.amt||50000).toLocaleString()+'</strong>';
-    case 'goal_pace':       return 'Rep drops below <strong>'+(c.pct||70)+'%</strong> of goal pace';
-    case 'renewal_due':     return 'Renewal is <strong>'+(c.days||30)+' days</strong> away';
+    case 'opp_field_match':
+    case 'person_field_match':
+    case 'acct_field_match':       return 'A record matches the conditions below';
+    case 'opp_stage_changed':      return 'Opportunity moves to <strong>'+_mktTriggerStageText(c)+'</strong>';
+    case 'opp_stage_left':         return 'Opportunity leaves <strong>'+_mktTriggerStageText(c)+'</strong>';
+    case 'opp_stage_stalled':      return 'Opportunity sits in <strong>'+_mktTriggerStageText(c)+'</strong> for <strong>'+(c.days||14)+' days</strong>';
+    case 'opp_won':                return 'Opportunity marked <strong>won</strong>';
+    case 'opp_lost':                return 'Opportunity marked <strong>lost</strong>';
+    case 'opp_created':            return 'Opportunity <strong>created</strong>';
+    case 'opp_value_above':        return 'Opportunity value exceeds <strong>$'+Number(c.amt||50000).toLocaleString()+'</strong>';
+    case 'opp_owner_assigned':     return 'New opportunity assigned to a rep';
+    case 'opp_owner_unassigned':   return 'Opportunity owner unassigned';
+    case 'opp_tag_added':          return 'Tag <strong>'+((t[c.tag]||{}).name||'any')+'</strong> added to an opportunity';
+    case 'opp_tag_removed':        return 'Tag removed from an opportunity';
+    case 'opp_renewal_due':        return 'Renewal is <strong>'+(c.days||30)+' days</strong> away';
+    case 'person_created':         return 'Person <strong>created</strong>';
+    case 'person_tag_added':       return 'Tag <strong>'+((t[c.tag]||{}).name||'any')+'</strong> added to a person';
+    case 'person_tag_removed':     return 'Tag removed from a person';
+    case 'person_owner_assigned':  return 'Person assigned to an owner';
+    case 'person_owner_unassigned':return 'Person owner unassigned';
+    case 'acct_tag_added':         return 'Tag <strong>'+((t[c.tag]||{}).name||'any')+'</strong> added to an account';
+    case 'acct_tag_removed':       return 'Tag removed from an account';
+    case 'acct_created':           return 'Account <strong>created</strong>';
+    case 'acct_owner_assigned':    return 'Account assigned to an owner';
+    case 'acct_owner_unassigned':  return 'Account owner unassigned';
+    case 'acct_no_activity':       return 'No activity logged for <strong>'+(c.days||7)+' days</strong>';
+    case 'opp_note_added': case 'person_note_added': case 'acct_note_added':
+      return 'Note <strong>added</strong>';
+    case 'opp_task_completed': case 'person_task_completed': case 'acct_task_completed':
+      return 'Task <strong>completed</strong>';
+    case 'opp_call_completed': case 'person_call_completed': case 'acct_call_completed':
+      return 'Call <strong>completed</strong>';
+    case 'opp_meeting_completed': case 'person_meeting_completed': case 'acct_meeting_completed':
+      return 'Meeting <strong>completed</strong>';
     default: return 'Trigger';
   }
 }
 function _mktActionText(a) {
   var c = a.cfg||{}, t = _companySettings.tagDefinitions||[], q = _companySettings.repQuotas||{};
   switch(a.type) {
-    case 'send_email':  return 'Send <em>'+((_mktTemplates[c.tmpl]||{}).n||'email')+'</em>' + (Number(c.delay)>0 ? ' after '+c.delay+' day'+(c.delay==1?'':'s') : '');
+    case 'send_email':  return 'Send email template <em>'+((_mktTemplates[c.tmpl]||{}).n||'email')+'</em>' + (Number(c.delay)>0 ? ' after '+c.delay+' day'+(c.delay==1?'':'s') : '');
     case 'create_task': return 'Create task: <em>'+(c.title||'Follow up')+'</em> (due ' + (Number(c.due)>0 ? '+'+c.due+'d' : 'today') + (c.rep ? ', '+((q[c.rep]||{}).name||c.rep) : '') + ')';
+    case 'assign_owner':return 'Assign owner to <em>'+((q[c.rep]||{}).name||'a rep')+'</em>';
     case 'notify_mgr':  return 'Notify the manager in Highlights';
     case 'add_tag':     return 'Add tag <em>'+((t[c.tag]||{}).name||'tag')+'</em>';
     case 'move_stage':  return 'Move deal to <em>'+_mktStageName(c.stage)+'</em>';
@@ -24449,13 +24670,14 @@ function _mktAutoFilterApply(btn, val) {
 function _mktRenderRecipes() {
   var el = document.getElementById('mkt-recipe-row'); if (!el) return;
   var recipes = [
-    {k:'stage_changed',   t:'Stage advance follow-up'},
-    {k:'stage_stalled',   t:'Rescue a stalled deal'},
-    {k:'no_activity',     t:'Nudge a quiet account'},
-    {k:'deal_won',        t:'Onboard a new customer'},
-    {k:'new_lead',        t:'First touch on a new lead'},
-    {k:'renewal_due',     t:'Renewal reminder'},
-    {k:'goal_pace',       t:'Coach a rep behind pace'}
+    {k:'opp_stage_changed',  t:'Stage advance follow-up'},
+    {k:'opp_stage_stalled',  t:'Rescue a stalled deal'},
+    {k:'acct_no_activity',   t:'Nudge a quiet account'},
+    {k:'opp_won',            t:'Onboard a new customer'},
+    {k:'opp_created',        t:'First touch on a new lead'},
+    {k:'opp_renewal_due',    t:'Renewal reminder'},
+    {k:'opp_field_match',    t:'Coach a rep behind pace'},
+    {k:'opp_field_match',    t:'Build your own — any field'}
   ];
   el.innerHTML = recipes.map(function(r){
     return '<button class="mkt-recipe" onclick="_mktOpenBuilderFrom(&quot;' + r.k + '&quot;)">'
@@ -24474,21 +24696,27 @@ function _mktRenderAutomations() {
     if (_mktAutoFilter === 'active' && !a.active) return;
     if (_mktAutoFilter === 'paused' && a.active) return;
     var acts = a.actions.map(function(ac){
-      var def = MKT_ACTIONS[ac.type] || {icon:'note'};
       return '<div class="mkt-act"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round">'
-        + (MKT_ICONS[def.icon] || MKT_ICONS.note) + '</svg><span>' + _mktActionText(ac) + '</span></div>';
+        + MKT_ICONS.bell + '</svg><span>' + _mktActionText(ac) + '</span></div>';
     }).join('');
+    var condTxt = _mktConditionsText(a.conditions);
+    var hasEmail = a.actions.some(function(ac){ return ac.type === 'send_email'; });
+    var typeLabel = (MKT_RECORD_TYPES[a.recordType] || {}).label || 'Opportunity';
     h += '<div class="mkt-auto-card' + (a.active ? '' : ' paused') + '">'
-      + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:12px">'
+      + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px">'
       +   '<div style="font-size:13.5px;font-weight:700;color:var(--dark);line-height:1.3">' + a.name + '</div>'
       +   '<label class="toggle-switch" style="margin:0"><input type="checkbox"' + (a.active ? ' checked' : '') + ' onchange="_mktToggleAuto(' + i + ',this.checked)"><span class="toggle-slider"></span></label>'
       + '</div>'
+      + '<div style="margin-bottom:10px"><span style="display:inline-block;font-size:10.5px;font-weight:600;color:var(--g500);background:var(--g100);border-radius:6px;padding:2px 8px">' + typeLabel + '</span></div>'
       + '<div class="mkt-trig"><span class="mkt-trig-tag">WHEN</span><span style="font-size:11.5px;color:var(--g600);line-height:1.45">' + _mktTriggerText(a.trigger) + '</span></div>'
+      + (condTxt ? '<div class="mkt-trig" style="margin-top:5px"><span class="mkt-trig-tag" style="background:rgba(245,158,11,0.12);color:var(--amber)">IF</span><span style="font-size:11.5px;color:var(--g600);line-height:1.45">' + condTxt + '</span></div>' : '')
       + '<div class="mkt-act-list">' + acts + '</div>'
+      + (hasEmail ? '<div style="display:flex;align-items:center;gap:5px;margin-top:10px;font-size:10.5px;color:var(--g400)"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Respects suppression list &amp; sending pace</div>' : '')
       + '<div class="mkt-auto-foot">'
       +   '<button class="mkt-mini-btn" onclick="_mktOpenBuilder(' + i + ')">Edit</button>'
       +   '<button class="mkt-mini-btn" onclick="_mktDuplicateAuto(' + i + ')">Duplicate</button>'
       +   '<button class="mkt-mini-btn" onclick="_mktViewLog(' + i + ')">Log</button>'
+      +   '<button class="mkt-mini-btn" style="color:var(--red);border-color:rgba(220,38,38,0.25)" onclick="_mktDeleteAuto(' + i + ')">Delete</button>'
       + '</div></div>';
   });
   h += '<div class="mkt-new-card" onclick="_mktOpenBuilder(null)">'
@@ -24512,6 +24740,14 @@ function _mktDuplicateAuto(i) {
 }
 function _mktViewLog(i) {
   showToast(_mktAutomations[i].name + ' — 33 runs in the last 30 days');
+}
+function _mktDeleteAuto(i) {
+  var a = _mktAutomations[i];
+  if (!a) return;
+  if (!confirm('Delete "' + a.name + '"? This cannot be undone.')) return;
+  _mktAutomations.splice(i, 1);
+  _mktRenderAutomations();
+  showToast('Deleted');
 }
 
 /* ── ACE AUTOMATION BUILDER ── — describe an automation in plain English, Ace
@@ -24614,6 +24850,16 @@ function _mktAceParse(text) {
   } else {
     assumptions.push('Couldn\'t find a clear trigger phrase, so Ace defaulted to "Opportunity moves to a stage" — change it in the Trigger dropdown if that\'s not right.');
   }
+
+  // Translate to the record-type-scoped trigger catalog
+  var MKT_ACE_TRIGGER_MAP = {
+    deal_won:'opp_won', deal_lost:'opp_lost', no_activity:'acct_no_activity',
+    stage_stalled:'opp_stage_stalled', new_lead:'opp_created', renewal_due:'opp_renewal_due',
+    goal_pace:'opp_field_match', tag_added:'acct_tag_added', value_above:'opp_value_above',
+    stage_changed:'opp_stage_changed'
+  };
+  triggerType = MKT_ACE_TRIGGER_MAP[triggerType] || triggerType;
+  if (triggerType === 'opp_stage_changed' || triggerType === 'opp_stage_stalled') triggerCfg.pipeline = 0;
 
   // ── Actions — scan for action phrases in the order they appear ──
   var actions = [];
@@ -24738,48 +24984,201 @@ function _mktAceConfirm() {
 
 /* ── Builder ── */
 var _mktBuilderActions = [];
+var _mktBuilderConditions = [];
+function _mktBuilderRenderConditions() {
+  var box = document.getElementById('mkt-b-conditions');
+  if (!box) return;
+  if (!_mktBuilderConditions.length) {
+    box.innerHTML = '<div style="font-size:11.5px;color:var(--g400);padding:2px 0 8px">No conditions — this automation fires on the trigger alone. Add a condition to filter it by any field, e.g. State contains "Florida".</div>';
+    return;
+  }
+  box.innerHTML = _mktBuilderConditions.map(function(cond, i){
+    var field = _mktConditionField(cond.field);
+    var ops = _mktOperatorsFor(cond.field);
+    var fieldOpts = MKT_CONDITION_FIELDS.map(function(f){ return '<option value="'+f.k+'"'+(f.k===cond.field?' selected':'')+'>'+f.l+'</option>'; }).join('');
+    var opOpts = ops.map(function(o){ return '<option value="'+o.k+'"'+(o.k===cond.operator?' selected':'')+'>'+o.l+'</option>'; }).join('');
+    var valueHtml = _mktConditionValueHtml(field, cond, 'mkt-b-cond' + i + '-value', '_mktBuilderConditionValueChange(' + i + ')');
+    return '<div class="mkt-builder-row">'
+      + '<div style="display:flex;align-items:center;gap:8px;width:100%;flex-wrap:wrap">'
+      +   (i > 0 ? '<button class="mkt-mini-btn" style="flex-shrink:0;width:52px" onclick="_mktBuilderToggleConnector(' + i + ')">' + (cond.connector||'AND') + '</button>' : '<span style="font-size:10px;font-weight:700;color:var(--g400);background:var(--white);border:1px solid var(--g200);border-radius:5px;padding:3px 7px;flex-shrink:0">IF</span>')
+      +   '<select class="mkt-input" style="flex:1.1;min-width:140px" onchange="_mktBuilderConditionFieldChange(' + i + ',this.value)">' + fieldOpts + '</select>'
+      +   '<select class="mkt-input" style="flex:1.2;min-width:150px" onchange="_mktBuilderConditionOpChange(' + i + ',this.value)">' + opOpts + '</select>'
+      +   (valueHtml ? '<div style="flex:1;min-width:120px">' + valueHtml + '</div>' : '')
+      +   '<button class="mkt-mini-btn" style="flex-shrink:0" onclick="_mktBuilderRemoveCondition(' + i + ')">Remove</button>'
+      + '</div></div>';
+  }).join('');
+}
+function _mktBuilderAddCondition() {
+  var defField = 'state';
+  _mktBuilderConditions.push({connector:'AND', field: defField, operator: _mktOperatorsFor(defField)[0].k, value:''});
+  _mktBuilderRenderConditions();
+  _mktBuilderPreview();
+}
+function _mktBuilderRemoveCondition(i) {
+  _mktBuilderConditions.splice(i, 1);
+  _mktBuilderRenderConditions();
+  _mktBuilderPreview();
+}
+function _mktBuilderToggleConnector(i) {
+  _mktBuilderConditions[i].connector = (_mktBuilderConditions[i].connector === 'AND') ? 'OR' : 'AND';
+  _mktBuilderRenderConditions();
+  _mktBuilderPreview();
+}
+function _mktBuilderConditionFieldChange(i, fieldKey) {
+  _mktBuilderConditions[i].field = fieldKey;
+  _mktBuilderConditions[i].operator = _mktOperatorsFor(fieldKey)[0].k;
+  _mktBuilderConditions[i].value = '';
+  _mktBuilderRenderConditions();
+  _mktBuilderPreview();
+}
+function _mktBuilderConditionOpChange(i, opKey) {
+  _mktBuilderConditions[i].operator = opKey;
+  _mktBuilderRenderConditions();
+  _mktBuilderPreview();
+}
+function _mktBuilderConditionValueChange(i) {
+  var e = document.getElementById('mkt-b-cond' + i + '-value');
+  if (e) _mktBuilderConditions[i].value = e.value;
+  _mktBuilderPreview();
+}
+/* ── Wizard steps: 1. Type  2. Trigger  3. Actions ── */
+var _mktBuilderStep = 1;
+var _mktBuilderRecordType = null;
+var MKT_BUILDER_STEP_LABELS = ['Type', 'Trigger', 'Actions'];
+function _mktBuilderRenderStepper() {
+  var el = document.getElementById('mkt-b-stepper');
+  if (!el) return;
+  el.innerHTML = MKT_BUILDER_STEP_LABELS.map(function(s, i){
+    var n = i + 1;
+    var active = n === _mktBuilderStep;
+    var done = n < _mktBuilderStep;
+    var color = active ? 'var(--teal)' : (done ? 'var(--g500)' : 'var(--g300)');
+    return '<span style="font-size:11px;font-weight:700;color:' + color + (active ? ';text-decoration:underline' : '') + '">' + n + '. ' + s + '</span>';
+  }).join('');
+}
+function _mktBuilderRenderTypeCards() {
+  var el = document.getElementById('mkt-b-type-cards');
+  if (!el) return;
+  el.innerHTML = Object.keys(MKT_RECORD_TYPES).map(function(k){
+    var t = MKT_RECORD_TYPES[k];
+    var active = _mktBuilderRecordType === k;
+    return '<div onclick="_mktBuilderChooseType(&quot;' + k + '&quot;)" style="cursor:pointer;background:#fff;border:1.5px solid ' + (active ? 'var(--teal)' : 'var(--g200)') + ';border-radius:10px;padding:14px">'
+      + '<div style="font-size:13.5px;font-weight:700;color:var(--dark);margin-bottom:3px">' + t.label + '</div>'
+      + '<div style="font-size:11px;color:var(--g400);line-height:1.4">' + t.desc + '</div></div>';
+  }).join('');
+}
+function _mktBuilderChooseType(rt) {
+  _mktBuilderRecordType = rt;
+  _mktBuilderRenderTypeCards();
+  var nextBtn = document.getElementById('mkt-b-next-btn');
+  if (nextBtn) nextBtn.disabled = false;
+}
+function _mktBuilderShowStep(n) {
+  _mktBuilderStep = n;
+  document.getElementById('mkt-b-step1').style.display = n === 1 ? '' : 'none';
+  document.getElementById('mkt-b-step2').style.display = n === 2 ? '' : 'none';
+  document.getElementById('mkt-b-step3').style.display = n === 3 ? '' : 'none';
+  document.getElementById('mkt-builder-title').textContent = n === 1 ? 'What is this automation for?' : 'Set up automation';
+  document.getElementById('mkt-b-back-btn').textContent = n === 1 ? 'Cancel' : 'Back';
+  document.getElementById('mkt-b-next-btn').textContent = n === 3 ? 'Save Automation' : ('Continue to ' + (n === 1 ? 'Trigger' : 'Actions'));
+  document.getElementById('mkt-b-note').textContent = n === 1 ? 'Pick a record type to continue' : (n === 2 ? 'Next, choose the actions to run' : 'Runs automatically once saved');
+  var nextBtn = document.getElementById('mkt-b-next-btn');
+  if (nextBtn) nextBtn.disabled = (n === 1 && !_mktBuilderRecordType);
+  _mktBuilderRenderStepper();
+  if (n === 3) _mktBuilderPreview();
+}
+function _mktBuilderBack() {
+  if (_mktBuilderStep === 1) { closeModal('mkt-builder-modal'); return; }
+  _mktBuilderShowStep(_mktBuilderStep - 1);
+}
+function _mktBuilderNext() {
+  if (_mktBuilderStep === 1) {
+    if (!_mktBuilderRecordType) { showToast('Pick a record type to continue'); return; }
+    var sel = document.getElementById('mkt-b-trigger');
+    var triggers = _mktTriggersForType(_mktBuilderRecordType);
+    sel.innerHTML = Object.keys(triggers).map(function(k){ return '<option value="' + k + '">' + _mktTriggerOptionLabel(k) + '</option>'; }).join('');
+    if (!Object.keys(triggers).some(function(k){ return k === sel.value; })) sel.value = Object.keys(triggers)[0];
+    if (!document.getElementById('mkt-b-name').value) document.getElementById('mkt-b-name').value = (MKT_TRIGGERS[sel.value]||{}).label || '';
+    _mktBuilderRenderTrigger({});
+    _mktBuilderRenderConditions();
+    _mktBuilderShowStep(2);
+  } else if (_mktBuilderStep === 2) {
+    _mktBuilderRenderActions();
+    _mktBuilderShowStep(3);
+  } else {
+    _mktBuilderSave();
+  }
+}
 function _mktOpenBuilderFrom(type) {
   _mktOpenBuilder(null);
+  var def = MKT_TRIGGERS[type];
+  if (!def) return;
+  _mktBuilderRecordType = def.recordType;
+  _mktBuilderRenderTypeCards();
   var sel = document.getElementById('mkt-b-trigger');
+  var triggers = _mktTriggersForType(_mktBuilderRecordType);
+  sel.innerHTML = Object.keys(triggers).map(function(k){ return '<option value="' + k + '">' + _mktTriggerOptionLabel(k) + '</option>'; }).join('');
   sel.value = type;
-  document.getElementById('mkt-b-name').value = (MKT_TRIGGERS[type]||{}).label || '';
-  _mktBuilderTriggerChange();
+  document.getElementById('mkt-b-name').value = def.label;
+  _mktBuilderRenderTrigger({});
+  _mktBuilderRenderConditions();
+  _mktBuilderShowStep(2);
 }
 function _mktOpenBuilder(idx) {
   _mktEditingIdx = idx;
-  var sel = document.getElementById('mkt-b-trigger');
-  sel.innerHTML = Object.keys(MKT_TRIGGERS).map(function(k){
-    return '<option value="' + k + '">' + MKT_TRIGGERS[k].label + '</option>';
-  }).join('');
   if (idx === null || idx === undefined) {
-    document.getElementById('mkt-builder-title').textContent = 'New Automation';
     document.getElementById('mkt-b-name').value = '';
-    sel.value = 'stage_changed';
+    _mktBuilderRecordType = null;
     _mktBuilderActions = [{type:'send_email', cfg:{}}];
+    _mktBuilderConditions = [];
+    _mktBuilderRenderTypeCards();
+    _mktBuilderRenderActions();
+    openModal('mkt-builder-modal');
+    _mktBuilderShowStep(1);
   } else {
     var a = _mktAutomations[idx];
-    document.getElementById('mkt-builder-title').textContent = 'Edit Automation';
+    var def = MKT_TRIGGERS[a.trigger.type] || {};
+    _mktBuilderRecordType = def.recordType || 'opportunity';
     document.getElementById('mkt-b-name').value = a.name;
-    sel.value = a.trigger.type;
     _mktBuilderActions = JSON.parse(JSON.stringify(a.actions));
+    _mktBuilderConditions = JSON.parse(JSON.stringify(a.conditions || []));
+    _mktBuilderRenderTypeCards();
+    var sel = document.getElementById('mkt-b-trigger');
+    var triggers = _mktTriggersForType(_mktBuilderRecordType);
+    sel.innerHTML = Object.keys(triggers).map(function(k){ return '<option value="' + k + '">' + _mktTriggerOptionLabel(k) + '</option>'; }).join('');
+    sel.value = a.trigger.type;
+    _mktBuilderRenderTrigger(a.trigger.cfg);
+    _mktBuilderRenderConditions();
+    _mktBuilderRenderActions();
+    openModal('mkt-builder-modal');
+    _mktBuilderShowStep(2);
   }
-  _mktBuilderRenderTrigger(idx !== null && idx !== undefined ? _mktAutomations[idx].trigger.cfg : {});
-  _mktBuilderRenderActions();
-  _mktBuilderPreview();
-  openModal('mkt-builder-modal');
 }
 function _mktBuilderTriggerChange() { _mktBuilderRenderTrigger({}); _mktBuilderPreview(); }
 function _mktBuilderRenderTrigger(cfg) {
   var type = document.getElementById('mkt-b-trigger').value;
   var def = MKT_TRIGGERS[type];
   var box = document.getElementById('mkt-b-trigger-cfg');
-  if (!def.fields.length) {
+  if (!def || !def.fields.length) {
     box.innerHTML = '<div style="font-size:11.5px;color:var(--g400);padding:2px 0">No extra settings — this trigger fires on the event itself.</div>';
     return;
   }
+  var hasPipeline = def.fields.some(function(f){ return f.t === 'pipeline'; });
+  var pipelineIdx = hasPipeline ? Number(cfg.pipeline || 0) : undefined;
   box.innerHTML = def.fields.map(function(f){
-    return _mktFieldHtml(f, cfg[f.k], 'mkt-b-t-' + f.k, '_mktBuilderPreview()');
+    var onchange = f.t === 'pipeline' ? '_mktBuilderPipelineChange()' : '_mktBuilderPreview()';
+    return _mktFieldHtml(f, cfg[f.k], 'mkt-b-t-' + f.k, onchange, f.t === 'stage' ? pipelineIdx : undefined);
   }).join('');
+}
+function _mktBuilderPipelineChange() {
+  var type = document.getElementById('mkt-b-trigger').value;
+  var cfg = {};
+  (MKT_TRIGGERS[type].fields || []).forEach(function(f){
+    var e = document.getElementById('mkt-b-t-' + f.k);
+    if (e) cfg[f.k] = e.value;
+  });
+  _mktBuilderRenderTrigger(cfg);
+  _mktBuilderPreview();
 }
 function _mktBuilderRenderActions() {
   var box = document.getElementById('mkt-b-actions');
@@ -24836,13 +25235,16 @@ function _mktBuilderCollect() {
   return {
     name: document.getElementById('mkt-b-name').value || MKT_TRIGGERS[type].label,
     active: true,
+    recordType: (MKT_TRIGGERS[type]||{}).recordType || _mktBuilderRecordType,
     trigger: {type:type, cfg:cfg},
+    conditions: JSON.parse(JSON.stringify(_mktBuilderConditions)),
     actions: JSON.parse(JSON.stringify(_mktBuilderActions))
   };
 }
 function _mktBuilderPreview() {
   var a = _mktBuilderCollect();
-  var txt = _mktTriggerText(a.trigger) + ' &rarr; ' + a.actions.map(_mktActionText).join(', then ');
+  var condTxt = _mktConditionsText(a.conditions);
+  var txt = _mktTriggerText(a.trigger) + (condTxt ? ' <em style="color:var(--g400);font-style:normal">if</em> ' + condTxt : '') + ' &rarr; ' + a.actions.map(_mktActionText).join(', then ');
   var p = document.getElementById('mkt-b-preview');
   if (p) p.innerHTML = txt;
 }
