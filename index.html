@@ -4261,6 +4261,15 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div class="stat-card"><div class="stat-label">Unsubscribe Rate</div><div class="stat-value" style="color:var(--amber)">0.4%</div><div class="stat-delta positive">Below 2% threshold</div></div>
   </div>
 
+  <!-- Deliverability status — compact single line; full detail lives in Company Settings → Email Sending -->
+  <div class="card" id="mkt-deliv-card" style="margin-bottom:22px;padding:12px 18px;display:flex;align-items:center;gap:10px;cursor:pointer" onclick="openCompanySettings();_csLoadSection('email-sending')" title="Open Email Sending settings">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <span style="font-size:12.5px;color:var(--g500)">Deliverability:</span>
+    <span id="mkt-deliv-status-badge" style="flex-shrink:0"></span>
+    <span style="font-size:11.5px;color:var(--g400)" id="mkt-deliv-summary"></span>
+    <span style="margin-left:auto;font-size:11.5px;color:var(--teal);font-weight:600;white-space:nowrap">Manage in Settings →</span>
+  </div>
+
   <!-- Campaigns / Templates -->
   <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
     <div style="font-size:13px;font-weight:600;color:var(--dark)" id="mkt-list-title">Campaigns</div>
@@ -4324,6 +4333,37 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <div>List</div><div style="text-align:right">Contacts</div><div>Type</div><div>Filters</div><div style="text-align:right">Used in</div><div></div>
     </div>
     <div id="mkt-list-list"></div>
+  </div>
+
+  <!-- Suppression & Do Not Contact -->
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+      <div style="font-size:13px;font-weight:600;color:var(--dark)">Suppression &amp; Do Not Contact</div>
+    </div>
+    <div style="font-size:11.5px;color:var(--g400);max-width:400px;text-align:right">These contacts are automatically excluded from every campaign, regardless of audience filters, to protect deliverability and honor opt-outs.</div>
+  </div>
+
+  <div class="stat-row" style="margin-bottom:14px">
+    <div class="stat-card"><div class="stat-label">Unsubscribed</div><div class="stat-value" id="mkt-supp-stat-unsub">0</div><div class="stat-delta" style="color:var(--g400)">Opted out via email link</div></div>
+    <div class="stat-card"><div class="stat-label">Hard Bounced</div><div class="stat-value" style="color:var(--amber)" id="mkt-supp-stat-bounce">0</div><div class="stat-delta" style="color:var(--g400)">Invalid or non-existent address</div></div>
+    <div class="stat-card"><div class="stat-label">Spam Complaints</div><div class="stat-value" style="color:var(--red)" id="mkt-supp-stat-complaint">0</div><div class="stat-delta" style="color:var(--g400)">Marked as spam by recipient</div></div>
+    <div class="stat-card"><div class="stat-label">Manually Suppressed</div><div class="stat-value" id="mkt-supp-stat-manual">0</div><div class="stat-delta" style="color:var(--g400)">Added by your team</div></div>
+  </div>
+
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+    <div style="position:relative;max-width:320px;flex:1">
+      <input type="text" id="mkt-supp-search" placeholder="Search suppressed contacts…" oninput="_mktSuppSearch(this.value)" style="width:100%;box-sizing:border-box;border:1.5px solid var(--g200);border-radius:8px;padding:7px 12px 7px 32px;font-size:12.5px;font-family:var(--font);outline:none;color:var(--dark)" onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--g200)'">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:11px;top:50%;transform:translateY(-50%)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    </div>
+    <button class="tb-btn btn-ghost" style="font-size:11px;display:flex;align-items:center;gap:6px" onclick="_mktSuppAddManual()"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add to Do Not Contact</button>
+  </div>
+
+  <div class="card" style="padding:0;overflow:hidden;margin-bottom:28px">
+    <div class="mkt-supp-row mkt-row-head">
+      <div>Contact</div><div>Reason</div><div>Date added</div><div style="text-align:right">Campaigns skipped</div><div></div>
+    </div>
+    <div id="mkt-supp-list"></div>
   </div>
 
 </div><!-- end mkt-panel-lists -->
@@ -6535,6 +6575,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <button class="cs-nav-btn" data-section="commissions" onclick="_csLoadSection('commissions')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Commission Rules</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">AI & Culture</div>
       <button class="cs-nav-btn" data-section="values"      onclick="_csLoadSection('values')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Culture &amp; Values</button>
+      <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Email</div>
+      <button class="cs-nav-btn" data-section="email-sending" onclick="_csLoadSection('email-sending')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg> Email Sending</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Data</div>
       <button class="cs-nav-btn" data-section="import-export" onclick="_csLoadSection('import-export')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg> Import / Export</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Team</div>
@@ -9462,6 +9504,36 @@ function _csLoadSection(id) {
   if (id === 'rules')      { c.innerHTML = _csRulesSection(); }
   if (id === 'values')         { c.innerHTML = _csValuesSection(); }
   if (id === 'import-export') { c.innerHTML = _csImportExportSection(); }
+  if (id === 'email-sending') { c.innerHTML = _csEmailSendingSection(); }
+}
+function _csEmailSendingSection() {
+  var d = (typeof _mktDeliverability !== 'undefined') ? _mktDeliverability : {spf:true,dkim:true,dmarc:true,reputationScore:92,reputationLabel:'Excellent',bounceRate:0.7,complaintRate:0.03,bounceThreshold:2.0,complaintThreshold:0.1,dailyCap:5000,sentToday:1240};
+  function authRow(label, ok, dnsHint) {
+    var color = ok ? 'var(--teal)' : 'var(--red)';
+    var icon = ok
+      ? '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+      : '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+    return '<div style="display:flex;align-items:center;padding:13px 14px;border-top:1px solid var(--g100)">' +
+      '<div style="display:flex;align-items:center;gap:9px;width:110px;flex-shrink:0">' + icon + '<span style="font-size:13px;font-weight:700;color:var(--dark)">' + label + '</span></div>' +
+      '<div style="flex:1;font-size:11.5px;color:var(--g400);font-family:var(--mono)">' + dnsHint + '</div>' +
+      '<div style="font-size:12px;font-weight:700;color:' + color + '">' + (ok ? 'Verified' : 'Missing') + '</div>' +
+    '</div>';
+  }
+  return _csSectionTitle('Email Sending', 'Domain authentication and sender reputation for outbound campaigns. This is technical setup — most teams configure it once with their IT/DNS admin and don\'t need to revisit it.') +
+    '<div style="margin-bottom:8px"><div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:14px">Domain Authentication</div>' +
+    '<div style="border:1.5px solid var(--g200);border-radius:10px;overflow:hidden">' +
+      '<div style="padding:11px 14px;background:var(--g50);font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;display:flex"><div style="width:110px">Record</div><div style="flex:1">DNS value</div><div>Status</div></div>' +
+      authRow('SPF', d.spf, 'v=spf1 include:_spf.goals.com ~all') +
+      authRow('DKIM', d.dkim, 'goals._domainkey.yourdomain.com') +
+      authRow('DMARC', d.dmarc, 'v=DMARC1; p=quarantine; rua=mailto:...') +
+    '</div></div>' +
+    '<div style="margin-top:28px;margin-bottom:8px"><div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:14px">Sender Reputation &amp; Thresholds</div>' +
+    '<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px">' +
+      '<div style="border:1.5px solid var(--g200);border-radius:10px;padding:14px"><div style="font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;margin-bottom:6px">Reputation Score</div><div style="font-size:20px;font-weight:800;color:var(--teal)">' + d.reputationScore + '<span style="font-size:11px;color:var(--g400);font-weight:500"> /100</span></div><div style="font-size:11.5px;color:var(--g500);margin-top:2px">' + d.reputationLabel + '</div></div>' +
+      '<div style="border:1.5px solid var(--g200);border-radius:10px;padding:14px"><div style="font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;margin-bottom:6px">Bounce Rate</div><div style="font-size:20px;font-weight:800;color:var(--dark)">' + d.bounceRate + '%</div><div style="font-size:11.5px;color:var(--g400);margin-top:2px">Pauses sending above ' + d.bounceThreshold + '%</div></div>' +
+      '<div style="border:1.5px solid var(--g200);border-radius:10px;padding:14px"><div style="font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;margin-bottom:6px">Complaint Rate</div><div style="font-size:20px;font-weight:800;color:var(--dark)">' + d.complaintRate + '%</div><div style="font-size:11.5px;color:var(--g400);margin-top:2px">Pauses sending above ' + d.complaintThreshold + '%</div></div>' +
+    '</div></div>' +
+    '<div style="margin-top:28px;font-size:11.5px;color:var(--g400);line-height:1.6;padding:14px;background:var(--g50);border-radius:10px">When bounce or complaint rate crosses its threshold, campaign sending pauses automatically to protect your domain\'s reputation. Reps see a simple "Sending Paused" status on the Email Marketing tab — the detail above is for whoever manages your sending domain.</div>';
 }
 function _csFieldGroup(label, hint, inputHtml) {
   return '<div style="margin-bottom:20px"><label style="display:block;font-size:12px;font-weight:700;color:var(--dark);margin-bottom:5px">' + label + (hint?'<span style="font-size:11px;font-weight:400;color:var(--g400);margin-left:6px">'+hint+'</span>':'') + '</label>' + inputHtml + '</div>';
@@ -21975,6 +22047,8 @@ select.opp-note-tbtn{width:auto;padding:0 6px;font-size:12px}
 .mkt-inv-row{display:grid;grid-template-columns:minmax(140px,1fr) 1.3fr 110px 110px 92px 78px;gap:16px;align-items:center;padding:14px 20px}
 .mkt-pay-row{display:grid;grid-template-columns:90px 1fr 1.2fr 100px 100px 110px;gap:16px;align-items:center;padding:14px 20px}
 .mkt-list-row{display:grid;grid-template-columns:minmax(200px,1.6fr) 110px 110px 130px 110px 78px;gap:16px;align-items:center;padding:14px 20px}
+.mkt-supp-row{display:grid;grid-template-columns:minmax(200px,1.6fr) 160px 120px 150px 70px;gap:16px;align-items:center;padding:14px 20px}
+@media(max-width:1240px){.mkt-supp-row{grid-template-columns:minmax(160px,1.6fr) 130px 0 120px 70px}.mkt-supp-row>:nth-child(3){display:none}}
 @media(max-width:1240px){
   .mkt-ct-row{grid-template-columns:minmax(180px,1.6fr) 1fr 0 110px 0 70px}
   .mkt-ct-row>:nth-child(3),.mkt-ct-row>:nth-child(5){display:none}
@@ -22233,6 +22307,46 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
             <input id="mkt-c-date" class="mkt-input" type="date">
           </div>
         </div>
+        <div class="mkt-cfg-grid" style="margin-top:12px">
+          <div class="mkt-field">
+            <label>Sending pace</label>
+            <select id="mkt-c-pace" class="mkt-input" onchange="_mktCampPaceChange()">
+              <option value="all">Send all at once</option>
+              <option value="warmup">Gradual warm-up (recommended for new domains)</option>
+              <option value="custom">Custom throttle</option>
+            </select>
+          </div>
+          <div class="mkt-field" id="mkt-c-rate-wrap" style="display:none">
+            <label>Emails per hour</label>
+            <input id="mkt-c-rate" class="mkt-input" type="number" min="10" step="10" value="200">
+          </div>
+        </div>
+        <div style="font-size:11px;color:var(--g400);line-height:1.5;margin-top:8px" id="mkt-c-pace-note">Recipients receive the email as soon as it sends — fine for a warmed-up, established sending domain.</div>
+
+        <div style="border-top:1px solid var(--g200);margin-top:14px;padding-top:12px">
+          <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+            <input id="mkt-c-prioritize-engaged" type="checkbox" checked style="accent-color:var(--teal);width:16px;height:16px;margin-top:1px;flex-shrink:0">
+            <span>
+              <span style="font-size:13px;font-weight:600;color:var(--dark);display:block">Send to most-engaged contacts first</span>
+              <span style="font-size:11.5px;color:var(--g400);line-height:1.5;display:block;margin-top:2px">Orders the send by open/click history, so your earliest opens come from contacts likely to engage — mailbox providers weight early engagement heavily when deciding whether the rest of the batch reaches the inbox.</span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mkt-sec-label">Suppression</div>
+      <div style="padding:14px;background:var(--g50);border-radius:10px">
+        <div class="mkt-audience" style="background:var(--white);margin-bottom:12px">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="4.9" y1="4.9" x2="19.1" y2="19.1"/></svg>
+          <span><strong id="mkt-c-suppressed-count" style="font-family:var(--mono)">0</strong> contacts automatically excluded — <span style="color:var(--g400)">unsubscribed, hard-bounced, or on your do-not-contact list</span></span>
+        </div>
+        <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer">
+          <input id="mkt-c-skip-inactive" type="checkbox" onchange="_mktCampRecount()" style="accent-color:var(--teal);width:16px;height:16px;margin-top:1px;flex-shrink:0">
+          <span>
+            <span style="font-size:13px;font-weight:600;color:var(--dark);display:block">Also skip contacts inactive 90+ days</span>
+            <span style="font-size:11.5px;color:var(--g400);line-height:1.5;display:block;margin-top:2px">List hygiene: sending to contacts who never open lowers your engagement rate and can hurt sender reputation over time. Recommended for larger sends.</span>
+          </span>
+        </label>
       </div>
 
       <div class="mkt-sec-label">Tracking</div>
@@ -22995,6 +23109,71 @@ function _mktRenderLists() {
   var elTop = document.getElementById('mkt-l-stat-top'); if (elTop) elTop.textContent = top ? top.name : '—';
   var elTopN = document.getElementById('mkt-l-stat-top-n'); if (elTopN) elTopN.textContent = top ? ((top.usedIn||0) + ' campaign' + ((top.usedIn||0)===1?'':'s')) : ' ';
 }
+/* ── Suppression & Do Not Contact ── */
+var _mktSuppression = [
+  {name:'Karen Ellis',    email:'karen.ellis@meridianfin.com',    reason:'unsub',     date:'Aug 18, 2026', skipped:3},
+  {name:'Tom Bradshaw',   email:'tbradshaw@old-domain-x.com',     reason:'bounce',    date:'Aug 22, 2026', skipped:2},
+  {name:'Priya Natarajan',email:'priya.n@clearviewdental.com',    reason:'complaint', date:'Jul 30, 2026', skipped:5},
+  {name:'Marcus Odom',    email:'modom@apexintl.co',              reason:'unsub',     date:'Jul 12, 2026', skipped:6},
+  {name:'Do Not Contact — Legal Hold', email:'legal-hold@internal.note', reason:'manual', date:'Jun 4, 2026', skipped:1}
+];
+var MKT_SUPP_REASON_LABELS = {
+  unsub: 'Unsubscribed', bounce: 'Hard bounced', complaint: 'Spam complaint', manual: 'Manually suppressed'
+};
+var MKT_SUPP_REASON_COLORS = {
+  unsub: 'var(--g500)', bounce: 'var(--amber)', complaint: 'var(--red)', manual: 'var(--g500)'
+};
+var _mktSuppSearchVal = '';
+function _mktSuppSearch(v) {
+  _mktSuppSearchVal = (v||'').trim().toLowerCase();
+  _mktRenderSuppression();
+}
+function _mktSuppAddManual() {
+  var email = prompt('Email address to add to the Do Not Contact list:');
+  if (!email) return;
+  email = email.trim();
+  if (!email) return;
+  _mktSuppression.unshift({name: email.split('@')[0], email: email, reason: 'manual', date: new Date().toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'}), skipped: 0});
+  _mktRenderSuppression();
+  showToast('Added to Do Not Contact — excluded from every future campaign');
+}
+function _mktSuppRemove(i) {
+  var s = _mktSuppression[i];
+  if (!s) return;
+  if (!confirm('Remove ' + s.email + ' from suppression? They will become eligible for campaigns again.')) return;
+  _mktSuppression.splice(i, 1);
+  _mktRenderSuppression();
+  showToast('Removed from suppression');
+}
+function _mktRenderSuppression() {
+  var el = document.getElementById('mkt-supp-list');
+  if (!el) return;
+  var counts = {unsub:0, bounce:0, complaint:0, manual:0};
+  _mktSuppression.forEach(function(s){ if (counts[s.reason] != null) counts[s.reason]++; });
+  var unsubEl = document.getElementById('mkt-supp-stat-unsub'); if (unsubEl) unsubEl.textContent = counts.unsub;
+  var bounceEl = document.getElementById('mkt-supp-stat-bounce'); if (bounceEl) bounceEl.textContent = counts.bounce;
+  var complaintEl = document.getElementById('mkt-supp-stat-complaint'); if (complaintEl) complaintEl.textContent = counts.complaint;
+  var manualEl = document.getElementById('mkt-supp-stat-manual'); if (manualEl) manualEl.textContent = counts.manual;
+
+  var visible = _mktSuppression.filter(function(s){
+    return !_mktSuppSearchVal || s.name.toLowerCase().indexOf(_mktSuppSearchVal) !== -1 || s.email.toLowerCase().indexOf(_mktSuppSearchVal) !== -1;
+  });
+  var rows = visible.map(function(s) {
+    var i = _mktSuppression.indexOf(s);
+    var color = MKT_SUPP_REASON_COLORS[s.reason] || 'var(--g500)';
+    return '<div class="mkt-supp-row">' +
+      '<div><div class="mkt-doc-name" style="cursor:default">' + s.name + '</div><div style="font-size:11px;color:var(--g400);margin-top:2px">' + s.email + '</div></div>' +
+      '<div><span class="status-pill" style="background:rgba(0,0,0,0.04);color:' + color + '"><span class="pill-dot" style="background:' + color + '"></span>' + (MKT_SUPP_REASON_LABELS[s.reason]||s.reason) + '</span></div>' +
+      '<div style="font-size:12px;color:var(--g400)">' + s.date + '</div>' +
+      '<div style="text-align:right;font-size:12.5px;color:var(--g400)">' + s.skipped + ' campaign' + (s.skipped===1?'':'s') + '</div>' +
+      '<div class="mkt-row-acts" style="opacity:1">' +
+        '<button class="mkt-ico-btn" title="Remove from suppression" onclick="_mktSuppRemove(' + i + ')"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg></button>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+  el.innerHTML = rows || ('<div style="padding:32px;text-align:center;color:var(--g400);font-size:13px">' + (_mktSuppSearchVal ? 'No suppressed contacts match your search.' : 'No suppressed contacts.') + '</div>');
+}
+
 var _mktListEditIdx = null;
 function _mktListOpen(idx) {
   _mktListEditIdx = (typeof idx === 'number') ? idx : null;
@@ -23166,6 +23345,7 @@ function _mktTab(tab) {
   window._mktCurTab = tab;
   _mktSyncPrimaryLabel();
   if (tab === 'lists' && typeof _mktRenderLists === 'function') _mktRenderLists();
+  if (tab === 'lists' && typeof _mktRenderSuppression === 'function') _mktRenderSuppression();
   if (tab === 'contracts' && typeof _mktRenderContracts === 'function') _mktRenderContracts();
   if (tab === 'invoices' && typeof _mktRenderInvoices === 'function') _mktRenderInvoices();
   if (tab === 'payments' && typeof _mktRenderPayments === 'function') _mktRenderPayments();
@@ -23767,6 +23947,11 @@ function _mktNewCampaign(idx) {
   document.getElementById('mkt-c-date').value    = '';
   document.getElementById('mkt-c-track-opens').checked  = c ? (c.trackOpens !== false) : true;
   document.getElementById('mkt-c-notify-opens').checked = c ? (c.notifyOpens !== false) : true;
+  document.getElementById('mkt-c-pace').value = c ? (c.pace || 'all') : 'all';
+  document.getElementById('mkt-c-rate').value = c && c.rate ? c.rate : 200;
+  document.getElementById('mkt-c-prioritize-engaged').checked = c ? (c.prioritizeEngaged !== false) : true;
+  document.getElementById('mkt-c-skip-inactive').checked = c ? !!c.skipInactive : false;
+  _mktCampPaceChange();
   _mktCampWhenChange();
   _mktCampRecount();
   openModal('mkt-campaign-modal');
@@ -23780,6 +23965,20 @@ function _mktCampWhenChange() {
   document.getElementById('mkt-c-date-wrap').style.display = (v === 'later') ? '' : 'none';
   document.getElementById('mkt-c-send-label').textContent  = (v === 'later') ? 'Schedule Campaign' : 'Send Now';
 }
+var MKT_PACE_NOTES = {
+  all:    'Recipients receive the email as soon as it sends — fine for a warmed-up, established sending domain.',
+  warmup: 'Ramps volume gradually (starting slow, doubling every few days) instead of sending at a flat rate. The safest option for a newer sending domain or IP.',
+  custom: 'Sends at a fixed rate you set, spreading the batch out over time instead of firing it all at once — reduces the spam-signal risk of a sudden volume spike.'
+};
+function _mktCampPaceChange() {
+  var v = document.getElementById('mkt-c-pace').value;
+  document.getElementById('mkt-c-rate-wrap').style.display = (v === 'custom') ? '' : 'none';
+  document.getElementById('mkt-c-pace-note').textContent = MKT_PACE_NOTES[v] || '';
+}
+function _mktSuppressedCount(n) {
+  // Deterministic mock: ~2.6% of any audience sits on unsubscribe/bounce/do-not-contact suppression.
+  return Math.round(n * 0.026);
+}
 function _mktCampAudience() {
   var parts = [], n = 1248;
   var s = document.getElementById('mkt-c-stage');
@@ -23790,12 +23989,17 @@ function _mktCampAudience() {
   if (r.value !== '') { parts.push('Owner: ' + ((_companySettings.repQuotas[r.value]||{}).name||'')); n = Math.round(n * 0.19); }
   var l = document.getElementById('mkt-c-last');
   if (l.value !== '') { parts.push('No contact ' + l.value + '+ days'); n = Math.round(n * 0.36); }
-  return {n:n, desc: parts.length ? parts.join(' · ') : 'All contacts'};
+  var skipInactive = document.getElementById('mkt-c-skip-inactive');
+  if (skipInactive && skipInactive.checked) { parts.push('Excludes 90+ day inactive'); n = Math.round(n * 0.82); }
+  var suppressed = _mktSuppressedCount(n);
+  return {n: n - suppressed, suppressed: suppressed, desc: parts.length ? parts.join(' · ') : 'All contacts'};
 }
 function _mktCampRecount() {
   var a = _mktCampAudience();
   document.getElementById('mkt-c-count').textContent = a.n.toLocaleString();
   document.getElementById('mkt-c-desc').textContent  = a.desc;
+  var supEl = document.getElementById('mkt-c-suppressed-count');
+  if (supEl) supEl.textContent = a.suppressed.toLocaleString();
 }
 function _mktCampSave(send) {
   var name = document.getElementById('mkt-c-name').value.trim();
@@ -23816,6 +24020,10 @@ function _mktCampSave(send) {
   var tmplSel = document.getElementById('mkt-c-tmpl');
   var trackOpens  = document.getElementById('mkt-c-track-opens').checked;
   var notifyOpens = trackOpens && document.getElementById('mkt-c-notify-opens').checked;
+  var pace = document.getElementById('mkt-c-pace').value;
+  var rate = Number(document.getElementById('mkt-c-rate').value) || 200;
+  var prioritizeEngaged = document.getElementById('mkt-c-prioritize-engaged').checked;
+  var skipInactive = document.getElementById('mkt-c-skip-inactive').checked;
   var rec = {
     n: name, aud: a.desc, date: dateTxt, status: status,
     sent: status === 'Sent' ? a.n : 0,
@@ -23825,7 +24033,12 @@ function _mktCampSave(send) {
     bounce: status === 'Sent' ? 0.7 : 0,
     tmplIdx: tmplSel ? Number(tmplSel.value) : 0,
     trackOpens: trackOpens,
-    notifyOpens: notifyOpens
+    notifyOpens: notifyOpens,
+    pace: pace,
+    rate: rate,
+    suppressed: a.suppressed,
+    prioritizeEngaged: prioritizeEngaged,
+    skipInactive: skipInactive
   };
   if (_mktCampEditIdx !== null) _mktCampaigns[_mktCampEditIdx] = rec;
   else _mktCampaigns.unshift(rec);
@@ -25917,6 +26130,39 @@ function _mktPlanAceConfirm() {
   showToast('Scheduled ' + _mktPlanAcePlan.installments.length + ' payments for ' + inv.n);
 }
 
+/* ── Deliverability & sender health ── */
+var _mktDeliverability = {
+  spf: true, dkim: true, dmarc: true,
+  reputationScore: 92, reputationLabel: 'Excellent',
+  bounceRate: 0.7, complaintRate: 0.03,
+  bounceThreshold: 2.0, complaintThreshold: 0.1,
+  dailyCap: 5000, sentToday: 1240,
+  sendingPaused: false
+};
+function _mktAuthChipHTML(label, ok) {
+  var color = ok ? 'var(--teal)' : 'var(--red)';
+  var icon = ok
+    ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>'
+    : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="' + color + '" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
+  return '<div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dark)">' + icon + '<span>' + label + '</span><span style="color:' + color + ';font-weight:600;margin-left:auto">' + (ok ? 'Verified' : 'Missing') + '</span></div>';
+}
+function _mktRenderDeliverability() {
+  var d = _mktDeliverability;
+  var badge = document.getElementById('mkt-deliv-status-badge');
+  if (!badge) return;
+
+  var bounceOverThresh = d.bounceRate > d.bounceThreshold;
+  var complaintOverThresh = d.complaintRate > d.complaintThreshold;
+  d.sendingPaused = bounceOverThresh || complaintOverThresh;
+
+  badge.innerHTML = d.sendingPaused
+    ? '<span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--red);background:rgba(220,38,38,0.08);border:1px solid rgba(220,38,38,0.25);border-radius:20px;padding:3px 9px" title="Sending automatically pauses when bounce or complaint rate crosses threshold, to protect sender reputation.">● Sending Paused</span>'
+    : '<span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;color:var(--teal);background:rgba(29,158,117,0.08);border:1px solid rgba(29,158,117,0.25);border-radius:20px;padding:3px 9px">● Healthy</span>';
+
+  var summaryEl = document.getElementById('mkt-deliv-summary');
+  if (summaryEl) summaryEl.textContent = 'Reputation ' + d.reputationScore + '/100 · ' + d.sentToday.toLocaleString() + ' of ' + d.dailyCap.toLocaleString() + ' sent today';
+}
+
 /* ── Boot ── */
 function _mktInit() {
   if (typeof _companySettings === 'undefined') return;
@@ -25935,6 +26181,8 @@ function _mktInit() {
   _mktRenderTemplates();
   _mktRenderRecipes();
   _mktRenderAutomations();
+  _mktRenderDeliverability();
+  _mktRenderSuppression();
   window._mktCurTab = 'email';
   _mktSyncPrimaryLabel();
 }
