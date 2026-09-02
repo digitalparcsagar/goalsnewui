@@ -4534,6 +4534,19 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value">58%</div><div class="stat-delta" style="color:var(--amber)">— flat vs last year</div></div>
   <div class="stat-card"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$82.9K</div><div class="stat-delta positive">▲ $4.2K vs last mo</div></div>
 </div>
+<!-- ── LOST REASONS ── -->
+<div class="card" style="margin-bottom:22px;padding:20px 24px">
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px">
+    <div style="display:flex;align-items:center;gap:8px">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+      <div class="card-title" style="margin:0"><span>Lost Reasons</span></div>
+    </div>
+    <div style="font-size:11px;color:var(--g400)" id="rpt-lost-summary"></div>
+  </div>
+  <div style="font-size:11.5px;color:var(--g400);margin-bottom:16px">Why opportunities are being lost, based on the reason selected when each deal was marked Lost.</div>
+  <div id="rpt-lost-bars" style="display:flex;flex-direction:column;gap:10px"></div>
+</div>
+
 <!-- ── SAVED REPORTS FOLDER BROWSER ── -->
 <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden;margin-bottom:22px">
   <!-- FY tab bar -->
@@ -6573,6 +6586,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <button class="cs-nav-btn" data-section="pipeline"    onclick="_csLoadSection('pipeline')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg> Pipeline Stages</button>
       <button class="cs-nav-btn" data-section="products"    onclick="_csLoadSection('products')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Products &amp; Services</button>
       <button class="cs-nav-btn" data-section="commissions" onclick="_csLoadSection('commissions')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg> Commission Rules</button>
+      <button class="cs-nav-btn" data-section="lost-reasons" onclick="_csLoadSection('lost-reasons')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Lost Reasons</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">AI & Culture</div>
       <button class="cs-nav-btn" data-section="values"      onclick="_csLoadSection('values')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Culture &amp; Values</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Email</div>
@@ -9320,6 +9334,14 @@ var _companySettings = {
     {name:'VIP',      color:'#f59e0b'},
     {name:'Prospect', color:'#8b5cf6'},
   ],
+  lostReasons: [
+    {name:'Price too high'},
+    {name:'Chose a competitor'},
+    {name:'No budget'},
+    {name:'Bad timing'},
+    {name:'Went dark / no response'},
+    {name:'Not a fit'},
+  ],
   // Company culture & values — consumed by Ace when coaching reps
   companyMission: 'Help families in the Midwest navigate benefits with clarity and confidence.',
   companyValues: [
@@ -9499,6 +9521,7 @@ function _csLoadSection(id) {
   if (id === 'pipeline')   { c.innerHTML = _csPipelineSection(); }
   if (id === 'products')   { c.innerHTML = _csProductsSection(); }
   if (id === 'commissions'){ c.innerHTML = _csCommissionsSection(); }
+  if (id === 'lost-reasons'){ c.innerHTML = _csLostReasonsSection(); }
   if (id === 'territories'){ c.innerHTML = _csTerritoriesSection(); }
   if (id === 'tags')       { c.innerHTML = _csTagsSection(); }
   if (id === 'rules')      { c.innerHTML = _csRulesSection(); }
@@ -9742,6 +9765,33 @@ function _csRemoveTag(i) {
   _companySettings.tagDefinitions.splice(i, 1);
   _csLoadSection('tags');
 }
+function _csLostReasonsSection() {
+  var html = _csSectionTitle('Lost Reasons', 'Shown to reps when they mark an opportunity as Lost. Used to track why deals are lost in Reports.') +
+    '<div id="cs-lost-reasons-list" style="display:flex;flex-direction:column;gap:8px">';
+  _companySettings.lostReasons.forEach(function(r, i) {
+    html += _csLostReasonRow(i, r);
+  });
+  html += '</div><button onclick="_csAddLostReason()" style="margin-top:12px;display:flex;align-items:center;gap:6px;padding:8px 14px;border:1.5px dashed var(--g300);border-radius:8px;background:none;cursor:pointer;font-size:12px;font-weight:600;color:var(--g500);font-family:var(--font)">+ Add Reason</button>';
+  return html;
+}
+function _csLostReasonRow(i, r) {
+  return '<div id="cs-lostreason-row-' + i + '" style="display:flex;align-items:center;gap:10px;padding:11px 14px;background:var(--g50);border-radius:9px">' +
+    '<input id="cs-lostreason-name-' + i + '" value="' + r.name + '" style="flex:1;border:1.5px solid var(--g200);border-radius:6px;padding:6px 9px;font-size:12px;font-family:var(--font);outline:none;background:#fff" onfocus="this.style.borderColor=\'var(--teal)\'" onblur="this.style.borderColor=\'var(--g200)\'">' +
+    '<button onclick="_csRemoveLostReason(' + i + ')" style="background:none;border:none;cursor:pointer;color:var(--g300);font-size:16px;padding:0 4px" title="Remove">×</button>' +
+    '</div>';
+}
+function _csAddLostReason() {
+  _companySettings.lostReasons.push({name:'New Reason'});
+  var el = document.getElementById('cs-lost-reasons-list');
+  var i = _companySettings.lostReasons.length - 1;
+  var div = document.createElement('div');
+  div.innerHTML = _csLostReasonRow(i, _companySettings.lostReasons[i]);
+  el.appendChild(div.firstChild);
+}
+function _csRemoveLostReason(i) {
+  _companySettings.lostReasons.splice(i, 1);
+  _csLoadSection('lost-reasons');
+}
 function _csRulesSection() {
   return _csSectionTitle('Performance Rules', 'Define the thresholds that determine rep status on Team and Goals pages.') +
     '<div style="background:var(--g50);border-radius:12px;padding:16px 18px;margin-bottom:20px">' +
@@ -9945,6 +9995,10 @@ function _csSave() {
   _companySettings.tagDefinitions.forEach(function(t, i){
     var tn = document.getElementById('cs-tag-name-'+i); if(tn) t.name = tn.value;
     var tc = document.getElementById('cs-tag-color-'+i); if(tc) t.color = tc.value;
+  });
+  // Lost Reasons
+  _companySettings.lostReasons.forEach(function(r, i){
+    var rn = document.getElementById('cs-lostreason-name-'+i); if(rn) r.name = rn.value;
   });
   // Rules
   var ot = document.getElementById('cs-ontrack-min'); if(ot) _companySettings.onTrackMin = parseInt(ot.value)||70;
@@ -11393,12 +11447,43 @@ function _oppMarkWon() {
   showToast('Opportunity marked as Closed Won');
 }
 function _oppMarkLost() {
+  var sel = document.getElementById('opp-lr-reason');
+  sel.innerHTML = (_companySettings.lostReasons || []).map(function(r, i){
+    return '<option value="' + i + '">' + r.name + '</option>';
+  }).join('');
+  document.getElementById('opp-lr-notes').value = '';
+  var opp = (_oppCurrentCtx && _oppCurrentCtx.opp) || {};
+  document.getElementById('opp-lr-deal-name').textContent = (opp.title || 'This opportunity') + (opp.value ? ' · $' + Number(opp.value).toLocaleString() : '');
+  openModal('opp-lost-reason-modal');
+}
+function _oppCancelLostReason() {
+  closeModal('opp-lost-reason-modal');
+}
+function _oppConfirmLostReason() {
+  var sel = document.getElementById('opp-lr-reason');
+  var reasonIdx = Number(sel.value);
+  var reason = ((_companySettings.lostReasons || [])[reasonIdx] || {}).name || 'Unspecified';
+  var notes = document.getElementById('opp-lr-notes').value.trim();
+  var opp = (_oppCurrentCtx && _oppCurrentCtx.opp) || {};
+
+  _lostDeals.unshift({
+    name: opp.title || 'Untitled opportunity',
+    value: opp.value || 0,
+    owner: opp.owner || '',
+    reason: reason,
+    notes: notes,
+    date: new Date().toLocaleDateString('en-US', {month:'short', day:'numeric', year:'numeric'})
+  });
+
   document.getElementById('opp-detail-overlay').dataset.status = 'lost';
+  document.getElementById('opp-detail-overlay').dataset.lostReason = reason;
   var idx = PIPELINE_STAGES_ORDER.indexOf(document.getElementById('oppd-stage-breadcrumb').textContent);
   _oppRenderStageBar(idx, []);
   _oppSetStatusButtons('lost');
   _oppRenderDetails();
-  showToast('Opportunity marked as Lost');
+  closeModal('opp-lost-reason-modal');
+  showToast('Opportunity marked as Lost — ' + reason);
+  if (typeof _rptRenderLostReasons === 'function') _rptRenderLostReasons();
 }
 function _oppReopen() {
   document.getElementById('opp-detail-overlay').dataset.status = 'open';
@@ -11477,6 +11562,18 @@ var _oppFieldOrder = ['contact','account','pipeline','stage','status','value','c
 var _oppFieldHidden = {};
 var _oppFieldAdded = []; // {key, source:'contact'|'account', field, label, icon}
 var _oppCurrentCtx = null; // {opp, pipelineName, detail}
+
+/* ── Lost deals — tracked with reason for the Reports "Lost Reasons" breakdown ── */
+var _lostDeals = [
+  {name:'Meridian Financial — Q2 renewal', value:84000,  owner:'Brock Wilson',    reason:'Price too high',            notes:'', date:'Jul 18, 2026'},
+  {name:'Clearview Dental expansion',      value:31500,  owner:'Aya Pedrad',      reason:'Chose a competitor',        notes:'', date:'Jul 22, 2026'},
+  {name:'Apex International — new dept',   value:112000, owner:'Doug Silverness',reason:'No budget',                 notes:'', date:'Aug 2, 2026'},
+  {name:'Northgate Logistics pilot',       value:22800,  owner:'Jules Richards', reason:'Bad timing',                notes:'', date:'Aug 5, 2026'},
+  {name:'Harborline Retail refresh',       value:47500,  owner:'Marcus Kim',     reason:'Went dark / no response',   notes:'', date:'Aug 11, 2026'},
+  {name:'Summit Health add-on',            value:19000,  owner:'Lisa Torres',    reason:'Chose a competitor',        notes:'', date:'Aug 14, 2026'},
+  {name:'Beacon Manufacturing renewal',    value:66200,  owner:'Brock Wilson',   reason:'Price too high',            notes:'', date:'Aug 20, 2026'},
+  {name:'Ridgeline Partners trial',        value:14300,  owner:'Elena Vasquez',  reason:'Not a fit',                 notes:'', date:'Aug 24, 2026'}
+];
 
 var _OPP_CONTACT_FIELD_DEFS = [
   {field:'title', label:'Title', icon:'ti-id-badge-2'},
@@ -18802,10 +18899,48 @@ function _rptRenderIndividualContent() {
   }
 }
 
+function _rptRenderLostReasons() {
+  var barsEl = document.getElementById('rpt-lost-bars');
+  var sumEl = document.getElementById('rpt-lost-summary');
+  if (!barsEl) return;
+  var byReason = {};
+  var totalCount = 0, totalValue = 0;
+  _lostDeals.forEach(function(d){
+    if (!byReason[d.reason]) byReason[d.reason] = {count:0, value:0};
+    byReason[d.reason].count++;
+    byReason[d.reason].value += (d.value||0);
+    totalCount++;
+    totalValue += (d.value||0);
+  });
+  var rows = Object.keys(byReason).map(function(r){ return {reason:r, count:byReason[r].count, value:byReason[r].value}; });
+  rows.sort(function(a,b){ return b.count - a.count; });
+  var maxCount = rows.length ? rows[0].count : 1;
+
+  if (sumEl) sumEl.textContent = totalCount + ' lost deals · $' + totalValue.toLocaleString() + ' in lost pipeline value';
+
+  if (!rows.length) {
+    barsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--g400);font-size:12.5px">No opportunities marked Lost yet.</div>';
+    return;
+  }
+  barsEl.innerHTML = rows.map(function(r){
+    var pct = Math.round((r.count / maxCount) * 100);
+    return '<div>' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
+        '<span style="font-size:12.5px;font-weight:600;color:var(--dark)">' + r.reason + '</span>' +
+        '<span style="font-size:11.5px;color:var(--g400)">' + r.count + ' deal' + (r.count===1?'':'s') + ' &middot; $' + r.value.toLocaleString() + '</span>' +
+      '</div>' +
+      '<div style="height:7px;background:var(--g100);border-radius:4px;overflow:hidden">' +
+        '<div style="height:100%;width:' + pct + '%;background:var(--red);border-radius:4px;opacity:0.75"></div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+}
+
 // Init folder browser on page load
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
     _rptRenderFolders();
+    _rptRenderLostReasons();
   });
 })();
 
@@ -20678,6 +20813,34 @@ function _aceCommConfirm() {
       <div style="display:flex;gap:10px;justify-content:center">
         <button onclick="_aceBonusClose()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done</button>
         <button onclick="_aceBonusReset()" style="background:#fff;color:var(--g600);border:1px solid var(--g200);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Build Another</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LOST REASON MODAL -->
+<div class="modal-overlay" id="opp-lost-reason-modal" style="z-index:2500" onclick="closeOnOverlay(event,'opp-lost-reason-modal')">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="opp-lr-title" onclick="event.stopPropagation()" style="max-width:440px">
+    <div class="modal-header">
+      <div class="modal-title" id="opp-lr-title">Why was this deal lost?</div>
+      <button class="modal-close" onclick="_oppCancelLostReason()" aria-label="Close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div style="font-size:12.5px;color:var(--g400);margin-bottom:16px" id="opp-lr-deal-name">Opportunity</div>
+      <div class="mkt-field" style="margin-bottom:14px">
+        <label>Lost reason <span style="color:var(--red)">*</span></label>
+        <select id="opp-lr-reason" class="mkt-input"></select>
+      </div>
+      <div class="mkt-field">
+        <label>Additional notes <span style="font-weight:400;color:var(--g400)">(optional)</span></label>
+        <textarea id="opp-lr-notes" class="mkt-input" rows="3" placeholder="Any extra context for the team..." style="resize:vertical"></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="modal-note">Helps managers spot patterns in Reports</div>
+      <div class="modal-actions">
+        <button class="modal-cancel" onclick="_oppCancelLostReason()">Cancel</button>
+        <button class="modal-save" onclick="_oppConfirmLostReason()">Mark Lost</button>
       </div>
     </div>
   </div>
