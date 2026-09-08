@@ -942,6 +942,8 @@ button svg, .tb-btn svg, .card-link svg, .hl-action svg,
 /* Page fade-in */
 .page.active { animation: pageFadeIn 0.16s ease }
 @keyframes pageFadeIn { from { opacity:0; transform:translateY(3px) } to { opacity:1; transform:translateY(0) } }
+@keyframes rcbar { 0%,100% { transform:scaleY(0.4) } 50% { transform:scaleY(1) } }
+@keyframes rcspin { to { transform:rotate(360deg) } }
 
 /* Sidebar active state — no left bar */
 .sb-item.active { background:rgba(29,158,117,0.14) }
@@ -1776,6 +1778,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <button class="sb-item" onclick="showPage('commissions',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg><span class="sb-label">Commissions</span></button>
     <div class="sb-divider"></div>
     <button class="sb-item" onclick="showPage('marketing',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg><span class="sb-label">Marketing</span></button>
+    <button class="sb-item" onclick="showPage('calls',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/></svg><span class="sb-label">Calls</span></button>
     <button class="sb-item" onclick="showPage('reports',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><span class="sb-label">Reports</span></button>
     <button class="sb-item" onclick="showPage('forecasting',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg><span class="sb-label">Forecast</span></button>
     <button class="sb-item" onclick="showPage('marketplace',this)"><svg class="sb-icon-svg" aria-hidden="true" focusable="false" viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1-5h16l1 5"/><path d="M3 9a2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 2 2 2 2 0 0 0 2-2 2 2 0 0 0 2 2 2 2 0 0 0 2-2"/><path d="M5 11v9a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-9"/><line x1="9" y1="21" x2="9" y2="15"/><line x1="15" y1="21" x2="15" y2="15"/><line x1="9" y1="15" x2="15" y2="15"/></svg><span class="sb-label">Marketplace</span></button>
@@ -4509,6 +4512,39 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 </div><!-- end mkt-panel-payments -->
 </div><!-- end page-marketing -->
 
+<!-- CALLS -->
+<div id="page-calls" class="page">
+<div class="page-header">
+  <div>
+    <div class="page-title">Calls</div>
+    <div class="page-subtitle">Record sales calls and let Ace summarize them with action items</div>
+  </div>
+  <div style="display:flex;gap:8px">
+    <button class="tb-btn btn-teal" style="font-size:12px" onclick="_rcOpen(null)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/></svg> Record Call</button>
+  </div>
+</div>
+
+<div class="stat-row">
+  <div class="stat-card"><div class="stat-label">Calls This Week</div><div class="stat-value" id="calls-stat-week">0</div><div class="stat-delta positive">Across the team</div></div>
+  <div class="stat-card"><div class="stat-label">Avg Call Length</div><div class="stat-value teal" id="calls-stat-avglen">0:00</div><div class="stat-delta" style="color:var(--g400)">Per recorded call</div></div>
+  <div class="stat-card"><div class="stat-label">Action Items Found</div><div class="stat-value" id="calls-stat-actions">0</div><div class="stat-delta" style="color:var(--g400)">By Ace this week</div></div>
+  <div class="stat-card"><div class="stat-label">Added as Tasks</div><div class="stat-value" style="color:var(--amber)" id="calls-stat-tasks">0</div><div class="stat-delta positive">Follow-through rate</div></div>
+</div>
+
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:10px">
+  <div style="font-size:13px;font-weight:600;color:var(--dark)">Recent Calls</div>
+  <div style="display:flex;gap:6px;align-items:center">
+    <div style="position:relative">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--g300)"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input type="text" id="calls-search" placeholder="Search calls, accounts, reps…" oninput="_callsRender()" style="padding:7px 10px 7px 30px;border:1px solid var(--g200);border-radius:7px;font-size:12px;font-family:var(--font);width:220px;outline:none">
+    </div>
+  </div>
+</div>
+
+<div id="calls-list" style="display:flex;flex-direction:column;gap:10px"></div>
+
+</div><!-- end page-calls -->
+
 <!-- REPORTS -->
 <div id="page-reports" class="page">
 
@@ -6312,7 +6348,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
       <!-- Quick action buttons -->
       <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:16px 24px;display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap">
-        <button class="oppd-qbtn" onclick="_oppActionTab('call',null);_oppFocusActionInput()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/></svg>Call</button>
+        <button class="oppd-qbtn" onclick="_rcOpen({type:'Opportunity',name:(document.getElementById('oppd-header-title')||{}).textContent||''})"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/></svg>Record Call</button>
         <button class="oppd-qbtn" onclick="_oppActionTab('activity',null);_oppFocusActionInput()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Task</button>
         <button class="oppd-qbtn" onclick="_oppActionTab('meeting',null);_oppFocusActionInput()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>Meeting</button>
         <button class="oppd-qbtn" onclick="_oppActionTab('note',null);_oppFocusActionInput()"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Note</button>
@@ -6331,6 +6367,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         <button onclick="_oppMainTab('actions',this)" id="oppd-mtab-actions" class="oppd-maintab oppd-maintab-active">Actions</button>
         <button onclick="_oppMainTab('history',this)" id="oppd-mtab-history" class="oppd-maintab">History</button>
         <button onclick="_oppMainTab('notes',this)" id="oppd-mtab-notes" class="oppd-maintab">Notes</button>
+        <button onclick="_oppMainTab('calls',this)" id="oppd-mtab-calls" class="oppd-maintab">Calls</button>
         <button onclick="_oppMainTab('files',this)" id="oppd-mtab-files" class="oppd-maintab">Files</button>
         <button onclick="_oppMainTab('emails',this)" id="oppd-mtab-emails" class="oppd-maintab">Emails</button>
         <button onclick="_oppMainTab('contracts',this)" id="oppd-mtab-contracts" class="oppd-maintab">Contracts</button>
@@ -6397,7 +6434,18 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
                       <div id="opp-note-summary" style="display:none;margin-bottom:12px"></div>
                       <div id="opp-note-list"></div>
                     </div>
-                    
+
+        </div>
+
+        <div id="oppd-panel-calls" style="display:none">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400)">Recorded Calls</div>
+            <button onclick="_rcOpen({type:'Opportunity',name:(document.getElementById('oppd-header-title')||{}).textContent||''})" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--navy);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/></svg>
+              Record Call
+            </button>
+          </div>
+          <div id="opp-calls-list"></div>
         </div>
 
         <div id="oppd-panel-files" style="display:none">
@@ -6625,6 +6673,28 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <div style="background:var(--white);border-top:1px solid var(--g200);padding:16px 56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0" id="iw-footer">
     <button id="iw-back-btn" onclick="_iwBack()" style="border:1px solid var(--g200);background:none;color:var(--g600);border-radius:9px;padding:9px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">← Back</button>
     <button id="iw-next-btn" onclick="_iwNext()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════
+     RECORD CALL — top-level sibling overlay (see import-wizard-overlay
+     comment above for why this must never be nested inside a hidden page)
+═══════════════════════════════════════════════════════════ -->
+<div id="call-record-overlay" style="position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:2400;display:none;align-items:center;justify-content:center;padding:24px">
+  <div style="background:#fff;border-radius:16px;width:560px;max-width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <div style="padding:20px 24px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:9px;background:rgba(139,92,246,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.63 1h3a2 2 0 0 1 2 1.72c.346 1.053.535 2.152.56 2.26a2 2 0 0 1-.45 2.11L8.09 9a16 16 0 0 0 6.91 6.91l1.27-1.27a2 2 0 0 1 2.11-.45c.108.025 1.207.214 2.26.56A2 2 0 0 1 22 16.92z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--dark)">Record Call</div>
+          <div style="font-size:11.5px;color:var(--g400)" id="rc-header-sub">Ace will summarize it for you</div>
+        </div>
+      </div>
+      <button onclick="_rcClose()" style="border:none;background:none;color:var(--g400);cursor:pointer;font-size:20px;line-height:1;padding:4px">×</button>
+    </div>
+    <div id="rc-body" style="padding:24px"><!-- rendered by JS --></div>
   </div>
 </div>
 
@@ -7923,6 +7993,9 @@ function showPage(id, btn) {
   // Redraw sales chart when returning to dashboard
   if (id === 'dashboard') {
     setTimeout(drawSalesChart, 60);
+  }
+  if (id === 'calls' && typeof _callsRender === 'function') {
+    setTimeout(_callsRender, 30);
   }
   // When navigating to company-settings, load active section
   if (id === 'company-settings') {
@@ -11422,13 +11495,33 @@ function _oppSaveAction() {
   showToast(kind + ' logged');
 }
 function _oppMainTab(tab, btn) {
-  ['actions','history','notes','files','emails','contracts','quickbooks'].forEach(function(t) {
+  ['actions','history','notes','calls','files','emails','contracts','quickbooks'].forEach(function(t) {
     var panel = document.getElementById('oppd-panel-' + t);
     var tabBtn = document.getElementById('oppd-mtab-' + t);
     if (panel) panel.style.display = (t === tab) ? 'block' : 'none';
     if (tabBtn) tabBtn.classList.toggle('oppd-maintab-active', t === tab);
   });
   if (tab === 'notes') _oppRenderNotes();
+  if (tab === 'calls') _oppRenderCalls();
+}
+function _oppRenderCalls() {
+  var list = document.getElementById('opp-calls-list');
+  if (!list) return;
+  var title = (document.getElementById('oppd-header-title')||{}).textContent || '';
+  var calls = (typeof _callsData !== 'undefined' ? _callsData : []).filter(function(c){ return c.recordType === 'Opportunity' && c.recordName === title; });
+  if (!calls.length) {
+    list.innerHTML = '<div style="border:2px dashed var(--g200);border-radius:10px;padding:26px;text-align:center;color:var(--g400)">'
+      + '<div style="font-size:13px;font-weight:600;margin-bottom:4px">No calls recorded yet</div>'
+      + '<div style="font-size:12px">Record a call and Ace will summarize it here with action items</div></div>';
+    return;
+  }
+  list.innerHTML = calls.map(function(c){
+    var tasksAdded = c.actionItems.filter(function(x){return x.added;}).length;
+    return '<div style="border:1px solid var(--g200);border-radius:10px;padding:14px 16px;margin-bottom:10px;cursor:pointer" onclick="_rcViewCall(' + c.id + ')">'
+      + '<div style="font-size:12px;color:var(--g500);margin-bottom:6px;line-height:1.5">' + c.summary + '</div>'
+      + '<div style="font-size:11px;color:var(--g400)">' + c.rep + ' · ' + c.date + ' · ' + _callsFmtDuration(c.duration) + ' · ' + c.actionItems.length + ' action item' + (c.actionItems.length===1?'':'s') + (tasksAdded ? ' · ' + tasksAdded + ' added as tasks' : '') + '</div>'
+      + '</div>';
+  }).join('');
 }
 
 // ── Opportunity Details: customizable, reorderable, cross-record fields ──────
@@ -19392,6 +19485,280 @@ function _iwSavePipeline(i) {
   _iwPipelineOpen = null;
   showToast('Pipeline "' + name + '" created');
   _iwRenderBody();
+}
+
+// ── CALLS FEATURE — recording + Ace summary ────────────────────
+var _rcLinkableRecords = {
+  Opportunity: ['Riverside Financial — Group Benefits', 'Northbrook Benefits Package', 'Pacific Coast HSA', 'Summit 401k Rollover', 'Lakewood Workers Comp'],
+  Account:     ['Riverside Financial Group', 'Apex Holdings LLC', 'Pacific Coast Medical', 'Summit Credit Union', 'Lakewood Builders Inc.'],
+  Person:      ['Marcus Lee', 'Tara Nguyen', 'David Chen', 'James Park', 'Chris Brown']
+};
+var _callTasksStore = {}; // keyed by "Type|Name" -> [{title, done}]
+var _callsData = [
+  { id:1, recordType:'Opportunity', recordName:'Riverside Financial — Group Benefits', rep:'Sagar', date:'09/02/2026', duration:312,
+    summary:'Discussed renewal terms for the group benefits package. Client is comparing against two other carriers and is price-sensitive on the dental add-on. Decision expected by end of month.',
+    actionItems:[
+      {text:'Send updated dental rider pricing by Friday', added:true},
+      {text:'Loop in underwriting on the group size discount', added:true},
+      {text:'Schedule follow-up call for Sep 15', added:false}
+    ]},
+  { id:2, recordType:'Account', recordName:'Apex Holdings LLC', rep:'Mike Choma', date:'09/01/2026', duration:184,
+    summary:'Check-in call with the HR director. No urgent issues — mostly confirming enrollment numbers for Q4. Mentioned interest in adding HSA administration next year.',
+    actionItems:[
+      {text:'Send HSA administration one-pager', added:true},
+      {text:'Add to Q1 2027 renewal pipeline for HSA upsell', added:false}
+    ]},
+  { id:3, recordType:'Person', recordName:'Tara Nguyen', rep:'Sagar', date:'08/29/2026', duration:527,
+    summary:'Discovery call. Tara is the benefits coordinator for a 120-person company currently uninsured for dental/vision. Budget confirmed at $45/employee/month. Wants a proposal before their open enrollment window closes Oct 1.',
+    actionItems:[
+      {text:'Build proposal for dental + vision, 120 lives', added:true},
+      {text:'Confirm open enrollment deadline with Tara', added:true},
+      {text:'Send proposal no later than Sep 20', added:true}
+    ]},
+  { id:4, recordType:'Opportunity', recordName:'Pacific Coast HSA', rep:'Brock Wilson', date:'08/27/2026', duration:96,
+    summary:'Quick call — client asked to push the decision to next quarter due to internal budget review. No red flags, just a timing delay.',
+    actionItems:[
+      {text:'Set reminder to follow up in Q1', added:false}
+    ]}
+];
+
+function _callsFmtDuration(sec) {
+  var m = Math.floor(sec/60), s = sec%60;
+  return m + ':' + (s<10?'0':'') + s;
+}
+function _callsStatRow() {
+  var wk = _callsData.length;
+  var avg = _callsData.length ? Math.round(_callsData.reduce(function(a,c){return a+c.duration;},0)/_callsData.length) : 0;
+  var actions = _callsData.reduce(function(a,c){return a+c.actionItems.length;},0);
+  var tasks = _callsData.reduce(function(a,c){return a+c.actionItems.filter(function(x){return x.added;}).length;},0);
+  var elW = document.getElementById('calls-stat-week'); if (elW) elW.textContent = wk;
+  var elA = document.getElementById('calls-stat-avglen'); if (elA) elA.textContent = _callsFmtDuration(avg);
+  var elAc = document.getElementById('calls-stat-actions'); if (elAc) elAc.textContent = actions;
+  var elT = document.getElementById('calls-stat-tasks'); if (elT) elT.textContent = tasks;
+}
+function _callsRender() {
+  _callsStatRow();
+  var list = document.getElementById('calls-list');
+  if (!list) return;
+  var q = (document.getElementById('calls-search')||{}).value || '';
+  q = q.toLowerCase();
+  var rows = _callsData.filter(function(c){
+    return !q || c.recordName.toLowerCase().indexOf(q)>-1 || c.rep.toLowerCase().indexOf(q)>-1 || c.summary.toLowerCase().indexOf(q)>-1;
+  });
+  if (!rows.length) { list.innerHTML = '<div class="card" style="padding:30px;text-align:center;color:var(--g400);font-size:13px">No calls found.</div>'; return; }
+  list.innerHTML = rows.map(function(c){
+    var tasksAdded = c.actionItems.filter(function(x){return x.added;}).length;
+    return '<div class="card" style="padding:16px 18px;cursor:pointer" onclick="_rcViewCall(' + c.id + ')">'
+      + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px">'
+      + '<div style="flex:1;min-width:0">'
+      + '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">'
+      + '<span style="font-size:13.5px;font-weight:700;color:var(--dark)">' + c.recordName + '</span>'
+      + '<span style="font-size:10px;font-weight:700;color:var(--g500);background:var(--g100);border-radius:5px;padding:2px 7px">' + c.recordType + '</span>'
+      + '</div>'
+      + '<div style="font-size:12px;color:var(--g500);margin-bottom:8px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical">' + c.summary + '</div>'
+      + '<div style="font-size:11px;color:var(--g400)">' + c.rep + ' · ' + c.date + ' · ' + _callsFmtDuration(c.duration) + ' · ' + c.actionItems.length + ' action item' + (c.actionItems.length===1?'':'s') + (tasksAdded ? ' · ' + tasksAdded + ' added as tasks' : '') + '</div>'
+      + '</div>'
+      + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:2px"><polyline points="9 18 15 12 9 6"/></svg>'
+      + '</div></div>';
+  }).join('');
+}
+
+// ── Record Call modal state machine ─────────────────────────────
+var _rcStep = 1;
+var _rcType = null;
+var _rcName = null;
+var _rcRep = 'Sagar';
+var _rcSeconds = 0;
+var _rcTimer = null;
+var _rcRecording = false;
+var _rcResult = null;
+var _rcViewMode = false;
+
+function _rcOpen(prefill) {
+  _rcStep = 1; _rcType = null; _rcName = null; _rcSeconds = 0; _rcRecording = false; _rcResult = null; _rcViewMode = false;
+  if (_rcTimer) { clearInterval(_rcTimer); _rcTimer = null; }
+  if (prefill && prefill.type && prefill.name) { _rcType = prefill.type; _rcName = prefill.name; _rcStep = 2; }
+  var el = document.getElementById('call-record-overlay');
+  if (el) el.style.display = 'flex';
+  _rcRenderBody();
+}
+function _rcClose() {
+  if (_rcTimer) { clearInterval(_rcTimer); _rcTimer = null; }
+  var el = document.getElementById('call-record-overlay');
+  if (el) el.style.display = 'none';
+}
+function _rcRenderBody() {
+  var body = document.getElementById('rc-body');
+  var sub = document.getElementById('rc-header-sub');
+  if (!body) return;
+  if (_rcStep === 1) { sub.textContent = 'Step 1 of 3 — link this call to a record'; body.innerHTML = _rcStep1(); }
+  else if (_rcStep === 2) { sub.textContent = 'Step 2 of 3 — recording'; body.innerHTML = _rcStep2(); }
+  else if (_rcStep === 3) { sub.textContent = 'Step 3 of 3 — Ace summary'; body.innerHTML = _rcStep3(); }
+}
+function _rcStep1() {
+  var types = ['Opportunity','Account','Person'];
+  var html = '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px">What is this call about? <span style="font-weight:500;color:var(--g400)">(optional)</span></div>';
+  html += '<div style="display:flex;gap:6px;margin-bottom:14px">' + types.map(function(t){
+    return '<button onclick="_rcPickType(\'' + t + '\')" style="flex:1;padding:8px;border-radius:8px;border:1.5px solid ' + (_rcType===t?'var(--teal)':'var(--g200)') + ';background:' + (_rcType===t?'#f0fdfa':'#fff') + ';font-size:12px;font-weight:700;color:var(--dark);cursor:pointer;font-family:var(--font)">' + t + '</button>';
+  }).join('') + '</div>';
+  if (_rcType) {
+    html += '<select onchange="_rcName=this.value" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);margin-bottom:14px">'
+      + '<option value="">-- Select ' + _rcType + ' --</option>'
+      + _rcLinkableRecords[_rcType].map(function(n){ return '<option' + (n===_rcName?' selected':'') + '>' + n + '</option>'; }).join('')
+      + '</select>';
+  }
+  html += '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px">Rep</div>';
+  html += '<input value="' + _rcRep + '" onchange="_rcRep=this.value" style="width:100%;border:1px solid var(--g200);border-radius:8px;padding:9px 12px;font-size:13px;font-family:var(--font);margin-bottom:18px;box-sizing:border-box">';
+  html += '<div style="display:flex;justify-content:flex-end;gap:8px">'
+    + '<button onclick="_rcSkipLink()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:9px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Skip — no record</button>'
+    + '<button onclick="_rcGoStep2()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Continue →</button>'
+    + '</div>';
+  return html;
+}
+function _rcPickType(t) { _rcType = t; _rcName = null; _rcRenderBody(); }
+function _rcSkipLink() { _rcType = null; _rcName = null; _rcGoStep2(); }
+function _rcGoStep2() { _rcStep = 2; _rcRenderBody(); }
+function _rcStep2() {
+  var linkLine = (_rcType && _rcName) ? ('<div style="text-align:center;font-size:12px;color:var(--g500);margin-bottom:18px">Linked to <strong style="color:var(--dark)">' + _rcName + '</strong> (' + _rcType + ')</div>') : '<div style="text-align:center;font-size:12px;color:var(--g400);margin-bottom:18px">Not linked to a record</div>';
+  var html = linkLine;
+  html += '<div style="display:flex;flex-direction:column;align-items:center;padding:28px 0">';
+  html += '<div style="font-family:var(--mono);font-size:36px;font-weight:800;color:var(--dark);margin-bottom:18px" id="rc-timer">' + _callsFmtDuration(_rcSeconds) + '</div>';
+  html += '<div style="display:flex;align-items:flex-end;gap:4px;height:44px;margin-bottom:24px" id="rc-waveform">' + _rcWaveformBars() + '</div>';
+  if (!_rcRecording) {
+    html += '<button onclick="_rcStartRecording()" style="width:64px;height:64px;border-radius:50%;background:#dc2626;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(220,38,38,0.35)"><svg width="24" height="24" viewBox="0 0 24 24" fill="white"><circle cx="12" cy="12" r="9"/></svg></button>';
+    html += '<div style="font-size:12px;color:var(--g400);margin-top:10px">Tap to start recording</div>';
+  } else {
+    html += '<button onclick="_rcStopRecording()" style="width:64px;height:64px;border-radius:16px;background:#dc2626;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(220,38,38,0.35)"><svg width="22" height="22" viewBox="0 0 24 24" fill="white"><rect x="6" y="6" width="12" height="12" rx="2"/></svg></button>';
+    html += '<div style="font-size:12px;color:#dc2626;font-weight:700;margin-top:10px">● Recording — tap to stop</div>';
+  }
+  html += '</div>';
+  html += '<div style="display:flex;justify-content:space-between;gap:8px">'
+    + '<button onclick="_rcStep=1;_rcRenderBody()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:9px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">← Back</button>'
+    + '<button ' + (_rcSeconds<1?'disabled style="opacity:0.4;cursor:not-allowed"':'') + ' onclick="_rcFinishRecording()" style="background:var(--navy);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Done — summarize with Ace →</button>'
+    + '</div>';
+  return html;
+}
+function _rcWaveformBars() {
+  var heights = [10,22,14,30,18,38,12,26,16,34,10,20,28,14,24];
+  return heights.map(function(h,i){
+    var animate = _rcRecording ? ';animation:rcbar 1.1s ease-in-out ' + (i*0.06) + 's infinite' : '';
+    return '<div style="width:4px;height:' + h + 'px;background:' + (_rcRecording ? '#dc2626' : 'var(--g200)') + ';border-radius:2px' + animate + '"></div>';
+  }).join('');
+}
+function _rcStartRecording() {
+  _rcRecording = true;
+  _rcSeconds = 0;
+  _rcRenderBody();
+  _rcTimer = setInterval(function(){
+    _rcSeconds++;
+    var t = document.getElementById('rc-timer');
+    if (t) t.textContent = _callsFmtDuration(_rcSeconds);
+  }, 1000);
+}
+function _rcStopRecording() {
+  _rcRecording = false;
+  if (_rcTimer) { clearInterval(_rcTimer); _rcTimer = null; }
+  _rcRenderBody();
+}
+function _rcFinishRecording() {
+  if (_rcSeconds < 1) return;
+  if (_rcRecording) _rcStopRecording();
+  _rcStep = 3;
+  _rcResult = null;
+  _rcRenderBody();
+  setTimeout(function(){
+    _rcResult = _rcGenerateSummary();
+    _rcRenderBody();
+  }, 1400);
+}
+var _rcSummaryBank = [
+  { summary:'Client reviewed current coverage and raised concerns about rising premiums. Compared notes against a competing quote and asked for a revised proposal with adjusted deductible tiers.',
+    items:['Send revised proposal with adjusted deductible tiers','Compare pricing against the competing quote client mentioned','Schedule follow-up call within 5 business days'] },
+  { summary:'Discovery call — client is evaluating vendors for the first time and wants a side-by-side comparison of plan options. Budget has not been finalized internally.',
+    items:['Send plan comparison one-pager','Ask finance contact for budget range confirmation','Add to nurture sequence until budget is confirmed'] },
+  { summary:'Renewal check-in. No major changes requested — client is satisfied with current service levels. Mentioned a new location opening next quarter that may need coverage.',
+    items:['Note new location opening for Q1 coverage planning','Send renewal confirmation paperwork','Check in again after location opens'] },
+  { summary:'Client raised a billing discrepancy from last quarter and wants it resolved before renewing. Otherwise positive about continuing the relationship.',
+    items:['Escalate billing discrepancy to accounts team','Send corrected invoice once resolved','Confirm renewal once billing issue is closed'] }
+];
+function _rcGenerateSummary() {
+  var pick = _rcSummaryBank[Math.floor(Math.random()*_rcSummaryBank.length)];
+  return {
+    summary: pick.summary,
+    actionItems: pick.items.map(function(t){ return {text:t, add:true}; })
+  };
+}
+function _rcStep3() {
+  if (!_rcResult) {
+    return '<div style="display:flex;flex-direction:column;align-items:center;padding:50px 0">'
+      + '<div style="width:40px;height:40px;border:3px solid var(--g200);border-top-color:#8b5cf6;border-radius:50%;animation:rcspin 0.8s linear infinite;margin-bottom:16px"></div>'
+      + '<div style="font-size:13px;font-weight:600;color:var(--dark)">Ace is listening back to the call…</div>'
+      + '<div style="font-size:11.5px;color:var(--g400);margin-top:4px">Summarizing and pulling out action items</div>'
+      + '</div>';
+  }
+  var linkLine = (_rcType && _rcName) ? (_rcName + ' · ' + _rcType) : 'Not linked to a record';
+  var html = '<div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">'
+    + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/></svg>'
+    + '<span style="font-size:13px;font-weight:800;color:var(--dark)">Call Summary</span></div>';
+  html += '<div style="font-size:11.5px;color:var(--g400);margin-bottom:12px">' + linkLine + ' · ' + _callsFmtDuration(_rcSeconds) + '</div>';
+  html += '<div style="background:var(--g50);border-radius:10px;padding:14px 16px;font-size:13px;color:var(--dark);line-height:1.55;margin-bottom:18px">' + _rcResult.summary + '</div>';
+  html += '<div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px">Action Items — ' + _rcResult.actionItems.length + '</div>';
+  html += '<div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">' + _rcResult.actionItems.map(function(a,i){
+    return '<label style="display:flex;align-items:flex-start;gap:10px;padding:10px 12px;border:1px solid var(--g200);border-radius:9px;cursor:pointer">'
+      + '<input type="checkbox" ' + (a.add?'checked':'') + ' onchange="_rcResult.actionItems[' + i + '].add=this.checked" style="margin-top:2px;accent-color:var(--teal)">'
+      + '<span style="font-size:13px;color:var(--dark);flex:1">' + a.text + '</span>'
+      + '<span style="font-size:10px;font-weight:700;color:var(--teal);white-space:nowrap">Add as task</span>'
+      + '</label>';
+  }).join('') + '</div>';
+  if (_rcViewMode) {
+    html += '<div style="display:flex;justify-content:flex-end">'
+      + '<button onclick="_rcClose()" style="background:var(--navy);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Close</button>'
+      + '</div>';
+  } else {
+    html += '<div style="display:flex;justify-content:space-between;gap:8px">'
+      + '<button onclick="_rcClose()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:9px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Discard</button>'
+      + '<button onclick="_rcSaveCall()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Save Call</button>'
+      + '</div>';
+  }
+  return html;
+}
+function _rcSaveCall() {
+  var addedCount = _rcResult.actionItems.filter(function(a){return a.add;}).length;
+  var call = {
+    id: (_callsData.length ? Math.max.apply(null,_callsData.map(function(c){return c.id;})) : 0) + 1,
+    recordType: _rcType || 'Unlinked',
+    recordName: _rcName || 'No record linked',
+    rep: _rcRep || 'You',
+    date: (function(){ var d=new Date(); return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear(); })(),
+    duration: _rcSeconds,
+    summary: _rcResult.summary,
+    actionItems: _rcResult.actionItems.map(function(a){ return {text:a.text, added:a.add}; })
+  };
+  _callsData.unshift(call);
+  if (_rcType && _rcName && addedCount) {
+    var key = _rcType + '|' + _rcName;
+    if (!_callTasksStore[key]) _callTasksStore[key] = [];
+    _rcResult.actionItems.filter(function(a){return a.add;}).forEach(function(a){
+      _callTasksStore[key].push({title:a.text, done:false, source:'call'});
+    });
+  }
+  _rcClose();
+  showToast(addedCount ? ('Call saved · ' + addedCount + ' task' + (addedCount===1?'':'s') + ' added') : 'Call saved');
+  if (typeof _callsRender === 'function' && document.getElementById('calls-list')) _callsRender();
+  if (typeof _oppRenderCalls === 'function' && _rcType === 'Opportunity') _oppRenderCalls();
+}
+function _rcViewCall(id) {
+  var c = _callsData.filter(function(x){return x.id===id;})[0];
+  if (!c) return;
+  _rcStep = 3;
+  _rcViewMode = true;
+  _rcType = c.recordType === 'Unlinked' ? null : c.recordType;
+  _rcName = c.recordType === 'Unlinked' ? null : c.recordName;
+  _rcSeconds = c.duration;
+  _rcResult = { summary: c.summary, actionItems: c.actionItems.map(function(a){ return {text:a.text, add:a.added}; }) };
+  var el = document.getElementById('call-record-overlay');
+  if (el) el.style.display = 'flex';
+  _rcRenderBody();
 }
 
 // ── STEP 4: Preview ──────────────────────────────────────────
