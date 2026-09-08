@@ -19174,8 +19174,8 @@ function _iwMissingRequired() {
 }
 
 function _iwStep3() {
-  var auto   = _iwMappings.filter(function(m){ return m.status==='auto'; });
-  var needsReview = _iwMappings.filter(function(m){ return m.status!=='auto'; });
+  var auto   = _iwMappings.filter(function(m){ return m.status==='auto' || m.status==='skipped'; });
+  var needsReview = _iwMappings.filter(function(m){ return m.status!=='auto' && m.status!=='skipped'; });
   var missingReq = _iwMissingRequired();
   var valid = _iwMappingValid();
 
@@ -19246,12 +19246,15 @@ function _iwMapRow(m, i, compact) {
   var html = '<div style="' + wrapStyle + '">';
   html += '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">';
   html += '<div style="flex:1;min-width:180px">';
-  html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><span style="font-size:13px;font-weight:700;color:var(--dark)">' + m.col + '</span>' + (m.status==='auto'||m.status==='review'? _iwConfBadge(m.confidence) : '') + '</div>';
+  var badgeHtml = '';
+  if (m.status === 'auto' || m.status === 'review') badgeHtml = _iwConfBadge(m.confidence);
+  else if (m.status === 'skipped') badgeHtml = '<span style="font-size:10px;font-weight:800;color:var(--g500);background:var(--g100);border-radius:5px;padding:2px 7px;white-space:nowrap">Skipped</span>';
+  html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><span style="font-size:13px;font-weight:700;color:var(--dark)">' + m.col + '</span>' + badgeHtml + '</div>';
   html += '<div style="font-size:11px;color:var(--g400);margin-bottom:5px">Sample: ' + m.samples.join(' · ') + '</div>';
   if (m.note) html += '<div style="font-size:11.5px;color:' + (m.status==='nomatch'||m.status==='newpipeline'?'#b45309':'var(--g500)') + ';font-style:italic">' + m.note + '</div>';
   html += '</div>';
 
-  if (m.status === 'auto' || m.status === 'review') {
+  if (m.status === 'auto' || m.status === 'review' || m.status === 'skipped') {
     html += '<div style="width:230px;flex-shrink:0">' + _iwFieldSelectHtml(i, m) + '</div>';
   } else if (m.status === 'nomatch') {
     html += '<div style="width:230px;flex-shrink:0;text-align:right">'
@@ -19278,12 +19281,23 @@ function _iwMapRow(m, i, compact) {
 }
 
 function _iwSetField(i, val) {
-  if (!_iwMappings[i]) return;
-  if (!val) { _iwMappings[i].field = null; return; }
+  var m = _iwMappings[i];
+  if (!m) return;
+  if (!val) { m.field = null; return; }
   var parts = val.split('|');
-  _iwMappings[i].field = parts[0];
-  _iwMappings[i].entity = parts[1];
-  _iwMappings[i].note = 'Manually mapped to ' + parts[0];
+  var field = parts[0];
+  var entity = parts[1];
+  m.field = field;
+  m.entity = entity;
+  if (field === '-- Skip --') {
+    m.status = 'skipped';
+    m.confidence = null;
+    m.note = 'Skipped — this column will not be imported';
+  } else {
+    m.status = 'auto';
+    m.confidence = 100;
+    m.note = 'Manually mapped to ' + field;
+  }
   _iwRenderBody();
 }
 function _iwUnmapAll() {
