@@ -19191,6 +19191,13 @@ function _iwStep3() {
       + '<span style="font-size:12.5px;font-weight:700;color:#991b1b">Required fields not mapped: ' + missingReq.join(', ') + '</span></div>';
   }
 
+  var unresolved = _iwMappings.filter(function(m){ return m.status==='nomatch' || m.status==='newpipeline'; });
+  if (unresolved.length) {
+    html += '<div style="display:flex;align-items:center;gap:10px;background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:10px 14px;margin-bottom:16px">'
+      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#b45309" stroke-width="2.5" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+      + '<span style="font-size:12.5px;font-weight:700;color:#92400e">Still needs action before you can continue: ' + unresolved.map(function(m){ return m.col + (m.status==='newpipeline' ? ' (create pipeline or skip)' : ' (create field or skip)'); }).join(', ') + '</span></div>';
+  }
+
   // Auto-mapped summary (collapsed by default)
   html += '<div style="background:#f0fdfa;border:1px solid var(--teal);border-radius:10px;margin-bottom:14px;overflow:hidden">';
   html += '<div onclick="_iwToggleAuto()" style="display:flex;align-items:center;justify-content:between;gap:10px;padding:12px 16px;cursor:pointer">'
@@ -19258,12 +19265,16 @@ function _iwMapRow(m, i, compact) {
     html += '<div style="width:230px;flex-shrink:0">' + _iwFieldSelectHtml(i, m) + '</div>';
   } else if (m.status === 'nomatch') {
     html += '<div style="width:230px;flex-shrink:0;text-align:right">'
-      + '<button onclick="_iwOpenCreateField(' + i + ')" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">+ Create field</button>'
-      + '</div>';
+      + '<div style="display:flex;gap:6px;justify-content:flex-end">'
+      + '<button onclick="_iwSkipColumn(' + i + ')" style="background:#fff;color:var(--g500);border:1px solid var(--g200);border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Skip</button>'
+      + '<button onclick="_iwOpenCreateField(' + i + ')" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap">+ Create field</button>'
+      + '</div></div>';
   } else if (m.status === 'newpipeline') {
     html += '<div style="width:230px;flex-shrink:0;text-align:right">'
-      + '<button onclick="_iwOpenPipeline(' + i + ')" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Create pipeline</button>'
-      + '</div>';
+      + '<div style="display:flex;gap:6px;justify-content:flex-end">'
+      + '<button onclick="_iwSkipColumn(' + i + ')" style="background:#fff;color:var(--g500);border:1px solid var(--g200);border-radius:8px;padding:8px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Skip</button>'
+      + '<button onclick="_iwOpenPipeline(' + i + ')" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap">Create pipeline</button>'
+      + '</div></div>';
   }
   html += '</div>';
 
@@ -19298,6 +19309,17 @@ function _iwSetField(i, val) {
     m.confidence = 100;
     m.note = 'Manually mapped to ' + field;
   }
+  _iwRenderBody();
+}
+function _iwSkipColumn(i) {
+  var m = _iwMappings[i];
+  if (!m) return;
+  m.field = '-- Skip --';
+  m.status = 'skipped';
+  m.confidence = null;
+  m.note = 'Skipped — this column will not be imported';
+  _iwCreateFieldOpen = null;
+  _iwPipelineOpen = null;
   _iwRenderBody();
 }
 function _iwUnmapAll() {
