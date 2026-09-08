@@ -6590,6 +6590,44 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   </div>
 </div><!-- end page-company-settings -->
 
+<!-- ═══════════════════════════════════════════════════════════
+     IMPORT WIZARD — FULL-PAGE OVERLAY (top-level sibling — must NOT be
+     nested inside any other display:none page, or position:fixed will
+     never render regardless of its own display value)
+═══════════════════════════════════════════════════════════ -->
+<div id="import-wizard-overlay" style="position:fixed;inset:0;background:#f0f2f5;z-index:2300;display:none;flex-direction:column;overflow:hidden">
+
+  <!-- Topbar -->
+  <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
+    <!-- Left: back + title -->
+    <div style="display:flex;align-items:center;gap:16px;min-width:160px">
+      <button onclick="closeImportWizard()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:8px;font-family:var(--font);transition:background .12s" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        Back
+      </button>
+      <div style="width:1px;height:24px;background:var(--g200)"></div>
+      <div style="font-size:15px;font-weight:800;color:var(--dark);letter-spacing:-0.2px">Import Data</div>
+    </div>
+
+    <!-- Center: step progress -->
+    <div style="display:flex;align-items:center;gap:0" id="iw-step-bar"><!-- rendered by JS --></div>
+
+    <!-- Right: cancel -->
+    <div style="min-width:160px;display:flex;justify-content:flex-end">
+      <button onclick="closeImportWizard()" style="border:1px solid var(--g200);background:none;color:var(--g500);border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel</button>
+    </div>
+  </div>
+
+  <!-- Body -->
+  <div style="flex:1;overflow-y:auto;padding:44px 56px" id="iw-body"><!-- rendered by JS --></div>
+
+  <!-- Footer -->
+  <div style="background:var(--white);border-top:1px solid var(--g200);padding:16px 56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0" id="iw-footer">
+    <button id="iw-back-btn" onclick="_iwBack()" style="border:1px solid var(--g200);background:none;color:var(--g600);border-radius:9px;padding:9px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">← Back</button>
+    <button id="iw-next-btn" onclick="_iwNext()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Next →</button>
+  </div>
+</div>
+
 <!-- TOOLS & INTEGRATIONS PAGE -->
 <div id="page-tools-settings" style="position:fixed;inset:0;z-index:2100;background:#f0f2f5;display:none;flex-direction:column;overflow:hidden">
   <!-- Top bar -->
@@ -7445,6 +7483,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   </div>
 
 </div><!-- end settings-ace -->
+</div><!-- end ts-content -->
+</div><!-- end ts-content flex wrapper -->
 </div><!-- end page-tools-settings -->
 
 
@@ -17700,42 +17740,6 @@ function lbSort(colIndex, th) {
         <button class="modal-save" onclick="_submitIntegRequest()">Send Request</button>
       </div>
     </div>
-  </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════════════════
-     IMPORT WIZARD — FULL-PAGE OVERLAY
-═══════════════════════════════════════════════════════════ -->
-<div id="import-wizard-overlay" style="position:fixed;inset:0;background:#f0f2f5;z-index:2300;display:none;flex-direction:column;overflow:hidden">
-
-  <!-- Topbar -->
-  <div style="background:var(--white);border-bottom:1px solid var(--g200);padding:0 28px;height:64px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0">
-    <!-- Left: back + title -->
-    <div style="display:flex;align-items:center;gap:16px;min-width:160px">
-      <button onclick="closeImportWizard()" style="display:flex;align-items:center;gap:6px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:13px;font-weight:600;padding:6px 10px;border-radius:8px;font-family:var(--font);transition:background .12s" onmouseover="this.style.background='var(--g100)'" onmouseout="this.style.background='none'">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-        Back
-      </button>
-      <div style="width:1px;height:24px;background:var(--g200)"></div>
-      <div style="font-size:15px;font-weight:800;color:var(--dark);letter-spacing:-0.2px">Import Data</div>
-    </div>
-
-    <!-- Center: step progress -->
-    <div style="display:flex;align-items:center;gap:0" id="iw-step-bar"><!-- rendered by JS --></div>
-
-    <!-- Right: cancel -->
-    <div style="min-width:160px;display:flex;justify-content:flex-end">
-      <button onclick="closeImportWizard()" style="border:1px solid var(--g200);background:none;color:var(--g500);border-radius:8px;padding:7px 16px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel</button>
-    </div>
-  </div>
-
-  <!-- Body -->
-  <div style="flex:1;overflow-y:auto;padding:44px 56px" id="iw-body"><!-- rendered by JS --></div>
-
-  <!-- Footer -->
-  <div style="background:var(--white);border-top:1px solid var(--g200);padding:16px 56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0" id="iw-footer">
-    <button id="iw-back-btn" onclick="_iwBack()" style="border:1px solid var(--g200);background:none;color:var(--g600);border-radius:9px;padding:9px 22px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">← Back</button>
-    <button id="iw-next-btn" onclick="_iwNext()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Next →</button>
   </div>
 </div>
 
