@@ -4534,19 +4534,6 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <div class="stat-card"><div class="stat-label">Win Rate</div><div class="stat-value">58%</div><div class="stat-delta" style="color:var(--amber)">— flat vs last year</div></div>
   <div class="stat-card"><div class="stat-label">Avg Deal Size</div><div class="stat-value">$82.9K</div><div class="stat-delta positive">▲ $4.2K vs last mo</div></div>
 </div>
-<!-- ── LOST REASONS ── -->
-<div class="card" style="margin-bottom:22px;padding:20px 24px">
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;flex-wrap:wrap;gap:8px">
-    <div style="display:flex;align-items:center;gap:8px">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="var(--red)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
-      <div class="card-title" style="margin:0"><span>Lost Reasons</span></div>
-    </div>
-    <div style="font-size:11px;color:var(--g400)" id="rpt-lost-summary"></div>
-  </div>
-  <div style="font-size:11.5px;color:var(--g400);margin-bottom:16px">Why opportunities are being lost, based on the reason selected when each deal was marked Lost.</div>
-  <div id="rpt-lost-bars" style="display:flex;flex-direction:column;gap:10px"></div>
-</div>
-
 <!-- ── SAVED REPORTS FOLDER BROWSER ── -->
 <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;overflow:hidden;margin-bottom:22px">
   <!-- FY tab bar -->
@@ -6599,7 +6586,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <button class="cs-nav-btn" data-section="rules"       onclick="_csLoadSection('rules')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg> Performance Rules</button>
     </div>
     <!-- Content area -->
-    <div id="cs-content" style="flex:1;overflow-y:auto;padding:32px 40px;max-width:820px"></div>
+    <div id="cs-content" style="flex:1;overflow-y:auto;padding:32px 40px;max-width:1120px"></div>
   </div>
 </div><!-- end page-company-settings -->
 
@@ -6663,62 +6650,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div style="font-size:12px;color:var(--g400);margin-bottom:14px">Select all that apply — the wizard will guide you through mapping, preview, and duplicates.</div>
   </div>
 
-  <!-- Past Imports heading placeholder (table moved to bottom) -->
-  <div style="display:none" id="_past-imports-anchor"></div>
-  <!-- old inline wizard removed; see #import-wizard-overlay -->
-  <div style="display:none" id="import-steps-bar">
-    <div class="import-step active" data-step="1" style="display:flex;align-items:center;gap:6px;padding:6px 14px 6px 10px;border-radius:20px 0 0 20px;background:var(--navy);color:white;font-size:12px;font-weight:600"><span style="width:20px;height:20px;border-radius:50%;background:rgba(255,255,255,0.25);display:inline-flex;align-items:center;justify-content:center;font-size:11px">1</span>Select Type</div>
-    <div style="width:0;height:0;border-top:19px solid transparent;border-bottom:19px solid transparent;border-left:12px solid var(--navy);flex-shrink:0"></div>
-    <div class="import-step" data-step="2" style="display:flex;align-items:center;gap:6px;padding:6px 14px 6px 18px;background:var(--g100);color:var(--g400);font-size:12px;font-weight:600"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);display:inline-flex;align-items:center;justify-content:center;font-size:11px">2</span>Upload File</div>
-    <div style="width:0;height:0;border-top:19px solid transparent;border-bottom:19px solid transparent;border-left:12px solid var(--g100);flex-shrink:0"></div>
-    <div class="import-step" data-step="3" style="display:flex;align-items:center;gap:6px;padding:6px 14px 6px 18px;background:var(--g100);color:var(--g400);font-size:12px;font-weight:600"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);display:inline-flex;align-items:center;justify-content:center;font-size:11px">3</span>Map Fields</div>
-    <div style="width:0;height:0;border-top:19px solid transparent;border-bottom:19px solid transparent;border-left:12px solid var(--g100);flex-shrink:0"></div>
-    <div class="import-step" data-step="4" style="display:flex;align-items:center;gap:6px;padding:6px 14px 6px 18px;background:var(--g100);color:var(--g400);font-size:12px;font-weight:600"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);display:inline-flex;align-items:center;justify-content:center;font-size:11px">4</span>Preview</div>
-    <div style="width:0;height:0;border-top:19px solid transparent;border-bottom:19px solid transparent;border-left:12px solid var(--g100);flex-shrink:0"></div>
-    <div class="import-step" data-step="5" style="display:flex;align-items:center;gap:6px;padding:6px 14px 6px 18px;border-radius:0 20px 20px 0;background:var(--g100);color:var(--g400);font-size:12px;font-weight:600"><span style="width:20px;height:20px;border-radius:50%;background:var(--g200);display:inline-flex;align-items:center;justify-content:center;font-size:11px">5</span>Finish</div>
-  </div>
-
-  <div id="import-step-1">
-    <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:14px">Select all that apply</div>
-    <div style="display:flex;flex-direction:column;gap:8px;max-width:540px" id="import-type-list">
-      <label style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid var(--g200);border-radius:10px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="var inp=this.querySelector('input');this.style.borderColor=inp.checked?'var(--teal)':'var(--g200)';this.style.background=inp.checked?'var(--teal-bg)':'var(--white)'">
-        <input type="checkbox" style="margin-top:2px;accent-color:var(--teal)" onchange="updateImportTypeStyle(this)">
-        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">People</div><div style="font-size:12px;color:var(--g400)">Individual contacts you communicate with directly</div></div>
-      </label>
-      <label style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid var(--g200);border-radius:10px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--teal)'" onmouseout="var inp=this.querySelector('input');this.style.borderColor=inp.checked?'var(--teal)':'var(--g200)';this.style.background=inp.checked?'var(--teal-bg)':'var(--white)'">
-        <input type="checkbox" style="margin-top:2px;accent-color:var(--teal)" onchange="updateImportTypeStyle(this)">
-        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">Organizations</div><div style="font-size:12px;color:var(--g400)">Companies, employers, or other entities you work with</div></div>
-      </label>
-      <label style="display:flex;align-items:flex-start;gap:14px;padding:16px 18px;border:2px solid var(--teal);border-radius:10px;cursor:pointer;background:#f0fdfa;transition:.15s">
-        <input type="checkbox" checked style="margin-top:2px;accent-color:var(--teal)" onchange="updateImportTypeStyle(this)">
-        <div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:2px">Opportunities</div><div style="font-size:12px;color:var(--g400)">Active revenue opportunities, commonly called a deal</div></div>
-      </label>
-    </div>
-
-    <div style="margin-top:24px;padding:16px;background:#f8fafc;border:1px solid var(--g200);border-radius:10px;max-width:540px">
-      <div style="font-size:12px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px">Import Guide — Opportunities</div>
-      <div style="font-size:12px;color:var(--g500);margin-bottom:8px">These fields are required:</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
-        <span style="background:white;border:1px solid var(--g200);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--dark);font-weight:500">Opportunity Title <span style="color:var(--red)">*</span></span>
-        <span style="background:white;border:1px solid var(--g200);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--dark);font-weight:500">Person - Name <span style="color:var(--red)">*</span></span>
-        <span style="background:white;border:1px solid var(--g200);border-radius:6px;padding:3px 8px;font-size:11px;color:var(--dark);font-weight:500">OR Organization - Name <span style="color:var(--red)">*</span></span>
-      </div>
-      <div style="overflow-x:auto;border-radius:6px;border:1px solid var(--g200)">
-        <table style="width:100%;border-collapse:collapse;font-size:11px">
-          <thead><tr style="background:var(--g100)"><th style="padding:6px 8px;text-align:left;font-weight:600;border-right:1px solid var(--g200)">Opp Title <span style="color:var(--red)">*</span></th><th style="padding:6px 8px;text-align:left;font-weight:600;border-right:1px solid var(--g200)">Value</th><th style="padding:6px 8px;text-align:left;font-weight:600;border-right:1px solid var(--g200)">Person Name <span style="color:var(--red)">*</span></th><th style="padding:6px 8px;text-align:left;font-weight:600;border-right:1px solid var(--g200)">Email</th><th style="padding:6px 8px;text-align:left;font-weight:600">Org Name</th></tr></thead>
-          <tbody><tr style="border-top:1px solid var(--g200)"><td style="padding:5px 8px;border-right:1px solid var(--g200)">Riverside Deal</td><td style="padding:5px 8px;border-right:1px solid var(--g200)">$92,000</td><td style="padding:5px 8px;border-right:1px solid var(--g200)">Marcus Lee</td><td style="padding:5px 8px;border-right:1px solid var(--g200)">m.lee@riverside…</td><td style="padding:5px 8px">Riverside Financial</td></tr></tbody>
-        </table>
-      </div>
-      <div style="margin-top:10px"><button style="background:none;border:1px solid var(--teal);color:var(--teal);border-radius:6px;padding:5px 12px;font-size:12px;font-weight:600;cursor:pointer" onclick="showToast('Template downloaded')">⬇ Download Template (.xlsx)</button></div>
-    </div>
-
-    <div style="margin-top:20px;display:flex;gap:8px;max-width:540px;justify-content:flex-end">
-      <button class="tb-btn btn-primary" onclick="importGoToStep(2)">Next →</button>
-    </div>
-  </div>
-
   <!-- Past Imports — bottom of page so actions stay front and center -->
-  <div style="margin-top:36px;padding-top:28px;border-top:1px solid var(--g200)">
+  <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--g200)">
     <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:12px">Past Imports</div>
     <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden">
       <table style="width:100%;border-collapse:collapse;font-size:12px">
@@ -6765,103 +6698,6 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
           </tr>
         </tbody>
       </table>
-    </div>
-  </div>
-
-  <div id="import-step-2" style="display:none">
-    <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:16px">Upload your file</div>
-    <div id="import-dropzone" style="border:2px dashed var(--g200);border-radius:12px;padding:48px 24px;text-align:center;max-width:540px;cursor:pointer;transition:.15s" onmouseover="this.style.borderColor='var(--teal)';this.style.background='#f0fdfa'" onmouseout="this.style.borderColor='var(--g200)';this.style.background=''" onclick="document.getElementById('import-file-input').click()">
-      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 12px"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-      <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:4px">Drag and drop your file here</div>
-      <div style="font-size:12px;color:var(--g400);margin-bottom:14px">Supported formats: .xlsx, .csv, .xls</div>
-      <button class="tb-btn btn-ghost" style="font-size:12px">Choose File</button>
-    </div>
-    <input type="file" id="import-file-input" accept=".xlsx,.csv,.xls" style="display:none" onchange="importFileSelected(this)">
-    <div id="import-file-info" style="display:none;max-width:540px;margin-top:12px;padding:12px 16px;background:#f0fdfa;border:1px solid var(--teal);border-radius:8px;display:flex;align-items:center;gap:10px">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-      <div style="flex:1"><div style="font-size:13px;font-weight:600;color:var(--dark)" id="import-file-name">contacts_export.xlsx</div><div style="font-size:11px;color:var(--g400)">Ready to map</div></div>
-      <button style="background:none;border:none;color:var(--g400);cursor:pointer;font-size:16px" onclick="document.getElementById('import-file-info').style.display='none'">×</button>
-    </div>
-    <div style="margin-top:20px;display:flex;gap:8px;max-width:540px;justify-content:space-between">
-      <button class="tb-btn btn-ghost" onclick="importGoToStep(1)">← Back</button>
-      <button class="tb-btn btn-primary" onclick="importGoToStep(3)">Next →</button>
-    </div>
-  </div>
-
-  <div id="import-step-3" style="display:none">
-    <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:6px">Map your columns</div>
-    <div style="font-size:12px;color:var(--g400);margin-bottom:18px">Match each column from your file to a Goals.com field.</div>
-    <div style="max-width:560px">
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:8px;padding:8px 0;border-bottom:2px solid var(--g200);margin-bottom:4px">
-        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Your Column</div>
-        <div></div>
-        <div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px">Goals.com Field</div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--g100)">
-        <div style="font-size:13px;color:var(--dark);background:var(--g100);padding:6px 10px;border-radius:6px">Deal Name</div>
-        <div style="color:var(--teal);font-size:16px;text-align:center">→</div>
-        <select style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:13px"><option selected>Opportunity Title</option><option>Organization Name</option><option>Contact Name</option><option>-- Skip --</option></select>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--g100)">
-        <div style="font-size:13px;color:var(--dark);background:var(--g100);padding:6px 10px;border-radius:6px">Value ($)</div>
-        <div style="color:var(--teal);font-size:16px;text-align:center">→</div>
-        <select style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:13px"><option selected>Opportunity Value</option><option>-- Skip --</option></select>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--g100)">
-        <div style="font-size:13px;color:var(--dark);background:var(--g100);padding:6px 10px;border-radius:6px">Contact First Name</div>
-        <div style="color:var(--teal);font-size:16px;text-align:center">→</div>
-        <select style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:13px"><option selected>Contact - First Name</option><option>Contact - Full Name</option><option>-- Skip --</option></select>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--g100)">
-        <div style="font-size:13px;color:var(--dark);background:var(--g100);padding:6px 10px;border-radius:6px">Contact Last Name</div>
-        <div style="color:var(--teal);font-size:16px;text-align:center">→</div>
-        <select style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:13px"><option selected>Contact - Last Name</option><option>Contact - Full Name</option><option>-- Skip --</option></select>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--g100)">
-        <div style="font-size:13px;color:var(--dark);background:var(--g100);padding:6px 10px;border-radius:6px">Email</div>
-        <div style="color:var(--teal);font-size:16px;text-align:center">→</div>
-        <select style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:13px"><option selected>Contact - Email</option><option>-- Skip --</option></select>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:8px;padding:10px 0;border-bottom:1px solid var(--g100)">
-        <div style="font-size:13px;color:var(--dark);background:var(--g100);padding:6px 10px;border-radius:6px">Company</div>
-        <div style="color:var(--teal);font-size:16px;text-align:center">→</div>
-        <select style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:13px"><option selected>Organization Name</option><option>-- Skip --</option></select>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 28px 1fr;align-items:center;gap:8px;padding:10px 0">
-        <div style="font-size:13px;color:var(--dark);background:var(--g100);padding:6px 10px;border-radius:6px">Stage</div>
-        <div style="color:var(--teal);font-size:16px;text-align:center">→</div>
-        <select style="border:1px solid var(--g200);border-radius:6px;padding:6px 8px;font-size:13px"><option selected>Pipeline Stage</option><option>-- Skip --</option></select>
-      </div>
-    </div>
-    <div style="margin-top:20px;display:flex;gap:8px;max-width:560px;justify-content:space-between">
-      <button class="tb-btn btn-ghost" onclick="importGoToStep(2)">← Back</button>
-      <button class="tb-btn btn-primary" onclick="importGoToStep(4)">Next →</button>
-    </div>
-  </div>
-
-  <div id="import-step-4" style="display:none">
-    <div style="font-size:14px;font-weight:600;color:var(--dark);margin-bottom:6px">Preview import</div>
-    <div style="font-size:12px;color:var(--g400);margin-bottom:16px">Showing first 5 rows. Review before importing.</div>
-    <div style="background:#f0fdfa;border:1px solid var(--teal);border-radius:8px;padding:10px 14px;margin-bottom:16px;display:flex;gap:20px">
-      <div style="font-size:13px;color:var(--dark)"><strong>47</strong> <span style="color:var(--g400)">rows ready</span></div>
-      <div style="font-size:13px;color:var(--dark)"><strong>0</strong> <span style="color:var(--g400)">errors</span></div>
-      <div style="font-size:13px;color:var(--dark)"><strong>3</strong> <span style="color:var(--g400)">warnings</span></div>
-    </div>
-    <div style="overflow-x:auto;border:1px solid var(--g200);border-radius:8px">
-      <table style="width:100%;border-collapse:collapse;font-size:12px;min-width:600px">
-        <thead><tr style="background:var(--g50)"><th style="padding:9px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--g200)">Opportunity Title</th><th style="padding:9px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--g200)">Value</th><th style="padding:9px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--g200)">Contact</th><th style="padding:9px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--g200)">Organization</th><th style="padding:9px 12px;text-align:left;font-weight:600;border-bottom:2px solid var(--g200)">Stage</th><th style="padding:9px 12px;text-align:center;font-weight:600;border-bottom:2px solid var(--g200)">Status</th></tr></thead>
-        <tbody>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:9px 12px">Northbrook Benefits Package</td><td style="padding:9px 12px">$145,000</td><td style="padding:9px 12px">Tara Nguyen</td><td style="padding:9px 12px">Apex Holdings LLC</td><td style="padding:9px 12px">Contact Made</td><td style="padding:9px 12px;text-align:center"><span style="background:#dcfce7;color:#16a34a;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px">✓ Ready</span></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:9px 12px">Pacific Coast HSA</td><td style="padding:9px 12px">$78,000</td><td style="padding:9px 12px">David Chen</td><td style="padding:9px 12px">Pacific Coast Medical</td><td style="padding:9px 12px">Documents Collected</td><td style="padding:9px 12px;text-align:center"><span style="background:#dcfce7;color:#16a34a;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px">✓ Ready</span></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:9px 12px">Summit 401k Rollover</td><td style="padding:9px 12px">$210,000</td><td style="padding:9px 12px">James Park</td><td style="padding:9px 12px">Summit Credit Union</td><td style="padding:9px 12px">Payment Confirmed</td><td style="padding:9px 12px;text-align:center"><span style="background:#fef9c3;color:#a16207;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px">⚠ Duplicate?</span></td></tr>
-          <tr style="border-bottom:1px solid var(--g100)"><td style="padding:9px 12px">Riverside Dental Add-On</td><td style="padding:9px 12px">$34,000</td><td style="padding:9px 12px">Marcus Lee</td><td style="padding:9px 12px">Riverside Financial Group</td><td style="padding:9px 12px">Prospect Registered</td><td style="padding:9px 12px;text-align:center"><span style="background:#dcfce7;color:#16a34a;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px">✓ Ready</span></td></tr>
-          <tr><td style="padding:9px 12px">Lakewood Workers Comp</td><td style="padding:9px 12px">$174,000</td><td style="padding:9px 12px">Chris Brown</td><td style="padding:9px 12px">Lakewood Builders Inc.</td><td style="padding:9px 12px">Payment Confirmed</td><td style="padding:9px 12px;text-align:center"><span style="background:#dcfce7;color:#16a34a;font-size:11px;font-weight:600;padding:2px 8px;border-radius:20px">✓ Ready</span></td></tr>
-        </tbody>
-      </table>
-    </div>
-    <div style="margin-top:20px;display:flex;gap:8px;max-width:600px;justify-content:space-between">
-      <button class="tb-btn btn-ghost" onclick="importGoToStep(3)">← Back</button>
-      <button class="tb-btn btn-primary" onclick="importGoToStep(5)">Import 47 Records →</button>
     </div>
   </div>
 
@@ -9912,32 +9748,32 @@ function _csImportExportSection() {
         '</div>' +
         '<div style="margin-left:auto;font-size:12px;color:var(--g400)">Total Imports: ' + importRows.length + '</div>' +
       '</div>' +
-      '<div style="border:1px solid var(--g200);border-radius:10px;overflow:hidden">' +
-        '<table style="width:100%;border-collapse:collapse;font-size:13px">' +
+      '<div style="border:1px solid var(--g200);border-radius:10px;overflow-x:auto">' +
+        '<table style="width:100%;min-width:760px;border-collapse:collapse;font-size:13px">' +
           '<thead><tr style="background:var(--g50)">' +
-            '<th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">File Name</th>' +
-            '<th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Type</th>' +
-            '<th style="padding:10px 12px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Total</th>' +
-            '<th style="padding:10px 12px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Success</th>' +
-            '<th style="padding:10px 12px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Failed</th>' +
-            '<th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Created By</th>' +
-            '<th style="padding:10px 12px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Date</th>' +
-            '<th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200)">Actions</th>' +
+            '<th style="padding:10px 16px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200);white-space:nowrap">File Name</th>' +
+            '<th style="padding:10px 10px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200);white-space:nowrap">Type</th>' +
+            '<th style="padding:10px 10px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200);white-space:nowrap">Total</th>' +
+            '<th style="padding:10px 10px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200);white-space:nowrap">Success</th>' +
+            '<th style="padding:10px 10px;text-align:center;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200);white-space:nowrap">Failed</th>' +
+            '<th style="padding:10px 10px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200);white-space:nowrap">Created By</th>' +
+            '<th style="padding:10px 10px;text-align:left;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200);white-space:nowrap">Date</th>' +
+            '<th style="padding:10px 16px;text-align:right;font-size:12px;font-weight:600;color:var(--g500);border-bottom:1px solid var(--g200);white-space:nowrap">Actions</th>' +
           '</tr></thead>' +
           '<tbody>' +
             importRows.map(function(r, i) {
               return '<tr style="border-bottom:1px solid var(--g100)">' +
-                '<td style="padding:10px 16px;color:var(--dark);max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">' + r[0] + '</td>' +
-                '<td style="padding:10px 12px;color:var(--g600)">' + r[1] + '</td>' +
-                '<td style="padding:10px 12px;text-align:center;color:var(--dark)">' + r[2] + '</td>' +
-                '<td style="padding:10px 12px;text-align:center;color:' + (r[3]>0?'var(--dark)':'var(--g400)') + '">' + r[3] + '</td>' +
-                '<td style="padding:10px 12px;text-align:center;color:' + (r[4]>0?'var(--red)':'var(--g400)') + '">' + r[4] + '</td>' +
-                '<td style="padding:10px 12px;color:var(--g600)">' + r[5] + '</td>' +
-                '<td style="padding:10px 12px;color:var(--g600)">' + r[6] + '</td>' +
-                '<td style="padding:10px 16px">' +
-                  '<div style="display:flex;gap:6px">' +
-                  '<button onclick="showToast(\'Viewing import…\')" style="font-size:12px;font-weight:500;color:var(--dark);background:#fff;border:1px solid var(--g200);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:var(--font)">View</button>' +
-                  '<button onclick="showToast(\'Downloading…\')" style="font-size:12px;font-weight:500;color:var(--dark);background:#fff;border:1px solid var(--g200);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:var(--font)">Download</button>' +
+                '<td style="padding:10px 16px;color:var(--dark);max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="' + r[0] + '">' + r[0] + '</td>' +
+                '<td style="padding:10px 10px;color:var(--g600);white-space:nowrap">' + r[1] + '</td>' +
+                '<td style="padding:10px 10px;text-align:center;color:var(--dark)">' + r[2] + '</td>' +
+                '<td style="padding:10px 10px;text-align:center;color:' + (r[3]>0?'var(--dark)':'var(--g400)') + '">' + r[3] + '</td>' +
+                '<td style="padding:10px 10px;text-align:center;color:' + (r[4]>0?'var(--red)':'var(--g400)') + '">' + r[4] + '</td>' +
+                '<td style="padding:10px 10px;color:var(--g600);white-space:nowrap">' + r[5] + '</td>' +
+                '<td style="padding:10px 10px;color:var(--g600);white-space:nowrap">' + r[6] + '</td>' +
+                '<td style="padding:10px 16px;text-align:right">' +
+                  '<div style="display:flex;gap:6px;justify-content:flex-end">' +
+                  '<button onclick="showToast(\'Viewing import…\')" title="View" style="font-size:11px;font-weight:600;color:var(--dark);background:#fff;border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);white-space:nowrap">View</button>' +
+                  '<button onclick="showToast(\'Downloading…\')" title="Download" style="font-size:11px;font-weight:600;color:var(--dark);background:#fff;border:1px solid var(--g200);border-radius:6px;padding:5px 10px;cursor:pointer;font-family:var(--font);white-space:nowrap">⬇</button>' +
                   '</div>' +
                 '</td>' +
               '</tr>';
@@ -11483,7 +11319,6 @@ function _oppConfirmLostReason() {
   _oppRenderDetails();
   closeModal('opp-lost-reason-modal');
   showToast('Opportunity marked as Lost — ' + reason);
-  if (typeof _rptRenderLostReasons === 'function') _rptRenderLostReasons();
 }
 function _oppReopen() {
   document.getElementById('opp-detail-overlay').dataset.status = 'open';
@@ -18402,8 +18237,9 @@ function _teamApplyCustomize() {
 
 // ── IMPORT WIZARD ────────────────────────────────────────────
 var _iwStep = 1;
-var _iwTotal = 5;
-var _iwStepNames = ['File info','Upload file','Map','Preview','Finish'];
+var _iwTotal = 6;
+var _iwStepNames = ['File info','Upload file','Options','Map','Preview','Finish'];
+var _iwOptions = { header:'yes', createNew:'yes', updateExisting:'yes', dateFormat:'MM/DD/YYYY' };
 
 // ── REPORTS FOLDER BROWSER ────────────────────────────────────────────────────
 var _rptFY = '2026';
@@ -18899,10 +18735,7 @@ function _rptRenderIndividualContent() {
   }
 }
 
-function _rptRenderLostReasons() {
-  var barsEl = document.getElementById('rpt-lost-bars');
-  var sumEl = document.getElementById('rpt-lost-summary');
-  if (!barsEl) return;
+function _rptLostReasonsPreviewHTML() {
   var byReason = {};
   var totalCount = 0, totalValue = 0;
   _lostDeals.forEach(function(d){
@@ -18916,31 +18749,29 @@ function _rptRenderLostReasons() {
   rows.sort(function(a,b){ return b.count - a.count; });
   var maxCount = rows.length ? rows[0].count : 1;
 
-  if (sumEl) sumEl.textContent = totalCount + ' lost deals · $' + totalValue.toLocaleString() + ' in lost pipeline value';
-
   if (!rows.length) {
-    barsEl.innerHTML = '<div style="padding:20px;text-align:center;color:var(--g400);font-size:12.5px">No opportunities marked Lost yet.</div>';
-    return;
+    return '<div style="padding:12px 0;color:var(--g400);font-size:12px">No opportunities marked Lost yet.</div>';
   }
-  barsEl.innerHTML = rows.map(function(r){
+  var summary = '<div style="font-size:11px;color:var(--g400);margin-bottom:10px">' + totalCount + ' lost deals &middot; $' + totalValue.toLocaleString() + ' in lost pipeline value</div>';
+  var bars = rows.map(function(r){
     var pct = Math.round((r.count / maxCount) * 100);
-    return '<div>' +
+    return '<div style="margin-bottom:9px">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">' +
-        '<span style="font-size:12.5px;font-weight:600;color:var(--dark)">' + r.reason + '</span>' +
-        '<span style="font-size:11.5px;color:var(--g400)">' + r.count + ' deal' + (r.count===1?'':'s') + ' &middot; $' + r.value.toLocaleString() + '</span>' +
+        '<span style="font-size:12px;font-weight:600;color:var(--dark)">' + r.reason + '</span>' +
+        '<span style="font-size:11px;color:var(--g400)">' + r.count + ' deal' + (r.count===1?'':'s') + ' &middot; $' + r.value.toLocaleString() + '</span>' +
       '</div>' +
-      '<div style="height:7px;background:var(--g100);border-radius:4px;overflow:hidden">' +
+      '<div style="height:6px;background:var(--g100);border-radius:4px;overflow:hidden">' +
         '<div style="height:100%;width:' + pct + '%;background:var(--red);border-radius:4px;opacity:0.75"></div>' +
       '</div>' +
     '</div>';
   }).join('');
+  return summary + bars;
 }
 
 // Init folder browser on page load
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
     _rptRenderFolders();
-    _rptRenderLostReasons();
   });
 })();
 
@@ -19002,6 +18833,7 @@ function _rptbRender() {
       { key:'customers',  label:'Top Customers',               sub:'Revenue by account' },
       { key:'leadSource', label:'Lead Source Analysis',        sub:'Where deals are coming from' },
       { key:'salesCycle', label:'Average Sales Cycle',         sub:'Time in each pipeline stage' },
+      { key:'lostReasons', label:'Lost Reason Analysis',       sub:'Why opportunities are being lost, by reason' },
     ];
     body.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px;padding-bottom:8px">' +
       sections.map(function(s) {
@@ -19063,11 +18895,13 @@ function _rptbRender() {
         '</div>' +
         '<div style="padding:16px 18px">' +
           Object.keys(_rptbState.sections).filter(function(k){ return _rptbState.sections[k]; }).map(function(k) {
-            var labels = { revenue:'Revenue & Sales KPIs', goals:'Goals & Attainment', activities:'Activity Breakdown', customers:'Top Customers', leadSource:'Lead Source Analysis', salesCycle:'Average Sales Cycle' };
-            return '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--g100);font-size:13px">' +
+            var labels = { revenue:'Revenue & Sales KPIs', goals:'Goals & Attainment', activities:'Activity Breakdown', customers:'Top Customers', leadSource:'Lead Source Analysis', salesCycle:'Average Sales Cycle', lostReasons:'Lost Reason Analysis' };
+            var row = '<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--g100);font-size:13px">' +
               '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' +
               '<span style="color:var(--dark);font-weight:500">' + (labels[k]||k) + '</span>' +
             '</div>';
+            if (k === 'lostReasons') row += '<div style="padding:10px 0 14px">' + _rptLostReasonsPreviewHTML() + '</div>';
+            return row;
           }).join('') +
         '</div>' +
       '</div>' +
@@ -19087,7 +18921,7 @@ var _csExportType = 'People';
 var _csExportFields = {
   People:       ['First Name','Last Name','Email','Phone','Title','Company','Owner','Created Date','Last Activity','Custom Fields'],
   Accounts:     ['Company Name','Industry','Revenue','Employees','City','State','Owner','Account Type','Created Date','Custom Fields'],
-  Opportunities:['Deal Name','Account','Stage','Value','Close Date','Owner','Lead Source','Won/Lost','Created Date','Custom Fields'],
+  Opportunities:['Deal Name','Account','Stage','Value','Close Date','Owner','Lead Source','Won/Lost','Lost Reason','Created Date','Custom Fields'],
   Notes:        ['Note Body','Related To','Note Type','Created By','Created Date','Linked Account'],
 };
 
@@ -19129,7 +18963,8 @@ function closeImportWizard() {
 }
 function _iwBack() { if (_iwStep > 1) { _iwStep--; _iwRender(); } }
 function _iwNext() {
-  if (_iwStep === 5) {
+  if (_iwStep === 4 && !_iwMappingValid()) return;
+  if (_iwStep === 6) {
     var body = document.getElementById('iw-body');
     var footer = document.getElementById('iw-footer');
     if (body) body.innerHTML = '<div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;text-align:center;padding:60px 40px">'
@@ -19191,9 +19026,10 @@ function _iwRenderBody() {
   var html = '';
   if (_iwStep === 1) html = _iwStep1();
   else if (_iwStep === 2) html = _iwStep2();
-  else if (_iwStep === 3) html = _iwStep3();
-  else if (_iwStep === 4) html = _iwStep4();
-  else if (_iwStep === 5) html = _iwStep5();
+  else if (_iwStep === 3) html = _iwStepOptions();
+  else if (_iwStep === 4) html = _iwStep3();
+  else if (_iwStep === 5) html = _iwStep4();
+  else if (_iwStep === 6) html = _iwStep5();
   body.innerHTML = html;
 }
 
@@ -19202,10 +19038,14 @@ function _iwRenderFooter() {
   var nb = document.getElementById('iw-next-btn');
   if (bb) bb.style.visibility = _iwStep === 1 ? 'hidden' : 'visible';
   if (nb) {
-    if (_iwStep === 4) nb.textContent = 'Start import →';
-    else if (_iwStep === 5) nb.textContent = 'Done';
+    if (_iwStep === 5) nb.textContent = 'Start import →';
+    else if (_iwStep === 6) nb.textContent = 'Done';
     else nb.textContent = 'Next →';
-    nb.style.background = _iwStep === 4 ? 'var(--navy)' : 'var(--teal)';
+    nb.style.background = _iwStep === 5 ? 'var(--navy)' : 'var(--teal)';
+    var block = _iwStep === 4 && !_iwMappingValid();
+    nb.disabled = block;
+    nb.style.opacity = block ? '0.5' : '1';
+    nb.style.cursor = block ? 'not-allowed' : 'pointer';
   }
 }
 
@@ -19262,101 +19102,255 @@ function _iwSimulateUpload() {
   if (dz) { dz.style.borderColor='var(--teal)'; dz.style.background='#f0fdfa'; }
 }
 
+// ── STEP: Options ────────────────────────────────────────────
+function _iwOptRadio(group, val, label) {
+  var checked = _iwOptions[group] === val;
+  return '<label style="display:flex;align-items:center;gap:8px;padding:9px 14px;border:1.5px solid ' + (checked?'var(--teal)':'var(--g200)') + ';background:' + (checked?'#f0fdfa':'#fff') + ';border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;color:var(--dark)">'
+    + '<input type="radio" name="iwopt-' + group + '" ' + (checked?'checked':'') + ' onchange="_iwSetOption(\'' + group + '\',\'' + val + '\')" style="accent-color:var(--teal)">' + label + '</label>';
+}
+function _iwSetOption(group, val) { _iwOptions[group] = val; _iwRenderBody(); }
+function _iwStepOptions() {
+  var html = '<div style="max-width:600px">';
+  html += '<h2 style="font-size:20px;font-weight:800;color:var(--dark);margin:0 0 6px">Import options</h2>';
+  html += '<p style="font-size:13px;color:var(--g500);margin:0 0 26px">Tell us how to read your file and what to do with matching records.</p>';
+
+  html += '<div style="margin-bottom:22px"><div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px">Use first row as header?</div>'
+    + '<div style="display:flex;gap:10px">' + _iwOptRadio('header','yes','Yes, first row has column names') + _iwOptRadio('header','no','No, start from row 1') + '</div></div>';
+
+  html += '<div style="margin-bottom:22px"><div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px">Create new record if it does not exist?</div>'
+    + '<div style="display:flex;gap:10px">' + _iwOptRadio('createNew','yes','Yes') + _iwOptRadio('createNew','no','No, skip') + '</div></div>';
+
+  html += '<div style="margin-bottom:22px"><div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px">Update existing record if a match is found?</div>'
+    + '<div style="display:flex;gap:10px">' + _iwOptRadio('updateExisting','yes','Yes, update fields') + _iwOptRadio('updateExisting','no','No, keep existing data') + '</div></div>';
+
+  html += '<div style="margin-bottom:8px"><div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:8px">Date format</div>'
+    + '<select onchange="_iwSetOption(\'dateFormat\',this.value)" style="border:1px solid var(--g200);border-radius:8px;padding:8px 12px;font-size:13px;font-family:var(--font);background:#fff">'
+    + ['MM/DD/YYYY','DD/MM/YYYY','YYYY-MM-DD'].map(function(f){return '<option' + (_iwOptions.dateFormat===f?' selected':'') + '>' + f + '</option>';}).join('')
+    + '</select></div>';
+
+  html += '</div>';
+  return html;
+}
+
 // ── STEP 3: Map ──────────────────────────────────────────────
+// status: 'auto' = Ace confidently mapped it | 'review' = mapped but low confidence | 'nomatch' = no existing field, needs custom field | 'newpipeline' = looks like a pipeline stage column with unrecognized values
 var _iwMappings = [
-  {col:'Person - Name',   samples:['Maya Chen','Jordan Lee'],      field:'Person name',       entity:'Person',  status:'ok'},
-  {col:'Person - Email',  samples:['m.chen@example.com','j.lee@example.com'], field:'Email (Work)', entity:'Person', status:'ok'},
-  {col:'Person - Phone',  samples:['415-555-1111','305-555-2222'], field:'Phone (Work)',       entity:'Person',  status:'ok'},
-  {col:'Organization - Name', samples:['Northstar Labs','Blue Harbor Media'], field:'Organization name', entity:'Organization', status:'ok'},
-  {col:'Job Title',       samples:['VP Operations','Marketing Director'], field:'Person label',  entity:'Person',  status:'warn'},
-  {col:'Notes',           samples:['Decision maker','Interested in automation'], field:'Note content', entity:'Note', status:'ok'},
+  {col:'Full Name',    samples:['Maya Chen','Jordan Lee'],      field:'Person name',       entity:'Person',  status:'auto', confidence:98,  note:'Ace matched "Full Name" to Person name'},
+  {col:'email',        samples:['m.chen@example.com','j.lee@example.com'], field:'Email (Work)', entity:'Person', status:'auto', confidence:96, note:'Ace figured out "email" means Email (Work)'},
+  {col:'Telephone',    samples:['415-555-1111','305-555-2222'], field:'Phone (Work)',       entity:'Person',  status:'auto', confidence:91,  note:'Ace figured out "Telephone" means Phone (Work)'},
+  {col:'Company',      samples:['Northstar Labs','Blue Harbor Media'], field:'Organization name', entity:'Organization', status:'auto', confidence:94, note:'Ace matched "Company" to Organization name'},
+  {col:'Job Title',    samples:['VP Operations','Marketing Director'], field:'Person label',  entity:'Person',  status:'review', confidence:63, note:'Ace found a possible match, but confidence is low — please confirm'},
+  {col:'Deal Stage',   samples:['Prospecting','Contract Sent','Legal Review'], field:null, entity:'Opportunity', status:'newpipeline', confidence:0, note:'These stage values don\'t match any pipeline in Goals.com', stages:['Prospecting','Contract Sent','Legal Review','Closed Won']},
+  {col:'Employee Count', samples:['120','48'], field:null, entity:null, status:'nomatch', confidence:0, note:'No matching field found for "Employee Count"'},
 ];
 var _iwEntityFields = {
   Person:['Person name','First name','Last name','Email (Work)','Email (Personal)','Phone (Work)','Phone (Mobile)','Person label','Person owner','-- Skip --'],
   Organization:['Organization name','Organization owner','-- Skip --'],
+  Opportunity:['Opportunity stage','Opportunity name','Opportunity value','-- Skip --'],
   Note:['Note content','-- Skip --'],
 };
+var _iwRequiredFields = { Person:['Email (Work)'] };
+var _iwShowAutoMapped = false;
+var _iwCreateFieldOpen = null;
+var _iwPipelineOpen = null;
+
+function _iwConfColor(c) { return c>=85 ? 'var(--teal)' : c>=60 ? 'var(--amber)' : 'var(--red,#dc2626)'; }
+function _iwConfBadge(c) {
+  return '<span style="font-size:10px;font-weight:800;color:' + _iwConfColor(c) + ';background:' + _iwConfColor(c) + '17;border-radius:5px;padding:2px 7px;white-space:nowrap">' + c + '% match</span>';
+}
+function _iwMappingValid() {
+  var mappedPersonFields = _iwMappings.filter(function(m){return m.entity==='Person' && m.field && m.field!=='-- Skip --';}).map(function(m){return m.field;});
+  var reqOk = _iwRequiredFields.Person.every(function(f){ return mappedPersonFields.indexOf(f) !== -1; });
+  var noUnresolved = _iwMappings.every(function(m){ return m.status !== 'nomatch' && m.status !== 'newpipeline'; });
+  return reqOk && noUnresolved;
+}
+function _iwMissingRequired() {
+  var mappedPersonFields = _iwMappings.filter(function(m){return m.entity==='Person' && m.field && m.field!=='-- Skip --';}).map(function(m){return m.field;});
+  return _iwRequiredFields.Person.filter(function(f){ return mappedPersonFields.indexOf(f) === -1; });
+}
+
 function _iwStep3() {
-  var html = '<div style="display:flex;gap:16px;align-items:flex-start">';
-  // Main mapping area
-  html += '<div style="flex:1;min-width:0">';
-  html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">';
-  html += '<div><h2 style="font-size:18px;font-weight:800;color:var(--dark);margin:0 0 3px">Map your spreadsheet columns</h2>'
-       + '<p style="font-size:12px;color:var(--g500);margin:0">Drag fields from the right panel or use the dropdowns. Unmapped columns won\'t be imported.</p></div>';
-  var mapped = _iwMappings.filter(function(m){return m.field!=='-- Skip --';}).length;
-  html += '<div style="font-size:12px;font-weight:600;color:var(--teal);background:#f0fdfa;border:1px solid var(--teal);border-radius:8px;padding:5px 12px">Mapped ' + mapped + ' / ' + _iwMappings.length + ' <button onclick="_iwUnmapAll()" style="background:none;border:none;color:var(--teal);font-size:11px;font-weight:700;cursor:pointer;text-decoration:underline;margin-left:4px">Unmap all</button></div>';
-  html += '</div>';
+  var auto   = _iwMappings.filter(function(m){ return m.status==='auto'; });
+  var needsReview = _iwMappings.filter(function(m){ return m.status!=='auto'; });
+  var missingReq = _iwMissingRequired();
+  var valid = _iwMappingValid();
 
-  // Header row
-  html += '<div style="background:var(--g50);border:1px solid var(--g200);border-radius:10px;overflow:hidden">';
-  html += '<div style="display:grid;grid-template-columns:1fr 56px 1fr;align-items:center;padding:10px 16px;border-bottom:2px solid var(--g200)">'
-       + '<div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.6px">Spreadsheet column</div>'
-       + '<div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.6px;text-align:center">Mapped</div>'
-       + '<div style="font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.6px">Goals.com field</div>'
-       + '</div>';
+  var html = '<div style="max-width:820px">';
+  html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:4px">'
+    + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2"><path d="M12 2l1.9 5.8L20 10l-6.1 2.2L12 18l-1.9-5.8L4 10l6.1-2.2z"/></svg>'
+    + '<h2 style="font-size:18px;font-weight:800;color:var(--dark);margin:0">Ace mapped your columns</h2></div>';
+  html += '<p style="font-size:12px;color:var(--g500);margin:0 0 18px">Ace matched columns to existing Goals.com fields automatically. Review anything it wasn\'t sure about below.</p>';
 
-  _iwMappings.forEach(function(m,i) {
-    var statusIcon = m.field === '-- Skip --'
-      ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/></svg>'
-      : m.status === 'warn'
-        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2.5"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
-        : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>';
-    var fieldOptions = [];
-    ['Person','Organization','Note'].forEach(function(ent){
-      _iwEntityFields[ent].forEach(function(f){ fieldOptions.push({label:f,ent:ent}); });
+  if (missingReq.length) {
+    html += '<div style="display:flex;align-items:center;gap:10px;background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:10px 14px;margin-bottom:16px">'
+      + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2.5" style="flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+      + '<span style="font-size:12.5px;font-weight:700;color:#991b1b">Required fields not mapped: ' + missingReq.join(', ') + '</span></div>';
+  }
+
+  // Auto-mapped summary (collapsed by default)
+  html += '<div style="background:#f0fdfa;border:1px solid var(--teal);border-radius:10px;margin-bottom:14px;overflow:hidden">';
+  html += '<div onclick="_iwToggleAuto()" style="display:flex;align-items:center;justify-content:between;gap:10px;padding:12px 16px;cursor:pointer">'
+    + '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>'
+    + '<span style="font-size:13px;font-weight:700;color:var(--dark);flex:1">Ace auto-mapped ' + auto.length + ' of ' + _iwMappings.length + ' columns with high confidence</span>'
+    + '<span style="font-size:11px;font-weight:700;color:var(--teal);text-decoration:underline">' + (_iwShowAutoMapped?'Hide':'Review') + '</span></div>';
+  if (_iwShowAutoMapped) {
+    html += '<div style="border-top:1px solid var(--teal)">';
+    auto.forEach(function(m,idx) {
+      var i = _iwMappings.indexOf(m);
+      html += _iwMapRow(m, i, true);
     });
-    var selectHtml = '<select onchange="_iwSetField(' + i + ',this.value)" style="border:1px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;width:100%;background:#fff;font-family:var(--font)">';
-    ['Person','Organization','Note'].forEach(function(ent){
-      selectHtml += '<optgroup label="' + ent + '">';
-      _iwEntityFields[ent].forEach(function(f){
-        selectHtml += '<option value="' + f + '"' + (m.field===f?' selected':'') + '>' + f + '</option>';
-      });
-      selectHtml += '</optgroup>';
-    });
-    selectHtml += '</select>';
-
-    var bg = i%2===0 ? 'var(--white)' : 'var(--g50)';
-    html += '<div style="display:grid;grid-template-columns:1fr 56px 1fr;align-items:center;padding:10px 16px;border-bottom:1px solid var(--g100);background:' + bg + '">';
-    // Column 1: spreadsheet col + samples
-    html += '<div><div style="font-size:13px;font-weight:600;color:var(--dark);margin-bottom:3px">' + m.col + '</div>'
-         + '<div style="font-size:11px;color:var(--g400)">' + m.samples.join(' · ') + '</div></div>';
-    // Column 2: status
-    html += '<div style="text-align:center">' + statusIcon + '</div>';
-    // Column 3: field select
-    html += '<div>' + selectHtml + '</div>';
     html += '</div>';
-  });
-  html += '</div>'; // end table
-
-  html += '</div>'; // end main area
-
-  // Right field picker panel
-  html += '<div style="width:240px;flex-shrink:0;background:#fff;border:1px solid var(--g200);border-radius:12px;overflow:hidden;position:sticky;top:0">';
-  html += '<div style="padding:12px 14px;border-bottom:1px solid var(--g200)">';
-  html += '<div style="font-size:11px;font-weight:700;color:var(--dark);margin-bottom:8px">Goals.com data fields</div>';
-  html += '<input type="text" placeholder="Search for a field…" style="width:100%;border:1px solid var(--g200);border-radius:7px;padding:6px 10px;font-size:12px;box-sizing:border-box;font-family:var(--font)">';
+  }
   html += '</div>';
-  // Entity tabs
-  html += '<div style="display:flex;border-bottom:1px solid var(--g200)">';
-  ['Person','Organization','Note','More'].forEach(function(t,i){
-    var active = i===0;
-    html += '<button style="flex:1;padding:7px 4px;font-size:11px;font-weight:700;border:none;background:none;cursor:pointer;color:' + (active?'var(--teal)':'var(--g400)') + ';border-bottom:2px solid ' + (active?'var(--teal)':'transparent') + ';font-family:var(--font)">' + t + '</button>';
-  });
-  html += '</div>';
-  html += '<div style="padding:8px 0;max-height:340px;overflow-y:auto">';
-  ['Email','Phone','First name','Last name','Person label','Person owner','Person creation date','Visible to','Followers'].forEach(function(f){
-    html += '<div style="padding:8px 14px;font-size:12px;color:var(--dark);cursor:pointer;display:flex;align-items:center;gap:8px" onmouseover="this.style.background=\'var(--g50)\'" onmouseout="this.style.background=\'\'"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--g400)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>' + f + ' <span style="margin-left:auto;font-size:10px;color:var(--g400);font-weight:600">PERSON</span></div>';
-  });
-  html += '</div></div>'; // end panel
 
-  html += '</div>'; // end flex
+  // Needs-review rows (always expanded)
+  if (needsReview.length) {
+    html += '<div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:0.5px;margin:18px 0 8px">Needs your review (' + needsReview.length + ')</div>';
+    needsReview.forEach(function(m) {
+      var i = _iwMappings.indexOf(m);
+      html += _iwMapRow(m, i, false);
+    });
+  }
+
+  html += '</div>';
   return html;
 }
+
+function _iwToggleAuto() { _iwShowAutoMapped = !_iwShowAutoMapped; _iwRenderBody(); }
+
+function _iwFieldSelectHtml(i, m) {
+  var entities = m.entity ? [m.entity] : ['Person','Organization','Opportunity','Note'];
+  var html = '<select onchange="_iwSetField(' + i + ',this.value)" style="border:1px solid var(--g200);border-radius:7px;padding:6px 8px;font-size:12px;width:100%;background:#fff;font-family:var(--font)">';
+  html += '<option value="">-- Choose a field --</option>';
+  entities.forEach(function(ent){
+    html += '<optgroup label="' + ent + '">';
+    _iwEntityFields[ent].forEach(function(f){
+      html += '<option value="' + f + '|' + ent + '"' + (m.field===f?' selected':'') + '>' + f + '</option>';
+    });
+    html += '</optgroup>';
+  });
+  html += '</select>';
+  return html;
+}
+
+function _iwMapRow(m, i, compact) {
+  var bg = compact ? 'transparent' : (i%2===0 ? 'var(--white)' : 'var(--g50)');
+  var border = compact ? 'border-top:1px solid #ccf3e8' : '1px solid var(--g200)';
+  var wrapStyle = compact
+    ? 'padding:9px 16px;' + border
+    : 'padding:14px 16px;border:' + border + ';border-radius:10px;margin-bottom:10px;background:' + bg;
+  var html = '<div style="' + wrapStyle + '">';
+  html += '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap">';
+  html += '<div style="flex:1;min-width:180px">';
+  html += '<div style="display:flex;align-items:center;gap:8px;margin-bottom:3px"><span style="font-size:13px;font-weight:700;color:var(--dark)">' + m.col + '</span>' + (m.status==='auto'||m.status==='review'? _iwConfBadge(m.confidence) : '') + '</div>';
+  html += '<div style="font-size:11px;color:var(--g400);margin-bottom:5px">Sample: ' + m.samples.join(' · ') + '</div>';
+  if (m.note) html += '<div style="font-size:11.5px;color:' + (m.status==='nomatch'||m.status==='newpipeline'?'#b45309':'var(--g500)') + ';font-style:italic">' + m.note + '</div>';
+  html += '</div>';
+
+  if (m.status === 'auto' || m.status === 'review') {
+    html += '<div style="width:230px;flex-shrink:0">' + _iwFieldSelectHtml(i, m) + '</div>';
+  } else if (m.status === 'nomatch') {
+    html += '<div style="width:230px;flex-shrink:0;text-align:right">'
+      + '<button onclick="_iwOpenCreateField(' + i + ')" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">+ Create field</button>'
+      + '</div>';
+  } else if (m.status === 'newpipeline') {
+    html += '<div style="width:230px;flex-shrink:0;text-align:right">'
+      + '<button onclick="_iwOpenPipeline(' + i + ')" style="background:var(--navy);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Create pipeline</button>'
+      + '</div>';
+  }
+  html += '</div>';
+
+  if (m.status === 'newpipeline' && m.stages) {
+    html += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-top:10px">' + m.stages.map(function(s){
+      return '<span style="font-size:11px;font-weight:600;color:var(--navy);background:#eef2ff;border-radius:6px;padding:3px 9px">' + s + '</span>';
+    }).join('') + '</div>';
+  }
+
+  if (_iwCreateFieldOpen === i) html += _iwCreateFieldForm(i, m);
+  if (_iwPipelineOpen === i) html += _iwPipelineForm(i, m);
+
+  html += '</div>';
+  return html;
+}
+
 function _iwSetField(i, val) {
-  if (_iwMappings[i]) _iwMappings[i].field = val;
+  if (!_iwMappings[i]) return;
+  if (!val) { _iwMappings[i].field = null; return; }
+  var parts = val.split('|');
+  _iwMappings[i].field = parts[0];
+  _iwMappings[i].entity = parts[1];
+  _iwMappings[i].note = 'Manually mapped to ' + parts[0];
+  _iwRenderBody();
 }
 function _iwUnmapAll() {
-  _iwMappings.forEach(function(m){ m.field = '-- Skip --'; });
+  _iwMappings.forEach(function(m){ m.field = null; });
+  _iwRenderBody();
+}
+
+// ── Inline "create custom field" ────────────────────────────
+function _iwOpenCreateField(i) { _iwCreateFieldOpen = i; _iwPipelineOpen = null; _iwRenderBody(); }
+function _iwCloseCreateField() { _iwCreateFieldOpen = null; _iwRenderBody(); }
+function _iwCreateFieldForm(i, m) {
+  var entities = ['Person','Organization','Opportunity'];
+  var html = '<div style="margin-top:12px;padding:14px;background:#fff;border:1.5px dashed var(--navy);border-radius:10px">';
+  html += '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:10px">Create a new field for "' + m.col + '"</div>';
+  html += '<div style="display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end">';
+  html += '<div><div style="font-size:10px;font-weight:700;color:var(--g400);margin-bottom:4px">FIELD NAME</div><input id="iw-newfield-name" value="' + m.col + '" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;font-family:var(--font);width:170px"></div>';
+  html += '<div><div style="font-size:10px;font-weight:700;color:var(--g400);margin-bottom:4px">FIELD TYPE</div><select id="iw-newfield-type" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;font-family:var(--font)"><option>Text</option><option>Number</option><option>Date</option><option>Dropdown</option></select></div>';
+  html += '<div><div style="font-size:10px;font-weight:700;color:var(--g400);margin-bottom:4px">APPLIES TO</div><select id="iw-newfield-entity" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;font-family:var(--font)">' + entities.map(function(e){return '<option' + (m.entity===e?' selected':'') + '>' + e + '</option>';}).join('') + '</select></div>';
+  html += '<button onclick="_iwSaveCreateField(' + i + ')" style="background:var(--teal);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Create &amp; map</button>';
+  html += '<button onclick="_iwCloseCreateField()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel</button>';
+  html += '</div></div>';
+  return html;
+}
+function _iwSaveCreateField(i) {
+  var name = document.getElementById('iw-newfield-name').value.trim();
+  var entity = document.getElementById('iw-newfield-entity').value;
+  if (!name) return;
+  if (!_iwEntityFields[entity]) _iwEntityFields[entity] = ['-- Skip --'];
+  _iwEntityFields[entity].splice(_iwEntityFields[entity].length-1, 0, name);
+  _iwMappings[i].field = name;
+  _iwMappings[i].entity = entity;
+  _iwMappings[i].status = 'auto';
+  _iwMappings[i].confidence = 100;
+  _iwMappings[i].note = 'Created new field "' + name + '" on ' + entity + ' and mapped this column to it';
+  _iwCreateFieldOpen = null;
+  showToast('Field "' + name + '" created on ' + entity);
+  _iwRenderBody();
+}
+
+// ── Inline "create new pipeline from detected stages" ───────
+function _iwOpenPipeline(i) { _iwPipelineOpen = i; _iwCreateFieldOpen = null; _iwRenderBody(); }
+function _iwClosePipeline() { _iwPipelineOpen = null; _iwRenderBody(); }
+function _iwPipelineForm(i, m) {
+  var html = '<div style="margin-top:12px;padding:14px;background:#fff;border:1.5px dashed var(--navy);border-radius:10px">';
+  html += '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:4px">Create a new pipeline from these stages?</div>';
+  html += '<div style="font-size:11.5px;color:var(--g500);margin-bottom:10px">Ace didn\'t recognize these stage names in any existing pipeline. It can create a new pipeline using the values found in "' + m.col + '".</div>';
+  html += '<div><div style="font-size:10px;font-weight:700;color:var(--g400);margin-bottom:4px">PIPELINE NAME</div><input id="iw-newpipeline-name" value="Imported Pipeline" style="border:1px solid var(--g200);border-radius:7px;padding:7px 10px;font-size:12px;font-family:var(--font);width:220px;margin-bottom:10px"></div>';
+  html += '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">' + m.stages.map(function(s){
+    return '<span style="font-size:11px;font-weight:600;color:var(--navy);background:#eef2ff;border-radius:6px;padding:3px 9px">' + s + '</span>';
+  }).join('') + '</div>';
+  html += '<button onclick="_iwSavePipeline(' + i + ')" style="background:var(--teal);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Create pipeline &amp; map</button>';
+  html += '<button onclick="_iwClosePipeline()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);margin-left:8px">Cancel</button>';
+  html += '</div>';
+  return html;
+}
+function _iwSavePipeline(i) {
+  var name = document.getElementById('iw-newpipeline-name').value.trim() || 'Imported Pipeline';
+  var m = _iwMappings[i];
+  if (typeof _companySettings !== 'undefined' && _companySettings.pipelines) {
+    _companySettings.pipelines.push({
+      name: name, description: 'Created from import mapping', visibility:'everyone', isDefault:false,
+      stages: m.stages.map(function(s,idx){ var colors=['#94a3b8','#38bdf8','#a78bfa','#22c55e']; return {name:s, color:colors[idx%colors.length]}; })
+    });
+  }
+  m.field = 'Opportunity stage';
+  m.entity = 'Opportunity';
+  m.status = 'auto';
+  m.confidence = 100;
+  m.note = 'Created pipeline "' + name + '" and mapped this column to it';
+  _iwPipelineOpen = null;
+  showToast('Pipeline "' + name + '" created');
   _iwRenderBody();
 }
 
