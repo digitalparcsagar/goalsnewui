@@ -5295,66 +5295,11 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <div style="display:flex;align-items:center;gap:8px">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1d9e75" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/></svg>
         <div style="font-size:15px;font-weight:700;color:#fff;flex:1">Ask Ace</div>
+        <button onclick="_aceNewFolder()" title="New folder" style="background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:6px;padding:5px 8px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></button>
         <button onclick="newAceChat()" style="background:rgba(29,158,117,0.8);color:#fff;border:none;border-radius:6px;padding:5px 11px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);white-space:nowrap">+ New Chat</button>
       </div>
     </div>
-    <div style="overflow-y:auto;flex:1;padding:8px 0">
-      <div class="ace-hist-section">Today</div>
-      <div class="ace-hist-item active" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Compare Brock's performance versus Aya's</div>
-        <div class="ace-hist-time">7 minutes ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Q2 Performance vs Goal</div>
-        <div class="ace-hist-time">2h ago</div>
-      </div>
-      <div class="ace-hist-section">Yesterday</div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Show me the number of calls I have...</div>
-        <div class="ace-hist-time">11 days ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Please review the notes on the AR...</div>
-        <div class="ace-hist-time">24 days ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Move APEX International to not int...</div>
-        <div class="ace-hist-time">24 days ago</div>
-      </div>
-      <div class="ace-hist-section">This Month</div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Set Brock's goal for this month to...</div>
-        <div class="ace-hist-time">a month ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Can you review my notes to deter...</div>
-        <div class="ace-hist-time">a month ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Delete proposal for Viatris</div>
-        <div class="ace-hist-time">a month ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Move Arc Partners to not interested</div>
-        <div class="ace-hist-time">a month ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Add Akron to Today's Outreach. Tha...</div>
-        <div class="ace-hist-time">a month ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">What can you do for me Ace?</div>
-        <div class="ace-hist-time">a month ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Hi Ace. What can you do for me?</div>
-        <div class="ace-hist-time">a month ago</div>
-      </div>
-      <div class="ace-hist-item" onclick="loadAceChat(this)">
-        <div class="ace-hist-title">Please provide me with performan...</div>
-        <div class="ace-hist-time">a month ago</div>
-      </div>
-    </div>
+    <div style="overflow-y:auto;flex:1;padding:8px 0" id="ace-hist-container"><!-- rendered by JS --></div>
   </div>
 
   <!-- Main chat area -->
@@ -6527,10 +6472,11 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div class="ace-insights-panel">
       <div class="ace-insights-panel-header">
         <div class="ace-insights-panel-header-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div>
-        <div>
+        <div style="flex:1;min-width:0">
           <div class="ace-insights-panel-title">Ace Insights</div>
           <div class="ace-insights-panel-sub" id="ace-insights-module-label">Dashboard</div>
         </div>
+        <button id="ace-insights-viewinace-btn" onclick="_aceOpenLogged(_aceInsightsConvId)" style="display:none;background:rgba(255,255,255,0.12);color:#fff;border:none;border-radius:7px;padding:6px 11px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font);white-space:nowrap;flex-shrink:0">View in Ask Ace ↗</button>
       </div>
       <div class="ace-page-messages" id="ace-insights-messages"></div>
       <div class="ace-page-input-wrap">
@@ -7988,6 +7934,9 @@ function showPage(id, btn) {
   else document.querySelectorAll('.sb-item').forEach(b => {
     if ((b.getAttribute('onclick')||'').includes("'"+id+"'")) b.classList.add('active');
   });
+  // Remember the current page so a browser refresh returns here instead of always
+  // resetting to the dashboard.
+  try { if (page) localStorage.setItem('goalscom_lastPage', id); } catch (e) {}
   closeAllPanels();
   closeDrawer();
   // Redraw sales chart when returning to dashboard
@@ -8017,6 +7966,10 @@ function showPage(id, btn) {
 function openAskAce() {
   var el = document.getElementById('page-askace');
   if (el) el.classList.add('ace-modal-open');
+  if (typeof _aceRenderHistory === 'function') {
+    _aceRenderHistory();
+    _aceLoadIntoPane(_aceConvById(_aceActiveConvId));
+  }
 }
 function closeAskAce() {
   var el = document.getElementById('page-askace');
@@ -8199,11 +8152,15 @@ function _aceModuleLabel(pageId) { return _aceModuleLabels[pageId] || _aceModule
 
 var ACE_SPARK_ICON_SM = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg>';
 
+var _aceInsightsConvId = null;
 function openAceInsights() {
   if (!_aceInsightsEnabled) return;
   var overlay = document.getElementById('ace-insights-overlay');
   if (!overlay) return;
   overlay.classList.add('open');
+  _aceInsightsConvId = null; // fresh session each time the panel opens
+  var vb = document.getElementById('ace-insights-viewinace-btn');
+  if (vb) vb.style.display = 'none';
   _aceInsightsRenderInitial();
 }
 function closeAceInsights() {
@@ -8290,6 +8247,19 @@ function _aceInsightsSend(input) {
       '</div>';
     msgs.appendChild(aceDiv);
     msgs.scrollTop = msgs.scrollHeight;
+
+    // Every Ace Insights conversation also lives in Ask Ace's history
+    if (typeof _aceLogConversation === 'function') {
+      if (!_aceInsightsConvId) {
+        var moduleLabel = (typeof _aceModuleLabel === 'function' && typeof _aceCurrentPageId === 'function') ? _aceModuleLabel(_aceCurrentPageId()) : 'Ace Insights';
+        _aceInsightsConvId = _aceLogConversation('Ace Insights · ' + moduleLabel, q.length > 44 ? q.slice(0,44) + '…' : q, [{role:'user',html:esc},{role:'ace',html:responseHTML}]);
+      } else {
+        var c = _aceConvById(_aceInsightsConvId);
+        if (c) { c.messages.push({role:'user',html:esc},{role:'ace',html:responseHTML}); c.updatedAt = new Date(); }
+      }
+      var vb = document.getElementById('ace-insights-viewinace-btn');
+      if (vb) vb.style.display = 'inline-block';
+    }
   }, 900 + Math.random() * 600);
 }
 
@@ -11302,6 +11272,19 @@ document.addEventListener('DOMContentLoaded', function() {
   if (btn) _srDashTab('due', btn);
 });
 
+// Restore whichever page the user was on before a refresh, instead of always
+// resetting to the dashboard. Falls back silently to the default dashboard
+// view if nothing was saved, the saved page no longer exists, or storage is
+// unavailable (e.g. private browsing).
+document.addEventListener('DOMContentLoaded', function() {
+  try {
+    var lastPage = localStorage.getItem('goalscom_lastPage');
+    if (lastPage && lastPage !== 'dashboard' && document.getElementById('page-' + lastPage)) {
+      showPage(lastPage);
+    }
+  } catch (e) {}
+});
+
 
 // ─── RECURRING OPPORTUNITIES ─────────────────────────────────────────────────
 var _recurringEnabled = false;
@@ -11994,11 +11977,19 @@ function _oppSummarizeNotes() {
   var keyLines = notes.slice(0, 6).map(function(n){ var s = _oppWtSentences(n.text); return s[0] || n.text; });
   var authors = Array.from(new Set(notes.map(function(n){ return n.author; })));
   var oldest = notes[notes.length - 1].ts, newest = notes[0].ts;
-  box.innerHTML = '<div class="opp-note-summary-card">'
-    + '<div class="lbl">' + _oppWtIcon('<path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/>') + "Ace's summary of " + notes.length + ' note' + (notes.length>1?'s':'') + '</div>'
-    + '<ul style="margin:0 0 10px 18px;padding:0;font-size:13px;color:var(--dark);line-height:1.7">' + keyLines.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>'
+  var summaryBodyHTML = '<ul style="margin:0 0 10px 18px;padding:0;font-size:13px;color:var(--dark);line-height:1.7">' + keyLines.map(function(l){ return '<li>' + l + '</li>'; }).join('') + '</ul>'
     + '<div style="font-size:11px;color:var(--g500)">From ' + authors.join(', ') + ' &middot; ' + oldest.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + ' &ndash; ' + newest.toLocaleDateString('en-US',{month:'short',day:'numeric'}) + '</div>'
-    + '<div style="font-size:10.5px;color:var(--g400);margin-top:8px;line-height:1.5">This is a lightweight extractive summary generated in the mockup (first key line from each note). A production build would run a real summarization model over the full note history.</div>'
+    + '<div style="font-size:10.5px;color:var(--g400);margin-top:8px;line-height:1.5">This is a lightweight extractive summary generated in the mockup (first key line from each note). A production build would run a real summarization model over the full note history.</div>';
+  var oppTitle = (document.getElementById('oppd-header-title')||{}).textContent || 'this opportunity';
+  var loggedId = (typeof _aceLogConversation === 'function')
+    ? _aceLogConversation('Summarize with Ace · Notes', 'Summary of notes on ' + oppTitle, [
+        {role:'user', html:'Summarize my notes on ' + oppTitle}, {role:'ace', html:summaryBodyHTML}
+      ])
+    : null;
+  box.innerHTML = '<div class="opp-note-summary-card">'
+    + '<div class="lbl" style="display:flex;align-items:center;justify-content:space-between">' + '<span>' + _oppWtIcon('<path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/>') + "Ace's summary of " + notes.length + ' note' + (notes.length>1?'s':'') + '</span>'
+    + (loggedId ? '<button onclick="_aceOpenLogged(\'' + loggedId + '\')" style="background:none;border:none;color:var(--teal);font-size:11px;font-weight:700;cursor:pointer;font-family:var(--font)">View in Ask Ace ↗</button>' : '') + '</div>'
+    + summaryBodyHTML
     + '</div>';
   box.style.display = 'block';
 }
@@ -13244,16 +13235,257 @@ function addCustomColumn() {
 }
 
 // ── Ask Ace page ──
-function newAceChat() {
-  document.querySelectorAll('.ace-hist-item').forEach(i => i.classList.remove('active'));
-  document.getElementById('ace-suggested-wrap').style.display = 'block';
-  document.getElementById('ace-page-msgs').innerHTML = '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 24px;text-align:center"><svg width="72" height="72" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:20px"><circle cx="40" cy="40" r="38" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="4 3"/><rect x="24" y="26" width="32" height="24" rx="6" stroke="#3b82f6" stroke-width="2"/><circle cx="33" cy="37" r="3" fill="#3b82f6"/><circle cx="47" cy="37" r="3" fill="#3b82f6"/><path d="M33 44c1.5 2 10.5 2 12 0" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round"/><rect x="37" y="22" width="6" height="5" rx="2" fill="#3b82f6"/><line x1="28" y1="50" x2="24" y2="56" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="52" y1="50" x2="56" y2="56" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="24" y1="56" x2="56" y2="56" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/></svg><div style="font-size:24px;font-weight:700;color:var(--dark);margin-bottom:8px">Hi! I\'m Ace</div><div style="font-size:14px;color:var(--g500);max-width:320px;line-height:1.6">Your CRM assistant. Ask me anything about your leads, deals, goals, or schedule.</div><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:28px"><button onclick="injectAcePrompt(this)" class="ace-suggest-chip" style="font-size:12px;padding:8px 16px">How many deals did I close this month?</button><button onclick="injectAcePrompt(this)" class="ace-suggest-chip" style="font-size:12px;padding:8px 16px">Show my upcoming meetings</button><button onclick="injectAcePrompt(this)" class="ace-suggest-chip" style="font-size:12px;padding:8px 16px">What\'s my lead pipeline?</button><button onclick="injectAcePrompt(this)" class="ace-suggest-chip" style="font-size:12px;padding:8px 16px">Am I hitting my goals?</button></div></div>';
-  document.getElementById('ace-page-input').focus();
+var ACE_EMPTY_STATE_HTML = '<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 24px 24px;text-align:center"><svg width="72" height="72" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:20px"><circle cx="40" cy="40" r="38" stroke="#3b82f6" stroke-width="2.5" stroke-dasharray="4 3"/><rect x="24" y="26" width="32" height="24" rx="6" stroke="#3b82f6" stroke-width="2"/><circle cx="33" cy="37" r="3" fill="#3b82f6"/><circle cx="47" cy="37" r="3" fill="#3b82f6"/><path d="M33 44c1.5 2 10.5 2 12 0" stroke="#3b82f6" stroke-width="1.8" stroke-linecap="round"/><rect x="37" y="22" width="6" height="5" rx="2" fill="#3b82f6"/><line x1="28" y1="50" x2="24" y2="56" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="52" y1="50" x2="56" y2="56" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/><line x1="24" y1="56" x2="56" y2="56" stroke="#3b82f6" stroke-width="2" stroke-linecap="round"/></svg><div style="font-size:24px;font-weight:700;color:var(--dark);margin-bottom:8px">Hi! I\'m Ace</div><div style="font-size:14px;color:var(--g500);max-width:320px;line-height:1.6">Your CRM assistant. Ask me anything about your leads, deals, goals, or schedule.</div><div style="display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:28px"><button onclick="injectAcePrompt(this)" class="ace-suggest-chip" style="font-size:12px;padding:8px 16px">How many deals did I close this month?</button><button onclick="injectAcePrompt(this)" class="ace-suggest-chip" style="font-size:12px;padding:8px 16px">Show my upcoming meetings</button><button onclick="injectAcePrompt(this)" class="ace-suggest-chip" style="font-size:12px;padding:8px 16px">What\'s my lead pipeline?</button><button onclick="injectAcePrompt(this)" class="ace-suggest-chip" style="font-size:12px;padding:8px 16px">Am I hitting my goals?</button></div></div>';
+
+// ── Ask Ace — data-driven conversation history (folders + conversations) ──
+// Every AI feature in the platform that has a conversation (Ace Insights,
+// Summarize with Ace, Call summaries, the various Ace builders, etc.) logs
+// into this same store via _aceLogConversation(), so it always shows up
+// here too — one history across the whole app, not a silo per feature.
+var _aceFolders = [];        // [{id, name}]
+var _aceConversations = [];  // [{id, title, folderId, messages:[{role,html}], updatedAt, source}]
+var _aceActiveConvId = null;
+var _aceOpenMenuId = null;   // which row's ⋯ menu is expanded (folder or conversation id)
+
+(function _aceSeed() {
+  var seedThread = [
+    {role:'user', html:'How is our Q2 performance tracking compared to last year?'},
+    {role:'ace', html:'<div class="ace-response-section"><div class="ace-response-label">Performance Comparison</div><table class="ace-table"><thead><tr><th>Metric</th><th>Q2 2025</th><th>Q2 2026</th><th>Change</th></tr></thead><tbody><tr><td>Total Sales</td><td>$6.72M</td><td>$7.95M</td><td style="color:#1d9e75;font-weight:600">+18.3%</td></tr><tr><td>Win Rate</td><td>52%</td><td>58%</td><td style="color:#1d9e75;font-weight:600">+6pp</td></tr><tr><td>Avg Deal Size</td><td>$38K</td><td>$42K</td><td style="color:#1d9e75;font-weight:600">+10.5%</td></tr><tr><td>Team ROI</td><td>241%</td><td>285%</td><td style="color:#1d9e75;font-weight:600">+44pp</td></tr></tbody></table></div><div class="ace-response-section"><div class="ace-response-label">Key Takeaways</div><ul class="ace-list"><li>Sales are tracking <strong>18.3% ahead</strong> of Q2 2025, the team is accelerating.</li><li>Win rate improved from 52% to 58%, indicating stronger proposal quality and follow-up cadence.</li><li>Average deal size grew by $4K, likely driven by Brock Wilson\'s enterprise focus in March–May.</li></ul></div><div class="ace-response-section"><div class="ace-response-label">Recommendations</div><ul class="ace-list"><li>Maintain current call volume, the team is 8% above Q2 2025 call count.</li><li>Coach Jules Richards on deal velocity, her avg close time is 22 days vs team avg of 14.</li><li>Replicate Brock\'s discovery call framework across the team to sustain deal size growth.</li></ul></div><div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Conclusion</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">Q2 2026 is your strongest quarter on record. Sustaining current momentum puts you on pace for <strong>$16.2M EOY</strong>, 84% of annual goal. Three focused advisors can close the remaining gap with a strong H2 push.</p></div>'},
+    {role:'user', html:'Which advisor should I focus on coaching first?'},
+    {role:'ace', html:'<div style="display:flex;align-items:center;gap:10px;padding:12px;background:rgba(245,158,11,0.06);border:1px solid rgba(245,158,11,0.15);border-radius:8px;margin-bottom:10px"><div class="rep-avatar" style="background:#f59e0b;width:32px;height:32px;font-size:11px;flex-shrink:0">JR</div><div><div style="font-weight:700;font-size:13px;color:var(--dark)">Jules Richards — Priority #1</div><div style="font-size:12px;color:var(--g500);margin-top:2px">51% to annual goal · 22-day avg close time · 3 stalled proposals</div></div></div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">Jules has the highest deal count but the longest close cycle. A 30-minute coaching session focused on objection handling and follow-up timing could unlock $200–300K in stalled proposals.</p>'}
+  ];
+  var legacyTitles = [
+    ['Compare Brock\'s performance versus Aya\'s', 7],
+    ['Q2 Performance vs Goal', 130],
+    ['Show me the number of calls I have...', 15900],
+    ['Please review the notes on the AR...', 34700],
+    ['Move APEX International to not int...', 34700],
+    ['Set Brock\'s goal for this month to...', 43200],
+    ['Can you review my notes to deter...', 43200],
+    ['Delete proposal for Viatris', 43200],
+    ['Move Arc Partners to not interested', 43200],
+    ['Add Akron to Today\'s Outreach. Tha...', 43200],
+    ['What can you do for me Ace?', 43200],
+    ['Hi Ace. What can you do for me?', 43200],
+    ['Please provide me with performan...', 43200]
+  ];
+  var now = Date.now();
+  legacyTitles.forEach(function(t, i) {
+    _aceConversations.push({
+      id: 'seed' + i,
+      title: t[0],
+      folderId: null,
+      messages: i === 0 ? seedThread : [],
+      updatedAt: new Date(now - t[1]*60000),
+      source: 'Ask Ace'
+    });
+  });
+  _aceActiveConvId = 'seed0';
+})();
+
+function _aceMatchResponse(q) {
+  var ql = q.toLowerCase();
+  if (ql.includes('risk') || ql.includes('behind') || ql.includes('missing')) return ACE_RESPONSES['who is most at risk'];
+  if (ql.includes('forecast') || ql.includes('gap') || ql.includes('19.35') || ql.includes('eoy')) return ACE_RESPONSES['forecast gap'];
+  if (ql.includes('stall') || ql.includes('pipeline') || ql.includes('deal')) return ACE_RESPONSES['stalled'];
+  return ACE_RESPONSES.default;
 }
-function loadAceChat(el) {
-  document.querySelectorAll('.ace-hist-item').forEach(i => i.classList.remove('active'));
-  el.classList.add('active');
-  showToast('Loading: ' + el.querySelector('.ace-hist-title').textContent);
+function _aceRelTime(d) {
+  var mins = Math.round((Date.now() - d.getTime()) / 60000);
+  if (mins < 1) return 'just now';
+  if (mins < 60) return mins + ' minute' + (mins===1?'':'s') + ' ago';
+  var hrs = Math.round(mins/60);
+  if (hrs < 24) return hrs + 'h ago';
+  var days = Math.round(hrs/24);
+  if (days === 1) return 'yesterday';
+  if (days < 30) return days + ' days ago';
+  var months = Math.round(days/30);
+  return months + ' month' + (months===1?'':'s') + ' ago';
+}
+function _aceConvById(id) { return _aceConversations.filter(function(c){ return c.id===id; })[0]; }
+function _aceFolderById(id) { return _aceFolders.filter(function(f){ return f.id===id; })[0]; }
+
+function _aceRenderHistory() {
+  var box = document.getElementById('ace-hist-container');
+  if (!box) return;
+  var html = '';
+
+  // Folders (each with its conversations, newest first)
+  _aceFolders.forEach(function(f) {
+    var convs = _aceConversations.filter(function(c){ return c.folderId===f.id; }).sort(function(a,b){ return b.updatedAt - a.updatedAt; });
+    html += '<div style="margin-bottom:2px">';
+    html += '<div style="display:flex;align-items:center;gap:6px;padding:8px 16px 4px;position:relative">'
+      + '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/></svg>'
+      + '<span style="font-size:11px;font-weight:700;color:rgba(255,255,255,0.75);text-transform:uppercase;letter-spacing:0.4px;flex:1">' + f.name + '</span>'
+      + '<span style="font-size:10px;color:rgba(255,255,255,0.35)">' + convs.length + '</span>'
+      + '<button onclick="event.stopPropagation();_aceToggleMenu(\'folder:' + f.id + '\')" style="background:none;border:none;color:rgba(255,255,255,0.5);cursor:pointer;padding:2px 4px;font-size:13px;line-height:1">⋯</button>'
+      + '</div>';
+    if (_aceOpenMenuId === 'folder:' + f.id) {
+      html += '<div style="margin:0 16px 6px;padding:6px;background:rgba(255,255,255,0.06);border-radius:8px;display:flex;gap:6px">'
+        + '<button onclick="_aceRenameFolder(\'' + f.id + '\')" style="flex:1;background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:6px;padding:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)">Rename</button>'
+        + '<button onclick="_aceDeleteFolder(\'' + f.id + '\')" style="flex:1;background:rgba(220,38,38,0.25);color:#fecaca;border:none;border-radius:6px;padding:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)">Delete</button>'
+        + '</div>';
+    }
+    if (!convs.length) {
+      html += '<div style="padding:4px 16px 8px;font-size:11px;color:rgba(255,255,255,0.3)">Empty — move a conversation in</div>';
+    } else {
+      convs.forEach(function(c){ html += _aceConvRowHTML(c); });
+    }
+    html += '</div>';
+  });
+
+  // Unfiled conversations, grouped by relative recency
+  var unfiled = _aceConversations.filter(function(c){ return !c.folderId; }).sort(function(a,b){ return b.updatedAt - a.updatedAt; });
+  if (_aceFolders.length && unfiled.length) {
+    html += '<div class="ace-hist-section">Unfiled</div>';
+  }
+  var dayMs = 86400000;
+  var today = unfiled.filter(function(c){ return (Date.now()-c.updatedAt)<dayMs; });
+  var yest  = unfiled.filter(function(c){ var age=Date.now()-c.updatedAt; return age>=dayMs && age<2*dayMs; });
+  var older = unfiled.filter(function(c){ return (Date.now()-c.updatedAt)>=2*dayMs; });
+  if (today.length) { html += '<div class="ace-hist-section">Today</div>'; today.forEach(function(c){ html += _aceConvRowHTML(c); }); }
+  if (yest.length)  { html += '<div class="ace-hist-section">Yesterday</div>'; yest.forEach(function(c){ html += _aceConvRowHTML(c); }); }
+  if (older.length) { html += '<div class="ace-hist-section">Older</div>'; older.forEach(function(c){ html += _aceConvRowHTML(c); }); }
+
+  box.innerHTML = html;
+}
+function _aceConvRowHTML(c) {
+  var active = c.id === _aceActiveConvId;
+  var html = '<div class="ace-hist-item' + (active?' active':'') + '" onclick="loadAceChat(\'' + c.id + '\')" style="position:relative">'
+    + '<div style="display:flex;align-items:flex-start;gap:6px">'
+    + '<div style="flex:1;min-width:0">'
+    + '<div class="ace-hist-title">' + c.title + '</div>'
+    + '<div class="ace-hist-time">' + (c.source && c.source!=='Ask Ace' ? c.source + ' · ' : '') + _aceRelTime(c.updatedAt) + '</div>'
+    + '</div>'
+    + '<button onclick="event.stopPropagation();_aceToggleMenu(\'' + c.id + '\')" style="background:none;border:none;color:rgba(255,255,255,0.4);cursor:pointer;padding:2px 4px;font-size:13px;line-height:1;flex-shrink:0">⋯</button>'
+    + '</div></div>';
+  if (_aceOpenMenuId === c.id) {
+    var folderOpts = '<option value="">No folder</option>' + _aceFolders.map(function(f){ return '<option value="' + f.id + '"' + (c.folderId===f.id?' selected':'') + '>' + f.name + '</option>'; }).join('');
+    html += '<div onclick="event.stopPropagation()" style="margin:0 10px 8px;padding:8px;background:rgba(255,255,255,0.06);border-radius:8px;display:flex;flex-direction:column;gap:6px">'
+      + '<div style="display:flex;gap:6px">'
+      + '<button onclick="_aceRenameConv(\'' + c.id + '\')" style="flex:1;background:rgba(255,255,255,0.1);color:#fff;border:none;border-radius:6px;padding:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)">Rename</button>'
+      + '<button onclick="_aceDeleteConv(\'' + c.id + '\')" style="flex:1;background:rgba(220,38,38,0.25);color:#fecaca;border:none;border-radius:6px;padding:5px;font-size:11px;font-weight:600;cursor:pointer;font-family:var(--font)">Delete</button>'
+      + '</div>'
+      + '<select onchange="_aceMoveConv(\'' + c.id + '\',this.value)" style="width:100%;font-size:11px;border:none;border-radius:6px;padding:5px;font-family:var(--font);background:rgba(255,255,255,0.1);color:#fff">' + folderOpts + '</select>'
+      + '</div>';
+  }
+  return html;
+}
+function _aceToggleMenu(id) {
+  _aceOpenMenuId = (_aceOpenMenuId === id) ? null : id;
+  _aceRenderHistory();
+}
+function _aceNewFolder() {
+  var name = (typeof prompt === 'function') ? prompt('Folder name:', 'New Folder') : 'New Folder';
+  if (!name) return;
+  _aceFolders.unshift({id:'f'+Date.now(), name:name.trim()});
+  _aceRenderHistory();
+}
+function _aceRenameFolder(id) {
+  var f = _aceFolderById(id); if (!f) return;
+  var name = (typeof prompt === 'function') ? prompt('Rename folder:', f.name) : f.name;
+  if (!name) return;
+  f.name = name.trim();
+  _aceOpenMenuId = null;
+  _aceRenderHistory();
+}
+function _aceDeleteFolder(id) {
+  _aceConversations.forEach(function(c){ if (c.folderId===id) c.folderId=null; });
+  _aceFolders = _aceFolders.filter(function(f){ return f.id!==id; });
+  _aceOpenMenuId = null;
+  _aceRenderHistory();
+  showToast('Folder deleted — conversations moved to Unfiled');
+}
+function _aceRenameConv(id) {
+  var c = _aceConvById(id); if (!c) return;
+  var title = (typeof prompt === 'function') ? prompt('Rename conversation:', c.title) : c.title;
+  if (!title) return;
+  c.title = title.trim();
+  _aceOpenMenuId = null;
+  _aceRenderHistory();
+}
+function _aceDeleteConv(id) {
+  _aceConversations = _aceConversations.filter(function(c){ return c.id!==id; });
+  _aceOpenMenuId = null;
+  if (_aceActiveConvId === id) { _aceActiveConvId = null; newAceChat(); }
+  else _aceRenderHistory();
+}
+function _aceMoveConv(id, folderId) {
+  var c = _aceConvById(id); if (!c) return;
+  c.folderId = folderId || null;
+  _aceOpenMenuId = null;
+  _aceRenderHistory();
+  showToast(folderId ? ('Moved to ' + (_aceFolderById(folderId)||{}).name) : 'Removed from folder');
+}
+
+// ── Shared bridge: any AI feature in the platform logs its conversation
+// here so it always shows up in Ask Ace's history too. ──
+function _aceLogConversation(source, title, turns) {
+  var conv = {
+    id: 'c' + Date.now() + Math.floor(Math.random()*1000),
+    title: title,
+    folderId: null,
+    messages: turns.map(function(t){ return {role:t.role, html:t.html}; }),
+    updatedAt: new Date(),
+    source: source
+  };
+  _aceConversations.unshift(conv);
+  return conv.id;
+}
+function _aceOpenLogged(id) {
+  openAskAce();
+  _aceActiveConvId = id;
+  _aceRenderHistory();
+  _aceLoadIntoPane(_aceConvById(id));
+}
+
+function _aceMsgBubbleHTML(m) {
+  var speakerIcon = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>';
+  if (m.role === 'user') {
+    return '<div class="ace-page-msg user"><div class="ace-page-av user">AR</div><div class="ace-page-msg-body"><div class="ace-page-bubble user">' + m.html + '</div><div class="ace-page-meta">' + speakerIcon + 'sent</div></div></div>';
+  }
+  return '<div class="ace-page-msg ace"><div class="ace-page-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div><div class="ace-page-msg-body"><div class="ace-page-bubble ace">' + m.html + '</div><div class="ace-page-meta">' + speakerIcon + 'Ace</div></div></div>';
+}
+function _aceLoadIntoPane(conv) {
+  var msgs = document.getElementById('ace-page-msgs');
+  var sugWrap = document.getElementById('ace-suggested-wrap');
+  if (!msgs) return;
+  if (!conv || !conv.messages.length) {
+    msgs.innerHTML = ACE_EMPTY_STATE_HTML;
+    if (sugWrap) sugWrap.style.display = 'block';
+  } else {
+    msgs.innerHTML = conv.messages.map(_aceMsgBubbleHTML).join('');
+    if (sugWrap) sugWrap.style.display = 'none';
+  }
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function newAceChat() {
+  var conv = {id:'c'+Date.now(), title:'New conversation', folderId:null, messages:[], updatedAt:new Date(), source:'Ask Ace'};
+  _aceConversations.unshift(conv);
+  _aceActiveConvId = conv.id;
+  _aceOpenMenuId = null;
+  _aceRenderHistory();
+  _aceLoadIntoPane(conv);
+  var inp = document.getElementById('ace-page-input');
+  if (inp) inp.focus();
+}
+function loadAceChat(id) {
+  var conv = _aceConvById(id);
+  if (!conv) return;
+  // Lazily synthesize content for legacy seed conversations that were never
+  // actually chatted in (title-only placeholders) so opening one still shows
+  // something coherent instead of an empty thread.
+  if (!conv.messages.length && conv.id.indexOf('seed') === 0) {
+    conv.messages = [
+      {role:'user', html:conv.title},
+      {role:'ace', html:_aceMatchResponse(conv.title)}
+    ];
+  }
+  _aceActiveConvId = id;
+  _aceOpenMenuId = null;
+  _aceRenderHistory();
+  _aceLoadIntoPane(conv);
 }
 function injectAcePrompt(btn) {
   const input = document.getElementById('ace-page-input');
@@ -13276,6 +13508,14 @@ function sendAcePage(input) {
   const msgs = document.getElementById('ace-page-msgs');
   const sugWrap = document.getElementById('ace-suggested-wrap');
 
+  // Make sure there is an active conversation to persist into
+  if (!_aceActiveConvId || !_aceConvById(_aceActiveConvId)) {
+    var fresh = {id:'c'+Date.now(), title:'New conversation', folderId:null, messages:[], updatedAt:new Date(), source:'Ask Ace'};
+    _aceConversations.unshift(fresh);
+    _aceActiveConvId = fresh.id;
+  }
+  var conv = _aceConvById(_aceActiveConvId);
+
   // Remove empty state if present
   const emptyState = msgs.querySelector('[style*="text-align:center"]');
   if (emptyState) emptyState.remove();
@@ -13285,10 +13525,15 @@ function sendAcePage(input) {
   // Add user message
   const userDiv = document.createElement('div');
   userDiv.className = 'ace-page-msg user';
-  userDiv.innerHTML = '<div class="ace-page-av user">AR</div><div class="ace-page-msg-body"><div class="ace-page-bubble user">' + q.replace(/</g,'&lt;') + '</div><div class="ace-page-meta">' + speakerIcon + 'just now</div></div>';
+  var qSafe = q.replace(/</g,'&lt;');
+  userDiv.innerHTML = '<div class="ace-page-av user">AR</div><div class="ace-page-msg-body"><div class="ace-page-bubble user">' + qSafe + '</div><div class="ace-page-meta">' + speakerIcon + 'just now</div></div>';
   msgs.appendChild(userDiv);
   input.value = '';
   input.style.height = 'auto';
+  conv.messages.push({role:'user', html:qSafe});
+  if (conv.title === 'New conversation') conv.title = q.length > 44 ? q.slice(0,44) + '…' : q;
+  conv.updatedAt = new Date();
+  _aceRenderHistory();
 
   // Hide suggestions after first message
   if (sugWrap) sugWrap.style.display = 'none';
@@ -13301,12 +13546,8 @@ function sendAcePage(input) {
   msgs.appendChild(typingDiv);
   msgs.scrollTop = msgs.scrollHeight;
 
-  // Match response
-  const ql = q.toLowerCase();
-  let responseHTML = ACE_RESPONSES.default;
-  if (ql.includes('risk') || ql.includes('behind') || ql.includes('missing')) responseHTML = ACE_RESPONSES['who is most at risk'];
-  else if (ql.includes('forecast') || ql.includes('gap') || ql.includes('19.35') || ql.includes('eoy')) responseHTML = ACE_RESPONSES['forecast gap'];
-  else if (ql.includes('stall') || ql.includes('pipeline') || ql.includes('deal')) responseHTML = ACE_RESPONSES['stalled'];
+  var responseHTML = _aceMatchResponse(q);
+  var convId = conv.id;
 
   setTimeout(function() {
     const t = document.getElementById('ace-typing');
@@ -13316,6 +13557,8 @@ function sendAcePage(input) {
     aceDiv.innerHTML = '<div class="ace-page-av"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/></svg></div><div class="ace-page-msg-body"><div class="ace-page-bubble ace">' + responseHTML + '</div><div class="ace-page-meta">' + speakerIcon + 'just now</div></div>';
     msgs.appendChild(aceDiv);
     msgs.scrollTop = msgs.scrollHeight;
+    var c2 = _aceConvById(convId);
+    if (c2) { c2.messages.push({role:'ace', html:responseHTML}); c2.updatedAt = new Date(); _aceRenderHistory(); }
   }, 900 + Math.random() * 600);
 }
 
@@ -19711,7 +19954,8 @@ function _rcStep3() {
       + '</label>';
   }).join('') + '</div>';
   if (_rcViewMode) {
-    html += '<div style="display:flex;justify-content:flex-end">'
+    html += '<div style="display:flex;justify-content:space-between;gap:8px;align-items:center">'
+      + (_rcResult.aceConvId ? '<button onclick="_aceOpenLogged(\'' + _rcResult.aceConvId + '\')" style="background:none;border:none;color:var(--teal);font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">View in Ask Ace ↗</button>' : '<span></span>')
       + '<button onclick="_rcClose()" style="background:var(--navy);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Close</button>'
       + '</div>';
   } else {
@@ -19724,6 +19968,14 @@ function _rcStep3() {
 }
 function _rcSaveCall() {
   var addedCount = _rcResult.actionItems.filter(function(a){return a.add;}).length;
+  var recordLabel = (_rcType && _rcName) ? (_rcName + ' (' + _rcType + ')') : 'this call';
+  var actionListHTML = '<ul class="ace-list">' + _rcResult.actionItems.map(function(a){ return '<li>' + a.text + (a.add ? ' <em style="color:var(--teal)">— added as task</em>' : '') + '</li>'; }).join('') + '</ul>';
+  var aceConvId = (typeof _aceLogConversation === 'function')
+    ? _aceLogConversation('Call Recording', 'Call summary — ' + recordLabel, [
+        {role:'user', html:'Summarize this call recording and pull out action items'},
+        {role:'ace', html:'<div class="ace-response-section"><div class="ace-response-label">Call Summary</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">' + _rcResult.summary + '</p></div><div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Action Items</div>' + actionListHTML + '</div>'}
+      ])
+    : null;
   var call = {
     id: (_callsData.length ? Math.max.apply(null,_callsData.map(function(c){return c.id;})) : 0) + 1,
     recordType: _rcType || 'Unlinked',
@@ -19732,7 +19984,8 @@ function _rcSaveCall() {
     date: (function(){ var d=new Date(); return (d.getMonth()+1)+'/'+d.getDate()+'/'+d.getFullYear(); })(),
     duration: _rcSeconds,
     summary: _rcResult.summary,
-    actionItems: _rcResult.actionItems.map(function(a){ return {text:a.text, added:a.add}; })
+    actionItems: _rcResult.actionItems.map(function(a){ return {text:a.text, added:a.add}; }),
+    aceConvId: aceConvId
   };
   _callsData.unshift(call);
   if (_rcType && _rcName && addedCount) {
@@ -19755,7 +20008,7 @@ function _rcViewCall(id) {
   _rcType = c.recordType === 'Unlinked' ? null : c.recordType;
   _rcName = c.recordType === 'Unlinked' ? null : c.recordName;
   _rcSeconds = c.duration;
-  _rcResult = { summary: c.summary, actionItems: c.actionItems.map(function(a){ return {text:a.text, add:a.added}; }) };
+  _rcResult = { summary: c.summary, actionItems: c.actionItems.map(function(a){ return {text:a.text, add:a.added}; }), aceConvId: c.aceConvId || null };
   var el = document.getElementById('call-record-overlay');
   if (el) el.style.display = 'flex';
   _rcRenderBody();
@@ -19929,6 +20182,12 @@ function _aceBonusGenerate() {
     _aceBonusRenderPreview(plan);
     document.getElementById('ace-bonus-loading').style.display = 'none';
     document.getElementById('ace-bonus-preview').style.display = 'block';
+    if (typeof _aceLogConversation === 'function') {
+      _aceLogConversation('Ace Bonus Builder', plan.type + ' plan', [
+        {role:'user', html: input.replace(/</g,'&lt;')},
+        {role:'ace', html:'<div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Bonus Plan</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">' + plan.type + ' — Trigger: ' + plan.trigger + ', Award: ' + (plan.rows[0] ? plan.rows[0].val : 'TBD') + ', Period: ' + plan.period + '</p></div>'}
+      ]);
+    }
   }, 2600);
 }
 function _aceBonusParse(text) {
@@ -20097,6 +20356,12 @@ function _aceContestGenerate() {
     _aceContestRenderPreview(plan);
     document.getElementById('ace-contest-loading').style.display = 'none';
     document.getElementById('ace-contest-preview').style.display = 'block';
+    if (typeof _aceLogConversation === 'function') {
+      _aceLogConversation('Ace Contest Builder', plan.metric + ' contest', [
+        {role:'user', html: input.replace(/</g,'&lt;')},
+        {role:'ace', html:'<div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Contest Plan</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">Metric: ' + plan.metric + ', Duration: ' + plan.duration + ', Prizes: ' + plan.prizes.map(function(p){return p.place + ' — ' + p.prize;}).join('; ') + '</p></div>'}
+      ]);
+    }
   }, 2600);
 }
 function _aceContestParse(text) {
@@ -20287,6 +20552,12 @@ function _aceCommGenerate() {
     _aceCommRenderPreview(plan);
     document.getElementById('ace-comm-loading').style.display = 'none';
     document.getElementById('ace-comm-preview').style.display = 'block';
+    if (typeof _aceLogConversation === 'function') {
+      _aceLogConversation('Ace Commission Builder', plan.structureType + ' commission plan', [
+        {role:'user', html: input.replace(/</g,'&lt;')},
+        {role:'ace', html:'<div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Commission Plan</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">Structure: ' + plan.structureType + ', Payout: ' + plan.payout + (plan.bonus ? ', Bonus: ' + plan.bonus : '') + '</p></div>'}
+      ]);
+    }
   }, 2600);
 }
 
@@ -24965,6 +25236,12 @@ function _mktCampAceGenerate() {
     _mktCampAceRenderPreview(result);
     document.getElementById('ace-campaign-loading').style.display = 'none';
     document.getElementById('ace-campaign-preview').style.display = 'block';
+    if (typeof _aceLogConversation === 'function') {
+      _aceLogConversation('Ace Campaign Builder', 'Campaign — ' + (result.plan && result.plan.subject ? result.plan.subject : 'Draft'), [
+        {role:'user', html: input.replace(/</g,'&lt;')},
+        {role:'ace', html:'<div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Campaign Draft</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">' + (result.plan && result.plan.subject ? 'Subject: ' + result.plan.subject : 'Draft campaign built from your description.') + '</p></div>'}
+      ]);
+    }
   }, 2400);
 }
 
@@ -25149,6 +25426,12 @@ function _mktListAceGenerate() {
     _mktListAceRenderPreview(result);
     document.getElementById('ace-list-loading').style.display = 'none';
     document.getElementById('ace-list-preview').style.display = 'block';
+    if (typeof _aceLogConversation === 'function') {
+      _aceLogConversation('Ace List Builder', 'List — ' + (result.plan && result.plan.name ? result.plan.name : 'Draft'), [
+        {role:'user', html: input.replace(/</g,'&lt;')},
+        {role:'ace', html:'<div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">List Draft</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">' + (result.plan && result.plan.name ? 'List: ' + result.plan.name : 'Draft list built from your description.') + '</p></div>'}
+      ]);
+    }
   }, 2400);
 }
 
@@ -25358,6 +25641,12 @@ function _mktAceGenerate() {
     _mktAceRenderPreview(_mktAcePlan);
     document.getElementById('ace-automation-loading').style.display = 'none';
     document.getElementById('ace-automation-preview').style.display = 'block';
+    if (typeof _aceLogConversation === 'function') {
+      _aceLogConversation('Ace Marketing Automation', 'Automation — ' + _mktAcePlan.triggerType, [
+        {role:'user', html: input.replace(/</g,'&lt;')},
+        {role:'ace', html:'<div class="ace-response-section" style="margin-bottom:0"><div class="ace-response-label">Automation Plan</div><p style="font-size:13px;color:var(--g700);line-height:1.6;margin:0">Trigger: ' + _mktAcePlan.triggerType + ', Actions: ' + (_mktAcePlan.actions ? _mktAcePlan.actions.length : 0) + '</p></div>'}
+      ]);
+    }
   }, 2400);
 }
 /* Pure-ish parser: text in, {triggerType, triggerCfg, actions[], assumptions[]} out.
