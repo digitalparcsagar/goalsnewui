@@ -2291,6 +2291,15 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
           <button onclick="showPage('pipeline',null)" style="font-size:11px;color:var(--teal);font-weight:600;background:none;border:none;cursor:pointer;font-family:var(--font)">Open Pipeline →</button>
         </div>
         <div style="padding:14px 18px">
+          <!-- Column header -->
+          <div style="display:flex;align-items:center;gap:10px;padding:0 0 6px;font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:0.4px;color:var(--g400)">
+            <div style="width:120px">Stage</div>
+            <div style="flex:1"></div>
+            <div style="width:18px;text-align:right">#</div>
+            <div style="width:52px;text-align:right">Value</div>
+            <div style="width:46px;text-align:right">Win %</div>
+            <div style="width:64px;text-align:right">Expected</div>
+          </div>
           <!-- Stage bars -->
           <div style="display:flex;flex-direction:column;gap:10px" id="sr-stage-funnel">
             <div style="display:flex;align-items:center;gap:10px">
@@ -2298,29 +2307,47 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
               <div style="flex:1;height:8px;background:var(--g100);border-radius:4px;overflow:hidden"><div style="width:100%;height:100%;background:#6366f1;border-radius:4px;opacity:0.8"></div></div>
               <div style="width:18px;text-align:right;font-size:13px;font-weight:700;color:var(--dark)">3</div>
               <div style="width:52px;text-align:right;font-size:11px;color:var(--g400)">$147K</div>
+              <div style="width:46px;text-align:right;font-size:11px;color:var(--amber);font-family:var(--mono)">20%</div>
+              <div style="width:64px;text-align:right;font-size:12px;font-weight:700;color:var(--teal);font-family:var(--mono)">$29.4K</div>
             </div>
             <div style="display:flex;align-items:center;gap:10px">
               <div style="width:120px;font-size:12px;font-weight:500;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Contact Made</div>
               <div style="flex:1;height:8px;background:var(--g100);border-radius:4px;overflow:hidden"><div style="width:75%;height:100%;background:#3b82f6;border-radius:4px;opacity:0.8"></div></div>
               <div style="width:18px;text-align:right;font-size:13px;font-weight:700;color:var(--dark)">2</div>
               <div style="width:52px;text-align:right;font-size:11px;color:var(--g400)">$98K</div>
+              <div style="width:46px;text-align:right;font-size:11px;color:var(--amber);font-family:var(--mono)">40%</div>
+              <div style="width:64px;text-align:right;font-size:12px;font-weight:700;color:var(--teal);font-family:var(--mono)">$39.2K</div>
             </div>
             <div style="display:flex;align-items:center;gap:10px">
               <div style="width:120px;font-size:12px;font-weight:500;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Docs Collected</div>
               <div style="flex:1;height:8px;background:var(--g100);border-radius:4px;overflow:hidden"><div style="width:50%;height:100%;background:#f59e0b;border-radius:4px;opacity:0.8"></div></div>
               <div style="width:18px;text-align:right;font-size:13px;font-weight:700;color:var(--dark)">1</div>
               <div style="width:52px;text-align:right;font-size:11px;color:var(--g400)">$92K</div>
+              <div style="width:46px;text-align:right;font-size:11px;color:var(--amber);font-family:var(--mono)">60%</div>
+              <div style="width:64px;text-align:right;font-size:12px;font-weight:700;color:var(--teal);font-family:var(--mono)">$55.2K</div>
             </div>
             <div style="display:flex;align-items:center;gap:10px">
               <div style="width:120px;font-size:12px;font-weight:500;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">Payment Confirmed</div>
               <div style="flex:1;height:8px;background:var(--g100);border-radius:4px;overflow:hidden"><div style="width:33%;height:100%;background:var(--teal);border-radius:4px"></div></div>
               <div style="width:18px;text-align:right;font-size:13px;font-weight:700;color:var(--dark)">1</div>
               <div style="width:52px;text-align:right;font-size:11px;color:var(--g400)">$174K</div>
+              <div style="width:46px;text-align:right;font-size:11px;color:var(--teal);font-family:var(--mono)">90%</div>
+              <div style="width:64px;text-align:right;font-size:12px;font-weight:700;color:var(--teal);font-family:var(--mono)">$156.6K</div>
             </div>
           </div>
-          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
-            <div style="font-size:12px;color:var(--g500)">Total pipeline value</div>
-            <div style="font-size:18px;font-weight:800;color:var(--teal);font-family:var(--mono)">$511K</div>
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--g100);display:flex;align-items:center;gap:18px;flex-wrap:wrap">
+            <div>
+              <div style="font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:0.4px">Total Pipeline Value</div>
+              <div style="font-size:15px;font-weight:800;color:var(--dark);font-family:var(--mono)">$511K</div>
+            </div>
+            <div>
+              <div style="font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:0.4px">Your Win Rate</div>
+              <div style="font-size:15px;font-weight:800;color:var(--dark);font-family:var(--mono)">71%</div>
+            </div>
+            <div style="margin-left:auto;text-align:right">
+              <div style="font-size:10px;color:var(--g400);text-transform:uppercase;letter-spacing:0.4px" title="Total pipeline value × each deal's stage probability">Expected Pipeline Value</div>
+              <div style="font-size:19px;font-weight:800;color:var(--teal);font-family:var(--mono)">$280.4K</div>
+            </div>
           </div>
         </div>
       </div>
@@ -16288,7 +16315,6 @@ function setRole(roleId) {
     if (briefBtn) briefBtn.style.display = 'flex';
     if (custBtn) custBtn.style.display = 'none';
     if (sub) sub.textContent = 'Good morning, Brock — here\'s your day';
-    setTimeout(function() { _showMorningBrief(); }, 600);
   } else {
     if (briefBtn) briefBtn.style.display = 'none';
     if (custBtn) custBtn.style.display = 'flex';
