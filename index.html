@@ -6644,6 +6644,25 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   </div>
 </div>
 
+<!-- Ace Knowledge Base — Add Knowledge modal (top-level sibling — must NOT be nested inside a hidden page, or position:fixed will never render regardless of its own display value) -->
+<div id="ace-kb-add-overlay" style="position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:2450;display:none;align-items:center;justify-content:center;padding:24px">
+  <div style="background:#fff;border-radius:16px;width:560px;max-width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <div style="padding:20px 24px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div style="width:32px;height:32px;border-radius:9px;background:rgba(29,158,117,0.1);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <div>
+          <div style="font-size:15px;font-weight:800;color:var(--dark)">Add Knowledge</div>
+          <div style="font-size:11.5px;color:var(--g400)">Give Ace more context to work with</div>
+        </div>
+      </div>
+      <button onclick="_aceKBCloseAdd()" style="border:none;background:none;color:var(--g400);cursor:pointer;font-size:20px;line-height:1;padding:4px">×</button>
+    </div>
+    <div id="ace-kb-add-body" style="padding:24px"><!-- rendered by JS --></div>
+  </div>
+</div>
+
 <!-- TOOLS & INTEGRATIONS PAGE -->
 <div id="page-tools-settings" style="position:fixed;inset:0;z-index:2100;background:#f0f2f5;display:none;flex-direction:column;overflow:hidden">
   <!-- Top bar -->
@@ -7199,6 +7218,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div onclick="switchAceTab('topics',this)" style="padding:9px 18px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">Topics &amp; Alerts</div>
     <div onclick="switchAceTab('access',this)" style="padding:9px 18px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">Team Access</div>
     <div onclick="switchAceTab('usage',this)" style="padding:9px 18px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer">AI Usage</div>
+    <div onclick="switchAceTab('knowledge',this)" style="padding:9px 18px;font-size:13px;font-weight:500;color:var(--g400);cursor:pointer;display:flex;align-items:center;gap:6px">Knowledge Base <span style="font-size:9px;background:rgba(29,158,117,0.12);color:var(--teal);border-radius:4px;padding:1px 6px;font-weight:700" id="ace-kb-tab-count">0</span></div>
   </div>
 
   <!-- ─── Tab: Coaching Style ─────────────────────────────────────── -->
@@ -7496,6 +7516,52 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         </tbody>
       </table>
     </div>
+  </div>
+
+  <!-- ─── Tab: Knowledge Base ───────────────────────────────────── -->
+  <div id="ace-tab-knowledge" style="display:none">
+
+    <div style="background:linear-gradient(135deg,rgba(26,32,53,0.05) 0%,rgba(29,158,117,0.06) 100%);border:1px solid var(--g200);border-radius:12px;padding:16px 18px;margin-bottom:18px;display:flex;align-items:flex-start;gap:12px">
+      <div style="width:34px;height:34px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+      </div>
+      <div style="flex:1">
+        <div style="font-size:13px;font-weight:700;color:var(--dark)">Give Ace your company's context</div>
+        <div style="font-size:11.5px;color:var(--g500);line-height:1.6;margin-top:3px">Import sales playbooks, methodology, product/business info, client details, and targets. Ace uses this when coaching reps on specific accounts and when drafting emails or other outreach — so its advice sounds like your company, not a generic assistant.</div>
+      </div>
+    </div>
+
+    <!-- Master toggle -->
+    <div style="border:1px solid var(--g200);border-radius:12px;padding:14px 18px;margin-bottom:18px;display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <div style="font-size:13px;font-weight:700;color:var(--dark)">Use Knowledge Base in Ace responses</div>
+        <div style="font-size:11px;color:var(--g400);margin-top:2px">When on, Ace references these documents in coaching, insights, and outreach drafts</div>
+      </div>
+      <label class="toggle-switch"><input type="checkbox" checked id="ace-kb-master-toggle"><span class="toggle-slider"></span></label>
+    </div>
+
+    <!-- Category filter chips -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;flex-wrap:wrap" id="ace-kb-filter-chips"></div>
+
+    <!-- Document list -->
+    <div style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:16px">
+      <div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;display:flex;align-items:center;justify-content:space-between">
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Knowledge Sources</div>
+          <div style="font-size:11px;color:var(--g400);margin-top:2px" id="ace-kb-summary-line">0 documents</div>
+        </div>
+        <button onclick="_aceKBOpenAdd()" style="display:flex;align-items:center;gap:6px;background:var(--teal);color:#fff;border:none;border-radius:8px;padding:8px 16px;font-size:12.5px;font-weight:700;cursor:pointer;font-family:var(--font)">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Knowledge
+        </button>
+      </div>
+      <div id="ace-kb-list"></div>
+      <div id="ace-kb-empty" style="display:none;padding:40px 20px;text-align:center">
+        <div style="font-size:13px;font-weight:600;color:var(--g500);margin-bottom:4px">No knowledge sources yet</div>
+        <div style="font-size:11.5px;color:var(--g400)">Add your sales methodology, business info, or client notes so Ace can use them.</div>
+      </div>
+    </div>
+
   </div>
 
 </div><!-- end settings-ace -->
@@ -18338,7 +18404,7 @@ function _selectPersona(el, val) {
   el.style.background = 'rgba(29,158,117,0.04)';
 }
 function switchAceTab(tab, btn) {
-  ['coaching','topics','access','usage'].forEach(function(t) {
+  ['coaching','topics','access','usage','knowledge'].forEach(function(t) {
     var el = document.getElementById('ace-tab-'+t);
     if (el) el.style.display = (t===tab) ? 'block' : 'none';
   });
@@ -18354,6 +18420,207 @@ function switchAceTab(tab, btn) {
     btn.style.borderBottom = '2px solid var(--navy)';
     btn.style.marginBottom = '-2px';
   }
+  if (tab === 'knowledge' && typeof _aceKBRender === 'function') _aceKBRender();
+}
+
+// ── Ace Knowledge Base ──────────────────────────────────────────────────
+var _aceKBCategories = [
+  { key:'methodology', label:'Sales Practices & Methodology', color:'#4f7ef7' },
+  { key:'business',    label:'Business Information',          color:'#8b5cf6' },
+  { key:'client',      label:'Client & Account Information',   color:'#f59e0b' },
+  { key:'targets',     label:'Targets & Quotas',                color:'#1d9e75' },
+  { key:'other',       label:'Other',                           color:'#64748b' }
+];
+function _aceKBCatMeta(key) { return _aceKBCategories.filter(function(c){return c.key===key;})[0] || _aceKBCategories[4]; }
+var _aceKB = [
+  { id:1, name:'MEDDIC Qualification Playbook', category:'methodology', scope:'All accounts', type:'PDF', sizeKB:842, addedBy:'Sagar', addedAt: new Date(Date.now() - 12*86400000), status:'indexed' },
+  { id:2, name:'2026 Product & Pricing Overview', category:'business', scope:'All accounts', type:'DOCX', sizeKB:1290, addedBy:'Sagar', addedAt: new Date(Date.now() - 30*86400000), status:'indexed' },
+  { id:3, name:'Riverside Financial — Account Notes', category:'client', scope:'Riverside Financial', type:'Text', sizeKB:12, addedBy:'Elena Vasquez', addedAt: new Date(Date.now() - 3*86400000), status:'indexed' },
+  { id:4, name:'Q3 Team Targets & Comp Plan Summary', category:'targets', scope:'All accounts', type:'XLSX', sizeKB:64, addedBy:'Sagar', addedAt: new Date(Date.now() - 6*86400000), status:'indexed' },
+  { id:5, name:'Objection Handling — Enterprise Deals', category:'methodology', scope:'All accounts', type:'PDF', sizeKB:310, addedBy:'Sagar', addedAt: new Date(Date.now() - 1*86400000), status:'processing' }
+];
+var _aceKBActiveFilter = 'all';
+function _aceKBFmtDate(d) {
+  var days = Math.floor((Date.now() - d.getTime()) / 86400000);
+  if (days <= 0) return 'today';
+  if (days === 1) return 'yesterday';
+  if (days < 30) return days + ' days ago';
+  return Math.floor(days/30) + ' month' + (Math.floor(days/30)===1?'':'s') + ' ago';
+}
+function _aceKBFmtSize(kb) { return kb >= 1024 ? (kb/1024).toFixed(1) + ' MB' : kb + ' KB'; }
+function _aceKBFileIcon(type) {
+  var icons = {
+    PDF:  '<path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><polyline points="14 2 14 8 20 8"/>',
+    DOCX: '<path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><polyline points="14 2 14 8 20 8"/><line x1="9" y1="13" x2="15" y2="13"/><line x1="9" y1="17" x2="13" y2="17"/>',
+    XLSX: '<rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="9" x2="9" y2="21"/>',
+    Text: '<path d="M4 3h16v18l-4-3-4 3-4-3-4 3V3z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/>'
+  };
+  return icons[type] || icons.Text;
+}
+function _aceKBRenderChips() {
+  var el = document.getElementById('ace-kb-filter-chips');
+  if (!el) return;
+  var counts = {};
+  _aceKB.forEach(function(d){ counts[d.category] = (counts[d.category]||0)+1; });
+  var chip = function(key, label, count) {
+    var active = _aceKBActiveFilter === key;
+    return '<button onclick="_aceKBSetFilter(\'' + key + '\')" style="border:1.5px solid ' + (active?'var(--navy)':'var(--g200)') + ';background:' + (active?'var(--navy)':'#fff') + ';color:' + (active?'#fff':'var(--g500)') + ';border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">' + label + (count!==undefined ? ' (' + count + ')' : '') + '</button>';
+  };
+  var html = chip('all', 'All', _aceKB.length);
+  _aceKBCategories.forEach(function(c) { html += chip(c.key, c.label, counts[c.key]||0); });
+  el.innerHTML = html;
+}
+function _aceKBSetFilter(key) { _aceKBActiveFilter = key; _aceKBRender(); }
+function _aceKBRender() {
+  _aceKBRenderChips();
+  var listEl = document.getElementById('ace-kb-list');
+  var emptyEl = document.getElementById('ace-kb-empty');
+  var summaryEl = document.getElementById('ace-kb-summary-line');
+  var tabCountEl = document.getElementById('ace-kb-tab-count');
+  if (tabCountEl) tabCountEl.textContent = _aceKB.length;
+  var docs = _aceKB.filter(function(d) { return _aceKBActiveFilter==='all' || d.category===_aceKBActiveFilter; });
+  if (summaryEl) {
+    var catCount = {}; _aceKB.forEach(function(d){ catCount[d.category]=1; });
+    summaryEl.textContent = _aceKB.length + ' document' + (_aceKB.length===1?'':'s') + ' across ' + Object.keys(catCount).length + ' categor' + (Object.keys(catCount).length===1?'y':'ies');
+  }
+  if (!listEl) return;
+  if (!docs.length) {
+    listEl.innerHTML = '';
+    if (emptyEl) emptyEl.style.display = 'block';
+    return;
+  }
+  if (emptyEl) emptyEl.style.display = 'none';
+  listEl.innerHTML = docs.map(function(d) {
+    var cat = _aceKBCatMeta(d.category);
+    var statusBadge = d.status === 'processing'
+      ? '<span style="font-size:10px;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:4px;padding:2px 7px;font-weight:600;display:inline-flex;align-items:center;gap:4px"><span style="width:5px;height:5px;border-radius:50%;background:var(--amber);animation:rcbar 1s infinite"></span> Indexing…</span>'
+      : '<span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:2px 7px;font-weight:600">✓ Indexed</span>';
+    return '<div style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid var(--g100)">'
+      + '<div style="width:34px;height:34px;border-radius:8px;background:' + cat.color + '1a;display:flex;align-items:center;justify-content:center;flex-shrink:0">'
+      + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="' + cat.color + '" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">' + _aceKBFileIcon(d.type) + '</svg></div>'
+      + '<div style="flex:1;min-width:0">'
+      + '<div style="font-size:13px;font-weight:700;color:var(--dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + d.name + '</div>'
+      + '<div style="font-size:11px;color:var(--g400);margin-top:2px">' + cat.label + ' · ' + d.scope + ' · ' + d.type + ' · ' + _aceKBFmtSize(d.sizeKB) + ' · added by ' + d.addedBy + ' ' + _aceKBFmtDate(d.addedAt) + '</div>'
+      + '</div>'
+      + statusBadge
+      + '<button onclick="_aceKBRemove(' + d.id + ')" title="Remove" style="border:none;background:none;color:var(--g400);cursor:pointer;padding:4px;flex-shrink:0">'
+      + '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>'
+      + '</button>'
+      + '</div>';
+  }).join('');
+}
+function _aceKBRemove(id) {
+  _aceKB = _aceKB.filter(function(d) { return d.id !== id; });
+  _aceKBRender();
+  showToast('Knowledge source removed');
+}
+function _aceKBOpenAdd() {
+  var overlay = document.getElementById('ace-kb-add-overlay');
+  if (overlay) overlay.style.display = 'flex';
+  _aceKBRenderAddForm();
+}
+function _aceKBCloseAdd() {
+  var overlay = document.getElementById('ace-kb-add-overlay');
+  if (overlay) overlay.style.display = 'none';
+}
+function _aceKBRenderAddForm() {
+  var body = document.getElementById('ace-kb-add-body');
+  if (!body) return;
+  var catOptions = _aceKBCategories.map(function(c) { return '<option value="' + c.key + '">' + c.label + '</option>'; }).join('');
+  body.innerHTML =
+    '<div style="display:flex;flex-direction:column;gap:14px">'
+    + '<div>'
+    + '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Source</div>'
+    + '<div style="display:flex;gap:8px">'
+    + '<button onclick="_aceKBUpload()" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 10px;border:1.5px dashed var(--g200);border-radius:10px;background:var(--g50);cursor:pointer;font-family:var(--font)" onmouseover="this.style.borderColor=\'var(--teal)\'" onmouseout="this.style.borderColor=\'var(--g200)\'">'
+    + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>'
+    + '<span style="font-size:12px;font-weight:600;color:var(--dark)">Upload File</span>'
+    + '<span style="font-size:10px;color:var(--g400)">PDF, DOCX, XLSX, TXT</span>'
+    + '</button>'
+    + '<button onclick="_aceKBShowPaste()" id="ace-kb-paste-btn" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:18px 10px;border:1.5px dashed var(--g200);border-radius:10px;background:var(--g50);cursor:pointer;font-family:var(--font)" onmouseover="this.style.borderColor=\'var(--teal)\'" onmouseout="this.style.borderColor=\'var(--g200)\'">'
+    + '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 3h16v18l-4-3-4 3-4-3-4 3V3z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/></svg>'
+    + '<span style="font-size:12px;font-weight:600;color:var(--dark)">Paste Text</span>'
+    + '<span style="font-size:10px;color:var(--g400)">Notes, playbook text, etc.</span>'
+    + '</button>'
+    + '</div>'
+    + '<div id="ace-kb-paste-area" style="display:none;margin-top:10px">'
+    + '<textarea id="ace-kb-paste-text" placeholder="Paste your content here…" style="width:100%;min-height:100px;border:1.5px solid var(--g200);border-radius:9px;padding:10px 12px;font-size:12.5px;font-family:var(--font);resize:vertical;box-sizing:border-box"></textarea>'
+    + '</div>'
+    + '<div id="ace-kb-upload-chip" style="display:none;margin-top:10px;background:var(--g50);border:1px solid var(--g200);border-radius:9px;padding:10px 12px;font-size:12.5px;color:var(--dark);display:flex;align-items:center;gap:8px"></div>'
+    + '</div>'
+    + '<div>'
+    + '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Title</div>'
+    + '<input type="text" id="ace-kb-title" placeholder="e.g. Enterprise Objection Handling Guide" style="width:100%;border:1.5px solid var(--g200);border-radius:9px;padding:9px 12px;font-size:13px;font-family:var(--font);box-sizing:border-box">'
+    + '</div>'
+    + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">'
+    + '<div>'
+    + '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Category</div>'
+    + '<select id="ace-kb-category" style="width:100%;border:1.5px solid var(--g200);border-radius:9px;padding:9px 12px;font-size:13px;font-family:var(--font)">' + catOptions + '</select>'
+    + '</div>'
+    + '<div>'
+    + '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:6px">Applies to</div>'
+    + '<input type="text" id="ace-kb-scope" placeholder="All accounts, or a client name" value="All accounts" style="width:100%;border:1.5px solid var(--g200);border-radius:9px;padding:9px 12px;font-size:13px;font-family:var(--font);box-sizing:border-box">'
+    + '</div>'
+    + '</div>'
+    + '<div style="display:flex;justify-content:flex-end;gap:8px;margin-top:4px">'
+    + '<button onclick="_aceKBCloseAdd()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:9px;padding:9px 16px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel</button>'
+    + '<button onclick="_aceKBSubmitAdd()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 20px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Add to Knowledge Base</button>'
+    + '</div>'
+    + '</div>';
+  _aceKBUploadedFile = null;
+}
+var _aceKBUploadedFile = null;
+function _aceKBUpload() {
+  // Simulated file picker for the mockup — picks a realistic filename/size
+  var samples = [
+    { name: 'Sales Playbook.pdf', type: 'PDF', sizeKB: 620 },
+    { name: 'Company Overview.docx', type: 'DOCX', sizeKB: 940 },
+    { name: 'Account Targets.xlsx', type: 'XLSX', sizeKB: 48 },
+    { name: 'Client Brief.pdf', type: 'PDF', sizeKB: 210 }
+  ];
+  var f = samples[Math.floor(Math.random() * samples.length)];
+  _aceKBUploadedFile = f;
+  var chip = document.getElementById('ace-kb-upload-chip');
+  if (chip) {
+    chip.style.display = 'flex';
+    chip.innerHTML = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg><span>' + f.name + ' · ' + _aceKBFmtSize(f.sizeKB) + ' selected</span>';
+  }
+  var paste = document.getElementById('ace-kb-paste-area');
+  if (paste) paste.style.display = 'none';
+  var titleEl = document.getElementById('ace-kb-title');
+  if (titleEl && !titleEl.value) titleEl.value = f.name.replace(/\.[a-z0-9]+$/i, '');
+}
+function _aceKBShowPaste() {
+  var paste = document.getElementById('ace-kb-paste-area');
+  if (paste) paste.style.display = 'block';
+  var chip = document.getElementById('ace-kb-upload-chip');
+  if (chip) chip.style.display = 'none';
+  _aceKBUploadedFile = null;
+}
+function _aceKBSubmitAdd() {
+  var titleEl = document.getElementById('ace-kb-title');
+  var title = titleEl ? titleEl.value.trim() : '';
+  var pasteEl = document.getElementById('ace-kb-paste-text');
+  var pasteText = pasteEl ? pasteEl.value.trim() : '';
+  if (!title) { showToast('Please give this a title'); return; }
+  if (!_aceKBUploadedFile && !pasteText) { showToast('Upload a file or paste some text first'); return; }
+  var category = document.getElementById('ace-kb-category').value;
+  var scope = (document.getElementById('ace-kb-scope').value || 'All accounts').trim();
+  var type = _aceKBUploadedFile ? _aceKBUploadedFile.type : 'Text';
+  var sizeKB = _aceKBUploadedFile ? _aceKBUploadedFile.sizeKB : Math.max(1, Math.round(pasteText.length / 1024 * 10) / 10 * 10 || Math.ceil(pasteText.length/200));
+  var newDoc = {
+    id: (_aceKB.length ? Math.max.apply(null, _aceKB.map(function(d){return d.id;})) : 0) + 1,
+    name: title, category: category, scope: scope, type: type, sizeKB: sizeKB,
+    addedBy: 'Sagar', addedAt: new Date(), status: 'processing'
+  };
+  _aceKB.unshift(newDoc);
+  _aceKBCloseAdd();
+  _aceKBRender();
+  showToast('Ace is indexing "' + title + '"…');
+  setTimeout(function() {
+    var d = _aceKB.filter(function(x){return x.id===newDoc.id;})[0];
+    if (d) { d.status = 'indexed'; _aceKBRender(); showToast('✓ "' + title + '" is ready — Ace can now use it'); }
+  }, 2200);
 }
 
 // ── PERSONAL GOALS + MORNING BRIEF ────────────────────────────────────────────
