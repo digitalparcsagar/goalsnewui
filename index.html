@@ -5327,6 +5327,16 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       </div>
     </div>
     <div style="overflow-y:auto;flex:1;padding:8px 0" id="ace-hist-container"><!-- rendered by JS --></div>
+
+    <!-- Bottom-left utility bar: Ace Configuration + Knowledge Base shortcut (icon-only) -->
+    <div style="padding:10px 12px;border-top:1px solid rgba(255,255,255,0.08);display:flex;gap:8px;flex:0 0 auto;overflow:visible">
+      <button onclick="_aceGotoConfig('coaching')" title="Ace Configuration" aria-label="Ace Configuration" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.85);border:none;border-radius:7px;cursor:pointer;flex-shrink:0" onmouseover="this.style.background='rgba(255,255,255,0.14)'" onmouseout="this.style.background='rgba(255,255,255,0.08)'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+      </button>
+      <button onclick="_aceGotoConfig('knowledge', true)" title="Add to Ace Knowledge Base" aria-label="Add to Ace Knowledge Base" style="width:32px;height:32px;display:flex;align-items:center;justify-content:center;background:rgba(29,158,117,0.2);color:#fff;border:1px solid rgba(29,158,117,0.45);border-radius:7px;cursor:pointer;flex-shrink:0" onmouseover="this.style.background='rgba(29,158,117,0.32)'" onmouseout="this.style.background='rgba(29,158,117,0.2)'">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </button>
+    </div>
   </div>
 
   <!-- Main chat area -->
@@ -8443,7 +8453,9 @@ document.addEventListener('keydown', function(e) {
   if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.tagName === 'SELECT') return;
   const map = { p:'person-modal', o:'org-modal', a:'activity-modal', d:'deal-modal', l:'lead-modal', n:'note-modal', r:'product-modal', e:'project-modal' };
   const key = e.key.toLowerCase();
-  if (map[key]) { openModal(map[key]); showToast('Adding new ' + key === 'p' ? 'person' : key); e.preventDefault(); }
+  // Only fire single-letter quick-add shortcuts when no modifier keys are held,
+  // so browser/OS shortcuts like Cmd+Shift+R (refresh) pass through untouched.
+  if (map[key] && !e.metaKey && !e.ctrlKey && !e.altKey && !e.shiftKey) { openModal(map[key]); showToast('Adding new ' + key === 'p' ? 'person' : key); e.preventDefault(); }
   if (e.key === 'Escape') {
     document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
     closeShortcutMenu();
@@ -18447,6 +18459,20 @@ function switchAceTab(tab, btn) {
     btn.style.marginBottom = '-2px';
   }
   if (tab === 'knowledge' && typeof _aceKBRender === 'function') _aceKBRender();
+}
+
+// ── Ask Ace overlay → Ace Configuration shortcut ────────────────────────
+function _aceGotoConfig(tab, openAdd) {
+  if (typeof closeAskAce === 'function') closeAskAce();
+  if (typeof openToolsSettings === 'function') openToolsSettings();
+  if (typeof _tsLoadSection === 'function') _tsLoadSection('ace');
+  setTimeout(function() {
+    var order = ['coaching','topics','access','usage','knowledge'];
+    var idx = order.indexOf(tab);
+    var btns = document.querySelectorAll('#ace-config-tabs > div');
+    if (typeof switchAceTab === 'function') switchAceTab(tab, btns[idx] || null);
+    if (openAdd && typeof _aceKBOpenAdd === 'function') _aceKBOpenAdd();
+  }, 60);
 }
 
 // ── Ace Knowledge Base ──────────────────────────────────────────────────
