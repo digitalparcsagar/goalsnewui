@@ -8497,13 +8497,15 @@ document.addEventListener('keydown', function(e) {
 
 // ── ACCOUNT DRAWER ───────────────────────────────────────────────────────────
 const accountData = {
-  'AR Solutions': { ico:'AR', contact:'Jake Miller · jake@arsolutions.com', stage:'Proposal', stageClass:'stage-prop', value:'$45,000', owner:'Brock Wilson', days:'12' },
-  'Timber Mill Inc': { ico:'TM', contact:'Sarah Chen · sarah@timbermill.com', stage:'Opportunity', stageClass:'stage-opp', value:'$28,000', owner:'Russ Holt', days:'5' },
-  'Bridge Partners': { ico:'BP', contact:'Tom Richards · tom@bridgepartners.com', stage:'Lead', stageClass:'stage-lead', value:'—', owner:'Jules Richards', days:'2' },
-  'Apex Analytics': { ico:'AA', contact:'Lisa Park · lisa@apexanalytics.com', stage:'Customer', stageClass:'stage-cust', value:'$72,000', owner:'Aya Pedrad', days:'90' },
-  'Redwood Energy': { ico:'RE', contact:'Mark Torres · mark@redwoodenergy.com', stage:'Opportunity', stageClass:'stage-opp', value:'$55,000', owner:'Doug Silverness', days:'8' },
-  'Franklin Assoc': { ico:'FA', contact:'Gina Rhodes · gina@franklinassoc.com', stage:'Proposal', stageClass:'stage-prop', value:'$72,000', owner:'Jules Richards', days:'3' },
-  'Meridian Partners': { ico:'MP', contact:'Chris Reed · chris@meridian.com', stage:'Customer', stageClass:'stage-cust', value:'$94,000', owner:'Brock Wilson', days:'45' },
+  'AR Solutions': { ico:'AR', contact:'Jake Miller · jake@arsolutions.com', contactName:'Jake Miller', contactEmail:'jake@arsolutions.com', phone:'(555) 201-4432', industry:'Manufacturing', stage:'Proposal', stageClass:'stage-prop', value:'$45,000', owner:'Brock Wilson', days:'12' },
+  'A.R. Solutions Inc.': { ico:'AR', contact:'Jake Miller · jake@arsolutions.com', contactName:'Jake Miller', contactEmail:'jake@arsolutions.com', phone:'(555) 201-4432', industry:'Manufacturing', stage:'Lead', stageClass:'stage-lead', value:'$0', owner:'Brock Wilson', days:'40' },
+  'Timber Mill Inc': { ico:'TM', contact:'Sarah Chen · sarah@timbermill.com', contactName:'Sarah Chen', contactEmail:'sarah@timbermill.com', phone:'(555) 340-9981', industry:'Construction', stage:'Opportunity', stageClass:'stage-opp', value:'$28,000', owner:'Russ Holt', days:'5' },
+  'Timber Mill': { ico:'TM', contact:'Sarah Chen · sarah@timbermill.com', contactName:'Sarah Chen', contactEmail:'sarah@timbermill.com', phone:'(555) 340-9981', industry:'Construction', stage:'Customer', stageClass:'stage-cust', value:'$92,000', owner:'Jules Richards', days:'620' },
+  'Bridge Partners': { ico:'BP', contact:'Tom Richards · tom@bridgepartners.com', contactName:'Tom Richards', contactEmail:'tom@bridgepartners.com', phone:'(555) 774-6620', industry:'Consulting', stage:'Lead', stageClass:'stage-lead', value:'—', owner:'Jules Richards', days:'2' },
+  'Apex Analytics': { ico:'AA', contact:'Lisa Park · lisa@apexanalytics.com', contactName:'Lisa Park', contactEmail:'lisa@apexanalytics.com', phone:'(555) 990-1122', industry:'Technology', stage:'Customer', stageClass:'stage-cust', value:'$72,000', owner:'Aya Pedrad', days:'90' },
+  'Redwood Energy': { ico:'RE', contact:'Mark Torres · mark@redwoodenergy.com', contactName:'Mark Torres', contactEmail:'mark@redwoodenergy.com', phone:'(555) 118-2247', industry:'Energy', stage:'Opportunity', stageClass:'stage-opp', value:'$55,000', owner:'Doug Silverness', days:'8' },
+  'Franklin Assoc': { ico:'FA', contact:'Gina Rhodes · gina@franklinassoc.com', contactName:'Gina Rhodes', contactEmail:'gina@franklinassoc.com', phone:'(555) 552-9013', industry:'Legal', stage:'Proposal', stageClass:'stage-prop', value:'$72,000', owner:'Jules Richards', days:'3' },
+  'Meridian Partners': { ico:'MP', contact:'Chris Reed · chris@meridian.com', contactName:'Chris Reed', contactEmail:'chris@meridian.com', phone:'(555) 665-3390', industry:'Finance', stage:'Customer', stageClass:'stage-cust', value:'$94,000', owner:'Brock Wilson', days:'45' },
 };
 function openDrawer(name) {
   const d = accountData[name] || { ico: name.slice(0,2).toUpperCase(), contact:'—', stage:'Lead', stageClass:'stage-lead', value:'—', owner:'—', days:'—' };
@@ -9620,11 +9622,23 @@ function _csSectionTitle(title, sub) {
 function _csDedupeSection() {
   return _csSectionTitle('Deduplication', 'Find and merge duplicate Accounts before they clutter reports and pipeline. Choose which fields to match on, then review and merge each group manually.') +
     '<div style="border:1.5px solid var(--g200);border-radius:10px;padding:16px 18px;margin-bottom:20px">' +
-      '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:10px">Match Accounts on</div>' +
-      '<div style="display:flex;gap:16px;flex-wrap:wrap;margin-bottom:14px" id="dedupe-field-checks">' +
-        '<label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dark);cursor:pointer"><input type="checkbox" id="dedupe-fld-email" checked style="accent-color:var(--teal)"> Contact Email</label>' +
-        '<label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dark);cursor:pointer"><input type="checkbox" id="dedupe-fld-phone" checked style="accent-color:var(--teal)"> Phone</label>' +
-        '<label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dark);cursor:pointer"><input type="checkbox" id="dedupe-fld-name" style="accent-color:var(--teal)"> Organization Name</label>' +
+      '<div style="font-size:12px;font-weight:700;color:var(--dark);margin-bottom:2px">Match Accounts on</div>' +
+      '<div style="font-size:11px;color:var(--g400);margin-bottom:12px">Account fields compare the company record itself. Primary Contact fields compare the person tied to it — the same contact often gets attached to a re-entered duplicate account.</div>' +
+      '<div style="display:flex;gap:28px;flex-wrap:wrap;margin-bottom:14px" id="dedupe-field-checks">' +
+        '<div>' +
+          '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--g400);margin-bottom:6px">Account</div>' +
+          '<div style="display:flex;flex-direction:column;gap:6px">' +
+            '<label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dark);cursor:pointer"><input type="checkbox" id="dedupe-fld-name" checked style="accent-color:var(--teal)"> Organization Name</label>' +
+            '<label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dark);cursor:pointer"><input type="checkbox" id="dedupe-fld-industry" style="accent-color:var(--teal)"> Industry</label>' +
+          '</div>' +
+        '</div>' +
+        '<div>' +
+          '<div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.4px;color:var(--g400);margin-bottom:6px">Primary Contact</div>' +
+          '<div style="display:flex;flex-direction:column;gap:6px">' +
+            '<label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dark);cursor:pointer"><input type="checkbox" id="dedupe-fld-email" checked style="accent-color:var(--teal)"> Contact Email</label>' +
+            '<label style="display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--dark);cursor:pointer"><input type="checkbox" id="dedupe-fld-phone" checked style="accent-color:var(--teal)"> Phone</label>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
       '<div style="display:flex;align-items:center;gap:14px;margin-bottom:16px">' +
         '<span style="font-size:11.5px;color:var(--g400);font-weight:600">Match when:</span>' +
@@ -18522,47 +18536,56 @@ function _aceGotoConfig(tab, openAdd) {
 }
 
 // ── Deduplication (Company Settings > Data > Deduplication) ─────────────
-var _dedupeAccounts = [
-  { id:1, name:'AR Solutions',       email:'jake@arsolutions.com',    phone:'(555) 201-4432', owner:'Brock Wilson',     stage:'Proposal',   value:'$45,000', industry:'Manufacturing', created:'Mar 11, 2025' },
-  { id:2, name:'A.R. Solutions Inc.',email:'jake@arsolutions.com',    phone:'(555) 201-4432', owner:'Brock Wilson',     stage:'Lead',       value:'$0',      industry:'Manufacturing', created:'Jun 2, 2025' },
-  { id:3, name:'Timber Mill Inc',    email:'sarah@timbermill.com',    phone:'(555) 340-9981', owner:'Russ Holt',        stage:'Opportunity',value:'$28,000', industry:'Construction',  created:'Nov 20, 2024' },
-  { id:4, name:'Timber Mill',        email:'sarah@timbermill.com',    phone:'(555) 340-9981', owner:'Jules Richards',   stage:'Customer',   value:'$92,000', industry:'Construction',  created:'Aug 14, 2023' },
-  { id:5, name:'Redwood Energy',     email:'mark@redwoodenergy.com',  phone:'(555) 118-2247', owner:'Doug Silverness',  stage:'Opportunity',value:'$55,000', industry:'Energy',        created:'Jan 9, 2025' },
-  { id:6, name:'Apex Analytics',     email:'lisa@apexanalytics.com',  phone:'(555) 990-1122', owner:'Aya Pedrad',       stage:'Customer',   value:'$72,000', industry:'Technology',    created:'May 30, 2022' },
-  { id:7, name:'Bridge Partners',    email:'tom@bridgepartners.com',  phone:'(555) 774-6620', owner:'Jules Richards',   stage:'Lead',       value:'—',       industry:'Consulting',    created:'Feb 3, 2026' },
-  { id:8, name:'Franklin Assoc',     email:'gina@franklinassoc.com',  phone:'(555) 552-9013', owner:'Jules Richards',   stage:'Proposal',   value:'$72,000', industry:'Legal',         created:'Apr 18, 2025' }
-];
+// Reads/writes the SAME accountData object the Account drawer uses (not a separate demo dataset),
+// so a merge here actually changes what you see elsewhere in the CRM.
 var _dedupeIgnoredGroups = {};
 var _dedupeMergeCandidates = [];
-var _dedupeMasterId = null;
+var _dedupeMasterKey = null;
 var _dedupeFieldWinners = {};
 var _dedupeShowConflictsOnly = false;
+var _dedupeScanGroups = [];
+var _dedupeFieldGroups = [
+  { label:'Account', fields:[ {key:'name', label:'Organization Name'}, {key:'industry', label:'Industry'} ] },
+  { label:'Primary Contact', fields:[ {key:'contactEmail', label:'Contact Email'}, {key:'phone', label:'Phone'} ] }
+];
+var _dedupeFieldLabels = { name:'Organization Name', industry:'Industry', contactName:'Contact Name', contactEmail:'Contact Email', phone:'Phone', owner:'Owner', stage:'Stage', value:'Deal Value' };
+var _dedupeMergeFields = ['name','contactName','contactEmail','phone','industry','owner','stage','value'];
 
-function _dedupeAcctById(id) { return _dedupeAccounts.filter(function(a){ return a.id === id; })[0]; }
+// Snapshot accountData into a flat, comparable array. "key" is the live accountData key (org name).
+function _dedupeSnapshot() {
+  return Object.keys(accountData).map(function(key) {
+    var d = accountData[key];
+    return { key:key, name:key, contactName:d.contactName || '', contactEmail:d.contactEmail || '', phone:d.phone || '', industry:d.industry || '', owner:d.owner || '', stage:d.stage || '', value:d.value || '', stageClass:d.stageClass || '', ico:d.ico || key.slice(0,2).toUpperCase() };
+  });
+}
+function _dedupeRecByKey(key) { return _dedupeSnapshot().filter(function(a){ return a.key === key; })[0]; }
 
 function _dedupeRunScan() {
-  var useEmail = document.getElementById('dedupe-fld-email').checked;
-  var usePhone = document.getElementById('dedupe-fld-phone').checked;
-  var useName  = document.getElementById('dedupe-fld-name').checked;
+  var useName    = document.getElementById('dedupe-fld-name').checked;
+  var useIndustry= document.getElementById('dedupe-fld-industry').checked;
+  var useEmail   = document.getElementById('dedupe-fld-email').checked;
+  var usePhone   = document.getElementById('dedupe-fld-phone').checked;
   var mode = (document.querySelector('input[name="dedupe-mode"]:checked') || {}).value || 'any';
-  if (!useEmail && !usePhone && !useName) { showToast('Select at least one field to match on'); return; }
+  if (!useName && !useIndustry && !useEmail && !usePhone) { showToast('Select at least one field to match on'); return; }
 
+  var records = _dedupeSnapshot();
   var groups = [];
   var seen = {};
-  _dedupeAccounts.forEach(function(a) {
-    if (seen[a.id]) return;
-    var matches = _dedupeAccounts.filter(function(b) {
-      if (b.id === a.id || seen[b.id]) return false;
+  records.forEach(function(a) {
+    if (seen[a.key]) return;
+    var matches = records.filter(function(b) {
+      if (b.key === a.key || seen[b.key]) return false;
       var fieldMatches = [];
-      if (useEmail) fieldMatches.push(a.email === b.email);
-      if (usePhone) fieldMatches.push(a.phone === b.phone);
-      if (useName)  fieldMatches.push(a.name.toLowerCase().replace(/[^a-z0-9]/g,'') === b.name.toLowerCase().replace(/[^a-z0-9]/g,''));
+      if (useName)     fieldMatches.push(a.name.toLowerCase().replace(/[^a-z0-9]/g,'') === b.name.toLowerCase().replace(/[^a-z0-9]/g,''));
+      if (useIndustry) fieldMatches.push(!!a.industry && a.industry === b.industry);
+      if (useEmail)    fieldMatches.push(!!a.contactEmail && a.contactEmail === b.contactEmail);
+      if (usePhone)    fieldMatches.push(!!a.phone && a.phone === b.phone);
       if (!fieldMatches.length) return false;
       return mode === 'all' ? fieldMatches.every(Boolean) : fieldMatches.some(Boolean);
     });
     if (matches.length) {
       var group = [a].concat(matches);
-      group.forEach(function(g) { seen[g.id] = true; });
+      group.forEach(function(g) { seen[g.key] = true; });
       groups.push(group);
     }
   });
@@ -18570,32 +18593,33 @@ function _dedupeRunScan() {
   _dedupeRenderResults();
   showToast(groups.length ? ('Found ' + groups.length + ' possible duplicate group' + (groups.length===1?'':'s')) : 'No duplicates found with these criteria');
 }
-var _dedupeScanGroups = [];
 
 function _dedupeRenderResults() {
   var el = document.getElementById('dedupe-results');
   if (!el) return;
-  var groups = (_dedupeScanGroups || []).filter(function(g) { return !_dedupeIgnoredGroups[g.map(function(x){return x.id;}).join('-')]; });
+  var groups = (_dedupeScanGroups || []).filter(function(g) { return !_dedupeIgnoredGroups[g.map(function(x){return x.key;}).join('|')]; });
   if (!groups.length) {
     el.innerHTML = '<div style="text-align:center;padding:36px 20px;color:var(--g400);font-size:12.5px">Run a scan to see possible duplicate groups here.</div>';
     return;
   }
   el.innerHTML = '<div style="font-size:11px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.5px;margin-bottom:10px">' + groups.length + ' Possible Duplicate Group' + (groups.length===1?'':'s') + '</div>' +
     groups.map(function(g) {
-      var gid = g.map(function(x){return x.id;}).join('-');
+      var gid = g.map(function(x){return x.key;}).join('|');
+      var gidJson = JSON.stringify(gid);
+      var keysJson = JSON.stringify(g.map(function(x){return x.key;}));
       return '<div style="border:1.5px solid var(--g200);border-radius:10px;margin-bottom:12px;overflow:hidden">' +
         '<div style="background:var(--g50);padding:10px 14px;display:flex;align-items:center;justify-content:space-between">' +
           '<div style="font-size:12.5px;font-weight:700;color:var(--dark)">' + g.length + ' matching records</div>' +
           '<div style="display:flex;gap:8px">' +
-            '<button onclick="_dedupeIgnoreGroup(\'' + gid + '\')" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:6px;padding:5px 12px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:var(--font)">Ignore</button>' +
-            '<button onclick="_dedupeOpenMerge([' + g.map(function(x){return x.id;}).join(',') + '])" style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:var(--font)">Review &amp; Merge</button>' +
+            '<button onclick=\'_dedupeIgnoreGroup(' + gidJson + ')\' style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:6px;padding:5px 12px;font-size:11.5px;font-weight:600;cursor:pointer;font-family:var(--font)">Ignore</button>' +
+            '<button onclick=\'_dedupeOpenMerge(' + keysJson + ')\' style="background:var(--teal);color:#fff;border:none;border-radius:6px;padding:5px 14px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:var(--font)">Review &amp; Merge</button>' +
           '</div>' +
         '</div>' +
         g.map(function(a) {
           return '<div style="padding:10px 14px;border-top:1px solid var(--g100);display:flex;align-items:center;gap:14px;font-size:12.5px">' +
             '<div style="font-weight:700;color:var(--dark);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + a.name + '</div>' +
-            '<div style="color:var(--g400);width:180px;flex-shrink:0">' + a.email + '</div>' +
-            '<div style="color:var(--g400);width:120px;flex-shrink:0">' + a.phone + '</div>' +
+            '<div style="color:var(--g400);width:170px;flex-shrink:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (a.contactEmail || '—') + '</div>' +
+            '<div style="color:var(--g400);width:120px;flex-shrink:0">' + (a.phone || '—') + '</div>' +
             '<div style="color:var(--g500);width:90px;flex-shrink:0">' + a.stage + '</div>' +
             '<div style="font-family:var(--mono);color:var(--dark);width:80px;flex-shrink:0;text-align:right">' + a.value + '</div>' +
           '</div>';
@@ -18610,13 +18634,13 @@ function _dedupeIgnoreGroup(gid) {
 }
 
 // ── Merge overlay (shared by bulk scan + per-record "Find & Merge Duplicates") ──
-function _dedupeOpenMerge(ids) {
-  _dedupeMergeCandidates = ids.map(_dedupeAcctById).filter(Boolean);
+function _dedupeOpenMerge(keys) {
+  var records = _dedupeSnapshot();
+  _dedupeMergeCandidates = keys.map(function(k) { return records.filter(function(r){ return r.key === k; })[0]; }).filter(Boolean);
   if (_dedupeMergeCandidates.length < 2) { showToast('Need at least two records to merge'); return; }
-  _dedupeMasterId = _dedupeMergeCandidates[0].id;
+  _dedupeMasterKey = _dedupeMergeCandidates[0].key;
   _dedupeFieldWinners = {};
-  var fields = ['name','email','phone','owner','stage','value','industry'];
-  fields.forEach(function(f) { _dedupeFieldWinners[f] = _dedupeMasterId; });
+  _dedupeMergeFields.forEach(function(f) { _dedupeFieldWinners[f] = _dedupeMasterKey; });
   _dedupeShowConflictsOnly = false;
   var overlay = document.getElementById('dedupe-merge-overlay');
   if (overlay) overlay.style.display = 'flex';
@@ -18626,35 +18650,34 @@ function _dedupeCloseMerge() {
   var overlay = document.getElementById('dedupe-merge-overlay');
   if (overlay) overlay.style.display = 'none';
 }
-function _dedupeSetMaster(id) {
-  _dedupeMasterId = id;
-  var fields = ['name','email','phone','owner','stage','value','industry'];
-  fields.forEach(function(f) { _dedupeFieldWinners[f] = id; });
+function _dedupeSetMaster(key) {
+  _dedupeMasterKey = key;
+  _dedupeMergeFields.forEach(function(f) { _dedupeFieldWinners[f] = key; });
   _dedupeRenderMergeBody();
 }
-function _dedupeSetFieldWinner(field, id) {
-  _dedupeFieldWinners[field] = id;
+function _dedupeSetFieldWinner(field, key) {
+  _dedupeFieldWinners[field] = key;
   _dedupeRenderMergeBody();
 }
 function _dedupeToggleConflictsOnly() {
   _dedupeShowConflictsOnly = !_dedupeShowConflictsOnly;
   _dedupeRenderMergeBody();
 }
-var _dedupeFieldLabels = { name:'Organization Name', email:'Contact Email', phone:'Phone', owner:'Owner', stage:'Stage', value:'Deal Value', industry:'Industry' };
 function _dedupeRenderMergeBody() {
   var body = document.getElementById('dedupe-merge-body');
   if (!body) return;
   var records = _dedupeMergeCandidates;
-  var fields = ['name','email','phone','owner','stage','value','industry'];
-  var colWidth = Math.max(160, Math.floor(420 / records.length));
+  var fields = _dedupeMergeFields;
+  var colWidth = Math.max(150, Math.floor(400 / records.length));
 
   var header = '<div style="display:flex;gap:10px;padding:0 0 10px;border-bottom:2px solid var(--g200);margin-bottom:4px">' +
-    '<div style="width:140px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px;align-self:flex-end">Field</div>' +
+    '<div style="width:130px;flex-shrink:0;font-size:10px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px;align-self:flex-end">Field</div>' +
     records.map(function(r) {
-      var isMaster = r.id === _dedupeMasterId;
+      var isMaster = r.key === _dedupeMasterKey;
+      var keyJson = JSON.stringify(r.key);
       return '<div style="width:' + colWidth + 'px;flex-shrink:0">' +
         '<label style="display:flex;align-items:center;gap:6px;cursor:pointer;padding:6px 8px;border-radius:7px;background:' + (isMaster ? 'rgba(29,158,117,0.1)' : 'var(--g50)') + ';border:1.5px solid ' + (isMaster ? 'var(--teal)' : 'var(--g200)') + '">' +
-          '<input type="radio" name="dedupe-master" ' + (isMaster ? 'checked' : '') + ' onchange="_dedupeSetMaster(' + r.id + ')" style="accent-color:var(--teal)">' +
+          '<input type="radio" name="dedupe-master" ' + (isMaster ? 'checked' : '') + ' onchange=\'_dedupeSetMaster(' + keyJson + ')\' style="accent-color:var(--teal)">' +
           '<span style="font-size:11px;font-weight:700;color:' + (isMaster ? 'var(--teal)' : 'var(--g500)') + '">' + (isMaster ? 'Master Record' : 'Duplicate') + '</span>' +
         '</label>' +
       '</div>';
@@ -18666,12 +18689,13 @@ function _dedupeRenderMergeBody() {
     var allSame = values.every(function(v) { return v === values[0]; });
     if (_dedupeShowConflictsOnly && allSame) return '';
     return '<div style="display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid var(--g100)">' +
-      '<div style="width:140px;flex-shrink:0;font-size:12px;font-weight:600;color:var(--dark)">' + _dedupeFieldLabels[f] + (allSame ? '' : ' <span style="color:var(--amber);font-size:10px;font-weight:700">● conflict</span>') + '</div>' +
+      '<div style="width:130px;flex-shrink:0;font-size:12px;font-weight:600;color:var(--dark)">' + _dedupeFieldLabels[f] + (allSame ? '' : ' <span style="color:var(--amber);font-size:10px;font-weight:700">● conflict</span>') + '</div>' +
       records.map(function(r) {
-        var picked = _dedupeFieldWinners[f] === r.id;
+        var picked = _dedupeFieldWinners[f] === r.key;
+        var keyJson = JSON.stringify(r.key);
         return '<div style="width:' + colWidth + 'px;flex-shrink:0">' +
           '<label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:12.5px;color:var(--dark);padding:5px 8px;border-radius:6px;background:' + (picked ? 'rgba(29,158,117,0.08)' : 'transparent') + '">' +
-            '<input type="radio" name="dedupe-fld-' + f + '" ' + (picked ? 'checked' : '') + ' onchange="_dedupeSetFieldWinner(\'' + f + '\',' + r.id + ')" style="accent-color:var(--teal);flex-shrink:0">' +
+            '<input type="radio" name="dedupe-fld-' + f + '" ' + (picked ? 'checked' : '') + ' onchange=\'_dedupeSetFieldWinner("' + f + '",' + keyJson + ')\' style="accent-color:var(--teal);flex-shrink:0">' +
             '<span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + (r[f] || '—') + '</span>' +
           '</label>' +
         '</div>';
@@ -18685,37 +18709,59 @@ function _dedupeRenderMergeBody() {
       '<label style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--dark);cursor:pointer;flex-shrink:0"><input type="checkbox" ' + (_dedupeShowConflictsOnly?'checked':'') + ' onchange="_dedupeToggleConflictsOnly()" style="accent-color:var(--teal)"> Show conflicts only</label>' +
     '</div>' +
     header + rows +
-    '<div style="margin-top:16px;padding:11px 14px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:8px;font-size:11.5px;color:#b91c1c;line-height:1.5">The non-master record(s) will be permanently deleted. Notes, activities, and attachments move to the Master Record. This can\'t be undone.</div>';
+    '<div style="margin-top:16px;padding:11px 14px;background:rgba(239,68,68,0.06);border:1px solid rgba(239,68,68,0.2);border-radius:8px;font-size:11.5px;color:#b91c1c;line-height:1.5">The non-master record(s) will be permanently deleted from Accounts. Notes, activities, and attachments move to the Master Record. This can\'t be undone.</div>';
 }
 function _dedupeConfirmMerge() {
-  var masterId = _dedupeMasterId;
-  var master = _dedupeAcctById(masterId);
-  if (!master) return;
-  var fields = ['name','email','phone','owner','stage','value','industry'];
-  fields.forEach(function(f) {
-    var winnerId = _dedupeFieldWinners[f];
-    var winner = _dedupeAcctById(winnerId);
-    if (winner) master[f] = winner[f];
+  var masterKey = _dedupeMasterKey;
+  var masterOriginalKey = masterKey;
+  if (!accountData[masterOriginalKey]) return;
+
+  // Build the merged record from field winners
+  var merged = {};
+  _dedupeMergeFields.forEach(function(f) {
+    var winnerKey = _dedupeFieldWinners[f];
+    var winnerRec = _dedupeMergeCandidates.filter(function(r){ return r.key === winnerKey; })[0];
+    if (winnerRec) merged[f] = winnerRec[f];
   });
-  var removedIds = _dedupeMergeCandidates.map(function(r){ return r.id; }).filter(function(id){ return id !== masterId; });
-  _dedupeAccounts = _dedupeAccounts.filter(function(a) { return removedIds.indexOf(a.id) === -1; });
-  _dedupeScanGroups = (_dedupeScanGroups || []).filter(function(g) { return g.every(function(a){ return removedIds.indexOf(a.id) === -1; }); });
+  var masterData = accountData[masterOriginalKey];
+  masterData.contactName = merged.contactName;
+  masterData.contactEmail = merged.contactEmail;
+  masterData.contact = (merged.contactName || '') + (merged.contactName && merged.contactEmail ? ' · ' : '') + (merged.contactEmail || '');
+  masterData.phone = merged.phone;
+  masterData.industry = merged.industry;
+  masterData.owner = merged.owner;
+  masterData.stage = merged.stage;
+  masterData.value = merged.value;
+
+  // Remove the non-master duplicate keys entirely
+  var removedKeys = _dedupeMergeCandidates.map(function(r){ return r.key; }).filter(function(k){ return k !== masterOriginalKey; });
+  removedKeys.forEach(function(k) { delete accountData[k]; });
+
+  // If the winning name differs from the current key, rename the key in accountData
+  var finalName = merged.name;
+  if (finalName && finalName !== masterOriginalKey) {
+    delete accountData[masterOriginalKey];
+    accountData[finalName] = masterData;
+  }
+
+  _dedupeScanGroups = (_dedupeScanGroups || []).filter(function(g) { return g.every(function(a){ return removedKeys.indexOf(a.key) === -1; }); });
   _dedupeCloseMerge();
   _dedupeRenderResults();
-  showToast('✓ Merged ' + (removedIds.length + 1) + ' records into "' + master.name + '"');
+  showToast('✓ Merged ' + (removedKeys.length + 1) + ' records into "' + finalName + '"');
 }
 
 // ── Contextual "Find & Merge Duplicates" trigger (Account drawer) ───────
 function _dedupeFindForRecord(name) {
-  var record = _dedupeAccounts.filter(function(a) { return a.name === name; })[0];
+  var record = _dedupeRecByKey(name);
   if (!record) { showToast('No likely duplicates found for ' + name); return; }
-  var matches = _dedupeAccounts.filter(function(a) {
-    return a.id !== record.id && (a.email === record.email || a.phone === record.phone);
+  var records = _dedupeSnapshot();
+  var matches = records.filter(function(a) {
+    return a.key !== record.key && ((!!a.contactEmail && a.contactEmail === record.contactEmail) || (!!a.phone && a.phone === record.phone));
   });
   if (!matches.length) { showToast('No likely duplicates found for ' + name); return; }
   if (typeof closeDrawer === 'function') closeDrawer();
-  var ids = [record.id].concat(matches.map(function(m){ return m.id; }));
-  _dedupeOpenMerge(ids);
+  var keys = [record.key].concat(matches.map(function(m){ return m.key; }));
+  _dedupeOpenMerge(keys);
 }
 
 // ── Ace Knowledge Base ──────────────────────────────────────────────────
