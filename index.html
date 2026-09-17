@@ -24468,15 +24468,19 @@ function _mktPipelineStageOpts(pipelineIdx, sel) {
 }
 
 var MKT_ACTIONS = {
-  send_email:   {label:'Send email',        icon:'mail',  fields:[{k:'tmpl',t:'template',l:'Template'},{k:'delay',t:'num',l:'Delay (days)',d:0}]},
-  create_task:  {label:'Create task',       icon:'check', fields:[{k:'title',t:'text',l:'Task title',d:'Follow up'},{k:'due',t:'num',l:'Due in (days)',d:2},{k:'rep',t:'rep',l:'Assign to'}]},
-  assign_owner: {label:'Assign to rep',     icon:'users', fields:[{k:'rep',t:'rep',l:'Assign to'}]},
-  notify_mgr:   {label:'Notify manager',    icon:'bell',  fields:[]},
-  add_tag:      {label:'Add tag',           icon:'tag',   fields:[{k:'tag',t:'tag',l:'Tag'}]},
-  move_stage:   {label:'Move to stage',     icon:'arrow', fields:[{k:'stage',t:'stage',l:'Stage'}]},
-  flag_risk:    {label:'Flag as at risk',   icon:'warn',  fields:[]},
-  log_note:     {label:'Log a note',        icon:'note',  fields:[{k:'text',t:'text',l:'Note text',d:'Auto-logged by workflow'}]},
-  wait:         {label:'Wait',              icon:'clock', fields:[{k:'days',t:'num',l:'Days',d:3}]}
+  send_email:      {label:'Send email',        icon:'mail',     fields:[{k:'tmpl',t:'template',l:'Template'}]},
+  create_task:     {label:'Create task',       icon:'check',    fields:[{k:'title',t:'text',l:'Task title',d:'Follow up'},{k:'rep',t:'rep',l:'Assign to'}]},
+  create_meeting:  {label:'Create meeting',    icon:'calendar', fields:[{k:'title',t:'text',l:'Meeting title',d:'Intro call'},{k:'rep',t:'rep',l:'With'}]},
+  create_call:     {label:'Create call',       icon:'phone',    fields:[{k:'title',t:'text',l:'Call subject',d:'Follow-up call'},{k:'rep',t:'rep',l:'Assign to'}]},
+  create_opportunity: {label:'Create opportunity', icon:'dollar', fields:[{k:'name',t:'text',l:'Opportunity name',d:'New Opportunity'},{k:'stage',t:'stage',l:'Starting stage'},{k:'rep',t:'rep',l:'Owner'}]},
+  update_field:    {label:'Update field',      icon:'pen',      fields:[{k:'field',t:'text',l:'Field name',d:'e.g. Industry'},{k:'value',t:'text',l:'New value',d:''}]},
+  assign_owner:    {label:'Assign to rep',     icon:'users',    fields:[{k:'rep',t:'rep',l:'Assign to'}]},
+  notify_mgr:      {label:'Notify manager',    icon:'bell',     fields:[]},
+  add_tag:         {label:'Add tag',           icon:'tag',      fields:[{k:'tag',t:'tag',l:'Tag'}]},
+  move_stage:      {label:'Move to stage',     icon:'arrow',    fields:[{k:'stage',t:'stage',l:'Stage'}]},
+  flag_risk:       {label:'Flag as at risk',   icon:'warn',     fields:[]},
+  log_note:        {label:'Create note',       icon:'note',     fields:[{k:'text',t:'text',l:'Note text',d:'Auto-logged by workflow'}]},
+  wait:            {label:'Wait',              icon:'clock',    fields:[{k:'days',t:'num',l:'Days',d:3}]}
 };
 
 /* ── Condition builder — lets a user filter a trigger by any CRM field,
@@ -24560,7 +24564,9 @@ var MKT_ICONS = {
   users: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
   pen:   '<path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4Z"/>',
   dollar:'<line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
-  minus: '<line x1="5" y1="12" x2="19" y2="12"/>'
+  minus: '<line x1="5" y1="12" x2="19" y2="12"/>',
+  calendar: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  phone: '<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.362 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.338 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>'
 };
 
 /* ── Live automation store ── */
@@ -24591,66 +24597,69 @@ function _mktSeedAutomations() {
        renamed to our own rep/tag/template data. */
     {name:'Assign all new accounts to ' + ((_companySettings.repQuotas[repA]||{}).name || 'rep'), active:true,
      recordType:'account', trigger:{type:'acct_created', cfg:{}}, conditions:[],
-     actions:[{type:'assign_owner', cfg:{rep:repA}}]},
+     actions:[{type:'assign_owner', cfg:{rep:repA}, delay:{amount:0, unit:'minutes'}}]},
+    {name:'New account → intro meeting', active:true,
+     recordType:'account', trigger:{type:'acct_created', cfg:{}}, conditions:[],
+     actions:[{type:'create_meeting', cfg:{title:'Intro call', rep:repA}, delay:{amount:5, unit:'minutes'}}]},
     {name:'Person unassigned_notify manager', active:true,
      recordType:'people', trigger:{type:'person_owner_unassigned', cfg:{}}, conditions:[],
-     actions:[{type:'notify_mgr', cfg:{}}]},
+     actions:[{type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Won_Sales Agreement (product)', active:true,
      recordType:'opportunity', trigger:{type:'opp_won', cfg:{}}, conditions:[],
-     actions:[{type:'send_email', cfg:{tmpl:1, delay:0}}]},
+     actions:[{type:'send_email', cfg:{tmpl:1}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Tag removed_notify manager', active:true,
      recordType:'account', trigger:{type:'acct_tag_removed', cfg:{}}, conditions:[],
-     actions:[{type:'notify_mgr', cfg:{}}]},
+     actions:[{type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Person_Customer tag added_assign to ' + ((_companySettings.repQuotas[repB]||{}).name || 'rep'), active:true,
      recordType:'people', trigger:{type:'person_tag_added', cfg:{tag:1}}, conditions:[],
-     actions:[{type:'assign_owner', cfg:{rep:repB}}]},
+     actions:[{type:'assign_owner', cfg:{rep:repB}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Won_send welcome packet & onboarding docs', active:true,
      recordType:'opportunity', trigger:{type:'opp_won', cfg:{}}, conditions:[],
-     actions:[{type:'send_email', cfg:{tmpl:5, delay:0}},
-              {type:'create_task', cfg:{title:'Kick off onboarding call', due:3, rep:''}}]},
+     actions:[{type:'send_email', cfg:{tmpl:5}, delay:{amount:0, unit:'minutes'}},
+              {type:'create_task', cfg:{title:'Kick off onboarding call', rep:''}, delay:{amount:3, unit:'days'}}]},
 
     /* Ours, layered on top: same idea, extended with if/then conditions
        and the fuller action/trigger set built out this session. */
     {name:'Stalled deal rescue', active:true,
      recordType:'opportunity', trigger:{type:'opp_stage_stalled', cfg:{pipeline:0, stage:early, days:14}},
      conditions:[{connector:'AND', field:'dealValue', operator:'greater_than', value:25000}],
-     actions:[{type:'send_email', cfg:{tmpl:6, delay:0}},
-              {type:'create_task', cfg:{title:'Call and re-qualify', due:1, rep:''}},
-              {type:'notify_mgr', cfg:{}}]},
+     actions:[{type:'send_email', cfg:{tmpl:6}, delay:{amount:0, unit:'minutes'}},
+              {type:'create_task', cfg:{title:'Call and re-qualify', rep:''}, delay:{amount:1, unit:'days'}},
+              {type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Quiet account nudge', active:true,
      recordType:'account', trigger:{type:'acct_no_activity', cfg:{days:_companySettings.overdueActivityDays||7}}, conditions:[],
-     actions:[{type:'send_email', cfg:{tmpl:0, delay:0}},
+     actions:[{type:'send_email', cfg:{tmpl:0}, delay:{amount:0, unit:'minutes'}},
               {type:'wait', cfg:{days:7}},
-              {type:'create_task', cfg:{title:'Personal check-in call', due:1, rep:''}},
-              {type:'flag_risk', cfg:{}}]},
+              {type:'create_task', cfg:{title:'Personal check-in call', rep:''}, delay:{amount:1, unit:'days'}},
+              {type:'flag_risk', cfg:{}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Lost deal recovery', active:false,
      recordType:'opportunity', trigger:{type:'opp_lost', cfg:{}}, conditions:[],
-     actions:[{type:'log_note', cfg:{text:'Logged loss reason for review'}},
+     actions:[{type:'log_note', cfg:{text:'Logged loss reason for review'}, delay:{amount:0, unit:'minutes'}},
               {type:'wait', cfg:{days:60}},
-              {type:'send_email', cfg:{tmpl:4, delay:0}}]},
+              {type:'send_email', cfg:{tmpl:4}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Florida leads → regional specialist', active:true,
      recordType:'opportunity', trigger:{type:'opp_field_match', cfg:{}},
      conditions:[{connector:'AND', field:'state', operator:'contains', value:'Florida'}],
-     actions:[{type:'assign_owner', cfg:{rep:repA}},
-              {type:'add_tag', cfg:{tag:0}},
-              {type:'create_task', cfg:{title:'Welcome call — regional territory', due:1, rep:repA}}]},
+     actions:[{type:'assign_owner', cfg:{rep:repA}, delay:{amount:0, unit:'minutes'}},
+              {type:'add_tag', cfg:{tag:0}, delay:{amount:0, unit:'minutes'}},
+              {type:'create_task', cfg:{title:'Welcome call — regional territory', rep:repA}, delay:{amount:1, unit:'days'}}]},
     {name:'Named account concierge routing', active:true,
      recordType:'opportunity', trigger:{type:'opp_field_match', cfg:{}},
      conditions:[{connector:'AND', field:'companyName', operator:'contains', value:'Enterprise'}],
-     actions:[{type:'assign_owner', cfg:{rep:repB}},
-              {type:'notify_mgr', cfg:{}}]},
+     actions:[{type:'assign_owner', cfg:{rep:repB}, delay:{amount:0, unit:'minutes'}},
+              {type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Deal sitting too long, high value', active:true,
      recordType:'opportunity', trigger:{type:'opp_field_match', cfg:{}},
      conditions:[{connector:'AND', field:'daysInStage', operator:'greater_than', value:5},
                  {connector:'AND', field:'dealValue', operator:'greater_or_equal', value:50000}],
-     actions:[{type:'flag_risk', cfg:{}},
-              {type:'notify_mgr', cfg:{}},
-              {type:'create_task', cfg:{title:'Check in before it stalls further', due:0, rep:''}}]},
+     actions:[{type:'flag_risk', cfg:{}, delay:{amount:0, unit:'minutes'}},
+              {type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}},
+              {type:'create_task', cfg:{title:'Check in before it stalls further', rep:''}, delay:{amount:0, unit:'minutes'}}]},
     {name:'Close date approaching this month', active:true,
      recordType:'opportunity', trigger:{type:'opp_field_match', cfg:{}},
      conditions:[{connector:'AND', field:'closeDate', operator:'within_next_days', value:30}],
-     actions:[{type:'create_task', cfg:{title:'Confirm close-date timeline with buyer', due:0, rep:''}},
-              {type:'send_email', cfg:{tmpl:1, delay:0}}]}
+     actions:[{type:'create_task', cfg:{title:'Confirm close-date timeline with buyer', rep:''}, delay:{amount:0, unit:'minutes'}},
+              {type:'send_email', cfg:{tmpl:1}, delay:{amount:2, unit:'hours'}}]}
   ];
 }
 
@@ -24981,20 +24990,37 @@ function _mktTriggerText(tr) {
     default: return 'Trigger';
   }
 }
-function _mktActionText(a) {
+/* Generic per-action delay — works the same for every action type (Create
+   Meeting, Create Task, Send Email, etc.) rather than being a one-off field
+   on a single action type. Shape: action.delay = {amount, unit}. */
+function _mktDelayText(delay) {
+  if (!delay || !Number(delay.amount)) return '';
+  var n = Number(delay.amount);
+  var unit = delay.unit || 'minutes';
+  var label = unit === 'minutes' ? 'minute' : unit === 'hours' ? 'hour' : 'day';
+  return ' <span style="color:var(--g400)">— after ' + n + ' ' + label + (n === 1 ? '' : 's') + '</span>';
+}
+function _mktActionBaseText(a) {
   var c = a.cfg||{}, t = _companySettings.tagDefinitions||[], q = _companySettings.repQuotas||{};
   switch(a.type) {
-    case 'send_email':  return 'Send email template <em>'+((_mktTemplates[c.tmpl]||{}).n||'email')+'</em>' + (Number(c.delay)>0 ? ' after '+c.delay+' day'+(c.delay==1?'':'s') : '');
-    case 'create_task': return 'Create task: <em>'+(c.title||'Follow up')+'</em> (due ' + (Number(c.due)>0 ? '+'+c.due+'d' : 'today') + (c.rep ? ', '+((q[c.rep]||{}).name||c.rep) : '') + ')';
+    case 'send_email':  return 'Send email template <em>'+((_mktTemplates[c.tmpl]||{}).n||'email')+'</em>';
+    case 'create_task': return 'Create task: <em>'+(c.title||'Follow up')+'</em>' + (c.rep ? ' — '+((q[c.rep]||{}).name||c.rep) : '');
+    case 'create_meeting': return 'Create meeting: <em>'+(c.title||'Meeting')+'</em>' + (c.rep ? ' with '+((q[c.rep]||{}).name||c.rep) : '');
+    case 'create_call': return 'Create call: <em>'+(c.title||'Call')+'</em>' + (c.rep ? ' — '+((q[c.rep]||{}).name||c.rep) : '');
+    case 'create_opportunity': return 'Create opportunity: <em>'+(c.name||'New Opportunity')+'</em>' + (c.stage ? ' in '+_mktStageName(c.stage) : '');
+    case 'update_field':return 'Update field <em>'+(c.field||'field')+'</em> to <em>'+(c.value||'value')+'</em>';
     case 'assign_owner':return 'Assign owner to <em>'+((q[c.rep]||{}).name||'a rep')+'</em>';
     case 'notify_mgr':  return 'Notify the manager in Highlights';
     case 'add_tag':     return 'Add tag <em>'+((t[c.tag]||{}).name||'tag')+'</em>';
     case 'move_stage':  return 'Move deal to <em>'+_mktStageName(c.stage)+'</em>';
     case 'flag_risk':   return 'Flag account as at risk';
-    case 'log_note':    return 'Log note: <em>'+(c.text||'')+'</em>';
+    case 'log_note':    return 'Create note: <em>'+(c.text||'')+'</em>';
     case 'wait':        return 'Wait <em>'+(c.days||3)+' days</em>';
     default: return 'Action';
   }
+}
+function _mktActionText(a) {
+  return _mktActionBaseText(a) + (a.type === 'wait' ? '' : _mktDelayText(a.delay));
 }
 
 /* ── Tab switching ── */
@@ -26590,7 +26616,7 @@ function _mktOpenBuilder(idx) {
   if (idx === null || idx === undefined) {
     document.getElementById('mkt-b-name').value = '';
     _mktBuilderRecordType = null;
-    _mktBuilderActions = [{type:'send_email', cfg:{}}];
+    _mktBuilderActions = [{type:'send_email', cfg:{}, delay:{amount:0, unit:'minutes'}}];
     _mktBuilderConditions = [];
     _mktBuilderRenderTypeCards();
     _mktBuilderRenderActions();
@@ -26641,6 +26667,10 @@ function _mktBuilderPipelineChange() {
   _mktBuilderRenderTrigger(cfg);
   _mktBuilderPreview();
 }
+var MKT_DELAY_UNITS = [{k:'minutes',l:'Minutes'},{k:'hours',l:'Hours'},{k:'days',l:'Days'}];
+function _mktDelayUnitOpts(sel) {
+  return MKT_DELAY_UNITS.map(function(u){ return '<option value="'+u.k+'"'+(u.k===(sel||'minutes')?' selected':'')+'>'+u.l+'</option>'; }).join('');
+}
 function _mktBuilderRenderActions() {
   var box = document.getElementById('mkt-b-actions');
   box.innerHTML = _mktBuilderActions.map(function(a, i){
@@ -26651,6 +26681,15 @@ function _mktBuilderRenderActions() {
     var cfgHtml = def.fields.map(function(f){
       return _mktFieldHtml(f, a.cfg[f.k], 'mkt-b-a' + i + '-' + f.k, '_mktBuilderPreview()');
     }).join('');
+    var delay = a.delay || {amount:0, unit:'minutes'};
+    var delayHtml = a.type === 'wait' ? '' :
+      '<div class="mkt-field"><label>Delay before this action</label>'
+      +   '<div style="display:flex;gap:6px">'
+      +     '<input type="number" min="0" id="mkt-b-a' + i + '-delayAmt" class="mkt-input" style="flex:1" value="' + (delay.amount || 0) + '" oninput="_mktBuilderPreview()">'
+      +     '<select id="mkt-b-a' + i + '-delayUnit" class="mkt-input" style="flex:1" onchange="_mktBuilderPreview()">' + _mktDelayUnitOpts(delay.unit) + '</select>'
+      +   '</div>'
+      +   '<span style="font-size:11px;color:var(--g400)">0 = runs immediately when the trigger fires. Set any amount + unit for a custom wait.</span>'
+      + '</div>';
     return '<div class="mkt-builder-row">'
       + '<div style="display:flex;align-items:center;gap:8px;width:100%">'
       +   '<span style="font-size:10px;font-weight:700;color:var(--g400);background:var(--white);border:1px solid var(--g200);border-radius:5px;padding:3px 7px;flex-shrink:0">' + (i + 1) + '</span>'
@@ -26658,16 +26697,17 @@ function _mktBuilderRenderActions() {
       +   '<button class="mkt-mini-btn" style="flex-shrink:0" onclick="_mktBuilderRemoveAction(' + i + ')">Remove</button>'
       + '</div>'
       + (cfgHtml ? '<div class="mkt-cfg-grid">' + cfgHtml + '</div>' : '')
+      + (delayHtml ? '<div class="mkt-cfg-grid">' + delayHtml + '</div>' : '')
       + '</div>';
   }).join('');
 }
 function _mktBuilderChangeAction(i, type) {
-  _mktBuilderActions[i] = {type:type, cfg:{}};
+  _mktBuilderActions[i] = {type:type, cfg:{}, delay:{amount:0, unit:'minutes'}};
   _mktBuilderRenderActions();
   _mktBuilderPreview();
 }
 function _mktBuilderAddAction() {
-  _mktBuilderActions.push({type:'create_task', cfg:{}});
+  _mktBuilderActions.push({type:'create_task', cfg:{}, delay:{amount:0, unit:'minutes'}});
   _mktBuilderRenderActions();
   _mktBuilderPreview();
 }
@@ -26683,6 +26723,12 @@ function _mktBuilderSync() {
       var e = document.getElementById('mkt-b-a' + i + '-' + f.k);
       if (e) a.cfg[f.k] = e.value;
     });
+    if (a.type !== 'wait') {
+      var amtEl = document.getElementById('mkt-b-a' + i + '-delayAmt');
+      var unitEl = document.getElementById('mkt-b-a' + i + '-delayUnit');
+      a.delay = { amount: amtEl ? (Number(amtEl.value) || 0) : (a.delay && a.delay.amount) || 0,
+                  unit: unitEl ? unitEl.value : ((a.delay && a.delay.unit) || 'minutes') };
+    }
   });
 }
 function _mktBuilderCollect() {
