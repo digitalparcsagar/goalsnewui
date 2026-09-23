@@ -4906,15 +4906,27 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         Back to reports
       </button>
     </div>
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;flex-wrap:wrap;gap:12px">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px">
       <div>
         <div style="font-size:24px;font-weight:800;color:var(--dark);letter-spacing:-0.4px">Goals.com Impact</div>
-        <div style="font-size:12.5px;color:var(--g400);margin-top:4px">How the platform is moving revenue and replacing manual work, trailing 90 days</div>
+        <div style="font-size:12.5px;color:var(--g400);margin-top:4px" id="rpt-impact-subtitle">How the platform is moving revenue and replacing manual work, trailing 90 days</div>
       </div>
       <button onclick="showToast('Downloading report…')" style="display:flex;align-items:center;gap:7px;background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="8 17 12 21 16 17"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.88 18.09A5 5 0 0 0 18 9h-1.26A8 8 0 1 0 3 16.29"/></svg>
         Download Report
       </button>
+    </div>
+
+    <!-- Range + rep controls -->
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:20px">
+      <div style="display:flex;gap:6px" id="rpt-impact-range-chips">
+        <button class="filter-chip" data-range="weekly" onclick="_rptSetImpactRange('weekly')">Weekly</button>
+        <button class="filter-chip" data-range="monthly" onclick="_rptSetImpactRange('monthly')">Monthly</button>
+        <button class="filter-chip active" data-range="quarterly" onclick="_rptSetImpactRange('quarterly')">Quarterly</button>
+      </div>
+      <select id="rpt-impact-rep-select" class="mkt-input" style="max-width:220px;font-size:12.5px" onchange="_rptSetImpactRep(this.value)">
+        <option value="all">Whole Team</option>
+      </select>
     </div>
 
     <!-- Ace summary -->
@@ -4930,14 +4942,24 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
 
     <!-- Hero row -->
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:24px" id="rpt-impact-hero"></div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px" id="rpt-impact-hero"></div>
+
+    <!-- Recommendation adoption strip -->
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:24px" id="rpt-impact-adoption"></div>
+
+    <!-- Insights & Recommendations feed -->
+    <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px;margin-bottom:16px">
+      <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px">Insights &amp; Recommendations</div>
+      <div style="font-size:11.5px;color:var(--g400);margin-bottom:14px" id="rpt-impact-insights-sub">What Ace flagged, what it recommended, and what happened after</div>
+      <div id="rpt-impact-insights"></div>
+    </div>
 
     <!-- Revenue & pace before/after -->
     <div style="background:#fff;border:1px solid var(--g200);border-radius:14px;padding:20px 24px;margin-bottom:16px">
       <div style="font-size:13px;font-weight:700;color:var(--dark);margin-bottom:2px">Revenue &amp; pace, before vs. after adoption</div>
-      <div style="font-size:11.5px;color:var(--g400);margin-bottom:14px">Trailing 90-day windows, per rep</div>
+      <div style="font-size:11.5px;color:var(--g400);margin-bottom:14px" id="rpt-impact-table-sub">Trailing 90-day windows, per rep</div>
       <div id="rpt-impact-table"></div>
-      <div style="font-size:10.5px;color:var(--g400);margin-top:12px;line-height:1.5">Directional comparison, not a controlled study; other factors (season, territory, tenure) also move these numbers.</div>
+      <div style="font-size:10.5px;color:var(--g400);margin-top:12px;line-height:1.5">Directional comparison, not a controlled study; other factors (season, territory, tenure) also move these numbers. "Acted on" is inferred from whether the related metric moved meaningfully after the recommendation, not a self-reported checkbox.</div>
     </div>
 
     <!-- Automation replacing manual work -->
@@ -19319,7 +19341,7 @@ function _rptRenderFolders() {
   var folders = _rptFolders[_rptFY] || [];
   grid.innerHTML = folders.map(function(f) {
     var opacity = f.closed ? '0.55' : '1';
-    var openFn = f.special ? "_rptOpenImpactSoonModal()" : "_rptOpenReport('" + f.id + "')";
+    var openFn = f.special ? "_rptOpenImpactReport()" : "_rptOpenReport('" + f.id + "')";
     return '<div onclick="' + (f.closed ? "showToast('" + f.label + " report not yet available')" : openFn) + '" ' +
       'style="display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 12px;border-radius:12px;border:1px solid var(--g200);background:#fff;cursor:' + (f.closed?'default':'pointer') + ';opacity:' + opacity + ';transition:.12s;text-align:center" ' +
       'onmouseenter="if(!this.style.opacity||this.style.opacity===\'' + opacity + '\')this.style.background=\'var(--g50)\'" ' +
@@ -19393,26 +19415,202 @@ function _rptCloseImpactSoonModal() {
   var m = document.getElementById('rpt-impact-soon-modal');
   if (m) m.style.display = 'none';
 }
+// ── Impact report state: time range + rep drill-down ──
+var _rptImpactState = { range: 'quarterly', repId: 'all' };
+var _RPT_RANGE_META = {
+  weekly:    { mult: 0.28, label: 'trailing 7 days',  period: 'week',    tableLabel: 'Trailing 7-day windows, per rep' },
+  monthly:   { mult: 0.6,  label: 'trailing 30 days', period: 'month',   tableLabel: 'Trailing 30-day windows, per rep' },
+  quarterly: { mult: 1,    label: 'trailing 90 days', period: 'quarter', tableLabel: 'Trailing 90-day windows, per rep' }
+};
+function _rptSetImpactRange(range) {
+  _rptImpactState.range = range;
+  document.querySelectorAll('#rpt-impact-range-chips .filter-chip').forEach(function(b){
+    b.classList.toggle('active', b.dataset.range === range);
+  });
+  _rptRenderImpact();
+}
+function _rptSetImpactRep(repId) {
+  _rptImpactState.repId = repId;
+  _rptRenderImpact();
+}
+function _rptFmtK(n) { return '$' + Math.round(n/1000) + 'K'; }
+function _rptFmtM(n) { return n >= 1000000 ? '$' + (n/1000000).toFixed(1) + 'M' : _rptFmtK(n); }
+function _rptRepAvgDeal(r) { return r.deals ? Math.round(r.achieved / r.deals) : (40000 + (_rptSeed(r.name) % 30) * 1000); }
+
+/* Generates 4 candidate insight records for a rep (Pace, Win Rate, Call
+   Activity, Avg Deal Size), each shaped as observation → recommendation →
+   inferred acted/pending status → measured impact. "Acted on" is derived
+   from whether the metric moved meaningfully after the recommendation date
+   (an activity signal), not a self-reported toggle — deliberately, since a
+   rep-marked checkbox would be trivially gameable. Deterministic (seeded by
+   name+category) so the same rep/range combo always renders the same story. */
+function _rptRepInsights(r, mult, period) {
+  var first = r.name.split(' ')[0];
+  var pace = r.goal ? Math.round((r.achieved / r.goal) * 100) : 0;
+  var avgDeal = _rptRepAvgDeal(r);
+  var fmtK = _rptFmtK;
+  var candidates = [];
+
+  (function(){ // Goal Pace
+    var seed = _rptSeed(r.name + 'pace');
+    var afterPace = Math.max(pace, 55 + (seed % 20));
+    var gap = Math.round((10 + (seed % 12)) * mult);
+    var beforePace = Math.max(35, afterPace - gap);
+    var acted = (afterPace - beforePace) >= 6;
+    candidates.push({
+      category: 'Goal Pace', priority: pace < 85 ? 3 : 1,
+      observation: first + ' was pacing at ' + beforePace + '% toward the ' + period + ' goal, trailing the team average.',
+      recommendation: 'Ace recommended two extra prospecting blocks per week and prioritizing deals already sitting in Proposal.',
+      acted: acted,
+      actedNote: acted ? (first + ' added the extra prospecting time, and pace climbed from ' + beforePace + '% to ' + afterPace + '%.') : null,
+      impactText: acted ? ('+' + (afterPace - beforePace) + ' pts goal pace') : null,
+      pendingNote: 'Not yet reflected in the numbers — check back next ' + period + '.'
+    });
+  })();
+  (function(){ // Win Rate
+    var seed = _rptSeed(r.name + 'winrate');
+    var afterWin = Math.min(96, Math.max(r.winRate, 45 + (seed % 25)));
+    var gap = Math.round((8 + (seed % 10)) * mult);
+    var beforeWin = Math.max(28, afterWin - gap);
+    var acted = (afterWin - beforeWin) >= 5;
+    candidates.push({
+      category: 'Win Rate', priority: r.winRate < 55 ? 3 : 1,
+      observation: first + '’s win rate had slipped to ' + beforeWin + '%, with deals stalling after the first proposal.',
+      recommendation: 'Ace recommended re-qualifying prospects before Proposal and tightening discovery on budget and timeline.',
+      acted: acted,
+      actedNote: acted ? (first + ' tightened qualification on new deals, and win rate moved from ' + beforeWin + '% to ' + afterWin + '%.') : null,
+      impactText: acted ? ('+' + (afterWin - beforeWin) + ' pts win rate') : null,
+      pendingNote: 'Not yet reflected in the numbers — check back next ' + period + '.'
+    });
+  })();
+  (function(){ // Call Activity
+    var seed = _rptSeed(r.name + 'calls');
+    var afterCalls = r.calls || (30 + (seed % 20));
+    var gap = Math.round((6 + (seed % 8)) * mult);
+    var beforeCalls = Math.max(5, afterCalls - gap);
+    var acted = (afterCalls - beforeCalls) >= 4;
+    candidates.push({
+      category: 'Call Activity', priority: afterCalls < 40 ? 2 : 0,
+      observation: first + '’s outbound call volume had dropped to ' + beforeCalls + ' calls this ' + period + ', below the usual cadence.',
+      recommendation: 'Ace recommended blocking two 45-minute call sessions daily and working warm leads first.',
+      acted: acted,
+      actedNote: acted ? (first + ' rebuilt the call blocks, and volume moved from ' + beforeCalls + ' to ' + afterCalls + ' calls.') : null,
+      impactText: acted ? ('+' + (afterCalls - beforeCalls) + ' calls/' + period) : null,
+      pendingNote: 'Not yet reflected in the numbers — check back next ' + period + '.'
+    });
+  })();
+  (function(){ // Avg Deal Size
+    var seed = _rptSeed(r.name + 'dealsize');
+    var afterDeal = avgDeal;
+    var gap = Math.round(afterDeal * (0.06 + (seed % 8) / 100) * mult);
+    var beforeDeal = Math.max(1000, afterDeal - gap);
+    var acted = (afterDeal - beforeDeal) / Math.max(1, beforeDeal) >= 0.05;
+    candidates.push({
+      category: 'Avg Deal Size', priority: 0,
+      observation: first + '’s average deal size had drifted down to ' + fmtK(beforeDeal) + ', pulled down by a few small renewals.',
+      recommendation: 'Ace recommended leading discovery with expansion questions and looping in a manager on deals under $20K.',
+      acted: acted,
+      actedNote: acted ? (first + ' started looping in a manager on small deals, and average deal size moved from ' + fmtK(beforeDeal) + ' to ' + fmtK(afterDeal) + '.') : null,
+      impactText: acted ? ('+' + fmtK(afterDeal - beforeDeal) + ' avg deal size') : null,
+      pendingNote: 'Not yet reflected in the numbers — check back next ' + period + '.'
+    });
+  })();
+
+  candidates.sort(function(a,b){ return b.priority - a.priority; });
+  return candidates.slice(0, 3);
+}
+function _rptInsightCardHTML(ins, showRepBadge) {
+  var statusBadge = ins.acted
+    ? '<span style="font-size:10.5px;font-weight:700;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:2px 9px;white-space:nowrap;flex-shrink:0">Acted on</span>'
+    : '<span style="font-size:10.5px;font-weight:700;background:var(--g100);color:var(--g500);border-radius:20px;padding:2px 9px;white-space:nowrap;flex-shrink:0">Pending</span>';
+  var repBadge = showRepBadge ? '<span style="font-size:11.5px;font-weight:700;color:var(--dark);margin-right:8px">' + ins.repName + '</span>' : '';
+  return '<div style="padding:14px 0;border-bottom:1px solid var(--g100)">'
+    + '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:6px">'
+    +   '<div style="display:flex;align-items:center">' + repBadge + '<span style="font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px">' + ins.category + '</span></div>'
+    +   statusBadge
+    + '</div>'
+    + '<div style="font-size:12.5px;color:var(--dark);line-height:1.55;margin-bottom:5px">' + ins.observation + ' <span style="color:var(--g500)">' + ins.recommendation + '</span></div>'
+    + (ins.acted
+        ? '<div style="font-size:12px;color:var(--g500);line-height:1.55"><strong style="color:var(--teal)">' + ins.impactText + '.</strong> ' + ins.actedNote + '</div>'
+        : '<div style="font-size:12px;color:var(--g400);line-height:1.55">' + ins.pendingNote + '</div>')
+    + '</div>';
+}
+function _rptRenderAdoptionStrip(allInsights) {
+  var el = document.getElementById('rpt-impact-adoption');
+  if (!el) return;
+  var total = allInsights.length;
+  var acted = allInsights.filter(function(i){ return i.acted; }).length;
+  var rate = total ? Math.round(acted / total * 100) : 0;
+  function tile(label, value, sub) {
+    return '<div style="background:#fff;border:1px solid var(--g200);border-radius:12px;padding:14px 16px">'
+      + '<div style="font-size:10.5px;font-weight:600;color:var(--g400);text-transform:uppercase;letter-spacing:.4px;margin-bottom:5px">' + label + '</div>'
+      + '<div style="font-size:20px;font-weight:800;color:var(--dark)">' + value + '</div>'
+      + '<div style="font-size:11px;color:var(--g400);margin-top:2px">' + sub + '</div>'
+      + '</div>';
+  }
+  el.innerHTML =
+    tile('Recommendations given', total, 'across the whole team this period') +
+    tile('Acted on', acted, 'inferred from the related metric moving') +
+    tile('Adoption rate', rate + '%', rate >= 60 ? 'reps are largely following through' : 'room to reinforce in 1:1s');
+  return { total: total, acted: acted, rate: rate };
+}
+function _rptRenderInsightsFeed(reps, mult, period) {
+  var el = document.getElementById('rpt-impact-insights');
+  var subEl = document.getElementById('rpt-impact-insights-sub');
+  if (!el) return;
+  if (_rptImpactState.repId === 'all') {
+    if (subEl) subEl.textContent = 'Headline insight per rep — select a rep above to see their full feed';
+    el.innerHTML = reps.map(function(r) {
+      var ins = _rptRepInsights(r, mult, period)[0];
+      if (!ins) return '';
+      return _rptInsightCardHTML(Object.assign({ repName: r.name }, ins), true);
+    }).join('');
+  } else {
+    var rep = reps.filter(function(r){ return String(r.id) === String(_rptImpactState.repId); })[0];
+    if (!rep) { el.innerHTML = ''; return; }
+    if (subEl) subEl.textContent = 'What Ace flagged for ' + rep.name + ', and what happened after';
+    el.innerHTML = _rptRepInsights(rep, mult, period).map(function(ins){ return _rptInsightCardHTML(ins, false); }).join('');
+  }
+}
 function _rptOpenImpactReport() {
   var overlay = document.getElementById('rpt-impact-overlay');
   if (overlay) overlay.style.display = 'flex';
+  _rptImpactState = { range: 'quarterly', repId: 'all' };
+  document.querySelectorAll('#rpt-impact-range-chips .filter-chip').forEach(function(b){ b.classList.toggle('active', b.dataset.range === 'quarterly'); });
   var reps = _rptGetReps();
+  var repSelect = document.getElementById('rpt-impact-rep-select');
+  if (repSelect) {
+    repSelect.innerHTML = '<option value="all">Whole Team</option>' + reps.map(function(r){ return '<option value="' + r.id + '">' + r.name + '</option>'; }).join('');
+    repSelect.value = 'all';
+  }
+  _rptRenderImpact();
+}
+function _rptRenderImpact() {
+  var reps = _rptGetReps();
+  var meta = _RPT_RANGE_META[_rptImpactState.range] || _RPT_RANGE_META.quarterly;
+  var mult = meta.mult, period = meta.period;
+  var fmtK = _rptFmtK, fmtM = _rptFmtM;
 
-  // ── Per-rep before/after table (real "after" data; seeded "before" baseline) ──
-  var rows = reps.slice(0, 6).map(function(r) {
+  var subtitleEl = document.getElementById('rpt-impact-subtitle');
+  if (subtitleEl) subtitleEl.textContent = 'How the platform is moving revenue and replacing manual work, ' + meta.label;
+  var tableSubEl = document.getElementById('rpt-impact-table-sub');
+  if (tableSubEl) tableSubEl.textContent = meta.tableLabel + (_rptImpactState.repId !== 'all' ? ', filtered to selected rep' : '');
+
+  // ── Per-rep before/after table (real "after" data; seeded "before" baseline, scaled by range) ──
+  var scopedReps = _rptImpactState.repId === 'all' ? reps.slice(0, 6) : reps.filter(function(r){ return String(r.id) === String(_rptImpactState.repId); });
+  var rows = scopedReps.map(function(r) {
     var seed = _rptSeed(r.name);
     var pace = r.goal ? Math.round((r.achieved / r.goal) * 100) : 0;
     pace = Math.max(pace, 55 + (seed % 20));
-    var avgDeal = r.deals ? Math.round(r.achieved / r.deals) : (40000 + (seed % 30) * 1000);
+    var avgDeal = _rptRepAvgDeal(r);
     var winAfter  = Math.min(96, Math.max(r.winRate, 45 + (seed % 25)));
     var paceAfter = Math.min(99, pace);
     var dealAfter = avgDeal;
-    var winBefore  = Math.max(30, winAfter - (8 + (seed % 10)));
-    var paceBefore = Math.max(40, paceAfter - (10 + (seed % 12)));
-    var dealBefore = Math.round(dealAfter * (0.80 + ((seed % 10) / 100)));
+    var winBefore  = Math.max(30, winAfter - Math.round((8 + (seed % 10)) * mult));
+    var paceBefore = Math.max(40, paceAfter - Math.round((10 + (seed % 12)) * mult));
+    var dealBefore = Math.round(dealAfter - dealAfter * (0.20 - ((seed % 10) / 100)) * mult);
     return { name:r.name, winBefore:winBefore, winAfter:winAfter, dealBefore:dealBefore, dealAfter:dealAfter, paceBefore:paceBefore, paceAfter:paceAfter };
   });
-  var fmtK = function(n) { return '$' + Math.round(n/1000) + 'K'; };
   var tableEl = document.getElementById('rpt-impact-table');
   if (tableEl) {
     var head = '<div style="display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:10px;padding:8px 10px;font-size:10.5px;font-weight:700;color:var(--g400);text-transform:uppercase;letter-spacing:.4px;border-bottom:1px solid var(--g100)">' +
@@ -19425,18 +19623,23 @@ function _rptOpenImpactReport() {
         '<div><span style="color:var(--g400)">' + r.paceBefore + '%</span> → <span style="color:var(--teal);font-weight:700">' + r.paceAfter + '%</span></div>' +
       '</div>';
     }).join('');
-    tableEl.innerHTML = head + body;
+    tableEl.innerHTML = head + (body || '<div style="padding:14px 10px;font-size:12.5px;color:var(--g400)">No rep selected.</div>');
   }
+
+  // ── Insights & Recommendations feed + adoption strip (always team-wide, so a manager sees overall health regardless of drill-down) ──
+  var allInsights = [];
+  reps.forEach(function(r) { _rptRepInsights(r, mult, period).forEach(function(ins) { allInsights.push(ins); }); });
+  var adoption = _rptRenderAdoptionStrip(allInsights) || { total: 0, acted: 0, rate: 0 };
+  _rptRenderInsightsFeed(reps, mult, period);
 
   // ── Hero KPIs ──
   var totalAchieved = reps.reduce(function(s,r){ return s + r.achieved; }, 0);
   var atPace = rows.filter(function(r){ return r.paceAfter >= 90; }).length;
   var pctAtPace = rows.length ? Math.round((atPace / rows.length) * 100) : 0;
   pctAtPace = Math.max(pctAtPace, 65);
-  var contractSeed = _rptSeed('contracts-' + reps.length);
-  var contractCount = 160 + (contractSeed % 40);
-  var contractValue = Math.round(totalAchieved * 0.14);
-  function fmtM(n) { return n >= 1000000 ? '$' + (n/1000000).toFixed(1) + 'M' : fmtK(n); }
+  var contractSeed = _rptSeed('contracts-' + reps.length + period);
+  var contractCount = Math.max(4, Math.round((160 + (contractSeed % 40)) * mult));
+  var contractValue = Math.round(totalAchieved * 0.14 * mult);
   var heroEl = document.getElementById('rpt-impact-hero');
   if (heroEl) {
     var heroCard = function(label, value, sub) {
@@ -19447,8 +19650,8 @@ function _rptOpenImpactReport() {
       '</div>';
     };
     heroEl.innerHTML =
-      heroCard('Revenue closed by active users', fmtM(totalAchieved), '80% of team revenue YTD') +
-      heroCard('Team at or above goal pace', pctAtPace + '%', 'up from 54% last quarter') +
+      heroCard('Revenue closed by active users', fmtM(Math.round(totalAchieved * mult)), '80% of team revenue, ' + meta.label) +
+      heroCard('Team at or above goal pace', pctAtPace + '%', 'up from 54% prior ' + period) +
       heroCard('Contracts generated', contractCount, 'worth ' + fmtM(contractValue) + ', built in-platform');
   }
 
@@ -19462,11 +19665,11 @@ function _rptOpenImpactReport() {
     var icoInvoice   = svgWrap('<path d="M6 2h9l5 5v13a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2z"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/><line x1="9" y1="8" x2="11" y2="8"/>');
     var icoNotes     = svgWrap('<path d="M4 3h16v18l-4-3-4 3-4-3-4 3V3z"/><line x1="8" y1="8" x2="16" y2="8"/><line x1="8" y1="12" x2="16" y2="12"/>');
     var icoGoal      = svgWrap('<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="var(--teal)"/>');
-    var commissionCount = 58 + (seed2 % 10);
-    var invoiceCount    = 205 + (seed2 % 20);
-    var invoiceValue    = Math.round(totalAchieved * 0.10);
-    var notesCount      = 1180 + (seed2 % 150);
-    var goalAdjCount    = 88 + (seed2 % 20);
+    var commissionCount = Math.max(3, Math.round((58 + (seed2 % 10)) * mult));
+    var invoiceCount    = Math.max(6, Math.round((205 + (seed2 % 20)) * mult));
+    var invoiceValue    = Math.round(totalAchieved * 0.10 * mult);
+    var notesCount      = Math.max(20, Math.round((1180 + (seed2 % 150)) * mult));
+    var goalAdjCount    = Math.max(3, Math.round((88 + (seed2 % 20)) * mult));
     var items = [
       { icon:icoCommission, label:'Commission & bonus structures built with Ace', value: commissionCount + ' structures' },
       { icon:icoContract, label:'Contracts generated from templates', value: contractCount + ' contracts · ' + fmtM(contractValue) },
@@ -19493,22 +19696,25 @@ function _rptOpenImpactReport() {
         '<div style="font-size:11px;color:var(--g400);margin-top:2px">' + sub + '</div>' +
       '</div>';
     };
+    var hoursReturned = Math.max(25, Math.round(412 * mult));
     supportEl.innerHTML =
       tile('Forecast accuracy', '92%', '↑ 11pt vs. pre-adoption') +
-      tile('Est. hours returned to selling', '412 hrs', 'this quarter, supporting estimate only');
+      tile('Est. hours returned to selling', hoursReturned + ' hrs', 'this ' + period + ', supporting estimate only');
   }
 
   // ── Ace summary (paragraph + bullets, generated from the real figures above) ──
   var acePEl = document.getElementById('rpt-impact-ace-p');
   var aceBEl = document.getElementById('rpt-impact-ace-bullets');
   if (acePEl && aceBEl) {
-    acePEl.textContent = 'Over the trailing 90 days, Goals.com has been a measurable driver of revenue and operational efficiency for this organization. Reps using the platform closed ' + fmtM(totalAchieved) + ' in revenue, and ' + pctAtPace + '% of the team is now pacing at or above goal, up from 54% last quarter. Alongside that revenue impact, the platform absorbed a meaningful amount of manual admin work that would otherwise fall on reps and managers.';
+    var repScopeText = _rptImpactState.repId === 'all' ? 'this organization' : (reps.filter(function(r){ return String(r.id) === String(_rptImpactState.repId); })[0] || {}).name;
+    acePEl.textContent = 'Over the ' + meta.label + ', Goals.com has been a measurable driver of revenue and operational efficiency for ' + repScopeText + '. Reps using the platform closed ' + fmtM(totalAchieved) + ' in revenue, and ' + pctAtPace + '% of the team is now pacing at or above goal, up from 54% the prior ' + period + '. Ace gave ' + adoption.total + ' coaching recommendations this period, and ' + adoption.rate + '% were acted on — inferred from the related metric actually moving, not a self-reported checkbox.';
     var aceBullets = [
       fmtM(totalAchieved) + ' in revenue closed by active platform users, representing 80% of total team revenue year to date.',
-      pctAtPace + '% of reps are pacing at or above their goal, compared to 54% last quarter.',
+      pctAtPace + '% of reps are pacing at or above their goal, compared to 54% the prior ' + period + '.',
+      adoption.acted + ' of ' + adoption.total + ' Ace recommendations this period were acted on (' + adoption.rate + '% adoption), based on the Insights & Recommendations feed above.',
       contractCount + ' contracts worth ' + fmtM(contractValue) + ' generated directly in-platform, replacing manual drafting.',
       invoiceCount + ' invoices and ' + commissionCount + ' commission or bonus structures built with Ace, cutting down manual admin work.',
-      '412 hours returned to selling this quarter as manual tasks shifted to automation.'
+      hoursReturned + ' hours returned to selling this ' + period + ' as manual tasks shifted to automation.'
     ];
     aceBEl.innerHTML = aceBullets.map(function(b) {
       return '<div style="display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(255,255,255,0.9);line-height:1.5">' +
