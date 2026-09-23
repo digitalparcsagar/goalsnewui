@@ -4331,6 +4331,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
   </div>
 
+  <div id="mkt-templates-banner" class="card" style="display:none;margin-bottom:16px;padding:14px 18px;align-items:center;gap:12px;justify-content:space-between;flex-wrap:wrap"></div>
   <div id="mkt-templates-view" class="three-col" style="display:none;margin-bottom:28px"></div>
 
 </div><!-- end mkt-panel-email -->
@@ -6448,6 +6449,10 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
         </div>
 
         <div id="oppd-panel-emails" style="display:none">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div style="font-size:14px;font-weight:700;color:var(--dark)">Emails</div>
+            <button onclick="_ecmOpenFromOpp()" style="display:flex;align-items:center;gap:6px;padding:7px 14px;background:var(--teal);color:#fff;border:none;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Compose Email</button>
+          </div>
           <div style="background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:32px;text-align:center;color:var(--g400)">
             <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 10px;display:block"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             <div style="font-size:13px;font-weight:600;margin-bottom:4px">No emails yet</div>
@@ -6720,6 +6725,75 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div style="padding:16px 24px;border-top:1px solid var(--g200);display:flex;justify-content:flex-end;gap:8px">
       <button onclick="_dedupeCloseMerge()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:9px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel</button>
       <button onclick="_dedupeConfirmMerge()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Merge</button>
+    </div>
+  </div>
+</div>
+
+<!-- Compose Email modal — used from an opportunity's Emails tab. Top-level
+     sibling (not nested inside the opp drawer or any hidden page), matching
+     the fixed-overlay pattern used by every other modal in this file. -->
+<div id="opp-compose-modal" style="position:fixed;inset:0;background:rgba(15,23,42,0.55);z-index:2470;display:none;align-items:center;justify-content:center;padding:24px" onclick="if(event.target===this)_ecmClose()">
+  <div style="background:#fff;border-radius:16px;width:720px;max-width:100%;max-height:92vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3)">
+    <div style="padding:18px 24px;border-bottom:1px solid var(--g200);display:flex;align-items:center;justify-content:space-between">
+      <div style="font-size:16px;font-weight:800;color:var(--dark)">Compose email</div>
+      <button onclick="_ecmClose()" style="border:none;background:none;color:var(--g400);cursor:pointer;font-size:20px;line-height:1;padding:4px">×</button>
+    </div>
+
+    <div style="padding:4px 24px 0">
+      <div style="display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--g100)">
+        <label style="width:64px;flex-shrink:0;font-size:12.5px;font-weight:600;color:var(--g500)">To</label>
+        <input type="text" id="ecm-to" placeholder="recipient@company.com" style="flex:1;border:none;outline:none;font-size:13.5px;color:var(--dark);font-family:var(--font);background:none">
+      </div>
+      <div style="display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--g100)">
+        <label style="width:64px;flex-shrink:0;font-size:12.5px;font-weight:600;color:var(--g500)">From</label>
+        <span id="ecm-from" style="font-size:13.5px;color:var(--dark)">—</span>
+      </div>
+      <div style="display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--g100)">
+        <label style="width:64px;flex-shrink:0;font-size:12.5px;font-weight:600;color:var(--g500)">Template</label>
+        <select id="ecm-template" class="mkt-input" style="flex:1;font-size:12.5px" onchange="_ecmApplyTemplate(this.value)">
+          <option value="">Blank email</option>
+        </select>
+      </div>
+      <div id="ecm-template-badge" style="display:none;font-size:11px;color:var(--g400);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 9px;margin:10px 0 0">Using a global template — edit freely, your changes only affect this email</div>
+      <div style="display:flex;align-items:center;padding:13px 0;border-bottom:1px solid var(--g100)">
+        <label style="width:64px;flex-shrink:0;font-size:12.5px;font-weight:600;color:var(--g500)">Subject</label>
+        <input type="text" id="ecm-subject" placeholder="Subject" style="flex:1;border:none;outline:none;font-size:13.5px;color:var(--dark);font-family:var(--font);background:none">
+      </div>
+    </div>
+
+    <div id="ecm-body" class="opp-note-editor" contenteditable="true" data-placeholder="Type your message..." style="min-height:160px;margin:14px 24px 0;padding:12px 0"></div>
+
+    <div class="opp-note-toolbar" style="margin:12px 24px 0">
+      <select class="opp-note-tbtn" style="width:78px;font-weight:600" onchange="_ecmFormatBlock(this.value)">
+        <option value="p">Normal</option><option value="h2">Heading</option><option value="h3">Subheading</option>
+      </select>
+      <div class="opp-note-tb-sep"></div>
+      <button class="opp-note-tbtn" onclick="_ecmCmd('bold')" title="Bold"><b>B</b></button>
+      <button class="opp-note-tbtn" style="font-style:italic" onclick="_ecmCmd('italic')" title="Italic">I</button>
+      <button class="opp-note-tbtn" style="text-decoration:underline" onclick="_ecmCmd('underline')" title="Underline">U</button>
+      <button class="opp-note-tbtn" style="text-decoration:line-through" onclick="_ecmCmd('strikeThrough')" title="Strikethrough">S</button>
+      <div class="opp-note-tb-sep"></div>
+      <button class="opp-note-tbtn" onclick="_ecmCmd('insertOrderedList')" title="Numbered list"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="6" x2="21" y2="6"/><line x1="10" y1="12" x2="21" y2="12"/><line x1="10" y1="18" x2="21" y2="18"/><path d="M4 6h1v4"/><path d="M4 10h2"/><path d="M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/></svg></button>
+      <button class="opp-note-tbtn" onclick="_ecmCmd('insertUnorderedList')" title="Bulleted list"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="9" y1="6" x2="21" y2="6"/><line x1="9" y1="12" x2="21" y2="12"/><line x1="9" y1="18" x2="21" y2="18"/><circle cx="4" cy="6" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="12" r="1.4" fill="currentColor" stroke="none"/><circle cx="4" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg></button>
+      <button class="opp-note-tbtn" onclick="_ecmCmd('justifyLeft')" title="Align"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="10" x2="3" y2="10"/><line x1="21" y1="6" x2="3" y2="6"/><line x1="21" y1="14" x2="3" y2="14"/><line x1="17" y1="18" x2="3" y2="18"/></svg></button>
+      <button class="opp-note-tbtn" onclick="_ecmLink()" title="Add link"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></button>
+      <button class="opp-note-tbtn" onclick="_ecmCmd('removeFormat')" title="Clear formatting"><i style="font-style:italic;font-size:12px">T<sub style="font-size:8px">x</sub></i></button>
+      <div class="opp-note-tb-sep"></div>
+      <div style="position:relative;display:inline-block">
+        <button class="opp-note-tbtn opp-wt-trigger" id="ecm-wt-btn" onclick="_ecmWtToggle(event)" title="Ace Writing Tools" style="color:#8b5cf6"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/><path d="M19 15l.8 2.1L22 18l-2.2.9L19 21l-.8-2.1L16 18l2.2-.9z"/><path d="M5 15l.6 1.6L7 17l-1.4.6L5 19l-.6-1.4L3 17l1.4-.4z"/></svg><span>Writing Tools</span></button>
+        <div id="ecm-wt-popover" class="opp-wt-popover" style="display:none"></div>
+      </div>
+    </div>
+
+    <div style="padding:16px 24px;border-top:1px solid var(--g200);margin-top:14px;display:flex;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--g400)">
+        <button onclick="showToast('File attachments coming soon')" style="display:flex;align-items:center;gap:5px;border:none;background:none;color:var(--g500);cursor:pointer;font-size:12px;font-family:var(--font);padding:0"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>Attach</button>
+        <span>· Max file size: 10 MB</span>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="_ecmClose()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:9px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Cancel</button>
+        <button onclick="_ecmSend()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Send</button>
+      </div>
     </div>
   </div>
 </div>
@@ -20717,6 +20791,34 @@ function _iwStep5() {
 
 function openEmailComposer() {
   document.getElementById('email-composer').classList.add('open');
+  _ecRenderTemplatePicker();
+}
+/* Populates the composer's template dropdown from the same global
+   _mktTemplates list managed under Email Marketing → Templates, so every
+   rep sees exactly what the manager has published — no separate data copy. */
+function _ecRenderTemplatePicker() {
+  var sel = document.getElementById('ec-template-picker');
+  if (!sel) return;
+  var current = sel.value;
+  var opts = '<option value="">Blank email</option>' + _mktTemplates.map(function(t, i){
+    return '<option value="' + i + '">' + t.n + '</option>';
+  }).join('');
+  sel.innerHTML = opts;
+  sel.value = current || '';
+}
+function _ecApplyTemplate(val) {
+  var sel = document.getElementById('ec-template-picker');
+  var badge = document.getElementById('ec-template-badge');
+  if (sel && sel.value !== String(val)) sel.value = val;
+  if (val === '' || val === undefined || val === null) {
+    if (badge) badge.style.display = 'none';
+    return;
+  }
+  var t = _mktTemplates[Number(val)];
+  if (!t) return;
+  document.getElementById('ec-subject').value = t.s || '';
+  document.getElementById('ec-body').value = _mktTemplateToPlainText(t);
+  if (badge) badge.style.display = '';
 }
 function _ecSend() {
   var tracked = document.getElementById('ec-track-toggle').checked;
@@ -20725,6 +20827,95 @@ function _ecSend() {
     ? 'Email sent. Open tracking enabled — check the timeline for updates.'
     : 'Email sent.';
   showToast(msg);
+}
+
+/* ── Compose Email modal (opportunity → Emails tab) ──────────────────────
+   Full "Compose email" modal — To / From (connected account) / Template /
+   Subject / rich-text body — separate from the sidebar #email-composer
+   because this one is a centered modal with a designed-template-aware,
+   contenteditable body instead of a plain textarea. Templates come from
+   the same global _mktTemplates list managed under Email Marketing →
+   Templates, so what a rep sees here always matches what the manager
+   published there. */
+function _ecmOpenFromOpp() {
+  var opp = (_oppCurrentCtx && _oppCurrentCtx.opp) || null;
+  var contactName = (opp && opp.contact) || (document.getElementById('oppd-contact')||{}).textContent || '';
+  var person = contactName && PEOPLE_DATA[contactName];
+  var toVal = person && person.email ? contactName + ' <' + person.email + '>' : contactName;
+  var oppTitle = (document.getElementById('oppd-header-title')||{}).textContent || '';
+  document.getElementById('ecm-to').value = toVal || '';
+  document.getElementById('ecm-subject').value = oppTitle ? 'Re: ' + oppTitle : '';
+  document.getElementById('ecm-body').innerHTML = '';
+  document.getElementById('ecm-template-badge').style.display = 'none';
+  _ecmRenderTemplatePicker();
+  document.getElementById('ecm-from').textContent = 'you@company.com (Gmail)';
+  var overlay = document.getElementById('opp-compose-modal');
+  if (overlay) overlay.style.display = 'flex';
+}
+function _ecmClose() {
+  var overlay = document.getElementById('opp-compose-modal');
+  if (overlay) overlay.style.display = 'none';
+}
+function _ecmRenderTemplatePicker() {
+  var sel = document.getElementById('ecm-template');
+  if (!sel) return;
+  sel.innerHTML = '<option value="">Blank email</option>' + _mktTemplates.map(function(t, i){
+    return '<option value="' + i + '">' + t.n + '</option>';
+  }).join('');
+  sel.value = '';
+}
+function _ecmApplyTemplate(val) {
+  var badge = document.getElementById('ecm-template-badge');
+  if (val === '' || val === undefined || val === null) { if (badge) badge.style.display = 'none'; return; }
+  var t = _mktTemplates[Number(val)];
+  if (!t) return;
+  var subjEl = document.getElementById('ecm-subject');
+  if (!subjEl.value || /^Re: /.test(subjEl.value)) subjEl.value = t.s || subjEl.value;
+  document.getElementById('ecm-body').innerHTML = _mktTemplateToRichHTML(t);
+  if (badge) badge.style.display = '';
+}
+function _ecmCmd(cmd) { document.execCommand(cmd, false, null); document.getElementById('ecm-body').focus(); }
+function _ecmFormatBlock(tag) { document.execCommand('formatBlock', false, tag); document.getElementById('ecm-body').focus(); }
+function _ecmLink() {
+  var url = prompt('Link URL');
+  if (!url) return;
+  document.execCommand('createLink', false, url);
+  document.getElementById('ecm-body').focus();
+}
+function _ecmWtToggle(e) {
+  e.stopPropagation();
+  var pop = document.getElementById('ecm-wt-popover');
+  if (pop.style.display === 'block') { pop.style.display = 'none'; return; }
+  pop.innerHTML = '<div class="opp-wt-pop-header">' + _oppWtIcon('<path d="M12 3l1.6 4.3L18 9l-4.4 1.7L12 15l-1.6-4.3L6 9l4.4-1.7z"/>') + 'Ace Writing Tools</div>'
+    + '<div class="opp-wt-row">'
+    +   '<button class="opp-wt-pill" onclick="_ecmWtApply(\'proofread\')">Grammar</button>'
+    +   '<button class="opp-wt-pill" onclick="_ecmWtApply(\'rewrite\')">Reword</button>'
+    + '</div>'
+    + '<div class="opp-wt-group-label">Tone</div>'
+    + '<div class="opp-wt-opt" onclick="_ecmWtApply(\'friendly\')">' + _oppWtIcon('<circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/>') + '<span>Casual</span></div>'
+    + '<div class="opp-wt-opt" onclick="_ecmWtApply(\'professional\')">' + _oppWtIcon('<rect x="4" y="7" width="16" height="13" rx="1"/>') + '<span>Formal</span></div>'
+    + '<div class="opp-wt-opt" onclick="_ecmWtApply(\'concise\')">' + _oppWtIcon('<line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="14" y2="12"/>') + '<span>Shorten</span></div>';
+  pop.style.display = 'block';
+}
+document.addEventListener('click', function(e) {
+  var pop = document.getElementById('ecm-wt-popover');
+  if (pop && pop.style.display === 'block' && !pop.contains(e.target) && !e.target.closest('#ecm-wt-btn')) pop.style.display = 'none';
+});
+function _ecmWtApply(kind) {
+  var editor = document.getElementById('ecm-body');
+  var text = (editor.innerText || '').trim();
+  document.getElementById('ecm-wt-popover').style.display = 'none';
+  if (!text) { showToast('Write your message first, then apply a writing tool to it'); return; }
+  var toneLabels = {proofread:'Grammar', rewrite:'Reword', friendly:'Casual', professional:'Formal', concise:'Shorten'};
+  var cleaned = text.replace(/\s+/g,' ').trim().replace(/(^\s*\w|[.!?]\s+\w)/g, function(m){ return m.toUpperCase(); });
+  editor.innerText = cleaned;
+  showToast('Applied a lightweight ' + toneLabels[kind] + ' pass. Full AI rewriting needs a real language model wired up on the backend — this is a mockup placeholder for that flow.');
+}
+function _ecmSend() {
+  var to = document.getElementById('ecm-to').value;
+  if (!to) { showToast('Add a recipient before sending'); return; }
+  _ecmClose();
+  showToast('Email sent to ' + to.split('<')[0].trim() + '.');
 }
 
 // ── ACE COMMISSION BUILDER ────────────────────────────────────────────────────
@@ -21556,6 +21747,13 @@ function _aceCommConfirm() {
       <label>To</label>
       <input type="text" id="ec-to" value="Jake Miller &lt;jake@arsolutions.com&gt;">
     </div>
+    <div class="ec-field" style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+      <label style="margin:0">Template</label>
+      <select id="ec-template-picker" class="mkt-input" style="max-width:220px;font-size:12px" onchange="_ecApplyTemplate(this.value)">
+        <option value="">Blank email</option>
+      </select>
+    </div>
+    <div id="ec-template-badge" style="display:none;font-size:11px;color:var(--g400);background:var(--g50);border:1px solid var(--g200);border-radius:6px;padding:5px 9px;margin:-4px 0 2px">Using global template — edit freely, your changes only affect this email</div>
     <div class="ec-field">
       <label>Subject</label>
       <input type="text" id="ec-subject" placeholder="Email subject...">
@@ -23899,6 +24097,7 @@ body.dark-mode .mkt-new-card{background:transparent;border-color:rgba(255,255,25
       <div class="modal-note" id="mkt-tp-desc"></div>
       <div class="modal-actions">
         <button class="modal-cancel" onclick="_mktTemplateEditFromPreview()">Edit</button>
+        <button class="modal-cancel" onclick="_mktUseTemplateInEmail(_mktTpIdx)">Use in Email</button>
         <button class="modal-save" onclick="_mktUseTemplateFromPreview()">Use in Campaign</button>
       </div>
     </div>
@@ -25069,8 +25268,23 @@ function _mktCampFilter(btn, val) {
   document.getElementById('mkt-list-title').textContent = isTemplates ? 'Email Templates' : 'Campaigns';
   document.getElementById('mkt-campaigns-view').style.display = isTemplates ? 'none' : '';
   document.getElementById('mkt-templates-view').style.display = isTemplates ? 'grid' : 'none';
-  if (isTemplates) _mktRenderTemplates(); else _mktRenderCampaigns();
+  document.getElementById('mkt-templates-banner').style.display = isTemplates ? 'flex' : 'none';
+  if (isTemplates) { _mktRenderTemplatesBanner(); _mktRenderTemplates(); } else _mktRenderCampaigns();
   _mktSyncPrimaryLabel();
+}
+function _mktRenderTemplatesBanner() {
+  var el = document.getElementById('mkt-templates-banner'); if (!el) return;
+  var isSM = _currentRole !== 'sr';
+  el.innerHTML =
+      '<div style="display:flex;align-items:center;gap:12px">'
+    +   '<div style="width:34px;height:34px;border-radius:8px;background:#fef2f2;display:flex;align-items:center;justify-content:center;flex-shrink:0"><svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M22 6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6z" fill="#EA4335" opacity=".2"/><polyline points="2,6 12,13 22,6" stroke="#EA4335" stroke-width="1.8" fill="none"/></svg></div>'
+    +   '<div>'
+    +     '<div style="font-size:12.5px;font-weight:700;color:var(--dark)">Global Templates — shared with your whole team</div>'
+    +     '<div style="font-size:11.5px;color:var(--g400);margin-top:1px">Synced with the connected <strong>Gmail</strong> account · ' + (isSM ? 'You manage these as Sales Manager' : 'Managed by your Sales Manager — pick one, edit it, then send') + '</div>'
+    +   '</div>'
+    + '</div>'
+    + (isSM ? '<span style="font-size:11px;font-weight:600;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:20px;padding:3px 10px;white-space:nowrap">Editable by you</span>'
+            : '<span style="font-size:11px;font-weight:600;background:var(--g100);color:var(--g500);border-radius:20px;padding:3px 10px;white-space:nowrap">View &amp; use only</span>');
 }
 function _mktStatusMeta(s) {
   if (s === 'Sent')      return {pill:'<span class="status-pill sp-green"><span class="pill-dot"></span>Sent</span>',
@@ -25157,6 +25371,7 @@ function _mktRenderEmailHTML(blocks) {
 
 function _mktRenderTemplates() {
   var el = document.getElementById('mkt-templates-view'); if (!el) return;
+  var isSM = _currentRole !== 'sr';
   var cards = _mktTemplates.map(function(t, i){
     return '<div class="mkt-tmpl-card">'
       + '<div class="mkt-tmpl-mini" onclick="_mktTemplatePreviewOpen(' + i + ')">' + _mktRenderEmailHTML(t.blocks) + '</div>'
@@ -25165,15 +25380,18 @@ function _mktRenderTemplates() {
       +   '<div class="mkt-tmpl-desc">' + t.d + '</div>'
       +   '<div class="mkt-tmpl-foot">'
       +     '<button class="mkt-mini-btn" onclick="_mktTemplatePreviewOpen(' + i + ')">Preview</button>'
-      +     '<button class="mkt-mini-btn" onclick="_mktTemplateEdit(' + i + ')">Edit</button>'
-      +     '<button class="mkt-mini-btn" onclick="_mktDuplicateTemplate(' + i + ')">Duplicate</button>'
+      +     '<button class="mkt-mini-btn" style="color:var(--teal);font-weight:700" onclick="_mktUseTemplateInEmail(' + i + ')">Use in Email</button>'
+      +     (isSM ? '<button class="mkt-mini-btn" onclick="_mktTemplateEdit(' + i + ')">Edit</button>'
+                  + '<button class="mkt-mini-btn" onclick="_mktDuplicateTemplate(' + i + ')">Duplicate</button>' : '')
       +   '</div>'
       + '</div></div>';
   }).join('');
-  cards += '<div class="mkt-new-card" style="min-height:auto" onclick="_mktNewTemplate()">'
-    + '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
-    + '<div style="font-size:12.5px;font-weight:600;color:var(--g500)">New Template</div>'
-    + '<div style="font-size:11px;color:var(--g400);text-align:center;max-width:180px">Drag and drop your own blocks</div></div>';
+  if (isSM) {
+    cards += '<div class="mkt-new-card" style="min-height:auto" onclick="_mktNewTemplate()">'
+      + '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--g300)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>'
+      + '<div style="font-size:12.5px;font-weight:600;color:var(--g500)">New Template</div>'
+      + '<div style="font-size:11px;color:var(--g400);text-align:center;max-width:180px">Drag and drop your own blocks</div></div>';
+  }
   el.innerHTML = cards;
 }
 
@@ -25198,6 +25416,55 @@ function _mktUseTemplateFromPreview() {
   if (sel) { sel.value = _mktTpIdx; _mktCampTemplatePick(); }
 }
 function _mktUseTemplate(i) { _mktTemplatePreviewOpen(i); }
+
+/* Flattens a template's designed blocks into plain text, so it can drop into
+   the rep's plain-text email composer and still be fully editable there. */
+function _mktTemplateToPlainText(t) {
+  if (!t || !t.blocks) return '';
+  return t.blocks.map(function(b){
+    switch (b.type) {
+      case 'header':  return [(b.brand||'').toUpperCase(), b.tagline||''].filter(Boolean).join('\n');
+      case 'heading': return (b.text || '').replace(/<[^>]+>/g, '');
+      case 'text':    return (b.text || '').replace(/<[^>]+>/g, '').replace(/\n/g, '\n');
+      case 'button':  return (b.text || 'Click here');
+      case 'image':   return '';
+      case 'divider':
+      case 'spacer':  return '';
+      case 'footer':  return (b.text || '').replace(/<[^>]+>/g, '');
+      default: return '';
+    }
+  }).filter(function(s){ return s !== ''; }).join('\n\n');
+}
+/* Same flatten, but keeps light HTML so it can be dropped straight into a
+   rich-text (contenteditable) composer instead of a plain textarea. */
+function _mktTemplateToRichHTML(t) {
+  if (!t || !t.blocks) return '';
+  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+  return t.blocks.map(function(b){
+    switch (b.type) {
+      case 'header':  return '<p><strong>' + esc(b.brand||'') + '</strong>' + (b.tagline ? '<br>' + esc(b.tagline) : '') + '</p>';
+      case 'heading': return '<h3>' + esc((b.text||'').replace(/<[^>]+>/g,'')) + '</h3>';
+      case 'text':    return '<p>' + esc((b.text||'').replace(/<[^>]+>/g,'')).replace(/\n/g,'<br>') + '</p>';
+      case 'button':  return '<p><strong>' + esc(b.text || 'Click here') + '</strong></p>';
+      case 'image':   return '';
+      case 'divider': return '<hr>';
+      case 'spacer':  return '';
+      case 'footer':  return '<p style="color:#8a8f98;font-size:12px">' + esc((b.text||'').replace(/<[^>]+>/g,'')).replace(/\n/g,'<br>') + '</p>';
+      default: return '';
+    }
+  }).filter(function(s){ return s !== ''; }).join('');
+}
+/* Global-template → rep-composer bridge: closes whatever template UI is open,
+   opens the composer, and drops in the subject + flattened body so the rep
+   can edit before sending — never sends on their behalf. */
+function _mktUseTemplateInEmail(i) {
+  var t = _mktTemplates[i];
+  if (!t) return;
+  closeModal('mkt-tmpl-preview-modal');
+  openEmailComposer();
+  _ecApplyTemplate(i);
+  showToast('Template loaded — edit and send');
+}
 function _mktDuplicateTemplate(i) {
   var t = JSON.parse(JSON.stringify(_mktTemplates[i]));
   t.n = t.n + ' (copy)';
