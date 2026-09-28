@@ -23773,6 +23773,10 @@ function _aceCommConfirm() {
 .mkt-auto-card{background:var(--white);border-radius:14px;border:1px solid var(--g200);padding:18px 20px;transition:box-shadow .15s;display:flex;flex-direction:column}
 .mkt-auto-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.06)}
 .mkt-auto-card.paused{opacity:.62}
+.mkt-status-dot{position:relative;cursor:default}
+.mkt-status-dot::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%) translateY(4px);background:var(--dark);color:#fff;font-size:11px;font-weight:500;line-height:1.4;padding:7px 10px;border-radius:7px;white-space:nowrap;max-width:240px;white-space:normal;width:max-content;max-width:220px;box-shadow:0 4px 14px rgba(0,0,0,0.18);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .12s,transform .12s;z-index:50}
+.mkt-status-dot::before{content:'';position:absolute;left:50%;bottom:100%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--dark);margin-bottom:-2px;opacity:0;visibility:hidden;transition:opacity .12s;z-index:50}
+.mkt-status-dot:hover::after,.mkt-status-dot:hover::before{opacity:1;visibility:visible;transform:translateX(-50%) translateY(0)}
 .mkt-trig{display:flex;align-items:flex-start;gap:8px;margin-bottom:10px}
 .mkt-trig-tag{padding:3px 8px;border-radius:6px;font-size:9.5px;font-weight:700;letter-spacing:.6px;background:rgba(29,158,117,0.1);color:var(--teal);flex-shrink:0;margin-top:1px}
 .mkt-act-list{margin-left:8px;border-left:2px solid var(--g200);padding-left:12px;display:flex;flex-direction:column;gap:7px;flex:1}
@@ -26688,7 +26692,7 @@ function _mktRenderAutomations() {
     h += '<div class="mkt-auto-card' + (a.active ? '' : ' paused') + '">'
       + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin-bottom:8px">'
       +   '<div style="display:flex;align-items:center;gap:7px;min-width:0">'
-      +     '<span title="' + runStatus.detail.replace(/"/g,'&quot;') + '" style="width:8px;height:8px;border-radius:50%;background:' + runStatus.color + ';flex-shrink:0"></span>'
+      +     '<span class="mkt-status-dot" data-tip="' + runStatus.detail.replace(/"/g,'&quot;') + '" style="width:8px;height:8px;border-radius:50%;background:' + runStatus.color + ';flex-shrink:0;display:inline-block"></span>'
       +     '<div style="font-size:13.5px;font-weight:700;color:var(--dark);line-height:1.3">' + a.name + '</div>'
       +   '</div>'
       +   '<label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox"' + (a.active ? ' checked' : '') + ' onchange="_mktToggleAuto(' + i + ',this.checked)"><span class="toggle-slider"></span></label>'
