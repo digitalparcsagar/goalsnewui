@@ -7727,6 +7727,9 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       </div>
     </div>
 
+    <!-- Ace-recommended automations, generated from the documents above -->
+    <div id="ace-kb-recs" style="border:1px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:16px"></div>
+
   </div>
 
 </div><!-- end settings-ace -->
@@ -18878,11 +18881,16 @@ var _aceKBCategories = [
 ];
 function _aceKBCatMeta(key) { return _aceKBCategories.filter(function(c){return c.key===key;})[0] || _aceKBCategories[4]; }
 var _aceKB = [
-  { id:1, name:'MEDDIC Qualification Playbook', category:'methodology', scope:'All accounts', type:'PDF', sizeKB:842, addedBy:'Sagar', addedAt: new Date(Date.now() - 12*86400000), status:'indexed' },
-  { id:2, name:'2026 Product & Pricing Overview', category:'business', scope:'All accounts', type:'DOCX', sizeKB:1290, addedBy:'Sagar', addedAt: new Date(Date.now() - 30*86400000), status:'indexed' },
-  { id:3, name:'Riverside Financial — Account Notes', category:'client', scope:'Riverside Financial', type:'Text', sizeKB:12, addedBy:'Elena Vasquez', addedAt: new Date(Date.now() - 3*86400000), status:'indexed' },
-  { id:4, name:'Q3 Team Targets & Comp Plan Summary', category:'targets', scope:'All accounts', type:'XLSX', sizeKB:64, addedBy:'Sagar', addedAt: new Date(Date.now() - 6*86400000), status:'indexed' },
-  { id:5, name:'Objection Handling — Enterprise Deals', category:'methodology', scope:'All accounts', type:'PDF', sizeKB:310, addedBy:'Sagar', addedAt: new Date(Date.now() - 1*86400000), status:'processing' }
+  { id:1, name:'MEDDIC Qualification Playbook', category:'methodology', scope:'All accounts', type:'PDF', sizeKB:842, addedBy:'Sagar', addedAt: new Date(Date.now() - 12*86400000), status:'indexed',
+    content:'Every deal must be qualified against MEDDIC before it moves to Proposal. Reps confirm the champion and the economic buyer by the end of discovery. All new leads get a first-touch call or email within 24 hours of creation. Any deal that has had no movement for 14 days is considered stalled and must be re-qualified.' },
+  { id:2, name:'2026 Product & Pricing Overview', category:'business', scope:'All accounts', type:'DOCX', sizeKB:1290, addedBy:'Sagar', addedAt: new Date(Date.now() - 30*86400000), status:'indexed',
+    content:'Enterprise deals above $50K require manager review and an executive sponsor conversation. Annual contracts renew every 12 months and the renewal conversation starts 60 days before the renewal date. Discounts above 10% need manager approval.' },
+  { id:3, name:'Riverside Financial — Account Notes', category:'client', scope:'Riverside Financial', type:'Text', sizeKB:12, addedBy:'Elena Vasquez', addedAt: new Date(Date.now() - 3*86400000), status:'indexed',
+    content:'Riverside Financial is a strategic account. Their compliance team goes quiet for weeks at a time, so we must not let more than 14 days pass without a touchpoint. Primary contact prefers email follow-ups.' },
+  { id:4, name:'Q3 Team Targets & Comp Plan Summary', category:'targets', scope:'All accounts', type:'XLSX', sizeKB:64, addedBy:'Sagar', addedAt: new Date(Date.now() - 6*86400000), status:'indexed',
+    content:'Team quota attainment is reviewed weekly. Deals worth $25K or more with a close date inside the next 30 days are the priority for the end-of-quarter push. Reps behind pace get a coaching conversation from their manager.' },
+  { id:5, name:'Objection Handling — Enterprise Deals', category:'methodology', scope:'All accounts', type:'PDF', sizeKB:310, addedBy:'Sagar', addedAt: new Date(Date.now() - 1*86400000), status:'processing',
+    content:'When a prospect raises a pricing objection or asks for a discount, prepare the objection responses before the proposal call. After a deal is closed won, send the welcome packet and schedule the onboarding kickoff within two days. For lost deals, log the loss reason and run a win-back outreach 60 days later.' }
 ];
 var _aceKBActiveFilter = 'all';
 function _aceKBFmtDate(d) {
@@ -18918,6 +18926,7 @@ function _aceKBRenderChips() {
 function _aceKBSetFilter(key) { _aceKBActiveFilter = key; _aceKBRender(); }
 function _aceKBRender() {
   _aceKBRenderChips();
+  if (typeof _aceKBRenderRecs === 'function') _aceKBRenderRecs();
   var listEl = document.getElementById('ace-kb-list');
   var emptyEl = document.getElementById('ace-kb-empty');
   var summaryEl = document.getElementById('ace-kb-summary-line');
@@ -19017,11 +19026,12 @@ function _aceKBRenderAddForm() {
 var _aceKBUploadedFile = null;
 function _aceKBUpload() {
   // Simulated file picker for the mockup — picks a realistic filename/size
+  // (content = what Ace "reads" from the file in this mockup)
   var samples = [
-    { name: 'Sales Playbook.pdf', type: 'PDF', sizeKB: 620 },
-    { name: 'Company Overview.docx', type: 'DOCX', sizeKB: 940 },
-    { name: 'Account Targets.xlsx', type: 'XLSX', sizeKB: 48 },
-    { name: 'Client Brief.pdf', type: 'PDF', sizeKB: 210 }
+    { name: 'Sales Playbook.pdf', type: 'PDF', sizeKB: 620, content: 'New opportunities must receive a first-touch call within 24 hours. Deals stuck in the same stage for 10 days are stalled and need a manager check-in. Always confirm the champion before sending a proposal.' },
+    { name: 'Company Overview.docx', type: 'DOCX', sizeKB: 940, content: 'Enterprise contracts over $75K need an executive sponsor call. Customers are onboarded with a welcome packet and a kickoff meeting after closing. Renewals are worked 90 days before the renewal date.' },
+    { name: 'Account Targets.xlsx', type: 'XLSX', sizeKB: 48, content: 'Quota attainment is tracked weekly. Deals of $40K or more closing within 30 days are priority. Reps behind pace on quota get coaching.' },
+    { name: 'Client Brief.pdf', type: 'PDF', sizeKB: 210, content: 'Lost deals are reviewed and a win-back email goes out 90 days after the loss. No account should go more than 10 days without a touchpoint.' }
   ];
   var f = samples[Math.floor(Math.random() * samples.length)];
   _aceKBUploadedFile = f;
@@ -19056,7 +19066,8 @@ function _aceKBSubmitAdd() {
   var newDoc = {
     id: (_aceKB.length ? Math.max.apply(null, _aceKB.map(function(d){return d.id;})) : 0) + 1,
     name: title, category: category, scope: scope, type: type, sizeKB: sizeKB,
-    addedBy: 'Sagar', addedAt: new Date(), status: 'processing'
+    addedBy: 'Sagar', addedAt: new Date(), status: 'processing',
+    content: pasteText || (_aceKBUploadedFile && _aceKBUploadedFile.content) || ''
   };
   _aceKB.unshift(newDoc);
   _aceKBCloseAdd();
@@ -19064,8 +19075,206 @@ function _aceKBSubmitAdd() {
   showToast('Ace is indexing "' + title + '"…');
   setTimeout(function() {
     var d = _aceKB.filter(function(x){return x.id===newDoc.id;})[0];
-    if (d) { d.status = 'indexed'; _aceKBRender(); showToast('✓ "' + title + '" is ready — Ace can now use it'); }
+    if (d) {
+      d.status = 'indexed';
+      var before = _aceKBRecs ? _aceKBRecs.length : 0;
+      _aceKBAnalyze();
+      _aceKBRender();
+      var found = _aceKBRecs.length - before;
+      showToast('✓ "' + title + '" is ready — Ace can now use it' + (found > 0 ? ' · ' + found + ' new recommended automation' + (found === 1 ? '' : 's') : ''));
+    }
   }, 2200);
+}
+
+/* ── Ace reads the Knowledge Base → recommends automations ─────────────────
+   Ace scans each indexed document's text for operating rules (response-time
+   promises, stall thresholds, escalation rules, renewal windows, onboarding
+   steps…), and for each rule it finds, proposes a ready-to-create automation
+   built on the real MKT_TRIGGERS / MKT_ACTIONS model, with the source
+   documents and the exact sentence that triggered the idea cited. The mockup
+   uses pattern matching in place of a language model, but the output feeds
+   straight into the same _mktAutomations store the builder uses. */
+var _aceKBRecs = null;            // null = never analyzed
+var _aceKBRecsCreated = {};       // sigId -> true once the user creates it
+var _aceKBRecsDismissed = {};     // sigId -> true once dismissed
+function _aceKBEsc(s) { return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function _aceKBSentences(text) { return String(text || '').split(/(?<=[.!?])\s+|\n+/).map(function(s){ return s.trim(); }).filter(Boolean); }
+function _aceKBStageIdx() {
+  var n = ((_companySettings && _companySettings.pipelineStages) || []).length;
+  var last = Math.max(0, n - 1);
+  return { early: Math.min(1, last), mid: Math.min(2, last) };
+}
+function _aceKBNum(s, re, dflt) { var m = String(s || '').match(re); return m ? Number(m[1].replace(/[,$]/g,'')) : dflt; }
+var _ACE_KB_SIGNALS = [
+  { id:'first_touch', re:/first[- ]touch|within (24|48) hours|within (a|one) day|new leads?/i,
+    build:function(snip){ return {
+      name:'First touch on every new opportunity', recordType:'opportunity',
+      trigger:{type:'opp_created', cfg:{}}, conditions:[],
+      actions:[{type:'create_call', cfg:{title:'First-touch call', rep:''}, delay:{amount:1, unit:'hours'}},
+               {type:'create_task', cfg:{title:'Confirm first touch was made', rep:''}, delay:{amount:1, unit:'days'}}] }; } },
+  { id:'stalled', re:/stalled|stuck|no movement|same stage/i,
+    build:function(snip){
+      var days = _aceKBNum(snip, /(\d{1,3})\s*(?:\+\s*)?days?/i, 14), st = _aceKBStageIdx();
+      return { name:'Rescue stalled deals (' + days + '+ days)', recordType:'opportunity',
+        trigger:{type:'opp_stage_stalled', cfg:{pipeline:0, stage:st.early, days:days}}, conditions:[],
+        actions:[{type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}},
+                 {type:'create_task', cfg:{title:'Re-qualify this stalled deal', rep:''}, delay:{amount:1, unit:'days'}}] }; } },
+  { id:'qualification', re:/meddic|qualif|champion|economic buyer/i,
+    build:function(snip){ var st = _aceKBStageIdx(); return {
+      name:'Qualification check before Proposal', recordType:'opportunity',
+      trigger:{type:'opp_stage_changed', cfg:{pipeline:0, stage:st.mid}}, conditions:[],
+      actions:[{type:'create_task', cfg:{title:'Confirm champion & economic buyer (MEDDIC)', rep:''}, delay:{amount:0, unit:'minutes'}},
+               {type:'log_note', cfg:{text:'Qualification checklist triggered by the sales playbook'}, delay:{amount:0, unit:'minutes'}}] }; } },
+  { id:'objections', re:/objection|discount|pricing/i,
+    build:function(snip){ var st = _aceKBStageIdx(); return {
+      name:'Prep objection responses before proposals', recordType:'opportunity',
+      trigger:{type:'opp_stage_changed', cfg:{pipeline:0, stage:st.mid}}, conditions:[],
+      actions:[{type:'create_task', cfg:{title:'Prepare objection & pricing responses', rep:''}, delay:{amount:30, unit:'minutes'}}] }; } },
+  { id:'escalation', re:/manager (review|approval)|executive sponsor|exec sponsor|enterprise (deals|contracts)/i,
+    build:function(snip){
+      var amt = _aceKBNum(snip, /\$\s*([\d,]+)\s*k/i, 0); amt = amt ? amt * 1000 : _aceKBNum(snip, /\$\s*([\d,]{5,})/i, 50000);
+      return { name:'Escalate big deals to a manager (over $' + amt.toLocaleString() + ')', recordType:'opportunity',
+        trigger:{type:'opp_value_above', cfg:{amt:amt}}, conditions:[],
+        actions:[{type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}},
+                 {type:'create_meeting', cfg:{title:'Executive sponsor alignment', rep:''}, delay:{amount:1, unit:'days'}}] }; } },
+  { id:'renewal', re:/renew/i,
+    build:function(snip){
+      var days = _aceKBNum(snip, /(\d{1,3})\s*days?\s*before/i, 60);
+      return { name:'Start renewal conversations ' + days + ' days out', recordType:'opportunity',
+        trigger:{type:'opp_renewal_due', cfg:{days:days}}, conditions:[],
+        actions:[{type:'create_task', cfg:{title:'Open the renewal conversation', rep:''}, delay:{amount:0, unit:'minutes'}},
+                 {type:'send_email', cfg:{tmpl:0}, delay:{amount:1, unit:'days'}}] }; } },
+  { id:'close_push', re:/close date|closing within|end-of-quarter|priority/i,
+    build:function(snip){
+      var amt = _aceKBNum(snip, /\$\s*([\d,]+)\s*k/i, 25); amt = amt * 1000;
+      return { name:'Close-date push on deals over $' + amt.toLocaleString(), recordType:'opportunity',
+        trigger:{type:'opp_field_match', cfg:{}},
+        conditions:[{connector:'AND', field:'dealValue', operator:'greater_or_equal', value:amt},
+                    {connector:'AND', field:'closeDate', operator:'within_next_days', value:30}],
+        actions:[{type:'create_task', cfg:{title:'Confirm close-date timeline with buyer', rep:''}, delay:{amount:0, unit:'minutes'}},
+                 {type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}}] }; } },
+  { id:'coaching', re:/behind pace|quota attainment|coaching/i,
+    build:function(snip){ return {
+      name:'Flag reps behind pace for coaching', recordType:'account',
+      trigger:{type:'acct_no_activity', cfg:{days:7}}, conditions:[],
+      actions:[{type:'flag_risk', cfg:{}, delay:{amount:0, unit:'minutes'}},
+               {type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}}] }; } },
+  { id:'onboarding', re:/onboard|welcome packet|kick.?off/i,
+    build:function(snip){ return {
+      name:'Onboard every new customer', recordType:'opportunity',
+      trigger:{type:'opp_won', cfg:{}}, conditions:[],
+      actions:[{type:'send_email', cfg:{tmpl:5}, delay:{amount:1, unit:'hours'}},
+               {type:'create_meeting', cfg:{title:'Onboarding kickoff', rep:''}, delay:{amount:2, unit:'days'}}] }; } },
+  { id:'winback', re:/win.?back|lost deals?|loss reason/i,
+    build:function(snip){
+      var days = _aceKBNum(snip, /(\d{1,3})\s*days?\s*(later|after)/i, 60);
+      return { name:'Win-back outreach after a loss (' + days + ' days)', recordType:'opportunity',
+        trigger:{type:'opp_lost', cfg:{}}, conditions:[],
+        actions:[{type:'log_note', cfg:{text:'Loss reviewed per playbook'}, delay:{amount:0, unit:'minutes'}},
+                 {type:'send_email', cfg:{tmpl:4}, delay:{amount:days, unit:'days'}}] }; } }
+];
+function _aceKBAnalyze() {
+  var docs = _aceKB.filter(function(d){ return d.status === 'indexed' && d.content; });
+  var recs = [];
+  _ACE_KB_SIGNALS.forEach(function(sig) {
+    var sources = [], firstSnip = '';
+    docs.forEach(function(d) {
+      var hit = _aceKBSentences(d.name + '. ' + d.content).filter(function(s){ return sig.re.test(s); })[0];
+      if (hit) { sources.push({ docId:d.id, name:d.name, snippet:hit }); if (!firstSnip) firstSnip = hit; }
+    });
+    if (!sources.length) return;
+    var rec = sig.build(firstSnip);
+    rec.sigId = sig.id; rec.sources = sources;
+    rec.confidence = sources.length >= 2 ? 'Strong match' : 'Likely match';
+    recs.push(rec);
+  });
+  // Client-specific documents → a keep-warm automation for that one account
+  docs.filter(function(d){ return d.category === 'client' && d.scope && !/^all/i.test(d.scope); }).forEach(function(d) {
+    var days = _aceKBNum(d.content, /(\d{1,3})\s*days/i, 14);
+    var snip = _aceKBSentences(d.content).filter(function(s){ return /days|touch|contact|quiet/i.test(s); })[0] || d.content.slice(0, 120);
+    recs.push({
+      sigId:'client_' + d.id, name:'Keep ' + d.scope + ' warm (' + days + '-day touchpoint)', recordType:'account',
+      trigger:{type:'acct_no_activity', cfg:{days:days}},
+      conditions:[{connector:'AND', field:'companyName', operator:'contains', value:d.scope}],
+      actions:[{type:'create_task', cfg:{title:'Reach out to ' + d.scope, rep:''}, delay:{amount:0, unit:'minutes'}},
+               {type:'notify_mgr', cfg:{}, delay:{amount:0, unit:'minutes'}}],
+      sources:[{ docId:d.id, name:d.name, snippet:snip }], confidence:'Account-specific'
+    });
+  });
+  // Don't re-suggest something the user already built with the same name
+  var existing = (typeof _mktAutomations !== 'undefined' ? _mktAutomations : []).map(function(a){ return a.name; });
+  recs.forEach(function(r){ if (existing.indexOf(r.name) !== -1) _aceKBRecsCreated[r.sigId] = true; });
+  _aceKBRecs = recs;
+  return recs;
+}
+function _aceKBRenderRecs() {
+  var el = document.getElementById('ace-kb-recs');
+  if (!el) return;
+  if (_aceKBRecs === null) _aceKBAnalyze();
+  var docCount = _aceKB.filter(function(d){ return d.status === 'indexed' && d.content; }).length;
+  var visible = _aceKBRecs.filter(function(r){ return !_aceKBRecsDismissed[r.sigId]; });
+  var head = '<div style="background:var(--g50);border-bottom:1px solid var(--g200);padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px">'
+    + '<div><div style="font-size:13px;font-weight:700;color:var(--dark);display:flex;align-items:center;gap:7px">'
+    + '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Recommended automations</div>'
+    + '<div style="font-size:11px;color:var(--g400);margin-top:2px">Ace read ' + docCount + ' document' + (docCount === 1 ? '' : 's') + ' and found ' + visible.length + ' workflow' + (visible.length === 1 ? '' : 's') + ' worth automating</div></div>'
+    + '<button onclick="_aceKBReanalyze()" style="border:1px solid var(--g200);background:#fff;color:var(--g600);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Re-analyze</button></div>';
+  var body;
+  if (!visible.length) {
+    body = '<div style="padding:28px 20px;text-align:center;font-size:12px;color:var(--g400)">' + (docCount ? 'No more recommendations right now — add more knowledge and Ace will look again.' : 'Add and index a document, then Ace will suggest automations from it.') + '</div>';
+  } else {
+    body = visible.map(function(r) {
+      var created = !!_aceKBRecsCreated[r.sigId];
+      var typeLabel = (MKT_RECORD_TYPES[r.recordType] || {}).label || r.recordType;
+      var condTxt = _mktConditionsText(r.conditions);
+      var srcChips = r.sources.slice(0, 3).map(function(s){
+        return '<span style="font-size:10.5px;font-weight:600;color:var(--g500);background:var(--g100);border-radius:6px;padding:2px 8px;display:inline-flex;align-items:center;gap:4px">' + _aceKBEsc(s.name) + '</span>'; }).join(' ');
+      var actions = r.actions.map(function(ac){ return '<div class="mkt-act"><span>' + _mktActionText(ac) + '</span></div>'; }).join('');
+      return '<div style="padding:16px;border-bottom:1px solid var(--g100)">'
+        + '<div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:6px">'
+        +   '<div><div style="font-size:13.5px;font-weight:700;color:var(--dark)">' + _aceKBEsc(r.name) + '</div>'
+        +   '<div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap"><span style="font-size:10.5px;font-weight:600;color:var(--g500);background:var(--g100);border-radius:6px;padding:2px 8px">' + typeLabel + '</span>'
+        +   '<span style="font-size:10.5px;font-weight:700;color:var(--teal)">' + r.confidence + '</span></div></div>'
+        +   (created
+              ? '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0"><span style="font-size:12px;font-weight:700;color:var(--teal)">✓ Created</span><button onclick="_aceKBViewAutomations()" style="border:none;background:none;color:var(--teal);font-size:11.5px;font-weight:600;cursor:pointer;font-family:var(--font);padding:0">View in Automations →</button></div>'
+              : '<div style="display:flex;gap:6px;flex-shrink:0"><button onclick="_aceKBDismissRec(\'' + r.sigId + '\')" style="border:1px solid var(--g200);background:#fff;color:var(--g500);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">Dismiss</button>'
+              +  '<button onclick="_aceKBCreateRec(\'' + r.sigId + '\')" style="border:none;background:var(--teal);color:#fff;border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Create automation</button></div>')
+        + '</div>'
+        + '<div style="font-size:12px;color:var(--g500);line-height:1.55;margin-bottom:10px">Ace found this in your documents: <em style="color:var(--g600)">&ldquo;' + _aceKBEsc(r.sources[0].snippet.length > 150 ? r.sources[0].snippet.slice(0, 147) + '…' : r.sources[0].snippet) + '&rdquo;</em></div>'
+        + '<div class="mkt-trig"><span class="mkt-trig-tag">WHEN</span><span style="font-size:11.5px;color:var(--g600);line-height:1.45">' + _mktTriggerText(r.trigger) + '</span></div>'
+        + (condTxt ? '<div class="mkt-trig" style="margin-top:5px"><span class="mkt-trig-tag" style="background:rgba(245,158,11,0.12);color:var(--amber)">IF</span><span style="font-size:11.5px;color:var(--g600);line-height:1.45">' + condTxt + '</span></div>' : '')
+        + '<div class="mkt-act-list" style="margin-bottom:10px">' + actions + '</div>'
+        + '<div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap"><span style="font-size:10.5px;color:var(--g400)">Sources:</span>' + srcChips + '</div>'
+        + '</div>';
+    }).join('');
+  }
+  el.innerHTML = head + body;
+}
+function _aceKBReanalyze() {
+  var el = document.getElementById('ace-kb-recs');
+  var n = _aceKB.filter(function(d){ return d.status === 'indexed' && d.content; }).length;
+  if (el) el.innerHTML = '<div style="padding:28px 20px;text-align:center;font-size:12.5px;color:var(--g500)">Ace is reading ' + n + ' document' + (n === 1 ? '' : 's') + '…</div>';
+  setTimeout(function(){ _aceKBRecsDismissed = {}; _aceKBAnalyze(); _aceKBRenderRecs(); showToast('Ace found ' + _aceKBRecs.length + ' recommended automation' + (_aceKBRecs.length === 1 ? '' : 's')); }, 1100);
+}
+function _aceKBDismissRec(sigId) { _aceKBRecsDismissed[sigId] = true; _aceKBRenderRecs(); showToast('Recommendation dismissed'); }
+function _aceKBCreateRec(sigId) {
+  var r = (_aceKBRecs || []).filter(function(x){ return x.sigId === sigId; })[0];
+  if (!r || _aceKBRecsCreated[sigId]) return;
+  if (!_mktAutomations.length && typeof _mktSeedAutomations === 'function') _mktSeedAutomations();
+  _mktAutomations.push({
+    name: r.name, active: true, recordType: r.recordType, source: 'Ace · Knowledge Base',
+    trigger: JSON.parse(JSON.stringify(r.trigger)),
+    conditions: JSON.parse(JSON.stringify(r.conditions || [])),
+    actions: JSON.parse(JSON.stringify(r.actions))
+  });
+  _aceKBRecsCreated[sigId] = true;
+  if (typeof _mktRenderAutomations === 'function') _mktRenderAutomations();
+  _aceKBRenderRecs();
+  showToast('✓ Automation created: ' + r.name);
+}
+function _aceKBViewAutomations() {
+  if (typeof closeToolsSettings === 'function') closeToolsSettings();
+  showPage('marketing');
+  if (typeof _mktTab === 'function') _mktTab('auto');
 }
 
 // ── PERSONAL GOALS + MORNING BRIEF ────────────────────────────────────────────
@@ -26697,7 +26906,8 @@ function _mktRenderAutomations() {
       +   '</div>'
       +   '<label class="toggle-switch" style="margin:0;flex-shrink:0"><input type="checkbox"' + (a.active ? ' checked' : '') + ' onchange="_mktToggleAuto(' + i + ',this.checked)"><span class="toggle-slider"></span></label>'
       + '</div>'
-      + '<div style="margin-bottom:10px"><span style="display:inline-block;font-size:10.5px;font-weight:600;color:var(--g500);background:var(--g100);border-radius:6px;padding:2px 8px">' + typeLabel + '</span></div>'
+      + '<div style="margin-bottom:10px;display:flex;gap:6px;flex-wrap:wrap"><span style="display:inline-block;font-size:10.5px;font-weight:600;color:var(--g500);background:var(--g100);border-radius:6px;padding:2px 8px">' + typeLabel + '</span>'
+      + (a.source ? '<span style="display:inline-block;font-size:10.5px;font-weight:600;color:var(--teal);background:rgba(29,158,117,0.1);border-radius:6px;padding:2px 8px">From Knowledge Base</span>' : '') + '</div>'
       + '<div class="mkt-trig"><span class="mkt-trig-tag">WHEN</span><span style="font-size:11.5px;color:var(--g600);line-height:1.45">' + _mktTriggerText(a.trigger) + '</span></div>'
       + (condTxt ? '<div class="mkt-trig" style="margin-top:5px"><span class="mkt-trig-tag" style="background:rgba(245,158,11,0.12);color:var(--amber)">IF</span><span style="font-size:11.5px;color:var(--g600);line-height:1.45">' + condTxt + '</span></div>' : '')
       + '<div class="mkt-act-list">' + acts + '</div>'
