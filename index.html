@@ -6634,7 +6634,8 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     <div style="width:220px;flex-shrink:0;border-right:1px solid var(--g200);padding:16px 10px;display:flex;flex-direction:column;gap:2px;overflow-y:auto;background:var(--g50)">
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:4px 10px 8px">Organization</div>
       <button class="cs-nav-btn" data-section="company"     onclick="_csLoadSection('company')"     style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:var(--teal);border:none;cursor:pointer;font-size:13px;font-weight:700;color:#fff;text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg> Company Info</button>
-      <button class="cs-nav-btn" data-section="goals"       onclick="_csLoadSection('goals')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Goals &amp; Quotas</button>
+      <button class="cs-nav-btn" data-section="labels"      onclick="_csLoadSection('labels')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg> Platform Labels</button>
+      <button class="cs-nav-btn" data-section="goals"      onclick="_csLoadSection('goals')"       style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg> Goals &amp; Quotas</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Sales Process</div>
       <button class="cs-nav-btn" data-section="pipeline"    onclick="_csLoadSection('pipeline')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><rect x="3" y="3" width="5" height="18" rx="1"/><rect x="10" y="3" width="5" height="11" rx="1"/><rect x="17" y="3" width="4" height="7" rx="1"/></svg> Pipeline Stages</button>
       <button class="cs-nav-btn" data-section="products"    onclick="_csLoadSection('products')"    style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"/><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg> Products &amp; Services</button>
@@ -9730,6 +9731,7 @@ function _csLoadSection(id) {
   if (id === 'import-export') { c.innerHTML = _csImportExportSection(); }
   if (id === 'email-sending') { c.innerHTML = _csEmailSendingSection(); }
   if (id === 'dedupe')        { c.innerHTML = _csDedupeSection(); _dedupeRenderResults(); }
+  if (id === 'labels')        { c.innerHTML = _csLabelsSection(); _lblRenderPreview(); }
 }
 function _csEmailSendingSection() {
   var d = (typeof _mktDeliverability !== 'undefined') ? _mktDeliverability : {spf:true,dkim:true,dmarc:true,reputationScore:92,reputationLabel:'Excellent',bounceRate:0.7,complaintRate:0.03,bounceThreshold:2.0,complaintThreshold:0.1,dailyCap:5000,sentToday:1240};
@@ -19548,8 +19550,244 @@ function _demoReset() {
   try { if (_currentRole !== 'sm') setRole('sm'); } catch (e) {}
   try { showPage('dashboard'); } catch (e) {}
   var p = document.getElementById('demo-guide-panel'); if (p) p.style.display = 'none';
+  _lblDraftFromCurrent();
   showToast('Demo reset — ready to start from the top');
 }
+
+/* ── Platform Labels (Company Settings → Platform Labels) ─────────────────
+   Lets each company rename core concepts (People → Clients, Accounts →
+   Households, Rep → Advisor …) everywhere in the UI. Implementation: a
+   label registry + a DOM pass that rewrites visible text (and placeholder /
+   title / aria-label attributes) in place, plus a MutationObserver so
+   content rendered later by JS gets the same treatment. Case ("People",
+   "people", "PEOPLE") and a/an agreement are preserved, and every rewritten
+   node remembers its original text so labels can be changed or reset at any
+   time. Data and code identifiers are never touched — only display text. */
+var _LBL_ENTITIES = [
+  { k:'person',      name:'People',        hint:'The individuals you sell to or manage',                 s:'Person',      p:'People',        sing:['person'],                plur:['people','persons'] },
+  { k:'account',     name:'Accounts',      hint:'The company or group a person belongs to',              s:'Account',     p:'Accounts',      sing:['account','organization'], plur:['accounts','organizations'] },
+  { k:'opportunity', name:'Opportunities', hint:'A potential sale being worked (also shown as “Deal”)',  s:'Opportunity', p:'Opportunities', sing:['opportunity','deal'],     plur:['opportunities','deals'] },
+  { k:'pipeline',    name:'Pipeline',      hint:'The stages an opportunity moves through',               s:'Pipeline',    p:'Pipelines',     sing:['pipeline'],              plur:['pipelines'] },
+  { k:'rep',         name:'Sales reps',    hint:'The people doing the selling — e.g. Agent, Advisor',     s:'Rep',         p:'Reps',          sing:['rep'],                   plur:['reps'] },
+  { k:'meeting',     name:'Meetings',      hint:'Scheduled conversations — e.g. Appointment, Review',     s:'Meeting',     p:'Meetings',      sing:['meeting'],               plur:['meetings'] },
+  { k:'task',        name:'Tasks',         hint:'To-dos tied to a record — e.g. Action item, Follow-up',  s:'Task',        p:'Tasks',         sing:['task'],                  plur:['tasks'] }
+];
+var _LBL_PRESETS = [
+  { id:'default',   name:'Default',            v:{} },
+  { id:'financial', name:'Financial Advisor',  v:{ person:['Client','Clients'], account:['Household','Households'], rep:['Advisor','Advisors'], meeting:['Review','Reviews'] } },
+  { id:'insurance', name:'Insurance Agent',    v:{ person:['Client','Clients'], account:['Household','Households'], opportunity:['Quote','Quotes'], rep:['Agent','Agents'], meeting:['Appointment','Appointments'] } },
+  { id:'realestate',name:'Real Estate',        v:{ person:['Client','Clients'], account:['Property','Properties'], opportunity:['Listing','Listings'], rep:['Agent','Agents'], meeting:['Showing','Showings'] } },
+  { id:'mortgage',  name:'Mortgage Lender',    v:{ person:['Borrower','Borrowers'], account:['Household','Households'], opportunity:['Loan','Loans'], rep:['Loan Officer','Loan Officers'], meeting:['Consultation','Consultations'] } },
+  { id:'recruiting',name:'Recruiting & Staffing', v:{ person:['Candidate','Candidates'], account:['Client','Clients'], opportunity:['Job Order','Job Orders'], rep:['Recruiter','Recruiters'], meeting:['Interview','Interviews'] } },
+  { id:'consulting',name:'Consulting & Agency',v:{ person:['Stakeholder','Stakeholders'], account:['Client','Clients'], opportunity:['Engagement','Engagements'], rep:['Consultant','Consultants'], meeting:['Session','Sessions'] } },
+  { id:'legal',     name:'Law Firm',           v:{ person:['Client','Clients'], account:['Matter','Matters'], opportunity:['Case','Cases'], rep:['Attorney','Attorneys'], meeting:['Consultation','Consultations'] } },
+  { id:'healthcare',name:'Healthcare Practice',v:{ person:['Patient','Patients'], account:['Practice','Practices'], opportunity:['Referral','Referrals'], rep:['Liaison','Liaisons'], meeting:['Appointment','Appointments'] } },
+  { id:'nonprofit', name:'Nonprofit Fundraising', v:{ person:['Donor','Donors'], account:['Foundation','Foundations'], opportunity:['Gift','Gifts'], rep:['Fundraiser','Fundraisers'], meeting:['Visit','Visits'], task:['Follow-up','Follow-ups'] } },
+  { id:'education', name:'Education & Admissions', v:{ person:['Student','Students'], account:['Family','Families'], opportunity:['Application','Applications'], rep:['Admissions Counselor','Admissions Counselors'], meeting:['Campus Visit','Campus Visits'] } },
+  { id:'saas',      name:'B2B Software',       v:{ person:['Contact','Contacts'], account:['Company','Companies'], opportunity:['Deal','Deals'], rep:['Account Executive','Account Executives'], meeting:['Demo','Demos'] } }
+];
+var _labels = {};          // only entries that differ from the default: { key:{s,p} }
+var _lblDraft = {};        // what's currently typed in the settings screen
+var _lblRegex = null, _lblMap = {};
+var _lblNodes = new Map(); // text node -> {orig, out}
+var _lblAttrs = [];        // [{el, attr, orig}]
+var _lblObserver = null, _lblBusy = false;
+
+function _lblEntity(k) { return _LBL_ENTITIES.filter(function(e){ return e.k === k; })[0]; }
+function _lblCurrent(k) { var e = _lblEntity(k), c = _labels[k]; return { s: c ? c.s : e.s, p: c ? c.p : e.p }; }
+function _lblAutoPlural(s) {
+  s = String(s || '').trim();
+  if (!s) return '';
+  if (/[^aeiou]y$/i.test(s)) return s.slice(0, -1) + 'ies';
+  if (/(s|x|ch|sh)$/i.test(s)) return s + 'es';
+  return s + 's';
+}
+function _lblLoad() {
+  try { var raw = localStorage.getItem('goalscom_labels'); _labels = raw ? JSON.parse(raw) : {}; } catch (e) { _labels = {}; }
+}
+function _lblSave() {
+  try { localStorage.setItem('goalscom_labels', JSON.stringify(_labels)); } catch (e) {}
+}
+function _lblBuild() {
+  _lblMap = {}; var words = [];
+  _LBL_ENTITIES.forEach(function(e) {
+    var c = _labels[e.k];
+    if (!c || (c.s === e.s && c.p === e.p)) return;       // unchanged → leave the platform's own wording alone
+    e.sing.forEach(function(w){ _lblMap[w] = { s:c.s, p:c.p, plural:false }; words.push(w); });
+    e.plur.forEach(function(w){ _lblMap[w] = { s:c.s, p:c.p, plural:true  }; words.push(w); });
+  });
+  words.sort(function(a, b){ return b.length - a.length; });
+  // "in person" and "My Account" are ordinary English / a different thing — never rewritten
+  _lblRegex = words.length ? new RegExp('\\b(?:(an?)\\s+)?(?<!\\b(?:in|my)\\s)(' + words.join('|') + ')\\b(?!\\s+Settings\\b)', 'gi') : null;
+}
+function _lblCase(orig, label) {
+  if (orig.length > 1 && orig === orig.toUpperCase()) return label.toUpperCase();
+  if (orig.charAt(0) === orig.charAt(0).toUpperCase()) return label.charAt(0).toUpperCase() + label.slice(1);
+  return label.toLowerCase();
+}
+function _lblReplaceText(str) {
+  if (!_lblRegex || !str) return str;
+  return str.replace(_lblRegex, function(m, art, word) {
+    var info = _lblMap[word.toLowerCase()]; if (!info) return m;
+    var label = _lblCase(word, info.plural ? info.p : info.s);
+    if (!art) return label;
+    if (info.plural) return art + ' ' + label;
+    var na = /^[aeiou]/i.test(label) ? 'an' : 'a';
+    if (art.charAt(0) === art.charAt(0).toUpperCase()) na = na.charAt(0).toUpperCase() + na.slice(1);
+    return na + ' ' + label;
+  });
+}
+function _lblSkipNode(n) {
+  var p = n.parentNode;
+  if (!p) return true;
+  var tag = p.nodeName;
+  if (tag === 'SCRIPT' || tag === 'STYLE' || tag === 'TEXTAREA' || tag === 'NOSCRIPT' || tag === 'INPUT') return true;
+  if (p.closest && p.closest('[data-nolabel]')) return true;
+  return false;
+}
+function _lblProcessTextNode(n) {
+  if (!_lblRegex || _lblSkipNode(n)) return;
+  var cur = n.nodeValue; if (!cur) return;
+  var entry = _lblNodes.get(n);
+  if (entry && entry.out === cur) return;                  // our own change
+  _lblRegex.lastIndex = 0;
+  if (!_lblRegex.test(cur)) { if (entry) _lblNodes.delete(n); return; }
+  _lblRegex.lastIndex = 0;
+  var out = _lblReplaceText(cur);
+  if (out !== cur) { _lblNodes.set(n, { orig: cur, out: out }); n.nodeValue = out; }
+}
+function _lblProcessAttrs(root) {
+  if (!_lblRegex || !root.querySelectorAll) return;
+  var els = root.querySelectorAll('[placeholder],[title],[aria-label]');
+  for (var i = 0; i < els.length; i++) {
+    var el = els[i];
+    if (el.closest && el.closest('[data-nolabel]')) continue;
+    ['placeholder','title','aria-label'].forEach(function(a) {
+      var v = el.getAttribute(a); if (!v) return;
+      var out = _lblReplaceText(v);
+      if (out !== v) { _lblAttrs.push({ el: el, attr: a, orig: v }); el.setAttribute(a, out); }
+    });
+  }
+}
+function _lblWalk(root) {
+  if (!_lblRegex || !root) return;
+  if (root.nodeType === 3) { _lblProcessTextNode(root); return; }
+  if (typeof document.createTreeWalker !== 'function') return;
+  var w = document.createTreeWalker(root, 4 /* SHOW_TEXT */, null), list = [], n;
+  while ((n = w.nextNode())) list.push(n);
+  list.forEach(_lblProcessTextNode);
+  _lblProcessAttrs(root);
+}
+function _lblRevertAll() {
+  _lblNodes.forEach(function(entry, node) { if (node.isConnected !== false && node.nodeValue === entry.out) node.nodeValue = entry.orig; });
+  _lblNodes.clear();
+  _lblAttrs.forEach(function(a) { try { a.el.setAttribute(a.attr, a.orig); } catch (e) {} });
+  _lblAttrs = [];
+}
+function _lblApplyAll() {
+  _lblBusy = true;
+  _lblRevertAll();
+  _lblBuild();
+  if (document.body) _lblWalk(document.body);
+  if (_lblObserver && _lblObserver.takeRecords) _lblObserver.takeRecords();
+  _lblBusy = false;
+}
+function _lblStartObserver() {
+  if (typeof MutationObserver !== 'function' || !document.body || _lblObserver) return;
+  _lblObserver = new MutationObserver(function(records) {
+    if (_lblBusy || !_lblRegex) return;
+    _lblBusy = true;
+    records.forEach(function(r) {
+      if (r.type === 'characterData') _lblProcessTextNode(r.target);
+      else if (r.addedNodes) for (var i = 0; i < r.addedNodes.length; i++) _lblWalk(r.addedNodes[i]);
+    });
+    if (_lblObserver.takeRecords) _lblObserver.takeRecords();
+    _lblBusy = false;
+  });
+  _lblObserver.observe(document.body, { childList:true, subtree:true, characterData:true });
+}
+function _lblInit() { _lblLoad(); _lblApplyAll(); _lblStartObserver(); }
+
+/* ── Settings screen ── */
+function _lblDraftFromCurrent() {
+  _lblDraft = {};
+  _LBL_ENTITIES.forEach(function(e){ var c = _lblCurrent(e.k); _lblDraft[e.k] = { s:c.s, p:c.p }; });
+}
+function _csLabelsSection() {
+  _lblDraftFromCurrent();
+  var presets = _LBL_PRESETS.map(function(p) {
+    return '<button onclick="_lblApplyPreset(\'' + p.id + '\')" style="border:1.5px solid var(--g200);background:#fff;color:var(--g600);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font)">' + p.name + '</button>';
+  }).join('');
+  var rows = _LBL_ENTITIES.map(function(e) {
+    return '<div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px;align-items:center;padding:13px 16px;border-top:1px solid var(--g100)">'
+      + '<div><div style="font-size:13px;font-weight:700;color:var(--dark)">' + e.name + '</div><div style="font-size:11px;color:var(--g400);margin-top:2px;line-height:1.4">' + e.hint + '</div></div>'
+      + '<input id="lbl-s-' + e.k + '" value="' + _aceKBEsc(_lblDraft[e.k].s) + '" oninput="_lblOnType(\'' + e.k + '\',\'s\',this.value)" placeholder="' + e.s + '" style="border:1.5px solid var(--g200);border-radius:8px;padding:8px 11px;font-size:13px;font-family:var(--font);box-sizing:border-box;width:100%">'
+      + '<input id="lbl-p-' + e.k + '" value="' + _aceKBEsc(_lblDraft[e.k].p) + '" oninput="_lblOnType(\'' + e.k + '\',\'p\',this.value)" placeholder="' + e.p + '" style="border:1.5px solid var(--g200);border-radius:8px;padding:8px 11px;font-size:13px;font-family:var(--font);box-sizing:border-box;width:100%">'
+      + '</div>';
+  }).join('');
+  return '<div data-nolabel="1">'
+    + _csSectionTitle('Platform Labels', 'Rename the core terms to match how your business talks — a financial advisor can say Clients and Households, an insurance agent can say Policyholders and Quotes. Changes apply everywhere in the platform.')
+    + '<div style="margin-bottom:20px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:8px">Start from a preset</div><div style="display:flex;gap:8px;flex-wrap:wrap">' + presets + '</div></div>'
+    + '<div style="border:1.5px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:18px">'
+    +   '<div style="display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:12px;padding:10px 16px;background:var(--g50);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400)"><div>Platform term</div><div>Your label (singular)</div><div>Your label (plural)</div></div>'
+    +   rows
+    + '</div>'
+    + '<div style="background:var(--g50);border:1px solid var(--g200);border-radius:12px;padding:14px 16px;margin-bottom:18px"><div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:7px">Preview</div><div id="lbl-preview" style="font-size:13px;color:var(--dark);line-height:1.7"></div></div>'
+    + '<div style="display:flex;gap:10px;align-items:center"><button onclick="_lblSaveFromUI()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 22px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Apply labels</button>'
+    + '<button onclick="_lblResetAll()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:9px;padding:10px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Reset to defaults</button>'
+    + '<span style="font-size:11.5px;color:var(--g400)">Only display text changes — your data and reports are untouched.</span></div>'
+    + '</div>';
+}
+function _lblRenderPreview() {
+  var el = document.getElementById('lbl-preview'); if (!el) return;
+  var d = _lblDraft, g = function(k, f){ return _aceKBEsc((d[k] && d[k][f]) || _lblEntity(k)[f]); };
+  el.innerHTML = '<div><strong>Navigation:</strong> ' + g('person','p') + ' · ' + g('account','p') + ' · ' + g('pipeline','p') + ' · ' + g('meeting','p') + '</div>'
+    + '<div><strong>In a sentence:</strong> “Add a ' + g('person','s').toLowerCase() + ' to this ' + g('account','s').toLowerCase() + ', then book a ' + g('meeting','s').toLowerCase() + ' with your ' + g('rep','s').toLowerCase() + ' and create a ' + g('opportunity','s').toLowerCase() + '.”</div>';
+}
+function _lblOnType(k, field, val) {
+  if (!_lblDraft[k]) _lblDraft[k] = { s:_lblEntity(k).s, p:_lblEntity(k).p };
+  var prevAuto = _lblAutoPlural(_lblDraft[k].s);
+  _lblDraft[k][field] = val;
+  if (field === 's') {          // keep the plural in step unless the user wrote their own
+    var pEl = document.getElementById('lbl-p-' + k);
+    if (_lblDraft[k].p === prevAuto || !_lblDraft[k].p || _lblDraft[k].p === _lblEntity(k).p) {
+      _lblDraft[k].p = _lblAutoPlural(val); if (pEl) pEl.value = _lblDraft[k].p;
+    }
+  }
+  _lblRenderPreview();
+}
+function _lblApplyPreset(id) {
+  var p = _LBL_PRESETS.filter(function(x){ return x.id === id; })[0]; if (!p) return;
+  _LBL_ENTITIES.forEach(function(e) {
+    var v = p.v[e.k] || [e.s, e.p];
+    _lblDraft[e.k] = { s:v[0], p:v[1] };
+    var sEl = document.getElementById('lbl-s-' + e.k), pEl = document.getElementById('lbl-p-' + e.k);
+    if (sEl) sEl.value = v[0]; if (pEl) pEl.value = v[1];
+  });
+  _lblRenderPreview();
+}
+function _lblSaveFromUI() {
+  var next = {};
+  for (var i = 0; i < _LBL_ENTITIES.length; i++) {
+    var e = _LBL_ENTITIES[i], d = _lblDraft[e.k] || { s:e.s, p:e.p };
+    var s = String(d.s || '').trim(), p = String(d.p || '').trim();
+    if (!s && !p) { s = e.s; p = e.p; }
+    if (!s) s = e.s; if (!p) p = _lblAutoPlural(s);
+    if (s.length > 30 || p.length > 30) { showToast('Keep labels under 30 characters (' + e.name + ')'); return; }
+    if (s !== e.s || p !== e.p) next[e.k] = { s:s, p:p };
+  }
+  _labels = next; _lblSave(); _lblApplyAll();
+  var n = Object.keys(next).length;
+  showToast(n ? '✓ ' + n + ' label' + (n === 1 ? '' : 's') + ' updated across the platform' : '✓ Labels reset to defaults');
+  _lblDraftFromCurrent(); _lblRenderPreview();
+}
+function _lblResetAll() {
+  _labels = {}; _lblSave(); _lblApplyAll();
+  var c = document.getElementById('cs-content'); if (c && _csCurrentSection === 'labels') { c.innerHTML = _csLabelsSection(); _lblRenderPreview(); }
+  showToast('✓ Labels reset to defaults');
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _lblInit);
+else _lblInit();
 
 // ── PERSONAL GOALS + MORNING BRIEF ────────────────────────────────────────────
 
