@@ -6828,6 +6828,47 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   </div>
 </div>
 
+<!-- Ask Ace first-time setup (5 questions). Top-level sibling so it layers above
+     the Ask Ace pop-up (z 2000) regardless of which page is underneath. -->
+<div id="ace-onboard-overlay" style="position:fixed;inset:0;background:rgba(15,23,42,0.6);z-index:2600;display:none;align-items:center;justify-content:center;padding:24px">
+  <div style="background:#fff;border-radius:18px;width:580px;max-width:100%;max-height:92vh;display:flex;flex-direction:column;box-shadow:0 24px 70px rgba(0,0,0,0.35);overflow:hidden">
+    <div style="padding:20px 26px 0">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:9px">
+          <div style="width:28px;height:28px;border-radius:8px;background:var(--navy);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
+          <div style="font-size:13px;font-weight:700;color:var(--dark)">Set up Ace</div>
+        </div>
+        <div id="ace-ob-count" style="font-size:11.5px;font-weight:600;color:var(--g400)">Question 1 of 5</div>
+      </div>
+      <div id="ace-ob-progress" style="display:flex;gap:6px"></div>
+    </div>
+    <div id="ace-ob-body" style="padding:22px 26px;overflow-y:auto;flex:1"></div>
+    <div style="padding:14px 26px;border-top:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between">
+      <button onclick="_aceObSkip()" style="border:none;background:none;color:var(--g400);font-size:12px;font-weight:600;cursor:pointer;font-family:var(--font);padding:0">Skip for now</button>
+      <div style="display:flex;gap:8px">
+        <button id="ace-ob-back" onclick="_aceObBack()" style="background:none;border:1px solid var(--g200);color:var(--g500);border-radius:9px;padding:9px 18px;font-size:13px;font-weight:600;cursor:pointer;font-family:var(--font)">Back</button>
+        <button id="ace-ob-next" onclick="_aceObNext()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:9px 24px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Next</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Demo guide: presenter-only walkthrough + one-click reset (top-level, always above page content) -->
+<button id="demo-guide-pill" onclick="_demoToggle()" style="position:fixed;right:18px;bottom:18px;z-index:1900;background:var(--navy);color:#fff;border:none;border-radius:20px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);box-shadow:0 4px 14px rgba(0,0,0,0.25);display:none;align-items:center;gap:7px">
+  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>Demo guide
+</button>
+<div id="demo-guide-panel" style="position:fixed;right:18px;bottom:62px;z-index:2700;width:370px;max-width:calc(100vw - 36px);max-height:78vh;background:#fff;border:1px solid var(--g200);border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,0.28);display:none;flex-direction:column;overflow:hidden">
+  <div style="padding:14px 16px;border-bottom:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;background:var(--navy);color:#fff">
+    <div><div style="font-size:13px;font-weight:800">Demo guide</div><div style="font-size:11px;opacity:.65;margin-top:1px">Click-path for walking the dev team through</div></div>
+    <button onclick="_demoToggle()" style="border:none;background:none;color:#fff;font-size:18px;cursor:pointer;line-height:1">×</button>
+  </div>
+  <div id="demo-guide-steps" style="overflow-y:auto;flex:1"></div>
+  <div style="padding:12px 16px;border-top:1px solid var(--g100);display:flex;align-items:center;justify-content:space-between;gap:10px;background:var(--g50)">
+    <div style="font-size:11px;color:var(--g400);line-height:1.4">Reset puts everything back to a clean first-run state.</div>
+    <button onclick="_demoReset()" style="background:var(--teal);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap">Reset demo</button>
+  </div>
+</div>
+
 <!-- TOOLS & INTEGRATIONS PAGE -->
 <div id="page-tools-settings" style="position:fixed;inset:0;z-index:2100;background:#f0f2f5;display:none;flex-direction:column;overflow:hidden">
   <!-- Top bar -->
@@ -7377,6 +7418,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
   </div>
 
+  <div style="display:flex;justify-content:flex-end;margin-bottom:6px"><button onclick="_aceObReplay()" style="border:none;background:none;color:var(--teal);font-size:11.5px;font-weight:600;cursor:pointer;font-family:var(--font);padding:0">Redo Ace setup (5 questions)</button></div>
   <!-- Tabs -->
   <div style="display:flex;gap:0;border-bottom:2px solid var(--g200);margin-bottom:24px" id="ace-config-tabs">
     <div onclick="switchAceTab('coaching',this)" style="padding:9px 18px;font-size:13px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy);margin-bottom:-2px;cursor:pointer">Coaching Style</div>
@@ -8204,6 +8246,8 @@ function openAskAce() {
     _aceRenderHistory();
     _aceLoadIntoPane(_aceConvById(_aceActiveConvId));
   }
+  // First time ever opening Ask Ace → 5-question setup
+  if (typeof _aceObShouldRun === 'function' && _aceObShouldRun()) _aceObStart();
 }
 function closeAskAce() {
   var el = document.getElementById('page-askace');
@@ -19275,6 +19319,236 @@ function _aceKBViewAutomations() {
   if (typeof closeToolsSettings === 'function') closeToolsSettings();
   showPage('marketing');
   if (typeof _mktTab === 'function') _mktTab('auto');
+}
+
+/* ── Ask Ace first-time setup: exactly 5 questions ────────────────────────
+   1 coaching style · 2 response depth · 3 topics on/off · 4 knowledge base
+   upload · 5 check-in cadence. Shown the first time Ask Ace is ever opened;
+   answers are applied to the real Ace configuration controls and the
+   knowledge base, and remembered so it never shows again (replay link lives
+   at the top of Tools & Integrations → Ace). */
+var _ACE_OB_TOTAL = 5;
+var _aceOb = null;
+var _ACE_OB_TOPICS = [
+  { k:'pipeline',  l:'Pipeline & Opportunities',   on:true },
+  { k:'goals',     l:'Goal Progress & Pace',        on:true },
+  { k:'contacts',  l:'Contact Recommendations',     on:true },
+  { k:'activity',  l:'Activity Coaching',           on:true },
+  { k:'product',   l:'Product Knowledge',           on:true },
+  { k:'forecast',  l:'Forecasting & Projections',   on:true },
+  { k:'comp',      l:'Compensation & Commission',   on:false, sensitive:true },
+  { k:'compare',   l:'Team Performance Comparisons',on:false, sensitive:true }
+];
+var _ACE_OB_STYLES = [
+  { k:'friendly',  e:'🤝', t:'Friendly Coach', d:'Warm, practical, confidence-building.' },
+  { k:'direct',    e:'🎯', t:'Direct',         d:'No fluff. Clear feedback and next actions.' },
+  { k:'data',      e:'📊', t:'Data Nerd',      d:'Every insight backed by a number.' },
+  { k:'aggressive',e:'🔥', t:'Aggressive',     d:'Pushes urgency and pipeline momentum.' }
+];
+var _ACE_OB_DEPTHS = [
+  { k:'brief',    t:'Brief',    d:'2–3 sentences. Good for quick checks during calls.' },
+  { k:'standard', t:'Standard', d:'A paragraph with context and next steps.', rec:true },
+  { k:'detailed', t:'Detailed', d:'Full analysis with data breakdown.' }
+];
+var _ACE_OB_CADENCE = [
+  { k:'daily',  t:'Daily brief',        d:'A short morning rundown of what needs attention.' },
+  { k:'weekly', t:'Weekly summary',     d:'One recap each week with wins, risks and next steps.', rec:true },
+  { k:'ask',    t:'Only when I ask',    d:'Ace stays quiet until you open Ask Ace.' }
+];
+var _ACE_OB_FILES = [
+  { name:'Sales Playbook.pdf', type:'PDF', sizeKB:620, content:'New opportunities must receive a first-touch call within 24 hours. Deals stuck in the same stage for 10 days are stalled and need a manager check-in. Always confirm the champion before sending a proposal.' },
+  { name:'Company Overview.docx', type:'DOCX', sizeKB:940, content:'Enterprise contracts over $75K need an executive sponsor call. Customers are onboarded with a welcome packet and a kickoff meeting after closing. Renewals are worked 90 days before the renewal date.' }
+];
+function _aceObShouldRun() {
+  try { return !localStorage.getItem('goalscom_aceOnboarded'); } catch (e) { return false; }
+}
+function _aceObDefaults() {
+  var topics = {}; _ACE_OB_TOPICS.forEach(function(t){ topics[t.k] = t.on; });
+  return { step:0, style:'friendly', depth:'standard', topics:topics, kbFile:null, kbText:'', kbCategory:'methodology', cadence:'weekly' };
+}
+function _aceObStart() {
+  _aceOb = _aceObDefaults();
+  var o = document.getElementById('ace-onboard-overlay');
+  if (o) o.style.display = 'flex';
+  _aceObRender();
+}
+function _aceObReplay() {
+  if (typeof closeToolsSettings === 'function') closeToolsSettings();
+  _aceObStart();
+}
+function _aceObClose() {
+  var o = document.getElementById('ace-onboard-overlay');
+  if (o) o.style.display = 'none';
+}
+function _aceObMarkDone(answers) {
+  try {
+    localStorage.setItem('goalscom_aceOnboarded', '1');
+    if (answers) localStorage.setItem('goalscom_aceOnboardingAnswers', JSON.stringify(answers));
+  } catch (e) {}
+}
+function _aceObSkip() {
+  _aceObMarkDone(null);
+  _aceObClose();
+  showToast('Skipped — you can set up Ace anytime in Tools & Integrations → Ace');
+}
+function _aceObCard(selected, onclick, inner) {
+  return '<div onclick="' + onclick + '" style="border:2px solid ' + (selected ? 'var(--teal)' : 'var(--g200)') + ';background:' + (selected ? 'rgba(29,158,117,0.05)' : '#fff') + ';border-radius:12px;padding:14px 16px;cursor:pointer;transition:.12s">' + inner + '</div>';
+}
+function _aceObRender() {
+  var s = _aceOb.step, a = _aceOb;
+  document.getElementById('ace-ob-count').textContent = 'Question ' + (s + 1) + ' of ' + _ACE_OB_TOTAL;
+  var bars = ''; for (var i = 0; i < _ACE_OB_TOTAL; i++) bars += '<div style="flex:1;height:4px;border-radius:2px;background:' + (i <= s ? 'var(--teal)' : 'var(--g200)') + '"></div>';
+  document.getElementById('ace-ob-progress').innerHTML = bars;
+  var back = document.getElementById('ace-ob-back'); if (back) back.style.visibility = s === 0 ? 'hidden' : 'visible';
+  var next = document.getElementById('ace-ob-next'); if (next) next.textContent = s === _ACE_OB_TOTAL - 1 ? 'Finish setup' : 'Next';
+  var h = function(title, sub) { return '<div style="font-size:19px;font-weight:800;color:var(--dark);letter-spacing:-0.2px">' + title + '</div><div style="font-size:12.5px;color:var(--g400);margin:5px 0 18px;line-height:1.5">' + sub + '</div>'; };
+  var body = '';
+  if (s === 0) {
+    body = h('How should Ace coach you?', 'Pick the personality Ace uses when it talks to you. You can change this anytime.')
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">' + _ACE_OB_STYLES.map(function(o){
+          return _aceObCard(a.style === o.k, "_aceObSet('style','" + o.k + "')", '<div style="font-size:24px;margin-bottom:6px">' + o.e + '</div><div style="font-size:13px;font-weight:700;color:var(--dark)">' + o.t + '</div><div style="font-size:11px;color:var(--g400);line-height:1.5;margin-top:3px">' + o.d + '</div>'); }).join('') + '</div>';
+  } else if (s === 1) {
+    body = h('How much detail do you want?', 'This controls how long and detailed Ace’s answers are.')
+      + '<div style="display:flex;flex-direction:column;gap:10px">' + _ACE_OB_DEPTHS.map(function(o){
+          return _aceObCard(a.depth === o.k, "_aceObSet('depth','" + o.k + "')", '<div style="font-size:13px;font-weight:700;color:var(--dark)">' + o.t + (o.rec ? ' <span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:1px 6px;margin-left:4px">Recommended</span>' : '') + '</div><div style="font-size:11.5px;color:var(--g400);margin-top:3px">' + o.d + '</div>'); }).join('') + '</div>';
+  } else if (s === 2) {
+    var row = function(t) {
+      var on = !!a.topics[t.k];
+      return '<div onclick="_aceObToggleTopic(\'' + t.k + '\')" style="display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid var(--g200);border-radius:10px;cursor:pointer;background:#fff">'
+        + '<span style="font-size:12.5px;color:var(--dark)">' + t.l + '</span>'
+        + '<span style="width:34px;height:20px;border-radius:10px;background:' + (on ? 'var(--teal)' : 'var(--g300)') + ';position:relative;flex-shrink:0;transition:.15s"><span style="position:absolute;top:2px;left:' + (on ? '16px' : '2px') + ';width:16px;height:16px;border-radius:50%;background:#fff;transition:.15s"></span></span></div>';
+    };
+    body = h('Which topics can Ace discuss?', 'Turn topics on or off. Managers always see everything — these control what Ace brings up.')
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' + _ACE_OB_TOPICS.filter(function(t){return !t.sensitive;}).map(row).join('') + '</div>'
+      + '<div style="display:flex;align-items:center;gap:8px;margin:16px 0 8px"><div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:var(--amber)">Sensitive topics</div><span style="font-size:10px;background:rgba(245,158,11,0.1);color:var(--amber);border-radius:4px;padding:1px 7px;font-weight:600">Off by default</span></div>'
+      + '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">' + _ACE_OB_TOPICS.filter(function(t){return t.sensitive;}).map(row).join('') + '</div>';
+  } else if (s === 3) {
+    var catOpts = _aceKBCategories.map(function(c){ return '<option value="' + c.key + '"' + (a.kbCategory === c.key ? ' selected' : '') + '>' + c.label + '</option>'; }).join('');
+    body = h('Give Ace your company knowledge', 'Upload a playbook, methodology or product doc so Ace sounds like your company — and can recommend automations from it. Optional: you can skip this and add it later.')
+      + '<div style="display:flex;gap:10px;margin-bottom:12px">'
+      +   '<button onclick="_aceObPickFile()" style="flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 10px;border:1.5px dashed ' + (a.kbFile ? 'var(--teal)' : 'var(--g300)') + ';border-radius:12px;background:var(--g50);cursor:pointer;font-family:var(--font)"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><span style="font-size:12.5px;font-weight:600;color:var(--dark)">Upload a file</span><span style="font-size:10.5px;color:var(--g400)">PDF, DOCX, XLSX, TXT</span></button>'
+      + '</div>'
+      + (a.kbFile ? '<div style="display:flex;align-items:center;gap:8px;background:rgba(29,158,117,0.07);border:1px solid rgba(29,158,117,0.25);border-radius:9px;padding:9px 12px;font-size:12.5px;color:var(--dark);margin-bottom:12px"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--teal)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>' + a.kbFile.name + ' · ' + _aceKBFmtSize(a.kbFile.sizeKB) + ' selected</div>' : '')
+      + '<div style="font-size:11.5px;color:var(--g400);margin-bottom:6px">…or paste text</div>'
+      + '<textarea oninput="_aceOb.kbText=this.value" placeholder="Paste playbook text, notes, or business info…" style="width:100%;min-height:78px;border:1.5px solid var(--g200);border-radius:9px;padding:10px 12px;font-size:12.5px;font-family:var(--font);resize:vertical;box-sizing:border-box">' + _aceKBEsc(a.kbText) + '</textarea>'
+      + '<div style="margin-top:12px"><div style="font-size:11.5px;font-weight:600;color:var(--dark);margin-bottom:5px">Category</div><select onchange="_aceOb.kbCategory=this.value" style="width:100%;border:1.5px solid var(--g200);border-radius:9px;padding:9px 12px;font-size:12.5px;font-family:var(--font)">' + catOpts + '</select></div>';
+  } else {
+    body = h('How often should Ace check in?', 'Ace can reach out proactively with insights and recommendations — or stay quiet until you ask.')
+      + '<div style="display:flex;flex-direction:column;gap:10px">' + _ACE_OB_CADENCE.map(function(o){
+          return _aceObCard(a.cadence === o.k, "_aceObSet('cadence','" + o.k + "')", '<div style="font-size:13px;font-weight:700;color:var(--dark)">' + o.t + (o.rec ? ' <span style="font-size:10px;background:rgba(29,158,117,0.1);color:var(--teal);border-radius:4px;padding:1px 6px;margin-left:4px">Recommended</span>' : '') + '</div><div style="font-size:11.5px;color:var(--g400);margin-top:3px">' + o.d + '</div>'); }).join('') + '</div>';
+  }
+  document.getElementById('ace-ob-body').innerHTML = body;
+}
+function _aceObSet(key, val) { _aceOb[key] = val; _aceObRender(); }
+function _aceObToggleTopic(k) { _aceOb.topics[k] = !_aceOb.topics[k]; _aceObRender(); }
+function _aceObPickFile() {
+  _aceOb.kbFile = _ACE_OB_FILES[Math.floor(Math.random() * _ACE_OB_FILES.length)];
+  _aceObRender();
+}
+function _aceObBack() { if (_aceOb.step > 0) { _aceOb.step--; _aceObRender(); } }
+function _aceObNext() {
+  if (_aceOb.step < _ACE_OB_TOTAL - 1) { _aceOb.step++; _aceObRender(); return; }
+  _aceObFinish();
+}
+function _aceObApplyToConfig(a) {
+  // Coaching style → the real SR persona cards and SM personality cards
+  var srMap = { friendly:'field-coach', direct:'the-closer', data:'data-nerd', aggressive:'aggressive' };
+  var smMap = { friendly:'friendly', direct:'direct', data:'data-nerd', aggressive:'aggressive' };
+  var srIn = document.querySelector('input[name="ace-persona"][value="' + srMap[a.style] + '"]');
+  if (srIn) { srIn.checked = true; if (srIn.closest && srIn.closest('label') && typeof _selectPersona === 'function') _selectPersona(srIn.closest('label'), srMap[a.style]); }
+  var smIn = document.querySelector('input[name="ace-sm-personality"][value="' + smMap[a.style] + '"]');
+  if (smIn) { smIn.checked = true; if (smIn.closest && smIn.closest('label') && typeof _selectSMPersonality === 'function') _selectSMPersonality(smIn.closest('label'), smMap[a.style]); }
+  // Response depth
+  var dIn = document.querySelector('input[name="ace-depth"][value="' + a.depth + '"]');
+  if (dIn) dIn.checked = true;
+  // Topics → the toggles in Topics & Alerts (same order as the questionnaire)
+  var boxes = document.querySelectorAll('#ace-tab-topics .toggle-switch input');
+  _ACE_OB_TOPICS.forEach(function(t, i) { if (boxes[i]) boxes[i].checked = !!a.topics[t.k]; });
+}
+function _aceObFinish() {
+  var a = _aceOb, addedKB = false;
+  _aceObApplyToConfig(a);
+  var text = (a.kbText || '').trim();
+  if (a.kbFile || text) {
+    var id = (_aceKB.length ? Math.max.apply(null, _aceKB.map(function(d){ return d.id; })) : 0) + 1;
+    var doc = { id:id, name: a.kbFile ? a.kbFile.name.replace(/\.[a-z0-9]+$/i, '') : 'Pasted knowledge', category:a.kbCategory, scope:'All accounts',
+      type: a.kbFile ? a.kbFile.type : 'Text', sizeKB: a.kbFile ? a.kbFile.sizeKB : Math.max(1, Math.ceil(text.length / 200)),
+      addedBy:'Sagar', addedAt:new Date(), status:'processing', content: text || (a.kbFile && a.kbFile.content) || '' };
+    _aceKB.unshift(doc); addedKB = true;
+    _aceKBRender();
+    setTimeout(function() {
+      doc.status = 'indexed'; _aceKBAnalyze(); _aceKBRender();
+      showToast('✓ Ace read "' + doc.name + '" — see recommended automations in the Knowledge Base tab');
+    }, 2200);
+  }
+  _aceObMarkDone({ style:a.style, depth:a.depth, topics:a.topics, cadence:a.cadence, knowledgeBase: addedKB });
+  _aceObClose();
+  var styleLabel = (_ACE_OB_STYLES.filter(function(o){ return o.k === a.style; })[0] || {}).t;
+  showToast('✓ Ace is set up — ' + styleLabel + ' style, ' + a.depth + ' answers');
+}
+
+/* ── Demo guide (presenter tool) ──────────────────────────────────────────
+   A floating "Demo guide" button with a click-path through the recent
+   features — each step has a talking point, a "what's mocked vs. what needs a
+   backend" note for the dev team, and a Go button that navigates there.
+   "Reset demo" restores a clean first-run state so the walkthrough can be
+   replayed from the top. */
+var _demoKBSeed = _aceKB.map(function(d){ return Object.assign({}, d); });
+// Hidden by default; open the app with ?demo at the end of the URL to show the button
+(function(){ try { if (/[?&]demo\b/.test(location.search)) { var b = document.getElementById('demo-guide-pill'); if (b) b.style.display = 'flex'; } } catch (e) {} })();
+var _DEMO_STEPS = [
+  { t:'First-time Ask Ace setup', say:'The first time anyone opens Ask Ace they answer 5 questions: coaching style, response depth, topics on/off, knowledge upload, check-in cadence.',
+    dev:'Answers apply to the Ace config controls. Needs a per-user settings record; cadence needs a scheduler (not wired).', go:function(){ _demoCloseAll(); try { localStorage.removeItem('goalscom_aceOnboarded'); } catch(e){} openAskAce(); } },
+  { t:'Ace reads the Knowledge Base → recommends automations', say:'Ace reads each indexed document, finds operating rules, and proposes automations with the exact source sentence. Click “Create automation” on any card.',
+    dev:'Mocked with phrase matching. Real version: LLM extracts rules from uploaded docs and returns trigger/conditions/actions JSON in the automation schema.', go:function(){ _demoCloseAll(); _aceGotoConfig('knowledge'); } },
+  { t:'Automations: delays + run status', say:'Every action can wait minutes/hours/days. Dots show which automations recently ran (teal), went quiet (amber), or are not running (red). Hover a dot for detail.',
+    dev:'Delay is action.delay = {amount, unit}. Run status is simulated; needs a real run log (last_run_at, runs_30d) per automation.', go:function(){ _demoCloseAll(); showPage('marketing'); _mktTab('auto'); } },
+  { t:'Global email templates (manager vs. rep)', say:'Managers build shared templates; switch the role to Sales Rep and they can only preview and use them.',
+    dev:'Templates are one shared list. Needs org-level storage + role permission checks; Gmail/Outlook sync is not real.', go:function(){ _demoCloseAll(); showPage('marketing'); _mktTab('email'); var c = document.querySelectorAll('#mkt-camp-filters .filter-chip'); if (c.length) _mktCampFilter(c[c.length-1], 'templates'); } },
+  { t:'Compose email from a deal', say:'Open the Emails tab on a deal, click Compose Email, and pick a template — it fills the subject and body, still fully editable.',
+    dev:'Send is mocked (toast only). Needs Gmail/Outlook send API + logging the email to the activity timeline.', go:function(){ _demoCloseAll(); showPage('pipeline'); var k = Object.keys(CRM_PIPELINES)[0], opps = (CRM_PIPELINES[k] || {}).opps || []; var o = opps.filter(function(x){ return /AR Solutions/.test(x.title || x.org || ''); })[0] || opps[0]; if (o) { openOppDetail(o.id); setTimeout(function(){ _oppMainTab('emails'); }, 80); } } },
+  { t:'Goals.com Impact report', say:'Ace insight → recommendation → did the rep act → measured impact. Toggle weekly/monthly/quarterly and drill into one rep.',
+    dev:'Numbers are seeded. Needs an insight log (date, rep, recommendation, metric snapshots) and activity-based “acted on” detection.', go:function(){ _demoCloseAll(); showPage('reports'); _rptOpenImpactReport(); } }
+];
+function _demoToggle() {
+  var p = document.getElementById('demo-guide-panel'); if (!p) return;
+  var open = p.style.display === 'flex';
+  p.style.display = open ? 'none' : 'flex';
+  if (!open) _demoRender();
+}
+function _demoRender() {
+  var el = document.getElementById('demo-guide-steps'); if (!el) return;
+  el.innerHTML = _DEMO_STEPS.map(function(s, i) {
+    return '<div style="padding:13px 16px;border-bottom:1px solid var(--g100)">'
+      + '<div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:5px"><div style="font-size:12.5px;font-weight:700;color:var(--dark)"><span style="color:var(--teal);margin-right:6px">' + (i + 1) + '</span>' + s.t + '</div>'
+      + '<button onclick="_demoGo(' + i + ')" style="border:1px solid var(--teal);background:#fff;color:var(--teal);border-radius:7px;padding:4px 11px;font-size:11.5px;font-weight:700;cursor:pointer;font-family:var(--font);flex-shrink:0">Go →</button></div>'
+      + '<div style="font-size:11.5px;color:var(--g500);line-height:1.5"><strong style="color:var(--dark)">Say:</strong> ' + s.say + '</div>'
+      + '<div style="font-size:11px;color:var(--g400);line-height:1.5;margin-top:4px"><strong style="color:var(--amber)">Dev note:</strong> ' + s.dev + '</div></div>';
+  }).join('');
+}
+function _demoGo(i) {
+  var s = _DEMO_STEPS[i]; if (!s) return;
+  var p = document.getElementById('demo-guide-panel'); if (p) p.style.display = 'none';
+  try { s.go(); } catch (e) { showToast('Could not open this step: ' + e.message); }
+}
+function _demoCloseAll() {
+  ['ace-onboard-overlay','opp-compose-modal','rpt-impact-overlay','dedupe-merge-overlay','ace-kb-add-overlay'].forEach(function(id) { var e = document.getElementById(id); if (e) e.style.display = 'none'; });
+  try { closeAskAce(); } catch (e) {}
+  try { closeToolsSettings(); } catch (e) {}
+  try { closeCompanySettings(); } catch (e) {}
+}
+function _demoReset() {
+  _demoCloseAll();
+  try { localStorage.removeItem('goalscom_aceOnboarded'); localStorage.removeItem('goalscom_aceOnboardingAnswers'); } catch (e) {}
+  _aceKB = _demoKBSeed.map(function(d){ return Object.assign({}, d); });
+  _aceKBRecs = null; _aceKBRecsCreated = {}; _aceKBRecsDismissed = {}; _aceKBActiveFilter = 'all';
+  if (typeof _mktSeedAutomations === 'function') { _mktSeedAutomations(); if (typeof _mktRenderAutomations === 'function') _mktRenderAutomations(); }
+  try { _aceObApplyToConfig(_aceObDefaults()); } catch (e) {}
+  try { _aceKBRender(); } catch (e) {}
+  try { if (_currentRole !== 'sm') setRole('sm'); } catch (e) {}
+  try { showPage('dashboard'); } catch (e) {}
+  var p = document.getElementById('demo-guide-panel'); if (p) p.style.display = 'none';
+  showToast('Demo reset — ready to start from the top');
 }
 
 // ── PERSONAL GOALS + MORNING BRIEF ────────────────────────────────────────────
