@@ -1928,24 +1928,23 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
 <!-- Extend trial: book a call with the Customer Success Manager -->
 <div class="gt-ov" id="gt-extend" style="z-index:5300" onclick="if(event.target===this)gtCloseExtend()">
-  <div class="gt-box">
+  <div class="gt-box" style="max-width:780px;padding:22px">
     <div id="gt-ext-1">
-      <h2>Extend your trial</h2>
-      <p class="s">Need more time to evaluate? Book a call with your Customer Success Manager. They'll walk through your goals, help with your data import, and review whether a longer trial makes sense.</p>
-      <div style="display:flex;gap:12px;align-items:center;margin:16px 0 4px;padding:12px;border:1px solid var(--g200);border-radius:12px"><div class="gt-av" style="background:var(--teal);color:#fff">CS</div><div><b style="font-size:14px">Customer Success Manager</b><div style="font-size:12px;color:var(--g500)">30-minute video call · <span id="gt-tz"></span></div></div></div>
-      <div style="font-size:12px;font-weight:700;margin-top:14px">Pick a day</div>
-      <div class="gt-days" id="gt-days"></div>
-      <div style="font-size:12px;font-weight:700;margin-top:10px">Pick a time</div>
-      <div class="gt-slots" id="gt-slots"></div>
-      <div style="font-size:12px;font-weight:700;margin-top:14px">Anything we should prepare? <span style="font-weight:500;color:var(--g500)">(optional)</span></div>
-      <textarea id="gt-ext-note" rows="3" style="width:100%;margin-top:6px;border:1px solid var(--g200);border-radius:9px;padding:10px;font-family:var(--font);font-size:13px;background:var(--white);color:var(--dark);resize:vertical" placeholder="For example: we're moving from HubSpot and need help with our pipeline stages."></textarea>
-      <div style="display:flex;justify-content:space-between;margin-top:16px"><button class="gt-gbtn" onclick="gtCloseExtend()">Cancel</button><button class="gt-pbtn" id="gt-ext-go" disabled onclick="gtConfirmExtend()">Confirm booking</button></div>
+      <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px">
+        <div><h2>Extend your trial</h2>
+        <p class="s">Book a call with your Customer Success Manager. They'll help with your data import and review whether a longer trial makes sense.</p></div>
+        <button class="gt-gbtn" onclick="gtCloseExtend()" aria-label="Close" style="flex-shrink:0">Close</button>
+      </div>
+      <div style="margin-top:14px;border:1px solid var(--g200);border-radius:12px;overflow:hidden;background:#fff">
+        <iframe id="gt-cal" title="Book a call with the Customer Success Manager" style="width:100%;height:640px;border:0;display:block" loading="lazy"></iframe>
+      </div>
+      <div style="font-size:12px;color:var(--g500);margin-top:10px">Calendar not loading? <a id="gt-cal-link" href="https://calendly.com/goals-demo/30min" target="_blank" rel="noopener" style="color:var(--teal);font-weight:700">Open it in a new tab</a>.</div>
     </div>
     <div id="gt-ext-2" style="display:none;text-align:center;padding:10px 0">
       <div style="width:54px;height:54px;border-radius:50%;background:var(--teal);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">✓</div>
       <h2>You're booked</h2>
       <p class="s" id="gt-ext-when" style="margin-top:6px"></p>
-      <p class="s" style="margin-top:10px">In the real product, a calendar invite goes to your email. Your Customer Success Manager can extend your trial on the call.</p>
+      <p class="s" style="margin-top:10px">Your Customer Success Manager can extend your trial on the call.</p>
       <button class="gt-pbtn" style="margin-top:18px" onclick="gtCloseExtend()">Back to my workspace</button>
     </div>
   </div>
@@ -29558,7 +29557,7 @@ else _mktInit();
 var GT_DAYS = 7, GT_DAY_MS = 86400000;
 var _gt = { code: null, attempts: 0, form: null, slot: null, day: null, resendAt: 0 };
 var GT_FREE_DOMAINS = ['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','aol.com','proton.me','protonmail.com','live.com'];
-var GT_DATA_PAGES = ['dashboard','goals','pipeline','contacts','team','highlights','bonuses','contests','commissions','calls','reports','forecasting'];
+var GT_DATA_PAGES = ['dashboard','goals','pipeline','contacts','team','highlights','bonuses','contests','commissions','calls','reports','forecasting','marketing','chat','rep-profile'];
 var GT_CRMS = ['Salesforce','HubSpot','Pipedrive','Zoho CRM','Microsoft Dynamics','Other CRM'];
 
 function gtEl(id) { return document.getElementById(id); }
@@ -29814,48 +29813,29 @@ function gtSyncEmpty() {
   }
 })();
 
-/* ── Extend trial: book a call with the Customer Success Manager ── */
+/* ── Extend trial: the CSM's Calendly is embedded; a booking is detected via Calendly's postMessage ── */
+var GT_CAL_URL = 'https://calendly.com/goals-demo/30min';
+function gtCalSrc() {
+  var host = 'localhost';
+  try { if (location.hostname) host = location.hostname; } catch (e) {}
+  return GT_CAL_URL + '?embed_domain=' + encodeURIComponent(host) + '&embed_type=Inline&hide_gdpr_banner=1';
+}
 function gtOpenExtend() {
-  _gt.slot = null; _gt.day = null;
   gtEl('gt-ext-1').style.display = ''; gtEl('gt-ext-2').style.display = 'none';
-  gtEl('gt-ext-go').disabled = true; gtEl('gt-ext-note').value = '';
-  var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) {}
-  gtEl('gt-tz').textContent = tz || 'your time zone';
-  var days = [], d = new Date(), names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-  while (days.length < 5) {
-    d = new Date(d.getTime() + GT_DAY_MS);
-    if (d.getDay() !== 0 && d.getDay() !== 6) days.push(new Date(d.getTime()));
-  }
-  gtEl('gt-days').innerHTML = days.map(function(x, i){
-    return '<button class="gt-day" onclick="gtPickDay(' + i + ')" id="gt-day-' + i + '">' + names[x.getDay()] + '<small>' + (x.getMonth() + 1) + '/' + x.getDate() + '</small></button>';
-  }).join('');
-  _gt.days = days;
-  gtEl('gt-slots').innerHTML = '<div class="gt-muted" style="grid-column:1/-1;font-size:12px">Pick a day to see available times.</div>';
+  var f = gtEl('gt-cal'); if (f) f.src = gtCalSrc();
   gtEl('gt-extend').style.display = 'flex';
 }
 function gtCloseExtend() { gtEl('gt-extend').style.display = 'none'; }
-function gtPickDay(i) {
-  _gt.day = i; _gt.slot = null; gtEl('gt-ext-go').disabled = true;
-  for (var k = 0; k < 5; k++) { var b = gtEl('gt-day-' + k); if (b) b.className = 'gt-day' + (k === i ? ' sel' : ''); }
-  var times = ['9:00 AM','10:30 AM','12:00 PM','1:30 PM','3:00 PM','4:30 PM'];
-  gtEl('gt-slots').innerHTML = times.map(function(tm, j){
-    var taken = ((i * 7 + j * 3) % 5 === 0);
-    return '<button class="gt-slot" ' + (taken ? 'disabled ' : '') + 'id="gt-slot-' + j + '" onclick="gtPickSlot(' + j + ')">' + tm + '</button>';
-  }).join('');
-  _gt.times = times;
-}
-function gtPickSlot(j) {
-  _gt.slot = j; gtEl('gt-ext-go').disabled = false;
-  for (var k = 0; k < 6; k++) { var b = gtEl('gt-slot-' + k); if (b) b.className = 'gt-slot' + (k === j ? ' sel' : ''); }
-}
-function gtConfirmExtend() {
-  if (_gt.day == null || _gt.slot == null) return;
-  var d = _gt.days[_gt.day], names = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
-  var when = names[d.getDay()] + ' ' + (d.getMonth() + 1) + '/' + d.getDate() + ' at ' + _gt.times[_gt.slot];
-  var t = gtLoad(); if (t) { t.ext = { when: when, note: gtEl('gt-ext-note').value || '' }; gtSave(t); }
-  gtEl('gt-ext-when').textContent = 'Your call with the Customer Success Manager is set for ' + when + '.';
+function gtCalBooked() {
+  var t = gtLoad(); if (t) { t.ext = { when: 'booked with your Customer Success Manager' }; gtSave(t); }
+  gtEl('gt-ext-when').textContent = 'Your call with the Customer Success Manager is confirmed. Check your email for the calendar invite.';
   gtEl('gt-ext-1').style.display = 'none'; gtEl('gt-ext-2').style.display = '';
 }
+window.addEventListener('message', function(e){
+  if (!e || !e.data || e.data.event !== 'calendly.event_scheduled') return;
+  if (e.origin && e.origin.indexOf('calendly.com') < 0) return;
+  gtCalBooked();
+});
 
 /* ── Boot: show the login screen first (skip with ?nologin) ── */
 function gtInit() {
