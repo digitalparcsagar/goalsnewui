@@ -1759,6 +1759,219 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
   <button onclick="document.getElementById('trial-banner').style.display='none'" style="position:absolute;right:14px;background:none;border:none;color:rgba(255,255,255,0.6);cursor:pointer;font-size:16px;line-height:1;padding:0" title="Dismiss">×</button>
 </div>
 
+<!-- ═══ FREE TRIAL: login → sign-up → verify → workspace (mockup) ═══ -->
+<style>
+#gt-auth{position:fixed;inset:0;z-index:5000;background:#0a0d14;color:#fff;overflow:auto;font-family:var(--font)}
+#gt-auth *{box-sizing:border-box}
+.gt-center{width:100%;max-width:420px;margin:0 auto;padding:70px 20px 40px;text-align:center}
+.gt-logo svg{width:64px;height:auto}
+.gt-h1{font-size:28px;font-weight:800;margin:18px 0 6px;letter-spacing:-.3px}
+.gt-sub{font-size:14px;color:#8b95a5}
+.gt-card{background:#0f141c;border:1px solid #1d2430;border-radius:14px;padding:22px;text-align:left;margin-top:22px}
+.gt-lbl{display:block;font-size:12px;font-weight:600;color:#9aa5b5;margin:0 0 6px}
+.gt-lbl em{color:#2fb883;font-style:normal}
+.gt-in{width:100%;background:#0a0d14;border:1px solid #232b38;border-radius:9px;padding:11px 12px;color:#fff;font-size:14px;font-family:var(--font);outline:none;margin-bottom:14px}
+.gt-in:focus{border-color:#2fb883}
+.gt-btn{width:100%;background:#2fb883;color:#04130d;border:none;border-radius:9px;padding:12px;font-size:14px;font-weight:800;cursor:pointer;font-family:var(--font)}
+.gt-btn:hover{background:#3ac893}.gt-btn:disabled{opacity:.45;cursor:not-allowed}
+.gt-link{color:#2fb883;cursor:pointer;font-weight:700;background:none;border:none;font-size:inherit;font-family:inherit;padding:0}
+.gt-muted{font-size:13px;color:#8b95a5}
+.gt-err{color:#ff6b7a;font-size:12px;min-height:16px;margin:-4px 0 10px}
+.gt-quote{background:#0f141c;border:1px solid #1d2430;border-radius:12px;padding:14px;display:flex;gap:12px;text-align:left;margin-top:18px;font-size:13px;line-height:1.5}
+.gt-av{width:32px;height:32px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0}
+.gt-split{display:flex;gap:56px;max-width:1000px;margin:0 auto;padding:60px 24px;align-items:flex-start;text-align:left}
+.gt-split>div:first-child{flex:1;padding-top:10px}.gt-split>div:last-child{width:440px;flex-shrink:0}
+.gt-row2{display:flex;gap:12px}.gt-row2>div{flex:1}
+.gt-info{display:flex;gap:12px;align-items:flex-start;margin-top:18px;font-size:14px;color:#c6cdd8;line-height:1.45}
+.gt-info i{width:34px;height:34px;border-radius:9px;background:#0f2a22;border:1px solid #1b4a3a;color:#2fb883;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-style:normal;font-weight:800;font-size:14px}
+.gt-otp-row{display:flex;gap:8px;justify-content:center;margin:6px 0 14px}
+.gt-otp{width:46px;height:54px;text-align:center;font-size:22px;font-weight:800;background:#0a0d14;border:1px solid #232b38;border-radius:10px;color:#fff;outline:none;font-family:var(--font)}
+.gt-otp:focus{border-color:#2fb883}
+.gt-demo-code{border:1px dashed #3a4558;border-radius:10px;padding:10px 12px;font-size:12px;color:#9aa5b5;margin-bottom:16px;text-align:center}
+.gt-demo-code b{display:block;font-size:20px;letter-spacing:5px;color:#2fb883;margin-top:4px;font-family:var(--mono)}
+.gt-steps{list-style:none;padding:0;margin:20px 0 0;text-align:left}
+.gt-steps li{display:flex;align-items:center;gap:10px;padding:9px 0;font-size:14px;color:#6b7686}
+.gt-steps li.on{color:#fff}.gt-steps li .d{width:20px;height:20px;border-radius:50%;border:2px solid #2a3342;display:flex;align-items:center;justify-content:center;font-size:11px;color:#04130d}
+.gt-steps li.on .d{background:#2fb883;border-color:#2fb883}
+/* top bar controls */
+.gt-sw{display:flex;align-items:center;gap:8px;padding:5px 12px 5px 10px;border:1px solid var(--g200);border-radius:22px;cursor:pointer;font-size:12px;font-weight:700;color:var(--dark);background:var(--white);position:relative;white-space:nowrap}
+.gt-sw input{position:absolute;opacity:0;pointer-events:none}
+.gt-sw-track{width:40px;height:22px;border-radius:11px;background:var(--g300);position:relative;transition:background .15s;flex-shrink:0}
+.gt-sw-knob{position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .15s}
+.gt-sw input:checked + .gt-sw-track{background:var(--teal)}
+.gt-sw input:checked + .gt-sw-track .gt-sw-knob{transform:translateX(18px)}
+#gt-pill{border:none;border-radius:20px;padding:6px 12px;font-size:12px;font-weight:800;cursor:pointer;font-family:var(--font);background:var(--teal-bg);color:var(--teal);white-space:nowrap}
+#gt-pill.warn{background:rgba(245,158,11,.15);color:#b45309}#gt-pill.crit{background:rgba(239,68,68,.14);color:#c9184a}
+.gt-ext-btn{border:1px solid var(--teal);background:none;color:var(--teal);border-radius:20px;padding:5px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);white-space:nowrap}
+.gt-ext-btn:hover{background:var(--teal-bg)}
+#gt-pop{display:none;position:fixed;top:58px;right:70px;z-index:5200;background:var(--white);border:1px solid var(--g200);border-radius:12px;box-shadow:0 10px 30px rgba(0,0,0,.18);padding:8px;min-width:230px;font-family:var(--font)}
+#gt-pop .pi{padding:6px 10px 8px;font-size:12px;color:var(--g500);border-bottom:1px solid var(--g100);margin-bottom:4px}
+#gt-pop button{display:block;width:100%;text-align:left;background:none;border:none;padding:8px 10px;border-radius:8px;font-size:13px;color:var(--dark);cursor:pointer;font-family:var(--font)}
+#gt-pop button:hover{background:var(--g100)}
+/* overlays inside the app */
+.gt-ov{display:none;position:fixed;inset:0;z-index:5100;background:rgba(10,13,20,.62);align-items:center;justify-content:center;padding:20px;font-family:var(--font)}
+.gt-box{background:var(--white);color:var(--dark);border-radius:16px;width:100%;max-width:560px;max-height:92vh;overflow:auto;padding:26px;box-shadow:0 24px 70px rgba(0,0,0,.35)}
+.gt-box h2{font-size:20px;font-weight:800;margin-bottom:6px}.gt-box p.s{font-size:13px;color:var(--g500);line-height:1.5}
+.gt-opt{display:flex;gap:14px;align-items:flex-start;width:100%;text-align:left;background:var(--white);border:1px solid var(--g200);border-radius:12px;padding:14px;margin-top:10px;cursor:pointer;font-family:var(--font);color:var(--dark)}
+.gt-opt:hover{border-color:var(--teal);background:var(--teal-bg)}
+.gt-opt b{display:block;font-size:14px;margin-bottom:2px}.gt-opt span{font-size:12px;color:var(--g500);line-height:1.4}
+.gt-opt .ic{width:36px;height:36px;border-radius:10px;background:var(--teal-bg);color:var(--teal);display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0}
+.gt-gbtn{background:none;border:1px solid var(--g200);color:var(--dark);border-radius:9px;padding:9px 14px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.gt-pbtn{background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 16px;font-size:13px;font-weight:800;cursor:pointer;font-family:var(--font)}
+.gt-pbtn:disabled{opacity:.45;cursor:not-allowed}
+.gt-chips{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
+.gt-chip{border:1px solid var(--g200);background:var(--white);color:var(--dark);border-radius:10px;padding:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font);text-align:left}
+.gt-chip:hover{border-color:var(--teal);background:var(--teal-bg)}
+.gt-days{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap}
+.gt-day{border:1px solid var(--g200);background:var(--white);color:var(--dark);border-radius:10px;padding:8px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font);text-align:center;min-width:64px}
+.gt-day small{display:block;font-weight:500;color:var(--g500)}
+.gt-day.sel,.gt-slot.sel{border-color:var(--teal);background:var(--teal-bg);color:var(--teal)}
+.gt-slots{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.gt-slot{border:1px solid var(--g200);background:var(--white);color:var(--dark);border-radius:9px;padding:9px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)}
+.gt-slot:disabled{opacity:.4;text-decoration:line-through;cursor:not-allowed}
+#gt-empty{display:none;position:fixed;left:var(--sb);top:var(--topbar);right:0;bottom:0;z-index:400;background:var(--off);align-items:center;justify-content:center;padding:24px;font-family:var(--font)}
+#gt-empty .e{text-align:center;max-width:420px}
+#gt-empty h3{font-size:20px;font-weight:800;color:var(--dark);margin:12px 0 6px}
+#gt-empty p{font-size:13px;color:var(--g500);line-height:1.55;margin-bottom:16px}
+@media(max-width:860px){.gt-split{flex-direction:column;gap:24px}.gt-split>div:last-child{width:100%}}
+</style>
+
+<div id="gt-auth">
+  <!-- Login -->
+  <div id="gt-s-login" class="gt-center">
+    <div class="gt-logo"></div>
+    <div class="gt-h1">Welcome Back</div>
+    <div class="gt-sub">Sign in to your workspace.</div>
+    <div class="gt-card">
+      <label class="gt-lbl" for="gt-l-email">Work email</label>
+      <input class="gt-in" id="gt-l-email" type="email" placeholder="you@company.com" autocomplete="off">
+      <div style="display:flex;justify-content:space-between"><label class="gt-lbl" for="gt-l-pw">Password</label><span class="gt-lbl" style="cursor:pointer">Forgot password?</span></div>
+      <input class="gt-in" id="gt-l-pw" type="password" placeholder="••••••••••" autocomplete="off" onkeydown="if(event.key==='Enter')gtLogin()">
+      <button type="button" class="gt-btn" onclick="gtLogin()">Sign in</button>
+    </div>
+    <div class="gt-muted" style="margin-top:20px">Don't have an account? <button class="gt-link" onclick="gtScreen('signup')">Free Trial</button></div>
+    <div class="gt-quote"><div class="gt-av">DG</div><div>“Our team hit 127% of quota last quarter. Goals.com made it impossible not to stay on track.”<div class="gt-muted" style="font-size:12px;margin-top:4px">Dan G. — VP of Sales</div></div></div>
+    <div class="gt-muted" style="margin-top:18px;font-size:12px">← Back to Goals.com <span id="gt-reset-wrap" style="display:none"> · <button class="gt-link" style="font-weight:500;font-size:12px;color:#8b95a5" onclick="gtResetTrial()">Reset trial (demo)</button></span></div>
+  </div>
+
+  <!-- Sign up -->
+  <div id="gt-s-signup" style="display:none">
+    <div class="gt-split">
+      <div>
+        <div class="gt-logo"></div>
+        <div style="font-size:40px;font-weight:800;margin:30px 0 8px;letter-spacing:-.8px">7 Day Free Trial</div>
+        <div style="font-size:15px;color:#c6cdd8">No Credit Card Required</div>
+        <p style="font-size:15px;line-height:1.7;color:#c6cdd8;margin-top:28px">Your workspace comes pre-filled with sample data, so you can explore Goals.com right away. When you're ready, switch it off and bring in your own.</p>
+        <div class="gt-info"><i>1</i><div><b style="color:#fff">Sign up and verify your email</b><br>Takes about a minute.</div></div>
+        <div class="gt-info"><i>2</i><div><b style="color:#fff">Explore with sample data</b><br>A sample team, accounts, pipeline and goals.</div></div>
+        <div class="gt-info"><i>3</i><div><b style="color:#fff">Import your own data</b><br>Upload a CSV or Excel file.</div></div>
+      </div>
+      <div>
+        <div class="gt-card" style="margin-top:0">
+          <div class="gt-row2"><div><label class="gt-lbl" for="gt-su-fn">First Name <em>*</em></label><input class="gt-in" id="gt-su-fn" autocomplete="off"></div><div><label class="gt-lbl" for="gt-su-ln">Last Name <em>*</em></label><input class="gt-in" id="gt-su-ln" autocomplete="off"></div></div>
+          <label class="gt-lbl" for="gt-su-em">Work Email <em>*</em></label><input class="gt-in" id="gt-su-em" type="email" autocomplete="off" style="margin-bottom:6px" oninput="gtEmailHint()">
+          <div id="gt-su-hint" style="font-size:11px;color:#e0b341;min-height:15px;margin-bottom:8px"></div>
+          <label class="gt-lbl" for="gt-su-co">Company Name <em>*</em></label><input class="gt-in" id="gt-su-co" autocomplete="off">
+          <label class="gt-lbl" for="gt-su-ph">Phone Number <span style="font-weight:500;color:#6b7686">(optional)</span></label><input class="gt-in" id="gt-su-ph" type="tel" autocomplete="off" onkeydown="if(event.key==='Enter')gtSignup()">
+          <div class="gt-err" id="gt-su-err"></div>
+          <button class="gt-btn" onclick="gtSignup()">Start my free trial</button>
+          <div class="gt-muted" style="font-size:11px;margin-top:12px;text-align:center">By continuing you agree to the Terms and Privacy Policy.</div>
+        </div>
+        <div class="gt-muted" style="margin-top:16px;text-align:center">Already have an account? <button class="gt-link" onclick="gtScreen('login')">Sign in</button></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Verify -->
+  <div id="gt-s-verify" class="gt-center" style="display:none">
+    <div class="gt-logo"></div>
+    <div class="gt-h1">Check your email</div>
+    <div class="gt-sub">We sent a 6-digit code to <b id="gt-v-email" style="color:#fff"></b></div>
+    <div class="gt-card">
+      <div class="gt-demo-code">Mockup only: no email is actually sent. Your code is<b id="gt-v-code">------</b></div>
+      <div class="gt-otp-row" id="gt-otp-row"></div>
+      <div class="gt-err" id="gt-v-err" style="text-align:center"></div>
+      <button class="gt-btn" id="gt-v-btn" onclick="gtVerify()">Verify and continue</button>
+      <div class="gt-muted" style="margin-top:14px;text-align:center;font-size:12px">Didn't get it? <button class="gt-link" id="gt-v-resend" style="font-size:12px" onclick="gtResend()">Resend code</button> · <button class="gt-link" style="font-size:12px;color:#8b95a5;font-weight:500" onclick="gtScreen('signup')">Change email</button></div>
+    </div>
+  </div>
+
+  <!-- Setup -->
+  <div id="gt-s-setup" class="gt-center" style="display:none">
+    <div class="gt-logo"></div>
+    <div class="gt-h1">Setting up your workspace</div>
+    <div class="gt-sub" id="gt-setup-sub">Hang tight, this only takes a moment.</div>
+    <ul class="gt-steps" id="gt-steps">
+      <li><span class="d"></span>Creating your workspace</li>
+      <li><span class="d"></span>Loading sample team and accounts</li>
+      <li><span class="d"></span>Building sample pipeline and goals</li>
+      <li><span class="d"></span>Getting Ace ready</li>
+    </ul>
+  </div>
+</div>
+
+<div id="gt-pop"></div>
+
+<!-- Import-your-data pop-up (shown when sample data is switched off) -->
+<div class="gt-ov" id="gt-import" onclick="if(event.target===this)gtCloseImport()">
+  <div class="gt-box">
+    <div id="gt-imp-1">
+      <h2>Ready to bring in your own data?</h2>
+      <p class="s">Switching off sample data hides all the demo records. Your sample data is only hidden, not deleted, so you can switch it back on anytime.</p>
+      <button class="gt-opt" onclick="document.getElementById('gt-file').click()"><div class="ic">↑</div><div><b>Upload a CSV or Excel file</b><span>Accounts, people and opportunities. Columns are mapped for you.</span></div></button>
+      <button class="gt-opt" onclick="gtChooseImport('scratch')"><div class="ic">+</div><div><b>Start from scratch</b><span>Keep the workspace empty and add records as you go.</span></div></button>
+      <input type="file" id="gt-file" accept=".csv,.xlsx,.xls" style="display:none" onchange="gtFilePicked(this)">
+      <div style="display:flex;justify-content:flex-end;margin-top:18px"><button class="gt-gbtn" onclick="gtCloseImport()">Keep sample data on</button></div>
+    </div>
+  </div>
+</div>
+
+<!-- Extend trial: book a call with the Customer Success Manager -->
+<div class="gt-ov" id="gt-extend" style="z-index:5300" onclick="if(event.target===this)gtCloseExtend()">
+  <div class="gt-box">
+    <div id="gt-ext-1">
+      <h2>Extend your trial</h2>
+      <p class="s">Need more time to evaluate? Book a call with your Customer Success Manager. They'll walk through your goals, help with your data import, and review whether a longer trial makes sense.</p>
+      <div style="display:flex;gap:12px;align-items:center;margin:16px 0 4px;padding:12px;border:1px solid var(--g200);border-radius:12px"><div class="gt-av" style="background:var(--teal);color:#fff">CS</div><div><b style="font-size:14px">Customer Success Manager</b><div style="font-size:12px;color:var(--g500)">30-minute video call · <span id="gt-tz"></span></div></div></div>
+      <div style="font-size:12px;font-weight:700;margin-top:14px">Pick a day</div>
+      <div class="gt-days" id="gt-days"></div>
+      <div style="font-size:12px;font-weight:700;margin-top:10px">Pick a time</div>
+      <div class="gt-slots" id="gt-slots"></div>
+      <div style="font-size:12px;font-weight:700;margin-top:14px">Anything we should prepare? <span style="font-weight:500;color:var(--g500)">(optional)</span></div>
+      <textarea id="gt-ext-note" rows="3" style="width:100%;margin-top:6px;border:1px solid var(--g200);border-radius:9px;padding:10px;font-family:var(--font);font-size:13px;background:var(--white);color:var(--dark);resize:vertical" placeholder="For example: we're moving from HubSpot and need help with our pipeline stages."></textarea>
+      <div style="display:flex;justify-content:space-between;margin-top:16px"><button class="gt-gbtn" onclick="gtCloseExtend()">Cancel</button><button class="gt-pbtn" id="gt-ext-go" disabled onclick="gtConfirmExtend()">Confirm booking</button></div>
+    </div>
+    <div id="gt-ext-2" style="display:none;text-align:center;padding:10px 0">
+      <div style="width:54px;height:54px;border-radius:50%;background:var(--teal);color:#fff;font-size:26px;display:flex;align-items:center;justify-content:center;margin:0 auto 12px">✓</div>
+      <h2>You're booked</h2>
+      <p class="s" id="gt-ext-when" style="margin-top:6px"></p>
+      <p class="s" style="margin-top:10px">In the real product, a calendar invite goes to your email. Your Customer Success Manager can extend your trial on the call.</p>
+      <button class="gt-pbtn" style="margin-top:18px" onclick="gtCloseExtend()">Back to my workspace</button>
+    </div>
+  </div>
+</div>
+
+<!-- Trial ended -->
+<div class="gt-ov" id="gt-expired" style="z-index:5250;background:rgba(10,13,20,.9)">
+  <div class="gt-box" style="text-align:center">
+    <h2>Your 7 day trial has ended</h2>
+    <p class="s" style="margin-top:8px">Your workspace and everything you added are saved. Choose how you'd like to continue.</p>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:20px">
+      <button class="gt-pbtn" onclick="showToast('Taking you to plans and pricing (mockup)')">Upgrade to a paid plan</button>
+      <button class="gt-gbtn" onclick="gtOpenExtend()">Book a call to extend my trial</button>
+      <button class="gt-gbtn" style="border:none;color:var(--g500)" onclick="gtSignOut()">Sign out</button>
+    </div>
+  </div>
+</div>
+
+<!-- Empty workspace (sample data off) -->
+<div id="gt-empty"><div class="e">
+  <div style="width:58px;height:58px;border-radius:16px;background:var(--teal-bg);color:var(--teal);font-size:26px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto">∅</div>
+  <h3 id="gt-empty-t">Your workspace is empty</h3>
+  <p id="gt-empty-p">Sample data is off. Import your data and this page will fill with your real numbers.</p>
+  <div style="display:flex;gap:10px;justify-content:center"><button class="gt-pbtn" onclick="gtOpenImport()">Import your data</button><button class="gt-gbtn" onclick="gtSetDemo(true)">Show sample data again</button></div>
+</div></div>
+
 <div class="app">
 
 <nav class="sidebar" role="navigation" aria-label="Main navigation">
@@ -1804,6 +2017,11 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
     </div>
   </div>
   <div class="tb-right">
+    <div id="gt-trial-ui" style="display:none;align-items:center;gap:8px;margin-right:4px">
+      <label class="gt-sw" title="Show or hide the sample data"><input type="checkbox" id="gt-demo-cb" checked onchange="gtToggleDemo(this)"><span>Sample data</span><span class="gt-sw-track"><span class="gt-sw-knob"></span></span><span id="gt-sw-state" style="min-width:20px">On</span></label>
+      <button id="gt-pill" onclick="gtTogglePop(event)">7 days left</button>
+      <button class="gt-ext-btn" onclick="gtOpenExtend()">Extend your trial</button>
+    </div>
     <button class="ace-tb-btn" onclick="openAskAce()" aria-label="Open Ask Ace AI Coach" aria-haspopup="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M12 3L13.5 8.5L19 10L13.5 11.5L12 17L10.5 11.5L5 10L10.5 8.5L12 3Z"/><path d="M5 3L5.75 5.25L8 6L5.75 6.75L5 9L4.25 6.75L2 6L4.25 5.25L5 3Z"/><path d="M19 14L19.5 15.5L21 16L19.5 16.5L19 18L18.5 16.5L17 16L18.5 15.5L19 14Z"/></svg> Ask Ace</button>
     <div class="tb-icon-btn" onclick="togglePanel('cal-panel')" title="Calendar" role="button" aria-label="Open calendar" aria-haspopup="true" tabindex="0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
     <div class="tb-icon-btn" onclick="togglePanel('notif-panel')" title="Notifications" role="button" aria-label="Open notifications" aria-haspopup="true" tabindex="0"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><div class="notif-dot" aria-hidden="true"></div></div>
@@ -1918,7 +2136,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
 
         <!-- Logout -->
         <div style="padding:0 6px 2px">
-          <button onclick="showToast('Logging out…');toggleUserSwitcher()" class="profile-menu-item" style="color:var(--red)">
+          <button onclick="toggleUserSwitcher();gtSignOut()" class="profile-menu-item" style="color:var(--red)">
             <span class="profile-menu-icon" style="background:var(--g100)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg></span>
             Log Out
           </button>
@@ -29331,6 +29549,328 @@ function _mktInit() {
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mktInit);
 else _mktInit();
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   FREE TRIAL FLOW (mockup): login → sign-up → email verify → workspace
+   7-day trial, sample-data toggle, import pop-up, extend-by-booking-a-call.
+   No backend: the code is shown on screen, state lives in localStorage.
+   ═══════════════════════════════════════════════════════════════════════════ */
+var GT_DAYS = 7, GT_DAY_MS = 86400000;
+var _gt = { code: null, attempts: 0, form: null, slot: null, day: null, resendAt: 0 };
+var GT_FREE_DOMAINS = ['gmail.com','yahoo.com','outlook.com','hotmail.com','icloud.com','aol.com','proton.me','protonmail.com','live.com'];
+var GT_DATA_PAGES = ['dashboard','goals','pipeline','contacts','team','highlights','bonuses','contests','commissions','calls','reports','forecasting'];
+var GT_CRMS = ['Salesforce','HubSpot','Pipedrive','Zoho CRM','Microsoft Dynamics','Other CRM'];
+
+function gtEl(id) { return document.getElementById(id); }
+function gtEsc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+function gtLoad() { try { return JSON.parse(localStorage.getItem('gt_trial') || 'null'); } catch (e) { return null; } }
+function gtSave(t) { try { localStorage.setItem('gt_trial', JSON.stringify(t)); } catch (e) {} }
+function gtDaysLeft(t) { return Math.max(0, GT_DAYS - Math.floor((Date.now() - t.start) / GT_DAY_MS)); }
+
+function gtScreen(name) {
+  ['login','signup','verify','setup'].forEach(function(n){
+    var el = gtEl('gt-s-' + n); if (el) el.style.display = (n === name) ? '' : 'none';
+  });
+  var a = gtEl('gt-auth'); if (a) { a.style.display = 'block'; a.scrollTop = 0; }
+  var rw = gtEl('gt-reset-wrap'); if (rw) rw.style.display = gtLoad() ? 'inline' : 'none';
+}
+
+/* ── Login ── */
+/* Two separate flows: "Sign in" = the regular platform (Patricia, full data, no trial UI);
+   "Free Trial" sign-up = trial platform (7-day clock, sample-data toggle, extend). */
+function gtMode() { try { return sessionStorage.getItem('gt_mode') === 'trial' ? 'trial' : 'regular'; } catch (e) { return 'regular'; } }
+function gtLogin() {
+  // Hide the login screen first so nothing downstream can keep the user stuck here.
+  var a = gtEl('gt-auth'); if (a) a.style.display = 'none';
+  try { sessionStorage.setItem('gt_authed', '1'); sessionStorage.setItem('gt_mode', 'regular'); } catch (e) {}
+  try { gtApplyTrial(); } catch (e) { if (window.console) console.error('gtApplyTrial failed', e); }
+}
+function gtEnter() {
+  var a = gtEl('gt-auth'); if (a) a.style.display = 'none';
+  try { gtApplyTrial(); } catch (e) { if (window.console) console.error('gtApplyTrial failed', e); }
+}
+function gtSignOut() {
+  try { sessionStorage.removeItem('gt_authed'); sessionStorage.removeItem('gt_mode'); } catch (e) {}
+  gtCloseAll();
+  var ex = gtEl('gt-expired'); if (ex) ex.style.display = 'none';
+  gtApplyTrial();
+  gtScreen('login');
+}
+function gtResetTrial() {
+  try { localStorage.removeItem('gt_trial'); sessionStorage.removeItem('gt_authed'); } catch (e) {}
+  gtApplyTrial(); gtScreen('login');
+}
+
+/* ── Sign up ── */
+function gtEmailHint() {
+  var v = (gtEl('gt-su-em').value || '').toLowerCase(), d = v.split('@')[1] || '';
+  gtEl('gt-su-hint').textContent = (d && GT_FREE_DOMAINS.indexOf(d) > -1) ? 'Tip: a work email lets you invite your team later.' : '';
+}
+function gtSignup() {
+  var fn = gtEl('gt-su-fn').value.trim(), ln = gtEl('gt-su-ln').value.trim(),
+      em = gtEl('gt-su-em').value.trim(), co = gtEl('gt-su-co').value.trim(), ph = gtEl('gt-su-ph').value.trim();
+  var err = '';
+  if (!fn || !ln) err = 'Please enter your first and last name.';
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(em)) err = 'Please enter a valid email address.';
+  else if (!co) err = 'Please enter your company name.';
+  else if (ph && ph.replace(/\D/g, '').length < 7) err = 'That phone number looks too short. You can leave it blank.';
+  gtEl('gt-su-err').textContent = err;
+  if (err) return;
+  _gt.form = { first: fn, last: ln, email: em, company: co, phone: ph };
+  gtSendCode();
+  gtEl('gt-v-email').textContent = em;
+  gtBuildOtp();
+  gtScreen('verify');
+}
+
+/* ── Email verification ── */
+function gtSendCode() {
+  _gt.code = String(Math.floor(100000 + Math.random() * 900000));
+  _gt.attempts = 0;
+  _gt.resendAt = Date.now() + 30000;
+  var c = gtEl('gt-v-code'); if (c) c.textContent = _gt.code.slice(0, 3) + ' ' + _gt.code.slice(3);
+  var e = gtEl('gt-v-err'); if (e) e.textContent = '';
+  var b = gtEl('gt-v-btn'); if (b) b.disabled = false;
+}
+function gtBuildOtp() {
+  var row = gtEl('gt-otp-row'); if (!row) return;
+  row.innerHTML = '';
+  for (var i = 0; i < 6; i++) {
+    (function(i){
+      var inp = document.createElement('input');
+      inp.className = 'gt-otp'; inp.maxLength = 1; inp.setAttribute('inputmode', 'numeric'); inp.setAttribute('aria-label', 'Digit ' + (i + 1));
+      inp.addEventListener('input', function(){
+        inp.value = inp.value.replace(/\D/g, '').slice(0, 1);
+        if (inp.value && i < 5) row.children[i + 1].focus();
+        if (gtOtpValue().length === 6) gtVerify();
+      });
+      inp.addEventListener('keydown', function(ev){
+        if (ev.key === 'Backspace' && !inp.value && i > 0) row.children[i - 1].focus();
+      });
+      inp.addEventListener('paste', function(ev){
+        var txt = ((ev.clipboardData || window.clipboardData).getData('text') || '').replace(/\D/g, '').slice(0, 6);
+        if (!txt) return;
+        ev.preventDefault();
+        for (var k = 0; k < 6; k++) row.children[k].value = txt[k] || '';
+        if (txt.length === 6) gtVerify();
+      });
+      row.appendChild(inp);
+    })(i);
+  }
+  if (row.children[0] && row.children[0].focus) row.children[0].focus();
+}
+function gtOtpValue() {
+  var row = gtEl('gt-otp-row'), s = '';
+  if (!row) return s;
+  for (var i = 0; i < row.children.length; i++) s += row.children[i].value || '';
+  return s;
+}
+function gtVerify() {
+  var v = gtOtpValue(), err = gtEl('gt-v-err');
+  if (_gt.attempts >= 5) { err.textContent = 'Too many attempts. Please request a new code.'; return; }
+  if (v.length < 6) { err.textContent = 'Enter all 6 digits.'; return; }
+  if (v !== _gt.code) {
+    _gt.attempts++;
+    var left = 5 - _gt.attempts;
+    err.textContent = left > 0 ? ('That code doesn\'t match. ' + left + ' attempt' + (left === 1 ? '' : 's') + ' left.') : 'Too many attempts. Please request a new code.';
+    if (left <= 0) gtEl('gt-v-btn').disabled = true;
+    return;
+  }
+  var f = _gt.form || {};
+  gtSave({ first: f.first, last: f.last, email: f.email, company: f.company, phone: f.phone || '',
+           verified: true, start: Date.now(), demoOn: true, import: null, ext: null });
+  try { sessionStorage.setItem('gt_authed', '1'); sessionStorage.setItem('gt_mode', 'trial'); } catch (e) {}
+  gtRunSetup();
+}
+function gtResend() {
+  var wait = Math.ceil((_gt.resendAt - Date.now()) / 1000);
+  if (wait > 0) { gtEl('gt-v-err').textContent = 'You can request a new code in ' + wait + 's.'; return; }
+  gtSendCode(); gtBuildOtp();
+  showToast('A new code was sent');
+}
+
+/* ── Workspace setup animation ── */
+function gtRunSetup() {
+  gtScreen('setup');
+  var items = gtEl('gt-steps').children, i = 0;
+  for (var k = 0; k < items.length; k++) { items[k].className = ''; items[k].firstChild.textContent = ''; }
+  function next() {
+    if (i < items.length) {
+      items[i].className = 'on'; items[i].firstChild.textContent = '✓'; i++;
+      setTimeout(next, 650);
+    } else {
+      setTimeout(function(){
+        gtEnter();
+        showToast('Welcome! Your workspace is pre-filled with sample data. Switch it off anytime from the top bar.');
+      }, 500);
+    }
+  }
+  setTimeout(next, 300);
+}
+
+/* ── Trial state in the app ── */
+function gtApplyTrial() {
+  var t = gtLoad(), authed = false;
+  try { authed = sessionStorage.getItem('gt_authed') === '1'; } catch (e) {}
+  var ui = gtEl('gt-trial-ui');
+  // Remember Patricia's original profile so the regular platform can be restored exactly.
+  if (!_gt.orig) {
+    var n0 = gtEl('topbar-name'), t0 = gtEl('topbar-title'), p0 = gtEl('topbar-photo');
+    _gt.orig = { name: n0 ? n0.textContent : '', title: t0 ? t0.textContent : '', photo: p0 ? p0.src : '' };
+  }
+  if (!t || !authed || gtMode() !== 'trial') {
+    if (ui) ui.style.display = 'none';
+    var n1 = gtEl('topbar-name'), t1 = gtEl('topbar-title'), p1 = gtEl('topbar-photo');
+    if (n1) n1.textContent = _gt.orig.name; if (t1) t1.textContent = _gt.orig.title; if (p1 && _gt.orig.photo) p1.src = _gt.orig.photo;
+    var ex0 = gtEl('gt-expired'); if (ex0) ex0.style.display = 'none';
+    gtSyncEmpty(); return;
+  }
+  if (ui) ui.style.display = 'flex';
+  var left = gtDaysLeft(t), pill = gtEl('gt-pill');
+  pill.textContent = left === 0 ? 'Trial ended' : (left + ' day' + (left === 1 ? '' : 's') + ' left');
+  pill.className = left <= 1 ? 'crit' : (left <= 3 ? 'warn' : '');
+  var cb = gtEl('gt-demo-cb'); if (cb) cb.checked = !!t.demoOn;
+  var st = gtEl('gt-sw-state'); if (st) st.textContent = t.demoOn ? 'On' : 'Off';
+  var nm = gtEl('topbar-name'), ti = gtEl('topbar-title');
+  if (nm) nm.textContent = t.first + ' ' + t.last;
+  if (ti) ti.textContent = t.company;
+  var ph = gtEl('topbar-photo');
+  if (ph) ph.src = 'data:image/svg+xml;utf8,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="64" height="64" fill="#1d9e75"/><text x="32" y="41" font-size="26" font-weight="700" text-anchor="middle" fill="#fff" font-family="Arial">' + gtEsc((t.first[0] || '') + (t.last[0] || '')).toUpperCase() + '</text></svg>');
+  gtSyncEmpty();
+  var ex = gtEl('gt-expired'); if (ex) ex.style.display = (left === 0) ? 'flex' : 'none';
+}
+function gtCloseAll() { var p = gtEl('gt-pop'); if (p) p.style.display = 'none'; }
+function gtTogglePop(ev) {
+  if (ev && ev.stopPropagation) ev.stopPropagation();
+  var p = gtEl('gt-pop'), t = gtLoad(); if (!p || !t) return;
+  if (p.style.display === 'block') { p.style.display = 'none'; return; }
+  var left = gtDaysLeft(t);
+  p.innerHTML = '<div class="pi"><b style="color:var(--dark)">' + gtEsc(t.company) + '</b><br>' + left + ' of ' + GT_DAYS + ' days left in your free trial' +
+    (t.ext ? '<br><span style="color:var(--teal);font-weight:700">Extension call: ' + gtEsc(t.ext.when) + '</span>' : '') + '</div>' +
+    '<button onclick="gtCloseAll();gtOpenExtend()">Extend your trial</button>' +
+    '<button onclick="gtCloseAll();showToast(\'Taking you to plans and pricing (mockup)\')">Upgrade to a paid plan</button>' +
+    '<button onclick="gtSkipDay()" style="color:var(--g500)">Demo tool: skip ahead 1 day</button>' +
+    '<button onclick="gtSignOut()" style="color:var(--g500)">Sign out</button>';
+  p.style.display = 'block';
+}
+document.addEventListener('click', function(e){
+  var p = gtEl('gt-pop');
+  if (p && p.style.display === 'block' && !p.contains(e.target)) p.style.display = 'none';
+});
+function gtSkipDay() {
+  var t = gtLoad(); if (!t) return;
+  t.start -= GT_DAY_MS; gtSave(t); gtCloseAll(); gtApplyTrial();
+  showToast(gtDaysLeft(t) + ' day(s) left');
+}
+
+/* ── Sample-data toggle ── */
+function gtToggleDemo(cb) {
+  var t = gtLoad(); if (!t) return;
+  if (!cb.checked) { cb.checked = true; gtOpenImport(); }   // stays on until they choose a path
+  else gtSetDemo(true);
+}
+function gtSetDemo(on) {
+  var t = gtLoad(); if (!t) return;
+  t.demoOn = !!on; if (on) t.import = null;
+  gtSave(t); gtApplyTrial();
+  showToast(on ? 'Sample data is back on' : 'Sample data hidden');
+}
+function gtOpenImport() { gtImpStep(1); var o = gtEl('gt-import'); if (o) o.style.display = 'flex'; }
+function gtCloseImport() { var o = gtEl('gt-import'); if (o) o.style.display = 'none'; var cb = gtEl('gt-demo-cb'); if (cb) cb.checked = true; }
+function gtImpStep(n) {
+  var s = gtEl('gt-imp-1'); if (s) s.style.display = '';
+}
+function gtFilePicked(inp) {
+  var f = inp.files && inp.files[0];
+  if (f) gtChooseImport('csv:' + f.name);
+}
+function gtChooseImport(kind) {
+  var t = gtLoad(); if (!t) return;
+  t.demoOn = false; t.import = kind; gtSave(t);
+  var o = gtEl('gt-import'); if (o) o.style.display = 'none';
+  gtApplyTrial();
+  if (kind.indexOf('csv:') === 0) showToast('Import queued: ' + kind.slice(4) + ' (mockup)');
+  else if (kind.indexOf('crm:') === 0) showToast('Connecting to ' + kind.slice(4) + ' (mockup)');
+  else showToast('Sample data hidden. Your workspace is empty.');
+}
+function gtSyncEmpty() {
+  var t = gtLoad(), authed = false, el = gtEl('gt-empty'); if (!el) return;
+  try { authed = sessionStorage.getItem('gt_authed') === '1'; } catch (e) {}
+  var act = document.querySelector('.page.active'), id = act && act.id ? act.id.replace('page-', '') : '';
+  var show = !!(t && authed && gtMode() === 'trial' && !t.demoOn && GT_DATA_PAGES.indexOf(id) > -1);
+  el.style.display = show ? 'flex' : 'none';
+  if (show) {
+    var started = t.import && (t.import.indexOf('csv:') === 0 || t.import.indexOf('crm:') === 0);
+    gtEl('gt-empty-t').textContent = started ? 'Your import is on its way' : 'Your workspace is empty';
+    gtEl('gt-empty-p').textContent = started
+      ? 'In the real product, your records appear here as they finish importing. This mockup stays empty.'
+      : 'Sample data is off. Import your data and this page will fill with your real numbers.';
+  }
+}
+(function(){
+  if (typeof showPage === 'function') {
+    var _gtShowPage = showPage;
+    showPage = function(id, btn) { var r = _gtShowPage(id, btn); gtSyncEmpty(); return r; };
+  }
+})();
+
+/* ── Extend trial: book a call with the Customer Success Manager ── */
+function gtOpenExtend() {
+  _gt.slot = null; _gt.day = null;
+  gtEl('gt-ext-1').style.display = ''; gtEl('gt-ext-2').style.display = 'none';
+  gtEl('gt-ext-go').disabled = true; gtEl('gt-ext-note').value = '';
+  var tz = ''; try { tz = Intl.DateTimeFormat().resolvedOptions().timeZone; } catch (e) {}
+  gtEl('gt-tz').textContent = tz || 'your time zone';
+  var days = [], d = new Date(), names = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  while (days.length < 5) {
+    d = new Date(d.getTime() + GT_DAY_MS);
+    if (d.getDay() !== 0 && d.getDay() !== 6) days.push(new Date(d.getTime()));
+  }
+  gtEl('gt-days').innerHTML = days.map(function(x, i){
+    return '<button class="gt-day" onclick="gtPickDay(' + i + ')" id="gt-day-' + i + '">' + names[x.getDay()] + '<small>' + (x.getMonth() + 1) + '/' + x.getDate() + '</small></button>';
+  }).join('');
+  _gt.days = days;
+  gtEl('gt-slots').innerHTML = '<div class="gt-muted" style="grid-column:1/-1;font-size:12px">Pick a day to see available times.</div>';
+  gtEl('gt-extend').style.display = 'flex';
+}
+function gtCloseExtend() { gtEl('gt-extend').style.display = 'none'; }
+function gtPickDay(i) {
+  _gt.day = i; _gt.slot = null; gtEl('gt-ext-go').disabled = true;
+  for (var k = 0; k < 5; k++) { var b = gtEl('gt-day-' + k); if (b) b.className = 'gt-day' + (k === i ? ' sel' : ''); }
+  var times = ['9:00 AM','10:30 AM','12:00 PM','1:30 PM','3:00 PM','4:30 PM'];
+  gtEl('gt-slots').innerHTML = times.map(function(tm, j){
+    var taken = ((i * 7 + j * 3) % 5 === 0);
+    return '<button class="gt-slot" ' + (taken ? 'disabled ' : '') + 'id="gt-slot-' + j + '" onclick="gtPickSlot(' + j + ')">' + tm + '</button>';
+  }).join('');
+  _gt.times = times;
+}
+function gtPickSlot(j) {
+  _gt.slot = j; gtEl('gt-ext-go').disabled = false;
+  for (var k = 0; k < 6; k++) { var b = gtEl('gt-slot-' + k); if (b) b.className = 'gt-slot' + (k === j ? ' sel' : ''); }
+}
+function gtConfirmExtend() {
+  if (_gt.day == null || _gt.slot == null) return;
+  var d = _gt.days[_gt.day], names = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var when = names[d.getDay()] + ' ' + (d.getMonth() + 1) + '/' + d.getDate() + ' at ' + _gt.times[_gt.slot];
+  var t = gtLoad(); if (t) { t.ext = { when: when, note: gtEl('gt-ext-note').value || '' }; gtSave(t); }
+  gtEl('gt-ext-when').textContent = 'Your call with the Customer Success Manager is set for ' + when + '.';
+  gtEl('gt-ext-1').style.display = 'none'; gtEl('gt-ext-2').style.display = '';
+}
+
+/* ── Boot: show the login screen first (skip with ?nologin) ── */
+function gtInit() {
+  var authed = false;
+  try { authed = sessionStorage.getItem('gt_authed') === '1'; } catch (e) {}
+  var skip = /[?&]nologin/.test(location.search || '');
+  var lg = document.querySelector('.sb-logo svg');
+  var html = lg ? lg.outerHTML : '';
+  var holders = document.querySelectorAll('#gt-auth .gt-logo');
+  for (var i = 0; i < holders.length; i++) holders[i].innerHTML = html;
+  if (skip && !authed) { try { sessionStorage.setItem('gt_authed', '1'); } catch (e) {} authed = true; }
+  if (authed) gtEnter(); else gtScreen('login');
+}
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', gtInit);
+else gtInit();
 </script>
 </body>
 </html>
