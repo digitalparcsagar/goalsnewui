@@ -6860,6 +6860,7 @@ body.dark-mode .tgt-rie-input{background:var(--g50)!important;color:var(--dark)!
       <button class="cs-nav-btn" data-section="lost-reasons" onclick="_csLoadSection('lost-reasons')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg> Lost Reasons</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">AI & Culture</div>
       <button class="cs-nav-btn" data-section="values"      onclick="_csLoadSection('values')"      style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg> Culture &amp; Values</button>
+      <button class="cs-nav-btn" data-section="ai-connector" onclick="_csLoadSection('ai-connector')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg> AI Connector</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Email</div>
       <button class="cs-nav-btn" data-section="email-sending" onclick="_csLoadSection('email-sending')" style="display:flex;align-items:center;gap:9px;padding:9px 12px;border-radius:8px;background:transparent;border:none;cursor:pointer;font-size:13px;font-weight:500;color:var(--g600);text-align:left;width:100%;font-family:var(--font)"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><path d="M4 4h16v16H4z" opacity="0"/><path d="M22 6l-10 7L2 6"/><path d="M2 6h20v12H2z"/></svg> Email Sending</button>
       <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.6px;color:var(--g400);padding:12px 10px 8px">Data</div>
@@ -9949,6 +9950,7 @@ function _csLoadSection(id) {
   if (id === 'email-sending') { c.innerHTML = _csEmailSendingSection(); }
   if (id === 'dedupe')        { c.innerHTML = _csDedupeSection(); _dedupeRenderResults(); }
   if (id === 'labels')        { c.innerHTML = _csLabelsSection(); _lblRenderPreview(); }
+  if (id === 'ai-connector')  { c.innerHTML = _csAiConnectorSection(); }
 }
 function _csEmailSendingSection() {
   var d = (typeof _mktDeliverability !== 'undefined') ? _mktDeliverability : {spf:true,dkim:true,dmarc:true,reputationScore:92,reputationLabel:'Excellent',bounceRate:0.7,complaintRate:0.03,bounceThreshold:2.0,complaintThreshold:0.1,dailyCap:5000,sentToday:1240};
@@ -29548,6 +29550,132 @@ function _mktInit() {
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', _mktInit);
 else _mktInit();
+
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   AI CONNECTOR (MCP) settings, Company Settings → AI & Culture → AI Connector
+   Mockup of the manager controls for letting Claude, ChatGPT and other AI agents
+   connect to Goals.com. Nothing is actually connected; state is in memory only.
+   ═══════════════════════════════════════════════════════════════════════════ */
+var _AI_URL = 'https://mcp.goals.com/v1';
+var _AI_TOOLS = [
+  { g: 'read', k: 'search_records', n: 'Search records', d: 'Find accounts, people and opportunities.', on: true },
+  { g: 'read', k: 'get_goal_pace', n: 'View goals and pace', d: 'See goal progress for a rep or the team.', on: true },
+  { g: 'read', k: 'get_pipeline', n: 'View pipeline', d: 'See stages, coverage and deals at risk.', on: true },
+  { g: 'read', k: 'get_impact', n: 'Goals.com Impact report', d: 'Pull Ace insights and measured impact.', on: true },
+  { g: 'write', k: 'create_task', n: 'Create a task', d: 'Add a task to a record.', on: true },
+  { g: 'write', k: 'log_note', n: 'Log a note', d: 'Add a note to an account, person or opportunity.', on: true },
+  { g: 'write', k: 'log_call', n: 'Log a call', d: 'Record a call and its outcome.', on: true },
+  { g: 'write', k: 'create_meeting', n: 'Create a meeting', d: 'Schedule a meeting on a record.', on: true },
+  { g: 'write', k: 'update_next_step', n: 'Update the next step', d: 'Change the next step and its date.', on: true },
+  { g: 'approve', k: 'change_stage', n: 'Change an opportunity stage', d: 'Moves the deal in the pipeline and the forecast.', on: false },
+  { g: 'approve', k: 'change_amount', n: 'Change amount or close date', d: 'Can change forecast and goal progress.', on: false }
+];
+var _AI_LOCKED = [
+  { n: 'Delete records', d: 'Not available to AI agents.' },
+  { n: 'Commissions, bonuses and payouts', d: 'Not available to AI agents.' }
+];
+var _aiConn = {
+  enabled: true, maxRecords: 10, tools: {},
+  agents: [
+    { who: 'Patricia Moore', role: 'Sales Manager', platform: 'Claude', last: 'Today, 9:42 AM' },
+    { who: 'Daniel Brooks', role: 'Sales Rep', platform: 'ChatGPT', last: 'Yesterday, 4:15 PM' }
+  ],
+  log: [
+    { who: 'Patricia Moore', platform: 'Claude', when: 'Today, 9:42 AM', what: 'Created a task: Follow up with Northwind', undo: true },
+    { who: 'Daniel Brooks', platform: 'ChatGPT', when: 'Yesterday, 4:15 PM', what: 'Logged a call on the Acme renewal', undo: true },
+    { who: 'Patricia Moore', platform: 'Claude', when: 'Yesterday, 11:03 AM', what: 'Updated the next step on Brightside Dental', undo: true },
+    { who: 'Daniel Brooks', platform: 'ChatGPT', when: 'Mon, 2:20 PM', what: 'Asked to move Acme from Discovery to Proposal. Approved by Daniel.', undo: false }
+  ]
+};
+_AI_TOOLS.forEach(function(t){ _aiConn.tools[t.k] = t.on; });
+
+function _aiSw(on, fn, label) {
+  return '<button type="button" role="switch" aria-checked="' + (on ? 'true' : 'false') + '" aria-label="' + label + '" onclick="' + fn + '" style="width:40px;height:22px;border-radius:11px;border:none;cursor:pointer;position:relative;flex-shrink:0;background:' + (on ? 'var(--teal)' : 'var(--g300)') + ';padding:0;transition:background .15s"><span style="position:absolute;top:3px;left:' + (on ? '21px' : '3px') + ';width:16px;height:16px;border-radius:50%;background:#fff;transition:left .15s"></span></button>';
+}
+function _aiConnRender() {
+  var c = document.getElementById('cs-content');
+  if (c && _csCurrentSection === 'ai-connector') c.innerHTML = _csAiConnectorSection();
+}
+function _aiGroup(title, sub, g) {
+  var rows = _AI_TOOLS.filter(function(t){ return t.g === g; }).map(function(t){
+    return '<div style="display:flex;align-items:center;gap:14px;padding:12px 16px;border-top:1px solid var(--g100)">'
+      + '<div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--dark)">' + t.n + '</div><div style="font-size:11.5px;color:var(--g400);margin-top:2px">' + t.d + '</div></div>'
+      + _aiSw(_aiConn.tools[t.k], "_aiConnToggleTool('" + t.k + "')", t.n) + '</div>';
+  }).join('');
+  return '<div style="border:1.5px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:14px">'
+    + '<div style="padding:11px 16px;background:var(--g50)"><div style="font-size:12px;font-weight:800;color:var(--dark)">' + title + '</div><div style="font-size:11.5px;color:var(--g500);margin-top:2px">' + sub + '</div></div>' + rows + '</div>';
+}
+function _csAiConnectorSection() {
+  var on = _aiConn.enabled;
+  var card = function(name, steps, note) {
+    return '<div style="flex:1;min-width:260px;border:1.5px solid var(--g200);border-radius:12px;padding:16px">'
+      + '<div style="font-size:14px;font-weight:800;color:var(--dark);margin-bottom:8px">' + name + '</div>'
+      + '<ol style="margin:0 0 8px 18px;padding:0;font-size:12.5px;color:var(--g600);line-height:1.7">' + steps.map(function(x){ return '<li>' + x + '</li>'; }).join('') + '</ol>'
+      + '<div style="font-size:11.5px;color:var(--g400);line-height:1.5">' + note + '</div></div>';
+  };
+  var agents = _aiConn.agents.length ? _aiConn.agents.map(function(a, i){
+    return '<div style="display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--g100)">'
+      + '<div><div style="font-size:13px;font-weight:700;color:var(--dark)">' + a.who + '</div><div style="font-size:11px;color:var(--g400)">' + a.role + '</div></div>'
+      + '<div style="font-size:12.5px;color:var(--g600)">' + a.platform + '</div>'
+      + '<div style="font-size:12px;color:var(--g500)">' + a.last + '</div>'
+      + '<button onclick="_aiConnRevoke(' + i + ')" style="background:none;border:1px solid var(--g200);color:var(--red);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Revoke access</button></div>';
+  }).join('') : '<div style="padding:16px;font-size:12.5px;color:var(--g400);border-top:1px solid var(--g100)">No one has connected an AI agent yet.</div>';
+  var log = _aiConn.log.map(function(l, i){
+    return '<div style="display:grid;grid-template-columns:1fr 2.2fr auto;gap:12px;align-items:center;padding:12px 16px;border-top:1px solid var(--g100)">'
+      + '<div><div style="font-size:12.5px;font-weight:700;color:var(--dark)">' + l.who + '</div><div style="font-size:11px;color:var(--g400)">via ' + l.platform + ' · ' + l.when + '</div></div>'
+      + '<div style="font-size:12.5px;color:var(--g600)">' + l.what + '</div>'
+      + (l.undo ? '<button onclick="_aiConnUndo(' + i + ')" style="background:none;border:1px solid var(--g200);color:var(--g600);border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:var(--font)">Undo</button>' : '<span style="font-size:11.5px;color:var(--g400)">' + (l.undone ? 'Undone' : '') + '</span>')
+      + '</div>';
+  }).join('');
+  return '<div>'
+    + _csSectionTitle('AI Connector', 'Let your team connect Claude, ChatGPT and other AI assistants to Goals.com. Team members can then ask their assistant to find records, log activity, and update deals. Each person can only do what their own role allows.')
+    + '<div style="display:flex;align-items:center;gap:14px;border:1.5px solid ' + (on ? 'var(--teal)' : 'var(--g200)') + ';background:' + (on ? 'var(--teal-bg)' : 'var(--g50)') + ';border-radius:12px;padding:16px;margin-bottom:18px">'
+    +   '<div style="flex:1"><div style="font-size:14px;font-weight:800;color:var(--dark)">Allow AI assistants to connect</div><div style="font-size:12px;color:var(--g500);margin-top:3px">' + (on ? 'Your team can connect their own AI assistant using the address below.' : 'AI connections are turned off. Connected assistants cannot reach Goals.com.') + '</div></div>'
+    +   _aiSw(on, '_aiConnToggleMaster()', 'Allow AI assistants to connect') + '</div>'
+    + '<div style="opacity:' + (on ? '1' : '.45') + ';pointer-events:' + (on ? 'auto' : 'none') + '">'
+    + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:8px">Connector address</div>'
+    + '<div style="display:flex;gap:8px;margin-bottom:20px"><input readonly value="' + _AI_URL + '" style="flex:1;border:1.5px solid var(--g200);border-radius:9px;padding:10px 12px;font-size:13px;font-family:var(--mono);background:var(--g50);color:var(--dark)"><button onclick="_aiConnCopy()" style="background:var(--teal);color:#fff;border:none;border-radius:9px;padding:10px 18px;font-size:13px;font-weight:700;cursor:pointer;font-family:var(--font)">Copy address</button></div>'
+    + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:8px">How your team connects</div>'
+    + '<div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:22px">'
+    +   card('Claude', ['Open Settings, then Connectors.', 'Choose Add custom connector and paste the address.', 'Sign in with your Goals.com login and approve access.'], 'Each person signs in with their own account, so Claude can only see what that person can see.')
+    +   card('ChatGPT', ['Open Settings, then Connectors.', 'Add a custom connector and paste the address.', 'Sign in with your Goals.com login and approve access.'], 'Availability depends on your ChatGPT plan and settings.')
+    + '</div>'
+    + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:8px">What AI assistants can do</div>'
+    + _aiGroup('Read only', 'Looking things up. Nothing changes in Goals.com.', 'read')
+    + _aiGroup('Everyday updates', 'Low-risk changes that do not affect goals, forecast or pay.', 'write')
+    + _aiGroup('Needs approval each time', 'These can change the forecast and goal progress. The person sees a preview and must approve every change.', 'approve')
+    + '<div style="border:1.5px dashed var(--g300);border-radius:12px;padding:12px 16px;margin-bottom:18px">'
+    +   '<div style="font-size:12px;font-weight:800;color:var(--dark);margin-bottom:6px">Never available to AI assistants</div>'
+    +   _AI_LOCKED.map(function(l){ return '<div style="font-size:12.5px;color:var(--g500);line-height:1.8">&#128274; ' + l.n + '. ' + l.d + '</div>'; }).join('') + '</div>'
+    + '<div style="display:flex;align-items:center;gap:14px;border:1.5px solid var(--g200);border-radius:12px;padding:14px 16px;margin-bottom:22px">'
+    +   '<div style="flex:1"><div style="font-size:13px;font-weight:700;color:var(--dark)">Most records changed in one request</div><div style="font-size:11.5px;color:var(--g400);margin-top:2px">Keeps one request from changing too much at once.</div></div>'
+    +   '<select onchange="_aiConnSetMax(this.value)" style="border:1.5px solid var(--g200);border-radius:8px;padding:8px 10px;font-size:13px;font-family:var(--font)">'
+    +   [1,5,10,25].map(function(n){ return '<option value="' + n + '"' + (_aiConn.maxRecords === n ? ' selected' : '') + '>' + n + (n === 1 ? ' record' : ' records') + '</option>'; }).join('') + '</select></div>'
+    + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:8px">Connected people</div>'
+    + '<div style="border:1.5px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:22px"><div style="display:grid;grid-template-columns:1.3fr 1fr 1fr auto;gap:12px;padding:10px 16px;background:var(--g50);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400)"><div>Person</div><div>Assistant</div><div>Last used</div><div style="width:104px"></div></div>' + agents + '</div>'
+    + '<div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--g400);margin-bottom:8px">Recent AI activity</div>'
+    + '<div style="border:1.5px solid var(--g200);border-radius:12px;overflow:hidden;margin-bottom:12px">' + log + '</div>'
+    + '<div style="font-size:11.5px;color:var(--g400)">Every change made by an AI assistant is recorded with the person and the assistant that made it. This screen shows sample activity.</div>'
+    + '</div></div>';
+}
+function _aiConnToggleMaster() { _aiConn.enabled = !_aiConn.enabled; _aiConnRender(); showToast(_aiConn.enabled ? 'AI connections are on' : 'AI connections are off'); }
+function _aiConnToggleTool(k) { _aiConn.tools[k] = !_aiConn.tools[k]; _aiConnRender(); }
+function _aiConnSetMax(v) { _aiConn.maxRecords = parseInt(v, 10) || 10; showToast('Limit set to ' + _aiConn.maxRecords + (_aiConn.maxRecords === 1 ? ' record' : ' records') + ' per request'); }
+function _aiConnCopy() {
+  try { if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(_AI_URL); } catch (e) {}
+  showToast('Connector address copied');
+}
+function _aiConnRevoke(i) {
+  var a = _aiConn.agents[i]; if (!a) return;
+  _aiConn.agents.splice(i, 1); _aiConnRender();
+  showToast('Access revoked for ' + a.who);
+}
+function _aiConnUndo(i) {
+  var l = _aiConn.log[i]; if (!l || !l.undo) return;
+  l.undo = false; l.undone = true; _aiConnRender();
+  showToast('Change undone (mockup)');
+}
 
 /* ═══════════════════════════════════════════════════════════════════════════
    FREE TRIAL FLOW (mockup): login → sign-up → email verify → workspace
